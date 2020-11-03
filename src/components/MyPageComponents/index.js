@@ -1,3 +1,5 @@
 import Toolbar from "./Toolbar";
 import GreetingBanner from "./GreetingBanner";
-export { Toolbar, GreetingBanner };
+import IconTabs from "./IconTabs";
+
+export { Toolbar, GreetingBanner, IconTabs };
