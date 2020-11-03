@@ -3,17 +3,23 @@
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
       <greeting-banner></greeting-banner>
+      <icon-tabs></icon-tabs>
     </q-card>
   </div>
 </template>
 
 <script>
-import { Toolbar, GreetingBanner } from "src/components/MyPageComponents";
+import {
+  Toolbar,
+  GreetingBanner,
+  IconTabs
+} from "src/components/MyPageComponents";
 export default {
   name: "MyPage",
   components: {
     toolbar: Toolbar,
-    "greeting-banner": GreetingBanner
+    "greeting-banner": GreetingBanner,
+    "icon-tabs": IconTabs
   }
 };
 </script>
