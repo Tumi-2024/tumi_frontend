@@ -12,6 +12,16 @@ const routes = [
     component: () => import('pages/MyPage/Index'),
     name: 'my_page'
   },
+  {
+    path: '/my-page/',
+    component: () => import('layouts/MyPageLayout.vue'),
+    children: [
+      // Area(Interest)
+      { path: 'area', component: () => import('pages/AreaPage/Index.vue'), name: 'area' }
+      // Property(Interest)
+      // Property(Contacted)
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
