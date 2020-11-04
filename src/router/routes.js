@@ -9,7 +9,8 @@ const routes = [
   },
   {
     path: '/my-page',
-    component: () => import('pages/MyPage/Index')
+    component: () => import('pages/MyPage/Index'),
+    name: 'my_page'
   },
 
   // Always leave this as last one,
