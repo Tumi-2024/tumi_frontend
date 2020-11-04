@@ -6,13 +6,11 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/HomePage/Index.vue') }
     ]
-  },
-  {
+  }, {
     path: '/my-page',
     component: () => import('pages/MyPage/Index'),
     name: 'my_page'
-  },
-  {
+  }, {
     path: '/my-page/',
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
@@ -21,8 +19,19 @@ const routes = [
       // Property(Interest)
       // Property(Contacted)
     ]
+  }, {
+    path: '/my-page/',
+    component: () => import('layouts/MyPageLayout.vue'),
+    children: [
+      { path: 'property-interest', component: () => import('pages/PropertyInterestPage/Index.vue'), name: 'property-interest' }
+    ]
+  }, {
+    path: '/my-page/',
+    component: () => import('layouts/MyPageLayout.vue'),
+    children: [
+      { path: 'property-contacted', component: () => import('pages/PropertyContactedPage/Index.vue'), name: 'property-contacted' }
+    ]
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {
