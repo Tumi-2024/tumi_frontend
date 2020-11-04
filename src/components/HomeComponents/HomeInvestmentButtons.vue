@@ -64,8 +64,8 @@ export default {
   position: absolute;
   top: 0;
   margin-top: 18px;
-  width: 31px;
-    height: 18px;
+  width: 32px;
+  height: 32px;
 }
 
 .investment-btn-label {

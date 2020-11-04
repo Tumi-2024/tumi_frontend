@@ -1,11 +1,11 @@
 import HomeHeader from './HomeHeader'
 import HomeSearchBar from './HomeSearchBar'
-import HomeDashButton from './HomeDashButton'
 import HomeInvestmentButtons from './HomeInvestmentButtons'
+import HomeDashboardButtons from './HomeDashboardButtons'
 
 export {
   HomeHeader,
   HomeSearchBar,
-  HomeDashButton,
-  HomeInvestmentButtons
+  HomeInvestmentButtons,
+  HomeDashboardButtons
 }
