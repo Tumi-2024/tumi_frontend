@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: 100vh" class="row column bg-positive">
+  <div style="min-height: 100vh;" class="row column bg-positive">
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>

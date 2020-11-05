@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpr lfr">
-    <q-header>
+    <q-header style="max-width: 1000px;" class="q-mx-auto">
       <home-header />
     </q-header>
 
