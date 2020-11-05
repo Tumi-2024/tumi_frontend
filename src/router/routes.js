@@ -11,11 +11,13 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/HomePage/Index.vue') }
     ]
-  }, {
+  },
+  {
     path: '/my-page',
     component: () => import('pages/MyPage/Index'),
     name: 'my_page'
-  }, {
+  },
+  {
     path: '/my-page/',
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
