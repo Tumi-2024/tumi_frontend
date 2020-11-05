@@ -1,6 +1,6 @@
 /**
  * path: 'route-path' <- with hyphen for: SEO purpose
- * component: pages/.../RouteComponent.vue <- PascalCase for: best practice
+ * component: pages/RouteComponent/Index.vue <- PascalCase for: best practice/uniform
  * name: route_name <- snake_case
  */
 
