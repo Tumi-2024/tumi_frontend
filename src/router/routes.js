@@ -1,7 +1,6 @@
 /**
- * if two words
  * path: 'route-path' <- with hyphen for: SEO purpose
- * component: pages/.../RouteComponent <- PascalCase for: best practice
+ * component: pages/.../RouteComponent.vue <- PascalCase for: best practice
  * name: route_name <- snake_case
  */
 
@@ -20,7 +19,6 @@ const routes = [
     path: '/my-page/',
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
-      // Area(Interest)
       { path: 'area', component: () => import('pages/AreaPage/Index.vue'), name: 'area' },
       { path: 'property-interest', component: () => import('pages/PropertyInterestPage/Index.vue'), name: 'property_interest' },
       { path: 'property-contacted', component: () => import('pages/PropertyContactedPage/Index.vue'), name: 'property_contacted' }
