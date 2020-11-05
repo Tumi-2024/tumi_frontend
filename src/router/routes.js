@@ -1,3 +1,9 @@
+/**
+ * if two words
+ * path: 'route-path' <- with hyphen for: SEO purpose
+ * component: pages/.../RouteComponent <- PascalCase for: best practice
+ * name: route_name <- snake_case
+ */
 
 const routes = [
   {
@@ -15,21 +21,9 @@ const routes = [
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
       // Area(Interest)
-      { path: 'area', component: () => import('pages/AreaPage/Index.vue'), name: 'area' }
-      // Property(Interest)
-      // Property(Contacted)
-    ]
-  }, {
-    path: '/my-page/',
-    component: () => import('layouts/MyPageLayout.vue'),
-    children: [
-      { path: 'property-interest', component: () => import('pages/PropertyInterestPage/Index.vue'), name: 'property-interest' }
-    ]
-  }, {
-    path: '/my-page/',
-    component: () => import('layouts/MyPageLayout.vue'),
-    children: [
-      { path: 'property-contacted', component: () => import('pages/PropertyContactedPage/Index.vue'), name: 'property-contacted' }
+      { path: 'area', component: () => import('pages/AreaPage/Index.vue'), name: 'area' },
+      { path: 'property-interest', component: () => import('pages/PropertyInterestPage/Index.vue'), name: 'property_interest' },
+      { path: 'property-contacted', component: () => import('pages/PropertyContactedPage/Index.vue'), name: 'property_contacted' }
     ]
   },
   // Always leave this as last one,
