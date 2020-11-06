@@ -1,5 +1,5 @@
 import HomeHeader from './HomeHeader'
-import HomeSearchBar from './HomeSearchBar'
+import HomeSearchBar from './HomeSearchBar/Index'
 import HomeInvestmentButtons from './HomeInvestmentButtons'
 import HomeDashboardButtons from './HomeDashboardButtons'
 
