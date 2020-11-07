@@ -1,12 +1,17 @@
 <template>
-  <div>
-    Area(Interest)
-  </div>
+  <div class="q-mt-sm"><area-carousel></area-carousel></div>
 </template>
 
 <script>
+import { AreaCarousel } from "src/components/AreaPageComponents";
 export default {
-  name: "Area"
+  name: "Area",
+  components: {
+    "area-carousel": AreaCarousel
+  },
+  data() {
+    return {};
+  }
 };
 </script>
 
