@@ -1,0 +1,102 @@
+<template>
+  <q-card flat class="q-mt-sm">
+    <q-card-section class=" notosanskr-medium">
+      관심지역 매물 <span class="text-primary">320</span>개
+    </q-card-section>
+    <q-card-section
+      class="sort-section row bg-positive q-pa-none notosanskr-regular"
+    >
+      <q-btn flat class="text-primary">최신순</q-btn>
+      <q-separator vertical />
+      <q-btn flat>추천순</q-btn>
+      <q-separator vertical />
+      <q-btn flat>면적순</q-btn>
+      <q-separator vertical />
+      <q-btn flat>가격순</q-btn>
+    </q-card-section>
+    <q-card-section class="list-items q-pa-none">
+      <q-list class="q-pt-md">
+        <area-item
+          v-for="(item, i) of items"
+          :key="i"
+          :name="item.name"
+          :amount="item.amount"
+          :tags="item.tags"
+        ></area-item>
+      </q-list>
+    </q-card-section>
+  </q-card>
+</template>
+
+<script>
+import AreaItem from "./AreaItem";
+export default {
+  components: {
+    "area-item": AreaItem
+  },
+  data() {
+    return {
+      items: [
+        {
+          tags: {
+            type: "아파트",
+            recomend: "투미추천 급매",
+            date: "20.10.12"
+          },
+          name: "종로1가 대성스카이렉스",
+          amount: "보증금 5천 6백만 / 월세 120만"
+        },
+        {
+          tags: {
+            type: "아파트",
+            date: "20.10.12"
+          },
+          name: "종로1가 대성스카이렉스",
+          amount: "매매 6억 5,500만"
+        },
+        {
+          tags: {
+            type: "아파트",
+            redevelopment: true,
+            date: "20.10.12"
+          },
+          name: "종로1가 대성스카이렉스",
+          amount: "매매 6억 5천만"
+        },
+        {
+          tags: {
+            type: "아파트",
+            date: "20.10.12"
+          },
+          name: "종로1가 대성스카이렉스",
+          amount: "매매 6억 5,500만"
+        },
+        {
+          tags: {
+            type: "아파트",
+            date: "20.10.12"
+          },
+          name: "종로1가 대성스카이렉스",
+          amount: "매매 6억 5,500만"
+        }
+      ]
+    };
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.sort-section {
+  .q-btn {
+    font-size: 14px;
+    line-height: 44px;
+    text-align: center;
+    letter-spacing: -1.05px;
+    color: #707070;
+  }
+  .q-separator {
+    margin-top: 20px;
+    height: 14px;
+  }
+}
+</style>
