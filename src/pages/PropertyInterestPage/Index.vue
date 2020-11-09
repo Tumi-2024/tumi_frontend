@@ -1,46 +1,42 @@
 <template>
-  <div style="min-height: 100vh" class="row column bg-positive">
-    <div style="height: 48px; margin-top: 12px; background: #FFF;"  class="row">
-      <span style="padding-left: 16px; padding-right: 16px; font-size: 16px; line-height: 48px; font-weight: 500; font-style: normal;">
-        관심매물 5개
-      </span>
-    </div>
-
-    <div style="height: 48px; background: #F6F6F6;"  class="row">
-      <div class="col col-md-6">
-        <div class="row">
-          <div class="col col-md-3" style="text-align: center; ">
-            <a href="" style="line-height: 44px; font-size: 14px; font-weight: 500;  color: #D32C00; width: 100%; text-decoration: none;">최신순</a>
-          </div>
-
-          <div class="col col-md-3" style="text-align: center; ">
-            <a href="" style="line-height: 44px; font-size: 14px; font-weight: 500;  color: #707070; width: 100%; text-decoration: none;">추천순</a>
-          </div>
-
-          <div class="col col-md-3" style="text-align: center; ">
-            <a href="" style="line-height: 44px; font-size: 14px; font-weight: 500;  color: #707070; width: 100%; text-decoration: none;">면적순</a>
-          </div>
-          
-          <div class="col col-md-3" style="text-align: center;">
-            <a href="" style="line-height: 44px; font-size: 14px; font-weight: 500;  color: #707070; text-decoration: none;">가격순</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col col-md-6">
-        asd
-      </div>
-    </div>
-    <div style="height: 68px; background: #FFF;"  class="row">
-      
-    </div>
+  <div class="q-mt-sm">
+    <interest-menu-items></interest-menu-items>
+    <interest-btns></interest-btns>
+    <interest-list-items></interest-list-items>
   </div>
 </template>
 
 <script>
+import {
+  InterestMenuItems,
+  InterestBtns,
+  InterestListItems,
+} from "src/components/PropertyInterestComponents";
 export default {
-  name: "Property-Interest"
+  name: "Property-Interest",
+  components: {
+    "interest-menu-items": InterestMenuItems,
+    "interest-btns": InterestBtns,
+    "interest-list-items": InterestListItems,
+  },
+  data() {
+    return {};
+  }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.sort-section {
+  .q-btn {
+    font-size: 14px;
+    line-height: 44px;
+    text-align: center;
+    letter-spacing: -1.05px;
+    color: #707070;
+  }
+  .q-separator {
+    // margin-top: 20px;
+    height: 14px;
+  }
+}
+</style>

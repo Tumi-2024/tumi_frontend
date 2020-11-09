@@ -7,9 +7,17 @@
     <q-btn flat class="bg-white add-area" v-if="$route.name == 'area'">
       <q-icon size="24px">
         <img src="~assets/icons/add-area.svg" alt="" />
+        
       </q-icon>
-      로그인</q-btn
-    >
+      로그인
+    </q-btn>
+
+    <q-btn flat class="bg-white add-area" v-if="$route.name == 'property_interest'">
+      <q-icon size="24px">
+        <img src="~assets/icons/Regular.svg" alt="" />
+      </q-icon>
+    </q-btn>
+    
   </q-card-section>
 </template>
 
