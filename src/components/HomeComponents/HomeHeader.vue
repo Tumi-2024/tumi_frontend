@@ -11,6 +11,7 @@
       icon="menu"
       aria-label="Menu"
       css="btn-burger"
+      :to="{ name: 'my_page' }"
     />
   </q-toolbar>
 </template>
