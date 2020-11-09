@@ -13,14 +13,14 @@
     </div>
 
     <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" class="q-py-xs">
+      <q-btn flat ripple padding="0px" :to="{ name: 'area' }" class="q-py-xs">
         <q-icon size="44px" class="col-12">
           <img src="~assets/icons/area-interest.svg" />
         </q-icon>
         <div class="item-label col-12 text-center notosanskr-medium">
           관심지역
-        </div></q-btn
-      >
+        </div>
+      </q-btn>
     </div>
 
     <div class="items col-3 row items-center">
@@ -30,8 +30,8 @@
         </q-icon>
         <div class="item-label col-12 text-center notosanskr-medium">
           관심매물
-        </div></q-btn
-      >
+        </div>
+      </q-btn>
     </div>
 
     <div class="items col-3 row items-center">
@@ -41,8 +41,8 @@
         </q-icon>
         <div class="item-label col-12 text-center notosanskr-medium">
           연락한 매물
-        </div></q-btn
-      >
+        </div>
+      </q-btn>
     </div>
   </q-card-section>
 </template>
