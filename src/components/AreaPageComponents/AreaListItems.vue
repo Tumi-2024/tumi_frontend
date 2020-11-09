@@ -14,7 +14,7 @@
       <q-separator vertical />
       <q-btn flat>가격순</q-btn>
     </q-card-section>
-    <q-card-section class="list-items q-pa-none">
+    <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
         <area-item
           v-for="(item, i) of items"
@@ -23,6 +23,9 @@
           :amount="item.amount"
           :tags="item.tags"
         ></area-item>
+        <q-item class="q-pa-none">
+          <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
+        </q-item>
       </q-list>
     </q-card-section>
   </q-card>
@@ -97,6 +100,13 @@ export default {
   .q-separator {
     margin-top: 20px;
     height: 14px;
+  }
+  .see-more {
+    font-size: 17px;
+    line-height: 52px;
+    text-align: center;
+    letter-spacing: -1.275px;
+    color: #3a3a3a;
   }
 }
 </style>
