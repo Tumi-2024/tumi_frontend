@@ -1,19 +1,20 @@
 <template>
-  <q-dialog v-model="modals" full-width position="bottom">
-    <q-card style="width: 350px">
-      <q-linear-progress :value="0.6" color="pink" />
-
-      <q-card-section class="row items-center no-wrap">
-        <div>
-          <div class="text-weight-bold">The Walker</div>
-          <div class="text-grey">Fitz & The Tantrums</div>
+  <q-dialog v-model="modals" position="bottom">
+    <q-card class=" notosanskr-regular">
+      <q-card-section class="column q-pa-none">
+        <div class="heading-text">
+          투자매물을 <br />쉽게 찾고 관리할 수 있어요!
         </div>
-
-        <q-space />
-
-        <q-btn flat round icon="fast_rewind" />
-        <q-btn flat round icon="pause" />
-        <q-btn flat round icon="fast_forward" />
+        <q-btn flat class="bg-yellow q-mx-md notosanskr-medium">
+          <q-icon class="q-px-sm" size="32px">
+            <img src="~assets/icons/kakao.svg" alt="" srcset="" />
+          </q-icon>
+          카카오로 시작하기
+        </q-btn>
+        <div class="notice row items-center">
+          회원가입시 재미의 서비스 이용 약관과 개인정보 보호 정책에 동의하게
+          됩니다.
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -40,4 +41,39 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.q-card {
+  width: 100%;
+  max-width: 1000px;
+  height: 250px;
+  border-radius: 16px;
+}
+.heading-text {
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 30px;
+  letter-spacing: -1.575px;
+  color: #1a1a1a;
+  padding: 24px 16px;
+}
+.notice {
+  height: 28px;
+  background: #f6f6f6;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.9px;
+  color: #909090;
+  padding: 5px 16px;
+  margin-top: 20px;
+}
+.q-btn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -1.425px;
+  color: #1a1a1a;
+  padding: 12px;
+  border-radius: 8px;
+}
+</style>
