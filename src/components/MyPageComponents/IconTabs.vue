@@ -2,7 +2,7 @@
   <q-card-section class="full-width row q-pa-none q-px-md">
     <!-- icon tabs -->
     <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" class="q-py-xs">
+      <q-btn flat ripple padding="0px" :to="{ name: 'recently_seen' }" class="q-py-xs">
         <q-icon size="44px" class="col-12">
           <img src="~assets/icons/home-recently-viewed.svg" />
         </q-icon>
