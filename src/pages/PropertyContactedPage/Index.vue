@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-sm">
+  <div class="q-mt-sm" style="max-width: 1000px;">
     <contacted-menu-items></contacted-menu-items>
     <contacted-btns></contacted-btns>
     <contacted-list-items></contacted-list-items>

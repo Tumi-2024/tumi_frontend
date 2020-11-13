@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-sm">
+  <div class="q-mt-sm" style="max-width: 1000px;">
     <interest-menu-items></interest-menu-items>
     <interest-btns></interest-btns>
     <interest-list-items></interest-list-items>
