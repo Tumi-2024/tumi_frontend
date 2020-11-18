@@ -27,6 +27,14 @@ const routes = [
       { path: 'property-contacted', component: () => import('pages/PropertyContactedPage/Index.vue'), name: 'property_contacted' }
     ]
   },
+  {
+    path: '/map',
+    component: () => import('layouts/MapLayout.vue'),
+    children: [
+      { path: '', redirect: '/map/city' },
+      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' }
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
