@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ToolbarNav, TopTabNav } from "src/components/MyPageComponents";
+import { ToolbarNav, TopTabNav } from "src/components/MyPageLayoutComponents";
 import {} from "src/components/MyPageComponents";
 export default {
   components: {
