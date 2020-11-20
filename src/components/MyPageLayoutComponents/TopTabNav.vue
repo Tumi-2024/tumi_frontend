@@ -34,9 +34,9 @@ export default {
     },
     realEstateTabs() {
       return [
-        { label: "부동산 팁", pathName: "tips" },
-        { label: "정책분석", pathName: "policy_analysis" },
-        { label: "시장전망", pathName: "market_outlook" }
+        { label: "부동산 팁", pathName: "real_estate_tips" },
+        { label: "정책분석", pathName: "real_estate_policy_analysis" },
+        { label: "시장전망", pathName: "real_estate_market_outlook" }
       ];
     }
   },

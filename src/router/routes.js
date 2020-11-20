@@ -31,9 +31,9 @@ const routes = [
     path: '/real-estate/',
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
-      { path: 'tips', component: () => import('pages/RealEstatePage/RealEstateTips/Index.vue'), name: 'tips' },
-      { path: 'policy-analysis', component: () => import('pages/RealEstatePage/PolicyAnalysis/Index.vue'), name: 'policy_analysis' },
-      { path: 'market-outlook', component: () => import('pages/RealEstatePage/MarketOutlook/Index.vue'), name: 'market_outlook' }
+      { path: 'tips', component: () => import('pages/RealEstatePage/RealEstateTips/Index.vue'), name: 'real_estate_tips' },
+      { path: 'policy-analysis', component: () => import('pages/RealEstatePage/PolicyAnalysis/Index.vue'), name: 'real_estate_policy_analysis' },
+      { path: 'market-outlook', component: () => import('pages/RealEstatePage/MarketOutlook/Index.vue'), name: 'real_estate_market_outlook' }
     ],
     name: 'real_estate'
   },
