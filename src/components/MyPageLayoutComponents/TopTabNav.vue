@@ -5,23 +5,13 @@
       align="justify"
       v-model="pageTab"
       class="bg-white text-primary notosanskr-medium"
-      v-if="$route.name != 'one'"
     >
-      <q-route-tab :to="{ name: 'area' }" label="관심지역" />
-      <q-route-tab :to="{ name: 'property_interest' }" label="관심매물" />
-      <q-route-tab :to="{ name: 'property_contacted' }" label="연락한 매물" />
-    </q-tabs>
-
-    <q-tabs
-      dense
-      align="justify"
-      v-model="pageTab"
-      class="bg-white text-primary notosanskr-medium"
-      v-if="$route.name == 'one'"
-    >
-      <q-route-tab :to="{ name: 'one' }" label="관심지역" />
-      <q-route-tab :to="{ name: 'two' }" label="관심매물" />
-      <q-route-tab :to="{ name: 'three' }" label="연락한 매물" />
+      <q-route-tab
+        v-for="(tab, i) in routeTabs"
+        :key="i"
+        :to="{ name: tab.pathName }"
+        :label="tab.label"
+      />
     </q-tabs>
   </q-card-section>
 </template>
@@ -30,8 +20,36 @@
 export default {
   data() {
     return {
-      pageTab: ""
+      pageTab: "",
+      routeTabs: []
     };
+  },
+  computed: {
+    defaultTabs() {
+      return [
+        { label: "관심지역", pathName: "area" },
+        { label: "관심매물", pathName: "property_interest" },
+        { label: "연락한 매물", pathName: "property_contacted" }
+      ];
+    },
+    realEstateTabs() {
+      return [
+        { label: "부동산 팁", pathName: "tips" },
+        { label: "정책분석", pathName: "policy_analysis" },
+        { label: "시장전망", pathName: "market_outlook" }
+      ];
+    }
+  },
+  mounted() {
+    const path = this.$route.path.split("/")[1]; // my-page or real-estate
+    if (path === "real-estate") {
+      /**
+       *  if path is real-estate; we give real-estate route-tabs
+       */
+      this.routeTabs = this.realEstateTabs;
+    } else {
+      this.routeTabs = this.defaultTabs;
+    }
   }
 };
 </script>
