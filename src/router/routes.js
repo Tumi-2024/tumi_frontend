@@ -28,22 +28,22 @@ const routes = [
     ]
   },
   {
+    path: '/real-estate/',
+    component: () => import('layouts/MyPageLayout.vue'),
+    children: [
+      { path: 'tips', component: () => import('pages/RealEstatePage/RealEstateTips/Index.vue'), name: 'tips' },
+      { path: 'policy-analysis', component: () => import('pages/RealEstatePage/PolicyAnalysis/Index.vue'), name: 'policy_analysis' },
+      { path: 'market-outlook', component: () => import('pages/RealEstatePage/MarketOutlook/Index.vue'), name: 'market_outlook' }
+    ],
+    name: 'real_estate'
+  },
+  {
     path: '/map/',
     component: () => import('layouts/MapLayout.vue'),
     children: [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' }
     ]
-  },
-  {
-    path: '/real-estate/',
-    component: () => import('layouts/MyPageLayout.vue'),
-    children: [
-      { path: 'one', component: () => import('pages/RealEstatePage/Index.vue'), name: 'one' },
-      { path: 'two', component: () => import('pages/RealEstatePage/Index.vue'), name: 'two' },
-      { path: 'three', component: () => import('pages/RealEstatePage/Index.vue'), name: 'three' }
-    ],
-    name: 'real_estate'
   },
   // Always leave this as last one,
   // but you can also remove it
