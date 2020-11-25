@@ -11,7 +11,7 @@ import {
   RealEstatePost,
   RealEstateListItems,
   RealEstateFooter,
-} from "src/components/RealEstateComponents";
+} from "src/components/RealEstateComponents/RealEstateTips/";
 export default {
   name: "Recently-Seen",
   components: {
