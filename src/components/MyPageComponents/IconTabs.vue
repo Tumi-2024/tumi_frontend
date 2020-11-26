@@ -1,46 +1,23 @@
 <template>
   <q-card-section class="full-width row q-pa-none q-px-md">
     <!-- icon tabs -->
-    <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" :to="{ name: 'recently_seen' }" class="q-py-xs">
+    <div
+      v-for="(tab, i) in tabs"
+      :key="i"
+      class="items col-3 row items-center justify-center"
+    >
+      <q-btn
+        flat
+        ripple
+        padding="0px"
+        :to="{ name: tab.pathName }"
+        class="q-py-xs"
+      >
         <q-icon size="44px" class="col-12">
-          <img src="~assets/icons/home-recently-viewed.svg" />
+          <img :src="require(`../../assets/icons/${tab.icon}`)" />
         </q-icon>
         <div class="item-label col-12 text-center notosanskr-medium">
-          최근 본 매물
-        </div>
-      </q-btn>
-    </div>
-
-    <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" :to="{ name: 'area' }" class="q-py-xs">
-        <q-icon size="44px" class="col-12">
-          <img src="~assets/icons/area-interest.svg" />
-        </q-icon>
-        <div class="item-label col-12 text-center notosanskr-medium">
-          관심지역
-        </div>
-      </q-btn>
-    </div>
-
-    <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" class="q-py-xs">
-        <q-icon size="44px" class="col-12">
-          <img src="~assets/icons/home-interest.svg" />
-        </q-icon>
-        <div class="item-label col-12 text-center notosanskr-medium">
-          관심매물
-        </div>
-      </q-btn>
-    </div>
-
-    <div class="items col-3 row items-center">
-      <q-btn flat ripple padding="0px" class="q-py-xs">
-        <q-icon size="44px" class="col-12">
-          <img src="~assets/icons/contacted-property.svg" />
-        </q-icon>
-        <div class="item-label col-12 text-center notosanskr-medium">
-          연락한 매물
+          {{ tab.label }}
         </div>
       </q-btn>
     </div>
@@ -48,7 +25,34 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      tabs: [
+        {
+          label: "최근 본 매물",
+          icon: "home-recently-viewed.svg",
+          pathName: "recently_seen"
+        },
+        {
+          label: "관심지역",
+          icon: "area-interest.svg",
+          pathName: "area"
+        },
+        {
+          label: "관심매물",
+          icon: "home-interest.svg",
+          pathName: ""
+        },
+        {
+          label: "연락한 매물",
+          icon: "contacted-property.svg",
+          pathName: ""
+        }
+      ]
+    };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
