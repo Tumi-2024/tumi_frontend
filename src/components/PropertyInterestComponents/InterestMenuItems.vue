@@ -30,7 +30,14 @@
 </template>
 
 <script>
-    export default { };
+    export default { 
+        data() {},
+        components: {},
+        methods: {
+            
+        },
+        created() {},
+    };
 </script>
 
 <style lang="scss" scoped>
