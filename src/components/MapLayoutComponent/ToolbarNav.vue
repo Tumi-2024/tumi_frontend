@@ -14,12 +14,14 @@
       </div>
     </div>
     <div>
-      <q-btn flat>
+      <q-btn flat padding="4px" :to="{ name: 'my_page' }">
         <q-icon name="menu" size="24px"></q-icon>
       </q-btn>
-      <q-icon size="24px">
-        <img src="~assets/icons/regular-house.svg" alt="" />
-      </q-icon>
+      <q-btn flat padding="4px" :to="{name: 'home' }">
+        <q-icon size="24px">
+          <img src="~assets/icons/regular-house.svg" alt="" />
+        </q-icon>
+      </q-btn>
     </div>
   </q-card>
 </template>
