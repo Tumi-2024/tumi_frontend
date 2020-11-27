@@ -1,9 +1,7 @@
 <template>
   <div style="min-height: 100vh" class="row column bg-positive">
-    <q-card flat square class="row full-width items-center">
-      <div>Toolbar here</div>
-    </q-card>
-
+    <!-- navigation toolbar -->
+    <toolbar-nav />
     <q-card flat square class="q-pa-none bg-positive">
       <router-view></router-view>
     </q-card>
@@ -11,11 +9,12 @@
 </template>
 
 <script>
+import { ToolbarNav } from "components/MapLayoutComponent";
 export default {
-
-}
+  components: {
+    "toolbar-nav": ToolbarNav
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style lang="scss" scoped></style>
