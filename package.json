@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
+    "serve": "quasar dev",
     "dev": "quasar dev",
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa"
@@ -16,7 +17,8 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vue-chimera": "^3.0.2"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
