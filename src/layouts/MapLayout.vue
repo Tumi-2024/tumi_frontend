@@ -1,8 +1,7 @@
 <template>
   <div style="min-height: 100vh" class="row column bg-positive">
     <q-card flat square class="row full-width items-center">
-      <top-navigation></top-navigation>
-      <top-tab-nav></top-tab-nav>
+      <div>Toolbar here</div>
     </q-card>
 
     <q-card flat square class="q-pa-none bg-positive">
@@ -12,13 +11,11 @@
 </template>
 
 <script>
-import { ToolbarNav, TopTabNav } from "src/components/MyPageLayoutComponents";
 export default {
-  components: {
-    "top-navigation": ToolbarNav,
-    "top-tab-nav": TopTabNav
-  }
-};
+
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+
+</style>

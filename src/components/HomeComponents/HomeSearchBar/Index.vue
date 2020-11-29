@@ -17,11 +17,11 @@ export default {
 	data() {
 		return {
       text: null,
-      dialog: false,
+      dialog: false
 		}
   },
   components: {
-    SearchDialog,
+    SearchDialog
   },
   methods: {
     onHandleFocus() {
