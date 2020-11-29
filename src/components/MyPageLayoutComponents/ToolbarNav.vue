@@ -1,12 +1,14 @@
 <template>
   <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md">
     <div class="row items-center">
-      <q-btn flat padding="0px" :to="{ name: 'my_page' }">
+      <q-btn flat padding="0px" :to="{ name: returnBtn.pathName }">
         <q-icon name="keyboard_backspace" size="24px" class="q-mr-sm"></q-icon>
       </q-btn>
       <q-separator vertical inset></q-separator>
-      <q-btn flat>내 관심 매물</q-btn>
+      <q-btn flat>{{ returnBtn.label }}</q-btn>
     </div>
+
+    <!-- Right side starts here -->
     <q-btn flat class="bg-white add-area" v-if="$route.name == 'area'">
       <q-icon size="24px">
         <img src="~assets/icons/add-area.svg" alt="" />
@@ -20,14 +22,34 @@
       v-if="$route.name == 'property_interest'"
     >
       <q-icon size="24px">
-        <img src="~assets/icons/Regular.svg" alt="" />
+        <img src="~assets/icons/regular-house.svg" alt="" />
       </q-icon>
     </q-btn>
   </q-card-section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      returnBtn: {
+        label: "",
+        pathName: ""
+      }
+    };
+  },
+  mounted() {
+    const path = this.$route.path.split("/")[1];
+    if (path === "my-page") {
+      this.returnBtn.label = "내 관심 매물";
+      this.returnBtn.pathName = "my_page";
+    }
+    if (path === "real-estate") {
+      this.returnBtn.label = "부동산 인사이드";
+      this.returnBtn.pathName = "my_page";
+    }
+  }
+};
 </script>
 
 <style scoped>
