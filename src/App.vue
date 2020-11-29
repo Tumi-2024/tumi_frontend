@@ -12,6 +12,8 @@ export default {
   name: 'App',
   components: {
     "login-modal": LoginModal
+  },
+  created() {
   }
 }
 </script>

@@ -19,7 +19,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      // essentialLinks: linksData
     }
   }
 }
