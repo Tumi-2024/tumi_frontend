@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" seamless position="bottom">
     <q-card>
       <q-card-section class="q-pa-none">
-        <q-btn flat class="full-width notosanskr-medium">
+        <q-btn flat class="full-width notosanskr-medium" :to="{ name: 'map_list_sale' }">
           종로구 매물보기 <span style="color: #FF5A00">1,380</span>
         </q-btn>
       </q-card-section>
