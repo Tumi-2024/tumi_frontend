@@ -42,7 +42,8 @@ const routes = [
     component: () => import('layouts/MapLayout.vue'),
     children: [
       { path: '', redirect: '/map/city' },
-      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' }
+      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
+      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
   // Always leave this as last one,
