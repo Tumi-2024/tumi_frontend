@@ -1,15 +1,19 @@
 <template>
-  <div class="page-container full-height row justify-center items-center">
-    <h5 class="text-white">No Map :(</h5>
-    <bottom-drawer />
+  <div>
+    <toolbar-filter />
+    <div class="page-container full-height row justify-center items-center">
+      <h5 class="text-white">No Map :(</h5>
+      <bottom-drawer />
+    </div>
   </div>
 </template>
 
 <script>
-import { BottomDrawer } from "components/MapCityComponent";
+import { BottomDrawer, ToolbarFilter } from "components/MapCityComponent";
 export default {
   components: {
-    "bottom-drawer": BottomDrawer
+    "bottom-drawer": BottomDrawer,
+    "toolbar-filter": ToolbarFilter
   }
 };
 </script>

@@ -1,3 +1,3 @@
 import BottomDrawer from "./BottomDrawer";
-
-export { BottomDrawer };
+import ToolbarFilter from "./ToolbarFilter";
+export { BottomDrawer, ToolbarFilter };
