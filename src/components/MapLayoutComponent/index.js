@@ -1,3 +1,4 @@
 import ToolbarNav from "./ToolbarNav";
+import ToolbarFilter from "./ToolbarFilter";
 
-export { ToolbarNav };
+export { ToolbarNav, ToolbarFilter };
