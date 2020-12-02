@@ -1,15 +1,16 @@
 <template>
   <div>
     <toolbar-filter />
-    <h5>Map List Sale</h5>
+    <area-list-items />
   </div>
 </template>
 
 <script>
-import { ToolbarFilter } from "components/MapListSaleComponents";
+import { ToolbarFilter, AreaListItems } from "components/MapListSaleComponents";
 export default {
   components: {
-    "toolbar-filter": ToolbarFilter
+    "toolbar-filter": ToolbarFilter,
+    "area-list-items": AreaListItems
   }
 };
 </script>

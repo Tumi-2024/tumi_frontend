@@ -1,3 +1,4 @@
 import ToolbarFilter from "./ToolbarFilter";
+import AreaListItems from "./AreaListItems";
 
-export { ToolbarFilter };
+export { ToolbarFilter, AreaListItems };
