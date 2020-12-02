@@ -51,10 +51,12 @@ export default {
       // Login Kakao
       Kakao.Auth.login({
         success: function(authObj) {
+          console.log(authObj, authObj)
           // Update user
           Kakao.API.request({
             url: '/v2/user/me',
             success: function(response) {
+              console.log(response, response)
               const dataLogin = {}
 
               // Set user date
