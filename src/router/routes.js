@@ -9,7 +9,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/HomePage/Index.vue') }
+      { path: '', component: () => import('pages/HomePage/Index.vue'), name: 'home' }
     ]
   },
   {
@@ -42,7 +42,8 @@ const routes = [
     component: () => import('layouts/MapLayout.vue'),
     children: [
       { path: '', redirect: '/map/city' },
-      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' }
+      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
+      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
   // Always leave this as last one,

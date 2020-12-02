@@ -8,7 +8,7 @@
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center">
-      <q-btn flat class="btn-dash-board full-width" style="background-color: #4B62DE" >
+      <q-btn flat :to="{ path:'/map/' }" class="btn-dash-board full-width" style="background-color: #4B62DE" >
         <p class="btn-title1">추천</p>
         <p class="btn-title2">이번주 <br /> 추천급매</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
