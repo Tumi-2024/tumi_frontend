@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { ToolbarFilter, BottomDrawer } from "components/MapRedevelopmentComponents";
+import { ToolbarFilter, BottomDrawer } from "components/MapRedevelopComponents";
 export default {
   components: {
     "toolbar-filter": ToolbarFilter,
