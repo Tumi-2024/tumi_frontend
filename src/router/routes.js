@@ -43,6 +43,7 @@ const routes = [
     children: [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
+      { path: 'redevelop-area', component: () => import('pages/MapRedevelopArea/Index.vue'), name: 'map_redevelop_area' },
       { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
