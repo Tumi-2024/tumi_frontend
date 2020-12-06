@@ -47,6 +47,7 @@ const routes = [
       { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
+  { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
   // Always leave this as last one,
   // but you can also remove it
   {
