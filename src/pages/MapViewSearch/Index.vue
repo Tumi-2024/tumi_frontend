@@ -1,14 +1,16 @@
 <template>
   <div>
     <top-toolbar></top-toolbar>
+    <search-field></search-field>
   </div>
 </template>
 
 <script>
-import { TopToolbar } from "components/MapViewSearchComponents";
+import { TopToolbar, SearchField } from "components/MapViewSearchComponents";
 export default {
   components: {
-    "top-toolbar": TopToolbar
+    "top-toolbar": TopToolbar,
+    "search-field": SearchField
   }
 };
 </script>

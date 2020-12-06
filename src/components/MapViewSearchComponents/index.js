@@ -1,2 +1,4 @@
 import TopToolbar from "./TopToolbar";
-export { TopToolbar };
+import SearchField from "./SearchField";
+
+export { TopToolbar, SearchField };
