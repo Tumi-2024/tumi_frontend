@@ -2,15 +2,21 @@
   <div>
     <top-toolbar></top-toolbar>
     <search-field></search-field>
+    <bread-crumb></bread-crumb>
   </div>
 </template>
 
 <script>
-import { TopToolbar, SearchField } from "components/MapViewSearchComponents";
+import {
+  TopToolbar,
+  SearchField,
+  BreadCrumb
+} from "components/MapViewSearchComponents";
 export default {
   components: {
     "top-toolbar": TopToolbar,
-    "search-field": SearchField
+    "search-field": SearchField,
+    "bread-crumb": BreadCrumb
   }
 };
 </script>
