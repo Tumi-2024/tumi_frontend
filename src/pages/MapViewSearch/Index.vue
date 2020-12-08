@@ -3,6 +3,7 @@
     <top-toolbar></top-toolbar>
     <search-field></search-field>
     <bread-crumb></bread-crumb>
+    <table-region-selection></table-region-selection>
   </div>
 </template>
 
@@ -10,13 +11,15 @@
 import {
   TopToolbar,
   SearchField,
-  BreadCrumb
+  BreadCrumb,
+  TableRegionSelection
 } from "components/MapViewSearchComponents";
 export default {
   components: {
     "top-toolbar": TopToolbar,
     "search-field": SearchField,
-    "bread-crumb": BreadCrumb
+    "bread-crumb": BreadCrumb,
+    "table-region-selection": TableRegionSelection
   }
 };
 </script>
