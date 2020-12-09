@@ -23,8 +23,30 @@ export default {
       listDisplayed: []
     };
   },
+  props: {
+    step: Number
+  },
   mounted() {
     this.listDisplayed = this.listFirst;
+  },
+  watch: {
+    step(newValue) {
+      this.step = newValue;
+      switch (this.step) {
+        case 1:
+          this.listDisplayed = this.listFirst;
+          break;
+        case 2:
+          this.listDisplayed = this.listSecond;
+          break;
+        case 3:
+          this.listDisplayed = this.listThird;
+          break;
+        default:
+          this.listDisplayed = this.listFirst;
+          break;
+      }
+    }
   }
 };
 </script>

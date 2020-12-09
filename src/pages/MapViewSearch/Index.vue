@@ -2,8 +2,10 @@
   <div>
     <top-toolbar></top-toolbar>
     <search-field></search-field>
-    <bread-crumb></bread-crumb>
-    <table-region-selection></table-region-selection>
+    <!-- shows steps -->
+    <bread-crumb @setStep="stepChanged"></bread-crumb>
+    <!-- shows regions selections -->
+    <table-region-selection :step="step"></table-region-selection>
   </div>
 </template>
 
@@ -20,6 +22,16 @@ export default {
     "search-field": SearchField,
     "bread-crumb": BreadCrumb,
     "table-region-selection": TableRegionSelection
+  },
+  data() {
+    return {
+      step: 1
+    };
+  },
+  methods: {
+    stepChanged(v) {
+      this.step = v;
+    }
   }
 };
 </script>
