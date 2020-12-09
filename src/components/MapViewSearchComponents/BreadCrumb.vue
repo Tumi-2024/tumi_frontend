@@ -8,25 +8,25 @@
       <q-btn
         padding="2px"
         flat
-        label="서울시"
+        :label="selections.one ? selections.one : '시도 선택'"
         :class="{ 'current-step': step >= 1 }"
-        @click="step = 1"
+        @click="setStep(1)"
       />
       <q-icon name="keyboard_arrow_right" size="24px" />
       <q-btn
         padding="2px"
         flat
-        label="시군구 선택"
+        :label="selections.two ? selections.two : '시군구 선택'"
         :class="{ 'current-step': step >= 2 }"
-        @click="step = 2"
+        @click="setStep(2)"
       />
       <q-icon name="keyboard_arrow_right" size="24px" />
       <q-btn
         padding="2px"
         flat
-        label="읍면동 선택"
+        :label="selections.three ? selections.three : '읍면동 선택'"
         :class="{ 'current-step': step >= 3 }"
-        @click="step = 3"
+        @click="setStep(3)"
       />
     </q-card-section>
   </q-card>
@@ -36,8 +36,19 @@
 export default {
   data() {
     return {
-      step: 1
+      step: 1,
+      selections: {
+        one: "",
+        two: "",
+        three: ""
+      }
     };
+  },
+  methods: {
+    setStep(number) {
+      this.$emit("setStep", number);
+      this.step = number;
+    }
   }
 };
 </script>
