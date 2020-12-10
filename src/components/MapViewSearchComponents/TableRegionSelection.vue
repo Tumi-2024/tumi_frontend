@@ -6,7 +6,12 @@
         v-for="(list, i) of listDisplayed"
         :key="i"
       >
-        <q-btn flat class="full-width full-height" :label="list"></q-btn>
+        <q-btn
+          flat
+          class="full-width full-height"
+          :label="list"
+          @click="itemSelected(list)"
+        ></q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -28,6 +33,11 @@ export default {
   },
   mounted() {
     this.listDisplayed = this.listFirst;
+  },
+  methods: {
+    itemSelected(value) {
+      this.$emit("changeStepValue", { step: this.step, value });
+    }
   },
   watch: {
     step(newValue) {

@@ -3,9 +3,12 @@
     <top-toolbar></top-toolbar>
     <search-field></search-field>
     <!-- shows steps -->
-    <bread-crumb @setStep="stepChanged"></bread-crumb>
+    <bread-crumb ref="breadCrumb" @setStep="stepChanged"></bread-crumb>
     <!-- shows regions selections -->
-    <table-region-selection :step="step"></table-region-selection>
+    <table-region-selection
+      :step="step"
+      @changeStepValue="changeStepValue"
+    ></table-region-selection>
   </div>
 </template>
 
@@ -31,6 +34,9 @@ export default {
   methods: {
     stepChanged(v) {
       this.step = v;
+    },
+    changeStepValue(val) {
+      this.$refs.breadCrumb.setStepValue(val);
     }
   }
 };
