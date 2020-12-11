@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    modal: String
+    modal: Boolean
   }
 };
 </script>

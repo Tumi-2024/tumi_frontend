@@ -6,7 +6,7 @@
     <bread-crumb ref="breadCrumb" @setStep="stepChanged"></bread-crumb>
     <!-- shows regions selections -->
     <table-region-selection
-      :step="step"
+      :activeStep="activeStep"
       @changeStepValue="changeStepValue"
     ></table-region-selection>
   </div>
@@ -28,14 +28,16 @@ export default {
   },
   data() {
     return {
-      step: 1
+      activeStep: { step: "one", value: "서울시" }
     };
   },
   methods: {
     stepChanged(v) {
-      this.step = v;
+      this.activeStep = v;
+      console.log(v);
     },
     changeStepValue(val) {
+      this.activeStep = val;
       this.$refs.breadCrumb.setStepValue(val);
     }
   }

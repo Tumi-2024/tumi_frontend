@@ -55,18 +55,22 @@ export default {
   },
   methods: {
     setStep(number) {
-      this.$emit("setStep", number);
+      let step;
+      if (number == 1) step = "one";
+      if (number == 2) step = "two";
+      if (number == 3) step = "three";
+      this.$emit("setStep", { step, value: this.selections[step] });
       this.step = number;
     },
     setStepValue({ step, value }) {
       switch (step) {
-        case 1:
+        case "one":
           this.selections.one = value;
           break;
-        case 2:
+        case "two":
           this.selections.two = value;
           break;
-        case 3:
+        case "three":
           this.selections.three = value;
           break;
         default:

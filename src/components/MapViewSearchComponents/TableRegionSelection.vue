@@ -11,6 +11,7 @@
           class="full-width full-height"
           :label="list"
           @click="itemSelected(list)"
+          :text-color="activeStep.value == list ? 'primary' : 'black'"
         ></q-btn>
       </div>
     </q-card-section>
@@ -31,31 +32,32 @@ export default {
       listSecond: listSecond,
       listThird: listThird,
       listDisplayed: [],
-      buttonBottom: ""
+      buttonBottom: false
     };
   },
   props: {
-    step: Number
+    activeStep: Object
   },
   mounted() {
     this.listDisplayed = this.listFirst;
   },
   methods: {
     itemSelected(value) {
-      this.$emit("changeStepValue", { step: this.step, value });
+      this.buttonBottom = false;
+      if (this.activeStep.step == "three") this.buttonBottom = true;
+      this.$emit("changeStepValue", { step: this.activeStep.step, value });
     }
   },
   watch: {
-    step(newValue) {
-      this.step = newValue;
-      switch (this.step) {
-        case 1:
+    activeStep(newValue) {
+      switch (newValue.step) {
+        case "one":
           this.listDisplayed = this.listFirst;
           break;
-        case 2:
+        case "two":
           this.listDisplayed = this.listSecond;
           break;
-        case 3:
+        case "three":
           this.listDisplayed = this.listThird;
           break;
         default:
