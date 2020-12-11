@@ -14,18 +14,24 @@
         ></q-btn>
       </div>
     </q-card-section>
+    <button-bottom :modal="buttonBottom"></button-bottom>
   </q-card>
 </template>
 
 <script>
 import { listFirst, listSecond, listThird } from "./dummy-data-regions.js";
+import ButtonBottom from "./ButtonBottom";
 export default {
+  components: {
+    ButtonBottom
+  },
   data() {
     return {
       listFirst: listFirst,
       listSecond: listSecond,
       listThird: listThird,
-      listDisplayed: []
+      listDisplayed: [],
+      buttonBottom: ""
     };
   },
   props: {
