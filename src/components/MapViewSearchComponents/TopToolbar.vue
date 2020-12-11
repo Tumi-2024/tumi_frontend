@@ -2,7 +2,7 @@
   <q-card flat style="height: 44px">
     <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md">
       <div class="row items-center">
-        <q-btn flat padding="0px">
+        <q-btn flat padding="8px 4px" :to="{ name: 'map_city' }">
           <q-icon
             name="keyboard_backspace"
             size="24px"
