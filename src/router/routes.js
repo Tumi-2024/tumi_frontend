@@ -50,7 +50,7 @@ const routes = [
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
   {
     path: '/actual-transaction',
-    component: () => import('layouts/MapLayout.vue'),
+    component: () => import('layouts/ActualTransactionLayout.vue'),
     children: []
   },
   // Always leave this as last one,
