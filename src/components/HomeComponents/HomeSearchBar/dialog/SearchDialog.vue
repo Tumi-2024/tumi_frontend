@@ -34,9 +34,9 @@
       <q-card-section>
         <recent-search />
       </q-card-section>
-      
+
       <q-separator color="positive" inset spaced size="12px" class="full-width" />
-      
+
       <q-card-section>
         <list-result />
       </q-card-section>
@@ -55,9 +55,9 @@ export default {
       type: Boolean,
     }
   },
-  data(){
+  data() {
     return {
-      dialog: true,
+      text: null
     }
   },
   components: {
