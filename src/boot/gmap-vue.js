@@ -1,9 +1,10 @@
 import Vue from "vue";
 import * as GmapVue from "gmap-vue";
+// for some reason process.env will add always add double quote on value so we have to remove them
 
 Vue.use(GmapVue, {
   load: {
-    key: "AIzaSyCw9Tkht2CV1MAqNSBOQdqQLmhtvIYM0BI",
+    key: process.env.GOOGLE_MAP_API.replace(/"/g, ""),
     libraries: "places" // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
