@@ -34,14 +34,14 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      dataLogin: {}
+    }
+  },
   created() {
     // Init Kakao
     Kakao.init('7a1ac6a5d515aa253ff2ab9e9d56e21a')
-  },
-  data () {
-    return {
-      dataLogin: {},
-    }
   },
   chimera: {
     login() { return { url: `/login/`, data: this.dataLogin, method: 'post' } }
