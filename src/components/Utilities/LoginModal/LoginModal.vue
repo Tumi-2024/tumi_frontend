@@ -5,7 +5,7 @@
         <div class="heading-text">
           투자매물을 <br />쉽게 찾고 관리할 수 있어요!
         </div>
-        <q-btn flat class="bg-yellow q-mx-md notosanskr-medium" @click="loginKakao">
+        <q-btn flat class="bg-yellow q-mx-md notosanskr-medium" @click="login">
           <q-icon class="q-px-sm" size="32px">
             <img src="~assets/icons/kakao.svg" alt="" srcset="" />
           </q-icon>
@@ -34,55 +34,54 @@ export default {
       }
     }
   },
-  created() {
-    // Init Kakao
-    Kakao.init('7a1ac6a5d515aa253ff2ab9e9d56e21a')
-  },
   data () {
     return {
-      dataLogin: {},
+      dataLogin: {}
     }
   },
-  chimera: {
-    login() { return { url: `/login/`, data: this.dataLogin, method: 'post' } }
-  },
   methods: {
-    loginKakao () {
-      // Login Kakao
-      Kakao.Auth.login({
-        success: function(authObj) {
-          console.log(authObj, authObj)
-          // Update user
-          Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(response) {
-              console.log(response, response)
-              const dataLogin = {}
-
-              // Set user date
-              if (response) {
-                if (response.kakao_account) {
-                  const res = response.kakao_account
-                  dataLogin.email = res.email // sunus7@kakao.com
-                  dataLogin.birthday = res.birthday // 0426
-                  dataLogin.gender = res.gender // male
-                }
-                if (response.properties) {
-                  const res = response.properties
-                  dataLogin.nickname = res.nickname
-                  dataLogin.profile_image = res.profile_image
-                }
-                this.dataLogin = dataLogin
-                this.login.fetch()
-              }
-            }
-          });
-        },
-        fail: function(err) {
-          console.error(err)
-          alert('카카오 로그인 실패하였습니다. 카카오톡을 최신 버전으로 업데이트해주세요.')
+    async login () {
+      // Function Section
+      const login = async (dataUser) => {
+        const { data } = await this.$axios.post('/users/kakaologin/', this.$qs.stringify(dataUser))
+        this.$store.commit('setUser', data)
+        if (this.$store.getters.user && this.$store.getters.user.id) {
+          await this.$router.push({ name: 'home' })
         }
-      })
+      }
+
+      const meSuccess = (response) => {
+        const dataUser = {}
+
+        // Set user date
+        if (response) {
+          dataUser.id = response.id
+          if (response.kakao_account) {
+            const res = response.kakao_account
+            dataUser.email = res.email // sunus7@kakao.com
+            dataUser.birthday = res.birthday // 0426
+            dataUser.gender = res.gender // male
+          }
+          if (response.properties) {
+            const res = response.properties
+            dataUser.nickname = res.nickname
+            dataUser.profile_image = res.profile_image
+          }
+          login(dataUser)
+        }
+      }
+
+      const loginSuccess = async (authObj) => {
+        await Kakao.API.request({ url: '/v2/user/me', success: meSuccess })
+      }
+
+      const loginFail = (err) => {
+        console.error(err)
+        alert('카카오 로그인 실패하였습니다. 카카오톡을 최신 버전으로 업데이트해주세요.')
+      }
+
+      // Main Section
+      await Kakao.Auth.login({ success: loginSuccess, fail: loginFail }) // Login Kakao
     }
   },
   watch: {
