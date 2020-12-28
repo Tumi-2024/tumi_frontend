@@ -6,7 +6,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
-const env = require('quasar-dotenv').config()
+// const env = require('quasar-dotenv').config()
 
 module.exports = function (ctx) {
   return {
