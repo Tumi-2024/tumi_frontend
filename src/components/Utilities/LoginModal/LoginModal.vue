@@ -41,47 +41,16 @@ export default {
   },
   methods: {
     async login () {
-      // Function Section
-      const login = async (dataUser) => {
-        const { data } = await this.$axios.post('/users/kakaologin/', this.$qs.stringify(dataUser))
-        this.$store.commit('setUser', data)
-        if (this.$store.getters.user && this.$store.getters.user.id) {
-          await this.$router.push({ name: 'home' })
-        }
+      if (!(this.$store.getters.user && this.$store.getters.user.id)) {
+        // Get kakaoUser
+        const kakaoUser = await this.$kakaologin()
+
+        // Get user
+        const { data: user } = await this.$axios.post('/users/kakaologin/', this.$qs.stringify(kakaoUser))
+        if (!user) { return }
+        this.$store.commit('setUser', user)
+        loginModalMutation.closeModal()
       }
-
-      const meSuccess = (response) => {
-        const dataUser = {}
-
-        // Set user date
-        if (response) {
-          dataUser.id = response.id
-          if (response.kakao_account) {
-            const res = response.kakao_account
-            dataUser.email = res.email // sunus7@kakao.com
-            dataUser.birthday = res.birthday // 0426
-            dataUser.gender = res.gender // male
-          }
-          if (response.properties) {
-            const res = response.properties
-            dataUser.nickname = res.nickname
-            dataUser.profile_image = res.profile_image
-          }
-          login(dataUser)
-        }
-      }
-
-      const loginSuccess = async (authObj) => {
-        await Kakao.API.request({ url: '/v2/user/me', success: meSuccess })
-      }
-
-      const loginFail = (err) => {
-        console.error(err)
-        alert('카카오 로그인 실패하였습니다. 카카오톡을 최신 버전으로 업데이트해주세요.')
-      }
-
-      // Main Section
-      await Kakao.Auth.login({ success: loginSuccess, fail: loginFail }) // Login Kakao
     }
   },
   watch: {

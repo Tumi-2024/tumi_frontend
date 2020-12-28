@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export const userStore = {
   state: {
     data: {}
@@ -11,8 +13,16 @@ export const userStore = {
     setUser: function (state, payload) {
       state.data = payload
     },
-    reset: function (state, payload) {
+    patchUser: async function (state, payload) {
+      const { data: user } = await Vue.prototype.$axios.patch(
+        `/users/${this.getters.user.id}/`,
+        Vue.prototype.$qs.stringify(payload)
+      )
+      this.commit('setUser', user)
+    },
+    logout: function (state, payload) {
       state.data = {}
     }
-  }
+  },
+  actions: {}
 }
