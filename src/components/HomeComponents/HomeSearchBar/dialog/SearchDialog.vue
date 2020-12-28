@@ -16,11 +16,11 @@
       <q-card-section>
         <div class="row">
           <div class="col">
-            <q-input 
-              v-model="text" 
-              color="white" 
-              style="caret-color: #FF5A00;" 
-              class="search-bar-field" 
+            <q-input
+              v-model="text"
+              color="white"
+              style="caret-color: #FF5A00;"
+              class="search-bar-field"
               placeholder="지역명, 단지명,  지하철역, 주소 검색"
             >
               <template v-slot:after>
@@ -50,14 +50,15 @@ import RecentSearch from './RecentSearch';
 
 export default {
   props: {
-    dialog: {
-      default: false,
-      type: Boolean,
-    }
+    // dialog: {
+    //   default: false,
+    //   type: Boolean,
+    // }
   },
   data() {
     return {
-      text: null
+      dialog: true,
+      text: ''
     }
   },
   components: {
@@ -72,7 +73,7 @@ export default {
     width: 24px;
     height: 24px;
   }
-  
+
   .search-bar-field {
     border-bottom: 2px solid #000;
   }
