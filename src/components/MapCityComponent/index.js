@@ -1,3 +1,4 @@
 import BottomDrawer from "./BottomDrawer";
 import ToolbarFilter from "./ToolbarFilter";
-export { BottomDrawer, ToolbarFilter };
+import GoogleMap from './GoogleMap';
+export { BottomDrawer, ToolbarFilter, GoogleMap };
