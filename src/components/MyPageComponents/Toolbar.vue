@@ -3,7 +3,7 @@
     <q-btn flat padding="4px" ripple :to="{ path: '/' }">
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
-    <q-btn flat class="bg-primary text-white" @click="setModal">로그인</q-btn>
+    <q-btn flat class="bg-primary text-white" @click="setModal" v-if="!$store.getters.user.id">로그인</q-btn>
   </q-card-section>
 </template>
 

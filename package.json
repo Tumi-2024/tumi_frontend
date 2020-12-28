@@ -15,12 +15,15 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@sentry/browser": "^5.29.2",
+    "@sentry/tracing": "^5.29.2",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
     "gmap-vue": "^1.5.0",
     "quasar": "^1.0.0",
     "quasar-dotenv": "^1.0.5",
-    "vue-chimera": "^3.0.2"
+    "vue-chimera": "^3.0.2",
+    "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

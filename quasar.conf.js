@@ -8,7 +8,7 @@
 /* eslint-env node */
 const env = require('quasar-dotenv').config()
 
-module.exports = function (/* ctx */) {
+module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -20,9 +20,10 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
-
+      'gmap-vue',
       'axios',
-      'gmap-vue'
+      'sentry',
+      'kakao'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -47,7 +48,6 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      env: env, // environmental file
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -72,6 +72,12 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+      },
+      // Environment
+      env: {
+        // ...env,
+        API: ctx.dev ? 'http://127.0.0.1:9013/api' : 'https://admin.tumi.sunwook.com/api/',
+        KAKAO: '7a1ac6a5d515aa253ff2ab9e9d56e21a'
       }
     },
 
