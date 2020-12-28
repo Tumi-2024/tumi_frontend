@@ -11,5 +11,8 @@ export const loginModalMutation = {
     } else {
       loginModalStore.showModal = boolean;
     }
+  },
+  closeModal() {
+    loginModalStore.showModal = false;
   }
 };

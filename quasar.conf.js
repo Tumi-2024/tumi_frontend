@@ -7,7 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function (/* ctx */) {
+module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -19,8 +19,9 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
-
-      'axios'
+      'axios',
+      'sentry',
+      'kakao'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -70,6 +71,11 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+      },
+      // Environment
+      env: {
+        API: ctx.dev ? 'http://127.0.0.1:9013/api' : 'https://admin.tumi.sunwook.com/api/',
+        KAKAO: '7a1ac6a5d515aa253ff2ab9e9d56e21a'
       }
     },
 
