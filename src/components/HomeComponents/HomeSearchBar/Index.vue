@@ -1,12 +1,12 @@
 <template>
   <div class="row q-col-gutter-sm">
 		<div class="col-10">
-			<q-input borderless v-model="text" @click="onHandleFocus" @focus="onHandleFocus" class="search-field full-width" placeholder="지역명, 단지명,  지하철역, 주소 검색" />
+			<q-input borderless ref="searchInput" v-model="text" @click="onHandleFocus" @focus="onHandleFocus" class="search-field full-width" placeholder="지역명, 단지명,  지하철역, 주소 검색" />
 		</div>
 		<div class="col-2 flex items-center">
 			<q-btn icon="search" class="search-btn full-width" color="primary" />
 		</div>
-    <search-dialog :dialog="dialog" />
+    <search-dialog ref="dialog" />
 	</div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
   },
   methods: {
     onHandleFocus() {
-      this.dialog = !this.dialog;
+      this.$refs.dialog.showDialog();
+      this.$refs.searchInput.blur()
     }
   }
 }
