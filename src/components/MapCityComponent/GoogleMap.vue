@@ -2,35 +2,55 @@
   <div class="bg-red" ref="gmapContainer">
     <GmapMap
       ref="mapRef"
-      :center="{ lat: 1.38, lng: 103.8 }"
-      :zoom="12"
+      :center="{ lat: 37.5326, lng: 127.024612 }"
+      :zoom="9"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      v-if="mapReady"
     >
     </GmapMap>
   </div>
 </template>
 
 <script>
+import { gmapApi } from "gmap-vue";
+
 export default {
   data() {
     return {
+      map: null,
       mapReady: false,
-      mapSize: { height: "", width: "" }
+      mapSize: { height: "", width: "" },
+      marker: ""
     };
   },
-  mounted() {
-    this.getgmapContainerSize();
+  computed: {
+    google: gmapApi
   },
+
+  mounted() {
+    this.setGmapContainerSize();
+    // we access the map Object
+    this.$refs.mapRef.$mapPromise.then(map => {
+      this.map = map;
+      this.map.panTo({ lat: 37.1326, lng: 127.024612 });
+
+      this.marker = new this.google.maps.Marker({
+        position: { lat: 37.1326, lng: 127.024612 },
+        map: this.map,
+        title: "Hello World!"
+      });
+    });
+  },
+
   methods: {
-    getgmapContainerSize() {
+    setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
       this.mapReady = true;
     }
-  }
+  },
+  created() {}
 };
 </script>
 
