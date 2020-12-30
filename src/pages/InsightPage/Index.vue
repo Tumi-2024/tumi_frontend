@@ -15,12 +15,15 @@ import {
 export default {
   name: "Recently-Seen",
   components: {
-    "real-estate-post":RealEstatePost,
-    "real-estate-list-items":RealEstateListItems,
-    "real-estate-footer":RealEstateFooter,
+    "real-estate-post": RealEstatePost,
+    "real-estate-list-items": RealEstateListItems,
+    "real-estate-footer": RealEstateFooter,
   },
   data() {
     return {};
+  },
+  created() {
+    console.log('created')
   }
 };
 </script>
