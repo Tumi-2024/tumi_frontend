@@ -11,6 +11,7 @@
         :key="i"
         :label="tab.label"
         :to="tab.path"
+        @click="clickTab"
       />
     </q-tabs>
   </q-card-section>
@@ -23,6 +24,14 @@ export default {
       pageTab: "",
       routeTabs: []
     };
+  },
+  methods: {
+    clickTab () {
+      const path = this.$route.path.split("/")[1];
+      if (path === "insights") {
+        this.$store.commit('setInsights')
+      }
+    }
   },
   computed: {
     defaultTabs() {

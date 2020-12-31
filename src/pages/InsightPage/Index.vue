@@ -17,13 +17,18 @@ export default {
   components: {
     "real-estate-post": RealEstatePost,
     "real-estate-list-items": RealEstateListItems,
-    "real-estate-footer": RealEstateFooter,
+    "real-estate-footer": RealEstateFooter
   },
   data() {
     return {};
   },
-  created() {
-    console.log('created')
+  async created () {
+    let tab
+    if (this.$route.params && this.$route.params.tab) {
+      tab = this.$route.params.tab
+    }
+    const { data: { results: insights } } = await this.$axios.get('/insights?category=' + tab)
+    console.log(insights)
   }
 };
 </script>
