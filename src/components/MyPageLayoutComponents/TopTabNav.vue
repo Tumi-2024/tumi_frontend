@@ -27,10 +27,7 @@ export default {
   },
   methods: {
     clickTab () {
-      const path = this.$route.path.split("/")[1];
-      if (path === "insights") {
-        this.$store.commit('setInsights')
-      }
+      // const path = this.$route.path.split("/")[1];
     }
   },
   computed: {

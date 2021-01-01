@@ -1,30 +1,52 @@
-// Import Section
-import Vue from 'vue'
-
 // Main Section
-export const userStore = {
+import Vue from "vue";
+
+export const insightsStore = {
   state: {
-    data: {}
+    estateResponse: {},
+    estateResults: [],
+    policyResponse: {},
+    policyResults: [],
+    marketResponse: {},
+    marketResults: []
   },
   getters: {
-    user: (state, getters) => {
-      return state.data
+    estateInsights: (state, getters) => {
+      return state.estateResults
+    },
+    policyInsights: (state, getters) => {
+      return state.policyResults
+    },
+    marketInsights: (state, getters) => {
+      return state.marketResults
     }
   },
   mutations: {
-    setUser: function (state, payload) {
-      state.data = payload
+    setEstateResponse: function (state, payload) {
+      state.estateResponse = payload
+      state.estateResults = state.estateResults.concat(payload.results)
     },
-    patchUser: async function (state, payload) {
-      const { data: user } = await Vue.prototype.$axios.patch(
-        `/users/${this.getters.user.id}/`,
-        Vue.prototype.$qs.stringify(payload)
-      )
-      this.commit('setUser', user)
+    setPolicyResponse: function (state, payload) {
+      state.policyResponse = payload
+      state.policyResults = state.policyResults.concat(payload.results)
     },
-    logout: function (state, payload) {
-      state.data = {}
+    setMarketResponse: function (state, payload) {
+      state.marketResponse = payload
+      state.marketResults = state.marketResults.concat(payload.results)
     }
   },
-  actions: {}
+  actions: {
+    getEstate: async function (context) {
+      const { data } = await Vue.prototype.$axios.get('/insights?category=부동산팁')
+      context.commit('setEstateResponse', data)
+    },
+    getPolicy: async function (context) {
+      const { data } = await Vue.prototype.$axios.get('/insights?category=정책분석')
+      context.commit('setPolicyResponse', data)
+    },
+    getMarket: async function (context) {
+      const { data } = await Vue.prototype.$axios.get('/insights?category=시장전망')
+      context.commit('setMarketResponse', data)
+    }
+  }
 }

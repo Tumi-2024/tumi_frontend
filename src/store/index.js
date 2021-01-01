@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 // Modules
 import { userStore } from './modules/user'
+import { insightsStore } from './modules/insights'
 
 // Main Section
 Vue.use(Vuex)
@@ -21,7 +22,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      user: userStore
+      user: userStore,
+      insights: insightsStore
     },
 
     plugins: [createPersistedState()],
