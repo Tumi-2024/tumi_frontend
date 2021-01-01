@@ -10,10 +10,8 @@
       <div class="value">{{ date }}</div>
     </div>
 
-    <q-item-section class="area-description">
-      {{ description }}
-    </q-item-section>
-    
+    <q-item-section class="area-description" v-html="description"></q-item-section>
+
     <q-separator style="margin-top: 20px" />
   </q-item>
 </template>
@@ -67,6 +65,7 @@ export default {
   margin-top: 8px;
   letter-spacing: -0.98px;
   color: #707070;
+  white-space: pre-line;
 }
 
 </style>
