@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     image () {
-      return this.item.image || 'assets/icons/real_estate_background.svg'
+      return this.item.image
     }
   }
 }
