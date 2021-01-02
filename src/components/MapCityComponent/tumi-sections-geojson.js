@@ -142,3 +142,42 @@ export const tumiSections = {
     }
   ]
 };
+
+export const sampleMarkers = [
+  { position: { lat: 37.426, lng: 127.024612 } },
+  { position: { lat: 37.426, lng: 127.024642 } },
+  { position: { lat: 37.6326, lng: 127.024612 } },
+  { position: { lat: 37.6346, lng: 127.023612 } },
+  { position: { lat: 37.6926, lng: 127.024612 } },
+  { position: { lat: 37.6356, lng: 127.023112 } },
+  { position: { lat: 37.6926, lng: 127.024612 } },
+  { position: { lat: 37.676, lng: 127.124612 } },
+  { position: { lat: 37.61226, lng: 127.324612 } },
+  { position: { lat: 37.6326, lng: 127.224612 } },
+  { position: { lat: 37.5326, lng: 127.00131 } },
+  { position: { lat: 37.5396, lng: 127.021692 } },
+  { position: { lat: 37.531005, lng: 127.083247 } },
+  { position: { lat: 37.53688, lng: 127.091201 } },
+  { position: { lat: 37.536767, lng: 127.09545 } },
+  { position: { lat: 37.538195, lng: 127.086955 } },
+  { position: { lat: 37.5316, lng: 127.011672 } },
+  { position: { lat: 37.5336, lng: 127.09131 } },
+  { position: { lat: 37.5362044, lng: 127.084209 } },
+  { position: { lat: 37.5396, lng: 127.091692 } },
+  { position: { lat: 37.5337, lng: 127.088668 } },
+  { position: { lat: 37.5316, lng: 127.091672 } },
+  { position: { lat: 37.5316, lng: 127.094672 } },
+  { position: { lat: 37.488345069646314, lng: 126.9590766966852 } },
+  { position: { lat: 37.494746636240016, lng: 126.94603043203676 } },
+  { position: { lat: 37.48112562362195, lng: 126.95135193472231 } },
+  { position: { lat: 37.540091991553886, lng: 127.58983499084107 } },
+  { position: { lat: 37.44638609983939, lng: 127.60494119201294 } },
+  { position: { lat: 37.55641870814871, lng: 127.05963092089841 } },
+  { position: { lat: 37.56002487761615, lng: 127.06336455584714 } },
+  { position: { lat: 37.488753696672354, lng: 127.01225238085935 } },
+  { position: { lat: 37.54363057853547, lng: 127.03822600167217 } },
+  { position: { lat: 37.57614844355205, lng: 127.97380023242185 } },
+  { position: { lat: 37.573971625804774, lng: 127.00229602099607 } },
+  { position: { lat: 37.57551921371042, lng: 127.00744586230466 } },
+  { position: { lat: 37.57295972401574, lng: 127.0119734311218 } }
+];

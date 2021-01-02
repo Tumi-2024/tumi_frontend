@@ -9,19 +9,54 @@
     >
       <gmap-cluster
         :zoomOnClick="true"
-        :grid-size="gridSize"
         :styles="clusterStyles"
-        :maxZoom="12"
+        :maxZoom="15"
         :minimumClusterSize="1"
         @click="clusterClicked"
+        ref="clusterers"
       >
+        <gmap-info-window
+          v-for="(m, index) in markers"
+          :key="index"
+          :options="infoOptions"
+          :position="m.position"
+          :opened="showInfoWindow"
+          @closeclick="infoWinOpen = false"
+          class="q-pa-none"
+        >
+          <div class="row" style="width: 192px">
+            <q-img
+              src="~assets/icons/house_orange.svg"
+              spinner-color="white"
+              style="height: 20px; max-width: 20px"
+              class="q-mr-xs"
+            />
+
+            <div class="col">
+              <div class="info-heading notosanskr-medium">
+                3천만 보증금 / 60만 월세
+              </div>
+              <div class="row notosanskr-regular">
+                <div>단독다가구</div>
+                <q-badge
+                  color="white"
+                  text-color="primary"
+                  label="매매
+"
+                />
+              </div>
+            </div>
+          </div>
+        </gmap-info-window>
+
         <gmap-marker
           v-for="(m, index) in markers"
+          :key="'d' + index"
+          @click="center = m.position"
           :position="m.position"
           :clickable="true"
           :draggable="true"
-          @click="center = m.position"
-          :key="index"
+          :visible="!showInfoWindow"
         ></gmap-marker>
       </gmap-cluster>
     </GmapMap>
@@ -30,11 +65,12 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { tumiSections } from "./tumi-sections-geojson.js";
+import { tumiSections, sampleMarkers } from "./tumi-sections-geojson.js";
 export default {
   data() {
     return {
       map: null,
+      mapZoom: 12,
       mapOptions: {
         zoomControl: true,
         mapTypeControl: false,
@@ -48,38 +84,56 @@ export default {
       mapReady: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
-      markers: [
-        { position: { lat: 37.426, lng: 127.024612 } },
-        { position: { lat: 37.426, lng: 127.024642 } },
-        { position: { lat: 37.6326, lng: 127.024612 } },
-        { position: { lat: 37.6346, lng: 127.023612 } },
-        { position: { lat: 37.6926, lng: 127.024612 } },
-        { position: { lat: 37.6356, lng: 127.023112 } },
-        { position: { lat: 37.6926, lng: 127.024612 } },
-        { position: { lat: 37.676, lng: 127.124612 } },
-        { position: { lat: 37.61226, lng: 127.324612 } },
-        { position: { lat: 37.6326, lng: 127.224612 } },
-        { position: { lat: 37.5326, lng: 127.00131 } },
-        { position: { lat: 37.5396, lng: 127.021692 } },
-        { position: { lat: 37.5316, lng: 127.011672 } },
-        { position: { lat: 37.5326, lng: 127.09131 } },
-        { position: { lat: 37.5396, lng: 127.091692 } },
-        { position: { lat: 37.5316, lng: 127.091672 } },
-        { position: { lat: 37.5316, lng: 127.094672 } }
-      ],
+      markers: sampleMarkers,
+      /* INFO WINDOW */
+
+      infoOptions: {
+        // optional: offset infowindow so it visually sits nicely on top of our marker
+        pixelOffset: { width: 0, height: -35 },
+        // prevent map from moving when showing infoWindow
+        disableAutoPan: true
+      },
+      showInfoWindow: false,
       /* CLUSTERS */
-      gridSize: 144,
       clusterStyles: [
+        // 1+
+        {
+          textColor: "white",
+          fontWeight: 900,
+          textAlign: "center",
+          maxZoom: 15,
+          textSize: 16,
+          url: "icons/map-red-60x60.png",
+          height: 60,
+          width: 60,
+          anchorText: [20, 0],
+          gridSize: 60
+        },
+        // 10+
         {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
           maxZoom: 15,
           textSize: 20,
-          url: "icons/map-red-circle.png",
-          height: 144,
-          width: 144,
-          anchorText: [30, -30]
+          url: "icons/map-red-84x84.png",
+          height: 84,
+          width: 84,
+          anchorText: [30, 0],
+          gridSize: 84
+        },
+        // 100+
+        {
+          textColor: "white",
+          fontWeight: 900,
+          textAlign: "center",
+          maxZoom: 15,
+          textSize: 24,
+          url: "icons/map-red-96x96.png",
+          height: 96,
+          width: 96,
+          anchorText: [30, 0],
+          gridSize: 96
         }
       ]
     };
@@ -98,21 +152,31 @@ export default {
       // apply options to map
       this.map.setOptions({
         zoomControlOptions: {
-          position: this.google.maps.ControlPosition.RIGHT_CENTER
+          position: this.google.maps.ControlPosition.RIGHT_TOP
         }
       });
       // apply click event on map
       this.map.addListener("click", e => {
         /**
          *  access click event
+         *
          */
+        console.log(e.latLng.lat(), e.latLng.lng());
       });
+      // apply zoom change listeners
+      this.map.addListener("zoom_changed", () => {
+        setTimeout(() => {
+          this.showInfoWindow = this.map.getZoom() > 15;
+        }, 1000);
+      });
+      this.markers.push(
+        new this.google.maps.Marker({
+          position: { lat: 37.5326, lng: 127.024612 },
+          map: this.map,
+          title: "Hello World!"
+        })
+      );
 
-      const marker = new this.google.maps.Marker({
-        position: { lat: 37.5326, lng: 127.024612 },
-        map: this.map,
-        title: "Hello World!"
-      });
       /**
        *  we use loadGeoJson() for url
        *  this.map.data.loadGeoJson("https:// url here /");
@@ -124,7 +188,7 @@ export default {
       this.map.data.addGeoJson(tumiSections);
       // apply styles on geojson layers
       this.map.data.setStyle(function(feature) {
-        const color = feature.getProperty("numbers") > 1 ? "cyan" : "green";
+        const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "green";
         return { fillColor: color, strokeColor: color, strokeWeight: 1 };
       });
     });
@@ -138,19 +202,12 @@ export default {
       this.mapSize.width = w + "px";
       this.mapReady = true;
     },
-    clusterClicked(e) {
+    clusterClicked() {
       setTimeout(() => {
         this.map.setZoom(16);
-        this.$nextTick(() => {
-          const center = this.map.getCenter();
-          const lat = center.lat();
-          const lng = center.lng();
-          console.log(lat, lng, this.map.getZoom());
-        });
       }, 500);
     }
-  },
-  created() {}
+  }
 };
 </script>
 
