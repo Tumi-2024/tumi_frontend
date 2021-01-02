@@ -21,6 +21,7 @@ export const userStore = {
         Vue.prototype.$qs.stringify(payload)
       )
       this.commit('setUser', user)
+      Vue.prototype.$axios.defaults.headers.common.Authorization = `token ${user.token}`
     },
     logout: function (state, payload) {
       state.data = {}
