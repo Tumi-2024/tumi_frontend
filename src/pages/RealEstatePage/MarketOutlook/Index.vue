@@ -10,7 +10,7 @@
 import {
   RealEstatePost,
   RealEstateListItems,
-  RealEstateFooter,
+  RealEstateFooter
 } from "src/components/RealEstateComponents/MarketOutlook";
 export default {
   name: "Recently-Seen",
