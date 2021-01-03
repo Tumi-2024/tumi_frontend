@@ -7,6 +7,17 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="mapOptions"
     >
+      <gmap-info-window
+        v-for="(m, index) in markers"
+        :key="index"
+        :options="infoOptions"
+        :position="m.position"
+        :opened="showInfoWindow"
+        @closeclick="infoWinOpen = false"
+      >
+        <info-window-content />
+      </gmap-info-window>
+
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
@@ -15,18 +26,6 @@
         @click="clusterClicked"
         ref="clusterers"
       >
-        <gmap-info-window
-          v-for="(m, index) in markers"
-          :key="index"
-          :options="infoOptions"
-          :position="m.position"
-          :opened="showInfoWindow"
-          @closeclick="infoWinOpen = false"
-          class="q-pa-none"
-        >
-          <info-window-content />
-        </gmap-info-window>
-
         <gmap-marker
           v-for="(m, index) in markers"
           :key="'d' + index"
@@ -35,7 +34,7 @@
           :clickable="true"
           :draggable="true"
           :visible="!showInfoWindow"
-        ></gmap-marker>
+        />
       </gmap-cluster>
     </GmapMap>
   </div>
@@ -44,10 +43,10 @@
 <script>
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./tumi-sections-geojson.js";
-import InfoWindowContent from './InfoWindowContent';
+import InfoWindowContent from "./InfoWindowContent";
 export default {
-  components:{
-    'info-window-content': InfoWindowContent
+  components: {
+    "info-window-content": InfoWindowContent
   },
   data() {
     return {
