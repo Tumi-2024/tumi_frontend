@@ -42,7 +42,7 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { tumiSections, sampleMarkers } from "./tumi-sections-geojson.js";
+import { tumiSections, sampleMarkers } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 export default {
   components: {
