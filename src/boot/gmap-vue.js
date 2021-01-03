@@ -27,3 +27,6 @@ Vue.use(GmapVue, {
   // // If you want to automatically install all the components this property must be set to 'true':
   installComponents: true
 });
+import GmapCluster from "gmap-vue/dist/components/cluster"; // replace dist with src if you have Babel issues
+
+Vue.component("GmapCluster", GmapCluster);

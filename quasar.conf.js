@@ -80,7 +80,7 @@ module.exports = function (ctx) {
         API_URL: 'localhost',
         API_CLIENT_ID: 0,
         API_CLIENT_SECRET: 0,
-        GOOGLE_MAP_API: 'AIzxxxxxxxxxxxxxxxxx'
+        GOOGLE_MAP_API: 'AIzaSyBlMj7A1FSP8rR0SEJvk1SA5zw_XdW1VAQ'
       }
     },
 
