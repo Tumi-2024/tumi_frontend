@@ -9,8 +9,9 @@
       <q-route-tab
         v-for="(tab, i) in routeTabs"
         :key="i"
-        :to="{ name: tab.pathName }"
         :label="tab.label"
+        :to="tab.path"
+        @click="clickTab"
       />
     </q-tabs>
   </q-card-section>
@@ -24,29 +25,34 @@ export default {
       routeTabs: []
     };
   },
+  methods: {
+    clickTab () {
+      // const path = this.$route.path.split("/")[1];
+    }
+  },
   computed: {
     defaultTabs() {
       return [
-        { label: "관심지역", pathName: "area" },
-        { label: "관심매물", pathName: "property_interest" },
-        { label: "연락한 매물", pathName: "property_contacted" }
+        { label: "관심지역", path: "/area" },
+        { label: "관심매물", path: "/property-interest" },
+        { label: "연락한 매물", path: "/property-contacted" }
       ];
     },
-    realEstateTabs() {
+    insightsTabs() {
       return [
-        { label: "부동산 팁", pathName: "real_estate_tips" },
-        { label: "정책분석", pathName: "real_estate_policy_analysis" },
-        { label: "시장전망", pathName: "real_estate_market_outlook" }
+        { label: "부동산 팁", path: '/insights/부동산팁' },
+        { label: "정책분석", path: '/insights/정책분석' },
+        { label: "시장전망", path: '/insights/시장전망' }
       ];
     }
   },
   mounted() {
     const path = this.$route.path.split("/")[1]; // my-page or real-estate
-    if (path === "real-estate") {
+    if (path === "insights") {
       /**
        *  if path is real-estate; we give real-estate route-tabs
        */
-      this.routeTabs = this.realEstateTabs;
+      this.routeTabs = this.insightsTabs;
     } else {
       this.routeTabs = this.defaultTabs;
     }

@@ -14,13 +14,13 @@
                 </div>
 
                 <div class="row area-description">
-                  {{item.title}}
+                    코로나 바이러스 세계적인 확산에 주식폭락, 부동산 폭락도 시간문제?!
                 </div>
 
                 <div class="row area-background">
                     <q-img
                         class="img-background"
-                        :src="image"
+                        src="~assets/icons/real_estate_background.svg"
                         native-context-menu
                         alt="Logo"
                         basic
@@ -34,23 +34,13 @@
 </template>
 
 <script>
-export default {
-  name: "RealEstatePost",
-  props: {
-    item: Object
-  },
-  computed: {
-    image () {
-      return this.item.image
-    }
-  }
-}
+    export default { };
 </script>
 
 <style lang="scss" scoped>
     .q-mt-sm {
         background: #E8E8E8;
-        margin-top: -8px;
+        margin-top: -8px; 
         border-radius: 0;
         padding-top: 24px;
         padding-bottom: 24px;
@@ -111,7 +101,7 @@ export default {
         margin-left: 16px;
         margin-right: 16px;
         padding-bottom: 16px;
-
+            
     }
 
     .area-background {
@@ -123,9 +113,8 @@ export default {
         margin-right: 16px;
         padding-bottom: 16px;
             .img-background {
-                background: #3a3a3a;
-                height: 156px;
-                max-width: 100%;
+                height: 156px; 
+                max-width: 100%; 
                 border-radius: 7px;
             }
     }
