@@ -1,19 +1,7 @@
 <template>
   <q-card flat style="padding-top: 10px">
     <q-card-section class="row justify-between no-wrap q-pa-none q-px-sm">
-      <q-btn
-        unelevated
-        outline
-        color="primary"
-        padding="8px"
-        style="border-radius: 8px; height: 36px;"
-        class="q-mr-sm"
-      >
-        <q-icon size="20px">
-          <img src="~assets/icons/Filter.svg" />
-        </q-icon>
-      </q-btn>
-
+      <property-search-filter />
       <div class="scrolling-wrapper-flexbox notosanskr-medium row sc">
         <q-btn
           v-for="(filter, i) of filters"
@@ -30,7 +18,11 @@
 </template>
 
 <script>
+import PropertySearchFilter from "components/Utilities/PropertySearchFilter/PropertySearchFilter";
 export default {
+  components: {
+    "property-search-filter": PropertySearchFilter
+  },
   data() {
     return {
       filters: ["거래유형", "매물유형", "매매/분양가", "전용면적"]
