@@ -24,29 +24,7 @@
           @closeclick="infoWinOpen = false"
           class="q-pa-none"
         >
-          <div class="row" style="width: 192px">
-            <q-img
-              src="~assets/icons/house_orange.svg"
-              spinner-color="white"
-              style="height: 20px; max-width: 20px"
-              class="q-mr-xs"
-            />
-
-            <div class="col">
-              <div class="info-heading notosanskr-medium">
-                3천만 보증금 / 60만 월세
-              </div>
-              <div class="row notosanskr-regular">
-                <div>단독다가구</div>
-                <q-badge
-                  color="white"
-                  text-color="primary"
-                  label="매매
-"
-                />
-              </div>
-            </div>
-          </div>
+          <info-window-content />
         </gmap-info-window>
 
         <gmap-marker
@@ -66,7 +44,11 @@
 <script>
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./tumi-sections-geojson.js";
+import InfoWindowContent from './InfoWindowContent';
 export default {
+  components:{
+    'info-window-content': InfoWindowContent
+  },
   data() {
     return {
       map: null,
