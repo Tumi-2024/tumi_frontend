@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      selected: "",
+      selected: "전체",
       transactions: ["전체", "매매", "전세", "월세"]
     };
   }
