@@ -1,43 +1,42 @@
 <template>
   <div class="row">
     <div class="col-6 btn-alignment  flex justify-center items-center">
-      <q-btn flat class="btn-dash-board full-width bg-primary" >
+      <q-btn flat class="btn-dash-board full-width" style="background-color: #FF7D36">
         <p class="btn-title1">추천</p>
-        <p class="btn-title2">이번주 <br /> 추천급매</p>
+        <p class="btn-title2">이번주 <br> 추천급매</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/2.svg" />
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center">
       <q-btn flat :to="{ path:'/map/' }" class="btn-dash-board full-width" style="background-color: #4B62DE" >
-        <p class="btn-title1">추천</p>
-        <p class="btn-title2">이번주 <br /> 추천급매</p>
+        <p class="btn-title1">지도</p>
+        <p class="btn-title2">지도에서 쉽게 <br> 매물찾기</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center" style="padding-bottom: 24px">
-      <q-btn flat class="btn-dash-board full-width" style="background-color: #00B0E8">
-        <p class="btn-title1">추천</p>
-        <p class="btn-title2">이번주 <br /> 추천급매</p>
+      <q-btn flat class="btn-dash-board full-width" style="background-color: #3ECCB2">
+        <p class="btn-title1">재개발 구역</p>
+        <p class="btn-title2">투미에서 <br> 재개발 구역 찾기</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/3.svg" />
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center" style="padding-bottom: 24px">
-      <q-btn flat :to="{ name: 'my_page' }" class="btn-dash-board full-width" style="background-color: #00CE84">
-        <p class="btn-title1">추천</p>
-        <p class="btn-title2">이번주 <br /> 추천급매</p>
+      <q-btn flat :to="{ name: 'my_page' }" class="btn-dash-board full-width" style="background-color: #5893F7">
+        <p class="btn-title1">부동산<br/>인사이트</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/4.svg" />
       </q-btn>
     </div>
-	</div>
+ </div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			text: null,
-		}
-	},
+  data () {
+    return {
+      text: null
+    }
+  }
 }
 </script>
 
@@ -56,6 +55,7 @@ export default {
   margin-top: 16px;
   margin-left: 16px;
   font-size: 21px;
+  text-align: left;
   font-family: 'notosanskr-medium';
 }
 
