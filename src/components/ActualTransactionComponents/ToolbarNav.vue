@@ -49,13 +49,17 @@ export default {};
   color: #1a1a1a;
 }
 
+.back-btn {
+  width: 24px;
+}
+
 .back-btn-border ::after{
   content: '';
   position: absolute;
   width: 1px;
   height: 12px;
   right: -8px;
-  margin: 1px auto;
+  margin: 100px auto;
   background: #DBDBDB;
 }
 </style>
