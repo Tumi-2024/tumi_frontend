@@ -6,7 +6,7 @@
       color="primary"
       padding="8px"
       style="border-radius: 8px; height: 36px;"
-      class="q-mr-sm"
+      class="q-mx-xs"
       @click="modal = true"
     >
       <q-icon size="20px">
