@@ -15,20 +15,26 @@
     </q-btn>
     <!-- Dialog Section -->
     <q-dialog v-model="modal" position="bottom">
-      <q-card class=" notosanskr-regular">
+      <q-card class="notosanskr-regular">
         <q-card-section
-          class="head-section notosanskr-medium row justify-between items-center"
+          class="head-section bg-white notosanskr-medium row justify-between items-center"
         >
           <div>검색 필터</div>
           <q-icon name="close" size="24px" @click="modal = false" />
         </q-card-section>
+        <!-- Transactio type | 거래유형 -->
+        <transaction-type></transaction-type>
       </q-card>
     </q-dialog>
   </div>
 </template>
 
 <script>
+import TransactionType from "./TransactionType";
 export default {
+  components: {
+    "transaction-type": TransactionType
+  },
   data() {
     return {
       modal: false
@@ -45,6 +51,7 @@ export default {
   border-radius: 16px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  background: #f0f0f0;
 }
 .head-section {
   font-weight: 500;
