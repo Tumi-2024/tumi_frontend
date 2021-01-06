@@ -22,11 +22,19 @@
         </div>
       </q-btn>
     </div>
+
+    <property-detailed-type
+      :selectedCategory="selected"
+    ></property-detailed-type>
   </q-card-section>
 </template>
 
 <script>
+import PropertyDetailedType from "./PropertyDetailedType";
 export default {
+  components: {
+    "property-detailed-type": PropertyDetailedType
+  },
   data() {
     return {
       selected: "아파트",
