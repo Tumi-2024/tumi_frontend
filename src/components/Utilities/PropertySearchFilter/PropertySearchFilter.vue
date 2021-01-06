@@ -20,7 +20,14 @@
           class="head-section bg-white notosanskr-medium row justify-between items-center"
         >
           <div>검색 필터</div>
-          <q-icon name="close" size="24px" @click="modal = false" />
+          <q-btn flat padding="0px"
+            ><q-icon
+              name="close"
+              class="cursor-pointer"
+              size="24px"
+              @click="modal = false"
+            />
+          </q-btn>
         </q-card-section>
         <!-- Transactio type | 거래유형 -->
         <transaction-type></transaction-type>
