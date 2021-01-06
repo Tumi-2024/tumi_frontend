@@ -7,6 +7,17 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="mapOptions"
     >
+      <gmap-info-window
+        v-for="(m, index) in markers"
+        :key="index"
+        :options="infoOptions"
+        :position="m.position"
+        :opened="showInfoWindow"
+        @closeclick="infoWinOpen = false"
+      >
+        <info-window-content />
+      </gmap-info-window>
+
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
@@ -15,40 +26,6 @@
         @click="clusterClicked"
         ref="clusterers"
       >
-        <gmap-info-window
-          v-for="(m, index) in markers"
-          :key="index"
-          :options="infoOptions"
-          :position="m.position"
-          :opened="showInfoWindow"
-          @closeclick="infoWinOpen = false"
-          class="q-pa-none"
-        >
-          <div class="row" style="width: 192px">
-            <q-img
-              src="~assets/icons/house_orange.svg"
-              spinner-color="white"
-              style="height: 20px; max-width: 20px"
-              class="q-mr-xs"
-            />
-
-            <div class="col">
-              <div class="info-heading notosanskr-medium">
-                3천만 보증금 / 60만 월세
-              </div>
-              <div class="row notosanskr-regular">
-                <div>단독다가구</div>
-                <q-badge
-                  color="white"
-                  text-color="primary"
-                  label="매매
-"
-                />
-              </div>
-            </div>
-          </div>
-        </gmap-info-window>
-
         <gmap-marker
           v-for="(m, index) in markers"
           :key="'d' + index"
@@ -57,7 +34,7 @@
           :clickable="true"
           :draggable="true"
           :visible="!showInfoWindow"
-        ></gmap-marker>
+        />
       </gmap-cluster>
     </GmapMap>
   </div>
@@ -65,8 +42,12 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { tumiSections, sampleMarkers } from "./tumi-sections-geojson.js";
+import { tumiSections, sampleMarkers } from "./map-sample-data.js";
+import InfoWindowContent from "./InfoWindowContent";
 export default {
+  components: {
+    "info-window-content": InfoWindowContent
+  },
   data() {
     return {
       map: null,
@@ -211,4 +192,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+// hide the close "x" icon on info window
+div /deep/ .gm-ui-hover-effect {
+  display: none !important;
+}
+</style>
