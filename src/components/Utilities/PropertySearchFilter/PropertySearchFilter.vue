@@ -37,6 +37,8 @@
         <property-sale-price></property-sale-price>
         <!--  Charter price deposit | 전세가 / 보증금 -->
         <charter-price-deposit></charter-price-deposit>
+        <!-- Property Monthly | 매월 부동산 -->
+        <property-monthly></property-monthly>
       </q-card>
     </q-dialog>
   </div>
@@ -47,12 +49,14 @@ import TransactionType from "./TransactionType";
 import PropertyType from "./PropertyType";
 import PropertySalePrice from "./PropertySalePrice";
 import CharterPriceDeposit from "./CharterPriceDeposit";
+import PropertyMonthly from "./PropertyMonthly";
 export default {
   components: {
     "transaction-type": TransactionType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
-    "charter-price-deposit": CharterPriceDeposit
+    "charter-price-deposit": CharterPriceDeposit,
+    "property-monthly": PropertyMonthly
   },
   data() {
     return {
