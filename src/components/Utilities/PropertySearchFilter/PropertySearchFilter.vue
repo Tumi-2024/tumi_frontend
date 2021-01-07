@@ -33,8 +33,10 @@
         <transaction-type></transaction-type>
         <!-- Property Type | 매물유형 -->
         <property-type class="q-mt-md"></property-type>
-        <!--  -->
+        <!-- property sale | 부동산 매매  -->
         <property-sale-price></property-sale-price>
+        <!--  Charter price deposit | 전세가 / 보증금 -->
+        <charter-price-deposit></charter-price-deposit>
       </q-card>
     </q-dialog>
   </div>
@@ -44,11 +46,13 @@
 import TransactionType from "./TransactionType";
 import PropertyType from "./PropertyType";
 import PropertySalePrice from "./PropertySalePrice";
+import CharterPriceDeposit from "./CharterPriceDeposit";
 export default {
   components: {
     "transaction-type": TransactionType,
     "property-type": PropertyType,
-    "property-sale-price": PropertySalePrice
+    "property-sale-price": PropertySalePrice,
+    "charter-price-deposit": CharterPriceDeposit
   },
   data() {
     return {
