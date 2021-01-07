@@ -20,12 +20,25 @@
           class="head-section bg-white notosanskr-medium row justify-between items-center"
         >
           <div>검색 필터</div>
-          <q-icon name="close" size="24px" @click="modal = false" />
+          <q-btn flat padding="0px"
+            ><q-icon
+              name="close"
+              class="cursor-pointer"
+              size="24px"
+              @click="modal = false"
+            />
+          </q-btn>
         </q-card-section>
         <!-- Transactio type | 거래유형 -->
         <transaction-type></transaction-type>
         <!-- Property Type | 매물유형 -->
         <property-type class="q-mt-md"></property-type>
+        <!-- property sale | 부동산 매매  -->
+        <property-sale-price></property-sale-price>
+        <!--  Charter price deposit | 전세가 / 보증금 -->
+        <charter-price-deposit></charter-price-deposit>
+        <!-- Property Monthly | 매월 부동산 -->
+        <property-monthly></property-monthly>
       </q-card>
     </q-dialog>
   </div>
@@ -34,10 +47,16 @@
 <script>
 import TransactionType from "./TransactionType";
 import PropertyType from "./PropertyType";
+import PropertySalePrice from "./PropertySalePrice";
+import CharterPriceDeposit from "./CharterPriceDeposit";
+import PropertyMonthly from "./PropertyMonthly";
 export default {
   components: {
     "transaction-type": TransactionType,
-    "property-type": PropertyType
+    "property-type": PropertyType,
+    "property-sale-price": PropertySalePrice,
+    "charter-price-deposit": CharterPriceDeposit,
+    "property-monthly": PropertyMonthly
   },
   data() {
     return {
