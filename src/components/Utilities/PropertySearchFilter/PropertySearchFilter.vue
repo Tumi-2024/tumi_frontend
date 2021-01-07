@@ -33,6 +33,8 @@
         <transaction-type></transaction-type>
         <!-- Property Type | 매물유형 -->
         <property-type class="q-mt-md"></property-type>
+        <!--  -->
+        <property-sale-price></property-sale-price>
       </q-card>
     </q-dialog>
   </div>
@@ -41,10 +43,12 @@
 <script>
 import TransactionType from "./TransactionType";
 import PropertyType from "./PropertyType";
+import PropertySalePrice from "./PropertySalePrice";
 export default {
   components: {
     "transaction-type": TransactionType,
-    "property-type": PropertyType
+    "property-type": PropertyType,
+    "property-sale-price": PropertySalePrice
   },
   data() {
     return {
