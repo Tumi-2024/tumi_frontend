@@ -1,6 +1,9 @@
 <template>
   <q-card-section class="bg-white q-pb-xl">
-    <div class="title notosanskr-medium">거래유형</div>
+    <text-under-highlight
+      text="거래유형"
+      class="q-mt-lg"
+    ></text-under-highlight>
     <!-- selection of choices | 선택의 선택 -->
     <div class="selection row q-mt-lg">
       <q-btn
@@ -17,7 +20,11 @@
 </template>
 
 <script>
+import TextUnderHighlight from "../TextUnderHighlight";
 export default {
+  components: {
+    "text-under-highlight": TextUnderHighlight
+  },
   data() {
     return {
       selected: "전체",
@@ -28,14 +35,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  margin-top: 24px;
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 28px; /* identical to box height, or 165% */
-  letter-spacing: -1.275px; /* Font/50 */
-  color: #1a1a1a;
-}
 .selection {
   font-size: 15px;
   line-height: 24px; /* identical to box height, or 160% */

@@ -1,7 +1,7 @@
 <template>
   <q-card-section class="q-mt-md q-pt-lg bg-white">
-    <div class="title q-pa-none q-pt-sm notosanskr-medium">
-      월세
+    <div class="q-pa-none q-pt-sm notosanskr-medium">
+      <text-under-highlight text="월세" class="q-mt-lg"></text-under-highlight>
       <q-btn
         flat
         class="float-right q-ma-none q-pa-none"
@@ -62,7 +62,11 @@
 </template>
 
 <script>
+import TextUnderHighlight from "../TextUnderHighlight";
 export default {
+  components: {
+    "text-under-highlight": TextUnderHighlight
+  },
   data() {
     return {
       selected: "전체",
@@ -92,16 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -1.2px; /* Font/40 */
-  color: #3a3a3a;
-  span {
-    color: #a0a0a0;
-  }
-}
 .selection {
   font-size: 15px;
   line-height: 24px;

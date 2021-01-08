@@ -39,6 +39,23 @@
         <charter-price-deposit></charter-price-deposit>
         <!-- Property Monthly | 매월 부동산 -->
         <property-monthly></property-monthly>
+        <!-- Exclusive Area | 전용면적 -->
+        <exclusive-area></exclusive-area>
+        <!-- Premium price | 프리미엄가, 감정가 -->
+        <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
+          <q-btn
+            flat
+            color="white"
+            align="between"
+            class="full-width"
+            text-color="black"
+            padding="16px"
+          >
+            프리미엄가, 감정가
+            <q-icon name="keyboard_arrow_down" size="24px" />
+          </q-btn>
+        </q-card-section>
+        <q-card-section class="empty-bottom-space"></q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -50,13 +67,15 @@ import PropertyType from "./PropertyType";
 import PropertySalePrice from "./PropertySalePrice";
 import CharterPriceDeposit from "./CharterPriceDeposit";
 import PropertyMonthly from "./PropertyMonthly";
+import ExclusiveArea from "./ExclusiveArea";
 export default {
   components: {
     "transaction-type": TransactionType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit,
-    "property-monthly": PropertyMonthly
+    "property-monthly": PropertyMonthly,
+    "exclusive-area": ExclusiveArea
   },
   data() {
     return {
@@ -75,6 +94,9 @@ export default {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background: #f0f0f0;
+  .empty-bottom-space {
+    height: 200px;
+  }
 }
 .head-section {
   font-weight: 500;
