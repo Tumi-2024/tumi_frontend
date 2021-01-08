@@ -1,7 +1,9 @@
 <template>
-  <div class="row" style="height: 24px">
-    <div class="text col-12 notosanskr-medium">{{ text }}</div>
-    <span class="highlighter full-width q-py-xs"></span>
+  <div class="row">
+    <div class="row" style="height: 24px">
+      <div class="text col-12 notosanskr-medium">{{ text }}</div>
+      <span class="highlighter full-width q-py-xs"></span>
+    </div>
   </div>
 </template>
 
