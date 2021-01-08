@@ -39,6 +39,8 @@
         <charter-price-deposit></charter-price-deposit>
         <!-- Property Monthly | 매월 부동산 -->
         <property-monthly></property-monthly>
+        <!-- Exclusive Area | 전용면적 -->
+        <exclusive-area></exclusive-area>
       </q-card>
     </q-dialog>
   </div>
@@ -50,13 +52,15 @@ import PropertyType from "./PropertyType";
 import PropertySalePrice from "./PropertySalePrice";
 import CharterPriceDeposit from "./CharterPriceDeposit";
 import PropertyMonthly from "./PropertyMonthly";
+import ExclusiveArea from "./ExclusiveArea";
 export default {
   components: {
     "transaction-type": TransactionType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit,
-    "property-monthly": PropertyMonthly
+    "property-monthly": PropertyMonthly,
+    "exclusive-area": ExclusiveArea
   },
   data() {
     return {
