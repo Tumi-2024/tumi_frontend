@@ -1,7 +1,10 @@
 <template>
   <q-card-section class="q-mt-md q-pt-lg bg-white">
     <div class="title q-pa-none q-pt-sm notosanskr-medium">
-      전용면적 <span class="notosanskr-regular">(평)</span>
+      <div class="title row q-mt-lg">
+        <text-under-highlight text="전용면적"></text-under-highlight>
+        <span class="notosanskr-regular q-ml-xs">(평)</span>
+      </div>
       <q-btn
         flat
         class="float-right q-ma-none q-pa-none"
@@ -27,7 +30,11 @@
 </template>
 
 <script>
+import TextUnderHighlight from "../TextUnderHighlight";
 export default {
+  components: {
+    "text-under-highlight": TextUnderHighlight
+  },
   data() {
     return {
       selected: "",
@@ -48,11 +55,6 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -1.2px; /* Font/40 */
-  color: #3a3a3a;
   span {
     color: #a0a0a0;
   }
