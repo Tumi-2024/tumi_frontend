@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="width: 192px">
+  <div class="row" style="width: 192px; overflow-y: hidden">
     <q-img
       src="~assets/icons/house_orange.svg"
       spinner-color="white"
@@ -11,7 +11,7 @@
       <div class="info-heading notosanskr-medium">
         3천만 보증금 / 60만 월세
       </div>
-      <div class="row bottom-toolbar notosanskr-regular">
+      <div class="row bottom-toolbar notosanskr-regular" :class="{ 'q-pb-sm' : $q.platform.is.mobile }">
         <div class="info-text">단독다가구</div>
         <q-badge color="white" text-color="primary" label="매매" />
         <q-badge class="re-develop bg-white q-mr-sm">
