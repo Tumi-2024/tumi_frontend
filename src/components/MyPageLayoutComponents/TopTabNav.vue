@@ -33,9 +33,9 @@ export default {
   computed: {
     defaultTabs() {
       return [
-        { label: "관심지역", path: "/area" },
-        { label: "관심매물", path: "/property-interest" },
-        { label: "연락한 매물", path: "/property-contacted" }
+        { label: "관심지역", path: "/my-page/area" },
+        { label: "관심매물", path: "/my-page/property-interest" },
+        { label: "연락한 매물", path: "/my-page/property-contacted" }
       ];
     },
     insightsTabs() {
