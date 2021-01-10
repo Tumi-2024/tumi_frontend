@@ -1,8 +1,9 @@
 <template>
-  <div class="q-mt-sm" style="max-width: 1000px;">
+  <div>
+    <toolbar-nav class="bg-white" style="margin-bottom: 12px"></toolbar-nav>
     <recently-seen-menu-items></recently-seen-menu-items>
-    <recently-seen-btns></recently-seen-btns>
-    <recently-seen-list-items></recently-seen-list-items>
+    <recently-seen-btns class="bg-white"></recently-seen-btns>
+    <recently-seen-list-items class="bg-white"></recently-seen-list-items>
   </div>
 </template>
 
@@ -11,13 +12,15 @@ import {
   RecentlySeenMenuItems,
   RecentlySeenBtns,
   RecentlySeenListItems,
+  ToolbarNav
 } from "src/components/RecentlySeenComponents";
 export default {
   name: "Recently-Seen",
   components: {
     "recently-seen-menu-items": RecentlySeenMenuItems,
     "recently-seen-btns": RecentlySeenBtns,
-    "recently-seen-list-items":RecentlySeenListItems,
+    "recently-seen-list-items": RecentlySeenListItems,
+    "toolbar-nav": ToolbarNav
   },
   data() {
     return {};
@@ -26,17 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sort-section {
-  .q-btn {
-    font-size: 14px;
-    line-height: 44px;
-    text-align: center;
-    letter-spacing: -1.05px;
-    color: #707070;
-  }
-  .q-separator {
-    // margin-top: 20px;
-    height: 14px;
-  }
+div {
+  background: #e8e8e8;
 }
 </style>
