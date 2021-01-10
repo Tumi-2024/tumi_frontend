@@ -34,7 +34,8 @@
 
 <script>
 import PropertyDetailedType from "./PropertyDetailedType";
-import TextUnderHighlight from "../TextUnderHighlight";
+import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
+
 export default {
   components: {
     "property-detailed-type": PropertyDetailedType,

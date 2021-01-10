@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import TextUnderHighlight from "../TextUnderHighlight";
+import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
+
 export default {
   components: {
     "text-under-highlight": TextUnderHighlight

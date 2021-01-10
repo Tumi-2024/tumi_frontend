@@ -62,12 +62,14 @@
 </template>
 
 <script>
-import TransactionType from "./TransactionType";
-import PropertyType from "./PropertyType";
-import PropertySalePrice from "./PropertySalePrice";
-import CharterPriceDeposit from "./CharterPriceDeposit";
-import PropertyMonthly from "./PropertyMonthly";
-import ExclusiveArea from "./ExclusiveArea";
+import {
+  TransactionType,
+  PropertyType,
+  PropertySalePrice,
+  CharterPriceDeposit,
+  PropertyMonthly,
+  ExclusiveArea
+} from "components/Utilities/PropertySearchFilter/Selections";
 export default {
   components: {
     "transaction-type": TransactionType,
