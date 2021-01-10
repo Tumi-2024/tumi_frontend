@@ -1,7 +1,9 @@
 <template>
-  <q-card-section class="q-mt-md q-pt-lg bg-white">
-    <div class="title q-pa-none q-pt-sm notosanskr-medium">
-      <div class="title row q-mt-lg">
+  <q-card-section class="q-mt-md q-pt-xl bg-white">
+    <div
+      class="title q-pa-none row justify-between items-center notosanskr-medium"
+    >
+      <div class="title row">
         <text-under-highlight text="전용면적"></text-under-highlight>
         <span class="notosanskr-regular q-ml-xs">(평)</span>
       </div>
