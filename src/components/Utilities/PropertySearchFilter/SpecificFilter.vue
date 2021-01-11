@@ -3,7 +3,7 @@
     <q-btn
       unelevated
       padding="0px"
-      class="q-ma-none no-wrap"
+      class="modal-btn q-ma-none no-wrap"
       @click="modal = true"
     >
       {{ label }}
@@ -18,6 +18,32 @@
 
         <q-card-section class="q-pa-none bg-white notosanskr-medium">
           <component :is="contentComponent" />
+        </q-card-section>
+
+        <q-card-section class="q-pt-lg bg-white">
+          <div class="row justify-around notosanskr-medium">
+            <div class="col q-mx-xs">
+              <!-- reset | 초기화 -->
+              <q-btn
+                class="reset-btn bg-grey-3"
+                flat
+                text-color="black"
+                label="초기화"
+                padding="12px"
+                @click="modal = false"
+              />
+            </div>
+            <div class="col q-mx-xs">
+              <!-- apply | 적용 -->
+              <q-btn
+                class="apply-btn bg-primary text-white"
+                flat
+                label="적용"
+                padding="12px"
+                @click="modal = false"
+              />
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -52,25 +78,27 @@ export default {
   },
   computed: {
     contentComponent() {
+      let component;
       if (this.transactionType) {
-        return "transaction-type";
+        component = "transaction-type";
       }
       if (this.propertyType) {
-        return "property-type";
+        component = "property-type";
       }
       if (this.salePrice) {
-        return "property-sale-price";
+        component = "property-sale-price";
       }
       if (this.charterPriceDeposit) {
-        return "charter-price-deposit";
+        component = "charter-price-deposit";
       }
+      return component
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.q-btn {
+.modal-btn {
   background: #ffffff;
   border: 1px solid #dbdbdb;
   box-sizing: border-box;
@@ -82,17 +110,27 @@ export default {
   letter-spacing: -1.05px;
   color: #1a1a1a;
 
-  padding: 0px 4px;
-  margin: 0px 2px;
+  padding: 0 4px;
+  margin: 0 2px;
+}
+.apply-btn,
+.reset-btn {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -1.275px;
+  color: #1a1a1a;
+  width: 100%;
+  border-radius: 12px;
 }
 .q-dialog {
   .q-card {
     width: 100%;
     max-width: 1000px;
     height: auto;
-    border-radius: 16px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 16px 16px 0 0;
     background: #f0f0f0;
     .empty-bottom-space {
       height: 200px;
