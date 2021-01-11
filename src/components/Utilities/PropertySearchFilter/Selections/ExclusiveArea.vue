@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="q-mt-md q-pt-xl bg-white">
+  <q-card-section>
     <div
       class="title q-pa-none row justify-between items-center notosanskr-medium"
     >

@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="q-mt-md q-pt-xl bg-white">
+  <q-card-section>
     <div class="q-pa-none row items-center justify-between notosanskr-medium">
       <text-under-highlight text="매매가"></text-under-highlight>
       <q-btn

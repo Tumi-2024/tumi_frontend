@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="q-mt-md q-pt-xl bg-white">
+  <q-card-section>
     <div class="q-pa-none row justify-between items-center notosanskr-medium">
       <text-under-highlight text="월세"></text-under-highlight>
       <q-btn

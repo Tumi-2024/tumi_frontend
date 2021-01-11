@@ -32,17 +32,32 @@
         <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
           <!-- Transactio type | 거래유형 -->
-          <transaction-type></transaction-type>
+          <transaction-type class="bg-white q-pb-xl q-pt-md"></transaction-type>
           <!-- Property Type | 매물유형 -->
-          <property-type class="q-mt-md"></property-type>
+          <property-type
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+          ></property-type>
           <!-- property sale | 부동산 매매  -->
-          <property-sale-price></property-sale-price>
+          <property-sale-price
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+          ></property-sale-price>
           <!--  Charter price deposit | 전세가 / 보증금 -->
-          <charter-price-deposit></charter-price-deposit>
+          <charter-price-deposit
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+          ></charter-price-deposit>
           <!-- Property Monthly | 매월 부동산 -->
-          <property-monthly></property-monthly>
+          <property-monthly
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+          ></property-monthly>
           <!-- Exclusive Area | 전용면적 -->
-          <exclusive-area></exclusive-area>
+          <exclusive-area
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+          ></exclusive-area>
           <!-- Premium price | 프리미엄가, 감정가 -->
 
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
