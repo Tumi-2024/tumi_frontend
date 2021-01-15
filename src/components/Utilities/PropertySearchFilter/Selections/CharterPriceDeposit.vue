@@ -1,10 +1,7 @@
 <template>
-  <q-card-section class="q-mt-md q-pt-lg bg-white">
-    <div class="q-pa-none q-pt-sm notosanskr-medium">
-      <text-under-highlight
-        text="전세가 / 보증금"
-        class="q-mt-lg"
-      ></text-under-highlight>
+  <q-card-section>
+    <div class="q-pa-none row justify-between items-center notosanskr-medium">
+      <text-under-highlight text="전세가 / 보증금"></text-under-highlight>
       <q-btn
         flat
         class="float-right q-ma-none q-pa-none"
