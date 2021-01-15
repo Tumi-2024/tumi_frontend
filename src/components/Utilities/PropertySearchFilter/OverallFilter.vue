@@ -10,7 +10,7 @@
       @click="modal = true"
     >
       <q-icon size="20px">
-        <img src="~assets/icons/Filter.svg" />
+        <img src="~assets/icons/Filter.svg" alt="filter" />
       </q-icon>
     </q-btn>
     <!-- Dialog Section -->
@@ -31,7 +31,7 @@
         </q-card-section>
         <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
-          <!-- Transactio type | 거래유형 -->
+          <!-- Transaction type | 거래유형 -->
           <transaction-type class="bg-white q-pb-xl q-pt-md"></transaction-type>
           <!-- Property Type | 매물유형 -->
           <property-type
@@ -111,9 +111,7 @@ export default {
   width: 100%;
   max-width: 1000px;
   height: 100vh;
-  border-radius: 16px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 16px 16px 0 0;
   background: #f0f0f0;
   .empty-bottom-space {
     height: 200px;
