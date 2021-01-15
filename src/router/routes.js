@@ -58,7 +58,9 @@ const routes = [
   {
     path: '/actual-transaction',
     component: () => import('layouts/ActualTransactionLayout.vue'),
-    children: []
+    children: [
+      { path: 'apartment', component: () => import('pages/ApartmentPage/Index.vue'), name: 'apartment' }
+    ]
   },
   // Always leave this as last one,
   // but you can also remove it
