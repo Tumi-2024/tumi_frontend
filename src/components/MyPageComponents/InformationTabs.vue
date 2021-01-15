@@ -1,26 +1,17 @@
 <template>
   <q-card-section class="q-pa-none full-width" style="padding: 30px 16px;">
     <q-btn padding="0px" align="left" flat class="item row full-width">
-      <div class="row">
-        <div class="text col-12 notosanskr-medium">실거래가 조회</div>
-        <span class="highlighter full-width q-py-xs"></span>
-      </div>
+      <text-under-highlight text="실거래가 조회"></text-under-highlight>
     </q-btn>
 
     <q-btn padding="0px" align="left" flat class="item row full-width">
-      <div class="row">
-        <div class="text col-12 notosanskr-medium">재개발 구역 정보</div>
-        <span class="highlighter full-width q-py-xs"></span>
-      </div>
+      <text-under-highlight text="재개발 구역 정보"></text-under-highlight>
     </q-btn>
 
     <q-expansion-item class="q-pa-none q-ma-none" header-class="q-px-none">
       <template v-slot:header>
         <div class="full-width row q-pa-none">
-          <div class="row" style="height: 24px">
-            <div class="text col-12 notosanskr-medium">아파트 매물 찾기</div>
-            <span class="highlighter full-width q-py-xs"></span>
-          </div>
+          <text-under-highlight text="아파트 매물 찾기"></text-under-highlight>
         </div>
       </template>
       <q-card class="investment-sale">
@@ -37,16 +28,18 @@
     </q-expansion-item>
 
     <q-btn padding="0px" align="left" flat class="item row full-width" :to="{path: '/insights/부동산팁'}">
-      <div class="row">
-        <div class="text col-12 notosanskr-medium">부동산 인사이트</div>
-        <span class="highlighter full-width q-py-xs"></span>
-      </div>
+      <text-under-highlight text="부동산 인사이트"></text-under-highlight>
     </q-btn>
   </q-card-section>
 </template>
 
 <script>
-export default {};
+import TextUnderHighlight from 'components/Utilities/TextUnderHighlight';
+export default {
+  components:{
+    "text-under-highlight": TextUnderHighlight
+  }
+};
 </script>
 
 <style lang="scss" scoped>
