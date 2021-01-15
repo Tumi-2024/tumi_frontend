@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import { ToolbarFilter, AreaListItems } from "components/MapListSaleComponents";
+import { AreaListItems } from "components/MapListSaleComponents";
+import ToolbarFilter from "components/Utilities/ToolbarFilter";
 export default {
   components: {
     "toolbar-filter": ToolbarFilter,
