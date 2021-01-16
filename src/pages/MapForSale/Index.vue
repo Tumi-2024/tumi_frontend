@@ -20,6 +20,6 @@ export default {
 
 <style lang="scss" scoped>
 .map {
-  height: calc(118vh / 812 * 100);
+  height: calc(118vh / 375 * 100);
 }
 </style>
