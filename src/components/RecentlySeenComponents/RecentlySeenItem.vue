@@ -2,25 +2,21 @@
   <q-item class="column  notosanskr-regular ">
     <q-item-section>
       <div class="row">
+
         <!-- badge for item type -->
-        <q-badge class="text-white bg-primary q-mr-sm">{{ tags.type }}</q-badge>
+        <custom-badge :label="tags.type"></custom-badge>
         <!-- badge for item status -->
-        <q-badge
-          outline
-          class="text-primary bg-white q-mr-sm"
-          v-if="tags.recomend"
-        >
-          {{ tags.recomend }}
-        </q-badge>
+        <custom-badge 
+          :label="tags.recomend" 
+          text_color="primary" 
+          bg_color="white"
+          outline_color="primary"
+          :outline="true" 
+          v-if="tags.recomend"></custom-badge>
         <!-- badge for redevelopment -->
-        <q-badge class="re-develop bg-white q-mr-sm" v-if="tags.redevelopment">
-          <q-icon>
-            <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
-          </q-icon>
-          재개발
-        </q-badge>
+        <custom-badge label="재개발" text_color="grey" bg_color="white" :outline="true" icon="redevelop" v-if="tags.redevelopment"></custom-badge>
         <!-- badge for item date -->
-        <q-badge class="date">{{ tags.date }}</q-badge>
+        <custom-badge :label="tags.date" text_color="grey" bg_color="white" :outline="true"></custom-badge>
       </div>
     </q-item-section>
     <q-item-section class="area-name q-pt-sm">
@@ -44,33 +40,21 @@
 </template>
 
 <script>
+import CustomBadge from 'src/components/Utilities/CustomBadge'
+
 export default {
   props: {
     tags: Object,
     name: String,
     amount: String
+  },
+  components: {
+    'custom-badge': CustomBadge
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.q-badge {
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 24px;
-  text-align: center;
-  letter-spacing: -0.9px;
-
-  &.date,
-  &.re-develop {
-    border: 1px solid #dbdbdb;
-    box-sizing: border-box;
-    border-radius: 4px;
-    font-weight: 500;
-    color: #909090;
-    background: white;
-  }
-}
 .area-name {
   font-weight: 500;
   font-size: 14px;

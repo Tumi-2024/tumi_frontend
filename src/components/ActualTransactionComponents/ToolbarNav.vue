@@ -6,11 +6,12 @@
     style="height: 60px"
   >
     <div class="row flex items-center justify-center">
-      <div class="back-btn-border q-pr-sm q-mr-sm flex justify-center items-center content-center">
+      <div class="back-btn-border flex justify-center items-center content-center">
         <q-btn class="back-btn flex justify-center items-center content-center" flat>
           <q-icon name="img:icons/home-page-icon/search-result-icon/back-btn.svg" />
         </q-btn>
-      </div>
+      </div> 
+      <q-separator class="q-mr-sm" vertical inset />
       <div class="location-text q-mt-xs notosanskr-medium">
         동대문구 전농동
       </div>
@@ -47,19 +48,5 @@ export default {};
   line-height: 30px;
   letter-spacing: -1.575px;
   color: #1a1a1a;
-}
-
-.back-btn {
-  width: 24px;
-}
-
-.back-btn-border ::after{
-  content: '';
-  position: absolute;
-  width: 1px;
-  height: 12px;
-  right: -8px;
-  margin: 100px auto;
-  background: #DBDBDB;
 }
 </style>
