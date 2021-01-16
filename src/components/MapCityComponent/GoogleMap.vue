@@ -44,6 +44,7 @@
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
+import { mapGetters } from "vuex";
 export default {
   components: {
     "info-window-content": InfoWindowContent
@@ -67,7 +68,6 @@ export default {
       /* MARKERS */
       markers: sampleMarkers,
       /* INFO WINDOW */
-
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
         pixelOffset: { width: 0, height: -35 },
@@ -120,6 +120,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("map", ["getMapCity"]),
     google: gmapApi
   },
 
@@ -173,6 +174,7 @@ export default {
         return { fillColor: color, strokeColor: color, strokeWeight: 1 };
       });
     });
+    console.log(this.getMapCity);
   },
 
   methods: {

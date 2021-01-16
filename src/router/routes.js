@@ -49,10 +49,9 @@ const routes = [
     component: () => import('layouts/MapLayout.vue'),
     children: [
       { path: '', redirect: '/map/city' },
-      { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
+      { path: 'city/:mode?', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
       { path: 'redevelop-area', component: () => import('pages/MapRedevelopArea/Index.vue'), name: 'map_redevelop_area' },
-      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' },
-      { path: 'actual-transaction', component: () => import('pages/MapActualTransaction/Index.vue'), name: 'map_actual_transaction' }
+      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
