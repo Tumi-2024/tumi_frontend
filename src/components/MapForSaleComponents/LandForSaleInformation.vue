@@ -5,29 +5,45 @@
     </q-card-section>
 
     <q-card-section>
-      <div class="row">
-        <q-btn flat class="col column items-center information-btn ">
-          <q-icon name="delete" size="32px" />
-          <div class="title">2,275㎡</div>
-          <div class="sub-title">대지면적</div>
+      <div class="row q-mb-md">
+        <q-btn flat class="col information-btn ">
+          <div class="column justify-center content-center items-center">
+            <q-icon size="32px">
+              <img src="~/assets/icons/LandForSaleInformationIcons/land_area.svg"/>
+            </q-icon>
+            <div class="title q-mt-sm">2,275㎡</div>
+            <div class="sub-title q-mt-xs">대지면적</div>
+          </div>
         </q-btn>
 
-        <q-btn flat class="col column items-center information-btn ">
-          <q-icon name="delete" size="32px" />
-          <div class="title">2,275㎡</div>
-          <div class="sub-title">대지면적</div>
+        <q-btn flat class="col information-btn ">
+          <div class="column justify-center content-center items-center">
+            <q-icon size="32px">
+              <img src="~/assets/icons/LandForSaleInformationIcons/building_area.svg"/>
+            </q-icon>
+            <div class="title q-mt-sm">2,275㎡</div>
+            <div class="sub-title q-mt-xs">대지면적</div>
+          </div>
         </q-btn>
 
-        <q-btn flat class="col column items-center information-btn ">
-          <q-icon name="delete" size="32px" />
-          <div class="title">2,275㎡</div>
-          <div class="sub-title">대지면적</div>
+        <q-btn flat class="col information-btn ">
+          <div class="column justify-center content-center items-center">
+            <q-icon size="32px">
+              <img src="~/assets/icons/LandForSaleInformationIcons/rent.svg"/>
+            </q-icon>
+            <div class="title q-mt-sm">2,275㎡</div>
+            <div class="sub-title q-mt-xs">대지면적</div>
+          </div>
         </q-btn>
 
-        <q-btn flat class="col column items-center information-btn ">
-          <q-icon name="delete" size="32px" />
-          <div class="title">2,275㎡</div>
-          <div class="sub-title">대지면적</div>
+        <q-btn flat class="col information-btn ">
+          <div class="column justify-center content-center items-center">
+            <q-icon size="32px">
+              <img src="~/assets/icons/LandForSaleInformationIcons/completion.svg"/>
+            </q-icon>
+            <div class="title q-mt-sm">2,275㎡</div>
+            <div class="sub-title q-mt-xs">대지면적</div>
+          </div>
         </q-btn>
       </div>
 
@@ -58,6 +74,8 @@ export default {
 }
 
 .information-btn {
+  height: 88px;
+
   .title {
     font-family: 'notosanskr-medium';
     font-style: normal;
