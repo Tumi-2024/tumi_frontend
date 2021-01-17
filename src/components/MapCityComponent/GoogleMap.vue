@@ -2,10 +2,10 @@
   <div class="bg-white" ref="gmapContainer">
     <GmapMap
       ref="mapRef"
-      :center="{ lat: 37.5326, lng: 127.024612 }"
-      :zoom="12"
+      :center="getMapCenter"
+      :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="mapOptions"
+      :options="getMapOptions"
     >
       <gmap-info-window
         v-for="(m, index) in markers"
@@ -52,18 +52,6 @@ export default {
   data() {
     return {
       map: null,
-      mapZoom: 12,
-      mapOptions: {
-        zoomControl: true,
-        mapTypeControl: false,
-        scaleControl: true,
-        streetViewControl: false,
-        rotateControl: false,
-        scrollwheel: true,
-        fullscreenControl: false,
-        disableDefaultUI: true
-      },
-      mapReady: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       markers: sampleMarkers,
@@ -120,61 +108,67 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["getMapCity"]),
+    ...mapGetters("map", [
+      "getMapMode",
+      "getMapZoom",
+      "getMapCenter",
+      "getMapOptions"
+    ]),
     google: gmapApi
   },
 
-  mounted() {
+  async mounted() {
     this.setGmapContainerSize();
     // we access the map Object
-    this.$refs.mapRef.$mapPromise.then(map => {
-      this.map = map;
-      this.map.panTo({ lat: 37.5326, lng: 127.024612 });
-
-      // apply options to map
-      this.map.setOptions({
-        zoomControlOptions: {
-          position: this.google.maps.ControlPosition.RIGHT_TOP
-        }
-      });
-      // apply click event on map
-      this.map.addListener("click", e => {
-        /**
-         *  access click event
-         *
-         */
-        console.log(e.latLng.lat(), e.latLng.lng());
-      });
-      // apply zoom change listeners
-      this.map.addListener("zoom_changed", () => {
-        setTimeout(() => {
-          this.showInfoWindow = this.map.getZoom() > 15;
-        }, 1000);
-      });
-      this.markers.push(
-        new this.google.maps.Marker({
-          position: { lat: 37.5326, lng: 127.024612 },
-          map: this.map,
-          title: "Hello World!"
-        })
-      );
-
-      /**
-       *  we use loadGeoJson() for url
-       *  this.map.data.loadGeoJson("https:// url here /");
-       *
-       *  we use addGeoJson() for direct
-       *  this.map.data.addGeoJson({ object here })
-       */
-
-      this.map.data.addGeoJson(tumiSections);
-      // apply styles on geojson layers
-      this.map.data.setStyle(function(feature) {
-        const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "green";
-        return { fillColor: color, strokeColor: color, strokeWeight: 1 };
-      });
+    this.map = await this.$refs.mapRef.$mapPromise;
+    this.map.panTo(this.getMapCenter);
+    this.showInfoWindow = this.map.getZoom() > 15;
+    // apply options to map
+    this.map.setOptions({
+      zoomControlOptions: {
+        position: this.google.maps.ControlPosition.RIGHT_TOP
+      }
     });
-    console.log(this.getMapCity);
+    // apply click event on map
+    this.map.addListener("click", e => {
+      /**
+       *  access click event
+       */
+      console.log(e.latLng.lat(), e.latLng.lng());
+    });
+    // apply zoom change listeners
+    this.map.addListener("zoom_changed", () => {
+      setTimeout(() => {
+        this.showInfoWindow = this.map.getZoom() > 15;
+      }, 1000);
+    });
+    this.markers.push(
+      new this.google.maps.Marker({
+        position: { lat: 37.5326, lng: 127.024612 },
+        map: this.map,
+        title: "Hello World!"
+      })
+    );
+    /**
+     *  we use loadGeoJson() for url
+     *  this.map.data.loadGeoJson("https:// url here /");
+     *
+     *  we use addGeoJson() for direct
+     *  this.map.data.addGeoJson({ object here })
+     */
+    this.map.data.addGeoJson(tumiSections);
+    // apply styles on geojson layers
+    this.map.data.setStyle(function(feature) {
+      const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "green";
+      return { fillColor: color, strokeColor: color, strokeWeight: 1 };
+    });
+
+    // console.log(
+    //   this.getMapMode + 1,
+    //   this.getMapZoom,
+    //   this.getMapCenter,
+    //   this.getMapOptions
+    // );
   },
 
   methods: {
@@ -183,7 +177,6 @@ export default {
       const w = this.$refs.gmapContainer.clientWidth;
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
-      this.mapReady = true;
     },
     clusterClicked() {
       setTimeout(() => {
