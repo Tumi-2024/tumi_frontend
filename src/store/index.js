@@ -28,7 +28,10 @@ export default function (/* { ssrContext } */) {
       map: mapStore
     },
 
-    plugins: [createPersistedState()],
+    plugins: [createPersistedState({
+      // enable presisted state for users only
+      paths: ['user.data']
+    })],
 
     // enable strict mode (adds overhead!)
     // for dev mode only
