@@ -9,7 +9,7 @@
     <redevelopment-information :details="redevelopment_details"></redevelopment-information>
     <administration-cost :cost="admin_cost"></administration-cost>
     <school></school>
-    <recent-pricing></recent-pricing>
+    <recent-pricing :details="extra_details"></recent-pricing>
   </div>
 </template>
 

@@ -25,7 +25,7 @@
 <script>
 export default {
   props: {
-    cost: Object
+    cost: Array
   }
 }
 </script>

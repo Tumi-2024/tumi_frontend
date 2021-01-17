@@ -47,7 +47,7 @@
       </div>
       <div class="row bg-white notosanskr-regular" style="padding: 0 16px 2px">
         <div class="col-12 table" style="padding-top: 20px; border-top: 1px dashed #E8E8E8;">
-          <div class="row" v-for="detail in extra_details" :key="detail.label">
+          <div class="row" v-for="detail in details" :key="detail.label">
             <div class="col-4"><span class="label text-30">{{ detail.label }}</span></div> 
             <div class="col-8"><span class="label text-50">{{ detail.info }}</span></div> 
           </div>
@@ -99,6 +99,15 @@
 </template>
 <script>
 export default {
+  props: {
+    details: Array
+  },
+  data () {
+    return {
+      options: [],
+      model: ''
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
