@@ -14,8 +14,17 @@
         :position="m.position"
         :opened="showInfoWindow"
         @closeclick="infoWinOpen = false"
+        class="bg-red q-pa-lg"
       >
-        <info-window-content />
+        <div class="top-info-container">
+          <div
+            class="roundedNumber bg-primary text-positive"
+            v-if="m.infoNumber"
+          >
+            {{ m.infoNumber }}
+          </div>
+        </div>
+        <info-window-content :marker="m" />
       </gmap-info-window>
 
       <gmap-cluster
@@ -182,7 +191,39 @@ export default {
 
 <style lang="scss" scoped>
 // hide the close "x" icon on info window
-div ::v-deep .gm-ui-hover-effect {
+::v-deep .gm-style-iw {
+  background: transparent;
+  box-shadow: none;
+  padding: 30px 3px 0 3px;
+  .gm-style-iw-d {
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  }
+}
+::v-deep .gm-ui-hover-effect {
   display: none !important;
+}
+.top-info-container {
+  position: absolute;
+  background: red;
+  width: 100%;
+  padding-right: 15px;
+  margin-top: -30px;
+  display: flex;
+  justify-content: flex-end;
+  .roundedNumber {
+    position: absolute;
+    float: right;
+    width: 35px;
+    height: 35px;
+    font-size: 12;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
