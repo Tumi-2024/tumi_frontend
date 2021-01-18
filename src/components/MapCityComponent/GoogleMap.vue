@@ -140,7 +140,7 @@ export default {
     this.map.addListener("zoom_changed", () => {
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
-      }, 1000);
+      }, 500);
     });
     this.markers.push(
       new this.google.maps.Marker({
@@ -159,16 +159,9 @@ export default {
     this.map.data.addGeoJson(tumiSections);
     // apply styles on geojson layers
     this.map.data.setStyle(function(feature) {
-      const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "green";
-      return { fillColor: color, strokeColor: color, strokeWeight: 1 };
+      const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "#0BCDC7";
+      return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
     });
-
-    // console.log(
-    //   this.getMapMode + 1,
-    //   this.getMapZoom,
-    //   this.getMapCenter,
-    //   this.getMapOptions
-    // );
   },
 
   methods: {
@@ -189,7 +182,7 @@ export default {
 
 <style lang="scss" scoped>
 // hide the close "x" icon on info window
-div /deep/ .gm-ui-hover-effect {
+div >>> .gm-ui-hover-effect {
   display: none !important;
 }
 </style>
