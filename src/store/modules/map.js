@@ -15,7 +15,7 @@ const initState = {
     fullscreenControl: false,
     disableDefaultUI: true
   }
-}
+};
 export const mapStore = {
   namespaced: true,
   state: { ...initState },
@@ -41,10 +41,16 @@ export const mapStore = {
     /**
      * Set the mode of the map
      * @param context
-     * @param {('default'|'transaction'|'redevelop')} mode - options
+     * @param {('default'|'transaction'|'apartment'|'redevelop-area'|'redevelop-estate')} mode - options
      */
     changeMapMode: (context, mode = "default") => {
-      const possibleValues = ['default', 'transaction', 'redevelop']
+      const possibleValues = [
+        "default",
+        "transaction",
+        "apartment",
+        "redevelop-area",
+        "redevelop-estate"
+      ];
       if (possibleValues.includes(mode)) {
         context.commit("setMapMode", mode);
       }
