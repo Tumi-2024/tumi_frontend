@@ -14,7 +14,8 @@ const initState = {
     scrollwheel: true,
     fullscreenControl: false,
     disableDefaultUI: true
-  }
+  },
+  toolbarTitle: "서울시 종로구"
 };
 export const mapStore = {
   namespaced: true,
@@ -23,13 +24,21 @@ export const mapStore = {
     getMapMode: state => state.mode,
     getMapZoom: state => state.mapZoom,
     getMapCenter: state => state.mapCenter,
-    getMapOptions: state => state.mapOptions
+    getMapOptions: state => state.mapOptions,
+    getToolbarLabel: state => {
+      // you lookint at | information viewing
+      return state.mode !== "default"
+        ? "지금 보고 있는 정보"
+        : "지금 보고있는 지역";
+    },
+    getToolbarTitle: state => state.toolbarTitle
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
     setMapZoom: (state, payload) => (state.mapZoom = payload),
     setMapCenter: (state, payload) => (state.mapCenter = payload),
-    setMapOptions: (state, payload) => (state.mapOptions = payload)
+    setMapOptions: (state, payload) => (state.mapOptions = payload),
+    setToolbarTitle: (state, payload) => (state.toolbarTitle = payload)
   },
   actions: {
     resetMap: context => {
@@ -37,6 +46,7 @@ export const mapStore = {
       context.commit("setMapZoom", initState.mapZoom);
       context.commit("setMapCenter", initState.mapCenter);
       context.commit("setMapOptions", initState.mapOptions);
+      context.commit("setToolbarTitle", initState.toolbarTitle);
     },
     /**
      * Set the mode of the map
@@ -57,6 +67,8 @@ export const mapStore = {
     },
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     changeMapCenter: (context, data) => context.commit("setMapCenter", data),
-    changeMapOptions: (context, data) => context.commit("setMapOptions", data)
+    changeMapOptions: (context, data) => context.commit("setMapOptions", data),
+    changeToolbarTitle: (context, data) =>
+      context.commit("setToolbarTitle", data)
   }
 };

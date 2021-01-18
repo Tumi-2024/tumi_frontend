@@ -10,7 +10,13 @@
       <text-under-highlight text="실거래가 조회"></text-under-highlight>
     </q-btn>
 
-    <q-btn padding="0px" align="left" flat class="item row full-width">
+    <q-btn
+      padding="0px"
+      align="left"
+      flat
+      class="item row full-width"
+      @click="toRedevelopmentArea"
+    >
       <text-under-highlight text="재개발 구역 정보"></text-under-highlight>
     </q-btn>
 
@@ -53,11 +59,24 @@ export default {
     "text-under-highlight": TextUnderHighlight
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "changeToolbarTitle"
+    ]),
     toMapActualTransaction() {
-      this.changeMapMode("actualTransaction");
-      this.changeMapZoom(17);
+      this.changeMapMode("transaction");
+      this.changeMapZoom(16);
       this.changeMapCenter({ lat: 37.53718802127926, lng: 127.09262711456654 });
+      this.changeToolbarTitle("실거래가 조회");
+      this.$router.push({ name: "map_city" });
+    },
+    toRedevelopmentArea() {
+      this.changeMapMode("redevelop-area");
+      this.changeMapZoom(16);
+      this.changeMapCenter({ lat: 37.51988040411035, lng: 127.05400058307147 });
+      this.changeToolbarTitle("재개발 구역");
       this.$router.push({ name: "map_city" });
     }
   }
@@ -73,26 +92,12 @@ export default {
   color: #1a1a1a;
   padding: 14px 0;
 }
-.text {
-  z-index: 1;
-}
-
-.highlighter {
-  background: #ffd8cc;
-  margin-top: -10px;
-  z-index: 0;
-}
 
 .investment-sale {
   font-weight: 500;
   font-size: 15px;
   line-height: 22px;
-  /* identical to box height, or 147% */
-
   letter-spacing: -0.975px;
-
-  /* Font/30 */
-
   color: #707070;
 }
 </style>

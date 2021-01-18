@@ -182,7 +182,7 @@ export default {
 
 <style lang="scss" scoped>
 // hide the close "x" icon on info window
-div >>> .gm-ui-hover-effect {
+div ::v-deep .gm-ui-hover-effect {
   display: none !important;
 }
 </style>

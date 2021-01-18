@@ -7,7 +7,7 @@
   >
     <div>
       <div class="helper notosanskr-regular">
-        지금 보고있는 지역
+        {{ getToolbarLabel }}
       </div>
       <div class="q-mt-xs notosanskr-medium">
         <q-btn
@@ -16,9 +16,9 @@
           flat
           text-color="black"
           padding="0px"
-          label="서울시 종로구"
           :to="{ name: 'map_view_search' }"
         >
+          {{ getToolbarTitle }}
           <q-icon name="keyboard_arrow_down" size="24px" />
         </q-btn>
       </div>
@@ -37,7 +37,13 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters("map", ["getToolbarLabel", "getToolbarTitle"])
+  },
+  methods: {}
+};
 </script>
 
 <style lang="scss" scoped>
