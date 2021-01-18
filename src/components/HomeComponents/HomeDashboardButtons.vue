@@ -8,7 +8,7 @@
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center">
-      <q-btn flat :to="{ path:'/map/' }" class="btn-dash-board full-width" style="background-color: #4B62DE" >
+      <q-btn flat @click="toMapCity()" class="btn-dash-board full-width" style="background-color: #4B62DE" >
         <p class="btn-title1">추천</p>
         <p class="btn-title2">이번주 <br /> 추천급매</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
@@ -37,7 +37,14 @@ export default {
 		return {
 			text: null,
 		}
-	},
+  },
+  methods:{
+    toMapCity() {
+      /* we dispatch an action resetMap() from map module */
+      this.$store.dispatch('map/resetMap');
+      this.$router.push({ name: 'map_city'})
+    }
+  }
 }
 </script>
 

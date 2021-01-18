@@ -9,9 +9,12 @@
 
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        3천만 보증금 / 60만 월세
+        {{ marker.price }}
       </div>
-      <div class="row bottom-toolbar notosanskr-regular" :class="{ 'q-pb-sm' : $q.platform.is.mobile }">
+      <div
+        class="row bottom-toolbar notosanskr-regular"
+        :class="{ 'q-pb-sm': $q.platform.is.mobile }"
+      >
         <div class="info-text">단독다가구</div>
         <q-badge color="white" text-color="primary" label="매매" />
         <q-badge class="re-develop bg-white q-mr-sm">
@@ -26,7 +29,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    marker: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
