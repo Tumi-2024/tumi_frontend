@@ -28,6 +28,21 @@ export const mapStore = {
     setMapOptions: (state, payload) => (state.mapOptions = payload)
   },
   actions: {
+    resetMap: context => {
+      context.commit("setMapMode", "default");
+      context.commit("setMapZoom", 12);
+      context.commit("setMapCenter", { lat: 37.5326, lng: 127.024612 });
+      context.commit("setMapOptions", {
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        scrollwheel: true,
+        fullscreenControl: false,
+        disableDefaultUI: true
+      });
+    },
     changeMapMode: (context, data) => context.commit("setMapMode", data),
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     changeMapCenter: (context, data) => context.commit("setMapCenter", data),
