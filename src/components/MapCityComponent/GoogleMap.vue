@@ -16,14 +16,7 @@
         @closeclick="infoWinOpen = false"
         class="bg-red q-pa-lg"
       >
-        <div class="top-info-container">
-          <div
-            class="roundedNumber bg-primary text-positive"
-            v-if="m.infoNumber"
-          >
-            {{ m.infoNumber }}
-          </div>
-        </div>
+        <info-top-content :marker="m" />
         <info-window-content :marker="m" />
       </gmap-info-window>
 
@@ -53,9 +46,11 @@
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
+import InfoTopContent from './InfoTopContent';
 import { mapGetters } from "vuex";
 export default {
   components: {
+    "info-top-content": InfoTopContent,
     "info-window-content": InfoWindowContent
   },
   data() {
@@ -190,7 +185,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// hide the close "x" icon on info window
+// make the outer container of info-window transparent
 ::v-deep .gm-style-iw {
   background: transparent;
   box-shadow: none;
@@ -202,28 +197,8 @@ export default {
     box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
   }
 }
+// hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
   display: none !important;
-}
-.top-info-container {
-  position: absolute;
-  background: red;
-  width: 100%;
-  padding-right: 15px;
-  margin-top: -30px;
-  display: flex;
-  justify-content: flex-end;
-  .roundedNumber {
-    position: absolute;
-    float: right;
-    width: 35px;
-    height: 35px;
-    font-size: 12;
-    font-weight: bold;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 </style>
