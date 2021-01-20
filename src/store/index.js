@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 // Modules
 import { userStore } from './modules/user'
 import { insightsStore } from './modules/insights'
+import { mapStore } from './modules/map';
 
 // Main Section
 Vue.use(Vuex)
@@ -23,15 +24,19 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user: userStore,
-      insights: insightsStore
+      insights: insightsStore,
+      map: mapStore
     },
 
-    plugins: [createPersistedState()],
+    plugins: [createPersistedState({
+      // enable presisted state for users only
+      paths: ['user.data']
+    })],
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEBUGGING
-  })
+  });
 
   return Store
 }

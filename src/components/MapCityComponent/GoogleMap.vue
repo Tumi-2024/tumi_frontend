@@ -2,10 +2,10 @@
   <div class="bg-white" ref="gmapContainer">
     <GmapMap
       ref="mapRef"
-      :center="{ lat: 37.5326, lng: 127.024612 }"
-      :zoom="12"
+      :center="getMapCenter"
+      :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="mapOptions"
+      :options="getMapOptions"
     >
       <gmap-info-window
         v-for="(m, index) in markers"
@@ -14,8 +14,17 @@
         :position="m.position"
         :opened="showInfoWindow"
         @closeclick="infoWinOpen = false"
+        class="bg-red q-pa-lg"
       >
-        <info-window-content />
+        <div class="top-info-container">
+          <div
+            class="roundedNumber bg-primary text-positive"
+            v-if="m.infoNumber"
+          >
+            {{ m.infoNumber }}
+          </div>
+        </div>
+        <info-window-content :marker="m" />
       </gmap-info-window>
 
       <gmap-cluster
@@ -44,6 +53,7 @@
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
+import { mapGetters } from "vuex";
 export default {
   components: {
     "info-window-content": InfoWindowContent
@@ -51,23 +61,10 @@ export default {
   data() {
     return {
       map: null,
-      mapZoom: 12,
-      mapOptions: {
-        zoomControl: true,
-        mapTypeControl: false,
-        scaleControl: true,
-        streetViewControl: false,
-        rotateControl: false,
-        scrollwheel: true,
-        fullscreenControl: false,
-        disableDefaultUI: true
-      },
-      mapReady: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       markers: sampleMarkers,
       /* INFO WINDOW */
-
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
         pixelOffset: { width: 0, height: -35 },
@@ -120,58 +117,59 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("map", [
+      "getMapMode",
+      "getMapZoom",
+      "getMapCenter",
+      "getMapOptions"
+    ]),
     google: gmapApi
   },
 
-  mounted() {
+  async mounted() {
     this.setGmapContainerSize();
     // we access the map Object
-    this.$refs.mapRef.$mapPromise.then(map => {
-      this.map = map;
-      this.map.panTo({ lat: 37.5326, lng: 127.024612 });
-
-      // apply options to map
-      this.map.setOptions({
-        zoomControlOptions: {
-          position: this.google.maps.ControlPosition.RIGHT_TOP
-        }
-      });
-      // apply click event on map
-      this.map.addListener("click", e => {
-        /**
-         *  access click event
-         *
-         */
-        console.log(e.latLng.lat(), e.latLng.lng());
-      });
-      // apply zoom change listeners
-      this.map.addListener("zoom_changed", () => {
-        setTimeout(() => {
-          this.showInfoWindow = this.map.getZoom() > 15;
-        }, 1000);
-      });
-      this.markers.push(
-        new this.google.maps.Marker({
-          position: { lat: 37.5326, lng: 127.024612 },
-          map: this.map,
-          title: "Hello World!"
-        })
-      );
-
+    this.map = await this.$refs.mapRef.$mapPromise;
+    this.map.panTo(this.getMapCenter);
+    this.showInfoWindow = this.map.getZoom() > 15;
+    // apply options to map
+    this.map.setOptions({
+      zoomControlOptions: {
+        position: this.google.maps.ControlPosition.RIGHT_TOP
+      }
+    });
+    // apply click event on map
+    this.map.addListener("click", e => {
       /**
-       *  we use loadGeoJson() for url
-       *  this.map.data.loadGeoJson("https:// url here /");
-       *
-       *  we use addGeoJson() for direct
-       *  this.map.data.addGeoJson({ object here })
+       *  access click event
        */
-
-      this.map.data.addGeoJson(tumiSections);
-      // apply styles on geojson layers
-      this.map.data.setStyle(function(feature) {
-        const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "green";
-        return { fillColor: color, strokeColor: color, strokeWeight: 1 };
-      });
+      console.log(e.latLng.lat(), e.latLng.lng());
+    });
+    // apply zoom change listeners
+    this.map.addListener("zoom_changed", () => {
+      setTimeout(() => {
+        this.showInfoWindow = this.map.getZoom() > 15;
+      }, 500);
+    });
+    this.markers.push(
+      new this.google.maps.Marker({
+        position: { lat: 37.5326, lng: 127.024612 },
+        map: this.map,
+        title: "Hello World!"
+      })
+    );
+    /**
+     *  we use loadGeoJson() for url
+     *  this.map.data.loadGeoJson("https:// url here /");
+     *
+     *  we use addGeoJson() for direct
+     *  this.map.data.addGeoJson({ object here })
+     */
+    this.map.data.addGeoJson(tumiSections);
+    // apply styles on geojson layers
+    this.map.data.setStyle(function(feature) {
+      const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "#0BCDC7";
+      return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
     });
   },
 
@@ -181,7 +179,6 @@ export default {
       const w = this.$refs.gmapContainer.clientWidth;
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
-      this.mapReady = true;
     },
     clusterClicked() {
       setTimeout(() => {
@@ -194,7 +191,39 @@ export default {
 
 <style lang="scss" scoped>
 // hide the close "x" icon on info window
-div /deep/ .gm-ui-hover-effect {
+::v-deep .gm-style-iw {
+  background: transparent;
+  box-shadow: none;
+  padding: 30px 3px 0 3px;
+  .gm-style-iw-d {
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  }
+}
+::v-deep .gm-ui-hover-effect {
   display: none !important;
+}
+.top-info-container {
+  position: absolute;
+  background: red;
+  width: 100%;
+  padding-right: 15px;
+  margin-top: -30px;
+  display: flex;
+  justify-content: flex-end;
+  .roundedNumber {
+    position: absolute;
+    float: right;
+    width: 35px;
+    height: 35px;
+    font-size: 12;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
