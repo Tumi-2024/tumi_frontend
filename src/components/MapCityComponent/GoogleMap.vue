@@ -12,7 +12,7 @@
         :key="index"
         :options="infoOptions"
         :position="m.position"
-        :opened="showInfoWindow"
+        :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
         @closeclick="infoWinOpen = false"
         class="bg-red q-pa-lg"
       >
@@ -46,7 +46,7 @@
 import { gmapApi } from "gmap-vue";
 import { tumiSections, sampleMarkers } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
-import InfoTopContent from './InfoTopContent';
+import InfoTopContent from "./InfoTopContent";
 import { mapGetters } from "vuex";
 export default {
   components: {
