@@ -26,12 +26,29 @@
         </q-icon>
       </q-btn>
     </div>
+    <!-- Dialog Section for Property Information | 찾아볼 매물 정보 -->
+    <q-dialog v-model="dialogPropertyInfo" position="bottom">
+      <q-card class="notosanskr-regular">
+        <q-card-section class="header-title bg-white notosanskr-medium">
+          찾아볼 매물 정보
+        </q-card-section>
+
+        <q-card-section class="q-pa-none bg-white notosanskr-medium">
+          conte
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      dialogPropertyInfo: null
+    };
+  },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
   },
@@ -39,7 +56,7 @@ export default {
     toggleHeaderTitle() {
       this.getMapMode === "default"
         ? this.$router.push({ name: "map_view_search" })
-        : console.log("dialog open");
+        : (this.dialogPropertyInfo = true);
     }
   }
 };
@@ -58,5 +75,26 @@ export default {
   line-height: 30px;
   letter-spacing: -1.575px;
   color: #1a1a1a;
+}
+
+.q-dialog {
+  .q-card {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 16px 16px 0 0;
+    background: #f0f0f0;
+    .empty-bottom-space {
+      height: 200px;
+    }
+
+    .header-title {
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 26px;
+      letter-spacing: -1.2px;
+      color: #1a1a1a;
+    }
+  }
 }
 </style>
