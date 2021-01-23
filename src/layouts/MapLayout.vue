@@ -26,7 +26,10 @@ export default {
      *  if path is '/map/city'
      *  use ToolBarNav
      */
-    this.toolbarComponent = path === "city" ? "toolbar-nav" : "share-tool-bar";
+    this.toolbarComponent =
+      path === "city" || path === "list-sale"
+        ? "toolbar-nav"
+        : "share-tool-bar";
   }
 };
 </script>

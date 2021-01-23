@@ -2,27 +2,20 @@
   <q-card
     flat
     square
-    class="row justify-between items-center q-px-md"
+    class="row justify-between items-center q-pr-md"
     style="height: 60px"
   >
-    <div>
-      <div class="helper notosanskr-regular">
+    <q-btn class="row" @click="toggleHeaderTitle()" flat padding="4px 16px">
+      <div class="helper text-left col-12 notosanskr-regular">
         {{ getToolbarLabel }}
       </div>
-      <div class="q-mt-xs notosanskr-medium">
-        <q-btn
-          color="white"
-          class="location-text "
-          flat
-          text-color="black"
-          padding="0px"
-          :to="{ name: 'map_view_search' }"
-        >
+      <div class="q-mt-xs col-12 text-left notosanskr-medium">
+        <div class="location-text " flat text-color="black">
           {{ getToolbarTitle }}
           <q-icon name="keyboard_arrow_down" size="24px" />
-        </q-btn>
+        </div>
       </div>
-    </div>
+    </q-btn>
     <div>
       <q-btn flat padding="4px" :to="{ name: 'my_page' }">
         <q-icon name="menu" size="24px"></q-icon>
@@ -40,9 +33,15 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters("map", ["getToolbarLabel", "getToolbarTitle"])
+    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
   },
-  methods: {}
+  methods: {
+    toggleHeaderTitle() {
+      this.getMapMode === "default"
+        ? this.$router.push({ name: "map_view_search" })
+        : console.log("dialog open");
+    }
+  }
 };
 </script>
 
