@@ -1,6 +1,5 @@
 <template>
   <div style="min-height: 100vh" class="row column bg-positive">
-    <component :is="toolbarComponent" />
     <!-- navigation toolbar -->
     <share-tool-bar-nav v-if="$route.name === 'map_for_sale'" />
     <toolbar-nav v-else />
