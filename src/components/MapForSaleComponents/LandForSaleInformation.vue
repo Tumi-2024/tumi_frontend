@@ -57,7 +57,9 @@
         </div>
       </div> -->
     </q-card-section>
+
     <q-separator inset color="white" class="broken-separator" />
+
     <q-card-section>
       <div class="row">
         <q-btn flat class="col-3 information-btn ">
@@ -99,13 +101,13 @@
     <q-separator spaced />
 
     <q-card-section>
-      <PlaceInformationList :payload="listPayload" />
+      <LandForSaleInformationList :payload="listPayload" />
     </q-card-section>
   </q-card>
 </template>
 
 <script>
-import PlaceInformationList from './PlaceInformationList'
+import LandForSaleInformationList from './LandForSaleInformationList'
 
 export default {
   name: 'land-for-sale-information',
@@ -158,7 +160,7 @@ export default {
     }
   },
   components: {
-    PlaceInformationList
+    LandForSaleInformationList
   }
 }
 </script>
