@@ -1,7 +1,8 @@
 <template>
   <div style="min-height: 100vh" class="row column bg-positive">
     <!-- navigation toolbar -->
-    <toolbar-nav />
+    <share-tool-bar-nav v-if="$route.name === 'map_for_sale'" />
+    <toolbar-nav v-else />
     <q-card flat square class="q-pa-none bg-positive">
       <router-view></router-view>
     </q-card>
@@ -9,10 +10,11 @@
 </template>
 
 <script>
-import { ShareToolBarNav as ToolbarNav } from "components/MapLayoutComponent";
+import { ShareToolBarNav, ToolbarNav } from "components/MapLayoutComponent";
 export default {
   components: {
-    "toolbar-nav": ToolbarNav
+    "toolbar-nav": ToolbarNav,
+    "share-tool-bar-nav": ShareToolBarNav
   }
 };
 </script>
