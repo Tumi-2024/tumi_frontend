@@ -44,7 +44,11 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { tumiSections, sampleMarkers } from "./map-sample-data.js";
+import {
+  TUMI_SECTIONS_AREA,
+  TUMI_AREA_FOR_SALE,
+  TUMI_MARKERS
+} from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import { mapGetters } from "vuex";
@@ -58,7 +62,7 @@ export default {
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
-      markers: sampleMarkers,
+      markers: TUMI_MARKERS,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -146,13 +150,6 @@ export default {
         this.showInfoWindow = this.map.getZoom() > 15;
       }, 500);
     });
-    this.markers.push(
-      new this.google.maps.Marker({
-        position: { lat: 37.5326, lng: 127.024612 },
-        map: this.map,
-        title: "Hello World!"
-      })
-    );
     /**
      *  we use loadGeoJson() for url
      *  this.map.data.loadGeoJson("https:// url here /");
@@ -160,10 +157,13 @@ export default {
      *  we use addGeoJson() for direct
      *  this.map.data.addGeoJson({ object here })
      */
-    this.map.data.addGeoJson(tumiSections);
+    const geojsonTumi =
+      this.getMapMode === "default" ? TUMI_SECTIONS_AREA : TUMI_AREA_FOR_SALE;
+
+    this.map.data.addGeoJson(geojsonTumi);
     // apply styles on geojson layers
     this.map.data.setStyle(function(feature) {
-      const color = feature.getProperty("numbers") > 1 ? "#DF5103" : "#0BCDC7";
+      const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
       return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
     });
   },
