@@ -3,16 +3,20 @@
     <google-map class="map" />
     <sale-title />
     <land-for-sale-information class="q-mt-sm" :payload="availableDashButton" />
+    <redevelopment-information class="q-mt-sm" />
+    <recent-transaction-price class="q-mt-sm" />
   </div>
 </template>
 
 <script>
-import { SaleTitle, LandForSaleInformation } from "components/MapForSaleComponents"
+import { SaleTitle, LandForSaleInformation, RedevelopmentInformation, RecentTransactionPrice} from "components/MapForSaleComponents"
 import { GoogleMap } from "components/MapCityComponent"
 export default {
   components: {
     SaleTitle,
     LandForSaleInformation,
+    RecentTransactionPrice,
+    RedevelopmentInformation,
     'google-map': GoogleMap
   },
   computed: {
