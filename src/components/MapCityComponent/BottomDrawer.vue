@@ -12,11 +12,11 @@
       </q-card-section>
 
       <q-card-section class="redevelop-area-section q-pa-none" v-else>
-        <q-btn
-          unelevated
-          class="btn-public notosanskr-medium"
+        <q-badge
+          outline
+          color="primary"
+          class="badge-type notosanskr-medium"
           label="공공주택지구"
-          padding="0 4px"
         />
         <div class="info q-mt-sm notosanskr-medium">
           <div class="head">
@@ -87,13 +87,14 @@ export default {
 
 .redevelop-area-section {
   padding: 20px 16px;
-  .q-btn {
+  .badge-type {
     font-weight: bold;
     font-size: 12px;
     line-height: 24px;
     letter-spacing: -0.9px;
     color: #ff5100;
     border: #ff5100 1px solid;
+    padding: 0 4px;
   }
   .info {
     .head {
