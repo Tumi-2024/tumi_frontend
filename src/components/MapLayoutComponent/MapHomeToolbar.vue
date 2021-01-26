@@ -61,7 +61,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      dialogPropertyInfo: true,
+      dialogPropertyInfo: false,
       properties: [
         {
           title: "실거래가 조회",
