@@ -11,51 +11,19 @@
         </q-btn>
       </q-card-section>
 
-      <q-card-section class="redevelop-area-section q-pa-none" v-else>
-        <q-badge
-          outline
-          color="primary"
-          class="badge-type notosanskr-medium"
-          label="공공주택지구"
-        />
-        <div class="info q-mt-sm notosanskr-medium">
-          <div class="head">
-            <q-badge outline class="q-mr-xs" color="grey-6">
-              <q-icon size="14px">
-                <img src="~assets/icons/info-i.svg" />
-              </q-icon>
-            </q-badge>
-            서울영등포 공공주택지구
-          </div>
-          <div class="properties q-pt-xs notosanskr-regular">
-            <div class="row q-mt-xs">
-              <div class="title q-pr-xs">·위치 :</div>
-              <div class="content">
-                서울특별시 영등포구 영등포동 일원
-              </div>
-            </div>
-            <div class="row q-mt-xs">
-              <div class="title q-pr-xs">·면적 :</div>
-              <div class="content">
-                1,366㎡
-              </div>
-            </div>
-            <div class="row q-mt-xs">
-              <div class="title q-pr-xs">·사업단계 :</div>
-              <div class="content">
-                사업시행인가
-              </div>
-            </div>
-          </div>
-        </div>
-      </q-card-section>
+      <!-- Redevelopment Area Information | 재개발 구역정보 -->
+      <redevelopment-area-info v-else></redevelopment-area-info>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
+import RedevelopmentAreaInfo from "./RedevelopmentAreaInfo/Index";
 import { mapGetters } from "vuex";
 export default {
+  components: {
+    "redevelopment-area-info": RedevelopmentAreaInfo
+  },
   data() {
     return {
       dialog: ""
@@ -83,36 +51,5 @@ export default {
   text-align: center;
   letter-spacing: -1.2px;
   color: #1a1a1a;
-}
-
-.redevelop-area-section {
-  padding: 20px 16px;
-  .badge-type {
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 24px;
-    letter-spacing: -0.9px;
-    color: #ff5100;
-    border: #ff5100 1px solid;
-    padding: 0 4px;
-  }
-  .info {
-    .head {
-      font-weight: 500;
-      font-size: 16px;
-      letter-spacing: -1.2px;
-    }
-    .properties {
-      font-size: 13px;
-      line-height: 20px;
-      letter-spacing: -0.97px;
-      .title {
-        color: #707070;
-      }
-      .content {
-        color: #1a1a1a;
-      }
-    }
-  }
 }
 </style>
