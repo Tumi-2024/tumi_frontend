@@ -2,8 +2,11 @@
   <div style="background-color: #E8E8E8;">
     <div class="header-section notosanskr-medium">
       재개발 구역정보
-      <q-icon name="close" size="24px" />
+      <q-btn flat padding="8px" @click="$emit('hide')">
+        <q-icon name="close" size="24px" />
+      </q-btn>
     </div>
+
     <q-card class="bg-transparent" flat>
       <q-tabs
         v-model="tab"
@@ -56,8 +59,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-
+  padding-left: 16px;
   background: white;
   font-weight: 500;
   font-size: 17px;

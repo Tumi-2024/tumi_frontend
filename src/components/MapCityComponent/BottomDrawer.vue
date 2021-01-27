@@ -1,6 +1,11 @@
 <template>
-  <q-dialog v-model="dialog" seamless position="bottom">
-    <q-card>
+  <q-dialog
+    v-model="dialog"
+    :seamless="seamless"
+    position="bottom"
+    @hide="dialogReset"
+  >
+    <q-card flat>
       <q-card-section class="q-pa-none" v-if="getMapMode !== 'redevelop-area'">
         <q-btn
           flat
@@ -12,7 +17,11 @@
       </q-card-section>
 
       <!-- Redevelopment Area Information | 재개발 구역정보 -->
-      <redevelopment-area-info v-else></redevelopment-area-info>
+      <redevelopment-area-info
+        @seamless-off="seamless = false"
+        @hide="dialogReset"
+        v-else
+      ></redevelopment-area-info>
     </q-card>
   </q-dialog>
 </template>
@@ -26,11 +35,18 @@ export default {
   },
   data() {
     return {
-      dialog: ""
+      dialog: "",
+      seamless: true
     };
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
+  },
+  methods: {
+    dialogReset() {
+      this.dialog = true;
+      this.seamless = true;
+    }
   }
 };
 </script>

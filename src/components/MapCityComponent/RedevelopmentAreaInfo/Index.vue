@@ -6,7 +6,7 @@
       @showSummaryInfo="showSummaryInfo = false"
     />
     <!-- Full Redevelopment Area Info 재개발 구역정보 -->
-    <information-full v-else></information-full>
+    <information-full @hide="hide" v-else></information-full>
   </q-card-section>
 </template>
 
@@ -22,6 +22,17 @@ export default {
     return {
       showSummaryInfo: true
     };
+  },
+  methods: {
+    hide() {
+      this.$emit("hide");
+      this.showSummaryInfo = true;
+    }
+  },
+  watch: {
+    showSummaryInfo() {
+      !this.showSummaryInfo && this.$emit("seamless-off");
+    }
   }
 };
 </script>
