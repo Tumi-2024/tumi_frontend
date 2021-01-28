@@ -5,7 +5,7 @@
     position="bottom"
     @hide="dialogReset"
   >
-    <q-card flat>
+    <q-card flat class="overflow-hidden">
       <q-card-section class="q-pa-none" v-if="getMapMode !== 'redevelop-area'">
         <q-btn
           flat
