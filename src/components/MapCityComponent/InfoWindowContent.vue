@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="width: 192px; overflow-y: hidden">
+  <div class="row" style="width: 192px; overflow-y: hidden" @click="viewArea()">
     <q-img
       src="~assets/icons/house_orange.svg"
       spinner-color="white"
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     marker: {
@@ -36,6 +37,19 @@ export default {
       default() {
         return {};
       }
+    }
+  },
+  methods: {
+    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    viewArea() {
+      this.changeMapMode("transaction");
+      this.changeMapZoom(17);
+      this.changeMapCenter({
+        lat: 37.54439180667893,
+        lng: 127.04601120488171
+      });
+      this.$route.name !== "map_for_sale" &&
+        this.$router.push({ name: "map_for_sale" });
     }
   }
 };

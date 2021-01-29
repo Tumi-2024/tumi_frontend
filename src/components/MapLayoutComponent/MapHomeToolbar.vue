@@ -5,6 +5,7 @@
     class="row justify-between items-center q-pr-md"
     style="height: 60px"
   >
+    <!-- left section items -->
     <q-btn class="row" @click="toggleHeaderTitle()" flat padding="4px 16px">
       <div class="helper text-left col-12 notosanskr-regular">
         {{ getToolbarLabel }}
@@ -16,7 +17,8 @@
         </div>
       </div>
     </q-btn>
-    <div>
+    <!-- right section-items -->
+    <section>
       <q-btn flat padding="4px" :to="{ name: 'my_page' }">
         <q-icon name="menu" size="24px"></q-icon>
       </q-btn>
@@ -25,16 +27,41 @@
           <img src="~assets/icons/regular-house.svg" alt="" />
         </q-icon>
       </q-btn>
-    </div>
-    <!-- Dialog Section for Property Information | 찾아볼 매물 정보 -->
+    </section>
+    <!--
+      Dialog Section for Property Information | 찾아볼 매물 정보
+      this Dialog will show if getMapMode is not "default"
+      -->
     <q-dialog v-model="dialogPropertyInfo" position="bottom">
       <q-card class="notosanskr-regular">
         <q-card-section class="header-title bg-white notosanskr-medium">
           찾아볼 매물 정보
         </q-card-section>
 
-        <q-card-section class="q-pa-none bg-white notosanskr-medium">
-          conte
+        <q-card-section class="row bg-white q-pa-none notosanskr-medium">
+          <div v-for="(item, i) of properties" :key="i" class="col-3">
+            <q-btn flat padding="12px 0" class="full-width">
+              <q-icon size="56px">
+                <img
+                  :src="require(`assets/icons/${item.iconSrc}`)"
+                  alt="icon"
+                />
+              </q-icon>
+              <div class="col-12">
+                {{ item.title }}
+              </div>
+            </q-btn>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="bg-white">
+          <q-btn
+            color="primary"
+            unelevated
+            text-color="positive"
+            label="정보 조회하기"
+            class="btn-retrieving-info full-width notosanskr-medium"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -46,7 +73,29 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      dialogPropertyInfo: null
+      dialogPropertyInfo: false,
+      properties: [
+        {
+          title: "실거래가 조회",
+          iconSrc: "PropertyInfoDialog/actual-transaction-price.svg"
+        },
+        {
+          title: "재개발 매물",
+          iconSrc: "PropertyInfoDialog/redevelopment-forsale.svg"
+        },
+        {
+          title: "아파트매물",
+          iconSrc: "PropertyInfoDialog/apartment-forsale.svg"
+        },
+        {
+          title: "재개발 구역 정보",
+          iconSrc: "PropertyInfoDialog/redevelopment-area-info.svg"
+        },
+        {
+          title: "부동산 인사이트",
+          iconSrc: "PropertyInfoDialog/real-estate-insight.svg"
+        }
+      ]
     };
   },
   computed: {
@@ -94,6 +143,15 @@ export default {
       line-height: 26px;
       letter-spacing: -1.2px;
       color: #1a1a1a;
+    }
+
+    .btn-retrieving-info {
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 52px;
+      text-align: center;
+      letter-spacing: -1.275px;
+      border-radius: 12px;
     }
   }
 }
