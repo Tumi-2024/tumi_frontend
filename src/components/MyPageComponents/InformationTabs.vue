@@ -36,7 +36,7 @@
       </q-card>
     </q-expansion-item>
 
-    <q-btn padding="0px" align="left" flat class="item row full-width" :to="{path: '/insights/부동산팁'}">
+    <q-btn padding="0px" align="left" flat class="item row full-width" :to="{path: '/insights/tips'}">
       <div class="row">
         <div class="text col-12 notosanskr-medium">부동산 인사이트</div>
         <span class="highlighter full-width q-py-xs"></span>
