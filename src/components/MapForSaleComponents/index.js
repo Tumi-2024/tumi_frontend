@@ -1,11 +1,11 @@
-import SaleTitle from './SaleTitle'
-import LandForSaleInformation from './LandForSaleInformation'
-import RedevelopmentInformation from './RedevelopmentInformation'
-import RecentTransactionPrice from './RecentTransactionPrice'
+import DetailSummary from "./DetailSummary";
+import LandForSaleInformation from "./LandForSaleInformation";
+import RedevelopmentInformation from "./RedevelopmentInformation";
+import RecentTransactionPrice from "./RecentTransactionPrice";
 
 export {
-  SaleTitle,
+  DetailSummary,
   LandForSaleInformation,
   RecentTransactionPrice,
   RedevelopmentInformation
-}
+};

@@ -1,7 +1,7 @@
 <template>
   <div>
     <google-map class="map" setMapAreaView />
-    <sale-title />
+    <detail-summary />
     <land-for-sale-information class="q-mt-sm" :payload="availableDashButton" />
     <redevelopment-information class="q-mt-sm" />
     <recent-transaction-price class="q-mt-sm" />
@@ -9,11 +9,16 @@
 </template>
 
 <script>
-import { SaleTitle, LandForSaleInformation, RedevelopmentInformation, RecentTransactionPrice} from "components/MapForSaleComponents"
+import {
+  DetailSummary,
+  LandForSaleInformation,
+  RedevelopmentInformation,
+  RecentTransactionPrice
+} from "components/MapForSaleComponents"
 import { GoogleMap } from "components/MapCityComponent"
 export default {
   components: {
-    SaleTitle,
+    DetailSummary,
     LandForSaleInformation,
     RecentTransactionPrice,
     RedevelopmentInformation,
@@ -62,14 +67,6 @@ export default {
   }
 };
 </script>
-
-<div class="column justify-center content-center items-center">
-            <q-icon size="32px">
-              <img src="~/assets/icons/LandForSaleInformationIcons/completion.svg"/>
-            </q-icon>
-            <div class="title q-mt-sm"></div>
-            <div class="sub-title q-mt-xs">대지면적</div>
-          </div>
 
 <style lang="scss" scoped>
 .map {
