@@ -115,6 +115,12 @@ export default {
       ]
     };
   },
+  props: {
+    setMapAreaView: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     ...mapGetters("map", [
       "getMapMode",
@@ -132,10 +138,13 @@ export default {
     this.map.panTo(this.getMapCenter);
     this.showInfoWindow = this.map.getZoom() > 15;
     // apply options to map
+    // here we can overide "getMapOptions" values
     this.map.setOptions({
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
-      }
+      },
+      zoomControl: !this.setMapAreaView,
+      scrollwheel: !this.setMapAreaView
     });
     // apply click event on map
     this.map.addListener("click", e => {

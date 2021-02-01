@@ -1,6 +1,6 @@
 <template>
   <div>
-    <google-map class="map" />
+    <google-map class="map" setMapAreaView />
     <sale-title />
     <land-for-sale-information class="q-mt-sm" :payload="availableDashButton" />
     <redevelopment-information class="q-mt-sm" />
