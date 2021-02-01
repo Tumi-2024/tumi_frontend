@@ -1,7 +1,8 @@
 <template>
   <q-card-section class="toolbar q-pa-none bg-white">
     <div class="row q-ml-sm">
-      <q-btn flat padding="0px" :to="{ name: returnBtn.pathName }">
+      <!-- <q-btn flat padding="0px" :to="{ name: returnBtn.pathName }"> -->
+      <q-btn flat padding="0px" @click="$router.go(-1)">
         <q-icon name="keyboard_backspace" size="24px" class="q-mr-sm"></q-icon>
       </q-btn>
       <q-separator vertical inset />
