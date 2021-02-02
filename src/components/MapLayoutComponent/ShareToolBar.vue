@@ -1,6 +1,6 @@
 <template>
   <q-card-section class="toolbar">
-    <q-btn flat padding="0px 8px 0 16px" class="row">
+    <q-btn flat padding="0px 8px 0 16px" class="row" :to="{ name: 'map_city' }">
       <div>
         <q-icon name="keyboard_backspace" size="24px" class="q-mr-sm"></q-icon>
       </div>
@@ -10,13 +10,13 @@
 
     <!-- Right side starts here -->
     <div class="flex-row">
-      <q-btn flat padding="0 8px" class="bg-white add-area">
+      <q-btn flat padding="0 8px" class="bg-white">
         <q-icon size="44px">
           <img src="~assets/icons/like.svg" alt="" />
         </q-icon>
       </q-btn>
 
-      <q-btn flat padding="0 8px" class="bg-white add-area">
+      <q-btn flat padding="0 8px" class="bg-white">
         <q-icon size="44px">
           <img src="~assets/icons/share.svg" alt="" />
         </q-icon>
@@ -26,27 +26,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      returnBtn: {
-        label: "",
-        pathName: ""
-      }
-    };
-  },
-  mounted() {
-    const path = this.$route.path.split("/")[1];
-    if (path === "my-page") {
-      this.returnBtn.label = "내 관심 매물";
-      this.returnBtn.pathName = "my_page";
-    }
-    if (path === "real-estate") {
-      this.returnBtn.label = "부동산 인사이드";
-      this.returnBtn.pathName = "my_page";
-    }
-  }
-};
+export default {};
 </script>
 
 <style scoped>
@@ -58,14 +38,6 @@ export default {
   align-items: center;
   padding: 0;
   background: white;
-}
-.add-area {
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 44px;
-  text-align: right;
-  letter-spacing: -1.2px;
-  color: #1a1a1a;
 }
 .heading-nav-bar {
   font-family: "notosanskr-medium";
