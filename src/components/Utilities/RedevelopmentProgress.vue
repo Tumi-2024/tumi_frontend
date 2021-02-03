@@ -7,13 +7,13 @@
     <div class="info notosanskr-regular">
       <div v-for="(item, i) of items" :key="i" class="item row">
         <div
-          class="title col-4 col-md-2"
+          class="title col-5"
           :class="{ 'text-primary': i === items.length - 1 }"
         >
           {{ item.title }}
         </div>
 
-        <div class="date col-8 col-md-10" v-if="item.date">
+        <div class="date col" v-if="item.date">
           <q-icon class="q-pr-sm" name="done" color="secondary" size="18px" />
           {{ item.date }}
         </div>
