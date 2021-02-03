@@ -32,31 +32,7 @@
       </div>
     </section>
 
-    <section class="progress-section bg-white">
-      <div class="title-heading notosanskr-medium">
-        진행단계
-      </div>
-
-      <div class="info notosanskr-regular">
-        <div v-for="(item, i) of progress" :key="i" class="item row">
-          <div
-            class="title col-4 col-md-2"
-            :class="{ 'text-primary': i === progress.length - 1 }"
-          >
-            {{ item.title }}
-          </div>
-
-          <div class="date col-8 col-md-10" v-if="item.date">
-            <q-icon class="q-pr-sm" name="done" color="secondary" size="18px" />
-            {{ item.date }}
-          </div>
-          <div class="row justify-start items-center" v-else>
-            <div class="bg-dark q-ml-lg" style="height: 2px; width: 4px"></div>
-            <q-icon name="horizontal_rule" size="20px" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <redevelopment-progress :items="progress" title="진행단계" />
 
     <section class="investment-point notosanskr-regular">
       <div class="title-heading notosanskr-medium">
@@ -78,7 +54,11 @@
 </template>
 
 <script>
+import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
 export default {
+  components: {
+    "redevelopment-progress": RedevelopmentProgress
+  },
   data() {
     return {
       stats: [
@@ -194,34 +174,6 @@ export default {
       line-height: 24px;
       letter-spacing: -1.2px;
       color: #1a1a1a;
-    }
-  }
-
-  .progress-section {
-    padding: 24px 16px;
-    .title-heading {
-      font-weight: 500;
-      font-size: 17px;
-      line-height: 26px;
-      letter-spacing: -1.275px;
-      color: #1a1a1a;
-    }
-    .info {
-      padding-top: 15px;
-      .item {
-        padding: 5px 0;
-        font-size: 14px;
-        line-height: 22px;
-        letter-spacing: -1.05px;
-        .title {
-          color: #707070;
-        }
-        .date {
-          display: flex;
-          align-items: center;
-          color: #1a1a1a;
-        }
-      }
     }
   }
 
