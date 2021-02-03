@@ -1,59 +1,56 @@
 <template>
-  <q-card flat>
-    <q-card-section>
-      <LandForSaleInformationList title="재개발 정보" :is-icon="true" :payload="payload" />
-    </q-card-section>
-  </q-card>
+  <q-card-section class="q-pa-none">
+    <redevelopment-progress title="재개발 정보" :items="stats" />
+  </q-card-section>
 </template>
 <script>
-import LandForSaleInformationList from './LandForSaleInformationList'
+import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
 
 export default {
+  components: {
+    "redevelopment-progress": RedevelopmentProgress
+  },
   data() {
     return {
-      payload: [
+      stats: [
         {
-          label: '추진위원회 승인',
-          value: '2004.07.20'
+          title: "추진위원회 승인",
+          date: "2004.07.20"
         },
         {
-          label: '정비구역지정',
-          value: '2005.05.19'
+          title: "정비구역지정",
+          date: "2005.05.19"
         },
         {
-          label: '조합설립인가',
-          value: '2005.05.19'
+          title: "조합설립인가",
+          date: "2005.05.19"
         },
         {
-          label: '시공사',
-          value: null
+          title: "시공사",
+          date: null
         },
         {
-          label: '사업시행인가',
-          value: '2005.05.19'
+          title: "사업시행인가",
+          date: "2005.05.19"
         },
         {
-          label: '관리처분인가',
-          value: '2005.05.19'
+          title: "관리처분인가",
+          date: "2005.05.19"
         },
         {
-          label: '착공',
-          value: '2005.05.19'
+          title: "착공",
+          date: "2005.05.19"
         },
         {
-          label: '일반분양',
-          value: null
+          title: "일반분양",
+          date: null
         },
         {
-          label: '준공인가',
-          value: '2005.05.19',
-          highlight: true
+          title: "준공인가",
+          date: "2005.05.19"
         }
       ]
-    }
-  },
-  components: {
-    LandForSaleInformationList
+    };
   }
-}
+};
 </script>
