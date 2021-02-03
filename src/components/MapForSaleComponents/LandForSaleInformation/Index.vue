@@ -1,12 +1,14 @@
 <template>
   <q-card flat>
-    <q-card-section>
-      <div class="heading-title">토지 매물정보</div>
+    <q-card-section class="q-pa-md heading-title">
+      토지 매물정보
     </q-card-section>
 
     <sale-summary />
+
     <q-separator spaced />
-    <sale-more-information :payload="MoreInformationList" />
+
+    <sale-more-information />
   </q-card>
 </template>
 
@@ -21,50 +23,7 @@ export default {
   },
   props: {},
   data() {
-    return {
-      MoreInformationList: [
-        {
-          label: "거래유형",
-          value: "토지매매"
-        },
-        {
-          label: "대지면적",
-          value: "2,275㎡ (688평)"
-        },
-        {
-          label: "건물면적",
-          value: "375㎡ (113평)"
-        },
-        {
-          label: "공용면적",
-          value: null
-        },
-        {
-          label: "용도지역",
-          value: "일반상업"
-        },
-        {
-          label: "지목",
-          value: "대"
-        },
-        {
-          label: "이용상황",
-          value: "상업용"
-        },
-        {
-          label: "공지시가",
-          value: "2천 115만"
-        },
-        {
-          label: "도로접면",
-          value: "세로한면(불)"
-        },
-        {
-          label: "지세",
-          value: "평지"
-        }
-      ]
-    };
+    return {};
   }
 };
 </script>
