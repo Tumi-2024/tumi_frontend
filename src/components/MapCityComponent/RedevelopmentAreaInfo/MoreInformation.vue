@@ -32,30 +32,33 @@
       </div>
     </section>
 
-    <section class="progress-section bg-white">
+    <redevelopment-progress :items="progress" title="진행단계" />
+
+    <section class="investment-point notosanskr-regular">
       <div class="title-heading notosanskr-medium">
-        진행단계
+        투자포인트
+      </div>
+      <div class="item">
+        ·주변 재개발 지역의 <span class="text-primary">지속적 분양</span>으로
+        인한 인지도 및 <span class="text-primary">주목도</span> 향상
       </div>
 
-      <div class="info">
-        <div v-for="(item, i) of progress" :key="i" class="item row">
-          <div class="title col-4 col-md-2 notosanskr-regular">
-            {{ item.title }}
-          </div>
-          <div class="date col-8 col-md-10 notosanskr-regular">
-            <q-icon class="q-pr-sm" name="done" color="secondary" size="18px" />
-            {{ item.date || "---" }}
-          </div>
-        </div>
+      <div class="item">
+        ·서울 4대공원 중 하나인
+        <span class="text-primary">북서울 꿈의 숲</span> 인접한 Park-front대단지
       </div>
     </section>
 
-    <section class="q-py-xl"></section>
+    <section style="min-height: 180px;"></section>
   </div>
 </template>
 
 <script>
+import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
 export default {
+  components: {
+    "redevelopment-progress": RedevelopmentProgress
+  },
   data() {
     return {
       stats: [
@@ -174,7 +177,9 @@ export default {
     }
   }
 
-  .progress-section {
+  .investment-point {
+    background: white;
+    margin-top: 8px;
     padding: 24px 16px;
     .title-heading {
       font-weight: 500;
@@ -182,23 +187,15 @@ export default {
       line-height: 26px;
       letter-spacing: -1.275px;
       color: #1a1a1a;
+      padding-bottom: 10px;
     }
-    .info {
-      padding-top: 15px;
-      .item {
-        padding: 5px 0;
-        font-size: 14px;
-        line-height: 22px;
-        letter-spacing: -1.05px;
-        .title {
-          color: #707070;
-        }
-        .date {
-          display: flex;
-          align-items: center;
-          color: #1a1a1a;
-        }
-      }
+
+    .item {
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: -1.05px;
+      color: #1a1a1a;
+      padding-top: 10px;
     }
   }
 }

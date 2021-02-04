@@ -30,16 +30,16 @@
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated class="bg-transparent ">
+        <!-- More Information | 상세정보 -->
         <q-tab-panel
           name="more_information"
           class="bg-transparent q-pa-none q-ma-none"
         >
           <more-information></more-information>
         </q-tab-panel>
-
-        <q-tab-panel name="image_material" class="image-material">
-          <div class="text-h6">이미지 자료</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <!-- Image material | 이미지 자료 -->
+        <q-tab-panel name="image_material" class="q-pa-none q-ma-none">
+          <image-material></image-material>
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -48,9 +48,11 @@
 
 <script>
 import MoreInformation from "./MoreInformation";
+import ImageMaterial from "./ImageMaterial";
 export default {
   components: {
-    "more-information": MoreInformation
+    "more-information": MoreInformation,
+    "image-material": ImageMaterial
   },
   data() {
     return {
@@ -80,9 +82,5 @@ export default {
   text-align: center;
   letter-spacing: -1.2px;
   color: #707070;
-}
-.image-material {
-  overflow-y: auto;
-  height: 90vh;
 }
 </style>
