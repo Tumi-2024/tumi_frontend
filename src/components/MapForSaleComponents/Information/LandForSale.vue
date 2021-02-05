@@ -94,4 +94,30 @@ export default {
   letter-spacing: -1.275px;
   color: #1a1a1a;
 }
+.information-btn {
+  .title {
+    font-family: "notosanskr-medium";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+  }
+  .sub-title {
+    font-family: "notosanskr-medium";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: -0.975px;
+    color: #707070;
+  }
+
+  &.border-bottom-dashed {
+    border-bottom: 2px dashed rgba(187, 186, 186, 0.466);
+  }
+}
 </style>

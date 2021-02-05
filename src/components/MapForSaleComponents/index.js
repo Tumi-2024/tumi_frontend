@@ -1,12 +1,12 @@
 import DetailSummary from "./DetailSummary";
-import LandForSaleInformation from "./BasicInformation/LandForSaleInformation.vue";
+import LandForSale from "./Information/LandForSale.vue";
 import MoreInformation from "./MoreInformation";
 import RedevelopmentInformation from "./RedevelopmentInformation";
 import RecentTransactionPrice from "./RecentTransactionPrice";
 
 export {
   DetailSummary,
-  LandForSaleInformation,
+  LandForSale,
   MoreInformation,
   RecentTransactionPrice,
   RedevelopmentInformation
