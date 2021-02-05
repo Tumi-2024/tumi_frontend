@@ -1,13 +1,23 @@
 <template>
-  <q-card>
+  <q-card flat>
     <q-card-section>
       <div class="title-heading-transaction">최근 실거래가</div>
     </q-card-section>
     <q-card-section>
       <div class="column latest-transaction-board q-pa-md">
         <div class="col q-gutter-sm">
-          <q-badge class="info-badge" color="white" text-color="primary" label="매매가" />
-          <q-badge class="info-badge" color="white" text-color="grey-8" label="2015년 06월" />
+          <q-badge
+            class="info-badge"
+            color="white"
+            text-color="primary"
+            label="매매가"
+          />
+          <q-badge
+            class="info-badge"
+            color="white"
+            text-color="grey-8"
+            label="2015년 06월"
+          />
         </div>
         <div class="col price q-mt-sm">
           118억 5,420만
@@ -33,18 +43,18 @@
 </template>
 
 <script>
-import InformationTable from 'src/components/Utilities/InformationTable'
+import InformationTable from "src/components/Utilities/InformationTable";
 
 export default {
   components: {
     InformationTable
   }
-}
+};
 </script>
 
 <style lang="scss">
 .info-badge {
-  border: 1px solid #D5D5D5;
+  border: 1px solid #d5d5d5;
   font-size: 12px;
   display: flex;
   flex-direction: row;
@@ -52,7 +62,7 @@ export default {
   align-items: center;
   border-radius: 4px;
 
-  font-family: 'notosanskr-bold';
+  font-family: "notosanskr-bold";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -64,7 +74,7 @@ export default {
 }
 
 .unit-price {
-  font-family: 'notosanskr-regular';
+  font-family: "notosanskr-regular";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -73,27 +83,27 @@ export default {
 }
 
 .latest-transaction-board {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   border-radius: 12px;
 }
 
 .price {
-  font-family: 'notosanskr-bold';
+  font-family: "notosanskr-bold";
   font-style: normal;
   font-weight: 500;
   font-size: 21px;
   line-height: 32px;
   letter-spacing: -1.575px;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 .title-heading-transaction {
-  font-family: 'notosanskr-bold';
+  font-family: "notosanskr-bold";
   font-style: normal;
   font-weight: 500;
   font-size: 17px;
   line-height: 26px;
   letter-spacing: -1.275px;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 </style>
