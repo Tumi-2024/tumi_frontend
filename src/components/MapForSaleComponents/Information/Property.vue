@@ -70,7 +70,7 @@
 <script>
 import ItemAttribute from "../Common/ItemAttribute";
 export default {
-  name: "land-for-sale-information",
+  name: "InformationProperty",
   components: {
     ItemAttribute
   },

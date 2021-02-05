@@ -6,29 +6,54 @@
 
     <q-card-section class="q-pa-none">
       <div class="row">
-        <q-btn
-          v-for="(item, i) of items"
-          :key="i"
-          flat
-          class="col-3 information-btn q-py-md"
-          :class="{ 'border-bottom-dashed': i < 4 }"
-        >
-          <div class="column justify-center content-center items-center">
-            <q-icon size="32px">
-              <img
-                v-if="item.icon"
-                :src="require(`assets/icons/LandSaleInformation/${item.icon}`)"
-              />
-            </q-icon>
-            <div class="title q-mt-sm" v-if="!item.value">
-              <q-icon size="20px">
-                <img src="~/assets/icons/empty.svg" />
-              </q-icon>
-            </div>
-            <div class="title q-mt-sm" v-else>{{ item.value }}</div>
-            <div class="sub-title q-mt-xs">{{ item.label }}</div>
-          </div>
-        </q-btn>
+        <!-- landArea -->
+        <ItemAttribute borderBottom label="대지면적" :value="landArea">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/land_area.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- buildingArea -->
+        <ItemAttribute borderBottom label="건물면적" :value="buildingArea">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/building_area.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- numberFloors -->
+        <ItemAttribute borderBottom label="임대현황" :value="rentalStatus">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/rent.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- stationArea -->
+        <ItemAttribute borderBottom label="진행단계" :value="progress">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/progress.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- connoisseur -->
+        <ItemAttribute label="감정가" :value="connoisseur">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/connoisseur.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- right -->
+        <ItemAttribute label="권리가" :value="right">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/right.svg" />
+          </template>
+        </ItemAttribute>
+
+        <!-- premiumPrice -->
+        <ItemAttribute label="프리미엄가" :value="premiumPrice">
+          <template v-slot:icon>
+            <img src="~assets/icons/LandSaleInformation/progress.svg" />
+          </template>
+        </ItemAttribute>
       </div>
     </q-card-section>
     <q-separator />
@@ -36,50 +61,45 @@
 </template>
 
 <script>
+import ItemAttribute from "../Common/ItemAttribute";
 export default {
-  name: "land-for-sale-information",
-  props: {},
+  name: "InformationLandForSale",
+  components: {
+    ItemAttribute
+  },
+  props: {
+    landArea: {
+      type: String,
+      default: ""
+    },
+    buildingArea: {
+      type: String,
+      default: ""
+    },
+    rentalStatus: {
+      type: String,
+      default: ""
+    },
+    progress: {
+      type: String,
+      default: ""
+    },
+    connoisseur: {
+      type: String,
+      default: ""
+    },
+    right: {
+      type: String,
+      default: ""
+    },
+    premiumPrice: {
+      type: String,
+      default: ""
+    }
+  },
 
   data() {
-    return {
-      items: [
-        {
-          value: "2,275㎡",
-          label: "대지면적",
-          icon: "land_area.svg"
-        },
-        {
-          value: "2,275㎡",
-          label: "대지면적",
-          icon: "building_area.svg"
-        },
-        {
-          value: "",
-          label: "대지면적",
-          icon: "rent.svg"
-        },
-        {
-          value: "준공인가",
-          label: "진행단계",
-          icon: "completion.svg"
-        },
-        {
-          value: "2,275㎡",
-          label: "대지면적",
-          icon: "building_area.svg"
-        },
-        {
-          value: "",
-          label: "감정가",
-          icon: "connoisseur.svg"
-        },
-        {
-          value: "2,275㎡",
-          label: "대지면적",
-          icon: "completion.svg"
-        }
-      ]
-    };
+    return {};
   }
 };
 </script>

@@ -3,7 +3,16 @@
     <google-map class="map" setMapAreaView />
     <detail-summary />
     <!--  토지 매물정보  -->
-    <information-land-for-sale class="q-mt-sm" />
+    <information-land-for-sale
+      landArea="2,275㎡"
+      buildingArea="2,275㎡"
+      rentalStatus=""
+      progress="준공인가"
+      connoisseur=""
+      right=""
+      premiumPrice=""
+      class="q-mt-sm"
+    />
     <more-information
       transactionType="토지매매"
       landArea="2,275㎡ (688평)"
@@ -50,9 +59,6 @@ export default {
     RecentTransactionPrice,
     RedevelopmentInformation,
     "google-map": GoogleMap
-  },
-  data() {
-    return {};
   }
 };
 </script>
