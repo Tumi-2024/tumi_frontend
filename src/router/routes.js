@@ -51,7 +51,8 @@ const routes = [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
       { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' },
-      { path: 'for-sale/land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'map_sale_land' }
+      { path: 'for-sale/land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'map_sale_land' },
+      { path: 'for-sale/apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'map_sale_apartment' }
     ]
   },
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
