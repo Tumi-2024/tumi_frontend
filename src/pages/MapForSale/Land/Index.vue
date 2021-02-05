@@ -2,6 +2,7 @@
   <div>
     <google-map class="map" setMapAreaView />
     <detail-summary />
+    <!--  토지 매물정보  -->
     <land-for-sale-information class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
@@ -15,9 +16,18 @@
       roadInterface="세로한면(불)"
       terrain="평지"
     />
+    <!-- 재개발 정보 -->
     <redevelopment-information
+      approvalPromotionCommittee="2004.07.20"
+      designationMaintenanceArea="2005.05.19"
+      associationEstablishment="2005.05.19"
+      constructorDate=""
+      projectImplementationAuthorization="2005.05.19"
+      managementDispositionAuthorization="2005.05.19"
+      startConstruction="2005.05.19"
+      generalSales=""
+      completion="2005.05.19"
       class="q-mt-sm"
-      :items="redevelopmentInformations"
     />
     <recent-transaction-price class="q-mt-sm" />
   </div>
