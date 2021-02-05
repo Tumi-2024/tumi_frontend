@@ -40,7 +40,7 @@
 
         <q-card-section class="row bg-white q-pa-none notosanskr-medium">
           <div v-for="(item, i) of properties" :key="i" class="col-3">
-            <q-btn flat padding="12px 0" class="full-width">
+            <q-btn flat padding="12px 0" class="full-width" @click="() => dialogPropertyInfo = false">
               <q-icon size="56px">
                 <img
                   :src="require(`assets/icons/${item.iconSrc}`)"
@@ -54,7 +54,7 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="bg-white">
+        <!-- <q-card-section class="bg-white">
           <q-btn
             color="primary"
             unelevated
@@ -62,7 +62,7 @@
             label="정보 조회하기"
             class="btn-retrieving-info full-width notosanskr-medium"
           />
-        </q-card-section>
+        </q-card-section> -->
       </q-card>
     </q-dialog>
   </q-card>
