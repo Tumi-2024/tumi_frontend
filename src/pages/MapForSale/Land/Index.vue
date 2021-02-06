@@ -12,14 +12,51 @@
       :quote="'“상업단지, 돈되는 땅”'"
     />
     <!--  토지 매물정보  -->
-    <information-land-for-sale
-      landArea="2,275㎡"
-      buildingArea="2,275㎡"
-      rentalStatus=""
-      progress="준공인가"
-      connoisseur=""
-      right=""
-      premiumPrice=""
+    <area-information
+      :informations="[
+        {
+          // land Area
+          label: '대지면적',
+          value: '2,275㎡',
+          icon: 'land-area.svg'
+        },
+        {
+          // building area
+          label: '건물면적',
+          value: '375㎡',
+          icon: 'building-area.svg'
+        },
+        {
+          // rental status
+          label: '임대현황',
+          value: '',
+          icon: 'rent.svg'
+        },
+        {
+          // progress
+          label: '진행단계',
+          value: '준공인가',
+          icon: 'progress.svg'
+        },
+        {
+          // connoisseur
+          label: '감정가',
+          value: '',
+          icon: 'connoisseur.svg'
+        },
+        {
+          // Right
+          label: '권리가',
+          value: '',
+          icon: 'right.svg'
+        },
+        {
+          // Premium price
+          label: '프리미엄가',
+          value: '',
+          icon: 'premium-price.svg'
+        }
+      ]"
       class="q-mt-sm"
     />
     <more-information
@@ -54,7 +91,7 @@
 <script>
 import {
   DetailSummary,
-  InformationLandForSale,
+  AreaInformation,
   MoreInformation,
   RedevelopmentInformation,
   RecentTransactionPrice
@@ -63,7 +100,7 @@ import { GoogleMap } from "components/MapCityComponent";
 export default {
   components: {
     DetailSummary,
-    InformationLandForSale,
+    AreaInformation,
     MoreInformation,
     RecentTransactionPrice,
     RedevelopmentInformation,

@@ -6,11 +6,19 @@
     style="height: 60px"
   >
     <div class="row flex items-center justify-center">
-      <div class="back-btn-border flex justify-center items-center content-center">
-        <q-btn class="back-btn flex justify-center items-center content-center" flat @click="$router.go(-1)">
-          <q-icon name="img:icons/home-page-icon/search-result-icon/back-btn.svg" />
+      <div
+        class="back-btn-border flex justify-center items-center content-center"
+      >
+        <q-btn
+          class="back-btn flex justify-center items-center content-center"
+          flat
+          @click="$router.go(-1)"
+        >
+          <q-icon
+            name="img:icons/home-page-icon/search-result-icon/back-btn.svg"
+          />
         </q-btn>
-      </div> 
+      </div>
       <q-separator class="q-mr-sm" vertical inset />
       <div class="location-text q-mt-xs notosanskr-medium">
         동대문구 전농동
@@ -19,12 +27,12 @@
     <div>
       <q-btn flat padding="4px" :to="{ name: 'my_page' }">
         <q-icon size="24px">
-          <img src="~assets/icons/ActualTransactionIcons/like.svg" alt="" />
+          <img src="~assets/icons/ActualTransaction/like.svg" alt="" />
         </q-icon>
       </q-btn>
-      <q-btn flat padding="4px" :to="{name: 'home' }">
+      <q-btn flat padding="4px" :to="{ name: 'home' }">
         <q-icon size="24px">
-          <img src="~assets/icons/ActualTransactionIcons/share.svg" alt="" />
+          <img src="~assets/icons/ActualTransaction/share.svg" alt="" />
         </q-icon>
       </q-btn>
     </div>

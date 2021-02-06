@@ -1,14 +1,12 @@
 import DetailSummary from "./DetailSummary";
-import InformationLandForSale from "./Information/LandForSale.vue";
-import InformationProperty from "./Information/Property.vue";
+import AreaInformation from "./AreaInformation";
 import MoreInformation from "./MoreInformation";
 import RedevelopmentInformation from "./RedevelopmentInformation";
 import RecentTransactionPrice from "./RecentTransactionPrice";
 
 export {
   DetailSummary,
-  InformationLandForSale,
-  InformationProperty,
+  AreaInformation,
   MoreInformation,
   RecentTransactionPrice,
   RedevelopmentInformation

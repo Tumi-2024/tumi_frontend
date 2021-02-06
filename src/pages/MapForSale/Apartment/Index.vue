@@ -14,15 +14,57 @@
       quote='“해당 세대 중 유일하게 야외 정원이 있는 집"'
     />
     <!--  토지 매물정보  -->
-    <information-property
-      exclusiveArea="130㎡"
-      direction="남서향"
-      numberFloors="고층"
-      stationArea="서초역"
-      connoisseur=""
-      right=""
-      premiumPrice="1억"
-      progress="준공인가"
+    <area-information
+      :informations="[
+        {
+          // exclusive Area
+          label: '전용면적',
+          value: '130㎡',
+          icon: 'land-area.svg'
+        },
+        {
+          // direction
+          label: '방향',
+          value: '남서향',
+          icon: 'direction.svg'
+        },
+        {
+          // number of floors
+          label: '층수',
+          value: '고층',
+          icon: 'number-floors.svg'
+        },
+        {
+          // station-area
+          label: '역세권',
+          value: '서초역',
+          icon: 'station-area.svg'
+        },
+        {
+          // connoisseur
+          label: '감정가',
+          value: '',
+          icon: 'connoisseur.svg'
+        },
+        {
+          // Right
+          label: '권리가',
+          value: '',
+          icon: 'right.svg'
+        },
+        {
+          // Premium price
+          label: '프리미엄가',
+          value: '1억',
+          icon: 'premium-price.svg'
+        },
+        {
+          // progress
+          label: '진행단계',
+          value: '준공인가',
+          icon: 'progress.svg'
+        }
+      ]"
       class="q-mt-sm"
     />
     <more-information
@@ -59,7 +101,7 @@
 <script>
 import {
   DetailSummary,
-  InformationProperty,
+  AreaInformation,
   MoreInformation,
   RedevelopmentInformation,
   RecentTransactionPrice
@@ -68,7 +110,7 @@ import { GoogleMap } from "components/MapCityComponent";
 export default {
   components: {
     DetailSummary,
-    InformationProperty,
+    AreaInformation,
     MoreInformation,
     RecentTransactionPrice,
     RedevelopmentInformation,
