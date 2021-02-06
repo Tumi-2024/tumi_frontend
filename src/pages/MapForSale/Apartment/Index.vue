@@ -1,7 +1,18 @@
 <template>
   <div>
     <google-map class="map" setMapAreaView />
-    <detail-summary />
+    <detail-summary
+      :tags="{
+        type: '아파트',
+        redevelopment: true,
+        stageProgress: '추진위원회 승인',
+        transactionStatus: '거래완료'
+      }"
+      areaName="한남 3구역"
+      sales="120억 8천만"
+      initialInvestments="100억 5천만"
+      :quote="'“상업단지, 돈되는 땅”'"
+    />
     <!--  토지 매물정보  -->
     <information-property
       exclusiveArea="130㎡"
