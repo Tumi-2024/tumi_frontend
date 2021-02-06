@@ -9,9 +9,9 @@
         transactionStatus: '거래완료'
       }"
       areaName="한남 3구역"
-      sales="120억 8천만"
-      initialInvestments="100억 5천만"
-      :quote="'“상업단지, 돈되는 땅”'"
+      sales="12억 8,500만"
+      initialInvestments="6억 5,500만"
+      quote='“해당 세대 중 유일하게 야외 정원이 있는 집"'
     />
     <!--  토지 매물정보  -->
     <information-property
