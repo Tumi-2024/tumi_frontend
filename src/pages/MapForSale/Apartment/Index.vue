@@ -16,15 +16,17 @@
     />
     <more-information
       transactionType="토지매매"
-      landArea="2,275㎡ (688평)"
-      buildingArea="375㎡ (113평)"
-      commonArea=""
+      exclusiveArea="2,275㎡ (688평)"
+      commonArea="375㎡ (113평)"
+      direction="남서향"
+      numberFloors="고층"
+      stationArea="역세권"
+      elevator="2대"
+      numberRooms="3 / 1개"
+      heating="개별난방(도시가스)"
+      numberHouseholds="36세대(총63세대)"
+      administrativeExpenses=""
       usageArea="일반상업"
-      point="대"
-      usageSituation="상업용"
-      announcement="2천 115만"
-      roadInterface="세로한면(불)"
-      terrain="평지"
     />
     <!-- 재개발 정보 -->
     <redevelopment-information
