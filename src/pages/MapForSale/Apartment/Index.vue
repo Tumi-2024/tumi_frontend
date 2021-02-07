@@ -42,7 +42,8 @@
       completion="2005.05.19"
       class="q-mt-sm"
     />
-    <administration-cost :cost="admin_cost" />
+    <administration-cost :cost="admin_cost" class="q-my-sm" />
+    <school-section :tabs="schoolTabs" :active="activeSchoolTab" />
     <recent-transaction-price class="q-mt-sm" />
   </div>
 </template>
@@ -54,6 +55,7 @@ import {
   MoreInformation,
   RedevelopmentInformation,
   AdministrationCost,
+  SchoolSection,
   RecentTransactionPrice
 } from "components/MapForSaleComponents";
 import { GoogleMap } from "components/MapCityComponent";
@@ -64,6 +66,7 @@ export default {
     MoreInformation,
     RedevelopmentInformation,
     AdministrationCost,
+    SchoolSection,
     RecentTransactionPrice,
     "google-map": GoogleMap
   },
@@ -123,7 +126,24 @@ export default {
         { label: "여름", value: "28만원", icon: "summer.svg" },
         { label: "겨울", value: "21만원", icon: "windy.svg" },
         { label: "평균", value: "23만원", icon: "average.svg" }
-      ]
+      ],
+      schoolTabs: [
+        {
+          level: "kindergarten",
+          label: "유치원",
+          schools: [
+            { name: "새나라 어린이집", distance: "500M이내" },
+            { name: "금모래 유치원", distance: "620M이내" },
+            { name: "푸리울 어린이집", distance: "620M이내" },
+            { name: "꿈샘 어린이집", distance: "700M이내" },
+            { name: "노랑노랑 유치원", distance: "700M이내" }
+          ]
+        },
+        { level: "elementary", label: "초등학교" },
+        { level: "middle", label: "중학교" },
+        { level: "high", label: "고등학교" }
+      ],
+      activeSchoolTab: "kindergarten"
     };
   }
 };
