@@ -1,7 +1,9 @@
 <template>
   <div style="min-height: 100vh" class="row column bg-positive">
     <!-- navigation toolbar -->
-    <share-tool-bar-nav v-if="$route.name === 'map_for_sale'" />
+    <share-tool-bar-nav
+      v-if="$route.fullPath.split('/').includes('for-sale')"
+    />
     <toolbar-nav v-else />
     <q-card flat square class="q-pa-none bg-positive">
       <router-view></router-view>
