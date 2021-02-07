@@ -14,59 +14,7 @@
       quote='“해당 세대 중 유일하게 야외 정원이 있는 집"'
     />
     <!--  토지 매물정보  -->
-    <area-information
-      :informations="[
-        {
-          // exclusive Area
-          label: '전용면적',
-          value: '130㎡',
-          icon: 'land-area.svg'
-        },
-        {
-          // direction
-          label: '방향',
-          value: '남서향',
-          icon: 'direction.svg'
-        },
-        {
-          // number of floors
-          label: '층수',
-          value: '고층',
-          icon: 'number-floors.svg'
-        },
-        {
-          // station-area
-          label: '역세권',
-          value: '서초역',
-          icon: 'station-area.svg'
-        },
-        {
-          // connoisseur
-          label: '감정가',
-          value: '',
-          icon: 'connoisseur.svg'
-        },
-        {
-          // Right
-          label: '권리가',
-          value: '',
-          icon: 'right.svg'
-        },
-        {
-          // Premium price
-          label: '프리미엄가',
-          value: '1억',
-          icon: 'premium-price.svg'
-        },
-        {
-          // progress
-          label: '진행단계',
-          value: '준공인가',
-          icon: 'progress.svg'
-        }
-      ]"
-      class="q-mt-sm"
-    />
+    <area-information :informations="propertyInformation" class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
       exclusiveArea="2,275㎡ (688평)"
@@ -94,6 +42,7 @@
       completion="2005.05.19"
       class="q-mt-sm"
     />
+    <administration-cost :cost="admin_cost" />
     <recent-transaction-price class="q-mt-sm" />
   </div>
 </template>
@@ -104,6 +53,7 @@ import {
   AreaInformation,
   MoreInformation,
   RedevelopmentInformation,
+  AdministrationCost,
   RecentTransactionPrice
 } from "components/MapForSaleComponents";
 import { GoogleMap } from "components/MapCityComponent";
@@ -112,12 +62,69 @@ export default {
     DetailSummary,
     AreaInformation,
     MoreInformation,
-    RecentTransactionPrice,
     RedevelopmentInformation,
+    AdministrationCost,
+    RecentTransactionPrice,
     "google-map": GoogleMap
   },
   data() {
-    return {};
+    return {
+      propertyInformation: [
+        {
+          // exclusive Area
+          label: "전용면적",
+          value: "130㎡",
+          icon: "land-area.svg"
+        },
+        {
+          // direction
+          label: "방향",
+          value: "남서향",
+          icon: "direction.svg"
+        },
+        {
+          // number of floors
+          label: "층수",
+          value: "고층",
+          icon: "number-floors.svg"
+        },
+        {
+          // station-area
+          label: "역세권",
+          value: "서초역",
+          icon: "station-area.svg"
+        },
+        {
+          // connoisseur
+          label: "감정가",
+          value: "",
+          icon: "connoisseur.svg"
+        },
+        {
+          // Right
+          label: "권리가",
+          value: "",
+          icon: "right.svg"
+        },
+        {
+          // Premium price
+          label: "프리미엄가",
+          value: "1억",
+          icon: "premium-price.svg"
+        },
+        {
+          // progress
+          label: "진행단계",
+          value: "준공인가",
+          icon: "progress.svg"
+        }
+      ],
+      admin_cost: [
+        { label: "여름", value: "28만원", icon: "summer.svg" },
+        { label: "겨울", value: "21만원", icon: "windy.svg" },
+        { label: "평균", value: "23만원", icon: "average.svg" }
+      ]
+    };
   }
 };
 </script>
