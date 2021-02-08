@@ -2,7 +2,6 @@
   <q-card flat>
     <q-card-section class="heading-title">
       토지 매물정보
-      {{ iconSrc }}
     </q-card-section>
 
     <q-card-section class="q-pa-none">
@@ -30,9 +29,6 @@ export default {
   name: "InformationLandForSale",
   components: {
     ItemAttribute
-  },
-  computed: {
-    iconSrc: () => "land-area.svg"
   },
   props: {
     informations: {
