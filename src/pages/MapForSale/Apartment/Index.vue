@@ -42,9 +42,18 @@
       completion="2005.05.19"
       class="q-mt-sm"
     />
-    <administration-cost :cost="admin_cost" class="q-my-sm" />
+    <administration-cost :cost="adminCost" class="q-my-sm" />
     <school-section :tabs="schoolTabs" :active="activeSchoolTab" />
-    <recent-transaction-price class="q-mt-sm" />
+
+    <recent-pricing
+      class="q-mt-sm"
+      :salePrice="salePrice"
+      :charter="charter"
+      :extraDetails="extraDetails"
+      :areaOptions="areaOptions"
+      show-units
+      :unit="unit"
+    />
   </div>
 </template>
 
@@ -56,7 +65,7 @@ import {
   RedevelopmentInformation,
   AdministrationCost,
   SchoolSection,
-  RecentTransactionPrice
+  RecentPricing
 } from "components/MapForSaleComponents";
 import { GoogleMap } from "components/MapCityComponent";
 export default {
@@ -67,7 +76,7 @@ export default {
     RedevelopmentInformation,
     AdministrationCost,
     SchoolSection,
-    RecentTransactionPrice,
+    RecentPricing,
     "google-map": GoogleMap
   },
   data() {
@@ -122,11 +131,12 @@ export default {
           icon: "progress.svg"
         }
       ],
-      admin_cost: [
+      adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },
         { label: "겨울", value: "21만원", icon: "windy.svg" },
         { label: "평균", value: "23만원", icon: "average.svg" }
       ],
+      // school sections
       schoolTabs: [
         {
           level: "kindergarten",
@@ -143,7 +153,31 @@ export default {
         { level: "middle", label: "중학교" },
         { level: "high", label: "고등학교" }
       ],
-      activeSchoolTab: "kindergarten"
+      activeSchoolTab: "kindergarten",
+      // Recent Actual transactions |  최근 실거래가
+      areaOptions: ["35평", "45평"],
+      salePrice: { value: "14억 5천만", date: "2020년 06월" },
+      charter: { value: "10억 2,580만", date: "2020년 03월" },
+      extraDetails: [
+        { label: "공급 / 전용 면적", info: "41.76 / 130.28㎡" },
+        { label: "시세 갱신일", info: "2020.06.20" }
+      ],
+      unit: {
+        salePrice: {
+          below: "13억 8,250만",
+          general: "14억 1,750만",
+          above: "15억 1,000만"
+        },
+        charter: {
+          below: "10억 4,520만",
+          general: "10억 9,500만",
+          above: "11억 9,500만"
+        },
+        monthly: {
+          deposit: "2천만",
+          rent: "115~120만"
+        }
+      }
     };
   }
 };
