@@ -146,6 +146,13 @@ export default {
       zoomControl: !this.setMapAreaView,
       scrollwheel: !this.setMapAreaView
     });
+
+    this.map.addListener('idle', e => {
+      console.log(this.map.getBounds().Qa);
+      console.log(this.map.getBounds().Va);
+    })
+
+
     // apply click event on map
     this.map.addListener("click", e => {
       /**

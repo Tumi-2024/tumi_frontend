@@ -7,7 +7,7 @@
   >
     <div class="row flex items-center justify-center">
       <div class="back-btn-border flex justify-center items-center content-center">
-        <q-btn class="back-btn flex justify-center items-center content-center" flat>
+        <q-btn class="back-btn flex justify-center items-center content-center" flat @click="$router.go(-1)">
           <q-icon name="img:icons/home-page-icon/search-result-icon/back-btn.svg" />
         </q-btn>
       </div> 

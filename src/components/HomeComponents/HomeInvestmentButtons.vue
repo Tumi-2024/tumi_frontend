@@ -8,7 +8,7 @@
 
     <div class="row q-mt-sm q-col-gutter-sm">
       <div class="col flex justify-center" v-for="(list, index) in investments_btn" :key="index">
-        <q-btn flat class="investment-btn full-width">
+        <q-btn flat class="investment-btn full-width" :to="{ name: 'map_city' }">
           <q-icon class="investment-btn-icon" :name="`img:icons/home-page-icon/investment-icon/${list.icon}`" />
           <p class="investment-btn-label">{{ list.label }}</p>
         </q-btn>
