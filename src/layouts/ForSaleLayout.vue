@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ToolbarNav } from "components/ActualTransactionComponents";
+import { ToolbarNav } from "components/ForSaleLayoutComponents";
 export default {
   components: {
     "toolbar-nav": ToolbarNav
