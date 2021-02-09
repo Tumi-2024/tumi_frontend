@@ -12,11 +12,11 @@
     />
 
     <custom-badge
-      :label="tag.recomend"
+      :label="tag.stageProgress"
       text_color="primary"
       bg_color="white"
       :outline="true"
-      v-if="tag.recomend"
+      v-if="tag.stageProgress"
     />
 
     <custom-badge
@@ -41,8 +41,8 @@ export default {
       default() {
         return {
           type: "",
-          recomend: "",
           redevelopment: false,
+          stageProgress: "",
           transactionStatus: ""
         };
       }

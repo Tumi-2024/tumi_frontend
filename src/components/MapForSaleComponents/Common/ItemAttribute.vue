@@ -1,0 +1,72 @@
+<template>
+  <q-btn
+    flat
+    class="col-3 information-btn q-py-md"
+    :class="{ 'border-bottom-dashed': borderBottom }"
+  >
+    <div class="column justify-center content-center items-center">
+      <q-icon size="32px">
+        <slot name="icon"></slot>
+      </q-icon>
+      <div class="title q-mt-sm" v-if="!value">
+        <q-icon size="20px">
+          <img src="~/assets/icons/empty.svg" />
+        </q-icon>
+      </div>
+      <div class="title q-mt-sm" v-else>{{ value }}</div>
+      <div class="sub-title q-mt-xs">{{ label }}</div>
+    </div>
+  </q-btn>
+</template>
+
+<script>
+export default {
+  props: {
+    borderBottom: {
+      type: Boolean,
+      default: false
+    },
+    iconSrc: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: String,
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.information-btn {
+  .title {
+    font-family: "notosanskr-medium";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+  }
+  .sub-title {
+    font-family: "notosanskr-medium";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: -0.975px;
+    color: #707070;
+  }
+
+  &.border-bottom-dashed {
+    border-bottom: 2px dashed rgba(187, 186, 186, 0.466);
+  }
+}
+</style>

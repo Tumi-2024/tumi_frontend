@@ -4,11 +4,11 @@
       <area-tags :tag="tags" />
 
       <div class="area-name q-mt-sm">
-        한남 3구역
+        {{ areaName }}
       </div>
       <div class="price-name">
         <span>매매</span>
-        120억 8천만
+        {{ sales }}
       </div>
       <div class="initial-investments row q-pa-sm q-mt-sm items-center">
         <q-icon>
@@ -24,14 +24,14 @@
           style="height: 16px"
         />
 
-        <div class="price">100억 5천만</div>
+        <div class="price">{{ initialInvestments }}</div>
       </div>
     </q-card-section>
 
     <q-separator color="grey-3" />
 
     <q-card-section class="bottom-title q-py-none">
-      “상업단지, 돈되는 땅”
+      {{ quote }}
     </q-card-section>
   </q-card>
 </template>
@@ -44,12 +44,29 @@ export default {
     AreaTags
   },
   data() {
-    return {
-      tags: {
-        type: "아파트",
-        redevelopment: true
-      }
-    };
+    return {};
+  },
+  props: {
+    tags: {
+      type: Object,
+      default: () => {}
+    },
+    areaName: {
+      type: String,
+      default: ""
+    },
+    sales: {
+      type: String,
+      default: ""
+    },
+    initialInvestments: {
+      type: String,
+      default: ""
+    },
+    quote: {
+      type: String,
+      default: ""
+    }
   }
 };
 </script>

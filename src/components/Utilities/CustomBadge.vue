@@ -1,7 +1,14 @@
 <template>
-  <q-badge 
-    :class="`q-mr-sm bg-${bg_color} text-${text_color} ${outline ? 'outline' : ''} outline-${outline_color}`" 
-    :outline="outline">
+  <q-badge
+    class="q-mr-sm notosanskr-regular"
+    :class="[
+      `bg-${bg_color}`,
+      `text-${text_color}`,
+      `outline-${outline_color}`,
+      { outline: outline }
+    ]"
+    :outline="outline"
+  >
     <q-icon v-if="icon != undefined">
       <img :src="`/icons/${icon}.svg`" alt="" srcset="" />
     </q-icon>
@@ -19,7 +26,7 @@ export default {
     text_color: String,
     outline_color: String
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .q-badge {
