@@ -4,7 +4,7 @@
       style="width: 100%; max-width: 1000px;"
       class="row justify-end q-pr-lg"
     >
-      <q-btn fab color="primary">
+      <q-btn fab color="primary" @click="goToMap()">
         <svg
           width="28"
           height="28"
@@ -40,7 +40,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goToMap() {
+      // set quries for map
+      const zoom = 17;
+      const lat = 37.536357575140926;
+      const lng = 127.09206289552306;
+      this.$router.push({
+        name: "map_city",
+        query: {
+          onFocus: true,
+          zoom,
+          lat,
+          lng
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style scoped></style>
