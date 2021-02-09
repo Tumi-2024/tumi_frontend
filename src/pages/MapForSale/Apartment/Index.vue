@@ -67,7 +67,7 @@ import {
   SchoolSection,
   RecentPricing
 } from "components/MapForSaleComponents";
-import { GoogleMap } from "components/MapCityComponent";
+import { GoogleMap } from "components/MapCityComponents";
 export default {
   components: {
     DetailSummary,

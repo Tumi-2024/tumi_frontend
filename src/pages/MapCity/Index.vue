@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { BottomDrawer, GoogleMap } from "components/MapCityComponent";
+import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
 import ToolbarFilter from "components/Utilities/ToolbarFilter";
 export default {
   components: {
