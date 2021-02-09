@@ -1,9 +1,6 @@
 <template>
   <q-card flat class="bg-white notosanskr-medium">
-    <q-card-section
-      class="row justify-between"
-      style="padding: 24px 16px 16px;"
-    >
+    <q-card-section class="row q-pb-none justify-between">
       <div class="title-heading col-6">
         최근 실거래가
       </div>
@@ -17,44 +14,50 @@
         class="area-selection"
         color="primary"
         label-color="primary"
+        v-if="areaOptions"
       />
     </q-card-section>
     <!-- recent pricing -->
-    <q-card-section class="q-py-none">
-      <div class="w-100 recent-pricing">
-        <div class="row">
-          <div class="col">
-            <q-badge outline class="text-primary bg-white q-mr-sm">
-              매매가
-            </q-badge>
-            <q-badge outline class="text-grey bg-white q-mr-sm">
-              {{ salePrice.date }}
-            </q-badge>
-            <div class="price">
-              {{ salePrice.value }}
-            </div>
+    <q-card-section class="recent-pricing w-100">
+      <div class="row">
+        <div class="col">
+          <q-badge outline class="text-primary bg-white q-mr-sm">
+            매매가
+          </q-badge>
+          <q-badge outline class="text-grey bg-white q-mr-sm">
+            {{ salePrice.date }}
+          </q-badge>
+          <div class="price">
+            {{ salePrice.value }}
           </div>
+        </div>
 
-          <q-separator vertical style="margin: 0 20px" v-if="charter.value" />
+        <q-separator vertical style="margin: 0 20px" v-if="charter.value" />
 
-          <div class="col" v-if="charter.value">
-            <q-badge outline class="text-teal bg-white q-mr-sm">
-              전세가
-            </q-badge>
-            <q-badge outline class="text-grey bg-white q-mr-sm">
-              {{ charter.date }}
-            </q-badge>
-            <div class="price">
-              {{ charter.value }}
-            </div>
+        <div class="col" v-if="charter.value">
+          <q-badge outline class="text-teal bg-white q-mr-sm">
+            전세가
+          </q-badge>
+          <q-badge outline class="text-grey bg-white q-mr-sm">
+            {{ charter.date }}
+          </q-badge>
+          <div class="price">
+            {{ charter.value }}
           </div>
+        </div>
+      </div>
+      <div class="price-per-land-area row q-mt-md" v-if="pricePerLandArea">
+        <div class="label text-grey-14 notosanskr-regular">토지면적당 단가</div>
+        <q-separator vertical class="q-mx-xs" />
+        <div class="value text-primary notosanskr-medium">
+          {{ pricePerLandArea }}/ 평
         </div>
       </div>
     </q-card-section>
 
     <q-card-section
       class="table bg-white notosanskr-regular"
-      v-if="extraDetails.length"
+      v-if="extraDetails"
     >
       <div
         class="row q-pb-sm"
@@ -165,6 +168,10 @@ export default {
           rent: "-~-만"
         }
       })
+    },
+    pricePerLandArea: {
+      type: String,
+      default: ""
     }
   }
 };
@@ -187,7 +194,7 @@ export default {
 .recent-pricing {
   border-radius: 8px;
   background: #f7f7f7;
-  padding: 20px 16px;
+  margin: 20px 16px;
 
   .price {
     letter-spacing: -1.575px;
@@ -202,6 +209,15 @@ export default {
     line-height: 20px;
     font-size: 12px;
     padding: 0 4px;
+  }
+
+  .price-per-land-area {
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: -1.2px;
+    .value {
+      font-weight: 500;
+    }
   }
 }
 .unit-heading {

@@ -84,7 +84,12 @@
       completion="2005.05.19"
       class="q-mt-sm"
     />
-    <recent-transaction-price class="q-mt-sm" />
+    <recent-pricing
+      :salePrice="salePrice"
+      pricePerLandArea="1,130만"
+      class="q-pb-md"
+    />
+    <div class="q-py-lg"></div>
   </div>
 </template>
 
@@ -94,7 +99,7 @@ import {
   AreaInformation,
   MoreInformation,
   RedevelopmentInformation,
-  RecentTransactionPrice
+  RecentPricing
 } from "components/MapForSaleComponents";
 import { GoogleMap } from "components/MapCityComponent";
 export default {
@@ -102,9 +107,17 @@ export default {
     DetailSummary,
     AreaInformation,
     MoreInformation,
-    RecentTransactionPrice,
     RedevelopmentInformation,
+    RecentPricing,
     "google-map": GoogleMap
+  },
+  data() {
+    return {
+      salePrice: {
+        value: "118억 5,420만",
+        date: "2015년 06월"
+      }
+    };
   }
 };
 </script>
