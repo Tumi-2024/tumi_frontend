@@ -50,17 +50,16 @@ const routes = [
     children: [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
-      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' },
-      { path: 'for-sale/land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'map_sale_land' },
-      { path: 'for-sale/apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'map_sale_apartment' }
+      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
   {
-    path: '/actual-transaction',
-    component: () => import('layouts/ActualTransactionLayout.vue'),
+    path: '/for-sale/',
+    component: () => import('layouts/ForSaleLayout.vue'),
     children: [
-      { path: 'apartment', component: () => import('pages/ApartmentPage/Index.vue'), name: 'apartment' }
+      { path: 'land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'for_sale_land' },
+      { path: 'apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'for_sale_apartment' }
     ]
   },
   // Always leave this as last one,

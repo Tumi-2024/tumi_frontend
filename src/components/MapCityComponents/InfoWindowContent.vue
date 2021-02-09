@@ -48,8 +48,8 @@ export default {
         lat: 37.54439180667893,
         lng: 127.04601120488171
       });
-      this.$route.name !== "map_sale_land" &&
-        this.$router.push({ name: "map_sale_land" });
+      this.$route.name !== "for_sale_land" &&
+        this.$router.push({ name: "for_sale_land" });
     }
   }
 };
