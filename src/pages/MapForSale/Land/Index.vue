@@ -89,6 +89,7 @@
       pricePerLandArea="1,130만"
       class="q-pb-md"
     />
+    <similar-transaction :lists="similarTransactions" />
     <div class="q-py-lg"></div>
   </div>
 </template>
@@ -99,7 +100,8 @@ import {
   AreaInformation,
   MoreInformation,
   RedevelopmentInformation,
-  RecentPricing
+  RecentPricing,
+  SimilarTransaction
 } from "components/MapForSaleComponents";
 import { GoogleMap } from "components/MapCityComponent";
 export default {
@@ -109,6 +111,7 @@ export default {
     MoreInformation,
     RedevelopmentInformation,
     RecentPricing,
+    SimilarTransaction,
     "google-map": GoogleMap
   },
   data() {
@@ -116,7 +119,39 @@ export default {
       salePrice: {
         value: "118억 5,420만",
         date: "2015년 06월"
-      }
+      },
+      similarTransactions: [
+        {
+          date: "2020.06.20",
+          address: "전농동60-17",
+          unitPrice: "1,157만 / 평",
+          landPriceRatio: "114.8%"
+        },
+        {
+          date: "2020.04.01",
+          address: "전농동",
+          unitPrice: "1,157만 / 평",
+          landPriceRatio: "378%"
+        },
+        {
+          date: "2020.03.24",
+          address: "전농동60-195",
+          unitPrice: "970만 / 평",
+          landPriceRatio: "140.2%"
+        },
+        {
+          date: "2020.03.15",
+          address: "전농동60-120",
+          unitPrice: "1,010만 / 평",
+          landPriceRatio: "140.2%"
+        },
+        {
+          date: "2020.01.15",
+          address: "전농동61-110",
+          unitPrice: "1,010만 / 평",
+          landPriceRatio: "140.2%"
+        }
+      ]
     };
   }
 };

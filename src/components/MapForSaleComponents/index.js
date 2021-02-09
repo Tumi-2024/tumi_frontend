@@ -5,6 +5,8 @@ import RedevelopmentInformation from "./RedevelopmentInformation";
 import AdministrationCost from "./AdministrationCost";
 import SchoolSection from "./SchoolSection";
 import RecentPricing from "./RecentPricing";
+import SimilarTransaction from "./SimilarTransaction";
+
 export {
   DetailSummary,
   AreaInformation,
@@ -12,5 +14,6 @@ export {
   RedevelopmentInformation,
   AdministrationCost,
   SchoolSection,
-  RecentPricing
+  RecentPricing,
+  SimilarTransaction
 };
