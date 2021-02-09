@@ -182,6 +182,8 @@ export default {
       const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
       return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
     });
+
+    this.setMapOnFocus();
   },
 
   methods: {
@@ -195,6 +197,15 @@ export default {
       setTimeout(() => {
         this.map.setZoom(16);
       }, 500);
+    },
+    setMapOnFocus() {
+      const query = this.$route.query;
+      if (query.onFocus) {
+        this.map.setZoom(query.zoom);
+        if (query.lat && query.lng) {
+          this.map.setCenter({ lat: query.lat, lng: query.lng });
+        }
+      }
     }
   }
 };
