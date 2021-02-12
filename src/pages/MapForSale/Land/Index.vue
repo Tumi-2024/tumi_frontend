@@ -1,6 +1,6 @@
 <template>
   <div>
-    <google-map class="map" setMapAreaView />
+    <google-map class="map" />
     <detail-summary
       :tags="{
         type: '아파트',
@@ -12,53 +12,7 @@
       :quote="'“상업단지, 돈되는 땅”'"
     />
     <!--  토지 매물정보  -->
-    <area-information
-      :informations="[
-        {
-          // land Area
-          label: '대지면적',
-          value: '2,275㎡',
-          icon: 'land-area.svg'
-        },
-        {
-          // building area
-          label: '건물면적',
-          value: '375㎡',
-          icon: 'building-area.svg'
-        },
-        {
-          // rental status
-          label: '임대현황',
-          value: '',
-          icon: 'rent.svg'
-        },
-        {
-          // progress
-          label: '진행단계',
-          value: '준공인가',
-          icon: 'progress.svg'
-        },
-        {
-          // connoisseur
-          label: '감정가',
-          value: '',
-          icon: 'connoisseur.svg'
-        },
-        {
-          // Right
-          label: '권리가',
-          value: '',
-          icon: 'right.svg'
-        },
-        {
-          // Premium price
-          label: '프리미엄가',
-          value: '',
-          icon: 'premium-price.svg'
-        }
-      ]"
-      class="q-mt-sm"
-    />
+    <area-information :informations="areaInformation0" class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
       landArea="2,275㎡ (688평)"
@@ -103,7 +57,7 @@ import {
   RecentPricing,
   SimilarTransaction
 } from "components/MapForSaleComponents";
-import { GoogleMap } from "components/MapCityComponents";
+import { GoogleMap } from "components/MapAreaComponents";
 export default {
   components: {
     DetailSummary,
@@ -116,6 +70,50 @@ export default {
   },
   data() {
     return {
+      areaInformation: [
+        {
+          // land Area
+          label: "대지면적",
+          value: "2,275㎡",
+          icon: "land-area.svg"
+        },
+        {
+          // building area
+          label: "건물면적",
+          value: "375㎡",
+          icon: "building-area.svg"
+        },
+        {
+          // rental status
+          label: "임대현황",
+          value: "",
+          icon: "rent.svg"
+        },
+        {
+          // progress
+          label: "진행단계",
+          value: "준공인가",
+          icon: "progress.svg"
+        },
+        {
+          // connoisseur
+          label: "감정가",
+          value: "",
+          icon: "connoisseur.svg"
+        },
+        {
+          // Right
+          label: "권리가",
+          value: "",
+          icon: "right.svg"
+        },
+        {
+          // Premium price
+          label: "프리미엄가",
+          value: "",
+          icon: "premium-price.svg"
+        }
+      ],
       salePrice: {
         value: "118억 5,420만",
         date: "2015년 06월"
