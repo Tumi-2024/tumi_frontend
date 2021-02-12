@@ -34,22 +34,15 @@ export default {
   props: {
     marker: {
       type: Object,
-      default() {
-        return {};
-      }
+      default: () => ({})
     }
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
     viewArea() {
-      this.changeMapMode("transaction");
-      this.changeMapZoom(17);
-      this.changeMapCenter({
-        lat: 37.54439180667893,
-        lng: 127.04601120488171
-      });
-      this.$route.name !== "for_sale_land" &&
-        this.$router.push({ name: "for_sale_land" });
+      this.changeMapZoom(16);
+      this.changeMapCenter(this.marker.position);
+      this.$router.push({ name: "for_sale_land" });
     }
   }
 };
@@ -76,7 +69,6 @@ export default {
   }
 }
 .q-badge {
-  font-weight: bold;
   font-size: 12px;
   height: 20px;
   text-align: center;
