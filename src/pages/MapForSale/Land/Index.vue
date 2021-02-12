@@ -12,7 +12,7 @@
       :quote="'“상업단지, 돈되는 땅”'"
     />
     <!--  토지 매물정보  -->
-    <area-information :informations="areaInformation0" class="q-mt-sm" />
+    <area-information :informations="areaInformation" class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
       landArea="2,275㎡ (688평)"
