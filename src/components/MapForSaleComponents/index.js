@@ -1,3 +1,4 @@
+import GoogleMap from "./GoogleMap";
 import DetailSummary from "./DetailSummary";
 import AreaInformation from "./AreaInformation";
 import MoreInformation from "./MoreInformation";
@@ -8,6 +9,7 @@ import RecentPricing from "./RecentPricing";
 import SimilarTransaction from "./SimilarTransaction";
 
 export {
+  GoogleMap,
   DetailSummary,
   AreaInformation,
   MoreInformation,

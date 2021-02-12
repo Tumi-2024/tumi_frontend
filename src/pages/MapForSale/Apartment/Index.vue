@@ -59,6 +59,7 @@
 
 <script>
 import {
+  GoogleMap,
   DetailSummary,
   AreaInformation,
   MoreInformation,
@@ -67,7 +68,6 @@ import {
   SchoolSection,
   RecentPricing
 } from "components/MapForSaleComponents";
-import { GoogleMap } from "components/MapAreaComponents";
 export default {
   components: {
     DetailSummary,

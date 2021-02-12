@@ -50,6 +50,7 @@
 
 <script>
 import {
+  GoogleMap,
   DetailSummary,
   AreaInformation,
   MoreInformation,
@@ -57,7 +58,6 @@ import {
   RecentPricing,
   SimilarTransaction
 } from "components/MapForSaleComponents";
-import { GoogleMap } from "components/MapAreaComponents";
 export default {
   components: {
     DetailSummary,

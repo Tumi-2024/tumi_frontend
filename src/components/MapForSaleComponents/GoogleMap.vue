@@ -36,20 +36,10 @@ export default {
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
-    // apply options to map
-    // here we can overide "getMapOptions" values
     this.map.setOptions({
       zoomControl: false,
       scrollwheel: false
     });
-
-    /**
-     *  we use loadGeoJson() for url
-     *  this.map.data.loadGeoJson("https:// url here /");
-     *
-     *  we use addGeoJson() for direct
-     *  this.map.data.addGeoJson({ object here })
-     */
     this.map.data.addGeoJson(TUMI_AREA_FOR_SALE);
     // apply styles on geojson layers
     this.map.data.setStyle(function(feature) {
