@@ -18,7 +18,7 @@ export default {
   props: {
     marker: Object
   },
-  computed:{
+  computed: {
     ...mapGetters('map', ['getMapMode'])
   }
 };
@@ -58,7 +58,7 @@ export default {
     float: right;
     width: 35px;
     height: 35px;
-    font-size: 12;
+    font-size: 12px;
     font-weight: bold;
     border-radius: 50%;
     display: flex;
