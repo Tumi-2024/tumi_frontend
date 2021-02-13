@@ -59,7 +59,8 @@ const routes = [
     component: () => import('layouts/ForSaleLayout.vue'),
     children: [
       { path: 'land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'for_sale_land' },
-      { path: 'apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'for_sale_apartment' }
+      { path: 'apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'for_sale_apartment' },
+      { path: 'no-redevelop-estate', component: () => import('pages/MapForSale/NoRedevelopEstate/Index.vue'), name: 'for_sale_no_redevelop_estate' }
     ]
   },
   // Always leave this as last one,
