@@ -17,6 +17,14 @@
         <q-tab name="charter" label="전세" />
         <q-tab name="monthly" label="월세" />
       </q-tabs>
+      <div class="reference notosanskr-regular">
+        <div class="box-colors primary"></div>
+        <span>매매</span>
+        <div class="box-colors secondary"></div>
+        <span>전세</span>
+        <div class="box-colors white"></div>
+        <span>월세</span>
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -46,6 +54,39 @@ export default {
   color: #707070;
   .q-tab {
     border-bottom: #e8e8e8 solid 3px;
+  }
+}
+.reference {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 20px 0 8px 0;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.9px;
+
+  border-bottom: 1px solid #1a1a1a;
+  color: #707070;
+  .box-colors {
+    width: 12px;
+    height: 8px;
+    margin: auto 2px auto 8px;
+    &.primary {
+      background: #ff5100;
+      opacity: 0.2;
+    }
+    &.secondary {
+      background-color: #00a4aa;
+      opacity: 0.2;
+    }
+    &.white {
+      border: 1px solid #d5d5d5;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
   }
 }
 </style>
