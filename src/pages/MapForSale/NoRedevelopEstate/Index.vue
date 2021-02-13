@@ -41,6 +41,10 @@
       show-units
       :unit="unit"
     />
+
+    <transaction-price-history />
+
+    <div class="q-my-xl"></div>
   </div>
 </template>
 
@@ -53,7 +57,8 @@ import {
   RedevelopmentInformation,
   AdministrationCost,
   SchoolSection,
-  RecentPricing
+  RecentPricing,
+  TransactionPriceHistory
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -64,6 +69,7 @@ export default {
     AdministrationCost,
     SchoolSection,
     RecentPricing,
+    TransactionPriceHistory,
     "google-map": GoogleMap
   },
   data() {
@@ -92,7 +98,7 @@ export default {
           label: "역세권",
           value: "서초역",
           icon: "station-area.svg"
-        },
+        }
       ],
       adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },
