@@ -11,7 +11,7 @@
           :key="i"
           :label="item.label"
           :value="item.value"
-          :borderBottom="i < 4"
+          :borderBottom="i < 4 && informations.length > 4"
         >
           <template v-slot:icon>
             <img :src="getImage(item.icon)" />
