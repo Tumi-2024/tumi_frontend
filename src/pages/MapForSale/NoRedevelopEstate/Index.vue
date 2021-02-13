@@ -42,7 +42,7 @@
       :unit="unit"
     />
 
-    <transaction-price-history />
+    <transaction-price-history :transactions="transactionPriceHistory" />
 
     <div class="q-my-xl"></div>
   </div>
@@ -146,7 +146,40 @@ export default {
           deposit: "2천만",
           rent: "115~120만"
         }
-      }
+      },
+      // Actual Transaction Price History | 실거래가 히스토리
+      transactionPriceHistory: [
+        {
+          date: "2020.06.20",
+          deal: "매매",
+          price: "17억 5,550만",
+          numberFloors: "고층"
+        },
+        {
+          date: "2020.04.01",
+          deal: "매매",
+          price: "17억 5,550만",
+          numberFloors: "고층"
+        },
+        {
+          date: "2020.03.24",
+          deal: "전세",
+          price: "14억 1,000만",
+          numberFloors: "저층"
+        },
+        {
+          date: "2020.01.15",
+          deal: "매매",
+          price: "10억 2,000만",
+          numberFloors: "저층"
+        },
+        {
+          date: "2020.06.20",
+          deal: "월세",
+          price: "8,000 / 90만",
+          numberFloors: "20층"
+        }
+      ]
     };
   }
 };
