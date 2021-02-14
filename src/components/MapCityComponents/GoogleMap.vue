@@ -44,11 +44,7 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import {
-  TUMI_SECTIONS_AREA,
-  TUMI_AREA_FOR_SALE,
-  TUMI_MARKERS
-} from "./map-sample-data.js";
+import { TUMI_SECTIONS_AREA, TUMI_MARKERS } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import { mapGetters } from "vuex";
@@ -147,11 +143,10 @@ export default {
       scrollwheel: !this.setMapAreaView
     });
 
-    this.map.addListener('idle', e => {
+    this.map.addListener("idle", _ => {
       console.log(this.map.getBounds().Qa);
       console.log(this.map.getBounds().Va);
-    })
-
+    });
 
     // apply click event on map
     this.map.addListener("click", e => {
@@ -173,10 +168,7 @@ export default {
      *  we use addGeoJson() for direct
      *  this.map.data.addGeoJson({ object here })
      */
-    const geojsonTumi =
-      this.getMapMode === "default" ? TUMI_SECTIONS_AREA : TUMI_AREA_FOR_SALE;
-
-    this.map.data.addGeoJson(geojsonTumi);
+    this.map.data.addGeoJson(TUMI_SECTIONS_AREA);
     // apply styles on geojson layers
     this.map.data.setStyle(function(feature) {
       const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
