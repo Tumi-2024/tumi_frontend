@@ -60,6 +60,7 @@ const routes = [
     children: [
       { path: 'land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'for_sale_land' },
       { path: 'apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'for_sale_apartment' },
+      { path: 'redevelop-estate', component: () => import('pages/MapForSale/RedevelopEstate/Index.vue'), name: 'for_sale_redevelop_estate' },
       { path: 'no-redevelop-estate', component: () => import('pages/MapForSale/NoRedevelopEstate/Index.vue'), name: 'for_sale_no_redevelop_estate' }
     ]
   },
