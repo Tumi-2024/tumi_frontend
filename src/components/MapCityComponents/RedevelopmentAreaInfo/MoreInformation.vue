@@ -49,6 +49,15 @@
       </div>
     </section>
 
+    <section class="button-fixed-bottom">
+      <q-btn
+        color="primary"
+        text-color="white"
+        class=" notosanskr-medium "
+        label="이지역 투자매물 보러가기"
+      />
+    </section>
+
     <section style="min-height: 180px;"></section>
   </div>
 </template>
@@ -196,6 +205,29 @@ export default {
       letter-spacing: -1.05px;
       color: #1a1a1a;
       padding-top: 10px;
+    }
+  }
+  .button-fixed-bottom {
+    width: 100%;
+    max-width: 1000px;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+
+    text-align: center;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    .q-btn {
+      background: #ff5100;
+      width: 100%;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 52px;
+      /* identical to box height, or 306% */
+
+      text-align: center;
+      letter-spacing: -1.25px;
+      border-radius: 12px;
     }
   }
 }
