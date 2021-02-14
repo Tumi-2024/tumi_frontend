@@ -50,16 +50,18 @@ const routes = [
     children: [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
-      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' },
-      { path: 'for-sale/land', component: () => import('pages/MapForSale/Index.vue'), name: 'map_for_sale' }
+      { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
     ]
   },
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
   {
-    path: '/actual-transaction',
-    component: () => import('layouts/ActualTransactionLayout.vue'),
+    path: '/for-sale/',
+    component: () => import('layouts/ForSaleLayout.vue'),
     children: [
-      { path: 'apartment', component: () => import('pages/ApartmentPage/Index.vue'), name: 'apartment' }
+      { path: 'land', component: () => import('pages/MapForSale/Land/Index.vue'), name: 'for_sale_land' },
+      { path: 'apartment', component: () => import('pages/MapForSale/Apartment/Index.vue'), name: 'for_sale_apartment' },
+      { path: 'redevelop-estate', component: () => import('pages/MapForSale/RedevelopEstate/Index.vue'), name: 'for_sale_redevelop_estate' },
+      { path: 'no-redevelop-estate', component: () => import('pages/MapForSale/NoRedevelopEstate/Index.vue'), name: 'for_sale_no_redevelop_estate' }
     ]
   },
   // Always leave this as last one,

@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="q-pa-none full-width">
+  <q-card-section class="q-pa-none full-width bg-red">
     <q-tabs
       dense
       align="justify"
