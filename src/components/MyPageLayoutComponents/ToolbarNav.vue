@@ -1,20 +1,13 @@
 <template>
-  <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md">
+  <q-card-section class="toolbar notosanskr-medium q-pa-none">
     <div class="row items-center">
-      <q-btn flat padding="0px" :to="{ name: returnBtn.pathName }">
-        <q-icon name="keyboard_backspace" size="24px" class="q-mr-sm"></q-icon>
+      <q-btn flat class="row" @click="$router.go(-1)">
+      <!-- <q-btn flat class="row" :to="{ name: returnBtn.pathName }"> -->
+        <q-icon name="keyboard_backspace" size="24px"></q-icon>
+        <q-separator vertical class="q-mx-sm"></q-separator>
+        {{ returnBtn.label }}
       </q-btn>
-      <q-separator vertical inset></q-separator>
-      <q-btn flat>{{ returnBtn.label }}</q-btn>
     </div>
-
-    <!-- Right side starts here -->
-    <q-btn flat class="bg-white add-area" v-if="$route.name == 'area'">
-      <q-icon size="24px">
-        <img src="~assets/icons/add-area.svg" alt="" />
-      </q-icon>
-      로그인
-    </q-btn>
 
     <q-btn
       flat

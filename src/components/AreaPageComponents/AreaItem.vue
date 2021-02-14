@@ -1,5 +1,5 @@
 <template>
-  <q-item class="column  notosanskr-regular ">
+  <q-item class="column  notosanskr-regular " :to="{ name: 'for_sale_apartment' }">
     <q-item-section>
       <div class="row">
         <!-- badge for item type -->

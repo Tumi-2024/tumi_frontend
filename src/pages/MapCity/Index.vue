@@ -1,17 +1,14 @@
 <template>
   <div>
     <toolbar-filter />
-    <google-map class="page-container full-height " />
+    <google-map class="page-container full-height full-width" />
     <bottom-drawer />
   </div>
 </template>
 
 <script>
-import {
-  BottomDrawer,
-  ToolbarFilter,
-  GoogleMap
-} from "components/MapCityComponent";
+import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
+import ToolbarFilter from "components/Utilities/ToolbarFilter";
 export default {
   components: {
     "bottom-drawer": BottomDrawer,
@@ -20,7 +17,6 @@ export default {
   }
 };
 </script>
-GoogleMap
 
 <style lang="scss" scoped>
 .page-container {
