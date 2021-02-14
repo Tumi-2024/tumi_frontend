@@ -24,7 +24,7 @@
     </div>
   </q-card-section>
 </template>
-
+is_public_friend":true,"is_reply":true,"snackzones":,"user":4
 <script>
 export default {};
 </script>
