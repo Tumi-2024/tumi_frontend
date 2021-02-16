@@ -4,9 +4,10 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 // Modules
-import { userStore } from './modules/user'
-import { insightsStore } from './modules/insights'
+import { userStore } from './modules/user';
+import { insightsStore } from './modules/insights';
 import { mapStore } from './modules/map';
+import { estateStore } from './modules/estate';
 
 // Main Section
 Vue.use(Vuex)
@@ -25,7 +26,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       user: userStore,
       insights: insightsStore,
-      map: mapStore
+      map: mapStore,
+      estate: estateStore
     },
 
     plugins: [createPersistedState({
