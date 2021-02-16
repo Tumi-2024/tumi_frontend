@@ -28,13 +28,18 @@ export default {
     if (this.$route.params && this.$route.params.tab) {
       this.tab = this.$route.params.tab
     }
+    console.log(`
+    zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    CREATE CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE 
+    zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    `)
     this.$store.dispatch('getEstate')
     this.$store.dispatch('getPolicy')
     this.$store.dispatch('getMarket')
   },
   computed: {
     insightsResults () {
-      if (this.$route.params.tab === '부동산팁') {
+      if (this.$route.params.tab === 'tips') {
         return this.$store.getters.estateInsights
       } else if (this.$route.params.tab === '정책분석') {
         return this.$store.getters.policyInsights
