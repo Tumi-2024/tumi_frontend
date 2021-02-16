@@ -1,7 +1,8 @@
 <template>
   <q-layout view="lHh lpr lFf" container style="min-height: 100vh">
-    <q-header reveal>
+    <q-header reveal class="bg-white">
       <toolbar-nav />
+      <toolbar-filter />
     </q-header>
 
     <q-page-container>
@@ -12,9 +13,11 @@
 
 <script>
 import { ToolbarNav } from "components/MapLayoutComponents";
+import ToolbarFilter from "components/Utilities/ToolbarFilter";
 export default {
   components: {
-    "toolbar-nav": ToolbarNav
+    "toolbar-nav": ToolbarNav,
+    "toolbar-filter": ToolbarFilter
   }
 };
 </script>
