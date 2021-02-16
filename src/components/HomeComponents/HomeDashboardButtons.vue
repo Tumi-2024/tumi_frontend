@@ -15,7 +15,7 @@
       </q-btn>
     </div>
     <div class="col-6 btn-alignment  flex justify-center items-center" style="padding-bottom: 24px">
-      <q-btn flat :to="{ name: 'map_city' }" class="btn-dash-board full-width" style="background-color: #3ECCB2">
+      <q-btn flat @click="toRedevelopmentArea()" class="btn-dash-board full-width" style="background-color: #3ECCB2">
         <p class="btn-title1">재개발 구역</p>
         <p class="btn-title2">투미에서 <br> 재개발 구역 찾기</p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/3.svg" />
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   data () {
     return {
@@ -38,10 +39,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "changeToolbarTitle"
+    ]),
     toMapCity() {
       /* we dispatch an action resetMap() from map module */
       this.$store.dispatch('map/resetMap');
       this.$router.push({ name: 'map_city'})
+    },
+    toRedevelopmentArea() {
+      /**
+       *  will make us navigate redevelopment area
+       *  we will set the desired settings view(lat&lng / zoom & etc...)
+       */
+      this.changeMapMode("redevelop-area");
+      this.changeMapZoom(16);
+      this.changeMapCenter({ lat: 37.51988040411035, lng: 127.05400058307147 });
+      this.changeToolbarTitle("재개발 구역");
+      /** After setting desired settings we procceed to see Map */
+      this.$router.push({ name: "map_city" });
     }
   }
 }

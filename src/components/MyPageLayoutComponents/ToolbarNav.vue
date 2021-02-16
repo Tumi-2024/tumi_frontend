@@ -1,8 +1,8 @@
 <template>
   <q-card-section class="toolbar notosanskr-medium q-pa-none">
     <div class="row items-center">
-      <q-btn flat class="row" @click="$router.go(-1)">
-      <!-- <q-btn flat class="row" :to="{ name: returnBtn.pathName }"> -->
+      <q-btn flat class="row" :to="{ name: returnBtn.pathName }">
+        <!-- <q-btn flat class="row" :to="{ name: returnBtn.pathName }"> -->
         <q-icon name="keyboard_backspace" size="24px"></q-icon>
         <q-separator vertical class="q-mx-sm"></q-separator>
         {{ returnBtn.label }}
@@ -37,9 +37,9 @@ export default {
       this.returnBtn.label = "내 관심 매물";
       this.returnBtn.pathName = "my_page";
     }
-    if (path === "real-estate") {
+    if (path === "insights") {
       this.returnBtn.label = "부동산 인사이드";
-      this.returnBtn.pathName = "my_page";
+      this.returnBtn.pathName = "home";
     }
   }
 };
