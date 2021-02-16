@@ -6,7 +6,13 @@
     style="height: 60px"
   >
     <q-card-section class="toolbar">
-      <q-btn flat padding="0px 8px 0 16px" class="row" @click="$router.go(-1)">
+      <q-btn
+        flat
+        padding="0px 8px 0 16px"
+        color="dark"
+        class="row"
+        @click="$router.go(-1)"
+      >
         <div>
           <q-icon
             name="keyboard_backspace"
