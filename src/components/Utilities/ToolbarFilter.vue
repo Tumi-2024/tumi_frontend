@@ -1,7 +1,9 @@
 <template>
   <q-card flat>
     <q-card-section class="row justify-between q-pa-none q-ma-none">
-      <overall-filter />
+      <!-- Dialog containing all filters-->
+      <overall-filter :disable="disable" />
+
       <div class="col w-100" :class="{ 'set-height': $q.platform.is.desktop }">
         <div
           class="scrolling-wrapper-flexbox notosanskr-medium row w-100 float-right"
@@ -15,6 +17,7 @@
                 :propertyType="filter.type === 'propertyType'"
                 :salePrice="filter.type === 'salePrice'"
                 :charterPriceDeposit="filter.type === 'charterPriceDeposit'"
+                :disable="disable"
               />
             </div>
           </slot>
@@ -55,6 +58,12 @@ export default {
         }
       ]
     };
+  },
+  props: {
+    disable: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>
@@ -64,18 +73,6 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-// .q-btn {
-//   background: #ffffff;
-//   border: 1px solid #dbdbdb;
-//   box-sizing: border-box;
-//   border-radius: 8px;
-//   font-weight: 500;
-//   font-size: 14px;
-//   line-height: 36px;
-//   text-align: center;
-//   letter-spacing: -1.05px;
-//   color: #1a1a1a;
-// }
 .scrolling-wrapper-flexbox {
   display: flex;
   flex-wrap: nowrap;
@@ -86,11 +83,6 @@ export default {
 
   .items {
     flex: 0 0 auto;
-    // .q-btn {
-    //   line-height: 36px;
-    //   padding: 0px 4px;
-    //   margin: 0px 2px;
-    // }
   }
   &.hideScrollbar {
     -ms-overflow-style: none; /* IE and Edge */
