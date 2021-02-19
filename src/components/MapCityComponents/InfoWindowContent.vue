@@ -1,5 +1,9 @@
 <template>
-  <div class="row" style="width: 192px; overflow-y: hidden" @click="viewArea()">
+  <div
+    class="row"
+    style="width: 192px; overflow-y: hidden"
+    @click="$emit('viewArea')"
+  >
     <q-img
       src="~assets/icons/house_orange.svg"
       spinner-color="white"
@@ -9,40 +13,53 @@
 
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        {{ marker.price }}
+        {{ price }}
       </div>
       <div
         class="row bottom-toolbar notosanskr-regular"
         :class="{ 'q-pb-sm': $q.platform.is.mobile }"
       >
-        <div class="info-text">단독다가구</div>
-        <q-badge color="white" text-color="primary" label="매매" />
-        <q-badge class="re-develop bg-white q-mr-sm">
+        <div class="info-text" v-if="badges.type">{{ badges.type }}</div>
+        <q-badge class="re-develop bg-white q-mr-sm" v-if="badges.redevelop">
           <q-icon>
             <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
           </q-icon>
         </q-badge>
-        <div class="info-text">25평</div>
+        <q-badge
+          color="white"
+          text-color="primary"
+          label="매매"
+          v-if="badges.charter"
+        />
+        <q-badge
+          color="white"
+          text-color="secondary"
+          label="전세"
+          v-if="badges.trading"
+        />
+        <q-separator vertical class="q-ma-xs" />
+        <div class="info-text" v-if="badges.area">{{ badges.area }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
 export default {
   props: {
-    marker: {
+    price: {
+      type: String,
+      default: ""
+    },
+    badges: {
       type: Object,
-      default: () => ({})
-    }
-  },
-  methods: {
-    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
-    viewArea() {
-      this.changeMapZoom(16);
-      this.changeMapCenter(this.marker.position);
-      this.$router.push({ name: "for_sale_land" });
+      default: () => ({
+        type: "단독다가구",
+        redevelop: true,
+        charter: false,
+        trading: false,
+        area: "0평"
+      })
     }
   }
 };

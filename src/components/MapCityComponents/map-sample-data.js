@@ -73,249 +73,483 @@ export const TUMI_MARKERS = [
     year: "2021년",
     price: "17억 2,420만",
     position: { lat: 37.426, lng: 127.024612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: "7억 2,420만",
     position: { lat: 37.426, lng: 127.024642 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.6326, lng: 127.024612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.6346, lng: 127.023612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2021년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.6926, lng: 127.024612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: "8억 2,420만",
     position: { lat: 37.6356, lng: 127.023112 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 3,
     price: "6억 3,000만",
     position: { lat: 37.6926, lng: 127.024612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.676, lng: 127.124612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.61226, lng: 127.324612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2021년",
     price: "6억 3,000만",
     position: { lat: 37.6326, lng: 127.224612 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2017년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5326, lng: 127.00131 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2021년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5396, lng: 127.021692 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2016년",
     price: "6억 19,000만",
     position: { lat: 37.531005, lng: 127.083247 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.53688, lng: 127.091201 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 3,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.536767, lng: 127.09545 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2017년",
     price: "6억 13,000만",
     position: { lat: 37.538195, lng: 127.086955 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5316, lng: 127.011672 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 2,
     price: " 9천만 보증금 / 60만 월세 ",
     position: { lat: 37.5336, lng: 127.09131 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 10,
     price: " 13억",
     position: { lat: 37.5362044, lng: 127.084209 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2022년",
     infoNumber: 4,
     price: " 4천만 보증금 / 60만 월세 ",
     position: { lat: 37.5396, lng: 127.091692 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2023년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5337, lng: 127.088668 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2021년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5316, lng: 127.091672 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.5316, lng: 127.094672 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.488345069646314, lng: 126.9590766966852 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2021년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.494746636240016, lng: 126.94603043203676 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.48112562362195, lng: 126.95135193472231 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.540091991553886, lng: 127.58983499084107 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     infoNumber: 7,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.44638609983939, lng: 127.60494119201294 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: "7억 2,420만",
     position: { lat: 37.55641870814871, lng: 127.05963092089841 },
-    type: "land"
+    type: "",
+    badges: {
+      type: "아파트",
+      redevelop: true,
+      charter: true,
+      area: "45평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.56002487761615, lng: 127.06336455584714 },
-    type: "land"
+    type: "apartment",
+    badges: {
+      type: "아파트",
+      redevelop: true,
+      trading: true,
+      area: "25평"
+    }
   },
   {
     year: "2020년",
     price: "7억 2,420만",
     position: { lat: 37.488753696672354, lng: 127.01225238085935 },
-    type: "land"
+    type: "apartment",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     infoNumber: 9,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.54363057853547, lng: 127.03822600167217 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.57614844355205, lng: 127.97380023242185 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.573971625804774, lng: 127.00229602099607 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.57551921371042, lng: 127.00744586230466 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.57295972401574, lng: 127.0119734311218 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      charter: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 10,
     price: "6천만 보증금/ 65만 월세",
     position: { lat: 37.51934447679332, lng: 127.05233867508158 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2020년",
     infoNumber: 6,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.53934447679332, lng: 127.05633867508158 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   },
   {
     year: "2019년",
     infoNumber: 2,
     price: " 3천만 보증금 / 60만 월세 ",
     position: { lat: 37.51764688948564, lng: 127.05859057443703 },
-    type: "land"
+    type: "land",
+    badges: {
+      type: "단독다가구",
+      redevelop: true,
+      trading: true,
+      area: "35평"
+    }
   }
 ];

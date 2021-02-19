@@ -31,10 +31,38 @@
           style="padding: 14px; background: #F6F6F6"
           class="row notosanskr-regular"
         >
-          <div class="col-6 q-pa-sm">아파트</div>
-          <div class="col-6 q-pa-sm">재개발</div>
-          <div class="col-6 q-pa-sm">가로주택</div>
-          <div class="col-6 q-pa-sm">기타매물</div>
+          <q-btn
+            flat
+            dense
+            align="left"
+            label="아파트"
+            class="col-6"
+            @click="toApartmentArea"
+          />
+          <q-btn
+            flat
+            dense
+            align="left"
+            label="재개발"
+            class="col-6"
+            @click="toApartmentArea"
+          />
+          <q-btn
+            flat
+            dense
+            align="left"
+            label="가로주택"
+            class="col-6"
+            @click="toApartmentArea"
+          />
+          <q-btn
+            flat
+            dense
+            align="left"
+            label="기타매물"
+            class="col-6"
+            @click="toApartmentArea"
+          />
         </q-card-section>
       </q-card>
     </q-expansion-item>
@@ -77,6 +105,13 @@ export default {
       this.changeMapZoom(16);
       this.changeMapCenter({ lat: 37.51988040411035, lng: 127.05400058307147 });
       this.changeToolbarTitle("재개발 구역");
+      this.$router.push({ name: "map_city" });
+    },
+    toApartmentArea() {
+      this.changeMapMode("apartment");
+      this.changeMapZoom(16);
+      this.changeMapCenter({ lat: 37.55931046167917, lng: 127.06229167224119 });
+      this.changeToolbarTitle("아파트 매물");
       this.$router.push({ name: "map_city" });
     }
   }

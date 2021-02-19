@@ -17,7 +17,11 @@
         class="bg-red q-pa-lg"
       >
         <info-top-content :marker="m" />
-        <info-window-content :marker="m" />
+        <info-window-content
+          @viewArea="viewArea(m)"
+          :price="m.price"
+          :badges="m.badges"
+        />
       </gmap-info-window>
 
       <gmap-cluster
@@ -31,7 +35,6 @@
         <gmap-marker
           v-for="(m, index) in markers"
           :key="'d' + index"
-          @click="center = m.position"
           :position="m.position"
           :clickable="true"
           :draggable="true"
@@ -47,7 +50,7 @@ import { gmapApi } from "gmap-vue";
 import { TUMI_SECTIONS_AREA, TUMI_MARKERS } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     "info-top-content": InfoTopContent,
@@ -144,6 +147,10 @@ export default {
     });
 
     this.map.addListener("idle", _ => {
+      /**
+       * run's when map stop's moving
+       */
+
       console.log(this.map.getBounds().Qa);
       console.log(this.map.getBounds().Va);
     });
@@ -179,6 +186,7 @@ export default {
   },
 
   methods: {
+    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;
@@ -198,6 +206,19 @@ export default {
           this.map.setCenter({ lat: query.lat, lng: query.lng });
         }
       }
+    },
+    viewArea({ position, type }) {
+      this.map.panTo(position);
+      this.map.addListener("idle", () => {
+        this.changeMapZoom(16);
+        this.changeMapCenter(position);
+        this.tpyeForSale(type) &&
+          this.$router.push({ name: this.tpyeForSale(type) });
+      });
+    },
+    tpyeForSale(type) {
+      if (type === "land") return "for_sale_land";
+      if (type === "apartment") return "for_sale_apartment";
     }
   }
 };
