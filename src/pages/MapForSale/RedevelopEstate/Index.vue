@@ -57,6 +57,8 @@
 
     <transaction-price-history :transactions="transactionPriceHistory" />
 
+    <average-price-history class="q-mt-sm" :areaOptions="areaOptions" />
+
     <div class="q-my-xl"></div>
   </div>
 </template>
@@ -71,7 +73,8 @@ import {
   AdministrationCost,
   SchoolSection,
   RecentPricing,
-  TransactionPriceHistory
+  TransactionPriceHistory,
+  AveragePriceHistory
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -83,6 +86,7 @@ export default {
     SchoolSection,
     RecentPricing,
     TransactionPriceHistory,
+    AveragePriceHistory,
     "google-map": GoogleMap
   },
   data() {
