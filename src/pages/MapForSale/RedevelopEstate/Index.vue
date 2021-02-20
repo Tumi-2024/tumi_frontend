@@ -57,7 +57,11 @@
 
     <transaction-price-history :transactions="transactionPriceHistory" />
 
-    <average-price-history class="q-mt-sm" :areaOptions="areaOptions" />
+    <average-price-history
+      class="q-mt-sm"
+      :areaOptions="areaOptions"
+      :priceAverage="averagePrice"
+    />
 
     <div class="q-my-xl"></div>
   </div>
@@ -214,7 +218,13 @@ export default {
           price: "8,000 / 90만",
           numberFloors: "20층"
         }
-      ]
+      ],
+      // Average Price History (Graph)
+      averagePrice: {
+        value: "11억 4,800만",
+        date: "2020년 06월",
+        badges: ["매매", "전세", "35평"]
+      }
     };
   }
 };

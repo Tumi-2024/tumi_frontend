@@ -19,16 +19,31 @@
     </q-card-section>
 
     <q-card-section class="q-pa-none">
-      <div class="average-pricing q-pa-md">
+      <div
+        class="average-pricing q-pa-md"
+        v-if="priceAverage.value && priceAverage.date"
+      >
         <div class="title q-py-xs">
           최근 한달기준 실거래가 평균
           <q-badge outline color="grey-13" class="q-mx-xs bg-white">
-            <span class="date  notosanskr-medium">2020년 06월</span>
+            <span class="date  notosanskr-medium">{{ priceAverage.date }}</span>
           </q-badge>
         </div>
         <div class="price-value notosanskr-medium">
-          11억 4,800만
+          {{ priceAverage.value }}
         </div>
+      </div>
+
+      <div class="badges q-px-md">
+        <q-badge
+          v-for="(badge, i) of priceAverage.badges"
+          :key="i"
+          color="grey-13"
+          outline
+          class="q-mr-sm q-px-sm"
+        >
+          <span class=" notosanskr-medium">#{{ badge }}</span>
+        </q-badge>
       </div>
     </q-card-section>
   </q-card>
@@ -42,7 +57,15 @@ export default {
     };
   },
   props: {
-    areaOptions: Array
+    areaOptions: Array,
+    priceAverage: {
+      type: Object,
+      default: () => ({
+        value: "",
+        date: "",
+        badges: []
+      })
+    }
   }
 };
 </script>
@@ -83,6 +106,19 @@ export default {
     line-height: 32px;
     letter-spacing: -1.575px;
     color: #1a1a1a;
+  }
+}
+.badges {
+  .q-badge {
+    border-radius: 8px;
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 36px;
+      text-align: center;
+      letter-spacing: -1.05px;
+      color: #1a1a1a;
+    }
   }
 }
 </style>
