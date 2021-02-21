@@ -18,10 +18,12 @@
     "@sentry/browser": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
     "axios": "^0.18.1",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "gmap-vue": "^1.5.0",
     "quasar": "^1.0.0",
     "quasar-dotenv": "^1.0.5",
+    "vue-chartjs": "^3.5.1",
     "vue-chimera": "^3.0.2",
     "vuex-persistedstate": "^4.0.0-beta.1"
   },
