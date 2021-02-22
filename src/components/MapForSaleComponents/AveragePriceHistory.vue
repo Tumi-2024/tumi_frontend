@@ -46,11 +46,19 @@
         </q-badge>
       </div>
     </q-card-section>
+
+    <q-card-section>
+      <average-price-chart />
+    </q-card-section>
   </q-card>
 </template>
 
 <script>
+import AveragePriceChart from "./Common/AveragePriceChart";
 export default {
+  components: {
+    AveragePriceChart
+  },
   data() {
     return {
       areaSelected: ""
