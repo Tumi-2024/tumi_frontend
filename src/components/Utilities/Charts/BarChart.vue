@@ -22,13 +22,25 @@ export default {
       ]
     },
     options: {
+      legend: {
+        position: "top",
+        align: "end",
+        display: true,
+        labels: {
+          fontFamily: "notosanskr-medium"
+        }
+      },
       responsive: true,
+      barRoundness: 1,
       maintainAspectRatio: false,
       scales: {
         yAxes: [
           {
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              callback: function(value) {
+                return value + "억";
+              }
             }
           }
         ]
@@ -38,7 +50,6 @@ export default {
 
   mounted() {
     this.renderChart(this.chartdata, this.options);
-    console.log(this.$data);
   }
 };
 </script>
