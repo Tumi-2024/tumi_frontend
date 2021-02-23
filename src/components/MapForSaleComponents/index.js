@@ -8,6 +8,7 @@ import SchoolSection from "./SchoolSection";
 import RecentPricing from "./RecentPricing";
 import TransactionPriceHistory from "./TransactionPriceHistory";
 import SimilarTransaction from "./SimilarTransaction";
+import AveragePriceHistory from "./AveragePriceHistory";
 
 export {
   GoogleMap,
@@ -19,5 +20,6 @@ export {
   SchoolSection,
   RecentPricing,
   TransactionPriceHistory,
-  SimilarTransaction
+  SimilarTransaction,
+  AveragePriceHistory
 };

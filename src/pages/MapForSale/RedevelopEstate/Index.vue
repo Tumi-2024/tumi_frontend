@@ -57,7 +57,13 @@
 
     <transaction-price-history :transactions="transactionPriceHistory" />
 
-    <div class="q-my-xl"></div>
+    <average-price-history
+      class="q-mt-sm"
+      :areaOptions="areaOptions"
+      :priceAverage="averagePrice"
+    />
+
+    <div class="q-py-xl "></div>
   </div>
 </template>
 
@@ -71,7 +77,8 @@ import {
   AdministrationCost,
   SchoolSection,
   RecentPricing,
-  TransactionPriceHistory
+  TransactionPriceHistory,
+  AveragePriceHistory
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -83,6 +90,7 @@ export default {
     SchoolSection,
     RecentPricing,
     TransactionPriceHistory,
+    AveragePriceHistory,
     "google-map": GoogleMap
   },
   data() {
@@ -210,7 +218,13 @@ export default {
           price: "8,000 / 90만",
           numberFloors: "20층"
         }
-      ]
+      ],
+      // Average Price History (Graph)
+      averagePrice: {
+        value: "11억 4,800만",
+        date: "2020년 06월",
+        badges: ["매매", "전세", "35평"]
+      }
     };
   }
 };
