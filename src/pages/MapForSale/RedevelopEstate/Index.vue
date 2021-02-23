@@ -63,7 +63,7 @@
       :priceAverage="averagePrice"
     />
 
-    <div class="q-my-xl"></div>
+    <div class="q-py-xl "></div>
   </div>
 </template>
 
