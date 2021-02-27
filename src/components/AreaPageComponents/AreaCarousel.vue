@@ -6,6 +6,7 @@
         transition-prev="slide-right"
         transition-next="slide-left"
         animated
+        swipeable
         control-color="primary"
         class="rounded-borders"
       >
@@ -15,11 +16,12 @@
           :name="slide"
           class="row"
         >
-          <div class="image-area bg-orange col-12">
-            <q-icon name="style" color="secondary" size="56px" />
-            {{ lorem }}
-          </div>
-          <div class="row justify-between items-center q-pt-sm col-12">
+          <section class="map-area">
+            <div class="mask"></div>
+            <area-google-map class="area-map" />
+          </section>
+
+          <section class="row justify-between items-center q-pt-sm col-12">
             <div class="text-address notosanskr-medium">
               서울시 강남구 대치동
             </div>
@@ -31,7 +33,7 @@
             >
               관심지역 삭제
             </q-btn>
-          </div>
+          </section>
         </q-carousel-slide>
       </q-carousel>
 
@@ -52,7 +54,11 @@
 </template>
 
 <script>
+import AreaGoogleMap from "./AreaGoogleMap";
 export default {
+  components: {
+    AreaGoogleMap
+  },
   data() {
     return {
       currentSlide: "slide1",
@@ -63,7 +69,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .q-carousel {
   height: 230px;
 }
@@ -74,13 +80,33 @@ export default {
   border-radius: 4px;
 }
 
-.image-area {
+.map-area {
   height: 172px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 14px;
+  position: relative;
+  .mask {
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/map-overlay.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    z-index: 10;
+  }
+  .area-map {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 .text-address {
   font-weight: 500;
@@ -104,10 +130,12 @@ export default {
 
 @media (min-width: 770px) {
   .q-carousel {
-    height: 460px;
+    min-height: 560px;
   }
-  .image-area {
-    height: 344px;
+  .map-area {
+    height: 444px;
+    max-width: 90%;
+    margin: auto;
   }
 }
 </style>
