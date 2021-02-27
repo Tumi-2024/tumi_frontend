@@ -12,9 +12,9 @@
     </q-card>
     <!-- Notice Section -->
     <q-card flat square class="q-mt-sm full-heigh col-grow">
-      <q-card-section class="notice notosanskr-regular"
-        >공지사항</q-card-section
-      >
+      <q-card-section class="notice notosanskr-regular">
+        공지사항
+      </q-card-section>
     </q-card>
   </div>
 </template>
