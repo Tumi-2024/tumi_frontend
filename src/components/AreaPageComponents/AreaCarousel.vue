@@ -17,13 +17,13 @@
           class="row"
         >
           <section class="map-area">
-            <div class="mask"></div>
+            <div class="mask" :class="i % 2 ? 'blue' : 'orange'"></div>
             <area-google-map :position="slide.position" class="area-map" />
           </section>
 
           <section class="row justify-between items-center q-pt-sm col-12">
             <div class="text-address notosanskr-medium">
-              서울시 강남구 대치동
+              {{ slide.areaName }}
             </div>
 
             <q-btn
@@ -104,19 +104,22 @@ export default {
 .map-area {
   height: 172px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 14px;
   position: relative;
   .mask {
     width: 100%;
     height: 100%;
-    background: url("../../assets/map-overlay.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    &.orange {
+      background: url("../../assets/map-overlay.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+    &.blue {
+      background: url("../../assets/map-overlay-blue.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
 
     position: absolute;
     bottom: 0;

@@ -67,4 +67,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .vue-map-container .vue-map {
+  border-radius: 8px;
+}
+</style>
