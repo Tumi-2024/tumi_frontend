@@ -13,12 +13,12 @@
         <q-carousel-slide
           v-for="(slide, i) in slides"
           :key="i"
-          :name="slide"
+          :name="slide.id"
           class="row"
         >
           <section class="map-area">
             <div class="mask"></div>
-            <area-google-map class="area-map" />
+            <area-google-map :position="slide.position" class="area-map" />
           </section>
 
           <section class="row justify-between items-center q-pt-sm col-12">
@@ -44,8 +44,8 @@
             class="carousel-btn q-pa-none q-pa-md-md"
             v-for="(slide, i) in slides"
             :key="i"
-            @click="currentSlide = slide"
-            :class="currentSlide == slide ? 'bg-primary' : 'bg-grey-12'"
+            @click="currentSlide = slide.id"
+            :class="currentSlide == slide.id ? 'bg-primary' : 'bg-grey-12'"
           ></q-btn>
         </div>
       </div>
@@ -62,7 +62,28 @@ export default {
   data() {
     return {
       currentSlide: "slide1",
-      slides: ["slide1", "slide2", "slide3", "slide4"],
+      slides: [
+        {
+          id: "slide1",
+          areaName: "서울시 강남구 대치동",
+          position: { lat: 37.54439180667893, lng: 127.04601120488171 }
+        },
+        {
+          id: "slide2",
+          areaName: "종로1가 대성스카이렉스",
+          position: { lat: 37.57551921371042, lng: 127.00744586230466 }
+        },
+        {
+          id: "slide3",
+          areaName: "한남 3구역",
+          position: { lat: 37.51934447679332, lng: 127.05233867508158 }
+        },
+        {
+          id: "slide4",
+          areaName: "서울시 강남구 대치동",
+          position: { lat: 37.51764688948564, lng: 127.05859057443703 }
+        }
+      ],
       lorem: "Map content here"
     };
   }

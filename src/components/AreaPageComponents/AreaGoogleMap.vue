@@ -1,11 +1,8 @@
 <template>
-  <div class="bg-red" ref="gmapContainer">
+  <div ref="gmapContainer">
     <GmapMap
       ref="mapRef"
-      :center="{
-        lat: 37.54439180667893,
-        lng: 127.04601120488171
-      }"
+      :center="position"
       :zoom="17"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
@@ -28,6 +25,15 @@ export default {
       mapSize: { height: "", width: "" }
     };
   },
+  props: {
+    position: {
+      type: Object,
+      default: () => ({
+        lat: 37.54439180667893,
+        lng: 127.04601120488171
+      })
+    }
+  },
   computed: {
     ...mapGetters("map", ["getMapOptions"]),
     google: gmapApi
@@ -42,10 +48,7 @@ export default {
       scrollwheel: false
     });
     new this.google.maps.Marker({
-      position: {
-        lat: 37.54439180667893,
-        lng: 127.04601120488171
-      },
+      position: this.position,
       map: this.map,
       icon: icon
     });
