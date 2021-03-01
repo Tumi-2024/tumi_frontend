@@ -15,10 +15,7 @@
       <div class="info-heading notosanskr-medium">
         {{ price }}
       </div>
-      <div
-        class="row bottom-toolbar notosanskr-regular"
-        :class="{ 'q-pb-sm': $q.platform.is.mobile }"
-      >
+      <div class="row bottom-toolbar notosanskr-regular">
         <div class="info-text" v-if="badges.type">{{ badges.type }}</div>
         <q-badge class="re-develop bg-white q-mr-sm" v-if="badges.redevelop">
           <q-icon>

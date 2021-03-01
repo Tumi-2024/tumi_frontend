@@ -1,22 +1,20 @@
 <template>
-  <div style="min-height: 100vh" class="row column bg-positive">
-    <q-card flat square class="row full-width items-center">
+  <q-layout view="lHh lpr lFf" container style="min-height: 100vh">
+    <q-header reveal class="bg-white">
       <top-navigation></top-navigation>
-      <top-tab-nav></top-tab-nav>
-    </q-card>
+    </q-header>
 
-    <q-card flat square class="q-pa-none bg-positive">
+    <q-page-container>
       <router-view></router-view>
-    </q-card>
-  </div>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
-import { ToolbarNav, TopTabNav } from "src/components/MyPageLayoutComponents";
+import { ToolbarNav } from "src/components/MyPageLayoutComponents";
 export default {
   components: {
-    "top-navigation": ToolbarNav,
-    "top-tab-nav": TopTabNav
+    "top-navigation": ToolbarNav
   }
 };
 </script>

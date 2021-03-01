@@ -6,22 +6,24 @@
         transition-prev="slide-right"
         transition-next="slide-left"
         animated
+        swipeable
         control-color="primary"
         class="rounded-borders"
       >
         <q-carousel-slide
           v-for="(slide, i) in slides"
           :key="i"
-          :name="slide"
+          :name="slide.id"
           class="row"
         >
-          <div class="image-area bg-orange col-12">
-            <q-icon name="style" color="secondary" size="56px" />
-            {{ lorem }}
-          </div>
-          <div class="row justify-between items-center q-pt-sm col-12">
+          <section class="map-area">
+            <div class="mask" :class="i % 2 ? 'blue' : 'orange'"></div>
+            <area-google-map :position="slide.position" class="area-map" />
+          </section>
+
+          <section class="row justify-between items-center q-pt-sm col-12">
             <div class="text-address notosanskr-medium">
-              서울시 강남구 대치동
+              {{ slide.areaName }}
             </div>
 
             <q-btn
@@ -31,7 +33,7 @@
             >
               관심지역 삭제
             </q-btn>
-          </div>
+          </section>
         </q-carousel-slide>
       </q-carousel>
 
@@ -42,8 +44,8 @@
             class="carousel-btn q-pa-none q-pa-md-md"
             v-for="(slide, i) in slides"
             :key="i"
-            @click="currentSlide = slide"
-            :class="currentSlide == slide ? 'bg-primary' : 'bg-grey-12'"
+            @click="currentSlide = slide.id"
+            :class="currentSlide == slide.id ? 'bg-primary' : 'bg-grey-12'"
           ></q-btn>
         </div>
       </div>
@@ -52,18 +54,43 @@
 </template>
 
 <script>
+import AreaGoogleMap from "./AreaGoogleMap";
 export default {
+  components: {
+    AreaGoogleMap
+  },
   data() {
     return {
       currentSlide: "slide1",
-      slides: ["slide1", "slide2", "slide3", "slide4"],
+      slides: [
+        {
+          id: "slide1",
+          areaName: "서울시 강남구 대치동",
+          position: { lat: 37.54439180667893, lng: 127.04601120488171 }
+        },
+        {
+          id: "slide2",
+          areaName: "종로1가 대성스카이렉스",
+          position: { lat: 37.57551921371042, lng: 127.00744586230466 }
+        },
+        {
+          id: "slide3",
+          areaName: "한남 3구역",
+          position: { lat: 37.51934447679332, lng: 127.05233867508158 }
+        },
+        {
+          id: "slide4",
+          areaName: "서울시 강남구 대치동",
+          position: { lat: 37.51764688948564, lng: 127.05859057443703 }
+        }
+      ],
       lorem: "Map content here"
     };
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .q-carousel {
   height: 230px;
 }
@@ -74,13 +101,36 @@ export default {
   border-radius: 4px;
 }
 
-.image-area {
+.map-area {
   height: 172px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 14px;
+  width: 100%;
+  position: relative;
+  .mask {
+    width: 100%;
+    height: 100%;
+    &.orange {
+      background: url("../../assets/map-overlay.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+    &.blue {
+      background: url("../../assets/map-overlay-blue.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    z-index: 10;
+  }
+  .area-map {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 .text-address {
   font-weight: 500;
@@ -104,10 +154,12 @@ export default {
 
 @media (min-width: 770px) {
   .q-carousel {
-    height: 460px;
+    min-height: 560px;
   }
-  .image-area {
-    height: 344px;
+  .map-area {
+    height: 444px;
+    max-width: 90%;
+    margin: auto;
   }
 }
 </style>

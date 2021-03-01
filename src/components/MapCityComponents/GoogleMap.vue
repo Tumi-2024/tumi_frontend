@@ -1,5 +1,6 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
+    <action-buttons :showAll="showInfoWindow" />
     <GmapMap
       ref="mapRef"
       :center="getMapCenter"
@@ -14,7 +15,7 @@
         :position="m.position"
         :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
         @closeclick="infoWinOpen = false"
-        class="bg-red q-pa-lg"
+        class="q-pa-lg"
       >
         <info-top-content :marker="m" />
         <info-window-content
@@ -50,11 +51,13 @@ import { gmapApi } from "gmap-vue";
 import { TUMI_SECTIONS_AREA, TUMI_MARKERS } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
+import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     "info-top-content": InfoTopContent,
-    "info-window-content": InfoWindowContent
+    "info-window-content": InfoWindowContent,
+    "action-buttons": ActionButtons
   },
   data() {
     return {
@@ -219,6 +222,8 @@ export default {
     tpyeForSale(type) {
       if (type === "land") return "for_sale_land";
       if (type === "apartment") return "for_sale_apartment";
+      if (type === "redevelop") return "for_sale_redevelop_estate";
+      if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     }
   }
 };
