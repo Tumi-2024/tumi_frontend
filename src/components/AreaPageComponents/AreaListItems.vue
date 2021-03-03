@@ -16,13 +16,13 @@
     </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
-        <area-item
+        <property-item
           v-for="(item, i) of items"
           :key="i"
           :name="item.name"
           :amount="item.amount"
           :tags="item.tags"
-        ></area-item>
+        />
         <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
         </q-item>
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import AreaItem from "./AreaItem";
+import PropertyItem from "components/Utilities/PropertyItem";
 export default {
   components: {
-    "area-item": AreaItem
+    "property-item": PropertyItem
   },
   data() {
     return {
@@ -43,7 +43,7 @@ export default {
         {
           tags: {
             type: "아파트",
-            recomend: "투미추천 급매",
+            recommended: "추천 급매",
             date: "20.10.12"
           },
           name: "종로1가 대성스카이렉스",
