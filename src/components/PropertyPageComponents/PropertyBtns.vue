@@ -2,11 +2,15 @@
   <q-card flat class="q-mt-sm" style="margin-top: 0px;">
     <q-card-section class="row justify-between card-section" style="">
       <div class="notosanskr-medium" style="">
-        <q-btn unelevated class="q-mr-sm" color="dark">
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px" color="dark">
           #전체({{ apartment + office }})
         </q-btn>
-        <q-btn unelevated class="q-mr-sm">#아파트({{ apartment }})</q-btn>
-        <q-btn unelevated class="q-mr-sm">#오피스텔({{ office }})</q-btn>
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px">
+          #아파트({{ apartment }})
+        </q-btn>
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px">
+          #오피스텔({{ office }})
+        </q-btn>
       </div>
     </q-card-section>
   </q-card>

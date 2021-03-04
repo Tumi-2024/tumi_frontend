@@ -8,7 +8,7 @@
           class="row"
           @click="setSelected(item.id)"
         >
-          <div class="row items-center q-px-md" v-if="isEdit">
+          <div class="row items-center q-pl-md q-pr-xs" v-if="isEdit">
             <svg
               width="20"
               height="20"
@@ -36,6 +36,31 @@
         </div>
       </q-list>
     </q-card-section>
+
+    <q-dialog v-model="isEdit" seamless position="bottom">
+      <q-card class="modal">
+        <q-card-section class="row notosanskr-medium">
+          <div class="col q-px-xs">
+            <q-btn
+              color="grey-8"
+              text-color="white"
+              class=" full-width "
+              label="전체선택"
+              padding="0px"
+            />
+          </div>
+          <div class="col q-px-xs">
+            <q-btn
+              class="full-width select-delete"
+              :class="{ active: selectedItems.length }"
+              :disable="!selectedItems.length"
+              label="전체선택"
+              padding="0px"
+            />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 
@@ -77,4 +102,30 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.modal {
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  background: transparent;
+  box-shadow: none;
+  .q-btn {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 52px;
+    text-align: center;
+    letter-spacing: -1.275px;
+    border-radius: 12px;
+    text-shadow: none;
+
+    &.select-delete {
+      background: #e8e8e8;
+      color: #a0a0a0;
+    }
+    &.active {
+      background: #ff5100;
+      color: aliceblue;
+    }
+  }
+}
+</style>
