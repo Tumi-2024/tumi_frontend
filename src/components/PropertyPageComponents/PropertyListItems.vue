@@ -98,6 +98,11 @@ export default {
       const checkSelected = this.selectedItems.find(item => item === id);
       return checkSelected ? "#FF7D36" : "#D5D5D5";
     }
+  },
+  watch: {
+    isEdit(editValue) {
+      !editValue && (this.selectedItems = []);
+    }
   }
 };
 </script>
