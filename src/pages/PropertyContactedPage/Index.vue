@@ -1,9 +1,13 @@
 <template>
   <div class="q-mt-sm" style="max-width: 1000px;">
-    <property-menu-sort @edit="e => (isEdit = e)"></property-menu-sort>
+    <property-menu-sort
+      @edit="e => (isEdit = e)"
+      :isEdit="isEdit"
+    ></property-menu-sort>
     <property-filter :apartment="3" :office="9"></property-filter>
     <property-list-items
       :items="propertyItems"
+      @deleteItems="deleteItems"
       :isEdit="isEdit"
     ></property-list-items>
   </div>
@@ -75,6 +79,14 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    deleteItems(items = []) {
+      items.forEach(id => {
+        this.propertyItems = this.propertyItems.filter(item => item.id !== id);
+      });
+      this.isEdit = false;
+    }
   }
 };
 </script>

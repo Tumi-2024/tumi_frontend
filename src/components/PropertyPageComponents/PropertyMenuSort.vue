@@ -59,15 +59,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isEdit: false
-    };
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     edit() {
-      this.isEdit = !this.isEdit;
-      this.$emit("edit", this.isEdit);
+      this.$emit("edit", !this.isEdit);
     }
   }
 };

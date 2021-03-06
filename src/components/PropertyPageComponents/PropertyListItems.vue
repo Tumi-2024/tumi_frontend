@@ -47,6 +47,12 @@
               class=" full-width "
               label="전체선택"
               padding="0px"
+              @click="
+                $emit(
+                  'deleteItems',
+                  items.map(x => x.id)
+                )
+              "
             />
           </div>
           <div class="col q-px-xs">
@@ -56,6 +62,7 @@
               :disable="!selectedItems.length"
               label="전체선택"
               padding="0px"
+              @click="$emit('deleteItems', selectedItems)"
             />
           </div>
         </q-card-section>
