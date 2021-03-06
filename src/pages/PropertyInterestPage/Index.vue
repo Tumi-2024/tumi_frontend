@@ -1,7 +1,7 @@
 <template>
   <div class="q-mt-sm" style="max-width: 1000px;">
     <property-menu-sort @edit="e => (isEdit = e)"></property-menu-sort>
-    <property-btns :apartment="3" :office="9"></property-btns>
+    <property-filter :apartment="3" :office="9"></property-filter>
     <property-list-items
       :items="propertyItems"
       :isEdit="isEdit"
@@ -12,14 +12,14 @@
 <script>
 import {
   PropertyMenuSort,
-  PropertyBtns,
+  PropertyFilter,
   PropertyListItems
 } from "src/components/PropertyPageComponents";
 export default {
   name: "Property-Interest",
   components: {
     "property-menu-sort": PropertyMenuSort,
-    "property-btns": PropertyBtns,
+    "property-filter": PropertyFilter,
     "property-list-items": PropertyListItems
   },
   data() {
@@ -29,7 +29,7 @@ export default {
         {
           id: 1,
           tags: {
-            type: "아파트",
+            type: "오피스텔",
             recommended: "투미추천 급매",
             date: "20.10.12"
           },
@@ -67,7 +67,7 @@ export default {
         {
           id: 5,
           tags: {
-            type: "아파트",
+            type: "오피스텔",
             date: "20.10.12"
           },
           name: "종로1가 대성스카이렉스",
