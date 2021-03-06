@@ -1,5 +1,5 @@
-import PropertyMenuFilter from "./PropertyMenuFilter";
+import PropertyMenuSort from "./PropertyMenuSort";
 import PropertyBtns from "./PropertyBtns";
 import PropertyListItems from "./PropertyListItems";
 
-export { PropertyMenuFilter, PropertyBtns, PropertyListItems };
+export { PropertyMenuSort, PropertyBtns, PropertyListItems };

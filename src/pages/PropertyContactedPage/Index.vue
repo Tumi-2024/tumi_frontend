@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-sm" style="max-width: 1000px;">
-    <property-menu-filter @edit="e => (isEdit = e)"></property-menu-filter>
+    <property-menu-sort @edit="e => (isEdit = e)"></property-menu-sort>
     <property-btns :apartment="3" :office="9"></property-btns>
     <property-list-items
       :items="propertyItems"
@@ -11,14 +11,14 @@
 
 <script>
 import {
-  PropertyMenuFilter,
+  PropertyMenuSort,
   PropertyBtns,
   PropertyListItems
 } from "src/components/PropertyPageComponents";
 export default {
   name: "Property-Contacted",
   components: {
-    "property-menu-filter": PropertyMenuFilter,
+    "property-menu-sort": PropertyMenuSort,
     "property-btns": PropertyBtns,
     "property-list-items": PropertyListItems
   },
