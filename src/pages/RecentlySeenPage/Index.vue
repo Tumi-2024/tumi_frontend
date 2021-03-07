@@ -1,7 +1,7 @@
 <template>
   <div>
     <toolbar-nav class="bg-white" style="margin-bottom: 12px"></toolbar-nav>
-    <property-menu-sort></property-menu-sort>
+    <property-menu-sort hide-edit></property-menu-sort>
     <property-filter
       :apartment="getCountApartment()"
       :office="getCountOfficetels()"

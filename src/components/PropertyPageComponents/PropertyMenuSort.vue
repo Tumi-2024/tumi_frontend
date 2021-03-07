@@ -26,6 +26,7 @@
         class="absolute-right"
         :text-color="isEdit ? 'primary' : 'dark'"
         @click="edit()"
+        v-if="!hideEdit"
       >
         <q-icon size="24px" style="margin-right: 3px;">
           <svg
@@ -61,6 +62,10 @@
 export default {
   props: {
     isEdit: {
+      type: Boolean,
+      default: false
+    },
+    hideEdit: {
       type: Boolean,
       default: false
     }
