@@ -47,6 +47,7 @@
               class=" full-width "
               label="전체선택"
               padding="0px"
+              :disable="!items.length"
               @click="
                 $emit(
                   'deleteItems',
