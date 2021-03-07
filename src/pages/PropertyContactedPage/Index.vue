@@ -4,7 +4,10 @@
       @edit="e => (isEdit = e)"
       :isEdit="isEdit"
     ></property-menu-sort>
-    <property-filter :apartment="3" :office="9"></property-filter>
+    <property-filter
+      :apartment="getCountApartment()"
+      :office="getCountOfficetels()"
+    ></property-filter>
     <property-list-items
       :items="propertyItems"
       @deleteItems="deleteItems"
@@ -17,7 +20,8 @@
 import {
   PropertyMenuSort,
   PropertyFilter,
-  PropertyListItems
+  PropertyListItems,
+  PropertyMixin
 } from "src/components/PropertyPageComponents";
 export default {
   name: "Property-Contacted",
@@ -26,65 +30,15 @@ export default {
     "property-filter": PropertyFilter,
     "property-list-items": PropertyListItems
   },
+  mixins: [PropertyMixin],
   data() {
     return {
-      isEdit: false,
-      propertyItems: [
-        {
-          id: 1,
-          tags: {
-            type: "아파트",
-            recommended: "투미추천 급매",
-            date: "21.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "보증금 5천 6백만 / 월세 121만"
-        },
-        {
-          id: 2,
-          tags: {
-            type: "아파트",
-            date: "21.10.12"
-          },
-          name: "종로 대성스카이렉스",
-          amount: "매매 6억 3,400만"
-        },
-        {
-          id: 3,
-          tags: {
-            type: "오피스텔",
-            redevelopment: true,
-            date: "21.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 7억 5천만"
-        },
-        {
-          id: 4,
-          tags: {
-            type: "아파트",
-            date: "21.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        },
-        {
-          id: 5,
-          tags: {
-            type: "오피스텔",
-            date: "21.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        }
-      ]
+      isEdit: false
     };
   },
   methods: {
-    deleteItems(items = []) {
-      items.forEach(id => {
-        this.propertyItems = this.propertyItems.filter(item => item.id !== id);
-      });
+    deleteListItems(items) {
+      this.deleteItems(items);
       this.isEdit = false;
     }
   }
