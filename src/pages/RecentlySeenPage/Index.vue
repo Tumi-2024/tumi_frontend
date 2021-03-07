@@ -1,27 +1,36 @@
 <template>
   <div>
     <toolbar-nav class="bg-white" style="margin-bottom: 12px"></toolbar-nav>
-    <recently-seen-menu-items></recently-seen-menu-items>
-    <recently-seen-btns class="bg-white"></recently-seen-btns>
-    <recently-seen-list-items class="bg-white"></recently-seen-list-items>
+    <property-menu-sort></property-menu-sort>
+    <property-filter
+      :apartment="getCountApartment()"
+      :office="getCountOfficetels()"
+      class="bg-white"
+    ></property-filter>
+    <property-list-items
+      class="bg-white"
+      :items="propertyItems"
+    ></property-list-items>
   </div>
 </template>
 
 <script>
+import { ToolbarNav } from "src/components/RecentlySeenComponents";
 import {
-  RecentlySeenMenuItems,
-  RecentlySeenBtns,
-  RecentlySeenListItems,
-  ToolbarNav
-} from "src/components/RecentlySeenComponents";
+  PropertyMenuSort,
+  PropertyFilter,
+  PropertyListItems,
+  PropertyMixin
+} from "src/components/PropertyPageComponents";
 export default {
   name: "Recently-Seen",
   components: {
-    "recently-seen-menu-items": RecentlySeenMenuItems,
-    "recently-seen-btns": RecentlySeenBtns,
-    "recently-seen-list-items": RecentlySeenListItems,
-    "toolbar-nav": ToolbarNav
+    "toolbar-nav": ToolbarNav,
+    PropertyMenuSort,
+    PropertyFilter,
+    PropertyListItems
   },
+  mixins: [PropertyMixin],
   data() {
     return {};
   }
