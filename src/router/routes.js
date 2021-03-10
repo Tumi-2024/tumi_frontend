@@ -51,6 +51,8 @@ const routes = [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
       { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
+      // 재개발구역
+      // { path: 'areas', component: () => import('pages/MapAreaPage/Index.vue'), name: 'map_list_sale' }
     ]
   },
   { path: '/map/view-search', component: () => import('pages/MapViewSearch/Index.vue'), name: 'map_view_search' },
