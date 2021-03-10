@@ -1,26 +1,46 @@
 <template>
   <div class="q-mt-sm" style="max-width: 1000px;">
-    <interest-menu-items></interest-menu-items>
-    <interest-btns></interest-btns>
-    <interest-list-items></interest-list-items>
+    <property-menu-sort
+      @edit="e => (isEdit = e)"
+      :isEdit="isEdit"
+    ></property-menu-sort>
+    <property-filter
+      :apartment="getCountApartment()"
+      :office="getCountOfficetels()"
+    ></property-filter>
+    <property-list-items
+      :items="propertyItems"
+      @deleteItems="deleteListItems"
+      :isEdit="isEdit"
+    ></property-list-items>
   </div>
 </template>
 
 <script>
 import {
-  InterestMenuItems,
-  InterestBtns,
-  InterestListItems,
-} from "src/components/PropertyInterestComponents";
+  PropertyMenuSort,
+  PropertyFilter,
+  PropertyListItems,
+  PropertyMixin
+} from "src/components/PropertyPageComponents";
 export default {
   name: "Property-Interest",
   components: {
-    "interest-menu-items": InterestMenuItems,
-    "interest-btns": InterestBtns,
-    "interest-list-items": InterestListItems,
+    "property-menu-sort": PropertyMenuSort,
+    "property-filter": PropertyFilter,
+    "property-list-items": PropertyListItems
   },
+  mixins: [PropertyMixin],
   data() {
-    return {};
+    return {
+      isEdit: false
+    };
+  },
+  methods: {
+    deleteListItems(items) {
+      this.deleteItems(items);
+      this.isEdit = false;
+    }
   }
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
-  <q-item class="column  notosanskr-regular " :to="{ name: to }">
+  <q-item
+    class="column  notosanskr-regular "
+    :to="{ name: !disabled ? to : '' }"
+  >
     <q-item-section>
       <!-- Area Tags |  -->
       <area-tags :tag="tags" />
@@ -37,6 +40,10 @@ export default {
     to: {
       type: String,
       default: "for_sale_apartment"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   }
 };
