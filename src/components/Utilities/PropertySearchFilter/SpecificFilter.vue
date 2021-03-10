@@ -4,7 +4,9 @@
       unelevated
       padding="0px"
       class="modal-btn q-ma-none no-wrap"
+      :class="{ disable: disable }"
       @click="modal = true"
+      :disable="disable"
     >
       {{ label }}
     </q-btn>
@@ -74,7 +76,8 @@ export default {
     transactionType: { type: Boolean, default: false },
     propertyType: { type: Boolean, default: false },
     salePrice: { type: Boolean, default: false },
-    charterPriceDeposit: { type: Boolean, default: false }
+    charterPriceDeposit: { type: Boolean, default: false },
+    disable: { type: Boolean, default: false }
   },
   computed: {
     contentComponent() {
@@ -91,7 +94,7 @@ export default {
       if (this.charterPriceDeposit) {
         component = "charter-price-deposit";
       }
-      return component
+      return component;
     }
   }
 };
@@ -112,6 +115,10 @@ export default {
 
   padding: 0 4px;
   margin: 0 2px;
+
+  &.disable {
+    color: #909090;
+  }
 }
 .apply-btn,
 .reset-btn {

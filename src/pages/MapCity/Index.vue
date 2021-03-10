@@ -1,6 +1,5 @@
 <template>
   <div>
-    <toolbar-filter />
     <google-map class="page-container full-height full-width" />
     <bottom-drawer />
   </div>
@@ -8,11 +7,9 @@
 
 <script>
 import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
-import ToolbarFilter from "components/Utilities/ToolbarFilter";
 export default {
   components: {
     "bottom-drawer": BottomDrawer,
-    "toolbar-filter": ToolbarFilter,
     "google-map": GoogleMap
   }
 };

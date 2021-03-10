@@ -3,11 +3,12 @@
     <q-btn
       unelevated
       outline
-      color="primary"
+      :color="!disable ? 'primary' : 'orange-3'"
       padding="8px"
       style="border-radius: 8px; height: 36px;"
       class="q-mx-xs"
       @click="modal = true"
+      :disable="disable"
     >
       <q-icon size="20px">
         <img src="~assets/icons/Filter.svg" alt="filter" />
@@ -102,6 +103,12 @@ export default {
     return {
       modal: false
     };
+  },
+  props: {
+    disable: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>

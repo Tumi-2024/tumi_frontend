@@ -1,27 +1,8 @@
 <template>
-  <q-item class="column  notosanskr-regular " :to="{ name: 'for_sale_apartment' }">
+  <q-item class="column  notosanskr-regular " :to="{ name: to }">
     <q-item-section>
-      <div class="row">
-        <!-- badge for item type -->
-        <q-badge class="text-white bg-primary q-mr-sm">{{ tags.type }}</q-badge>
-        <!-- badge for item status -->
-        <q-badge
-          outline
-          class="text-primary bg-white q-mr-sm"
-          v-if="tags.recomend"
-        >
-          {{ tags.recomend }}
-        </q-badge>
-        <!-- badge for redevelopment -->
-        <q-badge class="re-develop bg-white q-mr-sm" v-if="tags.redevelopment">
-          <q-icon>
-            <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
-          </q-icon>
-          재개발
-        </q-badge>
-        <!-- badge for item date -->
-        <q-badge class="date">{{ tags.date }}</q-badge>
-      </div>
+      <!-- Area Tags |  -->
+      <area-tags :tag="tags" />
     </q-item-section>
     <q-item-section class="area-name q-pt-sm">
       {{ name }}
@@ -44,11 +25,19 @@
 </template>
 
 <script>
+import AreaTags from "components/Utilities/AreaTags";
 export default {
+  components: {
+    AreaTags
+  },
   props: {
     tags: Object,
     name: String,
-    amount: String
+    amount: String,
+    to: {
+      type: String,
+      default: "for_sale_apartment"
+    }
   }
 };
 </script>
