@@ -1,7 +1,7 @@
 <template>
   <q-item class="column  notosanskr-regular ">
     <q-item-section class="area-title">
-      {{ title }}
+      {{ title }}123123
     </q-item-section>
 
     <div class="row area-date">
@@ -11,7 +11,7 @@
     </div>
 
     <q-item-section class="area-description">
-      {{ description }}
+      {{ description }}123123
     </q-item-section>
     
     <q-separator style="margin-top: 20px" />

@@ -9,19 +9,21 @@
       :options="getMapOptions"
     >
       <gmap-info-window
-        v-for="(m, index) in markers"
+        v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
         :options="infoOptions"
-        :position="m.position"
+        :position="m[0].position"
         :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
         @closeclick="infoWinOpen = false"
         class="q-pa-lg"
       >
-        <info-top-content :marker="m" />
+        <info-top-content :marker="m[0]" />
+        <info-window-content :marker="m[0]" />
+
         <info-window-content
-          @viewArea="viewArea(m)"
-          :price="m.price"
-          :badges="m.badges"
+          @viewArea="viewArea(m[0])"
+          :price="m[0].price"
+          :badges="m[0].badges"
         />
       </gmap-info-window>
 
@@ -64,7 +66,9 @@ export default {
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
-      markers: TUMI_MARKERS,
+      detailMarkers: this.$store.state.estate.detail_houses,
+      markers: this.$store.state.estate.simple_houses,
+      // markers: TUMI_MARKERS,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -150,12 +154,9 @@ export default {
     });
 
     this.map.addListener("idle", _ => {
-      /**
-       * run's when map stop's moving
-       */
-
-      console.log(this.map.getBounds().Qa);
-      console.log(this.map.getBounds().Va);
+      if (this.showInfoWindow) {
+        this.getDetailHouses();
+      }
     });
 
     // apply click event on map
@@ -167,6 +168,9 @@ export default {
     });
     // apply zoom change listeners
     this.map.addListener("zoom_changed", () => {
+      if (this.showInfoWindow) {
+        this.getDetailHouses();
+      }
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
       }, 500);
@@ -186,10 +190,20 @@ export default {
     });
 
     this.setMapOnFocus();
+    this.markers = this.$store.state.estate.simple_houses;
   },
 
   methods: {
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+    getDetailHouses() {
+      const bounds = this.map.getBounds();
+      const longitude = bounds.Qa;
+      const latitude = bounds.Va;
+      this.$store.dispatch('getDetailHouses', {
+        latitude: [latitude['i'], latitude['j']],
+        longitude: [longitude['i'], longitude['j']]
+      });
+    },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;

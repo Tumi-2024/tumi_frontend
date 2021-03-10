@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="bg-white text-dark">
     <q-toolbar-title class="q-mt-md">
-      <p class="notosanskr-bold text-heading-title">재미 </p>
+      <p class="notosanskr-bold text-heading-title">투미</p>
     </q-toolbar-title>
 
     <q-btn
