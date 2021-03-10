@@ -50,6 +50,7 @@ const routes = [
     children: [
       { path: '', redirect: '/map/city' },
       { path: 'city', component: () => import('pages/MapCity/Index.vue'), name: 'map_city' },
+      { path: 'city/area', component: () => import('pages/MapCity/Area/Index.vue'), name: 'map_city_area' },
       { path: 'list-sale', component: () => import('pages/MapListSale/Index.vue'), name: 'map_list_sale' }
       // 재개발구역
       // { path: 'areas', component: () => import('pages/MapAreaPage/Index.vue'), name: 'map_list_sale' }

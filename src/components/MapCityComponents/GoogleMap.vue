@@ -123,6 +123,10 @@ export default {
     geojson: {
       type: Object | null,
       default: null
+    },
+    areas: {
+      type: Array | null,
+      default: null
     }
   },
   computed: {

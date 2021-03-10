@@ -51,16 +51,7 @@ export default {
       this.$router.push({ name: 'map_city'})
     },
     toRedevelopmentArea() {
-      /**
-       *  will make us navigate redevelopment area
-       *  we will set the desired settings view(lat&lng / zoom & etc...)
-       */
-      this.changeMapMode("redevelop-area");
-      this.changeMapZoom(16);
-      this.changeMapCenter({ lat: 37.51988040411035, lng: 127.05400058307147 });
-      this.changeToolbarTitle("재개발 구역");
-      /** After setting desired settings we procceed to see Map */
-      this.$router.push({ name: "map_city" });
+      this.$router.push({ name: "map_city_area" });
     }
   }
 }
