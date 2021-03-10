@@ -50,7 +50,6 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { TUMI_SECTIONS_AREA, TUMI_MARKERS } from "./map-sample-data.js";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
@@ -68,7 +67,6 @@ export default {
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
       markers: this.$store.state.estate.simple_houses,
-      // markers: TUMI_MARKERS,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -122,9 +120,9 @@ export default {
     };
   },
   props: {
-    setMapAreaView: {
-      type: Boolean,
-      default: false
+    geojson: {
+      type: Object | null,
+      default: null
     }
   },
   computed: {
@@ -149,8 +147,6 @@ export default {
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
       },
-      zoomControl: !this.setMapAreaView,
-      scrollwheel: !this.setMapAreaView
     });
 
     this.map.addListener("idle", _ => {
@@ -175,19 +171,8 @@ export default {
         this.showInfoWindow = this.map.getZoom() > 15;
       }, 500);
     });
-    /**
-     *  we use loadGeoJson() for url
-     *  this.map.data.loadGeoJson("https:// url here /");
-     *
-     *  we use addGeoJson() for direct
-     *  this.map.data.addGeoJson({ object here })
-     */
-    this.map.data.addGeoJson(TUMI_SECTIONS_AREA);
-    // apply styles on geojson layers
-    this.map.data.setStyle(function(feature) {
-      const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
-      return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
-    });
+    // Load geojson if any
+    this.geojson && this.setMapGeojson(this.geojson);
 
     this.setMapOnFocus();
     this.markers = this.$store.state.estate.simple_houses;
@@ -203,6 +188,21 @@ export default {
         latitude: [latitude['i'], latitude['j']],
         longitude: [longitude['i'], longitude['j']]
       });
+    },
+    setMapGeojson(geojson) {
+      /**
+     *  we use loadGeoJson() for url
+     *  this.map.data.loadGeoJson("https:// url here /");
+     *
+     *  we use addGeoJson() for direct
+     *  this.map.data.addGeoJson({ object here })
+     */
+    this.map.data.addGeoJson(geojson);
+    // apply styles on geojson layers
+    this.map.data.setStyle(function(feature) {
+      const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
+      return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
+    });
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
