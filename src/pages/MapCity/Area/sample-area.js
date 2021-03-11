@@ -8,6 +8,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/486/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -140,6 +141,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/485/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -160,6 +162,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location: null,
     image_view: null,
     image_layout: null,
@@ -177,6 +180,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location: null,
     image_view: null,
     image_layout: null,
@@ -194,6 +198,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location: null,
     image_view: null,
     image_layout: null,
@@ -211,6 +216,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/520/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -382,6 +388,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/521/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -579,6 +586,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/519/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -659,6 +667,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/518/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -765,6 +774,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/517/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -884,6 +894,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/516/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1029,6 +1040,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/515/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1200,6 +1212,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/513/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1319,6 +1332,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/512/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1516,6 +1530,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/511/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1536,6 +1551,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/522/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1694,6 +1710,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/510/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1787,6 +1804,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/509/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -1880,6 +1898,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/508/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2077,6 +2096,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/507/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2222,6 +2242,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/506/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2315,6 +2336,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/505/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2460,6 +2482,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/504/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2514,6 +2537,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/502/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2620,6 +2644,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/501/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2778,6 +2803,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/523/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -2923,6 +2949,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/500/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3055,6 +3082,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/499/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3135,6 +3163,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/498/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3306,6 +3335,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/497/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3412,6 +3442,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/496/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3531,6 +3562,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/495/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3650,6 +3682,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/494/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3821,6 +3854,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/493/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -3979,6 +4013,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/560/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4085,6 +4120,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/559/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4178,6 +4214,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/525/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4362,6 +4399,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/492/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4520,6 +4558,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/491/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4704,6 +4743,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/490/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -4901,6 +4941,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/489/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5072,6 +5113,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/488/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5256,6 +5298,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/487/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5349,6 +5392,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/558/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5429,6 +5473,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/556/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5449,6 +5494,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/555/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5542,6 +5588,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/554/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5687,6 +5734,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/552/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -5858,6 +5906,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/551/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6029,6 +6078,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/550/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6109,6 +6159,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/549/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6293,6 +6344,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/548/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6412,6 +6464,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/547/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6583,6 +6636,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/546/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6663,6 +6717,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/545/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6730,6 +6785,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/543/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6810,6 +6866,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/542/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6864,6 +6921,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/541/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -6970,6 +7028,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/539/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7063,6 +7122,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/538/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7156,6 +7216,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/537/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7262,6 +7323,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/536/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7342,6 +7404,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/561/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7362,6 +7425,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/535/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7442,6 +7506,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/534/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7535,6 +7600,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/533/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7628,6 +7694,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/532/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7734,6 +7801,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/531/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7853,6 +7921,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/529/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7933,6 +8002,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/528/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -7953,6 +8023,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/527/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8098,6 +8169,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/600/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_rhKN68q.jpg",
     image_view:
@@ -8217,6 +8289,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/566/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8297,6 +8370,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/565/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8364,6 +8438,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/564/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8561,6 +8636,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/563/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8732,6 +8808,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/562/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8903,6 +8980,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/553/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -8996,6 +9074,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/603/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_KDXT3Gc.jpg",
     image_view:
@@ -9102,6 +9181,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/602/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_9LvgnNX.jpg",
     image_view:
@@ -9221,6 +9301,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/596/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_HkfXZVH.jpg",
     image_view:
@@ -9340,6 +9421,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/595/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -9433,6 +9515,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/593/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -9591,6 +9674,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/592/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -9736,6 +9820,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/591/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:
@@ -9803,6 +9888,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/590/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_jkMksjw.jpg",
     image_view:
@@ -9883,6 +9969,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/589/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_SkliTaa.jpg",
     image_view:
@@ -9989,6 +10076,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/599/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_2rhVYVr.jpg",
     image_view:
@@ -10069,6 +10157,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/598/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_0o9a6JN.jpg",
     image_view:
@@ -10162,6 +10251,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/587/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_9pP30Pf.jpg",
     image_view:
@@ -10242,6 +10332,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/586/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_zljRCn7.jpg",
     image_view:
@@ -10374,6 +10465,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/585/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_zrXyEWK.jpg",
     image_view:
@@ -10454,6 +10546,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/583/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_4jVk0R0.jpg",
     image_view:
@@ -10547,6 +10640,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/582/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_zQUYlES.jpg",
     image_view:
@@ -10601,6 +10695,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/580/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_VZo0bYC.jpg",
     image_view:
@@ -10681,6 +10776,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/579/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_1fh5HuL.jpg",
     image_view:
@@ -10701,6 +10797,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/578/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_x6xYqPT.jpg",
     image_view:
@@ -10781,6 +10878,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/588/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_DVQIxKK.jpg",
     image_view:
@@ -10965,6 +11063,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/575/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84_0srcRdV.jpg",
     image_view:
@@ -10985,6 +11084,7 @@ export const markersArea = [
     size_area: 0,
     count_house: 0,
     count_member: 0,
+    construction_company: null,
     image_location:
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/573/%EC%9C%84%EC%B9%98%EB%8F%84/%EC%9C%84%EC%B9%98%EB%8F%84.jpg",
     image_view:

@@ -36,7 +36,7 @@
       </div>
     </section>
 
-    <redevelopment-progress :items="progress" title="진행단계" />
+    <redevelopment-progress :items="getRedevelopmentSteps()" title="진행단계" />
 
     <section class="investment-point notosanskr-regular">
       <div class="title-heading notosanskr-medium">
@@ -104,11 +104,11 @@ export default {
       ],
       progress: [
         {
-          title: "추진위원회 승인",
+          title: "sdsd",
           date: "2004.07.20"
         },
         {
-          title: "정비구역지정",
+          title: "gagag",
           date: "2005.05.19"
         },
         {
@@ -157,6 +157,16 @@ export default {
         default:
           return this.getMapSelectedArea.construction_company;
       }
+    },
+    getRedevelopmentSteps() {
+      let steps = [];
+      if (this.getMapSelectedArea.redevelopment_steps) {
+        steps = this.getMapSelectedArea.redevelopment_steps.map(item => ({
+          title: item.title,
+          date: item.date
+        }));
+      }
+      return steps;
     }
   }
 };
