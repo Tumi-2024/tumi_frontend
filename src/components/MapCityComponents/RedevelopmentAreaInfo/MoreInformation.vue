@@ -7,9 +7,13 @@
         class="badge-type notosanskr-medium"
         label="재개발 구역"
       />
-      <div class="title-heading notosanskr-medium">서울영등포 공공주택지구</div>
+      <div class="title-heading notosanskr-medium">
+        <!-- 서울영등포 공공주택지구 -->
+        {{ getMapSelectedArea.title }}
+      </div>
       <div class="sub-title notosanskr-regular">
-        서울 특별시 동대문구 전농동 106-1
+        <!-- 서울 특별시 동대문구 전농동 106-1 -->
+        {{ getMapSelectedArea.address }}
       </div>
     </section>
 
@@ -24,7 +28,7 @@
               {{ stat.title }}
             </div>
             <div class="stat-value notosanskr-medium">
-              {{ stat.value }}
+              {{ getStatValue(stat.value) || "Unavailable" }}
             </div>
           </section>
         </div>
@@ -64,6 +68,7 @@
 
 <script>
 import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
+import { mapGetters } from "vuex";
 export default {
   components: {
     "redevelopment-progress": RedevelopmentProgress
@@ -74,27 +79,27 @@ export default {
         {
           icon: "AreaStats/area.svg",
           title: "면적",
-          value: "9,275 ㎡"
+          value: "size_area"
         },
         {
           icon: "AreaStats/number-household.svg",
           title: "건립세대 수",
-          value: "11,375 세대"
+          value: "count_house"
         },
         {
           icon: "AreaStats/number-members.svg",
           title: "조합원 수",
-          value: "375 명"
+          value: "count_member"
         },
         {
           icon: "AreaStats/progress.svg",
           title: "진행단계",
-          value: "준공인가"
+          value: "redevelopment_step"
         },
         {
           icon: "AreaStats/constructor.svg",
           title: "시공사",
-          value: "현대 산업개발 & 포스트건설"
+          value: "construction_company"
         }
       ],
       progress: [
@@ -132,6 +137,27 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapGetters("area", ["getMapSelectedArea"])
+  },
+  methods: {
+    getStatValue(value) {
+      switch (value) {
+        case "size_area":
+          return this.getMapSelectedArea["size_area"];
+        case "count_house":
+          return this.getMapSelectedArea["count_house"];
+        case "count_member":
+          return this.getMapSelectedArea["count_member"];
+        case "redevelopment_step":
+          return this.getMapSelectedArea.redevelopment_step
+            ? this.getMapSelectedArea["redevelopment_step"].title
+            : "";
+        default:
+          return this.getMapSelectedArea.construction_company;
+      }
+    }
   }
 };
 </script>

@@ -14,32 +14,34 @@
           label="공공주택지구"
         />
       </div>
-      <div class="info q-mt-sm notosanskr-medium">
+      <div class="info q-mt-sm notosanskr-medium" v-if="getMapSelectedArea">
         <div class="head">
           <q-badge outline class="q-mr-xs" color="grey-6">
             <q-icon size="14px">
               <img src="~assets/icons/info-i.svg" />
             </q-icon>
           </q-badge>
-          서울영등포 공공주택지구
+          <!-- 서울영등포 공공주택지구 -->
+          {{ getMapSelectedArea.title }}
         </div>
         <div class="properties q-pt-xs notosanskr-regular">
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·위치 :</div>
             <div class="content">
-              서울특별시 영등포구 영등포동 일원
+              <!-- 서울특별시 영등포구 영등포동 일원 -->
+              {{ getMapSelectedArea.address }}
             </div>
           </div>
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·면적 :</div>
             <div class="content">
-              1,366㎡
+              {{ getMapSelectedArea.size_area }}
             </div>
           </div>
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·사업단계 :</div>
-            <div class="content">
-              사업시행인가
+            <div class="content" v-if="getMapSelectedArea.redevelopment_step">
+              {{ getMapSelectedArea.redevelopment_step.title }}
             </div>
           </div>
         </div>
@@ -49,7 +51,12 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters("area", ["getMapSelectedArea"])
+  }
+};
 </script>
 
 <style lang="scss" scoped>

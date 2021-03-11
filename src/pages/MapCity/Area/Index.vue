@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div v-if="pageReady">
     <google-map
       :geojson="geojson"
       :areas="getMapAreas"
       :showEstates="false"
       class="page-container full-height full-width"
     />
-    <bottom-drawer />
+    <bottom-drawer v-if="getMapSelectedArea" />
   </div>
 </template>
 
@@ -22,13 +22,15 @@ export default {
   data: () => {
     return {
       geojson: geojson,
+      pageReady: false
     };
   },
-  computed:{
-    ...mapGetters('area', ['getMapAreas'])
+  computed: {
+    ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
   },
   async mounted() {
-    this.fetchMapAreas();
+    await this.fetchMapAreas();
+    this.pageReady = true;
   },
   methods: {
     ...mapActions("map", [
@@ -43,7 +45,7 @@ export default {
     // we will set the desired settings view(lat&lng / zoom & etc...)
     this.changeMapMode("redevelop-area");
     this.changeMapZoom(16);
-    this.changeMapCenter({ lat: 37.51988040411035, lng: 127.05400058307147 });
+    this.changeMapCenter({ lat: 37.548695, lng: 126.9747022 });
     this.changeToolbarTitle("재개발 구역");
     /** After setting desired settings we procceed to see Map */
   }
