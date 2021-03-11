@@ -191,6 +191,7 @@ export default {
 
   methods: {
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+    ...mapActions("area", ["changeMapSelectedArea"]),
     getDetailHouses() {
       const bounds = this.map.getBounds();
       const longitude = bounds.Qa;
@@ -226,6 +227,7 @@ export default {
           fillColor: "#0BCDC7",
           fillOpacity: 0.35
         };
+        let areaItem = null;
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,
@@ -236,7 +238,7 @@ export default {
             radius: 250
           });
           const bounds = c.getBounds();
-          new google.maps.Rectangle({
+          areaItem = new google.maps.Rectangle({
             ...style,
             map: this.map,
             bounds: {
@@ -248,7 +250,7 @@ export default {
           });
           c.setMap(null);
         } else {
-          new this.google.maps.Circle({
+          areaItem = new this.google.maps.Circle({
             ...style,
             map: this.map,
             center: {
@@ -258,6 +260,14 @@ export default {
             radius: 250
           });
         }
+        areaItem.addListener("click", _ => {
+          this.changeMapSelectedArea(area);
+          const { latitude: lat, longitude: lng } = area;
+          this.map.panTo({ lat, lng });
+          setTimeout(() => {
+            this.map.setZoom(16);
+          }, 500);
+        });
       });
     },
     setGmapContainerSize() {
