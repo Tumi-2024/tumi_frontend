@@ -177,6 +177,8 @@ export default {
     });
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
+    // Load Areas if any
+    this.areas && this.setMapAreas(this.areas);
 
     this.setMapOnFocus();
     this.markers = this.$store.state.estate.simple_houses;
@@ -194,19 +196,36 @@ export default {
       });
     },
     setMapGeojson(geojson) {
-      /**
-     *  we use loadGeoJson() for url
-     *  this.map.data.loadGeoJson("https:// url here /");
-     *
-     *  we use addGeoJson() for direct
-     *  this.map.data.addGeoJson({ object here })
-     */
-    this.map.data.addGeoJson(geojson);
-    // apply styles on geojson layers
-    this.map.data.setStyle(function(feature) {
-      const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
-      return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
-    });
+        /**
+      *  we use loadGeoJson() for url
+      *  this.map.data.loadGeoJson("https:// url here /");
+      *
+      *  we use addGeoJson() for direct
+      *  this.map.data.addGeoJson({ object here })
+      */
+      this.map.data.addGeoJson(geojson);
+      // apply styles on geojson layers
+      this.map.data.setStyle(function(feature) {
+        const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
+        return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
+      });
+    },
+    setMapAreas(areas) {
+      areas.forEach(area => {
+        new this.google.maps.Circle({
+            strokeColor: "#DF5103",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#0BCDC7",
+            fillOpacity: 0.35,
+            map:this.map,
+            center: {
+              lat: area.latitude,
+              lng: area.longitude
+            },
+            radius: 250,
+        });
+      })
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
