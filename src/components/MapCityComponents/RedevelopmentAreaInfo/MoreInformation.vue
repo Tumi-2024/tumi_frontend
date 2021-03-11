@@ -38,7 +38,10 @@
 
     <redevelopment-progress :items="getRedevelopmentSteps()" title="진행단계" />
 
-    <section class="investment-point notosanskr-regular">
+    <section
+      class="investment-point notosanskr-regular"
+      v-if="getMapSelectedArea.description_investment"
+    >
       <div class="title-heading notosanskr-medium">
         투자포인트
       </div>
