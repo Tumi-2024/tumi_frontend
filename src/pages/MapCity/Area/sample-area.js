@@ -128,7 +128,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "종로구",
@@ -147,7 +148,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/485/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -163,7 +165,8 @@ export const markersArea = [
     image_layout: null,
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -179,7 +182,8 @@ export const markersArea = [
     image_layout: null,
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -195,7 +199,8 @@ export const markersArea = [
     image_layout: null,
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -365,7 +370,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -561,7 +567,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -640,7 +647,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -745,7 +753,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -863,7 +872,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1007,7 +1017,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1177,7 +1188,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1295,7 +1307,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1491,7 +1504,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1510,7 +1524,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/511/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -1667,7 +1682,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1759,7 +1775,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -1851,7 +1868,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2047,7 +2065,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2191,7 +2210,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2283,7 +2303,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2427,7 +2448,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2480,7 +2502,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2585,7 +2608,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -2742,7 +2766,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -2886,7 +2911,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3017,7 +3043,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3096,7 +3123,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3266,7 +3294,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3371,7 +3400,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3489,7 +3519,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3607,7 +3638,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3777,7 +3809,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -3934,7 +3967,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -4039,7 +4073,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -4131,7 +4166,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -4314,7 +4350,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -4471,7 +4508,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -4654,7 +4692,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -4850,7 +4889,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -5020,7 +5060,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -5203,7 +5244,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "은평구",
@@ -5295,7 +5337,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -5374,7 +5417,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -5393,7 +5437,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/556/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -5485,7 +5530,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -5629,7 +5675,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -5799,7 +5846,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -5969,7 +6017,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6048,7 +6097,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6231,7 +6281,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6349,7 +6400,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6519,7 +6571,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6598,7 +6651,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6664,7 +6718,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6743,7 +6798,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6796,7 +6852,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -6901,7 +6958,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -6993,7 +7051,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7085,7 +7144,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7190,7 +7250,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7269,7 +7330,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -7288,7 +7350,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/561/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7367,7 +7430,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7459,7 +7523,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7551,7 +7616,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7656,7 +7722,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7774,7 +7841,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7853,7 +7921,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -7872,7 +7941,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/528/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "용산구",
@@ -8016,7 +8086,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -8134,7 +8205,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "종로구",
@@ -8213,7 +8285,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "종로구",
@@ -8279,7 +8352,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -8475,7 +8549,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -8645,7 +8720,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중구",
@@ -8815,7 +8891,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "중랑구",
@@ -8907,7 +8984,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -9012,7 +9090,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -9130,7 +9209,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -9248,7 +9328,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -9340,7 +9421,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -9497,7 +9579,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -9641,7 +9724,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -9707,7 +9791,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -9786,7 +9871,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -9891,7 +9977,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -9970,7 +10057,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "서초구",
@@ -10062,7 +10150,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -10141,7 +10230,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -10272,7 +10362,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -10351,7 +10442,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10443,7 +10535,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10496,7 +10589,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10575,7 +10669,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10594,7 +10689,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/579/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84_n0TIIYB.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10673,7 +10769,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "성북구",
@@ -10856,7 +10953,8 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   },
   {
     gu: "영등포구",
@@ -10875,7 +10973,8 @@ export const markersArea = [
       "https://tumi-backend.s3.amazonaws.com/media/RedevelopmentArea/575/%EB%B0%B0%EC%B9%98%EB%8F%84/%EB%B0%B0%EC%B9%98%EB%8F%84_VdKB209.jpg",
     redevelopment_step: null,
     redevelopment_steps: null,
-    redevelopment_area_locations: null
+    redevelopment_area_locations: null,
+    description_investment: null
   },
   {
     gu: "종로구",
@@ -11032,6 +11131,7 @@ export const markersArea = [
         latitude: null,
         longitude: null
       }
-    ]
+    ],
+    description_investment: null
   }
 ];

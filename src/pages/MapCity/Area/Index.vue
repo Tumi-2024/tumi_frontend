@@ -3,6 +3,7 @@
     <google-map
       :geojson="geojson"
       :areas="areas"
+      :showEstates="false"
       class="page-container full-height full-width"
     />
     <bottom-drawer />
@@ -25,12 +26,12 @@ export default {
       areas: markersArea
     };
   },
-  async mounted() {
-    // const areas = await this.$axios.get("/redevelopment_areas", {
-    //   timeout: 10000
-    // });
-    // console.log(areas.data.results);
-  },
+  // async mounted() {
+  //   const areas = await this.$axios.get("/redevelopment_areas", {
+  //     timeout: 10000
+  //   });
+  //   console.log(areas.data.results);
+  // },
   methods: {
     ...mapActions("map", [
       "changeMapMode",

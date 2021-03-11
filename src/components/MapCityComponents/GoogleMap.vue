@@ -13,7 +13,7 @@
         :key="index"
         :options="infoOptions"
         :position="m[0].position"
-        :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
+        :opened="showInfoWindow && showEstates"
         @closeclick="infoWinOpen = false"
         class="q-pa-lg"
       >
@@ -34,6 +34,7 @@
         :minimumClusterSize="1"
         @click="clusterClicked"
         ref="clusterers"
+        v-if="showEstates"
       >
         <gmap-marker
           v-for="(m, index) in markers"
@@ -127,6 +128,10 @@ export default {
     areas: {
       type: Array | null,
       default: null
+    },
+    showEstates: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -150,11 +155,11 @@ export default {
     this.map.setOptions({
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
-      },
+      }
     });
 
     this.map.addListener("idle", _ => {
-      if (this.showInfoWindow) {
+      if (this.showInfoWindow && this.showEstates) {
         this.getDetailHouses();
       }
     });
@@ -168,7 +173,7 @@ export default {
     });
     // apply zoom change listeners
     this.map.addListener("zoom_changed", () => {
-      if (this.showInfoWindow) {
+      if (this.showInfoWindow && this.showEstates) {
         this.getDetailHouses();
       }
       setTimeout(() => {
@@ -190,42 +195,70 @@ export default {
       const bounds = this.map.getBounds();
       const longitude = bounds.Qa;
       const latitude = bounds.Va;
-      this.$store.dispatch('getDetailHouses', {
-        latitude: [latitude['i'], latitude['j']],
-        longitude: [longitude['i'], longitude['j']]
+      this.$store.dispatch("getDetailHouses", {
+        latitude: [latitude["i"], latitude["j"]],
+        longitude: [longitude["i"], longitude["j"]]
       });
     },
     setMapGeojson(geojson) {
-        /**
-      *  we use loadGeoJson() for url
-      *  this.map.data.loadGeoJson("https:// url here /");
-      *
-      *  we use addGeoJson() for direct
-      *  this.map.data.addGeoJson({ object here })
-      */
+      /**
+       *  we use loadGeoJson() for url
+       *  this.map.data.loadGeoJson("https:// url here /");
+       *
+       *  we use addGeoJson() for direct
+       *  this.map.data.addGeoJson({ object here })
+       */
       this.map.data.addGeoJson(geojson);
       // apply styles on geojson layers
       this.map.data.setStyle(function(feature) {
-        const color = feature.getProperty("areaForSale") ? "#0BCDC7" : "#DF5103";
+        const color = feature.getProperty("areaForSale")
+          ? "#0BCDC7"
+          : "#DF5103";
         return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
       });
     },
     setMapAreas(areas) {
       areas.forEach(area => {
-        new this.google.maps.Circle({
-            strokeColor: "#DF5103",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#0BCDC7",
-            fillOpacity: 0.35,
-            map:this.map,
+        const style = {
+          strokeColor: "#DF5103",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#0BCDC7",
+          fillOpacity: 0.35
+        };
+        if (area.redevelopment_area_locations) {
+          const c = new this.google.maps.Circle({
+            map: this.map,
             center: {
               lat: area.latitude,
               lng: area.longitude
             },
-            radius: 250,
-        });
-      })
+            radius: 250
+          });
+          const bounds = c.getBounds();
+          new google.maps.Rectangle({
+            ...style,
+            map: this.map,
+            bounds: {
+              north: bounds.Ra.i, // Ra.i
+              south: bounds.Ra.g, // Ra.g
+              east: bounds.La.i, // La.i
+              west: bounds.La.g // La.g
+            }
+          });
+          c.setMap(null);
+        } else {
+          new this.google.maps.Circle({
+            ...style,
+            map: this.map,
+            center: {
+              lat: area.latitude,
+              lng: area.longitude
+            },
+            radius: 250
+          });
+        }
+      });
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
