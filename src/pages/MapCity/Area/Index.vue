@@ -2,7 +2,7 @@
   <div>
     <google-map
       :geojson="geojson"
-      :areas="areas"
+      :areas="getMapAreas"
       :showEstates="false"
       class="page-container full-height full-width"
     />
@@ -12,9 +12,8 @@
 
 <script>
 import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
-import { markersArea } from "./sample-area";
 import { geojson } from "./sample-geojson";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "bottom-drawer": BottomDrawer,
@@ -23,22 +22,22 @@ export default {
   data: () => {
     return {
       geojson: geojson,
-      areas: markersArea
     };
   },
-  // async mounted() {
-  //   const areas = await this.$axios.get("/redevelopment_areas", {
-  //     timeout: 10000
-  //   });
-  //   console.log(areas.data.results);
-  // },
+  computed:{
+    ...mapGetters('area', ['getMapAreas'])
+  },
+  async mounted() {
+    this.fetchMapAreas();
+  },
   methods: {
     ...mapActions("map", [
       "changeMapMode",
       "changeMapZoom",
       "changeMapCenter",
       "changeToolbarTitle"
-    ])
+    ]),
+    ...mapActions("area", ["fetchMapAreas"])
   },
   created() {
     // we will set the desired settings view(lat&lng / zoom & etc...)
