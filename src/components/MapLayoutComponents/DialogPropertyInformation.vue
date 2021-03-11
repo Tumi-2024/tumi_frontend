@@ -11,7 +11,7 @@
             flat
             padding="12px 0"
             class="full-width"
-            @click="() => (dialogPropertyInfo = false)"
+            @click="() => navigateInto(item.value)"
           >
             <q-icon size="56px">
               <img :src="require(`assets/icons/${item.iconSrc}`)" alt="icon" />
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -44,30 +45,78 @@ export default {
       properties: [
         {
           title: "실거래가 조회",
-          iconSrc: "PropertyInfoDialog/actual-transaction-price.svg"
+          iconSrc: "PropertyInfoDialog/actual-transaction-price.svg",
+          value: "mapActualTransaction"
         },
         {
           title: "재개발 매물",
-          iconSrc: "PropertyInfoDialog/redevelopment-forsale.svg"
+          iconSrc: "PropertyInfoDialog/redevelopment-forsale.svg",
+          value: ""
         },
         {
           title: "아파트매물",
-          iconSrc: "PropertyInfoDialog/apartment-forsale.svg"
+          iconSrc: "PropertyInfoDialog/apartment-forsale.svg",
+          value: "mapApartment"
         },
         {
           title: "재개발 구역 정보",
-          iconSrc: "PropertyInfoDialog/redevelopment-area-info.svg"
+          iconSrc: "PropertyInfoDialog/redevelopment-area-info.svg",
+          value: "MapRedevelopmentArea"
         },
         {
           title: "부동산 인사이트",
-          iconSrc: "PropertyInfoDialog/real-estate-insight.svg"
+          iconSrc: "PropertyInfoDialog/real-estate-insight.svg",
+          value: "insights"
         }
       ]
     };
   },
   methods: {
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "changeToolbarTitle"
+    ]),
     showDialog() {
       this.dialogPropertyInfo = true;
+    },
+    navigateInto(routeName) {
+      switch (routeName) {
+        case "mapActualTransaction":
+          this.changeMapMode("transaction");
+          this.changeMapZoom(16);
+          this.changeMapCenter({
+            lat: 37.53718802127926,
+            lng: 127.09262711456654
+          });
+          this.changeToolbarTitle("실거래가 조회");
+          this.$router.push({ name: "map_city" });
+          break;
+
+        case "mapApartment":
+          this.changeMapMode("apartment");
+          this.changeMapZoom(16);
+          this.changeMapCenter({
+            lat: 37.55931046167917,
+            lng: 127.06229167224119
+          });
+          this.changeToolbarTitle("아파트 매물");
+          this.$router.push({ name: "map_city" });
+          break;
+
+        case "MapRedevelopmentArea":
+          this.$router.push({ name: "map_city_area" });
+          break;
+
+        case "insights":
+          this.$router.push({ path: "/insights/부동산팁" });
+          break;
+
+        default:
+          break;
+      }
+      this.dialogPropertyInfo = false;
     }
   }
 };
