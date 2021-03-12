@@ -10,7 +10,7 @@
         class="col-3 notosanskr-medium"
         :class="{ selected: selected === transaction }"
         :label="transaction"
-        @click="selected = transaction"
+        @click="changeValue(transaction)"
       />
     </div>
   </q-card-section>
@@ -28,7 +28,17 @@ export default {
       selected: "전체",
       transactions: ["전체", "매매", "전세", "월세"]
     };
-  }
+  },
+  methods: {
+    changeValue(val) {
+      this.selected = val;
+      this.$store.dispatch('setTypeSale', val);
+    }
+  },
+  mounted() {
+    console.log(`this.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.state`);
+    this.selected = this.$store.state.search.typeSale;
+  },
 };
 </script>
 

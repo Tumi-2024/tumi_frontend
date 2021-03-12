@@ -8,6 +8,7 @@ import { userStore } from './modules/user';
 import { insightsStore } from './modules/insights';
 import { mapStore } from './modules/map';
 import { estateStore } from './modules/estate';
+import { searchStore } from './modules/search';
 
 // Main Section
 Vue.use(Vuex)
@@ -27,7 +28,8 @@ export default function (/* { ssrContext } */) {
       user: userStore,
       insights: insightsStore,
       map: mapStore,
-      estate: estateStore
+      estate: estateStore,
+      search: searchStore
     },
 
     plugins: [createPersistedState({

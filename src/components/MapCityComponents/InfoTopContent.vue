@@ -5,8 +5,7 @@
     </div>
     <div
       class="roundedNumber bg-primary text-positive"
-      v-if="marker.infoNumber"
-    >
+      v-if="marker.infoNumber">
       {{ marker.infoNumber }}
     </div>
   </div>

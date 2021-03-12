@@ -6,25 +6,26 @@
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="getMapOptions"
-    >
+      :options="getMapOptions">
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
         :options="infoOptions"
-        :position="m[0].position"
+        :position="m.results[0].position"
         :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
         @closeclick="infoWinOpen = false"
-        class="q-pa-lg"
-      >
-        <info-top-content :marker="m[0]" />
-        <info-window-content :marker="m[0]" />
+        class="q-pa-lg">
+
+        <info-top-content :marker="m.results[0]" />
 
         <info-window-content
-          @viewArea="viewArea(m[0])"
-          :price="m[0].price"
-          :badges="m[0].badges"
-        />
+          @viewArea="viewArea(m.results[0])"
+          :price="(m.count > 1) ? `${m.min} ~ ${m.max}` : m.results[0].price"
+          :count="m.count"
+          :badges="{
+            type: m.results[0].type_house,
+          }" />
+
       </gmap-info-window>
 
       <gmap-cluster
@@ -136,6 +137,7 @@ export default {
   },
 
   async mounted() {
+    console.log(this.$store.state)
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
@@ -182,11 +184,16 @@ export default {
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
     getDetailHouses() {
       const bounds = this.map.getBounds();
-      const longitude = bounds.Qa;
-      const latitude = bounds.Va;
+      const keys = Object.keys(bounds)
+      const latitude = bounds[keys[0]];
+      const longitude = bounds[keys[1]];
+      
+      const keys2 = Object.keys(longitude);
+      console.log(longitude);
+      console.log(latitude);
       this.$store.dispatch('getDetailHouses', {
-        latitude: [latitude['i'], latitude['j']],
-        longitude: [longitude['i'], longitude['j']]
+        latitude: [latitude[keys2[0]], latitude[keys2[1]]],
+        longitude: [longitude[keys2[0]], longitude[keys2[1]]]
       });
     },
     setMapGeojson(geojson) {

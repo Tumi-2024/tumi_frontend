@@ -35,7 +35,8 @@
           v-if="badges.trading"
         />
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="badges.area">{{ badges.area }}</div>
+        <div class="info-text" v-if="count">{{ `${count}개` }}</div>
+        <!-- <div class="info-text" v-if="badges.area">{{ badges.area }}</div> -->
       </div>
     </div>
   </div>
@@ -47,6 +48,10 @@ export default {
     price: {
       type: String,
       default: ""
+    },
+    count: {
+      type: Number,
+      default: 1
     },
     badges: {
       type: Object,
