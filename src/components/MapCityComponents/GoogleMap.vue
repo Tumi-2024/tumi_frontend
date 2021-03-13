@@ -12,7 +12,7 @@
         :key="index"
         :options="infoOptions"
         :position="m.results[0].position"
-        :opened="showInfoWindow && getMapMode !== 'redevelop-area'"
+        :opened="showInfoWindow && showEstates"
         @closeclick="infoWinOpen = false"
         class="q-pa-lg">
 
@@ -38,7 +38,7 @@
         v-if="showEstates"
       >
         <gmap-marker
-          v-for="(m, index) in markers"
+          v-for="(m, index) in $store.state.estate.simple_houses"
           :key="'d' + index"
           :position="m.position"
           :clickable="true"
@@ -160,6 +160,9 @@ export default {
       }
     });
 
+    console.log('getSimpleHousesgetSimpleHousesgetSimpleHouses');
+    this.$store.dispatch('getSimpleHouses');
+
     this.map.addListener("idle", _ => {
       if (this.showInfoWindow && this.showEstates) {
         this.getDetailHouses();
@@ -196,16 +199,13 @@ export default {
     ...mapActions("area", ["changeMapSelectedArea"]),
     getDetailHouses() {
       const bounds = this.map.getBounds();
-      const keys = Object.keys(bounds)
-      const latitude = bounds[keys[0]];
-      const longitude = bounds[keys[1]];
-      
-      const keys2 = Object.keys(longitude);
-      console.log(longitude);
-      console.log(latitude);
+      // console.log(`bounds.getNorthEast().lat() `, bounds.getNorthEast().lat());
+      // console.log(`bounds.getNorthEast().lng() `, bounds.getNorthEast().lng());
+      // console.log(`bounds.getSouthWest().lat() `, bounds.getSouthWest().lat());
+      // console.log(`bounds.getSouthWest().lng() `, bounds.getSouthWest().lng());
       this.$store.dispatch('getDetailHouses', {
-        latitude: [latitude[keys2[0]], latitude[keys2[1]]],
-        longitude: [longitude[keys2[0]], longitude[keys2[1]]]
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       });
     },
     setMapGeojson(geojson) {

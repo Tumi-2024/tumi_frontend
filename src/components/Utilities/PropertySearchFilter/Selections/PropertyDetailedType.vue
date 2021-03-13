@@ -14,7 +14,7 @@
         class="col-4 notosanskr-medium"
         :class="{ selected: selected === type && selected != '' }"
         :label="type"
-        @click="selected = type"
+        @click="select(type)"
       />
     </div>
   </div>
@@ -41,7 +41,14 @@ export default {
   props: {
     selectedCategory: String
   },
+  mounted() {
+    this.selected = this.$store.state.search.typeHouseDetail;
+  },
   methods: {
+    select(type) {
+      this.selected = type;
+      this.$emit('select', type);
+    },
     isVisible() {
       return (
         this.selectedCategory === "재개발" ||

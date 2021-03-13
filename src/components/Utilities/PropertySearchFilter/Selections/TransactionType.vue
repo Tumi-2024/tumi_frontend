@@ -32,7 +32,8 @@ export default {
   methods: {
     changeValue(val) {
       this.selected = val;
-      this.$store.dispatch('setTypeSale', val);
+      this.$emit('select', val)
+      // this.$store.dispatch('setTypeSale', val);
     }
   },
   mounted() {

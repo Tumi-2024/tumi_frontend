@@ -19,7 +19,7 @@
         </q-card-section>
 
         <q-card-section class="q-pa-none bg-white notosanskr-medium">
-          <component :is="contentComponent" />
+          <component :is="contentComponent" v-on:select="select" v-on:selectDetail="selectDetail" />
         </q-card-section>
 
         <q-card-section class="q-pt-lg bg-white">
@@ -32,7 +32,7 @@
                 text-color="black"
                 label="초기화"
                 padding="12px"
-                @click="modal = false"
+                @click="init"
               />
             </div>
             <div class="col q-mx-xs">
@@ -42,7 +42,7 @@
                 flat
                 label="적용"
                 padding="12px"
-                @click="modal = false"
+                @click="save"
               />
             </div>
           </div>
@@ -68,7 +68,9 @@ export default {
   },
   data() {
     return {
-      modal: false
+      modal: false,
+      selected: '',
+      selectedDetail: '',
     };
   },
   props: {
@@ -78,6 +80,85 @@ export default {
     salePrice: { type: Boolean, default: false },
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false }
+  },
+  mounted() {
+    if (this.transactionType) {
+      component = "transaction-type";
+    }
+    if (this.propertyType) {
+      component = "property-type";
+    }
+    if (this.salePrice) {
+      component = "property-sale-price";
+    }
+    if (this.charterPriceDeposit) {
+      component = "charter-price-deposit";
+    }
+  },
+  methods: {
+    select(val) {
+      console.log(val);
+      this.selected = val;
+    },
+    selectDetail(val) {
+      console.log(val);
+      this.selectedDetail = val;
+    },
+    save() {
+      if (this.selected) {
+        console.log('저장 ', this.selected, this.selectedDetail);
+        if (this.transactionType) {
+          this.$store.dispatch('setTypeSale', this.selected);
+        }
+        if (this.propertyType) {
+          this.$store.dispatch('setTypeHouse', this.selected);
+          if (this.selectedDetail) {
+            this.$store.dispatch('setTypeHouseDetail', this.selectedDetail);
+          }
+        }
+        if (this.salePrice) {
+          this.$store.dispatch('setSalePrice', this.selected);
+        }
+        if (this.charterPriceDeposit) {
+          this.$store.dispatch('setDepositPrice', this.selected);
+        }
+      }
+      this.modal = false;
+    },
+    init() {
+      if (this.selected) {
+        console.log('저장 ', this.selected);
+        if (this.transactionType) {
+          this.selected = '전체';
+          this.$store.dispatch('setTypeSale', '전체');
+        }
+        if (this.propertyType) {
+          this.selected = '아파트';
+          this.$store.dispatch('setTypeHouse', '아파트');
+          if (this.selectedDetail) {
+            this.selectedDetail = '전체';
+            this.$store.dispatch('setTypeHouseDetail', '전체');
+          }
+        }
+        if (this.salePrice) {
+          this.selected = { text: '전체', min: null, max: null, };
+          this.$store.dispatch('setSalePrice', {
+            text: '전체',
+            min: null,
+            max: null,
+          });
+        }
+        if (this.charterPriceDeposit) {
+          this.selected = { text: '전체', min: null, max: null, };
+          this.$store.dispatch('setDepositPrice', {
+            text: '전체',
+            min: null,
+            max: null,
+          });
+        }
+      }
+      this.modal = false;
+    },
   },
   computed: {
     contentComponent() {

@@ -21,7 +21,7 @@
         class="col-2 notosanskr-medium"
         :class="{ selected: selected === price && selected != '' }"
         :label="price"
-        @click="selected = price"
+        @click="changePriceText(price)"
       />
     </div>
 
@@ -39,6 +39,8 @@
             type="text"
             name="minimum-amount"
             class="full-width"
+            v-model="min"
+            @change="changeValue"
             placeholder="최소금액"
           />
         </div>
@@ -53,6 +55,8 @@
             type="text"
             name="minimum-amount"
             class="full-width"
+            v-model="max"
+            @change="changeValue"
             placeholder="최대금액"
           />
         </div>
@@ -67,22 +71,20 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
+  mounted() {
+    console.log(this.$store.state.search.depositPrice);
+    this.selected = this.$store.state.search.depositPrice.text;
+    this.min = this.$store.state.search.depositPrice.min;
+    this.max = this.$store.state.search.depositPrice.max;
+  },
   data() {
     return {
       selected: "전체",
+      min: null,
+      max: null,
       prices: [
-        "전체",
-        "~1천",
-        "1천",
-        "2천",
-        "3천",
-        "4천",
-        "5천",
-        "6천",
-        "7천",
-        "8천",
-        "9천",
-        "1억",
+        "전체", "~1천", "1천", "2천", "3천", "4천",
+        "5천", "6천", "7천", "8천", "9천", "1억",
         "2억",
         "3억",
         "4억",
@@ -103,6 +105,25 @@ export default {
         ""
       ]
     };
+  },
+  methods: {
+    changePriceText(text) {
+      this.selected = text;
+      this.$emit('select', {
+        text: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    },
+    changeValue(val) {
+      console.log(val);
+      console.log(this.min);
+      this.$emit('select', {
+        selected: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    },
   }
 };
 </script>
