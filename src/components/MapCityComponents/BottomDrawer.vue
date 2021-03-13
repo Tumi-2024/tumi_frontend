@@ -1,7 +1,7 @@
 <template>
   <q-dialog
     v-model="dialog"
-    :seamless="seamless"
+    :seamless="getMapMode !== 'redevelop-area'"
     position="bottom"
     @hide="dialogReset"
   >
@@ -18,7 +18,6 @@
 
       <!-- Redevelopment Area Information | 재개발 구역정보 -->
       <redevelopment-area-info
-        @seamless-off="seamless = false"
         @hide="dialogReset"
         v-else
       ></redevelopment-area-info>
@@ -28,24 +27,24 @@
 
 <script>
 import RedevelopmentAreaInfo from "./RedevelopmentAreaInfo/Index";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     "redevelopment-area-info": RedevelopmentAreaInfo
   },
   data() {
     return {
-      dialog: "",
-      seamless: true
+      dialog: true
     };
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
   methods: {
+    ...mapActions("area", ["changeMapSelectedArea"]),
     dialogReset() {
-      this.dialog = true;
-      this.seamless = true;
+      this.dialog = false;
+      this.changeMapSelectedArea(null);
     }
   }
 };
