@@ -39,7 +39,8 @@ export const estateStore = {
             lat: item.latitude,
             lng: item.longitude
           }
-        })))
+        }))
+      )
     },
     // getDetailHouses: async function (context, paramter) {
     //   console.log('contextcontextcontextcontextcontextcontextcontextcontextcontextcontext');
