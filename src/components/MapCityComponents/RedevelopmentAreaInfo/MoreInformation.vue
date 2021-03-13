@@ -28,7 +28,7 @@
               {{ stat.title }}
             </div>
             <div class="stat-value notosanskr-medium">
-              {{ getStatValue(stat.value) || "Unavailable" }}
+              {{ getStatValue(stat.value) }} {{ stat.unit }}
             </div>
           </section>
         </div>
@@ -82,17 +82,37 @@ export default {
         {
           icon: "AreaStats/area.svg",
           title: "면적",
-          value: "size_area"
+          value: "size_area",
+          default: 0,
+          unit: "m²"
         },
         {
           icon: "AreaStats/number-household.svg",
-          title: "건립세대 수",
-          value: "count_house"
+          title: "소유자 수",
+          value: "count_owner",
+          default: 0,
+          unit: "명"
+        },
+        {
+          icon: "AreaStats/number-household.svg",
+          title: "세입자 수",
+          value: "count_house",
+          default: 0,
+          unit: "명"
+        },
+        {
+          icon: "AreaStats/number-household.svg",
+          title: "조합원 수",
+          value: "count_member",
+          default: 0,
+          unit: "명"
         },
         {
           icon: "AreaStats/number-members.svg",
           title: "조합원 수",
-          value: "count_member"
+          value: "count_member",
+          default: 0,
+          unit: "명"
         },
         {
           icon: "AreaStats/progress.svg",
@@ -104,40 +124,6 @@ export default {
           title: "시공사",
           value: "construction_company"
         }
-      ],
-      progress: [
-        {
-          title: "sdsd",
-          date: "2004.07.20"
-        },
-        {
-          title: "gagag",
-          date: "2005.05.19"
-        },
-        {
-          title: "조합설립인가",
-          date: "2005.05.19"
-        },
-        {
-          title: "사업시행인가",
-          date: "2006.09.24"
-        },
-        {
-          title: "관리처분인가",
-          date: "2007.10.24"
-        },
-        {
-          title: "착공",
-          date: "2008.02.29"
-        },
-        {
-          title: "일반분양",
-          date: null
-        },
-        {
-          title: "준공인가",
-          date: "2010.09.24"
-        }
       ]
     };
   },
@@ -148,17 +134,19 @@ export default {
     getStatValue(value) {
       switch (value) {
         case "size_area":
-          return this.getMapSelectedArea["size_area"];
+          return this.getMapSelectedArea.size_area || 0;
         case "count_house":
-          return this.getMapSelectedArea["count_house"];
+          return this.getMapSelectedArea.count_house || 0;
+        case "count_owner":
+          return this.getMapSelectedArea.count_owner || 0;
         case "count_member":
-          return this.getMapSelectedArea["count_member"];
+          return this.getMapSelectedArea.count_member || 0;
         case "redevelopment_step":
           return this.getMapSelectedArea.redevelopment_step
-            ? this.getMapSelectedArea["redevelopment_step"].title
-            : "";
+            ? this.getMapSelectedArea.redevelopment_step.title
+            : "-";
         default:
-          return this.getMapSelectedArea.construction_company;
+          return this.getMapSelectedArea.construction_company || "-";
       }
     },
     getRedevelopmentSteps() {

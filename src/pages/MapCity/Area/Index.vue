@@ -1,10 +1,10 @@
 <template>
-  <div v-if="pageReady">
+  <div v-if="pageReady && headerHeight">
     <google-map
-      :geojson="geojson"
       :areas="getMapAreas"
       :showEstates="false"
-      class="page-container full-height full-width"
+      class="page-container full-width"
+      :style="`min-height: calc(100vh - ${headerHeight}px)`"
     />
     <bottom-drawer v-if="getMapSelectedArea" />
   </div>
@@ -24,6 +24,9 @@ export default {
       geojson: geojson,
       pageReady: false
     };
+  },
+  props: {
+    headerHeight: 0
   },
   computed: {
     ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
@@ -52,9 +55,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.page-container {
-  background: rgb(54, 54, 54);
-  min-height: calc(100vh - 118px);
-}
-</style>
+<style lang="scss" scoped></style>

@@ -59,21 +59,47 @@
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
           ></exclusive-area>
-          <!-- Premium price | 프리미엄가, 감정가 -->
 
+          <!-- Premium price | 프리미엄가, 감정가 -->
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
-            <q-btn
-              flat
-              color="white"
-              align="between"
-              class="full-width"
-              text-color="black"
-              padding="16px"
-            >
-              프리미엄가, 감정가
-              <q-icon name="keyboard_arrow_down" size="24px" />
-            </q-btn>
+            <!-- Dropdown Button -->
+            <q-expansion-item expand-separator label="프리미엄가, 감정가">
+              <div class="more-filters">
+                <property-premium-price
+                  class="q-pb-xl bg-white q-mt-sm"
+                  style="padding-top: 36px"
+                ></property-premium-price>
+                <property-connoisseur
+                  class="q-pb-xl bg-white q-mt-sm"
+                  style="padding-top: 36px"
+                ></property-connoisseur>
+              </div>
+            </q-expansion-item>
+
+            <!-- Action buttons -->
+            <div class="row q-py-md justify-around notosanskr-medium">
+              <div class="col q-mx-xs">
+                <!-- reset | 초기화 -->
+                <q-btn
+                  class="reset-btn bg-grey-3"
+                  flat
+                  text-color="black"
+                  label="초기화"
+                  padding="12px"
+                />
+              </div>
+              <div class="col q-mx-xs">
+                <!-- apply | 적용 -->
+                <q-btn
+                  class="apply-btn bg-primary text-white"
+                  flat
+                  label="적용"
+                  padding="12px"
+                />
+              </div>
+            </div>
           </q-card-section>
+
           <q-card-section class="empty-bottom-space"></q-card-section>
         </div>
       </q-card>
@@ -88,7 +114,9 @@ import {
   PropertySalePrice,
   CharterPriceDeposit,
   PropertyMonthly,
-  ExclusiveArea
+  ExclusiveArea,
+  PropertyPremiumPrice,
+  PropertyConnoisseur
 } from "components/Utilities/PropertySearchFilter/Selections";
 export default {
   components: {
@@ -97,11 +125,14 @@ export default {
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit,
     "property-monthly": PropertyMonthly,
-    "exclusive-area": ExclusiveArea
+    "exclusive-area": ExclusiveArea,
+    "property-premium-price": PropertyPremiumPrice,
+    "property-connoisseur": PropertyConnoisseur
   },
   data() {
     return {
-      modal: false
+      modal: false,
+      moreFilters: false
     };
   },
   props: {
@@ -114,9 +145,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$max-width: 1000px;
+
 .q-card {
   width: 100%;
-  max-width: 1000px;
+  max-width: $max-width;
   height: 100vh;
   border-radius: 16px 16px 0 0;
   background: #f0f0f0;
@@ -129,5 +162,22 @@ export default {
   font-size: 17px;
   letter-spacing: -1.275px;
   color: #1a1a1a;
+}
+
+.more-filters {
+  background: #f0f0f0;
+}
+
+.apply-btn,
+.reset-btn {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -1.275px;
+  color: #1a1a1a;
+  width: 100%;
+  border-radius: 12px;
 }
 </style>

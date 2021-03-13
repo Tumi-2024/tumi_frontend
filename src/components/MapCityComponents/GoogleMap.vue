@@ -228,13 +228,25 @@ export default {
     setMapAreas(areas) {
       areas.forEach(area => {
         const style = {
-          strokeColor: "#DF5103",
+          strokeColor: "#FF5100",
           strokeOpacity: 0.8,
           strokeWeight: 2,
           fillColor: "#0BCDC7",
           fillOpacity: 0.35
+          // icons: [
+          //   {
+          //     icon: {
+          //       path: "M 0,-1 0,1",
+          //       strokeOpacity: 1,
+          //       scale: 4
+          //     },
+          //     offset: "0",
+          //     repeat: "20px"
+          //   }
+          // ]
         };
         let areaItem = null;
+        console.log(area.redevelopment_area_locations)
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,
@@ -245,7 +257,7 @@ export default {
             radius: 250
           });
           const bounds = c.getBounds();
-          areaItem = new google.maps.Rectangle({
+          areaItem = new this.google.maps.Rectangle({
             ...style,
             map: this.map,
             bounds: {
