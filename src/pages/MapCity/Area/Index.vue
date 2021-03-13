@@ -1,7 +1,7 @@
 <template>
   <div v-if="pageReady">
+    <!--:geojson="geojson"-->
     <google-map
-      :geojson="geojson"
       :areas="getMapAreas"
       :showEstates="false"
       class="page-container full-height full-width"

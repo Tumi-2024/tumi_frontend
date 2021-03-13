@@ -8,7 +8,9 @@ export const areaStore = {
   namespaced: true,
   state: { ...initState },
   getters: {
-    getMapAreas: state => state.areas,
+    getMapAreas: state => {
+      return state.areas
+    },
     getMapSelectedArea: state => state.selectedArea
   },
   mutations: {
