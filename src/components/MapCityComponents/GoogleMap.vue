@@ -50,12 +50,26 @@
           :visible="!showInfoWindow"
         />
       </gmap-cluster>
+      <!-- we generate badges for the Redevelopment Area -->
+      <gmap-custom-marker
+        v-for="(badge, i) in areaBadges"
+        :key="i"
+        :marker="badge.center"
+      >
+        <div class="area-badge-info notosanskr-medium">
+          <q-icon size="20px" class="q-mr-xs">
+            <img src="~assets/icons/area-info.svg" alt="area-info" />
+          </q-icon>
+          {{ badge.title }}
+        </div>
+      </gmap-custom-marker>
     </GmapMap>
   </div>
 </template>
 
 <script>
 import { gmapApi } from "gmap-vue";
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
@@ -64,7 +78,8 @@ export default {
   components: {
     "info-top-content": InfoTopContent,
     "info-window-content": InfoWindowContent,
-    "action-buttons": ActionButtons
+    "action-buttons": ActionButtons,
+    "gmap-custom-marker": GmapCustomMarker
   },
   data() {
     return {
@@ -73,6 +88,7 @@ export default {
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
       markers: this.$store.state.estate.simple_houses,
+      areaBadges: [],
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -269,7 +285,7 @@ export default {
               west: bounds.La.g // La.g
             }
           });
-          this.createAreaBadge(area.title, center); // create area badge
+          this.areaBadges.push({ title: area.title, center }); // create area badge
           c.setMap(null); // remove circle
         } else {
           areaItem = new this.google.maps.Circle({
@@ -323,35 +339,6 @@ export default {
       if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
-    },
-    createAreaBadge(title, center) {
-      let scaledSize = new this.google.maps.Size(190, 30);
-      if (title.length > 15) {
-        scaledSize = new this.google.maps.Size(230, 30);
-      }
-      if (title.length > 20) {
-        scaledSize = new this.google.maps.Size(250, 30);
-      }
-      if (title.length > 25) {
-        scaledSize = new this.google.maps.Size(300, 30);
-      }
-      const markerIcon = {
-        url: "icons/area-label-long.png",
-        scaledSize
-        // origin: new this.google.maps.Point(0, 0), // origin
-        // anchor: new this.google.maps.Point(0, 0) // anchor
-      };
-      const marker = new this.google.maps.Marker({
-        position: new this.google.maps.LatLng(center),
-        map: this.map,
-        label: {
-          text: `${title}`,
-          color: "white",
-          fontSize: "10px",
-          textColor: "right"
-        },
-        icon: markerIcon
-      });
     }
   }
 };
@@ -376,5 +363,21 @@ export default {
 // hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
   display: none !important;
+}
+
+.area-badge-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #68814e;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -0.97px;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0 8px;
 }
 </style>
