@@ -228,6 +228,10 @@ export default {
     },
     setMapAreas(areas) {
       areas.forEach(area => {
+        let center = {
+          lat: area.latitude,
+          lng: area.longitude
+        };
         const style = {
           strokeColor: "#FF5100",
           strokeOpacity: 0.8,
@@ -251,10 +255,7 @@ export default {
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,
-            center: {
-              lat: area.latitude,
-              lng: area.longitude
-            },
+            center,
             radius: 250
           });
           const bounds = c.getBounds();
@@ -268,15 +269,13 @@ export default {
               west: bounds.La.g // La.g
             }
           });
-          c.setMap(null);
+          this.createAreaBadge(area.title, center); // create area badge
+          c.setMap(null); // remove circle
         } else {
           areaItem = new this.google.maps.Circle({
             ...style,
             map: this.map,
-            center: {
-              lat: area.latitude,
-              lng: area.longitude
-            },
+            center,
             radius: 250
           });
         }
@@ -324,6 +323,35 @@ export default {
       if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
+    },
+    createAreaBadge(title, center) {
+      let scaledSize = new this.google.maps.Size(190, 30);
+      if (title.length > 15) {
+        scaledSize = new this.google.maps.Size(230, 30);
+      }
+      if (title.length > 20) {
+        scaledSize = new this.google.maps.Size(250, 30);
+      }
+      if (title.length > 25) {
+        scaledSize = new this.google.maps.Size(300, 30);
+      }
+      const markerIcon = {
+        url: "icons/area-label-long.png",
+        scaledSize
+        // origin: new this.google.maps.Point(0, 0), // origin
+        // anchor: new this.google.maps.Point(0, 0) // anchor
+      };
+      const marker = new this.google.maps.Marker({
+        position: new this.google.maps.LatLng(center),
+        map: this.map,
+        label: {
+          text: `${title}`,
+          color: "white",
+          fontSize: "10px",
+          textColor: "right"
+        },
+        icon: markerIcon
+      });
     }
   }
 };
@@ -341,6 +369,9 @@ export default {
     padding: 8px;
     box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
   }
+}
+::v-deep .gm-style .gm-style-iw-t::after {
+  display: none;
 }
 // hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
