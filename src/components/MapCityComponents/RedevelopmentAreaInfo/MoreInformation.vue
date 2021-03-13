@@ -104,40 +104,6 @@ export default {
           title: "시공사",
           value: "construction_company"
         }
-      ],
-      progress: [
-        {
-          title: "sdsd",
-          date: "2004.07.20"
-        },
-        {
-          title: "gagag",
-          date: "2005.05.19"
-        },
-        {
-          title: "조합설립인가",
-          date: "2005.05.19"
-        },
-        {
-          title: "사업시행인가",
-          date: "2006.09.24"
-        },
-        {
-          title: "관리처분인가",
-          date: "2007.10.24"
-        },
-        {
-          title: "착공",
-          date: "2008.02.29"
-        },
-        {
-          title: "일반분양",
-          date: null
-        },
-        {
-          title: "준공인가",
-          date: "2010.09.24"
-        }
       ]
     };
   },
