@@ -1,6 +1,11 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
-    <action-buttons :showAll="showInfoWindow" />
+    <!-- Heart buttons | cone | GPS -->
+    <action-buttons
+      :hide-cone="getMapMode == 'redevelop-area'"
+      :hide-heart="hideHeart"
+    />
+    <!-- Google Map Starts -->
     <GmapMap
       ref="mapRef"
       :center="getMapCenter"
@@ -76,6 +81,7 @@ export default {
         disableAutoPan: true
       },
       showInfoWindow: false,
+      hideHeart: false,
       /* CLUSTERS */
       clusterStyles: [
         // 1+
@@ -178,6 +184,8 @@ export default {
       }
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
+        this.hideHeart = this.map.getZoom() < 14;
+        // console.log(this.map.getZoom());
       }, 500);
     });
     // Load geojson if any
@@ -239,7 +247,7 @@ export default {
           // ]
         };
         let areaItem = null;
-        console.log(area.redevelopment_area_locations)
+        // console.log(area.redevelopment_area_locations)
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,

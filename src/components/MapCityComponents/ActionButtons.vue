@@ -1,12 +1,12 @@
 <template>
   <div class="action-container ">
-    <q-btn color="white" padding="8px" v-if="showAll">
+    <q-btn color="white" padding="8px" v-if="!hideHeart">
       <q-icon size="24px">
         <img src="~assets/icons/like.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
 
-    <q-btn :color="cone ? 'primary' : 'white'" padding="8px" v-if="showAll">
+    <q-btn :color="cone ? 'primary' : 'white'" padding="8px" v-if="!hideCone">
       <div>
         <q-icon size="24px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
@@ -17,7 +17,7 @@
       </div>
     </q-btn>
 
-    <q-btn color="white" padding="8px">
+    <q-btn color="white" padding="8px" v-if="!hideGps">
       <q-icon size="24px">
         <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
@@ -33,7 +33,15 @@ export default {
     };
   },
   props: {
-    showAll: {
+    hideHeart: {
+      type: Boolean,
+      default: false
+    },
+    hideCone: {
+      type: Boolean,
+      default: false
+    },
+    hideGps: {
       type: Boolean,
       default: false
     }
