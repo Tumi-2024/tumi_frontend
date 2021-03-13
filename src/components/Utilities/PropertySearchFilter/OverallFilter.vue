@@ -63,31 +63,21 @@
           <!-- Premium price | 프리미엄가, 감정가 -->
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
             <!-- Dropdown Button -->
-            <q-btn
-              flat
-              color="white"
-              align="between"
-              class="full-width"
-              text-color="black"
-              padding="16px"
-            >
-              프리미엄가, 감정가
-              <q-icon name="keyboard_arrow_down" size="24px" />
-            </q-btn>
-
-            <div class="more-filters">
-              <property-premium-price
-                class="q-pb-xl bg-white q-mt-sm"
-                style="padding-top: 36px"
-              ></property-premium-price>
-              <property-connoisseur
-                class="q-pb-xl bg-white q-mt-sm"
-                style="padding-top: 36px"
-              ></property-connoisseur>
-            </div>
+            <q-expansion-item expand-separator label="프리미엄가, 감정가">
+              <div class="more-filters">
+                <property-premium-price
+                  class="q-pb-xl bg-white q-mt-sm"
+                  style="padding-top: 36px"
+                ></property-premium-price>
+                <property-connoisseur
+                  class="q-pb-xl bg-white q-mt-sm"
+                  style="padding-top: 36px"
+                ></property-connoisseur>
+              </div>
+            </q-expansion-item>
 
             <!-- Action buttons -->
-            <div class="row q-pb-md justify-around notosanskr-medium">
+            <div class="row q-py-md justify-around notosanskr-medium">
               <div class="col q-mx-xs">
                 <!-- reset | 초기화 -->
                 <q-btn
@@ -141,7 +131,8 @@ export default {
   },
   data() {
     return {
-      modal: false
+      modal: false,
+      moreFilters: false
     };
   },
   props: {
