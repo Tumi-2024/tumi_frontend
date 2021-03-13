@@ -1,12 +1,14 @@
 <template>
   <q-layout view="lHh lpr lFf" container style="min-height: 100vh">
     <q-header reveal class="bg-white">
-      <toolbar-nav />
-      <toolbar-filter :disable="getMapMode === 'redevelop-area'" />
+      <div ref="navHeader">
+        <toolbar-nav />
+        <toolbar-filter :disable="getMapMode === 'redevelop-area'" />
+      </div>
     </q-header>
 
     <q-page-container>
-      <router-view></router-view>
+      <router-view :headerHeight="headerH.clientHeight"></router-view>
     </q-page-container>
   </q-layout>
 </template>
@@ -20,8 +22,16 @@ export default {
     "toolbar-nav": ToolbarNav,
     "toolbar-filter": ToolbarFilter
   },
+  data() {
+    return {
+      headerH: 0
+    };
+  },
   computed: {
     ...mapGetters("map", ["getMapMode"])
+  },
+  mounted() {
+    this.headerH = this.$refs.navHeader;
   }
 };
 </script>

@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div class="q-my-xl"></div>
+      <div style="height: 100px;"></div>
     </div>
     <section class="button-fixed-bottom q-mr-lg">
       <q-btn
