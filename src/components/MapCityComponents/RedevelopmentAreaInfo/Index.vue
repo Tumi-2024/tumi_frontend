@@ -2,11 +2,14 @@
   <q-card-section class="redevelop-area-section q-pa-none">
     <!-- Summary Info | 요약 정보  -->
     <information-summary
-      v-if="showSummaryInfo"
-      @showSummaryInfo="showSummaryInfo = false"
+      v-if="isSummary"
+      @showSummaryInfo="isSummary = false"
     />
     <!-- Full Redevelopment Area Info 재개발 구역정보 -->
-    <information-full @hide="hide" v-else></information-full>
+    <information-full
+      ref="fullInfoDialog"
+      @hide="setSummary"
+    ></information-full>
   </q-card-section>
 </template>
 
@@ -20,18 +23,19 @@ export default {
   },
   data() {
     return {
-      showSummaryInfo: true
+      isSummary: true
     };
   },
   methods: {
-    hide() {
+    setSummary() {
       this.$emit("hide");
-      this.showSummaryInfo = true;
+      this.isSummary = true;
     }
   },
   watch: {
-    showSummaryInfo() {
-      !this.showSummaryInfo && this.$emit("seamless-off");
+    isSummary(value) {
+      this.$refs.fullInfoDialog.toggleDialog(!value);
+      !value && this.$emit("seamless-off");
     }
   }
 };
