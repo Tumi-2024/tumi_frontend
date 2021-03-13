@@ -28,7 +28,7 @@
               {{ stat.title }}
             </div>
             <div class="stat-value notosanskr-medium">
-              {{ getStatValue(stat.value) || "Unavailable" }}
+              {{ getStatValue(stat.value) || "-" }}
             </div>
           </section>
         </div>
