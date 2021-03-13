@@ -1,7 +1,6 @@
 <template>
   <div v-if="pageReady && headerHeight">
     <google-map
-      :geojson="geojson"
       :areas="getMapAreas"
       :showEstates="false"
       class="page-container full-width"
