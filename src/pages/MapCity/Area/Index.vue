@@ -55,6 +55,6 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   background: rgb(54, 54, 54);
-  min-height: calc(100vh - 118px);
+  min-height: calc(100vh - 102px);
 }
 </style>
