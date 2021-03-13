@@ -5,6 +5,7 @@ import CharterPriceDeposit from "./CharterPriceDeposit";
 import PropertyMonthly from "./PropertyMonthly";
 import ExclusiveArea from "./ExclusiveArea";
 import PropertyPremiumPrice from "./PropertyPremiumPrice";
+import PropertyConnoisseur from "./PropertyConnoisseur";
 
 export {
   TransactionType,
@@ -13,5 +14,6 @@ export {
   CharterPriceDeposit,
   PropertyMonthly,
   ExclusiveArea,
-  PropertyPremiumPrice
+  PropertyPremiumPrice,
+  PropertyConnoisseur
 };

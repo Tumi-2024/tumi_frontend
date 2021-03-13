@@ -75,11 +75,15 @@
               <q-icon name="keyboard_arrow_down" size="24px" />
             </q-btn>
 
-            <div>
-              <premium-price
+            <div class="more-filters">
+              <property-premium-price
                 class="q-pb-xl bg-white q-mt-sm"
                 style="padding-top: 36px"
-              ></premium-price>
+              ></property-premium-price>
+              <property-connoisseur
+                class="q-pb-xl bg-white q-mt-sm"
+                style="padding-top: 36px"
+              ></property-connoisseur>
             </div>
 
             <!-- Action buttons -->
@@ -121,7 +125,8 @@ import {
   CharterPriceDeposit,
   PropertyMonthly,
   ExclusiveArea,
-  PropertyPremiumPrice
+  PropertyPremiumPrice,
+  PropertyConnoisseur
 } from "components/Utilities/PropertySearchFilter/Selections";
 export default {
   components: {
@@ -131,7 +136,8 @@ export default {
     "charter-price-deposit": CharterPriceDeposit,
     "property-monthly": PropertyMonthly,
     "exclusive-area": ExclusiveArea,
-    "property-premium-price": PropertyPremiumPrice
+    "property-premium-price": PropertyPremiumPrice,
+    "property-connoisseur": PropertyConnoisseur
   },
   data() {
     return {
@@ -165,6 +171,10 @@ $max-width: 1000px;
   font-size: 17px;
   letter-spacing: -1.275px;
   color: #1a1a1a;
+}
+
+.more-filters {
+  background: #f0f0f0;
 }
 
 .apply-btn,
