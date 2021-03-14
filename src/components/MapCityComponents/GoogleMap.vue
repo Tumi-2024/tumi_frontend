@@ -62,7 +62,7 @@
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
-          {{ badge.title | truncate(7) }}
+          {{ badge.title | truncate(15) }}
         </div>
       </gmap-custom-marker>
       <!-- Users Location Marker-->
@@ -264,34 +264,24 @@ export default {
           fillOpacity: 0.35
         };
         let areaItem = null;
-        // console.log(area.redevelopment_area_locations)
-        // if (area.redevelopment_area_locations) {
-        //   const c = new this.google.maps.Circle({
-        //     map: this.map,
-        //     center,
-        //     radius: area.radius
-        //   });
-        //   const bounds = c.getBounds();
-        //   areaItem = new this.google.maps.Rectangle({
-        //     ...style,
-        //     map: this.map,
-        //     bounds: {
-        //       north: bounds.Ra.i, // Ra.i
-        //       south: bounds.Ra.g, // Ra.g
-        //       east: bounds.La.i, // La.i
-        //       west: bounds.La.g // La.g
-        //     }
-        //   });
-        //   this.areaBadges.push({ title: area.title, center }); // create area badge
-        //   c.setMap(null); // remove circle
-        // } else {
-        areaItem = new this.google.maps.Circle({
-          ...style,
-          map: this.map,
-          center,
-          radius: area.radius || 250
-        });
-        // }
+        if (area.redevelopment_area_locations) {
+          areaItem = new this.google.maps.Polygon({
+            ...style,
+            paths: area.redevelopment_area_locations,
+            map: this.map,
+            center,
+            radius: area.radius || 250
+          });
+          this.areaBadges.push({ title: area.title, center }); // create area badge
+        } else {
+          areaItem = new this.google.maps.Circle({
+            ...style,
+            map: this.map,
+            center,
+            radius: area.radius || 250
+          });
+          this.areaBadges.push({ title: area.title, center }); // create area badge
+        }
         areaItem.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           const { latitude: lat, longitude: lng } = area;
