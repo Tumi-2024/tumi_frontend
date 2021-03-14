@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { markersArea } from "../../pages/MapCity/Area/sample-area";
+// import { markersArea } from "../../pages/MapCity/Area/sample-area";
 const initState = {
   areas: [],
   selectedArea: null
@@ -27,7 +27,7 @@ export const areaStore = {
         // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data
-        context.commit("setMapAreas", markersArea);
+        // context.commit("setMapAreas", markersArea);
         console.log(error, "error");
       }
 
