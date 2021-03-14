@@ -35,7 +35,7 @@
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·면적 :</div>
             <div class="content">
-              {{ getMapSelectedArea.size_area }}
+              {{ getMapSelectedArea.size_area | number('0,0') }} m²
             </div>
           </div>
           <div class="row q-mt-xs">
