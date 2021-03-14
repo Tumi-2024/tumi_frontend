@@ -4,12 +4,16 @@ import Vue from 'vue'
 // Main Section
 export const userStore = {
   state: {
-    data: {}
+    data: {
+
+    },
+    location: null
   },
   getters: {
     user: (state, getters) => {
       return state.data
-    }
+    },
+    getUserLocation: state => state.location
   },
   mutations: {
     setUser: function (state, payload) {
@@ -24,8 +28,17 @@ export const userStore = {
       Vue.prototype.$axios.defaults.headers.common.Authorization = `token ${user.token}`
     },
     logout: function (state, payload) {
-      state.data = {}
+      state.data = {};
+      state.location = null;
+    },
+    setUserLocation: function (state, location) {
+      state.location = location
     }
+
   },
-  actions: {}
+  actions: {
+    changeUserLocation: function (context, payload) {
+      context.commit("setUserLocation", payload);
+    }
+  }
 }

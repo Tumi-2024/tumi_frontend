@@ -2,7 +2,7 @@
   <div class="bg-white" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
-      @setUserLocation="setUserLocation"
+      @accessUserLocation="getCurrentPosition"
       :hide-cone="getMapMode == 'redevelop-area'"
       :disable-heart="disableHeart"
     />
@@ -58,7 +58,7 @@
         :key="i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium">
+        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
@@ -66,7 +66,7 @@
         </div>
       </gmap-custom-marker>
       <!-- Users Location Marker-->
-      <gmap-custom-marker :marker="userLocation" v-if="userLocation">
+      <gmap-custom-marker :marker="getUserLocation" v-if="getUserLocation">
         <div class="user-marker"></div>
       </gmap-custom-marker>
     </GmapMap>
@@ -74,12 +74,18 @@
 </template>
 
 <script>
+/** google map components */
 import { gmapApi } from "gmap-vue";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
+/** custom components */
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
+/** geolocation */
+import { Plugins } from "@capacitor/core";
+const { Geolocation } = Plugins;
+
 export default {
   components: {
     "info-top-content": InfoTopContent,
@@ -89,7 +95,6 @@ export default {
   },
   data() {
     return {
-      userLocation: null,
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
@@ -97,6 +102,7 @@ export default {
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
+      showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -171,6 +177,7 @@ export default {
       "getMapCenter",
       "getMapOptions"
     ]),
+    ...mapGetters(["getUserLocation"]),
     google: gmapApi
   },
 
@@ -201,29 +208,31 @@ export default {
        */
       console.log(e.latLng.lat(), e.latLng.lng());
     });
-    // apply zoom change listeners
-    this.map.addListener("zoom_changed", () => {
-      if (this.showInfoWindow && this.showEstates) {
-        this.getDetailHouses();
-      }
-      setTimeout(() => {
-        this.showInfoWindow = this.map.getZoom() > 15;
-        this.disableHeart = this.map.getZoom() < 15;
-        // console.log(this.map.getZoom());
-      }, 500);
-    });
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
     // Load Areas if any
     this.areas && this.setMapAreas(this.areas);
 
-    this.setMapOnFocus();
     this.markers = this.$store.state.estate.simple_houses;
+
+    // apply zoom change listeners
+    this.zoomChangeListeners();
+    // ask for Users Current Location
+    // this.getCurrentPosition();
+  },
+
+  watch: {
+    getUserLocation(newVal) {
+      this.goToLocation(newVal);
+    }
   },
 
   methods: {
+    // have access to vuex actions
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
     ...mapActions("area", ["changeMapSelectedArea"]),
+    ...mapActions(["changeUserLocation"]),
+
     getDetailHouses() {
       const bounds = this.map.getBounds();
       const longitude = bounds.Qa;
@@ -295,10 +304,7 @@ export default {
         areaItem.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           const { latitude: lat, longitude: lng } = area;
-          this.map.panTo({ lat, lng });
-          setTimeout(() => {
-            this.map.setZoom(16);
-          }, 500);
+          this.goToLocation({ lat, lng });
         });
       });
     },
@@ -337,12 +343,39 @@ export default {
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },
-    setUserLocation(center) {
-      this.userLocation = center;
+    goToLocation(center = { lat, lng }) {
       this.map.panTo(center);
       setTimeout(() => {
         this.map.setZoom(17);
       }, 500);
+    },
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition({ enableHighAccuracy: true })
+        .then(position => {
+          const { latitude: lat, longitude: lng } = position.coords;
+          // console.log("Current", lat, lng);
+          this.changeUserLocation({ lat, lng });
+        })
+        .catch(e => {
+          console.log(e, "error");
+        });
+    },
+    zoomChangeListeners() {
+      // apply zoom change listeners
+      this.map.addListener("zoom_changed", () => {
+        if (this.showInfoWindow && this.showEstates) {
+          this.getDetailHouses();
+        }
+        setTimeout(() => {
+          // this will show AreaBadges & InfoWindow if zoom if closer
+          this.showAreaBadges = this.map.getZoom() > 15;
+          this.showInfoWindow = this.map.getZoom() > 15;
+          // this will disable hear button of zoom is too far
+          this.disableHeart = this.map.getZoom() < 15;
+
+          // console.log(this.map.getZoom());
+        }, 500);
+      });
     }
   }
 };
