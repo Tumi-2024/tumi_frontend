@@ -323,7 +323,9 @@ export default {
         }
         areaItem.addListener("click", _ => {
           this.changeMapSelectedArea(area);
-          const { latitude: lat, longitude: lng } = area;
+          let { latitude: lat, longitude: lng } = area;
+          lat = Number(lat)
+          lng = Number(lng)
           this.goToLocation({ lat, lng });
         });
       });
