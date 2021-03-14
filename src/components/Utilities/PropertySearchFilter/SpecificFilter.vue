@@ -83,18 +83,18 @@ export default {
     disable: { type: Boolean, default: false }
   },
   mounted() {
-    if (this.transactionType) {
-      component = "transaction-type";
-    }
-    if (this.propertyType) {
-      component = "property-type";
-    }
-    if (this.salePrice) {
-      component = "property-sale-price";
-    }
-    if (this.charterPriceDeposit) {
-      component = "charter-price-deposit";
-    }
+    // if (this.transactionType) {
+    //   this.component = "transaction-type";
+    // }
+    // if (this.propertyType) {
+    //   this.component = "property-type";
+    // }
+    // if (this.salePrice) {
+    //   this.component = "property-sale-price";
+    // }
+    // if (this.charterPriceDeposit) {
+    //   this.component = "charter-price-deposit";
+    // }
   },
   methods: {
     select(val) {

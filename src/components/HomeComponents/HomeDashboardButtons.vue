@@ -67,6 +67,8 @@
 
 <script>
 import { mapActions } from "vuex";
+import { Plugins } from "@capacitor/core";
+const { Geolocation } = Plugins;
 export default {
   data() {
     return {
@@ -81,12 +83,27 @@ export default {
       "changeToolbarTitle"
     ]),
     toMapCity() {
-      /* we dispatch an action resetMap() from map module */
-      this.$store.dispatch("map/resetMap");
-      this.$router.push({ name: "map_city" });
+      Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(position => {
+        const { latitude: lat, longitude: lng } = position.coords;
+        // console.log("Current", lat, lng);
+        this.$store.dispatch("map/resetMap");
+        this.changeMapCenter({ lat, lng });
+        this.$router.push({ name: "map_city" });
+      }).catch(e => {
+        console.log(e, "error");
+      });
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
+    },
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(position => {
+        const { latitude: lat, longitude: lng } = position.coords;
+        // console.log("Current", lat, lng);
+        this.changeUserLocation({ lat, lng });
+      }).catch(e => {
+        console.log(e, "error");
+      });
     }
   }
 };

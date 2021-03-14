@@ -67,7 +67,7 @@ export default {
       type: Object,
     },
     price: {
-      type: String,
+      type: Number,
       default: ""
     },
     count: {
