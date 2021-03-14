@@ -32,7 +32,7 @@
             </div>
           </section>
         </div>
-        <q-separator inset />
+        <q-separator inset v-if="stats.length - 1 !== i" />
       </div>
     </section>
 
@@ -57,7 +57,7 @@
       />
     </section>
 
-    <section style="min-height: 180px;"></section>
+    <section style="min-height: 200px;"></section>
   </div>
 </template>
 
