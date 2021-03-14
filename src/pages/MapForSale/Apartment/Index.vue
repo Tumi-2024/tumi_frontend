@@ -1,33 +1,32 @@
 <template>
-  <div>
-    <google-map class="map" setMapAreaView />
+  <div v-if="estate">
+    <google-map class="map" :position="estate.position" setMapAreaView />
     <detail-summary
       :tags="{
-        type: '아파트',
+        type: toKr(estate.type_house),
         redevelopment: true,
         stageProgress: '추진위원회 승인',
-        transactionStatus: '거래완료'
+        transactionStatus: estate.is_sold && '거래완료' 
       }"
-      areaName="한남 3구역"
-      sales="12억 8,500만"
-      initialInvestments="6억 5,500만"
-      quote='“해당 세대 중 유일하게 야외 정원이 있는 집"'
+      :areaName="estate.address"
+      :sales="toMoneyString(estate.price)"
+      :initialInvestments="toMoneyString(estate.initial_investment)"
+      :quote='estate.description'
     />
     <!--  토지 매물정보  -->
     <area-information :informations="propertyInformation" class="q-mt-sm" />
     <more-information
-      transactionType="토지매매"
-      exclusiveArea="2,275㎡ (688평)"
-      commonArea="375㎡ (113평)"
-      direction="남서향"
-      numberFloors="고층"
-      stationArea="역세권"
-      elevator="2대"
-      numberRooms="3 / 1개"
-      heating="개별난방(도시가스)"
-      numberHouseholds="36세대(총63세대)"
-      administrativeExpenses=""
-      usageArea="일반상업"
+      :transactionType="toKr(estate.type_sale)"
+      :exclusiveArea="`${estate.area_exclusive}㎡ (${Math.round(estate.area_exclusive/3.3)}평)`"
+      :commonArea="`${estate.area_common}㎡ (${Math.round(estate.area_common/3.3)}평)`"
+      :direction="`${estate.type_direction && toKr(estate.type_direction)}향`"
+      :numberFloors="estate.floor && `${estate.floor}층`"
+      :stationArea="estate.station"
+      :elevator="estate.elevator && `${estate.elevator}대`"
+      :numberRooms="estate.room_count && estate.bathroom_count && `${estate.room_count} / ${estate.bathroom_count}개`"
+      :heating="estate.heating_system"
+      :numberHouseholds="estate.area_household_count"
+      :administrativeExpenses="estate.administration_cost && `${estate.administration_cost}원`"
     />
     <!-- 재개발 정보 -->
     <redevelopment-information
@@ -58,6 +57,7 @@
 </template>
 
 <script>
+import { toKr, toMoneyString } from 'src/utils';
 import {
   GoogleMap,
   DetailSummary,
@@ -79,57 +79,66 @@ export default {
     RecentPricing,
     "google-map": GoogleMap
   },
+  mounted() {
+    this.estate = this.$route.params.data;
+    toKr(this.estate.type_house)
+  },
+  methods: {
+    toKr,
+    toMoneyString,
+  },
   data() {
     return {
+      estate: null,
       propertyInformation: [
         {
           // exclusive Area
           label: "전용면적",
-          value: "130㎡",
+          value: `${this.$route.params.data.area_exclusive}㎡`,
           icon: "land-area.svg"
         },
         {
           // direction
           label: "방향",
-          value: "남서향",
+          value: `${toKr(this.$route.params.data.type_direction)}향`,
           icon: "direction.svg"
         },
         {
           // number of floors
           label: "층수",
-          value: "고층",
+          value: `${this.$route.params.data.floor}층`,
           icon: "number-floors.svg"
         },
         {
           // station-area
           label: "역세권",
-          value: "서초역",
+          value: this.$route.params.data.station,
           icon: "station-area.svg"
         },
         {
           // connoisseur
           label: "감정가",
-          value: "",
+          value: toMoneyString(this.$route.params.data.price_appraised),
           icon: "connoisseur.svg"
         },
         {
           // Right
           label: "권리가",
-          value: "",
+          value: toMoneyString(this.$route.params.data.price_rights),
           icon: "right.svg"
         },
         {
           // Premium price
           label: "프리미엄가",
-          value: "1억",
+          value: toMoneyString(this.$route.params.data.price_premium),
           icon: "premium-price.svg"
         },
-        {
-          // progress
-          label: "진행단계",
-          value: "준공인가",
-          icon: "progress.svg"
-        }
+        // {
+        //   // progress
+        //   label: "진행단계",
+        //   value: "준공인가",
+        //   icon: "progress.svg"
+        // }
       ],
       adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },

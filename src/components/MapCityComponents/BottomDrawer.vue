@@ -12,7 +12,7 @@
           class="btn-view-properties full-width notosanskr-medium"
           :to="{ name: 'map_list_sale' }"
         >
-          종로구 매물보기 <span style="color: #FF5A00">1,380</span>
+          종로구 매물보기 <span style="color: #FF5A00">{{` ${$store.state.estate.simple_houses.length}개`}}</span>
         </q-btn>
       </q-card-section>
 

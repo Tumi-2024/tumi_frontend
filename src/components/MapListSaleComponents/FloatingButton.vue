@@ -44,18 +44,16 @@ export default {
   methods: {
     goToMap() {
       // set quries for map
-      const zoom = 17;
-      const lat = 37.536357575140926;
-      const lng = 127.09206289552306;
-      this.$router.push({
-        name: "map_city",
-        query: {
-          onFocus: true,
-          zoom,
-          lat,
-          lng
-        }
-      });
+      this.$router.push({ name: "map_city" });
+      // this.$router.push({
+      //   name: "map_city",
+      //   query: {
+      //     onFocus: true,
+      //     zoom,
+      //     lat,
+      //     lng
+      //   }
+      // });
     }
   }
 };

@@ -9,7 +9,7 @@
         flat
         class="col notosanskr-medium q-mx-xs"
         :class="{ selected: selected === property.title }"
-        @click="selected = property.title"
+        @click="changeValue(property.title)"
       >
         <div class="full-width column q-py-lg">
           <img
@@ -23,9 +23,7 @@
       </q-btn>
     </div>
 
-    <property-detailed-type
-      :selectedCategory="selected"
-    ></property-detailed-type>
+    <property-detailed-type :selectedCategory="selected" v-on:select="select"></property-detailed-type>
   </q-card-section>
 </template>
 
@@ -65,9 +63,19 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.selected = this.$store.state.search.typeHouse;
+  },
   methods: {
     getImgUrl(pic) {
       return require(`src/assets/icons/PropertySearchFilter/${pic}.svg`);
+    },
+    select(val) {
+      this.$emit('selectDetail', val)
+    },
+    changeValue(val) {
+      this.selected = val;
+      this.$emit('select', val);
     }
   }
 };

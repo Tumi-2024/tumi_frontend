@@ -21,7 +21,7 @@
         class="col-2 notosanskr-medium"
         :class="{ selected: selected === price && selected != '' }"
         :label="price"
-        @click="selected = price"
+        @click="changePriceText(price)"
       />
     </div>
 
@@ -37,6 +37,8 @@
         <div class="col-5 row items-center">
           <input
             type="text"
+            v-model="min"
+            @change="changeValue"
             name="minimum-amount"
             class="full-width"
             placeholder="최소금액"
@@ -51,6 +53,8 @@
         <div class="col-5 row items-center">
           <input
             type="text"
+            v-model="max"
+            @input="changeValue"
             name="minimum-amount"
             class="full-width"
             placeholder="최대금액"
@@ -68,9 +72,16 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
+  mounted() {
+    this.selected = this.$store.state.search.salePrice.text;
+    this.min = this.$store.state.search.salePrice.min;
+    this.max = this.$store.state.search.salePrice.max;
+  },
   data() {
     return {
       selected: "전체",
+      min: null,
+      max: null,
       prices: [
         "전체",
         "~1억",
@@ -92,6 +103,23 @@ export default {
         "16억~"
       ]
     };
+  },
+  methods: {
+    changePriceText(text) {
+      this.selected = text;
+      this.$emit('select', {
+        text: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    },
+    changeValue(val) {
+      this.$emit('select', {
+        selected: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    },
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <q-card flat class="q-mt-sm">
     <q-card-section class=" notosanskr-medium">
-      전체 매물 <span class="text-primary">30</span>개
+      전체 매물 <span class="text-primary">{{$store.state.estate.detail_houses.length}}</span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
@@ -16,13 +16,13 @@
     </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
+
         <area-item
-          v-for="(item, i) of items"
+          v-for="(item, i) of $store.state.estate.detail_houses"
           :key="i"
-          :name="item.name"
-          :amount="item.amount"
-          :tags="item.tags"
+          :item="item"
         ></area-item>
+        
         <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
         </q-item>
@@ -32,10 +32,22 @@
 </template>
 
 <script>
+import { toQueryString, toMoneyString, toKr } from 'src/utils';
 import AreaItem from "./AreaItem";
 export default {
   components: {
     "area-item": AreaItem
+  },
+  mounted() {
+    console.log(this.$route.params.type);
+    if (this.$route.params.type === 'location') {
+      // console.log(`toQueryString({ ...this.$route.params.position })`);
+      // console.log(this.$route.params.position);
+      // console.log(toQueryString({ ...this.$route.params.position }));
+      this.$store.dispatch('getDetailHouses', toQueryString({ latitude: this.$route.params.position.lat, longitude: this.$route.params.position.lng }));
+      // console.log('store');
+      // console.log(this.$store);
+    }
   },
   data() {
     return {
@@ -84,6 +96,10 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    toMoneyString: toMoneyString,
+    toKr: toKr,
   }
 };
 </script>

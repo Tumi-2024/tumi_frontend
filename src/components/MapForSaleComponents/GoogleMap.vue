@@ -3,8 +3,8 @@
     <GmapMap
       ref="mapRef"
       :center="{
-        lat: 37.54439180667893,
-        lng: 127.04601120488171
+        lat: position.lat,
+        lng: position.lng
       }"
       :zoom="17"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
@@ -21,6 +21,9 @@ import { TUMI_AREA_FOR_SALE } from "./area-forsale-sample.js";
 import { mapGetters } from "vuex";
 export default {
   components: {},
+  props: {
+    position: Object,
+  },
   data() {
     return {
       map: null,
@@ -33,6 +36,7 @@ export default {
   },
 
   async mounted() {
+    console.log(this.position);
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
@@ -40,7 +44,7 @@ export default {
       zoomControl: false,
       scrollwheel: false
     });
-    this.map.data.addGeoJson(TUMI_AREA_FOR_SALE);
+    // this.map.data.addGeoJson(TUMI_AREA_FOR_SALE);
     // apply styles on geojson layers
     this.map.data.setStyle(function(feature) {
       return { fillColor: "#0BCDC7", strokeColor: "#FF5100", strokeWeight: 2 };

@@ -12,26 +12,29 @@
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="getMapOptions"
-    >
-      <!-- Map Info Windows -->
+      :options="getMapOptions">
+
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
         :options="infoOptions"
-        :position="m[0].position"
+        :position="m.position"
         :opened="showInfoWindow && showEstates"
         @closeclick="infoWinOpen = false"
-        class="q-pa-lg"
-      >
-        <info-top-content :marker="m[0]" />
-        <info-window-content :marker="m[0]" />
+        class="q-pa-lg">
+
+        <info-top-content :marker="m" />
 
         <info-window-content
-          @viewArea="viewArea(m[0])"
-          :price="m[0].price"
-          :badges="m[0].badges"
-        />
+          @viewArea="viewArea(m)"
+          :price="m.price_avg"
+          :count="m.count"
+          :badges="{
+            type_sale: m.type_sale,
+            type_house: m.type_house,
+            area: m.area_common,
+          }" />
+
       </gmap-info-window>
       <!-- Map Markers -->
       <gmap-cluster
@@ -44,7 +47,7 @@
         v-if="showEstates"
       >
         <gmap-marker
-          v-for="(m, index) in markers"
+          v-for="(m, index) in $store.state.estate.simple_houses"
           :key="'d' + index"
           :position="m.position"
           :clickable="true"
@@ -81,6 +84,7 @@ import GmapCustomMarker from "vue2-gmap-custom-marker";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
+import { toQueryString } from 'src/utils';
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
@@ -182,6 +186,7 @@ export default {
   },
 
   async mounted() {
+    console.log(this.$store.state)
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
@@ -195,9 +200,12 @@ export default {
       }
     });
 
+    console.log('getSimpleHousesgetSimpleHousesgetSimpleHouses');
+    this.$store.dispatch('getSimpleHouses');
+
     this.map.addListener("idle", _ => {
       if (this.showInfoWindow && this.showEstates) {
-        this.getDetailHouses();
+        this.getDistinctHouses();
       }
     });
 
@@ -207,6 +215,17 @@ export default {
        *  access click event
        */
       console.log(e.latLng.lat(), e.latLng.lng());
+    });
+    // apply zoom change listeners
+    this.map.addListener("zoom_changed", () => {
+      if (this.showInfoWindow && this.showEstates) {
+        this.getDistinctHouses();
+      }
+      setTimeout(() => {
+        this.showInfoWindow = this.map.getZoom() > 15;
+        this.disableHeart = this.map.getZoom() < 15;
+        // console.log(this.map.getZoom());
+      }, 500);
     });
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
@@ -218,7 +237,7 @@ export default {
     // apply zoom change listeners
     this.zoomChangeListeners();
     // ask for Users Current Location
-    // this.getCurrentPosition();
+    this.getCurrentPosition();
   },
 
   watch: {
@@ -235,12 +254,21 @@ export default {
 
     getDetailHouses() {
       const bounds = this.map.getBounds();
-      const longitude = bounds.Qa;
-      const latitude = bounds.Va;
-      this.$store.dispatch("getDetailHouses", {
-        latitude: [latitude.i, latitude.j],
-        longitude: [longitude.i, longitude.j]
-      });
+      
+      this.$store.dispatch('getDetailHouses', toQueryString({
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
+        ...this.$store.state.search
+      }));
+    },
+    getDistinctHouses() {
+      const bounds = this.map.getBounds();
+      this.$store.dispatch('getDistinctHouses', toQueryString({
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
+        ...this.$store.state.search
+      }));
+      console.log(this.$store.state);
     },
     setMapGeojson(geojson) {
       /**
@@ -320,18 +348,18 @@ export default {
         }
       }
     },
-    viewArea({ position, type }) {
-      this.map.panTo(position);
+    viewArea(item) { 
+      this.map.panTo(item.position);
       this.map.addListener("idle", () => {
         this.changeMapZoom(16);
-        this.changeMapCenter(position);
-        this.tpyeForSale(type) &&
-          this.$router.push({ name: this.tpyeForSale(type) });
+        this.changeMapCenter(item.position);
+        this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position } });
       });
     },
-    tpyeForSale(type) {
+    typeForHouse(type) {
       if (type === "land") return "for_sale_land";
-      if (type === "apartment") return "for_sale_apartment";
+      if (type === "apartment") return "map_list_sale";
+      // if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },

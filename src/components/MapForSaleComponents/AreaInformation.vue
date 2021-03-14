@@ -1,7 +1,7 @@
 <template>
   <q-card flat>
     <q-card-section class="heading-title">
-      토지 매물정보
+      매물정보
     </q-card-section>
 
     <q-card-section class="q-pa-none">

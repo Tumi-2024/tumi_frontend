@@ -1,6 +1,6 @@
 <template>
   <div>
-    <area-list-items />
+    <area-list-items :params="$route.params" />
     <floating-button />
   </div>
 </template>
@@ -14,6 +14,9 @@ export default {
   components: {
     "area-list-items": AreaListItems,
     "floating-button": FloatingButton
+  },
+  mounted() {
+    // console.log(this.$route.params);
   }
 };
 </script>

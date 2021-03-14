@@ -8,6 +8,7 @@ import { userStore } from './modules/user';
 import { insightsStore } from './modules/insights';
 import { mapStore } from './modules/map';
 import { estateStore } from './modules/estate';
+import { searchStore } from './modules/search';
 import { areaStore } from './modules/area';
 
 // Main Section
@@ -29,6 +30,7 @@ export default function (/* { ssrContext } */) {
       insights: insightsStore,
       map: mapStore,
       estate: estateStore,
+      search: searchStore,
       area: areaStore
     },
 
