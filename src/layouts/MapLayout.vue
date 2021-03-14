@@ -3,7 +3,10 @@
     <q-header reveal class="bg-white">
       <div ref="navHeader">
         <toolbar-nav />
-        <toolbar-filter :disable="getMapMode === 'redevelop-area'" />
+        <toolbar-filter
+          class="q-pt-xs q-px-sm"
+          :disable="getMapMode === 'redevelop-area'"
+        />
       </div>
     </q-header>
 

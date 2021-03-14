@@ -1,12 +1,19 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
-    <action-buttons :showAll="showInfoWindow" />
+    <!-- Heart buttons | cone | GPS -->
+    <action-buttons
+      @setUserLocation="setUserLocation"
+      :hide-cone="getMapMode == 'redevelop-area'"
+      :disable-heart="disableHeart"
+    />
+    <!-- Google Map Starts -->
     <GmapMap
       ref="mapRef"
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions">
+      
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
@@ -27,7 +34,7 @@
           }" />
 
       </gmap-info-window>
-
+      <!-- Map Markers -->
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
@@ -46,12 +53,30 @@
           :visible="!showInfoWindow"
         />
       </gmap-cluster>
+      <!-- we generate badges for the Redevelopment Area -->
+      <gmap-custom-marker
+        v-for="(badge, i) in areaBadges"
+        :key="i"
+        :marker="badge.center"
+      >
+        <div class="area-badge-info notosanskr-medium">
+          <q-icon size="20px" class="q-mr-xs">
+            <img src="~assets/icons/area-info.svg" alt="area-info" />
+          </q-icon>
+          {{ badge.title }}
+        </div>
+      </gmap-custom-marker>
+      <!-- Users Location Marker-->
+      <gmap-custom-marker :marker="userLocation" v-if="userLocation">
+        <div class="user-marker"></div>
+      </gmap-custom-marker>
     </GmapMap>
   </div>
 </template>
 
 <script>
 import { gmapApi } from "gmap-vue";
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
@@ -61,15 +86,19 @@ export default {
   components: {
     "info-top-content": InfoTopContent,
     "info-window-content": InfoWindowContent,
-    "action-buttons": ActionButtons
+    "action-buttons": ActionButtons,
+    "gmap-custom-marker": GmapCustomMarker
   },
   data() {
     return {
+      userLocation: null,
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
       markers: this.$store.state.estate.simple_houses,
+      /** MARKERS SERVE AS AREA BADGE */
+      areaBadges: [],
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -78,6 +107,7 @@ export default {
         disableAutoPan: true
       },
       showInfoWindow: false,
+      disableHeart: false,
       /* CLUSTERS */
       clusterStyles: [
         // 1+
@@ -184,6 +214,8 @@ export default {
       }
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
+        this.disableHeart = this.map.getZoom() < 15;
+        // console.log(this.map.getZoom());
       }, 500);
     });
     // Load geojson if any
@@ -235,33 +267,23 @@ export default {
     },
     setMapAreas(areas) {
       areas.forEach(area => {
+        let center = {
+          lat: area.latitude,
+          lng: area.longitude
+        };
         const style = {
           strokeColor: "#FF5100",
           strokeOpacity: 0.8,
           strokeWeight: 2,
           fillColor: "#0BCDC7",
           fillOpacity: 0.35
-          // icons: [
-          //   {
-          //     icon: {
-          //       path: "M 0,-1 0,1",
-          //       strokeOpacity: 1,
-          //       scale: 4
-          //     },
-          //     offset: "0",
-          //     repeat: "20px"
-          //   }
-          // ]
         };
         let areaItem = null;
-        console.log(area.redevelopment_area_locations)
+        // console.log(area.redevelopment_area_locations)
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,
-            center: {
-              lat: area.latitude,
-              lng: area.longitude
-            },
+            center,
             radius: 250
           });
           const bounds = c.getBounds();
@@ -275,15 +297,13 @@ export default {
               west: bounds.La.g // La.g
             }
           });
-          c.setMap(null);
+          this.areaBadges.push({ title: area.title, center }); // create area badge
+          c.setMap(null); // remove circle
         } else {
           areaItem = new this.google.maps.Circle({
             ...style,
             map: this.map,
-            center: {
-              lat: area.latitude,
-              lng: area.longitude
-            },
+            center,
             radius: 250
           });
         }
@@ -331,6 +351,13 @@ export default {
       if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
+    },
+    setUserLocation(center) {
+      this.userLocation = center;
+      this.map.panTo(center);
+      setTimeout(() => {
+        this.map.setZoom(17);
+      }, 500);
     }
   }
 };
@@ -352,5 +379,50 @@ export default {
 // hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
   display: none !important;
+}
+
+.area-badge-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #68814e;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -0.97px;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0 8px;
+}
+
+.user-marker {
+  background: #005de9;
+  border-radius: 50%;
+  margin: 10px;
+  height: 30px;
+  width: 30px;
+
+  box-shadow: 0 0 0 0 rgb(4, 130, 248);
+  transform: scale(2);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 67, 250, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 46, 252, 0);
+  }
 }
 </style>
