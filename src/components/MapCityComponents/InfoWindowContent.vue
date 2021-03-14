@@ -19,7 +19,7 @@
 
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        {{ format(price) }}
+        {{ toMoneyString(price) }}
       </div>
       <div class="row bottom-toolbar notosanskr-regular">
         <div class="info-text" v-if="badges.type_house">{{ (badges.type_house === 'apartment') ? '아파트' : ''}}</div>
@@ -36,7 +36,7 @@
           (badges.type_sale === 'sale') ? '매매' : 
           (badges.type_sale === 'charter') ? '전세' : 
           (badges.type_sale === 'half-charter') ? '반전세' : 
-          (badges.type_sale === 'rent') ? '월세' : ''"
+          (badges.type_sale === 'rent') ? '월세' : badges.type_sale"
           v-if="badges.type_sale"
         />
         <!-- 여러개할라면 여러개넣고 하나만할라면 하나만해라 -->
@@ -53,13 +53,14 @@
           v-if="badges.type_sale === 'sale'"
         /> -->
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="badges.area">{{ badges.area }}평</div>
+        <div class="info-text" v-if="badges.area">{{ Math.round(badges.area/3.3) }}평</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { toMoneyString } from 'src/utils';
 export default {
   props: {
     item: {
@@ -85,12 +86,7 @@ export default {
     }
   },
   methods: {
-    format(val) {
-      let uk = Math.floor(val / 100000000);
-      let man = Math.floor((val - uk*100000000) / 10000);
-      let price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
-      return price;
-    }
+    toMoneyString: toMoneyString,
   }
 };
 </script>

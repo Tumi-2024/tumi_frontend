@@ -126,6 +126,11 @@ export default {
       }
       this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
       this.$store.dispatch('getDistinctHouses', toQueryString(this.$store.state.search));
+      this.$store.dispatch('getDetailHouses', toQueryString({
+        latitude: this.$store.state.map.mapCenter.lat,
+        longitude: this.$store.state.map.mapCenter.lng,
+        ...this.$store.state.search
+      }));
       this.modal = false;
     },
     init() {
@@ -160,6 +165,13 @@ export default {
           });
         }
       }
+      // this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
+      // this.$store.dispatch('getDistinctHouses', toQueryString(this.$store.state.search));
+      // this.$store.dispatch('getDetailHouses', toQueryString({
+      //   latitude: this.$store.state.map.mapCenter.lat,
+      //   longitude: this.$store.state.map.mapCenter.lng,
+      //   ...this.$store.state.search
+      // }));
       this.modal = false;
     },
   },

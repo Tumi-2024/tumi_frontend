@@ -30,8 +30,8 @@
           :price="m.price_avg"
           :count="m.count"
           :badges="{
-            type_house: m.type_house,
             type_sale: m.type_sale,
+            type_house: m.type_house,
             area: m.area_common,
           }" />
 
@@ -234,21 +234,12 @@ export default {
     ...mapActions("area", ["changeMapSelectedArea"]),
     getDetailHouses() {
       const bounds = this.map.getBounds();
-      // console.log(`bounds.getNorthEast().lat() `, bounds.getNorthEast().lat());
-      // console.log(`bounds.getNorthEast().lng() `, bounds.getNorthEast().lng());
-      // console.log(`bounds.getSouthWest().lat() `, bounds.getSouthWest().lat());
-      // console.log(`bounds.getSouthWest().lng() `, bounds.getSouthWest().lng());
-
       
       this.$store.dispatch('getDetailHouses', toQueryString({
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
         ...this.$store.state.search
       }));
-      // this.$store.dispatch('getDetailHouses', {
-      //   latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-      //   longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
-      // });
     },
     getDistinctHouses() {
       const bounds = this.map.getBounds();
@@ -348,18 +339,18 @@ export default {
         }
       }
     },
-    viewArea({ position, type }) { 
-      this.map.panTo(position);
-      // this.map.addListener("idle", () => {
-      //   this.changeMapZoom(16);
-      //   this.changeMapCenter(position);
-      //   this.tpyeForSale(type) &&
-      //     this.$router.push({ name: this.tpyeForSale(type) });
-      // });
+    viewArea(item) { 
+      this.map.panTo(item.position);
+      this.map.addListener("idle", () => {
+        this.changeMapZoom(16);
+        this.changeMapCenter(item.position);
+        this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position } });
+      });
     },
-    tpyeForSale(type) {
+    typeForHouse(type) {
       if (type === "land") return "for_sale_land";
-      if (type === "apartment") return "for_sale_apartment";
+      if (type === "apartment") return "map_list_sale";
+      // if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },

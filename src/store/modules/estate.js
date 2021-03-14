@@ -97,50 +97,6 @@ export const estateStore = {
           }
         }))
       context.commit('setDetailHouses', results)
-      if (results && results.length > 1) {
-        let result = results.reduce((acc, cur) => {
-          const key = `${cur.position.lat},${cur.position.lng}`;
-          if (acc[key]) {
-            acc[key] = acc[key].concat(cur);
-          } else {
-            acc[key] = [cur];
-          }
-          return acc;
-        }, {});
-        console.log(result);
-        result = Object.keys(result).map(item => result[item]);
-        result = result.map(item => {
-          if (item.length < 2) {
-            return {
-              count: item.length,
-              results: item
-            }
-          } else {
-            // 나중에 숫자로바꿔서 지랄해야함
-            const priceRange = item.reduce((acc, cur) => {
-              if (!acc.max) {
-                acc.max = cur.price;
-              } else {
-                acc.max = cur.price > acc.max ? cur.price : acc.max;
-              }
-
-              if (!acc.min) {
-                acc.min = cur.price;
-              } else {
-                acc.min = cur.price < acc.min ? cur.price : acc.min;
-              }
-              return acc;
-            }, {});
-            return {
-              ...priceRange,
-              count: item.length,
-              results: item
-            }
-          }
-        });
-        console.log(result);
-        context.commit('setDistinctHouses', result)
-      }
     }
   }
 }

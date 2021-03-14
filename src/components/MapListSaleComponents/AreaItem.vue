@@ -1,42 +1,42 @@
 <template>
-  <q-item class="column  notosanskr-regular " :to="{ name: 'apartment' }">
+  <q-item class="column  notosanskr-regular " :to="{ name: 'for_sale_apartment', params: { data: item } }">
     <q-item-section>
       <div class="row">
         <!-- badge for item type -->
-        <q-badge class="text-white bg-primary q-mr-sm">{{ tags.type }}</q-badge>
+        <q-badge class="text-white bg-primary q-mr-sm">{{ toKr(item.type_house) }}</q-badge>
         <!-- badge for item status -->
         <q-badge
           outline
           class="text-primary bg-white q-mr-sm"
-          v-if="tags.recomend"
+          v-if="item.recomend"
         >
-          {{ tags.recomend }}
+          {{ '투미추천 매물' }}
         </q-badge>
         <!-- badge for redevelopment -->
-        <q-badge class="re-develop bg-white q-mr-sm" v-if="tags.redevelopment">
+        <q-badge class="re-develop bg-white q-mr-sm" v-if="item.redevelopment">
           <q-icon>
             <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
           </q-icon>
           재개발
         </q-badge>
         <!-- badge for item date -->
-        <q-badge class="date">{{ tags.date }}</q-badge>
+        <q-badge class="date">{{ new Date(item.modified).toLocaleDateString() }}</q-badge>
       </div>
     </q-item-section>
     <q-item-section class="area-name q-pt-sm">
-      {{ name }}
+      {{ item.address }}
     </q-item-section>
     <q-item-section class="area-amount">
-      {{ amount }}
+      {{ `${toKr(item.type_sale)} ${toMoneyString(item.price)}` }}
     </q-item-section>
     <div class="additional-info row items-center q-pt-sm">
-      <div>전용면적 116㎡(30평)</div>
-      <div>고층</div>
+      <div>{{ (item.area_common) ? `전용면적 ${item.area_common}㎡(${Math.round(item.area_common/3.3)}평)` : '' }}</div>
+      <div>{{ item.floor && `${item.floor}층` }}</div>
       <q-icon size="16px">
         <img src="~assets/icons/sun.svg" />
       </q-icon>
       <div>
-        남서향
+        {{ item.type_direction && `${toKr(item.type_direction)}향` }}
       </div>
     </div>
     <q-separator style="margin-top: 20px" />
@@ -44,11 +44,14 @@
 </template>
 
 <script>
+import { toQueryString, toMoneyString, toKr } from 'src/utils';
 export default {
   props: {
-    tags: Object,
-    name: String,
-    amount: String
+    item: Object,
+  },
+  methods: {
+    toKr,
+    toMoneyString,
   }
 };
 </script>
