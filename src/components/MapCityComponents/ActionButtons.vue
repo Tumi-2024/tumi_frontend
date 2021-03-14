@@ -20,7 +20,7 @@
     <q-btn
       color="white"
       padding="8px"
-      @click="getCurrentPosition()"
+      @click="$emit('accessUserLocation')"
       v-if="!hideGps"
     >
       <q-icon size="24px">
@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import { Plugins } from "@capacitor/core";
-
-const { Geolocation } = Plugins;
 export default {
   data() {
     return {
@@ -52,19 +49,6 @@ export default {
     hideGps: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    getCurrentPosition() {
-      Geolocation.getCurrentPosition()
-        .then(position => {
-          const { latitude: lat, longitude: lng } = position.coords;
-          // console.log("Current", lat, lng);
-          this.$emit("setUserLocation", { lat, lng });
-        })
-        .catch(e => {
-          console.log(e, "error");
-        });
     }
   }
 };
