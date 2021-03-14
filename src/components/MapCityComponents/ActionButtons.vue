@@ -1,6 +1,6 @@
 <template>
-  <div class="action-container ">
-    <q-btn color="white" padding="8px" v-if="!hideHeart">
+  <div class="action-container q-px-sm">
+    <q-btn color="white" padding="8px" :disabled="disableHeart">
       <q-icon size="24px">
         <img src="~assets/icons/like.svg" alt="" srcset="" />
       </q-icon>
@@ -41,7 +41,7 @@ export default {
     };
   },
   props: {
-    hideHeart: {
+    disableHeart: {
       type: Boolean,
       default: false
     },
@@ -72,6 +72,7 @@ export default {
 
 <style lang="scss" scoped>
 .action-container {
+  background: transparent;
   position: fixed;
   z-index: 1;
   padding-top: 8px;
@@ -81,7 +82,7 @@ export default {
 }
 .q-btn {
   border-radius: 8px;
-  margin: 4px 16px;
+  margin: 4px 0px;
   .off {
     font-weight: bold;
     font-size: 11px;

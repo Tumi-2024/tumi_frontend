@@ -4,7 +4,7 @@
     <action-buttons
       @setUserLocation="setUserLocation"
       :hide-cone="getMapMode == 'redevelop-area'"
-      :hide-heart="hideHeart"
+      :disable-heart="disableHeart"
     />
     <!-- Google Map Starts -->
     <GmapMap
@@ -105,7 +105,7 @@ export default {
         disableAutoPan: true
       },
       showInfoWindow: false,
-      hideHeart: false,
+      disableHeart: false,
       /* CLUSTERS */
       clusterStyles: [
         // 1+
@@ -208,7 +208,7 @@ export default {
       }
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
-        this.hideHeart = this.map.getZoom() < 14;
+        this.disableHeart = this.map.getZoom() < 15;
         // console.log(this.map.getZoom());
       }, 500);
     });
