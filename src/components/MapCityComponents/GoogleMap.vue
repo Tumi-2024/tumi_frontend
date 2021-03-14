@@ -226,17 +226,6 @@ export default {
           strokeWeight: 2,
           fillColor: "#0BCDC7",
           fillOpacity: 0.35
-          // icons: [
-          //   {
-          //     icon: {
-          //       path: "M 0,-1 0,1",
-          //       strokeOpacity: 1,
-          //       scale: 4
-          //     },
-          //     offset: "0",
-          //     repeat: "20px"
-          //   }
-          // ]
         };
         let areaItem = null;
         console.log(area.redevelopment_area_locations)

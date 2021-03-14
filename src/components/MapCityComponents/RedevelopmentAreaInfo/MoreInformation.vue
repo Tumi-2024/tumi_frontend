@@ -45,15 +45,7 @@
       <div class="title-heading notosanskr-medium">
         투자포인트
       </div>
-      <div class="item">
-        ·주변 재개발 지역의 <span class="text-primary">지속적 분양</span>으로
-        인한 인지도 및 <span class="text-primary">주목도</span> 향상
-      </div>
-
-      <div class="item">
-        ·서울 4대공원 중 하나인
-        <span class="text-primary">북서울 꿈의 숲</span> 인접한 Park-front대단지
-      </div>
+      <div class="item summernote" v-html="getMapSelectedArea.description_investment"></div>
     </section>
 
     <section class="button-fixed-bottom">
