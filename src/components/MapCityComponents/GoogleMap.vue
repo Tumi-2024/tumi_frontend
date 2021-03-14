@@ -186,7 +186,6 @@ export default {
   },
 
   async mounted() {
-    console.log(this.$store.state)
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
@@ -300,15 +299,17 @@ export default {
         };
         let areaItem = null;
 
-        console.log(area.redevelopment_area_locations)
         if (area.redevelopment_area_locations && area.redevelopment_area_locations.length >= 1) {
-          console.log(area.redevelopment_area_locations)
+          const paths = []
+          for (var i = 0; i < area.redevelopment_area_locations.length; i++) {
+            const redevelopmentAreaLocation = area.redevelopment_area_locations[i]
+            paths.push({ lat: Number(redevelopmentAreaLocation.lat), lng: Number(redevelopmentAreaLocation.lng)})
+          }
           areaItem = new this.google.maps.Polygon({
             ...style,
-            paths: area.redevelopment_area_locations,
+            paths: paths,
             map: this.map,
             center
-            // radius: area.radius || 250
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         } else {
