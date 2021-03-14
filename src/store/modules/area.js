@@ -1,4 +1,4 @@
-// import Vue from "vue";
+import Vue from "vue";
 import { markersArea } from "../../pages/MapCity/Area/sample-area";
 const initState = {
   areas: [],
@@ -20,11 +20,11 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async context => {
       try {
-        //   const result = await Vue.prototype.$axios.get("/redevelopment_areas", {
-        //     timeout: 10000
-        //   });
-        //   context.commit("setMapAreas", result.data.results);
-        context.commit("setMapAreas", markersArea);
+        const result = await Vue.prototype.$axios.get("/redevelopment_areas", {
+          timeout: 10000
+        });
+        context.commit("setMapAreas", result.data.results);
+        // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data
         context.commit("setMapAreas", markersArea);
