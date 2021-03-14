@@ -387,13 +387,13 @@ export default {
           this.getDetailHouses();
         }
         setTimeout(() => {
-          // this will show AreaBadges & InfoWindow if zoom if closer
-          this.showAreaBadges = this.map.getZoom() > 15;
-          this.showInfoWindow = this.map.getZoom() > 15;
-          // this will disable hear button of zoom is too far
-          this.disableHeart = this.map.getZoom() < 15;
-
           // console.log(this.map.getZoom());
+
+          // this will show AreaBadges & InfoWindow if zoom if closer
+          this.showAreaBadges = this.map.getZoom() > 14;
+          this.showInfoWindow = this.map.getZoom() > 14;
+          // this will disable hear button of zoom is too far
+          this.disableHeart = this.map.getZoom() < 14;
         }, 500);
       });
     }
