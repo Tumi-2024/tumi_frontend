@@ -265,35 +265,33 @@ export default {
         };
         let areaItem = null;
         // console.log(area.redevelopment_area_locations)
-        console.log(area)
-        console.log(area.radius)
-        if (area.redevelopment_area_locations) {
-          const c = new this.google.maps.Circle({
-            map: this.map,
-            center,
-            radius: area.radius
-          });
-          const bounds = c.getBounds();
-          areaItem = new this.google.maps.Rectangle({
-            ...style,
-            map: this.map,
-            bounds: {
-              north: bounds.Ra.i, // Ra.i
-              south: bounds.Ra.g, // Ra.g
-              east: bounds.La.i, // La.i
-              west: bounds.La.g // La.g
-            }
-          });
-          this.areaBadges.push({ title: area.title, center }); // create area badge
-          c.setMap(null); // remove circle
-        } else {
-          areaItem = new this.google.maps.Circle({
-            ...style,
-            map: this.map,
-            center,
-            radius: 250
-          });
-        }
+        // if (area.redevelopment_area_locations) {
+        //   const c = new this.google.maps.Circle({
+        //     map: this.map,
+        //     center,
+        //     radius: area.radius
+        //   });
+        //   const bounds = c.getBounds();
+        //   areaItem = new this.google.maps.Rectangle({
+        //     ...style,
+        //     map: this.map,
+        //     bounds: {
+        //       north: bounds.Ra.i, // Ra.i
+        //       south: bounds.Ra.g, // Ra.g
+        //       east: bounds.La.i, // La.i
+        //       west: bounds.La.g // La.g
+        //     }
+        //   });
+        //   this.areaBadges.push({ title: area.title, center }); // create area badge
+        //   c.setMap(null); // remove circle
+        // } else {
+        areaItem = new this.google.maps.Circle({
+          ...style,
+          map: this.map,
+          center,
+          radius: area.radius || 250
+        });
+        // }
         areaItem.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           const { latitude: lat, longitude: lng } = area;
