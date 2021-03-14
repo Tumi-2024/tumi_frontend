@@ -36,50 +36,20 @@ export const estateStore = {
         ({
           ...item,
           position: {
-            lat: item.latitude,
-            lng: item.longitude
+            lat: Number(item.latitude),
+            lng: Number(item.longitude)
           }
         }))
       )
     },
-    // getDetailHouses: async function (context, paramter) {
-    //   console.log('contextcontextcontextcontextcontextcontextcontextcontextcontextcontext');
-    //   console.log(paramter);
-    //   console.log('contextcontextcontextcontextcontextcontextcontextcontextcontextcontext');
-    //   const response = await Vue.prototype.$axios.get(`/house/?latitude__range=${paramter.latitude[0]},${paramter.latitude[1]}&longitude__range=${paramter.longitude[0]},${paramter.longitude[1]}`)
-    //   const results = response.data.results.map(item =>
-    //     ({
-    //       ...item,
-    //       position: {
-    //         lat: item.latitude,
-    //         lng: item.longitude
-    //       }
-    //     }))
-    //   context.commit('setDetailHouses', results)
-    //   if (results && results.length > 1) {
-    //     let result = results.reduce((acc, cur) => {
-    //       const key = `${cur.position.lat},${cur.position.lng}`;
-    //       if (acc[key]) {
-    //         acc[key] = acc[key].concat(cur);
-    //       } else {
-    //         acc[key] = [cur];
-    //       }
-    //       return acc;
-    //     }, {});
-    //     console.log(result);
-    //     result = Object.keys(result).map(item => result[item]);
-    //     console.log(result);
-    //     context.commit('setDistinctHouses', result)
-    //   }
-    // }
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(`/house/distinct${paramter ? `?${paramter}` : ''}`)
       const results = response.data.map(item =>
         ({
           ...item,
           position: {
-            lat: item.latitude,
-            lng: item.longitude
+            lat: Number(item.latitude),
+            lng: Number(item.longitude)
           }
         })
       )
@@ -92,8 +62,8 @@ export const estateStore = {
         ({
           ...item,
           position: {
-            lat: item.latitude,
-            lng: item.longitude
+            lat: Number(item.latitude),
+            lng: Number(item.longitude)
           }
         }))
       context.commit('setDetailHouses', results)

@@ -44,7 +44,11 @@ export default {
       // console.log(`toQueryString({ ...this.$route.params.position })`);
       // console.log(this.$route.params.position);
       // console.log(toQueryString({ ...this.$route.params.position }));
-      this.$store.dispatch('getDetailHouses', toQueryString({ latitude: this.$route.params.position.lat, longitude: this.$route.params.position.lng }));
+      this.$store.dispatch('getDetailHouses', toQueryString({ 
+        latitude: this.$route.params.position.lat, 
+        longitude: this.$route.params.position.lng,
+        ...this.$store.state.search
+      }));
       // console.log('store');
       // console.log(this.$store);
     }
