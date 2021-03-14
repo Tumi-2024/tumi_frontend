@@ -58,7 +58,7 @@
         :key="i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium">
+        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
@@ -102,6 +102,7 @@ export default {
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
+      showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -207,17 +208,6 @@ export default {
        */
       console.log(e.latLng.lat(), e.latLng.lng());
     });
-    // apply zoom change listeners
-    this.map.addListener("zoom_changed", () => {
-      if (this.showInfoWindow && this.showEstates) {
-        this.getDetailHouses();
-      }
-      setTimeout(() => {
-        this.showInfoWindow = this.map.getZoom() > 15;
-        this.disableHeart = this.map.getZoom() < 15;
-        // console.log(this.map.getZoom());
-      }, 500);
-    });
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
     // Load Areas if any
@@ -225,8 +215,10 @@ export default {
 
     this.markers = this.$store.state.estate.simple_houses;
 
+    // apply zoom change listeners
+    this.zoomChangeListeners();
     // ask for Users Current Location
-    this.getCurrentPosition();
+    // this.getCurrentPosition();
   },
 
   watch: {
@@ -367,6 +359,23 @@ export default {
         .catch(e => {
           console.log(e, "error");
         });
+    },
+    zoomChangeListeners() {
+      // apply zoom change listeners
+      this.map.addListener("zoom_changed", () => {
+        if (this.showInfoWindow && this.showEstates) {
+          this.getDetailHouses();
+        }
+        setTimeout(() => {
+          // this will show AreaBadges & InfoWindow if zoom if closer
+          this.showAreaBadges = this.map.getZoom() > 15;
+          this.showInfoWindow = this.map.getZoom() > 15;
+          // this will disable hear button of zoom is too far
+          this.disableHeart = this.map.getZoom() < 15;
+
+          // console.log(this.map.getZoom());
+        }, 500);
+      });
     }
   }
 };
