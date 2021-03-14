@@ -2,7 +2,7 @@
   <div class="bg-white" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
-      @setUserLocation="setUserLocation"
+      @accessUserLocation="getCurrentPosition"
       :hide-cone="getMapMode == 'redevelop-area'"
       :disable-heart="disableHeart"
     />
@@ -61,15 +61,15 @@
         :key="i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium">
+        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
-          {{ badge.title }}
+          {{ badge.title | truncate(15) }}
         </div>
       </gmap-custom-marker>
       <!-- Users Location Marker-->
-      <gmap-custom-marker :marker="userLocation" v-if="userLocation">
+      <gmap-custom-marker :marker="getUserLocation" v-if="getUserLocation">
         <div class="user-marker"></div>
       </gmap-custom-marker>
     </GmapMap>
@@ -77,13 +77,19 @@
 </template>
 
 <script>
+/** google map components */
 import { gmapApi } from "gmap-vue";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
+/** custom components */
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
 import { toQueryString } from 'src/utils';
 import { mapGetters, mapActions } from "vuex";
+/** geolocation */
+import { Plugins } from "@capacitor/core";
+const { Geolocation } = Plugins;
+
 export default {
   components: {
     "info-top-content": InfoTopContent,
@@ -93,7 +99,6 @@ export default {
   },
   data() {
     return {
-      userLocation: null,
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
@@ -101,6 +106,7 @@ export default {
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
+      showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
@@ -175,6 +181,7 @@ export default {
       "getMapCenter",
       "getMapOptions"
     ]),
+    ...mapGetters(["getUserLocation"]),
     google: gmapApi
   },
 
@@ -225,13 +232,26 @@ export default {
     // Load Areas if any
     this.areas && this.setMapAreas(this.areas);
 
-    this.setMapOnFocus();
     this.markers = this.$store.state.estate.simple_houses;
+
+    // apply zoom change listeners
+    this.zoomChangeListeners();
+    // ask for Users Current Location
+    this.getCurrentPosition();
+  },
+
+  watch: {
+    getUserLocation(newVal) {
+      this.goToLocation(newVal);
+    }
   },
 
   methods: {
+    // have access to vuex actions
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
     ...mapActions("area", ["changeMapSelectedArea"]),
+    ...mapActions(["changeUserLocation"]),
+
     getDetailHouses() {
       const bounds = this.map.getBounds();
       
@@ -281,41 +301,28 @@ export default {
           fillOpacity: 0.35
         };
         let areaItem = null;
-        // console.log(area.redevelopment_area_locations)
         if (area.redevelopment_area_locations) {
-          const c = new this.google.maps.Circle({
+          areaItem = new this.google.maps.Polygon({
+            ...style,
+            paths: area.redevelopment_area_locations,
             map: this.map,
             center,
-            radius: 250
-          });
-          const bounds = c.getBounds();
-          areaItem = new this.google.maps.Rectangle({
-            ...style,
-            map: this.map,
-            bounds: {
-              north: bounds.Ra.i, // Ra.i
-              south: bounds.Ra.g, // Ra.g
-              east: bounds.La.i, // La.i
-              west: bounds.La.g // La.g
-            }
+            radius: area.radius || 250
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
-          c.setMap(null); // remove circle
         } else {
           areaItem = new this.google.maps.Circle({
             ...style,
             map: this.map,
             center,
-            radius: 250
+            radius: area.radius || 250
           });
+          this.areaBadges.push({ title: area.title, center }); // create area badge
         }
         areaItem.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           const { latitude: lat, longitude: lng } = area;
-          this.map.panTo({ lat, lng });
-          setTimeout(() => {
-            this.map.setZoom(16);
-          }, 500);
+          this.goToLocation({ lat, lng });
         });
       });
     },
@@ -354,12 +361,39 @@ export default {
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },
-    setUserLocation(center) {
-      this.userLocation = center;
+    goToLocation(center = { lat, lng }) {
       this.map.panTo(center);
       setTimeout(() => {
         this.map.setZoom(17);
       }, 500);
+    },
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition({ enableHighAccuracy: true })
+        .then(position => {
+          const { latitude: lat, longitude: lng } = position.coords;
+          // console.log("Current", lat, lng);
+          this.changeUserLocation({ lat, lng });
+        })
+        .catch(e => {
+          console.log(e, "error");
+        });
+    },
+    zoomChangeListeners() {
+      // apply zoom change listeners
+      this.map.addListener("zoom_changed", () => {
+        if (this.showInfoWindow && this.showEstates) {
+          this.getDetailHouses();
+        }
+        setTimeout(() => {
+          // this will show AreaBadges & InfoWindow if zoom if closer
+          this.showAreaBadges = this.map.getZoom() > 15;
+          this.showInfoWindow = this.map.getZoom() > 15;
+          // this will disable hear button of zoom is too far
+          this.disableHeart = this.map.getZoom() < 15;
+
+          // console.log(this.map.getZoom());
+        }, 500);
+      });
     }
   }
 };
