@@ -254,7 +254,6 @@ export default {
 
     getDetailHouses() {
       const bounds = this.map.getBounds();
-      
       this.$store.dispatch('getDetailHouses', toQueryString({
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
@@ -348,7 +347,7 @@ export default {
         }
       }
     },
-    viewArea(item) { 
+    viewArea(item) {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
         this.changeMapZoom(16);
