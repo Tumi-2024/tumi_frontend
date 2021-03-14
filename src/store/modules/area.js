@@ -9,7 +9,7 @@ export const areaStore = {
   state: { ...initState },
   getters: {
     getMapAreas: state => {
-      return state.areas
+      return state.areas;
     },
     getMapSelectedArea: state => state.selectedArea
   },

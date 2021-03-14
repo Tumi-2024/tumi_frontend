@@ -8,7 +8,7 @@
       <div v-for="(item, i) of items" :key="i" class="item row">
         <div
           class="title col-5"
-          :class="{ 'text-primary': item.title == '준공인가' }"
+          :class="{ 'text-primary': items.length - 1 === i }"
         >
           {{ item.title }}
         </div>

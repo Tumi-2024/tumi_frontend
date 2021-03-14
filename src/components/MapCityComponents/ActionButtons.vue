@@ -1,12 +1,12 @@
 <template>
-  <div class="action-container ">
-    <q-btn color="white" padding="8px" v-if="showAll">
+  <div class="action-container q-px-sm">
+    <q-btn color="white" padding="8px" :disabled="disableHeart">
       <q-icon size="24px">
         <img src="~assets/icons/like.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
 
-    <q-btn :color="cone ? 'primary' : 'white'" padding="8px" v-if="showAll">
+    <q-btn :color="cone ? 'primary' : 'white'" padding="8px" v-if="!hideCone">
       <div>
         <q-icon size="24px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
@@ -17,7 +17,12 @@
       </div>
     </q-btn>
 
-    <q-btn color="white" padding="8px">
+    <q-btn
+      color="white"
+      padding="8px"
+      @click="getCurrentPosition()"
+      v-if="!hideGps"
+    >
       <q-icon size="24px">
         <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
@@ -26,6 +31,9 @@
 </template>
 
 <script>
+import { Plugins } from "@capacitor/core";
+
+const { Geolocation } = Plugins;
 export default {
   data() {
     return {
@@ -33,9 +41,30 @@ export default {
     };
   },
   props: {
-    showAll: {
+    disableHeart: {
       type: Boolean,
       default: false
+    },
+    hideCone: {
+      type: Boolean,
+      default: false
+    },
+    hideGps: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition()
+        .then(position => {
+          const { latitude: lat, longitude: lng } = position.coords;
+          // console.log("Current", lat, lng);
+          this.$emit("setUserLocation", { lat, lng });
+        })
+        .catch(e => {
+          console.log(e, "error");
+        });
     }
   }
 };
@@ -43,6 +72,7 @@ export default {
 
 <style lang="scss" scoped>
 .action-container {
+  background: transparent;
   position: fixed;
   z-index: 1;
   padding-top: 8px;
@@ -52,7 +82,7 @@ export default {
 }
 .q-btn {
   border-radius: 8px;
-  margin: 4px 16px;
+  margin: 4px 0px;
   .off {
     font-weight: bold;
     font-size: 11px;

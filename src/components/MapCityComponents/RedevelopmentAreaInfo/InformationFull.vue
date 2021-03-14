@@ -1,5 +1,6 @@
 <template>
   <q-dialog
+    ref="dialog"
     v-model="dialog"
     position="bottom"
     transition-show="slide-up"
@@ -10,7 +11,7 @@
       <div style="background-color: #E8E8E8;">
         <div class="header-section notosanskr-medium">
           재개발 구역정보
-          <q-btn flat padding="8px" @click="toggleDialog(false)">
+          <q-btn flat padding="8px" @click="$refs.dialog.hide()">
             <q-icon name="close" size="24px" />
           </q-btn>
         </div>
