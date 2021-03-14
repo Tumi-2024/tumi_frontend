@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { toQueryString } from 'src/utils'
 import {
   TransactionType,
   PropertyType,
@@ -123,6 +124,8 @@ export default {
           this.$store.dispatch('setDepositPrice', this.selected);
         }
       }
+      this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
+      this.$store.dispatch('getDetailHouses', toQueryString(this.$store.state.search));
       this.modal = false;
     },
     init() {
@@ -133,8 +136,8 @@ export default {
           this.$store.dispatch('setTypeSale', '전체');
         }
         if (this.propertyType) {
-          this.selected = '아파트';
-          this.$store.dispatch('setTypeHouse', '아파트');
+          this.selected = '';
+          this.$store.dispatch('setTypeHouse', '');
           if (this.selectedDetail) {
             this.selectedDetail = '전체';
             this.$store.dispatch('setTypeHouseDetail', '전체');

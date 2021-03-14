@@ -55,6 +55,7 @@ import { gmapApi } from "gmap-vue";
 import InfoWindowContent from "./InfoWindowContent";
 import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
+import { toQueryString } from 'src/utils';
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
@@ -203,10 +204,17 @@ export default {
       // console.log(`bounds.getNorthEast().lng() `, bounds.getNorthEast().lng());
       // console.log(`bounds.getSouthWest().lat() `, bounds.getSouthWest().lat());
       // console.log(`bounds.getSouthWest().lng() `, bounds.getSouthWest().lng());
-      this.$store.dispatch('getDetailHouses', {
+
+      
+      this.$store.dispatch('getDetailHouses', toQueryString({
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
-      });
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
+        ...this.$store.state.search
+      }));
+      // this.$store.dispatch('getDetailHouses', {
+      //   latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+      //   longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
+      // });
     },
     setMapGeojson(geojson) {
       /**

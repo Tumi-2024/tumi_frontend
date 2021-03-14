@@ -73,7 +73,6 @@ export default {
     "text-under-highlight": TextUnderHighlight
   },
   mounted() {
-    console.log(this.$store.state.search.salePrice);
     this.selected = this.$store.state.search.salePrice.text;
     this.min = this.$store.state.search.salePrice.min;
     this.max = this.$store.state.search.salePrice.max;
@@ -115,8 +114,6 @@ export default {
       })
     },
     changeValue(val) {
-      console.log(val);
-      console.log(this.min);
       this.$emit('select', {
         selected: this.selected,
         min: this.min,

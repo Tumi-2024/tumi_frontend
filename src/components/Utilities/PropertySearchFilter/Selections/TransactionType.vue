@@ -37,7 +37,6 @@ export default {
     }
   },
   mounted() {
-    console.log(`this.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.statethis.$store.state`);
     this.selected = this.$store.state.search.typeSale;
   },
 };
