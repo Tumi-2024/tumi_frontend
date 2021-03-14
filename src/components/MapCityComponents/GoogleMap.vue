@@ -165,10 +165,6 @@ export default {
       type: Object | null,
       default: null
     },
-    areas: {
-      type: Array | null,
-      default: null
-    },
     showEstates: {
       type: Boolean,
       default: true
@@ -181,6 +177,7 @@ export default {
       "getMapCenter",
       "getMapOptions"
     ]),
+    ...mapGetters('area', ['getMapAreas']),
     ...mapGetters(["getUserLocation"]),
     google: gmapApi
   },
@@ -229,7 +226,7 @@ export default {
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
     // Load Areas if any
-    this.areas && this.setMapAreas(this.areas);
+    this.getMapAreas && this.setMapAreas(this.getMapAreas);
 
     this.markers = this.$store.state.estate.simple_houses;
 
