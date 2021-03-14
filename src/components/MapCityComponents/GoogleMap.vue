@@ -13,24 +13,26 @@
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions">
-      
+
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
         :options="infoOptions"
-        :position="m.results[0].position"
+        :position="m.position"
         :opened="showInfoWindow && showEstates"
         @closeclick="infoWinOpen = false"
         class="q-pa-lg">
 
-        <info-top-content :marker="m.results[0]" />
+        <info-top-content :marker="m" />
 
         <info-window-content
-          @viewArea="viewArea(m.results[0])"
-          :price="(m.count > 1) ? `${m.min} ~ ${m.max}` : m.results[0].price"
+          @viewArea="viewArea(m)"
+          :price="m.price_avg"
           :count="m.count"
           :badges="{
-            type: m.results[0].type_house,
+            type_house: m.type_house,
+            type_sale: m.type_sale,
+            area: m.area_common,
           }" />
 
       </gmap-info-window>
@@ -196,7 +198,7 @@ export default {
 
     this.map.addListener("idle", _ => {
       if (this.showInfoWindow && this.showEstates) {
-        this.getDetailHouses();
+        this.getDistinctHouses();
       }
     });
 
@@ -210,7 +212,7 @@ export default {
     // apply zoom change listeners
     this.map.addListener("zoom_changed", () => {
       if (this.showInfoWindow && this.showEstates) {
-        this.getDetailHouses();
+        this.getDistinctHouses();
       }
       setTimeout(() => {
         this.showInfoWindow = this.map.getZoom() > 15;
@@ -247,6 +249,15 @@ export default {
       //   latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
       //   longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       // });
+    },
+    getDistinctHouses() {
+      const bounds = this.map.getBounds();
+      this.$store.dispatch('getDistinctHouses', toQueryString({
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
+        ...this.$store.state.search
+      }));
+      console.log(this.$store.state);
     },
     setMapGeojson(geojson) {
       /**
@@ -337,14 +348,14 @@ export default {
         }
       }
     },
-    viewArea({ position, type }) {
+    viewArea({ position, type }) { 
       this.map.panTo(position);
-      this.map.addListener("idle", () => {
-        this.changeMapZoom(16);
-        this.changeMapCenter(position);
-        this.tpyeForSale(type) &&
-          this.$router.push({ name: this.tpyeForSale(type) });
-      });
+      // this.map.addListener("idle", () => {
+      //   this.changeMapZoom(16);
+      //   this.changeMapCenter(position);
+      //   this.tpyeForSale(type) &&
+      //     this.$router.push({ name: this.tpyeForSale(type) });
+      // });
     },
     tpyeForSale(type) {
       if (type === "land") return "for_sale_land";
