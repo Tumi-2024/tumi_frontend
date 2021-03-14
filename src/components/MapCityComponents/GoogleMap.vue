@@ -218,7 +218,7 @@ export default {
     // apply zoom change listeners
     this.zoomChangeListeners();
     // ask for Users Current Location
-    // this.getCurrentPosition();
+    this.getCurrentPosition();
   },
 
   watch: {
