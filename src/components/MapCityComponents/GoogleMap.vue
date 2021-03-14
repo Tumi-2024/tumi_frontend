@@ -301,6 +301,7 @@ export default {
         };
         let areaItem = null;
 
+        console.log(area)
         if (area.redevelopment_area_locations && area.redevelopment_area_locations.length >= 1) {
           console.log(area.redevelopment_area_locations)
           areaItem = new this.google.maps.Polygon({
