@@ -24,7 +24,8 @@ module.exports = function (ctx) {
       'axios',
       'sentry',
       'kakao',
-      'chartjs'
+      'chartjs',
+      'libraries'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -76,7 +77,8 @@ module.exports = function (ctx) {
       },
       // Environment
       env: {
-        API: 'https://admin.tumi.sunwook.com/api/',
+        // API: 'https://admin.tumi.sunwook.com/api/',
+        API: 'http://127.0.0.1:9013/api/',
         KAKAO: '7a1ac6a5d515aa253ff2ab9e9d56e21a',
         API_URL: 'localhost',
         API_CLIENT_ID: 0,

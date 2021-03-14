@@ -62,7 +62,7 @@
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
-          {{ badge.title }}
+          {{ badge.title | truncate(7) }}
         </div>
       </gmap-custom-marker>
       <!-- Users Location Marker-->
@@ -171,7 +171,7 @@ export default {
       "getMapCenter",
       "getMapOptions"
     ]),
-    google: gmapApi
+    google: gmapApi,
   },
 
   async mounted() {
@@ -229,8 +229,8 @@ export default {
       const longitude = bounds.Qa;
       const latitude = bounds.Va;
       this.$store.dispatch("getDetailHouses", {
-        latitude: [latitude["i"], latitude["j"]],
-        longitude: [longitude["i"], longitude["j"]]
+        latitude: [latitude.i, latitude.j],
+        longitude: [longitude.i, longitude.j]
       });
     },
     setMapGeojson(geojson) {
@@ -265,11 +265,13 @@ export default {
         };
         let areaItem = null;
         // console.log(area.redevelopment_area_locations)
+        console.log(area)
+        console.log(area.radius)
         if (area.redevelopment_area_locations) {
           const c = new this.google.maps.Circle({
             map: this.map,
             center,
-            radius: 250
+            radius: area.radius
           });
           const bounds = c.getBounds();
           areaItem = new this.google.maps.Rectangle({
