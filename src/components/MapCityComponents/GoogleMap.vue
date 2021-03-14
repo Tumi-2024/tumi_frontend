@@ -273,13 +273,15 @@ export default {
           fillOpacity: 0.35
         };
         let areaItem = null;
-        if (area.redevelopment_area_locations) {
+
+        if (area.redevelopment_area_locations && area.redevelopment_area_locations.length >= 1) {
+          console.log(area.redevelopment_area_locations)
           areaItem = new this.google.maps.Polygon({
             ...style,
             paths: area.redevelopment_area_locations,
             map: this.map,
-            center,
-            radius: area.radius || 250
+            center
+            // radius: area.radius || 250
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         } else {
@@ -287,7 +289,7 @@ export default {
             ...style,
             map: this.map,
             center,
-            radius: area.radius || 250
+            radius: area.radius || 200
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         }
