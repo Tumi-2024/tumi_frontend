@@ -2,6 +2,7 @@
   <div class="bg-white" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
+      @setUserLocation="setUserLocation"
       :hide-cone="getMapMode == 'redevelop-area'"
       :hide-heart="hideHeart"
     />
@@ -13,6 +14,7 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
+      <!-- Map Info Windows -->
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
         :key="index"
@@ -31,7 +33,7 @@
           :badges="m[0].badges"
         />
       </gmap-info-window>
-
+      <!-- Map Markers -->
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
@@ -63,6 +65,10 @@
           {{ badge.title }}
         </div>
       </gmap-custom-marker>
+      <!-- Users Location Marker-->
+      <gmap-custom-marker :marker="userLocation" v-if="userLocation">
+        <div class="user-marker"></div>
+      </gmap-custom-marker>
     </GmapMap>
   </div>
 </template>
@@ -83,11 +89,13 @@ export default {
   },
   data() {
     return {
+      userLocation: null,
       map: null,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
       markers: this.$store.state.estate.simple_houses,
+      /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
       /* INFO WINDOW */
       infoOptions: {
@@ -339,6 +347,13 @@ export default {
       if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
+    },
+    setUserLocation(center) {
+      this.userLocation = center;
+      this.map.panTo(center);
+      setTimeout(() => {
+        this.map.setZoom(17);
+      }, 500);
     }
   }
 };
@@ -356,9 +371,6 @@ export default {
     padding: 8px;
     box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
   }
-}
-::v-deep .gm-style .gm-style-iw-t::after {
-  display: none;
 }
 // hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
@@ -379,5 +391,34 @@ export default {
   color: #ffffff;
   border-radius: 8px;
   padding: 0 8px;
+}
+
+.user-marker {
+  background: #005de9;
+  border-radius: 50%;
+  margin: 10px;
+  height: 30px;
+  width: 30px;
+
+  box-shadow: 0 0 0 0 rgb(4, 130, 248);
+  transform: scale(2);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 67, 250, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 46, 252, 0);
+  }
 }
 </style>
