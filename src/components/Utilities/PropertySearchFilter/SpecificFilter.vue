@@ -125,7 +125,7 @@ export default {
         }
       }
       this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
-      this.$store.dispatch('getDetailHouses', toQueryString(this.$store.state.search));
+      this.$store.dispatch('getDistinctHouses', toQueryString(this.$store.state.search));
       this.modal = false;
     },
     init() {

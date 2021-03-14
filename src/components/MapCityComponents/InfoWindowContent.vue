@@ -11,32 +11,49 @@
       class="q-mr-xs q-mt-xs"
     />
 
+    <div v-if="count && count > 1" style="height: 28px; width:28px; background-color: #FF7D36; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1">
+      <div style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;">
+        {{ `${count}` }}
+      </div>
+    </div>
+
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        {{ price }}
+        {{ format(price) }}
       </div>
       <div class="row bottom-toolbar notosanskr-regular">
-        <div class="info-text" v-if="badges.type">{{ badges.type }}</div>
+        <div class="info-text" v-if="badges.type_house">{{ (badges.type_house === 'apartment') ? '아파트' : ''}}</div>
         <q-badge class="re-develop bg-white q-mr-sm" v-if="badges.redevelop">
           <q-icon>
             <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
           </q-icon>
         </q-badge>
+
+        <q-badge
+          color="white"
+          text-color="primary"
+          :label="
+          (badges.type_sale === 'sale') ? '매매' : 
+          (badges.type_sale === 'charter') ? '전세' : 
+          (badges.type_sale === 'half-charter') ? '반전세' : 
+          (badges.type_sale === 'rent') ? '월세' : ''"
+          v-if="badges.type_sale"
+        />
+        <!-- 여러개할라면 여러개넣고 하나만할라면 하나만해라 -->
+        <!-- <q-badge
+          color="white"
+          text-color="secondary"
+          label="전세"
+          v-if="badges.type_sale === 'charter'"
+        />
         <q-badge
           color="white"
           text-color="primary"
           label="매매"
-          v-if="badges.charter"
-        />
-        <q-badge
-          color="white"
-          text-color="secondary"
-          label="전세"
-          v-if="badges.trading"
-        />
+          v-if="badges.type_sale === 'sale'"
+        /> -->
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="count">{{ `${count}개` }}</div>
-        <!-- <div class="info-text" v-if="badges.area">{{ badges.area }}</div> -->
+        <div class="info-text" v-if="badges.area">{{ badges.area }}평</div>
       </div>
     </div>
   </div>
@@ -45,6 +62,9 @@
 <script>
 export default {
   props: {
+    item: {
+      type: Object,
+    },
     price: {
       type: String,
       default: ""
@@ -62,6 +82,14 @@ export default {
         trading: false,
         area: "0평"
       })
+    }
+  },
+  methods: {
+    format(val) {
+      let uk = Math.floor(val / 100000000);
+      let man = Math.floor((val - uk*100000000) / 10000);
+      let price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
+      return price;
     }
   }
 };
