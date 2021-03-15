@@ -86,7 +86,7 @@ module.exports = function (ctx) {
         GOOGLE_MAP_API: 'AIzaSyBlMj7A1FSP8rR0SEJvk1SA5zw_XdW1VAQ'
       }
     },
-    
+
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,
