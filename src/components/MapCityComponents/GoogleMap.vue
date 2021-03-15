@@ -403,19 +403,7 @@ export default {
       }
     },
     markUsersLocation(position = { lat, lng}) {
-      new this.google.maps.Marker({
-    icon: {
-      url: "/icons/marker.png",
-      size: new google.maps.Size(45, 45),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(12, 15),
-      scaledSize: new google.maps.Size(25, 25)
-    },
-        position,
-        map: this.map,
-        title: "Hello World!",
-      });
-       new this.google.maps.Circle({
+      new this.google.maps.Circle({
         strokeColor: "#FF5100",
         strokeOpacity: 0.8,
         strokeWeight: 1,
@@ -424,6 +412,18 @@ export default {
         map: this.map,
         center: position,
         radius: 50
+      });
+      new this.google.maps.Marker({
+        icon: {
+          url: "/icons/marker.png",
+          size: new google.maps.Size(30, 30),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(12, 15),
+          scaledSize: new google.maps.Size(25, 25)
+        },
+        position,
+        map: this.map,
+        title: "Hello World!",
       });
     }
   }
