@@ -1,8 +1,10 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
+    {{ getMapMode }}
     <action-buttons
       @accessUserLocation="getCurrentPosition"
+      @showArea="showHideArea"
       :hide-cone="getMapMode == 'redevelop-area'"
       :disable-heart="disableHeart"
     />
@@ -40,7 +42,7 @@
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
-        :maxZoom="15"
+        :maxZoom="14"
         :minimumClusterSize="1"
         @click="clusterClicked"
         ref="clusterers"
@@ -58,7 +60,7 @@
       <!-- we generate badges for the Redevelopment Area -->
       <gmap-custom-marker
         v-for="(badge, i) in areaBadges"
-        :key="i"
+        :key="'area' + i"
         :marker="badge.center"
       >
         <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
@@ -106,6 +108,7 @@ export default {
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
+      areaItems: [],
       showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
@@ -123,7 +126,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 14,
           textSize: 16,
           url: "icons/map-red-60x60.png",
           height: 60,
@@ -136,7 +139,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 14,
           textSize: 20,
           url: "icons/map-red-84x84.png",
           height: 84,
@@ -149,7 +152,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 14,
           textSize: 24,
           url: "icons/map-red-96x96.png",
           height: 96,
@@ -218,21 +221,20 @@ export default {
         this.getDistinctHouses();
       }
       setTimeout(() => {
-        this.showInfoWindow = this.map.getZoom() > 15;
-        this.disableHeart = this.map.getZoom() < 15;
+        this.showAreaBadges = this.map.getZoom() > 14 && this.getMapMode === 'redevelop-area';
+        this.showInfoWindow = this.map.getZoom() > 14;
+        this.disableHeart = this.map.getZoom() < 14;
         // console.log(this.map.getZoom());
       }, 500);
     });
     // Load geojson if any
     this.geojson && this.setMapGeojson(this.geojson);
-    // Load Areas if any
-    this.getMapAreas && this.setMapAreas(this.getMapAreas);
+    // Load Areas if mode is redevelop-area
+    if (this.getMapAreas.length && this.getMapMode === 'redevelop-area') {
+      this.setMapAreas(this.getMapAreas);
+    }
 
     this.markers = this.$store.state.estate.simple_houses;
-
-    // apply zoom change listeners
-    this.zoomChangeListeners();
-    // ask for Users Current Location
   },
 
   watch: {
@@ -244,7 +246,7 @@ export default {
   methods: {
     // have access to vuex actions
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
-    ...mapActions("area", ["changeMapSelectedArea"]),
+    ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
 
     getDetailHouses() {
@@ -294,7 +296,7 @@ export default {
           fillColor: "#0BCDC7",
           fillOpacity: 0.35
         };
-        let areaItem = null;
+        let item = null;
 
         if (area.redevelopment_area_locations && area.redevelopment_area_locations.length >= 1) {
           const paths = []
@@ -302,7 +304,7 @@ export default {
             const redevelopmentAreaLocation = area.redevelopment_area_locations[i]
             paths.push({ lat: Number(redevelopmentAreaLocation.lat), lng: Number(redevelopmentAreaLocation.lng)})
           }
-          areaItem = new this.google.maps.Polygon({
+          item = new this.google.maps.Polygon({
             ...style,
             paths: paths,
             map: this.map,
@@ -310,7 +312,7 @@ export default {
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         } else {
-          areaItem = new this.google.maps.Circle({
+          item = new this.google.maps.Circle({
             ...style,
             map: this.map,
             center,
@@ -318,13 +320,15 @@ export default {
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         }
-        areaItem.addListener("click", _ => {
+        item.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           let { latitude: lat, longitude: lng } = area;
           lat = Number(lat)
           lng = Number(lng)
           this.goToLocation({ lat, lng });
         });
+        this.areaItems.push(item);
+        this.showAreaBadges = true;
       });
     },
     setGmapContainerSize() {
@@ -377,22 +381,24 @@ export default {
         console.log(e, "error");
       });
     },
-    zoomChangeListeners() {
-      // apply zoom change listeners
-      this.map.addListener("zoom_changed", () => {
-        if (this.showInfoWindow && this.showEstates) {
-          this.getDetailHouses();
-        }
-        setTimeout(() => {
-          // console.log(this.map.getZoom());
-
-          // this will show AreaBadges & InfoWindow if zoom if closer
-          this.showAreaBadges = this.map.getZoom() > 14;
-          this.showInfoWindow = this.map.getZoom() > 14;
-          // this will disable hear button of zoom is too far
-          this.disableHeart = this.map.getZoom() < 14;
-        }, 500);
-      });
+    async showHideArea(value) {
+      if (!value) {
+        // if value is false; remove area from map
+        this.areaItems.forEach((item) => {
+          item.setMap(null)
+        });
+        this.areaItems = [];
+        this.showAreaBadges = false;
+        console.log('Areas are hidden :(')
+      } else if (value && this.getMapAreas.length) {
+        // if value is true; have area in store;
+        this.setMapAreas(this.getMapAreas);
+        console.log('showing areas...')
+      } else{
+        console.log('fetching areas from server...')
+        await this.fetchMapAreas();
+        this.getMapAreas.length && this.setMapAreas(this.getMapAreas);
+      }
     }
   }
 };
