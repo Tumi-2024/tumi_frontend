@@ -3,16 +3,33 @@
     <top-toolbar></top-toolbar>
     <search-field></search-field>
     <!-- shows steps -->
-    <bread-crumb ref="breadCrumb" @setStep="stepChanged"></bread-crumb>
+    <bread-crumb 
+    ref="breadCrumb" 
+    :first="addr1 && addr1.title"
+    :second="addr2 && addr2.title"
+    :third="addr3 && addr3.title"
+    @setStep="stepChanged"/>
     <!-- shows regions selections -->
-    <table-region-selection
-      :activeStep="activeStep"
-      @changeStepValue="changeStepValue"
-    ></table-region-selection>
+
+    <table-region-selection v-if="step === 0"
+      :data="$store.state.search.location"
+      @select="selectFirst"
+    />
+
+    <table-region-selection v-if="step === 1"
+      :data="$store.state.search.location[addr1.title].sub"
+      @select="selectSecond"
+    />
+
+    <table-region-selection v-if="step === 2"
+      :data="$store.state.search.location[addr1.title].sub[addr2.title].sub"
+      @select="selectThird"
+    />
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import {
   TopToolbar,
   SearchField,
@@ -28,17 +45,44 @@ export default {
   },
   data() {
     return {
-      activeStep: { step: "one", value: "서울시" }
+      step: 0,
+      addr1: '',
+      addr2: '',
+      addr3: '',
+      // activeStep: { step: "one", value: "서울시" }
     };
   },
   methods: {
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "changeToolbarTitle"
+    ]),
     stepChanged(v) {
-      this.activeStep = v;
-      console.log(v);
+      this.step = v;
     },
-    changeStepValue(val) {
-      this.activeStep = val;
-      this.$refs.breadCrumb.setStepValue(val);
+    selectFirst(val) {
+      console.log(val);
+      this.addr1 = val;
+      this.step = 1;
+      // this.activeStep = val;
+      // this.$refs.breadCrumb.setStepValue(val);
+    },
+    selectSecond(val) {
+      console.log(val);
+      this.addr2 = val;
+      this.step = 2;
+    },
+    selectThird(val) {
+      console.log(val);
+      this.addr3= val;
+      this.changeMapZoom(16);
+      this.changeMapCenter({
+        lat: Number(val.latitude),
+        lng: Number(val.longitude)
+      });
+      this.$router.push({ name: "map_city" });
     }
   }
 };

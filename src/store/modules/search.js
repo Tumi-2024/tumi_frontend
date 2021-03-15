@@ -1,5 +1,5 @@
 // Import Section
-// import Vue from 'vue'
+import Vue from 'vue'
 
 // Main Section
 export const searchStore = {
@@ -22,7 +22,8 @@ export const searchStore = {
       text: '전체',
       min: 0,
       max: 0
-    }
+    },
+    location: null
   },
   getters: {
     search: (state, getters) => {
@@ -59,7 +60,8 @@ export const searchStore = {
           max: 0
         }
       }
-    }
+    },
+    SET_LOCATION: (state, params) => (state.location = params)
   },
   actions: {
     setTypeSale: (context, data) => context.commit("SET_TYPE_SALE", data),
@@ -69,6 +71,31 @@ export const searchStore = {
     setSalePrice: (context, data) => context.commit("SET_SALE_PRICE", data),
     setDepositPrice: (context, data) => context.commit("SET_DEPOSIT_PRICE", data),
     setMonthlyRentPrice: (context, data) => context.commit("SET_MONTHLY_RENT_PRICE", data),
-    initialize: (context) => context.commit("INITIALIZE")
+    initialize: (context) => context.commit("INITIALIZE"),
+    setLocation: (context) => context.commit("SET_LOCATION"),
+    requestLocation: async (context) => {
+      const response = await Vue.prototype.$axios.get(`/cities/all/`)
+      const data = response.data.reduce((acc, cur) => {
+        // console.log('[curcur]', cur.title);
+        acc[cur.title] = {
+          ...cur,
+          sub: cur.sub_cities && cur.sub_cities.reduce((acc, cur) => {
+            // console.log('[cur]', cur.title);
+            acc[cur.title] = {
+              ...cur,
+              sub: cur.locations && cur.locations.reduce((acc, cur) => {
+                // console.log(cur.title);
+                acc[cur.title] = cur
+                return acc;
+              }, {})
+            }
+            return acc;
+          }, {})
+        }
+        return acc;
+      }, {})
+      console.log(data);
+      context.commit('SET_LOCATION', data)
+    }
   }
 }

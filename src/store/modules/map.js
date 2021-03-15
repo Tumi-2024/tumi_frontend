@@ -1,3 +1,6 @@
+// Import Section
+import Vue from 'vue'
+
 const initState = {
   mode: "default",
   mapZoom: 12,
@@ -5,6 +8,7 @@ const initState = {
     lat: 37.5326,
     lng: 127.024612
   },
+  mapAddress: '',
   mapOptions: {
     zoomControl: true,
     mapTypeControl: false,
@@ -37,6 +41,7 @@ export const mapStore = {
     setMapMode: (state, payload) => (state.mode = payload),
     setMapZoom: (state, payload) => (state.mapZoom = payload),
     setMapCenter: (state, payload) => (state.mapCenter = payload),
+    setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => (state.toolbarTitle = payload)
   },
@@ -66,7 +71,14 @@ export const mapStore = {
       }
     },
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
-    changeMapCenter: (context, data) => context.commit("setMapCenter", data),
+    changeMapCenter: async (context, data) => {
+      context.commit("setMapCenter", data)
+      Vue.prototype.$axios.post(`/locations/find/`, Vue.prototype.$qs.stringify({ latitude: data.lat, longitude: data.lng, address: '' })).then(result => {
+        const string = result.data.address.split(' ');
+        context.commit("setMapAddress", `${string[1]} ${string[2]}`)
+        context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
+      })
+    },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
     changeToolbarTitle: (context, data) =>
       context.commit("setToolbarTitle", data)

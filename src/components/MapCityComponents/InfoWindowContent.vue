@@ -68,7 +68,7 @@ export default {
     },
     price: {
       type: Number,
-      default: ""
+      default: 0
     },
     count: {
       type: Number,

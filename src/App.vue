@@ -13,9 +13,9 @@ export default {
   components: {
     "login-modal": LoginModal
   },
-  created() {
-    // this.$store.dispatch('getSimpleHouses');
-    // console.log(this.$store);
+  mounted() {
+    this.$store.dispatch('requestLocation');
+    console.log(this.$store);
   }
 }
 </script>

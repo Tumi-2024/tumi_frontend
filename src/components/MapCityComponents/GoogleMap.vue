@@ -204,6 +204,11 @@ export default {
     this.$store.dispatch('getSimpleHouses');
 
     this.map.addListener("idle", _ => {
+      const center = this.map.getCenter();
+      this.changeMapCenter({
+        lat: center.lat(),
+        lng: center.lng()
+      })
       if (this.showInfoWindow && this.showEstates) {
         this.getDistinctHouses();
       }

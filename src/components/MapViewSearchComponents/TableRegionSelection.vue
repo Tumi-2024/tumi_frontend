@@ -3,15 +3,15 @@
     <q-card-section class="q-px-md row notosanskr-regular">
       <div
         class="item-container col-4"
-        v-for="(list, i) of listDisplayed"
+        v-for="(item, i) of Object.keys(data)"
         :key="i"
       >
         <q-btn
           flat
           class="full-width full-height"
-          :label="list"
-          @click="itemSelected(list)"
-          :text-color="activeStep.value == list ? 'primary' : 'black'"
+          :label="data[item].title"
+          @click="itemSelected(data[item])"
+          :text-color="selected && selected.title == data[item].title ? 'primary' : 'black'"
         ></q-btn>
       </div>
     </q-card-section>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { listFirst, listSecond, listThird } from "./dummy-data-regions.js";
 import ButtonBottom from "./ButtonBottom";
 export default {
   components: {
@@ -28,44 +27,28 @@ export default {
   },
   data() {
     return {
-      listFirst: listFirst,
-      listSecond: listSecond,
-      listThird: listThird,
-      listDisplayed: [],
+      // listFirst: listFirst,
+      // listSecond: listSecond,
+      // listThird: listThird,
+      // listDisplayed: [],
+      selected: null,
       buttonBottom: false
     };
   },
   props: {
-    activeStep: Object
+    data: Array
   },
   mounted() {
-    this.listDisplayed = this.listFirst;
+
   },
   methods: {
     itemSelected(value) {
-      this.buttonBottom = false;
-      if (this.activeStep.step == "three") this.buttonBottom = true;
-      this.$emit("changeStepValue", { step: this.activeStep.step, value });
+      // this.buttonBottom = false;
+      // if (this.activeStep.step == "three") this.buttonBottom = true;
+      this.selected = value;
+      this.$emit("select", value);
     }
   },
-  watch: {
-    activeStep(newValue) {
-      switch (newValue.step) {
-        case "one":
-          this.listDisplayed = this.listFirst;
-          break;
-        case "two":
-          this.listDisplayed = this.listSecond;
-          break;
-        case "three":
-          this.listDisplayed = this.listThird;
-          break;
-        default:
-          this.listDisplayed = this.listFirst;
-          break;
-      }
-    }
-  }
 };
 </script>
 
