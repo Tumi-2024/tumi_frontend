@@ -1,7 +1,6 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
-    {{ getMapMode }}
     <action-buttons
       @accessUserLocation="getCurrentPosition"
       @showArea="showHideArea"
@@ -71,9 +70,9 @@
         </div>
       </gmap-custom-marker>
       <!-- Users Location Marker-->
-      <gmap-custom-marker :marker="getUserLocation" v-if="getUserLocation">
+      <!-- <gmap-custom-marker :marker="getUserLocation" v-if="getUserLocation">
         <div class="user-marker"></div>
-      </gmap-custom-marker>
+      </gmap-custom-marker> -->
     </GmapMap>
   </div>
 </template>
@@ -239,6 +238,7 @@ export default {
 
   watch: {
     getUserLocation(newVal) {
+      this.markUsersLocation(newVal)
       this.goToLocation(newVal);
     }
   },
@@ -399,6 +399,30 @@ export default {
         await this.fetchMapAreas();
         this.getMapAreas.length && this.setMapAreas(this.getMapAreas);
       }
+    },
+    markUsersLocation(position = { lat, lng}) {
+      new this.google.maps.Marker({
+    icon: {
+      url: "/icons/marker.png",
+      size: new google.maps.Size(45, 45),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(12, 15),
+      scaledSize: new google.maps.Size(25, 25)
+    },
+        position,
+        map: this.map,
+        title: "Hello World!",
+      });
+       new this.google.maps.Circle({
+        strokeColor: "#FF5100",
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: "#FF7D36",
+        fillOpacity: 0.35,
+        map: this.map,
+        center: position,
+        radius: 50
+      });
     }
   }
 };
@@ -438,32 +462,4 @@ export default {
   padding: 0 8px;
 }
 
-.user-marker {
-  background: #005de9;
-  border-radius: 50%;
-  margin: 10px;
-  height: 30px;
-  width: 30px;
-
-  box-shadow: 0 0 0 0 rgb(4, 130, 248);
-  transform: scale(2);
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 67, 250, 0);
-  }
-
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 46, 252, 0);
-  }
-}
 </style>
