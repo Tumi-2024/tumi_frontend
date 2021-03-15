@@ -320,13 +320,15 @@ export default {
           });
           this.areaBadges.push({ title: area.title, center }); // create area badge
         }
-        item.addListener("click", _ => {
-          this.changeMapSelectedArea(area);
-          let { latitude: lat, longitude: lng } = area;
-          lat = Number(lat)
-          lng = Number(lng)
-          this.goToLocation({ lat, lng });
-        });
+        if (this.getMapMode === 'redevelop-area') {
+          item.addListener("click", _ => {
+            this.changeMapSelectedArea(area);
+            let { latitude: lat, longitude: lng } = area;
+            lat = Number(lat)
+            lng = Number(lng)
+            this.goToLocation({ lat, lng });
+          });
+        }
         this.areaItems.push(item);
         this.showAreaBadges = true;
       });
