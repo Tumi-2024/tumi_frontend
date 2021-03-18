@@ -77,8 +77,8 @@ module.exports = function (ctx) {
       },
       // Environment
       env: {
-        // API: 'https://admin.tumi.sunwook.com/api/',
-        API: 'http://127.0.0.1:9013/api/',
+        API: 'https://admin.tumi.sunwook.com/api/',
+        // API: 'http://127.0.0.1:9013/api/',
         KAKAO: '7a1ac6a5d515aa253ff2ab9e9d56e21a',
         API_URL: 'localhost',
         API_CLIENT_ID: 0,
@@ -86,7 +86,7 @@ module.exports = function (ctx) {
         GOOGLE_MAP_API: 'AIzaSyBlMj7A1FSP8rR0SEJvk1SA5zw_XdW1VAQ'
       }
     },
-
+    
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,

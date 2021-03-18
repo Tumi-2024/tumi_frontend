@@ -1,10 +1,7 @@
 <template>
   <q-card-section class="redevelop-area-section q-pa-none">
     <!-- Summary Info | 요약 정보  -->
-    <information-summary
-      v-if="isSummary"
-      @showSummaryInfo="isSummary = false"
-    />
+    <information-summary v-if="isSummary" @hideSummary="isSummary = false" />
     <!-- Full Redevelopment Area Info 재개발 구역정보 -->
     <information-full
       ref="fullInfoDialog"

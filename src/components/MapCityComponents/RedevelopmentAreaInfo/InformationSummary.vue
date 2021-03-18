@@ -3,7 +3,7 @@
     padding="20px 16px"
     class="full-width"
     flat
-    @click="$emit('showSummaryInfo')"
+    @click="showInformationFull()"
   >
     <div class="col-12 column text-left">
       <div>
@@ -35,7 +35,7 @@
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·면적 :</div>
             <div class="content">
-              {{ getMapSelectedArea.size_area }}
+              {{ getMapSelectedArea.size_area | number("0,0") }} m²
             </div>
           </div>
           <div class="row q-mt-xs">
@@ -51,10 +51,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"])
+  },
+  methods: {
+    ...mapActions("area", ["fetchRedevelopmentSteps"]),
+    async showInformationFull() {
+      await this.fetchRedevelopmentSteps(this.getMapSelectedArea.id);
+      console.log(this.getMapSelectedArea);
+      this.$emit("hideSummary");
+    }
   }
 };
 </script>

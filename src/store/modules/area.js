@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { markersArea } from "../../pages/MapCity/Area/sample-area";
+// import { markersArea } from "../../pages/MapCity/Area/sample-area";
 const initState = {
   areas: [],
   selectedArea: null
@@ -15,7 +15,9 @@ export const areaStore = {
   },
   mutations: {
     setMapAreas: (state, payload) => (state.areas = payload),
-    setMapSelectedArea: (state, payload) => (state.selectedArea = payload)
+    setMapSelectedArea: (state, payload) => (state.selectedArea = payload),
+    setRedevelopmentSteps: (state, payload) =>
+      (state.selectedArea.steps = payload)
   },
   actions: {
     fetchMapAreas: async context => {
@@ -27,13 +29,29 @@ export const areaStore = {
         // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data
-        context.commit("setMapAreas", markersArea);
+        // context.commit("setMapAreas", markersArea);
         console.log(error, "error");
       }
 
       // context.commit("setMapAreas", data);
     },
     changeMapSelectedArea: (context, area) =>
-      context.commit("setMapSelectedArea", area)
+      context.commit("setMapSelectedArea", area),
+    fetchRedevelopmentSteps: async (context, id) => {
+      try {
+        const result = await Vue.prototype.$axios.get(
+          `/redevelopment_areas/${id}/steps`,
+          {
+            timeout: 10000
+          }
+        );
+        // console.log(result.data);
+        context.commit("setRedevelopmentSteps", result.data);
+      } catch (error) {
+        // if CORS error we use dummy data
+        context.commit("setRedevelopmentSteps", []);
+        console.log(error, "error");
+      }
+    }
   }
 };

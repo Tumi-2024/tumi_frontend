@@ -6,7 +6,12 @@
       </q-icon>
     </q-btn>
 
-    <q-btn :color="cone ? 'primary' : 'white'" padding="8px" v-if="!hideCone">
+    <q-btn
+      :color="cone ? 'primary' : 'white'"
+      @click="showRedevelopmentArea"
+      padding="8px"
+      v-if="!hideCone"
+    >
       <div>
         <q-icon size="24px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
@@ -49,6 +54,12 @@ export default {
     hideGps: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    showRedevelopmentArea() {
+      this.cone = !this.cone;
+      this.$emit("showArea", this.cone);
     }
   }
 };

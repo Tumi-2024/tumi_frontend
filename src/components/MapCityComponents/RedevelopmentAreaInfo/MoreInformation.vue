@@ -27,8 +27,11 @@
             <div class="stat-title notosanskr-medium">
               {{ stat.title }}
             </div>
-            <div class="stat-value notosanskr-medium">
-              {{ getStatValue(stat.value) }} {{ stat.unit }}
+            <div class="stat-value notosanskr-medium" v-if="stat.default == 0">
+              {{ getStatValue(stat.value) | number("0,0") }} {{ stat.unit }}
+            </div>
+            <div class="stat-value notosanskr-medium" v-else>
+              {{ getStatValue(stat.value) }}
             </div>
           </section>
         </div>
@@ -45,7 +48,10 @@
       <div class="title-heading notosanskr-medium">
         투자포인트
       </div>
-      <div class="item summernote" v-html="getMapSelectedArea.description_investment"></div>
+      <div
+        class="item summernote"
+        v-html="getMapSelectedArea.description_investment"
+      ></div>
     </section>
 
     <section class="button-fixed-bottom">
@@ -143,8 +149,8 @@ export default {
     },
     getRedevelopmentSteps() {
       let steps = [];
-      if (this.getMapSelectedArea.redevelopment_steps) {
-        steps = this.getMapSelectedArea.redevelopment_steps.map(item => ({
+      if (this.getMapSelectedArea.steps) {
+        steps = this.getMapSelectedArea.steps.map(item => ({
           title: item.title,
           date: item.date
         }));
