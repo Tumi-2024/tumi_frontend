@@ -61,9 +61,10 @@ export default {
 
         try {
           let token = user.data.token;
-          Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-          this.getLocationInterest();
-          this.$store.dispatch('getLocationInterest');
+          if (token) {
+            Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            this.getLocationInterest();
+          }
         } catch(e) {
           console.log(e);
         }

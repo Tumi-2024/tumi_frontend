@@ -28,8 +28,10 @@ export default {
     this.$store.dispatch('requestLocation');
     try {
       let token = this.$store.state.user.data.token;
-      Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-      this.getLocationInterest();
+      if (token) {
+        Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+        this.getLocationInterest();
+      }
     } catch(e) {
       console.log(e);
     }
