@@ -81,10 +81,9 @@ export const mapStore = {
         const string = result.data.address.split(' ');
         context.commit("setMapAddress", `${string[1]} ${string[2]}`)
         context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
-        console.log(`${string[1]} ${string[2]}`);
-        console.log(result.data.location);
-        context.commit("setIsInterest", !!result.data.location.interest.location);
-        console.log('context.state');
+        if (result.data.location && result.data.location.interest && result.data.location.interest.location) {
+          context.commit("setIsInterest", !!result.data.location.interest.location);
+        }
         // console.log(context.state);
         // context.commit("");
         // data.lat, longitude: data.lng
