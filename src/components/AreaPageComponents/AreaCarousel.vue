@@ -9,27 +9,29 @@
         swipeable
         control-color="primary"
         class="rounded-borders"
+        @transition="getLocationEstimate"
       >
         <q-carousel-slide
-          v-for="(slide, i) in slides"
+          v-for="(interest, i) in $store.state.map.interest"
           :key="i"
-          :name="slide.id"
+          :name="i"
           class="row"
         >
           <section class="map-area">
             <div class="mask" :class="i % 2 ? 'blue' : 'orange'"></div>
-            <area-google-map :position="slide.position" class="area-map" />
+            <area-google-map :position="{ lat: Number(interest.latitude), lng: Number(interest.longitude) }" class="area-map" />
           </section>
 
           <section class="row justify-between items-center q-pt-sm col-12">
             <div class="text-address notosanskr-medium">
-              {{ slide.areaName }}
+              {{ (interest.address) ? interest.address.split(' ').slice(1).join(' ') : null }}
             </div>
 
             <q-btn
               unelevated
               class="delete-btn notosanskr-regular"
               padding="0px"
+              @click="removeInterest(interest.id)"
             >
               관심지역 삭제
             </q-btn>
@@ -42,10 +44,10 @@
           <q-btn
             flat
             class="carousel-btn q-pa-none q-pa-md-md"
-            v-for="(slide, i) in slides"
+            v-for="(slide, i) in $store.state.map.interest"
             :key="i"
-            @click="currentSlide = slide.id"
-            :class="currentSlide == slide.id ? 'bg-primary' : 'bg-grey-12'"
+            @click="currentSlide = i"
+            :class="currentSlide == i ? 'bg-primary' : 'bg-grey-12'"
           ></q-btn>
         </div>
       </div>
@@ -55,37 +57,34 @@
 
 <script>
 import AreaGoogleMap from "./AreaGoogleMap";
+import { mapGetters, mapActions } from "vuex"
+import { toQueryString } from 'src/utils';
 export default {
   components: {
     AreaGoogleMap
   },
   data() {
     return {
-      currentSlide: "slide1",
-      slides: [
-        {
-          id: "slide1",
-          areaName: "서울시 강남구 대치동",
-          position: { lat: 37.54439180667893, lng: 127.04601120488171 }
-        },
-        {
-          id: "slide2",
-          areaName: "종로1가 대성스카이렉스",
-          position: { lat: 37.57551921371042, lng: 127.00744586230466 }
-        },
-        {
-          id: "slide3",
-          areaName: "한남 3구역",
-          position: { lat: 37.51934447679332, lng: 127.05233867508158 }
-        },
-        {
-          id: "slide4",
-          areaName: "서울시 강남구 대치동",
-          position: { lat: 37.51764688948564, lng: 127.05859057443703 }
-        }
-      ],
+      currentSlide: 0,
       lorem: "Map content here"
     };
+  },
+  mounted() {
+    this.getLocationEstimate(0);
+  },
+  methods: {
+    ...mapActions("map", [
+      "removeLocationInterest"
+    ]),
+    removeInterest(num) {
+      this.removeLocationInterest(num);
+      this.currentSlide = 0;
+    },
+    getLocationEstimate(val) {
+      const location = this.$store.state.map.interest[val];
+      this.$store.dispatch('getDetailHouses', `location=${location.id}`);
+      console.log(location);
+    }
   }
 };
 </script>

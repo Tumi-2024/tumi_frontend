@@ -79,11 +79,11 @@ export const mapStore = {
       context.commit("setMapCenter", data)
       Vue.prototype.$axios.post(`/locations/find/`, Vue.prototype.$qs.stringify({ latitude: data.lat, longitude: data.lng })).then(result => {
         const string = result.data.address.split(' ');
-        context.commit("setMapAddress", `${string[1]} ${string[2]} ${string[3]}`)
-        context.commit("setToolbarTitle", `${string[1]} ${string[2]} ${string[3]}`)
-        console.log(`${string[1]} ${string[2]} ${string[3]}`);
+        context.commit("setMapAddress", `${string[1]} ${string[2]}`)
+        context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
+        console.log(`${string[1]} ${string[2]}`);
         console.log(result.data.location);
-        context.commit("setIsInterest", !!result.data.location.interest);
+        context.commit("setIsInterest", !!result.data.location.interest.location);
         console.log('context.state');
         // console.log(context.state);
         // context.commit("");
@@ -100,34 +100,22 @@ export const mapStore = {
         })).then(result => {
           context.commit("setInterest", context.state.interest.concat(result.data.location));
           context.commit("setIsInterest", true);
-          // console.log(result);
-          // console.log(context.state.interest)
         })
       } else {
-        // Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
-        //   latitude: context.state.mapCenter.lat,
-        //   longitude: context.state.mapCenter.lng
-        // })).then(result => {
-        //   console.log(result);
-        // })
+        Vue.prototype.$axios.post(`/locations/uninterest/address/`, Vue.prototype.$qs.stringify({
+          latitude: context.state.mapCenter.lat,
+          longitude: context.state.mapCenter.lng
+        })).then(result => {
+          context.commit("setIsInterest", false);
+        })
       }
-      // Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
-      //   latitude: context.state.mapCenter.lat,
-      //   longitude: context.state.mapCenter.lng
-      // })).then(result => {
-      //   console.log(result);
-      //   const string = result.data.address.split(' ');
-      //   context.commit("setMapAddress", `${string[1]} ${string[2]}`)
-      //   context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
-      //   console.log('context.state');
-      //   context.state.map(item => )
-      //   console.log(context.state);
-      //   context.commit("");
-      //   data.lat, longitude: data.lng
-      // })
-      // console.log('vuex getLocationInterest');
-      // console.log(response.data.results);
-      // context.commit("setInterest", response.data.results)
+    },
+    removeLocationInterest: (context, payload) => {
+      Vue.prototype.$axios.delete(`locations/${payload}/interest/`).then(result => {
+        console.log(context);
+        context.dispatch('getLocationInterest');
+        // context.commit("setIsInterest", false);
+      })
     },
     getLocationInterest: async (context) => {
       const response = await Vue.prototype.$axios.get(

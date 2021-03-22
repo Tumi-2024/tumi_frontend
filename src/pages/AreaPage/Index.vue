@@ -12,6 +12,7 @@ import {
   AreaFilterBtns,
   AreaListItems
 } from "src/components/AreaPageComponents";
+import { mapGetters, mapActions } from "vuex"
 export default {
   name: "Area",
   components: {
@@ -21,6 +22,14 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    ...mapActions("map", [
+      "getLocationInterest"
+    ])
+  },
+  mounted() {
+    this.getLocationInterest();
   }
 };
 </script>
