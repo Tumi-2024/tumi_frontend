@@ -37,11 +37,13 @@
           }" />
 
       </gmap-info-window>
+
+
       <!-- Map Markers -->
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
-        :maxZoom="14"
+        :maxZoom="15"
         :minimumClusterSize="1"
         @click="clusterClicked"
         ref="clusterers"
@@ -225,9 +227,9 @@ export default {
         this.getDistinctHouses();
       }
       setTimeout(() => {
-        this.showAreaBadges = this.map.getZoom() > 14 && this.getMapMode === 'redevelop-area';
-        this.showInfoWindow = this.map.getZoom() > 14;
-        this.disableHeart = this.map.getZoom() < 14;
+        this.showAreaBadges = this.map.getZoom() > 15 && this.getMapMode === 'redevelop-area';
+        this.showInfoWindow = this.map.getZoom() > 15;
+        this.disableHeart = this.map.getZoom() < 15;
         // console.log(this.map.getZoom());
       }, 500);
     });

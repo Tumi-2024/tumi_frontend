@@ -1,8 +1,9 @@
 <template>
   <div class="action-container q-px-sm">
-    <q-btn color="white" padding="8px" :disabled="disableHeart">
+    <q-btn color="white" padding="8px" @click="interestLocation()">
       <q-icon size="24px">
-        <img src="~assets/icons/like.svg" alt="" srcset="" />
+        <img v-if="!$store.state.map.isInterest" src="~assets/icons/heart.svg" alt="" srcset="" />
+        <img v-if="$store.state.map.isInterest" src="~assets/icons/hearted.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
 
@@ -36,6 +37,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   data() {
     return {
@@ -57,9 +60,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions("map", [
+      "addInterestLocation"
+    ]),
     showRedevelopmentArea() {
       this.cone = !this.cone;
       this.$emit("showArea", this.cone);
+    },
+    interestLocation() {
+      this.addInterestLocation();
     }
   }
 };

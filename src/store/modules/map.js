@@ -19,7 +19,9 @@ const initState = {
     fullscreenControl: false,
     disableDefaultUI: true
   },
-  toolbarTitle: "서울시 종로구"
+  toolbarTitle: "서울시 종로구",
+  interest: [],
+  isInterest: false
 };
 export const mapStore = {
   namespaced: true,
@@ -43,7 +45,9 @@ export const mapStore = {
     setMapCenter: (state, payload) => (state.mapCenter = payload),
     setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
-    setToolbarTitle: (state, payload) => (state.toolbarTitle = payload)
+    setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
+    setInterest: (state, payload) => (state.interest = payload),
+    setIsInterest: (state, payload) => (state.isInterest = payload)
   },
   actions: {
     resetMap: context => {
@@ -75,12 +79,64 @@ export const mapStore = {
       context.commit("setMapCenter", data)
       Vue.prototype.$axios.post(`/locations/find/`, Vue.prototype.$qs.stringify({ latitude: data.lat, longitude: data.lng })).then(result => {
         const string = result.data.address.split(' ');
-        context.commit("setMapAddress", `${string[1]} ${string[2]}`)
-        context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
+        context.commit("setMapAddress", `${string[1]} ${string[2]} ${string[3]}`)
+        context.commit("setToolbarTitle", `${string[1]} ${string[2]} ${string[3]}`)
+        console.log(`${string[1]} ${string[2]} ${string[3]}`);
+        console.log(result.data.location);
+        context.commit("setIsInterest", !!result.data.location.interest);
+        console.log('context.state');
+        // console.log(context.state);
+        // context.commit("");
+        // data.lat, longitude: data.lng
       })
     },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
-    changeToolbarTitle: (context, data) =>
-      context.commit("setToolbarTitle", data)
+    changeToolbarTitle: (context, data) => context.commit("setToolbarTitle", data),
+    addInterestLocation: (context) => {
+      if (!context.state.isInterest) {
+        Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
+          latitude: context.state.mapCenter.lat,
+          longitude: context.state.mapCenter.lng
+        })).then(result => {
+          context.commit("setInterest", context.state.interest.concat(result.data.location));
+          context.commit("setIsInterest", true);
+          // console.log(result);
+          // console.log(context.state.interest)
+        })
+      } else {
+        // Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
+        //   latitude: context.state.mapCenter.lat,
+        //   longitude: context.state.mapCenter.lng
+        // })).then(result => {
+        //   console.log(result);
+        // })
+      }
+      // Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
+      //   latitude: context.state.mapCenter.lat,
+      //   longitude: context.state.mapCenter.lng
+      // })).then(result => {
+      //   console.log(result);
+      //   const string = result.data.address.split(' ');
+      //   context.commit("setMapAddress", `${string[1]} ${string[2]}`)
+      //   context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
+      //   console.log('context.state');
+      //   context.state.map(item => )
+      //   console.log(context.state);
+      //   context.commit("");
+      //   data.lat, longitude: data.lng
+      // })
+      // console.log('vuex getLocationInterest');
+      // console.log(response.data.results);
+      // context.commit("setInterest", response.data.results)
+    },
+    getLocationInterest: async (context) => {
+      const response = await Vue.prototype.$axios.get(
+        `/locations/interests/`, {
+          timeout: 10000
+        })
+      // console.log('vuex getLocationInterest');
+      // console.log(response.data.results);
+      context.commit("setInterest", response.data.results)
+    }
   }
 };

@@ -22,6 +22,9 @@
 
 <script>
 import { loginModalStore, loginModalMutation } from "./LoginModalState";
+import Vue from 'vue'
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   name: "LoginModal",
   computed: {
@@ -40,6 +43,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "getLocationInterest"
+    ]),
     async login () {
       if (!(this.$store.getters.user && this.$store.getters.user.id)) {
         // Get kakaoUser
@@ -49,6 +58,15 @@ export default {
         const { data: user } = await this.$axios.post('/users/kakaologin/', this.$qs.stringify(kakaoUser))
         if (!user) { return }
         this.$store.commit('setUser', user)
+
+        try {
+          let token = user.data.token;
+          Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+          this.getLocationInterest();
+          this.$store.dispatch('getLocationInterest');
+        } catch(e) {
+          console.log(e);
+        }
         loginModalMutation.closeModal()
       }
     }

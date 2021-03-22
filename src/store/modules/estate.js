@@ -32,7 +32,7 @@ export const estateStore = {
   actions: {
     getSimpleHouses: async function (context, payload) {
       const response = await Vue.prototype.$axios.get(
-        `/house/simple${payload ? `?${payload}` : ""}`, {
+        `/houses/simple${payload ? `?${payload}` : ""}`, {
           timeout: 10000
         }
       );
@@ -48,7 +48,7 @@ export const estateStore = {
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
-        `/house/distinct${paramter ? `?${paramter}` : ''}`, {
+        `/apartments/distinct${paramter ? `?${paramter}` : ''}`, {
           timeout: 10000
         })
       const results = response.data.map(item =>
@@ -60,12 +60,12 @@ export const estateStore = {
           }
         })
       )
-      console.log(results);
+      // console.log(results);
       context.commit('setDistinctHouses', results)
     },
     getDetailHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
-        `/house/${paramter ? `?${paramter}` : ''}`, {
+        `/houses/${paramter ? `?${paramter}` : ''}`, {
           timeout: 10000
         })
       const results = response.data.results.map(item =>
