@@ -10,7 +10,7 @@
         flat
         ripple
         padding="0px"
-        :to="{ name: tab.pathName }"
+        @click="goTo(tab.pathName)"
         class="q-py-xs"
       >
         <q-icon size="44px" class="col-12">
@@ -25,6 +25,11 @@
 </template>
 
 <script>
+import {
+  loginModalMutation,
+  loginModalStore
+} from "src/components/Utilities/LoginModal/LoginModalState";
+
 export default {
   data() {
     return {
@@ -42,15 +47,29 @@ export default {
         {
           label: "관심매물",
           icon: "home-interest.svg",
-          pathName: ""
+          pathName: "property_interest"
         },
         {
           label: "연락한 매물",
           icon: "contacted-property.svg",
-          pathName: ""
+          pathName: "property_contacted"
         }
       ]
     };
+  },
+  methods: {
+    goTo(path) {
+      console.log(this.$store.state.user.data);
+      if (this.$store.state.user.data && this.$store.state.user.data.id) {
+
+        this.$router.push({ name: path });
+      } else {
+        this.setModal();
+      }
+    },
+    setModal() {
+      loginModalMutation.setModal();
+    }
   }
 };
 </script>

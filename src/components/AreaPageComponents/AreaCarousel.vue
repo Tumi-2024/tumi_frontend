@@ -82,7 +82,7 @@ export default {
     },
     getLocationEstimate(val) {
       const location = this.$store.state.map.interest[val];
-      this.$store.dispatch('getDetailHouses', `location=${location.id}`);
+      this.$store.dispatch('getDetailHouses', `location=${location.id}&paging_size=30`);
       console.log(location);
     }
   }

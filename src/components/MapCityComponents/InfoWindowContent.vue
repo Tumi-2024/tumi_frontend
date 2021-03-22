@@ -19,7 +19,8 @@
 
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        {{ toMoneyString(price) }}
+        {{ toMoneyString(price*10000) }}
+        <!-- {{ price }} -->
       </div>
       <div class="row bottom-toolbar notosanskr-regular">
         <div class="info-text" v-if="badges.type_house">{{ (badges.type_house === 'apartment') ? '아파트' : ''}}</div>
@@ -32,28 +33,30 @@
         <q-badge
           color="white"
           text-color="primary"
-          :label="
-          (badges.type_sale === 'sale') ? '매매' : 
-          (badges.type_sale === 'charter') ? '전세' : 
-          (badges.type_sale === 'half-charter') ? '반전세' : 
-          (badges.type_sale === 'rent') ? '월세' : badges.type_sale"
-          v-if="badges.type_sale"
+          label="월세"
+          v-if="badges.type_sale.includes('rent')"
         />
-        <!-- 여러개할라면 여러개넣고 하나만할라면 하나만해라 -->
-        <!-- <q-badge
+        <q-badge
           color="white"
           text-color="secondary"
           label="전세"
-          v-if="badges.type_sale === 'charter'"
+          v-if="badges.type_sale.includes('charter')"
         />
         <q-badge
           color="white"
           text-color="primary"
           label="매매"
-          v-if="badges.type_sale === 'sale'"
-        /> -->
+          v-if="badges.type_sale.includes('sale')"
+        />
+        <q-badge
+          color="white"
+          text-color="primary"
+          label="매매"
+          v-if="badges.type_sale.includes('half-charter')"
+        />
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="badges.area">{{ Math.round(badges.area/3.3) }}평</div>
+        <div class="info-text" v-if="badges.area">{{ badges.area }}평</div>
+        <!-- <div class="info-text" v-if="badges.area">{{ Math.round(badges.area/3.3) }}평</div> -->
       </div>
     </div>
   </div>

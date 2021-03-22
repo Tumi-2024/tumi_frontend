@@ -5,8 +5,7 @@
       align="left"
       flat
       class="item row full-width"
-      @click="toMapActualTransaction"
-    >
+      @click="toMapActualTransaction">
       <text-under-highlight text="실거래가 조회"></text-under-highlight>
     </q-btn>
 

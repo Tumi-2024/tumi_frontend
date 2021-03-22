@@ -28,12 +28,12 @@
 
         <info-window-content
           @viewArea="viewArea(m)"
-          :price="m.price_avg"
+          :price="(m.house_last.price_sale) ? m.house_last.price_sale : (m.house_last.price_deposit) ? m.house_last.price_deposit : (m.house_last.price_charter) ? m.house_last.price_charter : 0"
           :count="m.count"
           :badges="{
             type_sale: m.type_sale,
             type_house: m.type_house,
-            area: m.area_common,
+            area: m.pyeong,
           }" />
 
       </gmap-info-window>
@@ -365,7 +365,7 @@ export default {
       this.map.addListener("idle", () => {
         this.changeMapZoom(16);
         this.changeMapCenter(item.position);
-        this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position } });
+        this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });
       });
     },
     typeForHouse(type) {

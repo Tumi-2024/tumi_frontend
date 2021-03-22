@@ -40,7 +40,10 @@ export default {
   },
   mounted() {
     console.log(this.$route.params.type);
-    if (this.$route.params.type === 'location') {
+    console.log(this.$route.params.apartment);
+    if (this.$route.params.apartment) {
+      this.$store.dispatch('getDetailHouses', `apartment=${apartment.id}`);
+    } else if (this.$route.params.type === 'location') {
       // console.log(`toQueryString({ ...this.$route.params.position })`);
       // console.log(this.$route.params.position);
       // console.log(toQueryString({ ...this.$route.params.position }));

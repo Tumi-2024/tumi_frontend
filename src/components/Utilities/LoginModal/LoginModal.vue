@@ -60,7 +60,7 @@ export default {
         this.$store.commit('setUser', user)
 
         try {
-          let token = user.data.token;
+          let token = user.token;
           if (token) {
             Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
             this.getLocationInterest();

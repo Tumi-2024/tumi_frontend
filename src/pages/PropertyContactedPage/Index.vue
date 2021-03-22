@@ -41,6 +41,9 @@ export default {
       this.deleteItems(items);
       this.isEdit = false;
     }
+  },
+  mounted() {
+    this.$store.dispatch('getContactHouses');
   }
 };
 </script>
