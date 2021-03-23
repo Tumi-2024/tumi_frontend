@@ -44,13 +44,13 @@
         />
         <q-badge
           color="white"
-          text-color="primary"
+          style="color: #FF5100"
           label="매매"
           v-if="badges.type_sale.includes('sale')"
         />
         <q-badge
           color="white"
-          text-color="primary"
+          style="color: #FF5100"
           label="매매"
           v-if="badges.type_sale.includes('half-charter')"
         />
