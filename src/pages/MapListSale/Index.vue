@@ -16,7 +16,7 @@ export default {
     "floating-button": FloatingButton
   },
   mounted() {
-    // console.log(this.$route.params);
+    console.log(this.$route.params);
   }
 };
 </script>

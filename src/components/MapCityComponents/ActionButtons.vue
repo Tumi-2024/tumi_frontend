@@ -1,6 +1,7 @@
 <template>
   <div class="action-container q-px-sm">
-    <q-btn color="white" padding="8px" @click="interestLocation()">
+
+    <q-btn v-if="!$store.state.map.locationLoading" color="white" padding="8px" @click="interestLocation()">
       <q-icon size="24px">
         <img v-if="!$store.state.map.isInterest" src="~assets/icons/heart.svg" alt="" srcset="" />
         <img v-if="$store.state.map.isInterest" src="~assets/icons/hearted.svg" alt="" srcset="" />
@@ -38,6 +39,10 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"
+import {
+  loginModalMutation,
+  loginModalStore
+} from "src/components/Utilities/LoginModal/LoginModalState";
 
 export default {
   data() {
@@ -68,7 +73,19 @@ export default {
       this.$emit("showArea", this.cone);
     },
     interestLocation() {
-      this.addInterestLocation();
+      try {
+        let token = this.$store.state.user.data.token;
+        if (token) {
+          this.addInterestLocation();
+        } else {
+          this.setModal();
+        }
+      } catch(e) {
+        this.setModal();
+      }
+    },
+    setModal() {
+      loginModalMutation.setModal();
     }
   }
 };

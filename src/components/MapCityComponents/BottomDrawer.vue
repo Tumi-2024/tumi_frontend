@@ -12,7 +12,7 @@
           class="btn-view-properties full-width notosanskr-medium"
           :to="{ name: 'map_list_sale' }"
         >
-          {{$store.state.map.toolbarTitle.split(' ')[1]}} 매물보기 <span style="color: #FF5A00">{{` ${$store.state.estate.simple_houses.length}개`}}</span>
+          {{$store.state.map.toolbarTitle.split(' ')[1]}} 매물보기 <span style="color: #FF5A00">{{` ${$store.state.estate.count_estate}개`}}</span>
         </q-btn>
       </q-card-section>
 
