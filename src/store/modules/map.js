@@ -21,7 +21,8 @@ const initState = {
   },
   toolbarTitle: "서울시 종로구",
   interest: [],
-  isInterest: false
+  isInterest: false,
+  locationLoading: false
 };
 export const mapStore = {
   namespaced: true,
@@ -47,9 +48,11 @@ export const mapStore = {
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
     setInterest: (state, payload) => (state.interest = payload),
-    setIsInterest: (state, payload) => (state.isInterest = payload)
+    setIsInterest: (state, payload) => (state.isInterest = payload),
+    setLocationLoading: (state, payload) => (state.locationLoading = payload)
   },
   actions: {
+    setLocationLoading: (context, payload) => context.commit("setLocationLoading", payload),
     resetMap: context => {
       context.commit("setMapMode", initState.mode);
       context.commit("setMapZoom", initState.mapZoom);
@@ -82,7 +85,9 @@ export const mapStore = {
         context.commit("setMapAddress", `${string[1]} ${string[2]}`)
         context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
         if (result.data.location && result.data.location.interest && result.data.location.interest.location) {
-          context.commit("setIsInterest", !!result.data.location.interest.location);
+          context.commit("setIsInterest", true);
+        } else {
+          context.commit("setIsInterest", false);
         }
         // console.log(context.state);
         // context.commit("");

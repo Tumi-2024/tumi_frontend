@@ -15,8 +15,19 @@
       <q-btn flat>가격순</q-btn>
     </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular">
-      <q-list class="q-pt-md">
+      <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
+        <area-item
+          v-for="(item, i) of $store.state.estate.detail_houses"
+          :key="i"
+          :item="item"
+        ></area-item>
+        
+        <q-item class="q-pa-none">
+          <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
+        </q-item>
+      </q-list>
 
+      <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
         <area-item
           v-for="(item, i) of $store.state.estate.detail_houses"
           :key="i"
@@ -41,19 +52,16 @@ export default {
   mounted() {
     console.log(this.$route.params.type);
     console.log(this.$route.params.apartment);
+    console.log(this.$route.params.apartment.id);
     if (this.$route.params.apartment) {
-      this.$store.dispatch('getDetailHouses', `apartment=${apartment.id}`);
+      console.log('getDetailHousesgetDetailHousesgetDetailHouses')
+      this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);
     } else if (this.$route.params.type === 'location') {
-      // console.log(`toQueryString({ ...this.$route.params.position })`);
-      // console.log(this.$route.params.position);
-      // console.log(toQueryString({ ...this.$route.params.position }));
       this.$store.dispatch('getDetailHouses', toQueryString({ 
         latitude: this.$route.params.position.lat, 
         longitude: this.$route.params.position.lng,
         ...this.$store.state.search
       }));
-      // console.log('store');
-      // console.log(this.$store);
     }
   },
   data() {

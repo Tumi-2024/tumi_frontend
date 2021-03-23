@@ -5,7 +5,8 @@ export const estateStore = {
   state: {
     simple_houses: [],
     detail_houses: [],
-    distinct_houses: []
+    distinct_houses: [],
+    count_estate: 0
   },
   getters: {
     simple_houses: (state, getters) => {
@@ -27,6 +28,9 @@ export const estateStore = {
     },
     setDistinctHouses: function (state, payload) {
       state.distinct_houses = payload
+    },
+    setCountEstate: function (state, payload) {
+      state.count_estate = payload
     }
   },
   actions: {
@@ -51,7 +55,8 @@ export const estateStore = {
         `/houses/distinct${paramter ? `?${paramter}` : ''}`, {
           timeout: 10000
         })
-      const results = response.data.map(item =>
+      console.log(response.data.apartments);
+      const results = response.data.apartments.map(item =>
         ({
           ...item,
           position: {
@@ -60,7 +65,8 @@ export const estateStore = {
           }
         })
       )
-      context.commit('setDistinctHouses', results)
+      context.commit('setDistinctHouses', results);
+      context.commit('setCountEstate', response.data.houses_count);
     },
     getDetailHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
@@ -75,6 +81,7 @@ export const estateStore = {
             lng: Number(item.longitude)
           }
         }))
+      context.commit('setCountEstate', response.data.count);
       context.commit('setDetailHouses', results)
     },
     getInterestHouses: async function (context, paramter) {

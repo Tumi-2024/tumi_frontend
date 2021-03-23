@@ -22,17 +22,28 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async context => {
       try {
-        const result = await Vue.prototype.$axios.get("/redevelopment_areas", {
-          timeout: 10000
-        });
-        context.commit("setMapAreas", result.data.results);
+        let areas = []
+        let url = "/redevelopment_areas";
+        while (true) {
+          console.log(url);
+          const result = await Vue.prototype.$axios.get(url, {
+            timeout: 10000
+          });
+          areas = areas.concat(result.data.results);
+          context.commit("setMapAreas", context.state.areas.concat(result.data.results));
+          if (!result.data.next) {
+            break;
+          } else {
+            url = result.data.next;
+          }
+        }
+        context.commit("setMapAreas", areas);
         // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data
         // context.commit("setMapAreas", markersArea);
         console.log(error, "error");
       }
-
       // context.commit("setMapAreas", data);
     },
     changeMapSelectedArea: (context, area) =>

@@ -64,7 +64,7 @@
         :key="'area' + i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
+        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges && $route.path === '/map/city/area'">
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
@@ -209,9 +209,14 @@ export default {
         lat: center.lat(),
         lng: center.lng()
       })
+      this.setLocationLoading(false);
       if (this.showInfoWindow && this.showEstates) {
         this.getDistinctHouses();
       }
+    });
+
+    this.map.addListener("drag", _ => {
+      this.setLocationLoading(true);
     });
 
     // apply click event on map
@@ -252,7 +257,7 @@ export default {
 
   methods: {
     // have access to vuex actions
-    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", ["changeMapZoom", "changeMapCenter", "setLocationLoading"]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
 
