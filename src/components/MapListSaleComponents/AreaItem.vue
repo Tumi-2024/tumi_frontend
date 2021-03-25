@@ -8,7 +8,7 @@
         <q-badge
           outline
           class="text-primary bg-white q-mr-sm"
-          v-if="item.recomend"
+          v-if="item.recommend"
         >
           {{ '투미추천 매물' }}
         </q-badge>

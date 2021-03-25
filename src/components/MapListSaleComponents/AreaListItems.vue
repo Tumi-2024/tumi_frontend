@@ -21,7 +21,7 @@
           :key="i"
           :item="item"
         ></area-item>
-        
+
         <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
         </q-item>
@@ -33,7 +33,7 @@
           :key="i"
           :item="item"
         ></area-item>
-        
+
         <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
         </q-item>
@@ -57,8 +57,8 @@ export default {
       console.log('getDetailHousesgetDetailHousesgetDetailHouses')
       this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);
     } else if (this.$route.params.type === 'location') {
-      this.$store.dispatch('getDetailHouses', toQueryString({ 
-        latitude: this.$route.params.position.lat, 
+      this.$store.dispatch('getDetailHouses', toQueryString({
+        latitude: this.$route.params.position.lat,
         longitude: this.$route.params.position.lng,
         ...this.$store.state.search
       }));
@@ -70,7 +70,7 @@ export default {
         {
           tags: {
             type: "아파트",
-            recomend: "투미추천 급매",
+            recommend: "투미추천 급매",
             date: "20.10.12"
           },
           name: "종로1가 대성스카이렉스",
