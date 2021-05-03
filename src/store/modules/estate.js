@@ -55,7 +55,6 @@ export const estateStore = {
         `/houses/distinct${paramter ? `?${paramter}` : ''}`, {
           timeout: 10000
         })
-      console.log(response.data.apartments);
       const results = response.data.apartments.map(item =>
         ({
           ...item,
