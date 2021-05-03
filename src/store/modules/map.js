@@ -84,7 +84,9 @@ export const mapStore = {
         const string = result.data.address.split(' ');
         context.commit("setMapAddress", `${string[1]} ${string[2]}`)
         context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
-        if (result.data.location && result.data.location.subcity && result.data.location.subcity.interest.subcity) {
+        console.log('changeMapCenter', result.data)
+        if (result.data.location && result.data.location.subcity && 
+          result.data.location.subcity.interest && result.data.location.subcity.interest.subcity) {
           context.commit("setIsInterest", true);
         } else {
           context.commit("setIsInterest", false);
