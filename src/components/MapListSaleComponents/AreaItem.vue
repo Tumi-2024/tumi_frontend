@@ -20,14 +20,14 @@
           재개발
         </q-badge>
         <!-- badge for item date -->
-        <q-badge class="date">{{ new Date(item.modified).toLocaleDateString() }}</q-badge>
+        <q-badge class="date">{{ toDateFormat(item.created) }}</q-badge>
       </div>
     </q-item-section>
     <q-item-section class="area-name q-pt-sm">
       {{ item.address }}
     </q-item-section>
     <q-item-section class="area-amount">
-      {{ `${toKr(item.type_sale)} ${toMoneyString(item.price)}` }}
+      {{ `${toKr(item.type_sale)} / ${toMoneyString(item.price)}` }}
     </q-item-section>
     <div class="additional-info row items-center q-pt-sm">
       <div>{{ (item.area_common) ? `전용면적 ${item.area_common}㎡(${Math.round(item.area_common/3.3)}평)` : '' }}</div>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { toQueryString, toMoneyString, toKr } from 'src/utils';
+import { toQueryString, toMoneyString, toKr, toDateFormat } from 'src/utils';
 export default {
   props: {
     item: Object,
@@ -52,6 +52,7 @@ export default {
   methods: {
     toKr,
     toMoneyString,
+    toDateFormat,
   }
 };
 </script>
