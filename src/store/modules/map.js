@@ -38,7 +38,8 @@ export const mapStore = {
         ? "지금 보고 있는 정보"
         : "지금 보고있는 지역";
     },
-    getToolbarTitle: state => state.toolbarTitle
+    getToolbarTitle: state => state.toolbarTitle,
+    getMyInterestArea: state => state.interest
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
@@ -122,14 +123,18 @@ export const mapStore = {
         // context.commit("setIsInterest", false);
       })
     },
-    getLocationInterest: async (context) => {
-      const response = await Vue.prototype.$axios.get(
-        `/sub_cities/interests/`, {
-          timeout: 10000
-        })
-      // console.log('vuex getLocationInterest');
-      // console.log(response.data.results);
-      context.commit("setInterest", response.data.results)
+    fetchLocationInterest: async (context) => {
+      try {
+        const response = await Vue.prototype.$axios.get(
+          `/sub_cities/interests/`,
+          { timeout: 10000 }
+        );
+        // console.log('vuex getLocationInterest');
+        // console.log(response.data.results);
+        context.commit("setInterest", response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };
