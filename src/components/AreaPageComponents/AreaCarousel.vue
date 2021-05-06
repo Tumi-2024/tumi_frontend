@@ -9,22 +9,36 @@
         swipeable
         control-color="primary"
         class="rounded-borders"
-        @transition="getLocationEstimate"
+        @transition="subcityHouses"
       >
         <q-carousel-slide
-          v-for="(interest, i) in $store.state.map.interest"
+          v-for="(interest, i) in myInterestArea"
           :key="i"
           :name="i"
           class="row"
         >
           <section class="map-area">
             <div class="mask" :class="i % 2 ? 'blue' : 'orange'"></div>
-            <area-google-map :position="{ lat: Number(interest.latitude), lng: Number(interest.longitude) }" class="area-map" />
+            <!-- <area-google-map :position="{ lat: Number(interest.latitude), lng: Number(interest.longitude) }" class="area-map" /> -->
+            <area-google-map
+              :position="{
+                lat: parseFloat(interest.latitude),
+                lng: parseFloat(interest.longitude)
+              }"
+              class="area-map"
+            />
           </section>
 
           <section class="row justify-between items-center q-pt-sm col-12">
             <div class="text-address notosanskr-medium">
-              {{ (interest.address) ? interest.address.split(' ').slice(1).join(' ') : null }}
+              {{
+                interest.address
+                  ? interest.address
+                      .split(" ")
+                      .slice(1)
+                      .join(" ")
+                  : null
+              }}
             </div>
 
             <q-btn
@@ -57,8 +71,8 @@
 
 <script>
 import AreaGoogleMap from "./AreaGoogleMap";
-import { mapGetters, mapActions } from "vuex"
-import { toQueryString } from 'src/utils';
+import { mapGetters, mapActions } from "vuex";
+import { toQueryString } from "src/utils";
 export default {
   components: {
     AreaGoogleMap
@@ -66,24 +80,47 @@ export default {
   data() {
     return {
       currentSlide: 0,
-      lorem: "Map content here"
+      lorem: "Map content here",
+      interests: [
+        {
+          id: 1,
+          address: "sdsadasd"
+        },
+        {
+          id: 1,
+          address: "sdsadasd"
+        }
+      ]
     };
   },
+  computed: {
+    ...mapGetters("map", ["myInterestArea"])
+  },
   mounted() {
-    this.getLocationEstimate(0);
+    this.subcityHouses(0);
+    console.log(this.myInterestArea[0]);
   },
   methods: {
-    ...mapActions("map", [
-      "removeLocationInterest"
-    ]),
+    ...mapActions("map", ["removeLocationInterest"]),
     removeInterest(num) {
       this.removeLocationInterest(num);
       this.currentSlide = 0;
     },
-    getLocationEstimate(val) {
-      const location = this.$store.state.map.interest[val];
-      this.$store.dispatch('getDetailHouses', `location=${location.id}&page_size=30`);
-      console.log(location);
+    subcityHouses(val) {
+      if (this.myInterestArea[val]) {
+        const subcity = this.$store.state.map.interest[val];
+        this.$store.dispatch(
+          "getDetailHouses",
+          `subcity=${subcity.id}&page_size=30`
+          // `location=${subcity.id}&page_size=30`
+        );
+      }
+      // const location = this.$store.state.map.interest[val];
+      // this.$store.dispatch(
+      //   "getDetailHouses",
+      //   `location=${location.id}&page_size=30`
+      // );
+      // console.log(location);
     }
   }
 };

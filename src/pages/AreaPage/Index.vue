@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-sm">
-    <section v-if="getMyInterestArea.length">
+    <section v-if="myInterestArea.length">
       <area-carousel></area-carousel>
       <area-filter-btns></area-filter-btns>
       <area-list-items></area-list-items>
@@ -31,13 +31,13 @@ export default {
     "area-list-items": AreaListItems
   },
   computed: {
-    ...mapGetters("map", ["getMyInterestArea"])
+    ...mapGetters("map", ["myInterestArea"])
   },
   methods: {
     ...mapActions("map", ["fetchLocationInterest"])
   },
   mounted() {
-    if (!this.getMyInterestArea.length) {
+    if (!this.myInterestArea.length) {
       this.fetchLocationInterest();
     }
   }

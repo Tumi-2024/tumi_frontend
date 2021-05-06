@@ -39,7 +39,7 @@ export const mapStore = {
         : "지금 보고있는 지역";
     },
     getToolbarTitle: state => state.toolbarTitle,
-    getMyInterestArea: state => state.interest
+    myInterestArea: state => state.interest
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
