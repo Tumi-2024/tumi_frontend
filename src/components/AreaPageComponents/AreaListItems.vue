@@ -17,11 +17,18 @@
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
         <property-item
-          v-for="(item, i) of items"
+          v-for="(item, i) of detail_houses"
           :key="i"
-          :name="item.name"
-          :amount="item.amount"
-          :tags="item.tags"
+          :name="item.address"
+          :amount="formatAmount(item.price_deposit, item.price_rent)"
+          :tags="
+            formatTags({
+              type: item.type_house,
+              date: item.modified,
+              recommended: item.recommend,
+              redevelopment: item.redevelopment_area
+            })
+          "
         />
         <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
@@ -33,6 +40,7 @@
 
 <script>
 import PropertyItem from "components/Utilities/PropertyItem";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "property-item": PropertyItem
@@ -48,42 +56,29 @@ export default {
           },
           name: "종로1가 대성스카이렉스",
           amount: "보증금 5천 6백만 / 월세 120만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            redevelopment: true,
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5천만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
         }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(["detail_houses"])
+  },
+  methods: {
+    formatAmount(priceDeposit, priceRent) {
+      return `${priceDeposit} / ${priceRent}`;
+    },
+    formatTags({ type, date, recommended, redevelopment }) {
+      const _date = new Date(date);
+      return {
+        type,
+        date: `${_date.getFullYear()}.${_date.getMonth()}.${_date.getDate()}`,
+        recommended,
+        redevelopment
+      };
+    }
+  },
+  mounted() {
+    console.log(this.detail_houses, "list itsems");
   }
 };
 </script>
