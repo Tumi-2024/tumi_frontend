@@ -3,27 +3,27 @@
     <top-toolbar></top-toolbar>
     <search-field></search-field>
     <!-- shows steps -->
-    <bread-crumb 
-    ref="breadCrumb" 
-    :first="addr1 && addr1.title"
-    :second="addr2 && addr2.title"
-    :third="addr3 && addr3.title"
-    @setStep="stepChanged"/>
+    <bread-crumb
+      ref="breadCrumb"
+      :first="addr1 && addr1.title"
+      :second="addr2 && addr2.title"
+      @setStep="stepChanged"
+    />
     <!-- shows regions selections -->
 
-    <table-region-selection v-if="step === 0"
+    <table-region-selection
+      v-if="step === 0"
       :data="$store.state.search.location"
       @select="selectFirst"
     />
 
-    <table-region-selection v-if="step === 1"
+    <table-region-selection
+      v-if="step === 1"
       :data="$store.state.search.location[addr1.title].sub"
       @select="selectSecond"
-    />
-
-    <table-region-selection v-if="step === 2"
-      :data="$store.state.search.location[addr1.title].sub[addr2.title].sub"
-      @select="selectThird"
+      @visit="visitMap"
+      hide-no-coords
+      show-button-bottom
     />
   </div>
 </template>
@@ -46,10 +46,8 @@ export default {
   data() {
     return {
       step: 0,
-      addr1: '',
-      addr2: '',
-      addr3: '',
-      // activeStep: { step: "one", value: "서울시" }
+      addr1: "",
+      addr2: ""
     };
   },
   methods: {
@@ -63,20 +61,14 @@ export default {
       this.step = v;
     },
     selectFirst(val) {
-      console.log(val);
       this.addr1 = val;
       this.step = 1;
-      // this.activeStep = val;
-      // this.$refs.breadCrumb.setStepValue(val);
+      this.$refs.breadCrumb.setStep(1);
     },
     selectSecond(val) {
-      console.log(val);
       this.addr2 = val;
-      this.step = 2;
     },
-    selectThird(val) {
-      console.log(val);
-      this.addr3= val;
+    visitMap(val) {
       this.changeMapZoom(16);
       this.changeMapCenter({
         lat: Number(val.latitude),

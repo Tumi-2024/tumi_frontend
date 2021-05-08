@@ -5,6 +5,7 @@
     style="background: #FFD8CC; border-radius: 8px; margin-top: 36px"
   >
     <q-card-section class="row justify-around items-center notosanskr-medium">
+      {{ step }}
       <div class="col">
         <q-btn
           padding="2px"
@@ -26,7 +27,7 @@
           @click="setStep(1)"
         />
       </div>
-      <q-icon name="keyboard_arrow_right" size="24px" />
+      <!-- <q-icon name="keyboard_arrow_right" size="24px" />
       <div class="col">
         <q-btn
           padding="2px"
@@ -36,7 +37,7 @@
           :class="{ 'current-step': step >= 2 }"
           @click="setStep(2)"
         />
-      </div>
+      </div> -->
     </q-card-section>
   </q-card>
 </template>
@@ -45,7 +46,7 @@
 export default {
   data() {
     return {
-      step: 0,
+      step: 0
       // selections: {
       //   one: "",
       //   two: "",
@@ -55,8 +56,8 @@ export default {
   },
   props: {
     first: String,
-    second: String,
-    third: String,
+    second: String
+    // third: String,
   },
   methods: {
     setStep(number) {
@@ -65,7 +66,7 @@ export default {
       // if (number == 2) step = "two";
       // if (number == 3) step = "three";
       this.$emit("setStep", number);
-    },
+    }
   }
 };
 </script>
