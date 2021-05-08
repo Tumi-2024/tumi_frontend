@@ -40,7 +40,7 @@
 
 <script>
 import PropertyItem from "components/Utilities/PropertyItem";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components: {
     "property-item": PropertyItem
