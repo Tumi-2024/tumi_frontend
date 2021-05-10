@@ -4,7 +4,7 @@
       관심지역 매물 <span class="text-primary">320</span>개
     </q-card-section>
 
-    <area-sort-btns />
+    <area-sort-btns @sortBy="toSortBy($event)" />
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
@@ -69,6 +69,9 @@ export default {
         recommended,
         redevelopment
       };
+    },
+    toSortBy(sortBy) {
+      console.log(sortBy);
     }
   },
   mounted() {

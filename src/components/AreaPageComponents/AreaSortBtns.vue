@@ -2,18 +2,53 @@
   <q-card-section
     class="sort-section row bg-positive q-pa-none notosanskr-regular"
   >
-    <q-btn flat class="text-primary">최신순</q-btn>
+    <q-btn
+      flat
+      :class="{ 'text-primary': selected == '최신순' }"
+      @click="setSelected('최신순')"
+      >최신순</q-btn
+    >
     <q-separator vertical />
-    <q-btn flat>추천순</q-btn>
+    <q-btn
+      flat
+      :class="{ 'text-primary': selected == '추천순' }"
+      @click="setSelected('추천순')"
+      >추천순</q-btn
+    >
     <q-separator vertical />
-    <q-btn flat>면적순</q-btn>
+    <q-btn
+      flat
+      :class="{ 'text-primary': selected == '면적순' }"
+      @click="setSelected('면적순')"
+      >면적순</q-btn
+    >
     <q-separator vertical />
-    <q-btn flat>가격순</q-btn>
+    <q-btn
+      flat
+      :class="{ 'text-primary': selected == '가격순' }"
+      @click="setSelected('가격순')"
+      >가격순</q-btn
+    >
   </q-card-section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      selected: "최신순"
+    };
+  },
+  methods: {
+    setSelected(sortby) {
+      if (sortby === this.selected) {
+        return;
+      }
+      this.selected = sortby;
+      this.$emit("sortBy", this.selected);
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
