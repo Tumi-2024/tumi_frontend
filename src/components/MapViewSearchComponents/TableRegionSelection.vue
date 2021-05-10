@@ -15,7 +15,7 @@
             selected && selected.title == data[item].title ? 'primary' : 'black'
           "
         >
-          {{ data[item].title }} {{ hideNoCoords }}
+          {{ data[item].title }}
         </q-btn>
       </div>
     </q-card-section>
