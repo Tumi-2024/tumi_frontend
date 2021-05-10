@@ -46,6 +46,7 @@
 <script>
 import { toQueryString, toMoneyString, toKr, toDateFormat } from 'src/utils';
 export default {
+  name: 'AreaItem',
   props: {
     item: Object,
   },

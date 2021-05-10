@@ -2,13 +2,13 @@
   <q-card flat class="q-mt-sm" style="margin-top: 0px;">
     <q-card-section class="row justify-between card-section" style="">
       <div class="notosanskr-medium" style="">
-        <q-btn unelevated class="q-mr-sm" padding="0px 8px" color="dark">
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'all' ? 'dark' : undefined" @click="filter('all')">
           #전체({{ apartment + office }})
         </q-btn>
-        <q-btn unelevated class="q-mr-sm" padding="0px 8px">
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'apartment' ? 'dark' : undefined" @click="filter('apartment')">
           #아파트({{ apartment }})
         </q-btn>
-        <q-btn unelevated class="q-mr-sm" padding="0px 8px">
+        <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'office' ? 'dark' : undefined" @click="filter('office')">
           #오피스텔({{ office }})
         </q-btn>
       </div>
@@ -26,6 +26,18 @@ export default {
     office: {
       type: Number,
       default: 0
+    }
+  },
+  data() {
+    return {
+      filter_keyword: 'all'
+    }
+  },
+  methods: {
+    filter(keyword) {
+      if(this.filter === keyword) return
+      this.filter_keyword = keyword
+      this.$emit('filter', keyword)
     }
   }
 };
