@@ -9,7 +9,7 @@
       :office="getCountOfficetels()"
     ></property-filter>
     <property-list-items
-      :items="propertyItems"
+      :items="properties"
       @deleteItems="deleteListItems"
       :isEdit="isEdit"
     ></property-list-items>

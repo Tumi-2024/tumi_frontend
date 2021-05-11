@@ -33,6 +33,5 @@ export default {
   },
   async mounted() {
     this.properties = await this.getProperties('created')
-    console.log('ProperyMixin mmounted', this.properties)
   }
 };
