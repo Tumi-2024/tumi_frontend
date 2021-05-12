@@ -4,8 +4,8 @@
     <detail-summary
       :tags="{
         type: toKr(estate.type_house),
-        redevelopment: true,
-        stageProgress: '추진위원회 승인',
+        redevelopment: redevelopment,
+        stageProgress: redevelopment && redevelopment.redevelopment_step,
         transactionStatus: estate.is_sold && '거래완료' 
       }"
       :areaName="estate.address"
@@ -17,19 +17,19 @@
     <area-information :informations="propertyInformation" class="q-mt-sm" />
     <more-information
       :transactionType="toKr(estate.type_sale)"
-      :exclusiveArea="`${estate.area_exclusive}㎡ (${Math.round(estate.area_exclusive/3.3)}평)`"
-      :commonArea="`${estate.area_common}㎡ (${Math.round(estate.area_common/3.3)}평)`"
+      :exclusiveArea="estate.area_exclusive && `${estate.area_exclusive}㎡ (${Math.round(estate.area_exclusive/3.3)}평)`"
+      :commonArea="estate.area_common && `${estate.area_common}㎡ (${Math.round(estate.area_common/3.3)}평)`"
       :direction="`${estate.type_direction && toKr(estate.type_direction)}향`"
       :numberFloors="estate.floor && `${estate.floor}층`"
       :stationArea="estate.station"
-      :elevator="estate.elevator && `${estate.elevator}대`"
+      :elevator="estate.elevator ? `${estate.elevator}대` : ''"
       :numberRooms="estate.room_count && estate.bathroom_count && `${estate.room_count} / ${estate.bathroom_count}개`"
       :heating="estate.heating_system"
       :numberHouseholds="estate.area_household_count"
       :administrativeExpenses="estate.administration_cost && `${estate.administration_cost}원`"
     />
     <!-- 재개발 정보 -->
-    <redevelopment-information
+    <redevelopment-information v-if="redevelopment"
       approvalPromotionCommittee="2004.07.20"
       designationMaintenanceArea="2005.05.19"
       associationEstablishment="2005.05.19"
@@ -81,7 +81,8 @@ export default {
   },
   mounted() {
     this.estate = this.$route.params.data;
-    toKr(this.estate.type_house)
+    this.$store.dispatch('addRecentlyViewedHouse', this.estate.id)
+    this.redevelopment = this.estate.redevelopment
   },
   methods: {
     toKr,
@@ -89,6 +90,7 @@ export default {
   },
   data() {
     return {
+      redevelopment: null,
       estate: null,
       propertyInformation: [
         {

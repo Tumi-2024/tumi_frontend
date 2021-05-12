@@ -13,14 +13,15 @@
     <q-item-section class="area-amount">
       {{ amount }}
     </q-item-section>
+
     <div class="additional-info row items-center q-pt-sm">
-      <div>전용면적 116㎡(30평)</div>
-      <div>고층</div>
+      <div>전용면적 {{ areaExclusive }}</div>
+      <div>{{ floor > 5 ? "고층" : "중층" }}</div>
       <q-icon size="16px">
         <img src="~assets/icons/sun.svg" />
       </q-icon>
       <div>
-        남서향
+        {{ direction }}
       </div>
     </div>
     <q-separator style="margin-top: 20px" />
@@ -37,6 +38,9 @@ export default {
     tags: Object,
     name: String,
     amount: String,
+    areaExclusive: [Number, String],
+    floor: [Number, String],
+    direction: String,
     to: {
       type: String,
       default: "for_sale_apartment"

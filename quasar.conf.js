@@ -83,10 +83,10 @@ module.exports = function (ctx) {
         API_URL: 'localhost',
         API_CLIENT_ID: 0,
         API_CLIENT_SECRET: 0,
-        GOOGLE_MAP_API: 'AIzaSyBlMj7A1FSP8rR0SEJvk1SA5zw_XdW1VAQ'
+        GOOGLE_MAP_API: 'AIzaSyByeeufWvZT9GcXzWNSUoZs7ycQSUxaIJI'
       }
     },
-    
+
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,

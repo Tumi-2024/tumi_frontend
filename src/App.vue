@@ -17,12 +17,7 @@ export default {
     "login-modal": LoginModal
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapMode",
-      "changeMapZoom",
-      "changeMapCenter",
-      "getLocationInterest",
-    ])
+    ...mapActions("map", ["fetchLocationInterest"])
   },
   mounted() {
     this.$store.dispatch('requestLocation');
@@ -31,7 +26,7 @@ export default {
       if (token) {
         Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
         this.$store.dispatch('getDetailHouses', 'page_size=5');
-        this.getLocationInterest();
+        this.fetchLocationInterest();
       }
     } catch(e) {
       console.log(e);

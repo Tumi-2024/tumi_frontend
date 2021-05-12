@@ -94,7 +94,7 @@ export const searchStore = {
         }
         return acc;
       }, {})
-      console.log(data);
+      // console.log(data);
       context.commit('SET_LOCATION', data)
     }
   }

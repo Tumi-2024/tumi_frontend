@@ -38,7 +38,8 @@ export const mapStore = {
         ? "지금 보고 있는 정보"
         : "지금 보고있는 지역";
     },
-    getToolbarTitle: state => state.toolbarTitle
+    getToolbarTitle: state => state.toolbarTitle,
+    myInterestArea: state => state.interest
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
@@ -84,7 +85,9 @@ export const mapStore = {
         const string = result.data.address.split(' ');
         context.commit("setMapAddress", `${string[1]} ${string[2]}`)
         context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
-        if (result.data.location && result.data.location.interest && result.data.location.interest.location) {
+        // console.log('changeMapCenter', result.data)
+        if (result.data.location && result.data.location.subcity &&
+          result.data.location.subcity.interest && result.data.location.subcity.interest.subcity) {
           context.commit("setIsInterest", true);
         } else {
           context.commit("setIsInterest", false);
@@ -98,15 +101,15 @@ export const mapStore = {
     changeToolbarTitle: (context, data) => context.commit("setToolbarTitle", data),
     addInterestLocation: (context) => {
       if (!context.state.isInterest) {
-        Vue.prototype.$axios.post(`/locations/interest/address/`, Vue.prototype.$qs.stringify({
+        Vue.prototype.$axios.post(`/sub_cities/interest/address/`, Vue.prototype.$qs.stringify({
           latitude: context.state.mapCenter.lat,
           longitude: context.state.mapCenter.lng
         })).then(result => {
-          context.commit("setInterest", context.state.interest.concat(result.data.location));
+          context.commit("setInterest", context.state.interest.concat(result.data.subcity));
           context.commit("setIsInterest", true);
         })
       } else {
-        Vue.prototype.$axios.post(`/locations/uninterest/address/`, Vue.prototype.$qs.stringify({
+        Vue.prototype.$axios.post(`/sub_cities/uninterest/address/`, Vue.prototype.$qs.stringify({
           latitude: context.state.mapCenter.lat,
           longitude: context.state.mapCenter.lng
         })).then(result => {
@@ -115,20 +118,23 @@ export const mapStore = {
       }
     },
     removeLocationInterest: (context, payload) => {
-      Vue.prototype.$axios.delete(`locations/${payload}/interest/`).then(result => {
-        console.log(context);
+      Vue.prototype.$axios.delete(`sub_cities/${payload}/interest/`).then(result => {
         context.dispatch('getLocationInterest');
         // context.commit("setIsInterest", false);
       })
     },
-    getLocationInterest: async (context) => {
-      const response = await Vue.prototype.$axios.get(
-        `/locations/interests/`, {
-          timeout: 10000
-        })
-      // console.log('vuex getLocationInterest');
-      // console.log(response.data.results);
-      context.commit("setInterest", response.data.results)
+    fetchLocationInterest: async (context) => {
+      try {
+        const response = await Vue.prototype.$axios.get(
+          `/sub_cities/interests/`,
+          { timeout: 10000 }
+        );
+        // console.log('vuex getLocationInterest');
+        // console.log(response.data.results);
+        context.commit("setInterest", response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

@@ -216,3 +216,15 @@ export const toMoneyString = (val) => {
   const price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
   return price;
 }
+
+const pad = (val) => {
+  return val < 10 ? '0' + val : val
+}
+
+export const toDateFormat = (val) => {
+  val = new Date(val)
+  const year = val.getFullYear().toString().slice(-2)
+  const month = pad(val.getMonth() + 1)
+  const day = pad(val.getDate())
+  return `${year}.${month}.${day}`
+}

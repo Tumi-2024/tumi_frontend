@@ -454,7 +454,9 @@ export default {
     background: white;
     border-radius: 8px;
     padding: 8px;
-    box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0;
+    border: 1px solid #D5D5D5;
+    border-bottom: 0;
   }
 }
 // hide the close "x" icon on info window

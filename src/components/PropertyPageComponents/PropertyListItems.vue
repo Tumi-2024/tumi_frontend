@@ -28,7 +28,7 @@
           </div>
           <property-item
             class="col"
-            :name="item.name"
+            :name="item.address"
             :amount="item.amount"
             :tags="item.tags"
             :disabled="isEdit"
@@ -74,13 +74,18 @@
 
 <script>
 import PropertyItem from "components/Utilities/PropertyItem";
+
+
 export default {
   components: {
     "property-item": PropertyItem
   },
+  mounted () {
+    
+  },
   data() {
     return {
-      selectedItems: []
+      selectedItems: [],
     };
   },
   props: {

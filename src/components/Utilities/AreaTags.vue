@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <custom-badge :label="tag.type" v-if="tag.type" />
+    <custom-badge :label="formatType(tag.type)" v-if="tag.type" />
 
     <custom-badge
-      :label="tag.recommended"
+      label="추천 급매"
       text_color="primary"
       bg_color="white"
       :outline="true"
@@ -64,6 +64,18 @@ export default {
           transactionStatus: "",
           date: ""
         };
+      }
+    }
+  },
+  methods: {
+    formatType(type) {
+      switch (type) {
+        case "officetels":
+          return "오피스텔";
+        case "apartment":
+          return "아파트";
+        default:
+          return type;
       }
     }
   }

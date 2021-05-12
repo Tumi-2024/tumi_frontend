@@ -1,8 +1,18 @@
 <template>
   <div class="q-mt-sm">
-    <area-carousel></area-carousel>
-    <area-filter-btns></area-filter-btns>
-    <area-list-items></area-list-items>
+    <section v-if="myInterestArea.length">
+      <area-carousel @setSubcity="e => (subcity = e)"></area-carousel>
+      <area-filter-btns></area-filter-btns>
+      <area-list-items :subcity="subcity" v-if="subcity"></area-list-items>
+    </section>
+    <!-- IF USER DONT HAVE ANY INTEREST -->
+    <section
+      class="row justify-center items-center"
+      style="min-height: 50vh"
+      v-else
+    >
+      <div>You dont have any Area of Interest.</div>
+    </section>
   </div>
 </template>
 
@@ -12,7 +22,7 @@ import {
   AreaFilterBtns,
   AreaListItems
 } from "src/components/AreaPageComponents";
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Area",
   components: {
@@ -21,15 +31,20 @@ export default {
     "area-list-items": AreaListItems
   },
   data() {
-    return {};
+    return {
+      subcity: null
+    };
+  },
+  computed: {
+    ...mapGetters("map", ["myInterestArea"])
   },
   methods: {
-    ...mapActions("map", [
-      "getLocationInterest"
-    ])
+    ...mapActions("map", ["fetchLocationInterest"])
   },
   mounted() {
-    this.getLocationInterest();
+    if (!this.myInterestArea.length) {
+      this.fetchLocationInterest();
+    }
   }
 };
 </script>

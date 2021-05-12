@@ -21,22 +21,10 @@
           :key="i"
           :item="item"
         ></area-item>
-        
-        <q-item class="q-pa-none">
-          <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
-        </q-item>
-      </q-list>
 
-      <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
-        <area-item
-          v-for="(item, i) of $store.state.estate.detail_houses"
-          :key="i"
-          :item="item"
-        ></area-item>
-        
-        <q-item class="q-pa-none">
+        <!-- <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-card-section>
   </q-card>
@@ -50,67 +38,23 @@ export default {
     "area-item": AreaItem
   },
   mounted() {
-    console.log(this.$route.params.type);
-    console.log(this.$route.params.apartment);
-    console.log(this.$route.params.apartment.id);
+    console.log('this.$route.params.type', this.$route.params.type);
+    console.log('this.$route.params.apartment', this.$route.params.apartment);
+    console.log('this.$route.params.apartment.id', this.$route.params.apartment.id);
+    console.log('this.$route.params.apartment', this.$route.params.apartment)
     if (this.$route.params.apartment) {
       console.log('getDetailHousesgetDetailHousesgetDetailHouses')
       this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);
     } else if (this.$route.params.type === 'location') {
-      this.$store.dispatch('getDetailHouses', toQueryString({ 
-        latitude: this.$route.params.position.lat, 
+      this.$store.dispatch('getDetailHouses', toQueryString({
+        latitude: this.$route.params.position.lat,
         longitude: this.$route.params.position.lng,
         ...this.$store.state.search
       }));
     }
   },
   data() {
-    return {
-      items: [
-        {
-          tags: {
-            type: "아파트",
-            recomend: "투미추천 급매",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "보증금 5천 6백만 / 월세 120만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            redevelopment: true,
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5천만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        },
-        {
-          tags: {
-            type: "아파트",
-            date: "20.10.12"
-          },
-          name: "종로1가 대성스카이렉스",
-          amount: "매매 6억 5,500만"
-        }
-      ]
-    };
+    return {};
   },
   methods: {
     toMoneyString: toMoneyString,

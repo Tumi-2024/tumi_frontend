@@ -2,8 +2,8 @@
   <q-dialog v-model="modal" seamless position="bottom" class=" bg-transparent">
     <q-card flat class=" notosanskr-regular bg-transparent">
       <q-card-section class="row justify-center q-pa-none">
-        <q-btn class="bg-primary">
-          종로구 지도로 보기
+        <q-btn class="bg-primary" @click="$emit('click')">
+          {{ title || "종로구 지도로 보기" }}
         </q-btn>
       </q-card-section>
     </q-card>
@@ -13,7 +13,8 @@
 <script>
 export default {
   props: {
-    modal: Boolean
+    modal: Boolean,
+    title: String
   }
 };
 </script>

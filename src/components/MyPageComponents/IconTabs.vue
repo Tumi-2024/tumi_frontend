@@ -59,9 +59,7 @@ export default {
   },
   methods: {
     goTo(path) {
-      console.log(this.$store.state.user.data);
       if (this.$store.state.user.data && this.$store.state.user.data.id) {
-
         this.$router.push({ name: path });
       } else {
         this.setModal();
