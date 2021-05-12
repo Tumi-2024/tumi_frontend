@@ -27,7 +27,7 @@
       {{ item.address }}
     </q-item-section>
     <q-item-section class="area-amount">
-      {{ `${toKr(item.type_sale)} / ${toMoneyString(item.price)}` }}
+      {{ `${toKr(sale.type)} ${sale.price !== '' ?  '/ ' + sale.price : ''}` }}
     </q-item-section>
     <div class="additional-info row items-center q-pt-sm">
       <div>{{ (item.area_common) ? `전용면적 ${item.area_common}㎡(${Math.round(item.area_common/3.3)}평)` : '' }}</div>
@@ -46,6 +46,7 @@
 <script>
 import { toQueryString, toMoneyString, toKr, toDateFormat } from 'src/utils';
 export default {
+  name: 'AreaItem',
   props: {
     item: Object,
   },
@@ -53,6 +54,39 @@ export default {
     toKr,
     toMoneyString,
     toDateFormat,
+  },
+  computed: {
+    sale () {
+      
+      const sale = {}
+      sale['type'] = this.item.type_sale
+      if (sale['type'] === 'sale') {
+        sale['price'] = toMoneyString(this.item.price_sale)
+        return sale
+      }
+      
+      if (sale['type'] === 'charter' || sale['type'] === 'half-charter') {
+        
+        sale['price'] = toMoneyString(this.item.price_rent) !== '' ? 
+          `${toMoneyString(this.item.price_charter)}, ${toMoneyString(this.item.price_rent)}` :
+          toMoneyString(this.item.price_charter)
+        return sale
+      }
+
+      if (sale['type'] === 'rent') {
+        sale['price'] = toMoneyString(this.item.price_rent) !== '' ? 
+          `${toMoneyString(this.item.price_deposit)}, ${toMoneyString(this.item.price_rent)}` :
+          toMoneyString(this.item.price_deposit)
+        return sale
+      }
+
+      return {
+        sale: {
+          type: '',
+          price: '',
+        }
+      }
+    }
   }
 };
 </script>

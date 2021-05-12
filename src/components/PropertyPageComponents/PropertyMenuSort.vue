@@ -5,7 +5,7 @@
       style="height: 48px;"
     >
       <p style="line-height: 48px; padding-left: 16px;">
-        관심매물 <span style="color: #ff5a00;">5</span>개
+        관심매물 <span style="color: #ff5a00;">{{ $store.getters.recently_viewed_houses.length }}</span>개
       </p>
     </q-card-section>
 
@@ -13,13 +13,13 @@
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
       align="center"
     >
-      <q-btn flat class="text-primary">최신순</q-btn>
+      <q-btn flat :class="{'text-primary': order==='created'}" @click="sort('created')">최신순</q-btn>
       <q-separator vertical />
-      <q-btn flat>추천순</q-btn>
+      <q-btn flat :class="{'text-primary': order==='recommend'}" @click="sort('recommend')">추천순</q-btn>
       <q-separator vertical />
-      <q-btn flat>면적순</q-btn>
+      <q-btn flat :class="{'text-primary': order==='area_common'}" @click="sort('area_common')">면적순</q-btn>
       <q-separator vertical />
-      <q-btn flat>가격순</q-btn>
+      <q-btn flat :class="{'text-primary': order==='price_string'}" @click="sort('price_string')">가격순</q-btn>
 
       <q-btn
         flat
@@ -70,7 +70,17 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      order: 'created',
+    }
+  },
   methods: {
+    sort(order) {
+      if(this.order === order) return
+      this.order = order
+      this.$emit("sort", this.order)
+    },
     edit() {
       this.$emit("edit", !this.isEdit);
     }

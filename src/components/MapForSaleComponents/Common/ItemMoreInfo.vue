@@ -22,10 +22,7 @@ export default {
       type: String,
       default: ""
     },
-    value: {
-      type: String,
-      default: ""
-    },
+    value: {},
     highlight: {
       type: Boolean,
       default: false

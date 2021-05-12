@@ -22,9 +22,9 @@
           :item="item"
         ></area-item>
 
-        <q-item class="q-pa-none">
+        <!-- <q-item class="q-pa-none">
           <q-btn flat class="bg-white full-width see-more"> 매물 더 보기</q-btn>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-card-section>
   </q-card>
@@ -41,6 +41,7 @@ export default {
     console.log('this.$route.params.type', this.$route.params.type);
     console.log('this.$route.params.apartment', this.$route.params.apartment);
     console.log('this.$route.params.apartment.id', this.$route.params.apartment.id);
+    console.log('this.$route.params.apartment', this.$route.params.apartment)
     if (this.$route.params.apartment) {
       console.log('getDetailHousesgetDetailHousesgetDetailHouses')
       this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);

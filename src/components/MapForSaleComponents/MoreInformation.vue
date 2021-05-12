@@ -112,10 +112,7 @@ export default {
       type: String,
       default: null
     },
-    exclusiveArea: {
-      type: String,
-      default: null
-    },
+    exclusiveArea: {},
     landArea: {
       type: String,
       default: null
@@ -124,10 +121,7 @@ export default {
       type: String,
       default: null
     },
-    commonArea: {
-      type: String,
-      default: null
-    },
+    commonArea: {},
     direction: {
       type: String,
       default: null
@@ -145,8 +139,8 @@ export default {
       default: null
     },
     numberRooms: {
-      type: String,
-      default: null
+      type: Number,
+      default: 0
     },
     heating: {
       type: String,
@@ -157,8 +151,8 @@ export default {
       default: null
     },
     administrativeExpenses: {
-      type: String,
-      default: null
+      type: Number,
+      default: 0
     },
     usageArea: {
       type: String,
