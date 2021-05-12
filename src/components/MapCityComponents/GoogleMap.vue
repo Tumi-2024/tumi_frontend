@@ -13,7 +13,8 @@
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="getMapOptions">
+      :options="getMapOptions"
+      >
 
       <gmap-info-window
         v-for="(m, index) in $store.state.estate.distinct_houses"
@@ -311,6 +312,7 @@ export default {
         let item = null;
 
         if (area.redevelopment_area_locations && area.redevelopment_area_locations.length >= 1) {
+          console.log(area);
           const paths = []
           for (var i = 0; i < area.redevelopment_area_locations.length; i++) {
             const redevelopmentAreaLocation = area.redevelopment_area_locations[i]
