@@ -32,7 +32,7 @@
 
 <script>
 import PropertyItem from "components/Utilities/PropertyItem";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import AreaSortBtns from "./AreaSortBtns.vue";
 export default {
   components: {
@@ -54,10 +54,15 @@ export default {
       ]
     };
   },
+  props: {
+    subcity: Object
+  },
   computed: {
     ...mapGetters(["detail_houses"])
   },
   methods: {
+    ...mapActions(["getDetailHouses"]),
+
     formatAmount(priceDeposit, priceRent) {
       return `${priceDeposit} / ${priceRent}`;
     },
@@ -71,11 +76,26 @@ export default {
       };
     },
     toSortBy(sortBy) {
-      console.log(sortBy);
+      let order = "modified";
+      switch (sortBy) {
+        case "추천순":
+          order = "recommend";
+          break;
+        case "면적순":
+          order = "area_exclusive";
+          break;
+        case "가격순":
+          order = "price_string";
+          break;
+
+        default:
+          order = "modified";
+          break;
+      }
+      const query = `subcity=${this.subcity.id}&page_size=30&ordering=${order}`;
+      // console.log(query);
+      this.getDetailHouses(query);
     }
-  },
-  mounted() {
-    console.log(this.detail_houses, "list itsems");
   }
 };
 </script>

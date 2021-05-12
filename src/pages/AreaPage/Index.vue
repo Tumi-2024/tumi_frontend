@@ -1,9 +1,9 @@
 <template>
   <div class="q-mt-sm">
     <section v-if="myInterestArea.length">
-      <area-carousel></area-carousel>
+      <area-carousel @setSubcity="e => (subcity = e)"></area-carousel>
       <area-filter-btns></area-filter-btns>
-      <area-list-items></area-list-items>
+      <area-list-items :subcity="subcity" v-if="subcity"></area-list-items>
     </section>
     <!-- IF USER DONT HAVE ANY INTEREST -->
     <section
@@ -29,6 +29,11 @@ export default {
     "area-carousel": AreaCarousel,
     "area-filter-btns": AreaFilterBtns,
     "area-list-items": AreaListItems
+  },
+  data() {
+    return {
+      subcity: null
+    };
   },
   computed: {
     ...mapGetters("map", ["myInterestArea"])

@@ -72,7 +72,6 @@
 <script>
 import AreaGoogleMap from "./AreaGoogleMap";
 import { mapGetters, mapActions } from "vuex";
-import { toQueryString } from "src/utils";
 export default {
   components: {
     AreaGoogleMap
@@ -98,10 +97,10 @@ export default {
   },
   mounted() {
     this.subcityHouses(0);
-    console.log(this.myInterestArea[0]);
   },
   methods: {
     ...mapActions("map", ["removeLocationInterest"]),
+    ...mapActions(["getDetailHouses"]),
     removeInterest(num) {
       this.removeLocationInterest(num);
       this.currentSlide = 0;
@@ -109,18 +108,9 @@ export default {
     subcityHouses(val) {
       if (this.myInterestArea[val]) {
         const subcity = this.$store.state.map.interest[val];
-        this.$store.dispatch(
-          "getDetailHouses",
-          `subcity=${subcity.id}&page_size=30`
-          // `location=${subcity.id}&page_size=30`
-        );
+        this.$emit("setSubcity", subcity);
+        this.getDetailHouses(`subcity=${subcity.id}&page_size=30`);
       }
-      // const location = this.$store.state.map.interest[val];
-      // this.$store.dispatch(
-      //   "getDetailHouses",
-      //   `location=${location.id}&page_size=30`
-      // );
-      // console.log(location);
     }
   }
 };
