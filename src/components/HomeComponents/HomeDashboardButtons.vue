@@ -1,38 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-6 q-pr-xs q-pb-xs flex justify-center items-center">
-      <q-btn
-        flat
-        @click="$router.push({ name: 'map_list_sale' })"
-        class="btn-dash-board full-width"
-        style="background-color: #FF7D36"
-      >
-        <p class="btn-title1">추천</p>
-        <p class="btn-title2">
-          이번주 <br />
-          추천급매
-        </p>
-        <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/2.svg" />
-      </q-btn>
-    </div>
-    <div class="col-6 q-pl-xs q-pb-xs flex justify-center items-center">
-      <q-btn
-        flat
-        @click="toMapCity()"
-        class="btn-dash-board full-width"
-        style="background-color: #4B62DE"
-      >
-        <p class="btn-title1">추천</p>
-        <p class="btn-title2">
-          지도에서 쉽게 <br />
-          매물찾기
-        </p>
-        <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
-      </q-btn>
-    </div>
     <div
-      class="col-6 q-pr-xs q-pt-xs flex justify-center items-center"
-      style="padding-bottom: 24px"
+      class="col-6 q-pr-xs q-pb-xs flex justify-center items-center"
     >
       <q-btn
         flat
@@ -42,12 +11,43 @@
       >
         <p class="btn-title1">재개발 구역</p>
         <p class="btn-title2">
-          투미에서 <br />
+          지도에서 쉽게 <br />
           재개발 구역 찾기
         </p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/3.svg" />
       </q-btn>
     </div>
+    <div class="col-6 q-pl-xs q-pb-xs flex justify-center items-center">
+      <q-btn
+        flat
+        @click="toMapCity()"
+        class="btn-dash-board full-width"
+        style="background-color: #4B62DE"
+      >
+        <p class="btn-title1">추천 매물</p>
+        <p class="btn-title2">
+          지도에서 쉽게 <br />
+          매물찾기
+        </p>
+        <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
+      </q-btn>
+    </div>
+    <div class="col-6 q-pr-xs q-pt-xs flex justify-center items-center" style="padding-bottom: 24px">
+      <q-btn
+        flat
+        @click="$router.push({ name: 'map_list_sale' })"
+        class="btn-dash-board full-width"
+        style="background-color: #FF7D36"
+      >
+        <p class="btn-title1">매물 검색</p>
+        <p class="btn-title2">
+          이번주 <br />
+          추천급매
+        </p>
+        <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/2.svg" />
+      </q-btn>
+    </div>
+    
     <div
       class="col-6 q-pl-xs q-pt-xs flex justify-center items-center"
       style="padding-bottom: 24px"

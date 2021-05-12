@@ -8,6 +8,7 @@ const instance = axios.create({})
 
 instance.defaults.baseURL = process.env.API
 // instance.defaults.baseURL = 'http://127.0.0.1:9013/api/';
+// instance.defaults.baseURL = 'http://admin.tumi.sunwook.com/api/';
 instance.defaults.timeout = 10000
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
