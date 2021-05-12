@@ -13,6 +13,9 @@
           :key="i"
           :name="item.address"
           :amount="formatAmount(item.price_deposit, item.price_rent)"
+          :areaExclusive="item.area_exclusive"
+          :floor="item.floor"
+          :direction="item.type_direction"
           :tags="
             formatTags({
               type: item.type_house,
@@ -64,7 +67,7 @@ export default {
     ...mapActions(["getDetailHouses"]),
 
     formatAmount(priceDeposit, priceRent) {
-      return `${priceDeposit} / ${priceRent}`;
+      return `보증금 ${priceDeposit || 0} / 월세 ${priceRent || 0}`;
     },
     formatTags({ type, date, recommended, redevelopment }) {
       const _date = new Date(date);
