@@ -17,7 +17,7 @@
       <q-separator vertical />
       <q-btn flat :class="{'text-primary': order==='recommend'}" @click="sort('recommend')">추천순</q-btn>
       <q-separator vertical />
-      <q-btn flat :class="{'text-primary': order==='area_common'}" @click="sort('area_common')">면적순</q-btn>
+      <q-btn flat :class="{'text-primary': order==='area_exclusive'}" @click="sort('area_exclusive')">면적순</q-btn>
       <q-separator vertical />
       <q-btn flat :class="{'text-primary': order==='price_string'}" @click="sort('price_string')">가격순</q-btn>
 
