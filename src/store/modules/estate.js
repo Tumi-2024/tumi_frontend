@@ -6,7 +6,8 @@ export const estateStore = {
     simple_houses: [],
     detail_houses: [],
     distinct_houses: [],
-    selected_house: {},
+    interest_houses: [],
+    current_house: {},
     recently_viewed_houses: [],
     count_estate: 0
   },
@@ -22,6 +23,10 @@ export const estateStore = {
     },
     recently_viewed_houses: (state, getters) => {
       return state.recently_viewed_houses
+    },
+    interest_houses: (state, getters) => state.interest_houses,
+    current_house: (state, getters) => {
+      return state.current_house
     }
   },
   mutations: {
@@ -38,17 +43,23 @@ export const estateStore = {
       state.count_estate = payload
     },
     setSelectedHouse: function (state, payload) {
-      state.selected_house = payload
+      state.current_house = payload
     },
     setRecentlyViewedHouses: function (state, payload) {
       state.recently_viewed_houses = payload
+    },
+    setInterestHouses: function (state, payload) {
+      state.interest_houses = payload
+    },
+    removeInterestHouse: function (state, payload) {
+      state.current_house.interest.house = null
     }
   },
   actions: {
     getSimpleHouses: async function (context, payload) {
       const response = await Vue.prototype.$axios.get(
         `/houses/simple${payload ? `?${payload}` : ""}`, {
-          timeout: 60000
+          timeout: 10000
         }
       );
       context.commit('setSimpleHouses', response.data.filter(item => item.latitude && item.longitude).map(item =>
@@ -62,10 +73,9 @@ export const estateStore = {
       )
     },
     getDistinctHouses: async function (context, paramter) {
-      console.log('getDistinctHouses', paramter)
       const response = await Vue.prototype.$axios.get(
         `/houses/distinct${paramter ? `?${paramter}` : ''}`, {
-          timeout: 600000
+          timeout: 100000
         })
       const results = response.data.apartments.map(item =>
         ({
@@ -126,8 +136,23 @@ export const estateStore = {
       context.commit('setDetailHouses', results)
     },
     addRecentlyViewedHouse: (context, parameter) => {
-      if (context.state.recently_viewed_houses.some(house => house.id === parameter)) return
-      Vue.prototype.$axios.post(`/houses/${parameter}/recent/`)
+      context.commit('setSelectedHouse', parameter)
+      if (context.state.recently_viewed_houses.some(house => house.id === parameter.id)) return
+      Vue.prototype.$axios.post(`/houses/${parameter.id}/recent/`).then(result => {
+        context.commit('setRecentlyViewedHouses', context.state.recently_viewed_houses.concat(result.data.house))
+      })
+    },
+    toggleInterestHouse: (context, parameter) => {
+      const house = context.state.current_house
+      if (house.interest.house) {
+        Vue.prototype.$axios.delete(`/houses/${house.id}/interest/`).then(() => {
+          context.commit('removeInterestHouse')
+        })
+        return
+      }
+      Vue.prototype.$axios.post(`/houses/${house.id}/interest/`).then(result => {
+        context.commit('setSelectedHouse', result.data.house)
+      })
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const { data, status } = await Vue.prototype.$axios.get(`houses/recents/?ordering=${parameter}`, { timeout: 60000 })

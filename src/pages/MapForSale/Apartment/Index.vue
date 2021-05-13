@@ -81,7 +81,8 @@ export default {
   },
   mounted() {
     this.estate = this.$route.params.data;
-    this.$store.dispatch('addRecentlyViewedHouse', this.estate.id)
+    if(this.estate === undefined) return 
+    this.$store.dispatch('addRecentlyViewedHouse', this.estate)
     this.redevelopment = this.estate.redevelopment
   },
   methods: {
