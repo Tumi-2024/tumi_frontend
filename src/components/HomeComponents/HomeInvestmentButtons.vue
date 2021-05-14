@@ -40,19 +40,19 @@ export default {
         },
         {
           label: '토지',
-          icon: 'home.svg',
+          icon: 'land.svg',
         },
         {
           label: '상업/업무용',
-          icon: 'home.svg',
+          icon: 'sanga.svg',
         },
         {
           label: '분양권',
-          icon: 'home.svg',
+          icon: 'ticket.svg',
         },
         {
           label: '입주권',
-          icon: 'home.svg',
+          icon: 'ticket2.svg',
         },
       ]
 		}
