@@ -27,7 +27,7 @@
         <p class="btn-title1">추천 매물</p>
         <p class="btn-title2">
           지도에서 쉽게 <br />
-          매물찾기
+          매물 찾기
         </p>
         <q-icon class="btn-icon" name="img:icons/home-page-icon/4btns/1.svg" />
       </q-btn>
