@@ -1,5 +1,5 @@
 <template>
-    <q-card flat class="q-mt-sm">
+    <q-card flat class="q-mt-sm" v-if="item">
         <q-card-section class="card-section" style="">
             <div class="title">
                 #최근 게시글
@@ -27,8 +27,6 @@
                     />
                 </div>
             </div>
-
-
         </q-card-section>
     </q-card>
 </template>
