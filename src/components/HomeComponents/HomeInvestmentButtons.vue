@@ -2,12 +2,12 @@
   <div>
     <div class="row q-mt-md q-col-gutter-sm">
       <div class="col">
-        <p class="title1">투자 매물 찾기</p>
+        <p class="title1">"주택유형별" 매물 찾기</p>
       </div>
     </div>
 
     <div class="row q-mt-sm q-col-gutter-sm">
-      <div class="col flex justify-center" v-for="(list, index) in investments_btn" :key="index">
+      <div class="col-3 flex justify-center" v-for="(list, index) in investments_btn" :key="index">
         <q-btn flat class="investment-btn full-width" :to="{ name: 'map_city' }">
           <q-icon class="investment-btn-icon" :name="`img:icons/home-page-icon/investment-icon/${list.icon}`" />
           <p class="investment-btn-label">{{ list.label }}</p>
@@ -27,17 +27,33 @@ export default {
           icon: 'building.svg',
         },
         {
-          label: '재개발',
+          label: '연립/다세대',
           icon: 'obstacle.svg',
         },
         {
-          label: '가로주택',
+          label: '단독/다가구',
           icon: 'paint.svg',
         },
         {
-          label: '기타매물',
+          label: '오피스텔',
           icon: 'home.svg',
-        }
+        },
+        {
+          label: '토지',
+          icon: 'land.svg',
+        },
+        {
+          label: '상업/업무용',
+          icon: 'sanga.svg',
+        },
+        {
+          label: '분양권',
+          icon: 'ticket.svg',
+        },
+        {
+          label: '입주권',
+          icon: 'ticket2.svg',
+        },
       ]
 		}
 	},
