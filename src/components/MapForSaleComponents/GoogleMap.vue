@@ -16,13 +16,11 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { TUMI_AREA_FOR_SALE } from "./area-forsale-sample.js";
-
 import { mapGetters } from "vuex";
 export default {
   components: {},
   props: {
-    position: Object,
+    position: Object
   },
   data() {
     return {
@@ -36,7 +34,6 @@ export default {
   },
 
   async mounted() {
-    console.log(this.position);
     this.setGmapContainerSize();
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;

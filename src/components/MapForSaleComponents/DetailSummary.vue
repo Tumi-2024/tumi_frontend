@@ -72,20 +72,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bread-crumbs-badge {
-  border-radius: 4px;
-  font-family: "notosanskr-medium";
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 24px;
-  text-align: center;
-  letter-spacing: -0.9px;
-  color: #ffffff;
-  padding: 5px;
-  height: 24px;
-  min-width: 30px;
-}
-
 .area-name {
   font-family: "notosanskr-medium";
   font-weight: 500;

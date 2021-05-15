@@ -162,10 +162,6 @@ export default {
       type: String,
       default: null
     },
-    usageSituation: {
-      type: String,
-      default: null
-    },
     announcement: {
       type: String,
       default: null
