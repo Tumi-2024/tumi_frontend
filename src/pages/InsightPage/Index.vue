@@ -39,11 +39,11 @@ export default {
   },
   computed: {
     insightsResults () {
-      if (this.$route.params.tab === 'tips') {
+      if (this.$route.params.tab === 'estate') {
         return this.$store.getters.estateInsights
-      } else if (this.$route.params.tab === '정책분석') {
+      } else if (this.$route.params.tab === 'policy') {
         return this.$store.getters.policyInsights
-      } else if (this.$route.params.tab === '시장전망') {
+      } else if (this.$route.params.tab === 'market') {
         return this.$store.getters.marketInsights
       } else {
         return this.$store.getters.estateInsights

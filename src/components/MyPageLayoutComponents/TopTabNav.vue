@@ -3,7 +3,6 @@
     <q-tabs
       dense
       align="justify"
-      v-model="pageTab"
       class="bg-white text-primary notosanskr-medium"
     >
       <q-route-tab
@@ -11,7 +10,8 @@
         :key="i"
         :label="tab.label"
         :to="tab.path"
-        @click="clickTab"
+        exact
+        replace
       />
     </q-tabs>
   </q-card-section>
@@ -21,14 +21,8 @@
 export default {
   data() {
     return {
-      pageTab: "",
       routeTabs: []
     };
-  },
-  methods: {
-    clickTab () {
-      // const path = this.$route.path.split("/")[1];
-    }
   },
   computed: {
     defaultTabs() {
@@ -40,9 +34,9 @@ export default {
     },
     insightsTabs() {
       return [
-        { label: "부동산 팁", path: '/insights/부동산팁' },
-        { label: "정책분석", path: '/insights/정책분석' },
-        { label: "시장전망", path: '/insights/시장전망' }
+        { label: "부동산 팁", path: '/insights/estate' },
+        { label: "정책분석", path: '/insights/policy' },
+        { label: "시장전망", path: '/insights/market' }
       ];
     }
   },
