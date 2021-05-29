@@ -1,6 +1,6 @@
 <template>
     <q-card flat class="q-mt-sm" v-if="item">
-        <q-card-section class="card-section" style="">
+        <q-card-section class="card-section" style="" @click="go()">
             <div class="title">
                 #최근 게시글
             </div>
@@ -40,6 +40,11 @@ export default {
   computed: {
     image () {
       return this.item.image
+    }
+  },
+  methods: {
+    go() {
+        this.$router.push({ name: 'insight_content', params: { id: this.item.id } })
     }
   }
 }

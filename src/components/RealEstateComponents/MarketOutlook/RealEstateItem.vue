@@ -1,11 +1,11 @@
 <template>
-  <q-item class="column  notosanskr-regular ">
+  <q-item class="column  notosanskr-regular" @click.native="go">
     <q-item-section class="area-title">
       {{ title }}
     </q-item-section>
 
     <div class="row area-date">
-      <div class="date">투미부동산</div>
+      <div class="date">{{ category }}</div>
       <div class="line"></div>
       <div class="value">{{ date }}</div>
     </div>
@@ -22,9 +22,16 @@
 <script>
 export default {
   props: {
+    id: Number,
     title: String,
     date: String,
     description: String,
+    category: String
+  },
+  methods: {
+    go () {
+      this.$router.push({ name: 'insight_content', params: { id: this.id } })
+    }
   }
 };
 </script>

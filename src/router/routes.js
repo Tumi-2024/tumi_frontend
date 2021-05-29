@@ -41,7 +41,8 @@ const routes = [
     path: '/insights/',
     component: () => import('layouts/MyPageLayout.vue'),
     children: [
-      { path: ':tab', component: () => import('pages/InsightPage/Index.vue'), name: 'insights' }
+      { path: '', component: () => import('pages/InsightPage/Index.vue'), name: 'insights' },
+      { path: ':id', component: () => import('pages/InsightPage/Content/Index.vue'), name: 'insight_content' }
     ]
   },
   {

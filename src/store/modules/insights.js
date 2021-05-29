@@ -19,6 +19,12 @@ export const insightsStore = {
     },
     marketInsights: (state, getters) => {
       return state.marketResults
+    },
+    allInsights: (state) => {
+      return state.estateResults.concat(
+        state.policyResults,
+        state.marketResults
+      )
     }
   },
   mutations: {

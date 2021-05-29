@@ -5,9 +5,11 @@
         <real-estate-item
           v-for="(item, i) of items"
           :key="i"
+          :id="item.id"
           :title="item.title"
           :date="item.completed_at"
           :description="item.description"
+          :category="item.category"
         ></real-estate-item>
       </q-list>
     </q-card-section>
@@ -22,10 +24,6 @@ export default {
   },
   props: {
     items: Array
-  },
-  data() {
-    return {
-    }
   }
 };
 </script>

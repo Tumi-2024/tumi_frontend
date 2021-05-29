@@ -39,7 +39,6 @@ export default {
   },
   computed: {
     insightsResults () {
-      console.log(this.$route)
       if (this.$route.query.tab === 'estate') {
         return this.$store.getters.estateInsights
       } else if (this.$route.query.tab === 'policy') {
