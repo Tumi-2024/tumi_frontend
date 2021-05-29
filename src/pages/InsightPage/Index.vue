@@ -57,7 +57,7 @@ export default {
       }
     },
     otherInsights () {
-      return this.insightsResults
+      return this.insightsResults.slice(1)
     }
   }
 }

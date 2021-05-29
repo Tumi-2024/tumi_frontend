@@ -2,7 +2,7 @@
     <q-card flat class="q-mt-sm"  style="margin-top: 0px;">
         <q-card-section class="card-section" style="">
             <div>
-                게시글 더보기
+                <!-- 게시글 더보기 -->
             </div>
         </q-card-section>
     </q-card>

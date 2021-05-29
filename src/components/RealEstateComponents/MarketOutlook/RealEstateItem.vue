@@ -9,8 +9,11 @@
       <div class="line"></div>
       <div class="value">{{ date }}</div>
     </div>
-
-    <q-item-section class="area-description" v-html="description"></q-item-section>
+    <q-item>
+      <q-item-section>
+        <q-item-label class="area-description" lines="2">{{ description }}</q-item-label>
+      </q-item-section>
+    </q-item>
 
     <q-separator style="margin-top: 20px" />
   </q-item>
@@ -61,11 +64,14 @@ export default {
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
-  line-height: 20px;
+  line-height: 20px !important;
   margin-top: 8px;
   letter-spacing: -0.98px;
   color: #707070;
   white-space: pre-line;
 }
+  .q-item .q-item-type {
+    padding: 0;
+  }
 
 </style>

@@ -10,9 +10,9 @@
                     <img class="img" src="~assets/icons/real_estate_orange.svg" />
                     <div class="date">투미부동산</div>
                     <div class="line"></div>
-                    <div class="value">20.11.02</div>
+                    <div class="value">{{item.completed_at}}</div>
                 </div>
-
+                
                 <div class="row area-description">
                   {{item.title}}
                 </div>
