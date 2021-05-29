@@ -71,7 +71,7 @@
       align="left"
       flat
       class="item row full-width"
-      :to="{ path: '/insights/estate' }"
+      :to="{ path: '/insights/?tab=estate' }"
     >
       <text-under-highlight text="부동산 인사이트"></text-under-highlight>
     </q-btn>

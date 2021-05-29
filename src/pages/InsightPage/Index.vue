@@ -39,11 +39,12 @@ export default {
   },
   computed: {
     insightsResults () {
-      if (this.$route.params.tab === 'estate') {
+      console.log(this.$route)
+      if (this.$route.query.tab === 'estate') {
         return this.$store.getters.estateInsights
-      } else if (this.$route.params.tab === 'policy') {
+      } else if (this.$route.query.tab === 'policy') {
         return this.$store.getters.policyInsights
-      } else if (this.$route.params.tab === 'market') {
+      } else if (this.$route.query.tab === 'market') {
         return this.$store.getters.marketInsights
       } else {
         return this.$store.getters.estateInsights
