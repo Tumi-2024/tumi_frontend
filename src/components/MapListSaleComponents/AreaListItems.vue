@@ -38,10 +38,10 @@ export default {
     "area-item": AreaItem
   },
   mounted() {
-    console.log('this.$route.params.type', this.$route.params.type);
-    console.log('this.$route.params.apartment', this.$route.params.apartment);
-    console.log('this.$route.params.apartment.id', this.$route.params.apartment.id);
-    console.log('this.$route.params.apartment', this.$route.params.apartment)
+    // console.log('this.$route.params.type', this.$route.params.type);
+    // console.log('this.$route.params.apartment', this.$route.params.apartment);
+    // console.log('this.$route.params.apartment.id', this.$route.params.apartment.id);
+    // console.log('this.$route.params.apartment', this.$route.params.apartment)
     if (this.$route.params.apartment) {
       console.log('getDetailHousesgetDetailHousesgetDetailHouses')
       this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);
