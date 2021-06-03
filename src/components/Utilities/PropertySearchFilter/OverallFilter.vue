@@ -33,11 +33,16 @@
         <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
           <!-- Transaction type | 거래유형 -->
-          <transaction-type class="bg-white q-pb-xl q-pt-md"></transaction-type>
+          <transaction-type
+            class="bg-white q-pb-xl q-pt-md"
+            @select="setSelected('transactionType', $event)"
+          ></transaction-type>
           <!-- Property Type | 매물유형 -->
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
+            @select="setSelected('propertyType', $event)"
+            @selectDetail="setSelected('propertyTypeDetailed', $event)"
           ></property-type>
           <!-- property sale | 부동산 매매  -->
           <property-sale-price
@@ -86,6 +91,7 @@
                   text-color="black"
                   label="초기화"
                   padding="12px"
+                  @click="resetFilters()"
                 />
               </div>
               <div class="col q-mx-xs">
@@ -95,6 +101,7 @@
                   flat
                   label="적용"
                   padding="12px"
+                  @click="applyFilters()"
                 />
               </div>
             </div>
@@ -132,13 +139,36 @@ export default {
   data() {
     return {
       modal: false,
-      moreFilters: false
+      moreFilters: false,
+      filterBy: {
+        transactionType: '전체',
+        propertyType: '아파트',
+        propertyTypeDetailed: null,
+        propertySalePrice: null,
+        CharterPriceDeposit: null,
+        PropertyMonthly: null,
+        ExclusiveArea: null,
+        PropertyPremiumPrice: null,
+        PropertyConnoisseur: null
+      }
     };
   },
   props: {
     disable: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    resetFilters() {
+      console.log("filters be reset");
+    },
+    setSelected(property, value) {
+      this.filterBy[property] = value;
+      console.log(property, this.filterBy[property]);
+    },
+    applyFilters() {
+      console.log(this.filterBy);
     }
   }
 };
