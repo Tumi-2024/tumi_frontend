@@ -54,7 +54,7 @@
     >
       <q-btn
         flat
-        :to="{ path: '/insights/부동산팁' }"
+        :to="{ path: '/insights/?tab=estate' }"
         class="btn-dash-board full-width"
         style="background-color: #5893F7"
       >
