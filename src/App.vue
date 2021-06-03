@@ -1,6 +1,9 @@
 <template>
   <div id="q-app" class="bg-positive">
-    <div style="max-width: 1000px; min-height: 100vh" class="q-mx-auto bg-white">
+    <div
+      style="max-width: 1000px; min-height: 100vh"
+      class="q-mx-auto bg-white"
+    >
       <router-view />
       <login-modal />
     </div>
@@ -8,11 +11,11 @@
 </template>
 <script>
 import LoginModal from "src/components/Utilities/LoginModal/LoginModal.vue";
-import Vue from 'vue'
-import { mapGetters, mapActions } from "vuex"
+import Vue from "vue";
+import { mapActions } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     "login-modal": LoginModal
   },
@@ -20,18 +23,18 @@ export default {
     ...mapActions("map", ["fetchLocationInterest"])
   },
   mounted() {
-    this.$store.dispatch('requestLocation');
+    this.$store.dispatch("requestLocation");
     try {
-      let token = this.$store.state.user.data.token;
+      const token = this.$store.state.user.data.token;
       if (token) {
-        Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-        this.$store.dispatch('getDetailHouses', 'page_size=5');
+        Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${token}`;
+        this.$store.dispatch("getDetailHouses", "page_size=5");
         this.fetchLocationInterest();
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
     console.log(this.$store);
   }
-}
+};
 </script>
