@@ -2,14 +2,14 @@
   <q-card flat square style="height: 60px">
     <q-card-section class="row justify-between items-center q-pa-none">
       <!-- left section items -->
-      <q-btn class="row" @click="toggleHeaderTitle()" flat padding="4px 16px">
+      <q-btn class="row" flat padding="4px 16px">
         <div class="helper text-left col-12 notosanskr-regular">
           {{ getToolbarLabel }}
         </div>
         <div class="q-mt-xs col-12 text-left notosanskr-medium">
           <div class="location-text " flat text-color="black">
             {{ getToolbarTitle }}
-            <q-icon name="keyboard_arrow_down" size="24px" />
+            <!-- <q-icon name="keyboard_arrow_down" size="24px" /> -->
           </div>
         </div>
       </q-btn>
