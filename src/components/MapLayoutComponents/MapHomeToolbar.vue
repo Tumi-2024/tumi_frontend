@@ -29,25 +29,26 @@
       Dialog Section for Property Information | 찾아볼 매물 정보
       this Dialog will show if getMapMode is not "default"
       -->
-    <dialog-property-information ref="DialogPropertyInformation" />
+    <!-- <dialog-property-information ref="DialogPropertyInformation" /> -->
   </q-card>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import DialogPropertyInformation from "./DialogPropertyInformation";
+// import DialogPropertyInformation from "./DialogPropertyInformation";
 export default {
   components: {
-    DialogPropertyInformation
+    // DialogPropertyInformation
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
   },
   methods: {
     toggleHeaderTitle() {
-      this.getMapMode === "default"
-        ? this.$router.push({ name: "map_view_search" })
-        : this.$refs.DialogPropertyInformation.showDialog();
+      // this.getMapMode === "default"
+      //   ? this.$router.push({ name: "map_view_search" })
+      //   : this.$refs.DialogPropertyInformation.showDialog();
+      this.$router.push({ name: "map_view_search" });
     }
   }
 };
