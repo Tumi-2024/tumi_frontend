@@ -43,7 +43,7 @@ export default {
         },
         {
           backgroundColor: "#FF7D36",
-          text: "매물 급매",
+          text: "매물 검색",
           subText: "투미매물<br/>상세 검색하기",
           img: "img:icons/home-page-icon/4btns/2.svg",
           func: () => this.$router.push({ name: "map_list_sale" })
