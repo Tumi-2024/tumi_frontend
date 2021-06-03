@@ -71,7 +71,7 @@ export default {
     return {
       modal: false,
       selected: '',
-      selectedDetail: '',
+      selectedDetail: ''
     };
   },
   props: {
@@ -149,19 +149,19 @@ export default {
           }
         }
         if (this.salePrice) {
-          this.selected = { text: '전체', min: null, max: null, };
+          this.selected = { text: '전체', min: null, max: null };
           this.$store.dispatch('setSalePrice', {
             text: '전체',
             min: null,
-            max: null,
+            max: null
           });
         }
         if (this.charterPriceDeposit) {
-          this.selected = { text: '전체', min: null, max: null, };
+          this.selected = { text: '전체', min: null, max: null };
           this.$store.dispatch('setDepositPrice', {
             text: '전체',
             min: null,
-            max: null,
+            max: null
           });
         }
       }
@@ -173,7 +173,7 @@ export default {
       //   ...this.$store.state.search
       // }));
       this.modal = false;
-    },
+    }
   },
   computed: {
     contentComponent() {
