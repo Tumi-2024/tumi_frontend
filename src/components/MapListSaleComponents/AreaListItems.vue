@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { toQueryString, toMoneyString, toKr } from 'src/utils';
+import { toQueryString } from 'src/utils';
 import AreaItem from "./AreaItem";
 export default {
   components: {
@@ -52,13 +52,6 @@ export default {
         ...this.$store.state.search
       }));
     }
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    toMoneyString: toMoneyString,
-    toKr: toKr,
   }
 };
 </script>
