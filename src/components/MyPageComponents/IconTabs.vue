@@ -26,8 +26,7 @@
 
 <script>
 import {
-  loginModalMutation,
-  loginModalStore
+  loginModalMutation
 } from "src/components/Utilities/LoginModal/LoginModalState";
 
 export default {

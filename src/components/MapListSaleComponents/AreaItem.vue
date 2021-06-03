@@ -1,16 +1,21 @@
 <template>
-  <q-item class="column  notosanskr-regular " :to="{ name: 'for_sale_apartment', params: { data: item } }">
+  <q-item
+    class="column  notosanskr-regular "
+    :to="{ name: 'for_sale_apartment', params: { data: item } }"
+  >
     <q-item-section>
       <div class="row">
         <!-- badge for item type -->
-        <q-badge class="text-white bg-primary q-mr-sm">{{ toKr(item.type_house) }}</q-badge>
+        <q-badge class="text-white bg-primary q-mr-sm">
+          {{ toKr(item.type_house) }}
+        </q-badge>
         <!-- badge for item status -->
         <q-badge
           outline
           class="text-primary bg-white q-mr-sm"
           v-if="item.recommend"
         >
-          {{ '투미추천 매물' }}
+          {{ "투미추천 매물" }}
         </q-badge>
         <!-- badge for redevelopment -->
         <q-badge class="re-develop bg-white q-mr-sm" v-if="item.redevelopment">
@@ -27,10 +32,18 @@
       {{ item.address }}
     </q-item-section>
     <q-item-section class="area-amount">
-      {{ `${toKr(sale.type)} ${sale.price !== '' ?  '/ ' + sale.price : ''}` }}
+      {{ `${toKr(sale.type)} ${sale.price !== "" ? "/ " + sale.price : ""}` }}
     </q-item-section>
     <div class="additional-info row items-center q-pt-sm">
-      <div>{{ (item.area_common) ? `전용면적 ${item.area_common}㎡(${Math.round(item.area_common/3.3)}평)` : '' }}</div>
+      <div>
+        {{
+          item.area_common
+            ? `전용면적 ${item.area_common}㎡(${Math.round(
+                item.area_common / 3.3
+              )}평)`
+            : ""
+        }}
+      </div>
       <div>{{ item.floor && `${item.floor}층` }}</div>
       <q-icon size="16px">
         <img src="~assets/icons/sun.svg" />
@@ -44,48 +57,52 @@
 </template>
 
 <script>
-import { toQueryString, toMoneyString, toKr, toDateFormat } from 'src/utils';
+import { toMoneyString, toKr, toDateFormat } from "src/utils";
 export default {
-  name: 'AreaItem',
+  name: "AreaItem",
   props: {
-    item: Object,
+    item: Object
   },
   methods: {
     toKr,
     toMoneyString,
-    toDateFormat,
+    toDateFormat
   },
   computed: {
-    sale () {
-      
-      const sale = {}
-      sale['type'] = this.item.type_sale
-      if (sale['type'] === 'sale') {
-        sale['price'] = toMoneyString(this.item.price_sale)
-        return sale
-      }
-      
-      if (sale['type'] === 'charter' || sale['type'] === 'half-charter') {
-        
-        sale['price'] = toMoneyString(this.item.price_rent) !== '' ? 
-          `${toMoneyString(this.item.price_charter)}, ${toMoneyString(this.item.price_rent)}` :
-          toMoneyString(this.item.price_charter)
-        return sale
+    sale() {
+      const sale = {};
+      sale.type = this.item.type_sale;
+      if (sale.type === "sale") {
+        sale.price = toMoneyString(this.item.price_sale);
+        return sale;
       }
 
-      if (sale['type'] === 'rent') {
-        sale['price'] = toMoneyString(this.item.price_rent) !== '' ? 
-          `${toMoneyString(this.item.price_deposit)}, ${toMoneyString(this.item.price_rent)}` :
-          toMoneyString(this.item.price_deposit)
-        return sale
+      if (sale.type === "charter" || sale.type === "half-charter") {
+        sale.price =
+          toMoneyString(this.item.price_rent) !== ""
+            ? `${toMoneyString(this.item.price_charter)}, ${toMoneyString(
+                this.item.price_rent
+              )}`
+            : toMoneyString(this.item.price_charter);
+        return sale;
+      }
+
+      if (sale.type === "rent") {
+        sale.price =
+          toMoneyString(this.item.price_rent) !== ""
+            ? `${toMoneyString(this.item.price_deposit)}, ${toMoneyString(
+                this.item.price_rent
+              )}`
+            : toMoneyString(this.item.price_deposit);
+        return sale;
       }
 
       return {
         sale: {
-          type: '',
-          price: '',
+          type: "",
+          price: ""
         }
-      }
+      };
     }
   }
 };
