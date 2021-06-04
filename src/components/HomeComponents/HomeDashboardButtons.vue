@@ -67,17 +67,7 @@ export default {
       "changeToolbarTitle"
     ]),
     toMapCity() {
-      Geolocation.getCurrentPosition({ enableHighAccuracy: true })
-        .then(position => {
-          const { latitude: lat, longitude: lng } = position.coords;
-          // console.log("Current", lat, lng);
-          this.$store.dispatch("map/resetMap");
-          this.changeMapCenter({ lat, lng });
-          this.$router.push({ name: "map_city" });
-        })
-        .catch(e => {
-          console.log(e, "error");
-        });
+      this.$router.push({ name: "map_city" });
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
