@@ -48,21 +48,25 @@
           <property-sale-price
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
+            @select="setSelected('propertySalePrice', $event)"
           ></property-sale-price>
           <!--  Charter price deposit | 전세가 / 보증금 -->
           <charter-price-deposit
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
+            @select="setSelected('charterPriceDeposit', $event)"
           ></charter-price-deposit>
           <!-- Property Monthly | 매월 부동산 -->
           <property-monthly
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
+            @select="setSelected('propertyMonthly', $event)"
           ></property-monthly>
           <!-- Exclusive Area | 전용면적 -->
           <exclusive-area
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
+            @select="setSelected('exclusiveArea', $event)"
           ></exclusive-area>
 
           <!-- Premium price | 프리미엄가, 감정가 -->
@@ -140,17 +144,7 @@ export default {
     return {
       modal: false,
       moreFilters: false,
-      filterBy: {
-        transactionType: '전체',
-        propertyType: '아파트',
-        propertyTypeDetailed: null,
-        propertySalePrice: null,
-        CharterPriceDeposit: null,
-        PropertyMonthly: null,
-        ExclusiveArea: null,
-        PropertyPremiumPrice: null,
-        PropertyConnoisseur: null
-      }
+      overallFilter: {}
     };
   },
   props: {
@@ -159,16 +153,45 @@ export default {
       default: false
     }
   },
+  created() {
+    this.overallFilter = this.setInitValue();
+  },
   methods: {
+    setInitValue() {
+      return {
+        transactionType: "전체",
+        propertyType: "아파트",
+        propertyTypeDetailed: null,
+        propertySalePrice: {
+          max: null,
+          min: null,
+          text: "전체"
+        },
+        charterPriceDeposit: {
+          max: null,
+          min: null,
+          text: "전체"
+        },
+        propertyMonthly: {
+          max: null,
+          min: null,
+          text: "전체"
+        },
+        exclusiveArea: "10평대",
+        propertyPremiumPrice: null,
+        propertyConnoisseur: null
+      };
+    },
     resetFilters() {
-      console.log("filters be reset");
+      this.overallFilter = this.setInitValue();
+      console.log(this.overallFilter, "reset");
     },
     setSelected(property, value) {
-      this.filterBy[property] = value;
-      console.log(property, this.filterBy[property]);
+      this.overallFilter[property] = value;
+      console.log(property, this.overallFilter[property]);
     },
     applyFilters() {
-      console.log(this.filterBy);
+      console.log(this.overallFilter);
     }
   }
 };

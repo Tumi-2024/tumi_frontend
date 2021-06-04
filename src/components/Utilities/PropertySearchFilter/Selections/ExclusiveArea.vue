@@ -25,7 +25,7 @@
         class="col-3 notosanskr-medium"
         :class="{ selected: selected === pyeong && selected != '' }"
         :label="pyeong"
-        @click="selected = pyeong"
+        @click="changeValue(pyeong)"
       />
     </div>
   </q-card-section>
@@ -52,6 +52,12 @@ export default {
         "80평대"
       ]
     };
+  },
+  methods: {
+    changeValue(val) {
+      this.selected = val;
+      this.$emit('select', val);
+    }
   }
 };
 </script>

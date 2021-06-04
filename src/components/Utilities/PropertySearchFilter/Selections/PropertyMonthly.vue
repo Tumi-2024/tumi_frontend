@@ -21,7 +21,7 @@
         class="col-2 notosanskr-medium"
         :class="{ selected: selected === price && selected != '' }"
         :label="price"
-        @click="selected = price"
+        @click="changePriceText(price)"
       />
     </div>
 
@@ -40,6 +40,8 @@
             name="minimum-amount"
             class="full-width"
             placeholder="최소금액"
+            v-model="max"
+            @change="changeValue"
           />
         </div>
         <div
@@ -54,6 +56,8 @@
             name="minimum-amount"
             class="full-width"
             placeholder="최대금액"
+            v-model="min"
+            @change="changeValue"
           />
         </div>
       </div>
@@ -71,6 +75,8 @@ export default {
   data() {
     return {
       selected: "전체",
+      min: null,
+      max: null,
       prices: [
         "전체",
         "~20",
@@ -92,6 +98,23 @@ export default {
         "8백~"
       ]
     };
+  },
+  methods: {
+    changePriceText(text) {
+      this.selected = text;
+      this.$emit('select', {
+        text: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    },
+    changeValue(val) {
+      this.$emit('select', {
+        selected: this.selected,
+        min: this.min,
+        max: this.max
+      })
+    }
   }
 };
 </script>

@@ -120,7 +120,7 @@ export default {
         min: this.min,
         max: this.max
       })
-    },
+    }
   }
 };
 </script>
