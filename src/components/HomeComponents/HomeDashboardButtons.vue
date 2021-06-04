@@ -12,7 +12,8 @@
     >
       <!-- @click="btn.func()" -->
       <p class="btn-title1" v-html="btn.text" />
-      <p class="btn-title2" v-html="btn.subText" />
+      <p class="btn-title2" v-html="btn.subText1" />
+      <p class="btn-title3" v-html="btn.subText2" />
       <q-icon class="btn-icon" :name="btn.img" />
     </q-btn>
   </div>
@@ -30,21 +31,22 @@ export default {
         {
           backgroundColor: "#4B62DE",
           text: "추천 매물",
-          subText: "지도에서 쉽게<br/>추천매물 찾기",
+          subText1: "지도에서 쉽게<br/>추천매물 찾기",
           img: "img:icons/home-page-icon/4btns/1.svg",
           func: this.toMapCity
         },
         {
           backgroundColor: "#3ECCB2",
           text: "재개발 구역",
-          subText: `지도에서 쉽게<br/>재개발구역과 실거래가 찾기`,
+          subText1: `지도에서 쉽게`,
+          subText2: `재개발구역과 실거래가 찾기`,
           img: "img:icons/home-page-icon/4btns/3.svg",
           func: this.toRedevelopmentArea
         },
         {
           backgroundColor: "#FF7D36",
           text: "매물 검색",
-          subText: "투미매물<br/>상세 검색하기",
+          subText1: "투미매물<br/>상세 검색하기",
           img: "img:icons/home-page-icon/4btns/2.svg",
           func: () => this.$router.push({ name: "map_list_sale" })
         },
@@ -119,11 +121,21 @@ export default {
   left: 0;
   margin-top: 50px;
   margin-left: 16px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "notosanskr-regular";
-  text-align: justify;
+  text-align: left;
 }
 
+.btn-title3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 72px;
+  margin-left: 16px;
+  font-size: 11px;
+  font-family: "notosanskr-regular";
+  text-align: left;
+}
 .btn-icon {
   position: absolute;
   top: 0;
