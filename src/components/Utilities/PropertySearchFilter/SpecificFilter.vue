@@ -60,6 +60,7 @@ import {
   PropertySalePrice,
   CharterPriceDeposit
 } from "components/Utilities/PropertySearchFilter/Selections";
+import { mapGetters } from 'vuex';
 export default {
   components: {
     "transaction-type": TransactionType,
@@ -82,19 +83,25 @@ export default {
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false }
   },
-  mounted() {
-    // if (this.transactionType) {
-    //   this.component = "transaction-type";
-    // }
-    // if (this.propertyType) {
-    //   this.component = "property-type";
-    // }
-    // if (this.salePrice) {
-    //   this.component = "property-sale-price";
-    // }
-    // if (this.charterPriceDeposit) {
-    //   this.component = "charter-price-deposit";
-    // }
+  computed: {
+    contentComponent() {
+      let component;
+      if (this.transactionType) {
+        component = "transaction-type";
+      }
+      if (this.propertyType) {
+        component = "property-type";
+      }
+      if (this.salePrice) {
+        component = "property-sale-price";
+      }
+      if (this.charterPriceDeposit) {
+        component = "charter-price-deposit";
+      }
+      return component;
+    },
+    ...mapGetters('search', ['search']),
+    ...mapGetters('map', ['getMapCenter'])
   },
   methods: {
     select(val) {
@@ -124,12 +131,12 @@ export default {
           this.$store.dispatch('setDepositPrice', this.selected);
         }
       }
-      this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
-      this.$store.dispatch('getDistinctHouses', toQueryString(this.$store.state.search));
+      this.$store.dispatch('getSimpleHouses', toQueryString(this.search));
+      this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
       this.$store.dispatch('getDetailHouses', toQueryString({
-        latitude: this.$store.state.map.mapCenter.lat,
-        longitude: this.$store.state.map.mapCenter.lng,
-        ...this.$store.state.search
+        latitude: this.getMapCenter.lat,
+        longitude: this.getMapCenter.lng,
+        ...this.search
       }));
       this.modal = false;
     },
@@ -165,32 +172,7 @@ export default {
           });
         }
       }
-      // this.$store.dispatch('getSimpleHouses', toQueryString(this.$store.state.search));
-      // this.$store.dispatch('getDistinctHouses', toQueryString(this.$store.state.search));
-      // this.$store.dispatch('getDetailHouses', toQueryString({
-      //   latitude: this.$store.state.map.mapCenter.lat,
-      //   longitude: this.$store.state.map.mapCenter.lng,
-      //   ...this.$store.state.search
-      // }));
       this.modal = false;
-    }
-  },
-  computed: {
-    contentComponent() {
-      let component;
-      if (this.transactionType) {
-        component = "transaction-type";
-      }
-      if (this.propertyType) {
-        component = "property-type";
-      }
-      if (this.salePrice) {
-        component = "property-sale-price";
-      }
-      if (this.charterPriceDeposit) {
-        component = "charter-price-deposit";
-      }
-      return component;
     }
   }
 };
