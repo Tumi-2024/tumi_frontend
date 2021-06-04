@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 // Main Section
 export const searchStore = {
+  namespaced: true,
   state: {
     typeSale: '전체',
     typeHouse: '아파트',
