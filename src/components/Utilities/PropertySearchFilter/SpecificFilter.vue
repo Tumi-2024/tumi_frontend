@@ -60,7 +60,7 @@ import {
   PropertySalePrice,
   CharterPriceDeposit
 } from "components/Utilities/PropertySearchFilter/Selections";
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   components: {
     "transaction-type": TransactionType,
@@ -104,6 +104,15 @@ export default {
     ...mapGetters('map', ['getMapCenter'])
   },
   methods: {
+    // STORE MODULE ACTIONS ***
+    ...mapActions('search', [
+      'setTypeSale',
+      'setTypeHouse',
+      'setTypeHouseDetail',
+      'setSalePrice',
+      'setDepositPrice'
+    ]),
+    // COMPONENTS METHODS STARTS ***
     select(val) {
       console.log(val);
       this.selected = val;
@@ -116,21 +125,27 @@ export default {
       if (this.selected) {
         console.log('저장 ', this.selected, this.selectedDetail);
         if (this.transactionType) {
-          this.$store.dispatch('setTypeSale', this.selected);
+          // this.$store.search.dispatch('setTypeSale', this.selected);
+          this.setTypeSale(this.selected);
         }
         if (this.propertyType) {
-          this.$store.dispatch('setTypeHouse', this.selected);
+          // this.$store.search.dispatch('setTypeHouse', this.selected);
+          this.setTypeHouse(this.selected);
           if (this.selectedDetail) {
-            this.$store.dispatch('setTypeHouseDetail', this.selectedDetail);
+            // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
+            this.setTypeHouseDetail(this.selectedDetail);
           }
         }
         if (this.salePrice) {
-          this.$store.dispatch('setSalePrice', this.selected);
+          // this.$store.search.dispatch('setSalePrice', this.selected);
+          this.setSalePrice(this.selected);
         }
         if (this.charterPriceDeposit) {
-          this.$store.dispatch('setDepositPrice', this.selected);
+          // this.$store.search.dispatch('setDepositPrice', this.selected);
+          this.setDepositPrice(this.selected)
         }
       }
+      console.log(toQueryString(this.search));
       this.$store.dispatch('getSimpleHouses', toQueryString(this.search));
       this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
       this.$store.dispatch('getDetailHouses', toQueryString({
@@ -145,31 +160,44 @@ export default {
         console.log('저장 ', this.selected);
         if (this.transactionType) {
           this.selected = '전체';
-          this.$store.dispatch('setTypeSale', '전체');
+          // this.$store.search.dispatch('setTypeSale', '전체');
+          this.setTypeSale('전체');
         }
         if (this.propertyType) {
           this.selected = '';
-          this.$store.dispatch('setTypeHouse', '');
+          // this.$store.search.dispatch('setTypeHouse', '');
+          this.setTypeHouse('')
           if (this.selectedDetail) {
             this.selectedDetail = '전체';
-            this.$store.dispatch('setTypeHouseDetail', '전체');
+            // this.$store.search.dispatch('setTypeHouseDetail', '전체');
+            this.setTypeHouseDetail('전체')
           }
         }
         if (this.salePrice) {
           this.selected = { text: '전체', min: null, max: null };
-          this.$store.dispatch('setSalePrice', {
+          // this.$store.search.dispatch('setSalePrice', {
+          //   text: '전체',
+          //   min: null,
+          //   max: null
+          // });
+          this.setSalePrice({
             text: '전체',
             min: null,
             max: null
-          });
+          })
         }
         if (this.charterPriceDeposit) {
           this.selected = { text: '전체', min: null, max: null };
-          this.$store.dispatch('setDepositPrice', {
+          // this.$store.search.dispatch('setDepositPrice', {
+          //   text: '전체',
+          //   min: null,
+          //   max: null
+          // });
+          this.setDepositPrice({
             text: '전체',
             min: null,
             max: null
-          });
+          })
         }
       }
       this.modal = false;
