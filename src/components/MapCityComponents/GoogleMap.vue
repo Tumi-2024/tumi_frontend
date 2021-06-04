@@ -39,7 +39,6 @@
 
       </gmap-info-window>
 
-
       <!-- Map Markers -->
       <gmap-cluster
         :zoomOnClick="true"
@@ -167,7 +166,7 @@ export default {
   },
   props: {
     geojson: {
-      type: Object | null,
+      type: Object || null,
       default: null
     },
     showEstates: {
@@ -298,7 +297,7 @@ export default {
     },
     setMapAreas(areas) {
       areas.forEach(area => {
-        let center = {
+        const center = {
           lat: Number(area.latitude),
           lng: Number(area.longitude)
         };
@@ -316,7 +315,7 @@ export default {
           const paths = []
           for (var i = 0; i < area.redevelopment_area_locations.length; i++) {
             const redevelopmentAreaLocation = area.redevelopment_area_locations[i]
-            paths.push({ lat: Number(redevelopmentAreaLocation.lat), lng: Number(redevelopmentAreaLocation.lng)})
+            paths.push({ lat: Number(redevelopmentAreaLocation.lat), lng: Number(redevelopmentAreaLocation.lng) })
           }
           item = new this.google.maps.Polygon({
             ...style,
@@ -382,7 +381,7 @@ export default {
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },
-    goToLocation(center = { lat, lng }) {
+    goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);
       setTimeout(() => {
         this.map.setZoom(17);
@@ -410,14 +409,14 @@ export default {
         // if value is true; have area in store;
         this.setMapAreas(this.getMapAreas);
         console.log('showing areas...')
-      } else{
+      } else {
         console.log('fetching areas from server...')
         await this.fetchMapAreas();
         this.getMapAreas.length && this.setMapAreas(this.getMapAreas);
       }
     },
-    markUsersLocation(position = { lat, lng}) {
-      new this.google.maps.Circle({
+    markUsersLocation(position = { lat: 0, lng: 0 }) {
+      (() => new this.google.maps.Circle({
         strokeColor: "#FF5100",
         strokeOpacity: 0.8,
         strokeWeight: 1,
@@ -426,19 +425,20 @@ export default {
         map: this.map,
         center: position,
         radius: 50
-      });
-      new this.google.maps.Marker({
+      }))();
+
+      (() => new this.google.maps.Marker({
         icon: {
           url: "/icons/marker.png",
-          size: new google.maps.Size(30, 30),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(12, 15),
-          scaledSize: new google.maps.Size(25, 25)
+          size: this.google.maps.Size(30, 30),
+          origin: this.google.maps.Point(0, 0),
+          anchor: this.google.maps.Point(12, 15),
+          scaledSize: this.google.maps.Size(25, 25)
         },
         position,
         map: this.map,
-        title: "Hello World!",
-      });
+        title: "Hello World!"
+      }))();
     }
   }
 };
