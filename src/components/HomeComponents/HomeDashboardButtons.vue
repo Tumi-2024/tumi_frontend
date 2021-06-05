@@ -68,6 +68,7 @@ export default {
     ]),
     toMapCity() {
       this.$router.push({ name: "map_city" });
+      this.$store.dispatch("map/resetMap");
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
