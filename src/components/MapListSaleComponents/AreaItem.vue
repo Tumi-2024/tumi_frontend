@@ -3,53 +3,47 @@
     class="column  notosanskr-regular "
     :to="{ name: 'for_sale_apartment', params: { data: item } }"
   >
-    <q-item-section>
-      <div class="row">
-        <!-- badge for item type -->
-        <q-badge class="text-white bg-primary q-mr-sm">
-          {{ toKr(item.type_house) }}
-        </q-badge>
-        <!-- badge for item status -->
-        <q-badge
-          outline
-          class="text-primary bg-white q-mr-sm"
-          v-if="item.recommend"
-        >
-          {{ "투미추천 매물" }}
-        </q-badge>
-        <!-- badge for redevelopment -->
-        <q-badge class="re-develop bg-white q-mr-sm" v-if="item.redevelopment">
-          <q-icon>
-            <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
+    <div class="row">
+      <div class="column align-start" style="flex-basis: 300px">
+        <q-item-section>
+          <div class="row">
+            <template v-for="(badge, index) of getBadges(item)">
+              <q-badge :key="index" :class="badge.class" v-if="badge.isShow">
+                <q-icon v-if="badge.icon">
+                  <img :src="badge.icon" alt="" srcset="" />
+                </q-icon>
+                {{badge.text}}
+              </q-badge>
+            </template>
+          </div>
+        </q-item-section>
+        <q-item-section class="area-name q-pt-sm">
+          {{ item.address }}
+        </q-item-section>
+        <q-item-section class="area-amount">
+          {{ `${toKr(sale.type)} ${sale.price !== "" ? "/ " + sale.price : ""}` }}
+        </q-item-section>
+        <div class="additional-info row items-center q-pt-sm">
+          <div>
+            {{
+              item.area_common
+                ? `전용면적 ${item.area_common}㎡(${Math.round(
+                    item.area_common / 3.3
+                  )}평)`
+                : ""
+            }}
+          </div>
+          <div>{{ item.floor && `${item.floor}층` }}</div>
+          <q-icon size="16px">
+            <img src="~assets/icons/sun.svg" />
           </q-icon>
-          재개발
-        </q-badge>
-        <!-- badge for item date -->
-        <q-badge class="date">{{ toDateFormat(item.created) }}</q-badge>
+          <div>
+            {{ item.type_direction && `${toKr(item.type_direction)}향` }}
+          </div>
+        </div>
       </div>
-    </q-item-section>
-    <q-item-section class="area-name q-pt-sm">
-      {{ item.address }}
-    </q-item-section>
-    <q-item-section class="area-amount">
-      {{ `${toKr(sale.type)} ${sale.price !== "" ? "/ " + sale.price : ""}` }}
-    </q-item-section>
-    <div class="additional-info row items-center q-pt-sm">
-      <div>
-        {{
-          item.area_common
-            ? `전용면적 ${item.area_common}㎡(${Math.round(
-                item.area_common / 3.3
-              )}평)`
-            : ""
-        }}
-      </div>
-      <div>{{ item.floor && `${item.floor}층` }}</div>
-      <q-icon size="16px">
-        <img src="~assets/icons/sun.svg" />
-      </q-icon>
-      <div>
-        {{ item.type_direction && `${toKr(item.type_direction)}향` }}
+      <div class="flex items-center justify-center q-py-sm" style="flex: 1 1 500px">
+        <area-item-info />
       </div>
     </div>
     <q-separator style="margin-top: 20px" />
@@ -58,8 +52,12 @@
 
 <script>
 import { toMoneyString, toKr, toDateFormat } from "src/utils";
+import areaItemInfo from './AreaItemInfo'
 export default {
   name: "AreaItem",
+  components: {
+    "area-item-info": areaItemInfo
+  },
   props: {
     item: Object
   },
@@ -69,6 +67,16 @@ export default {
     toDateFormat
   },
   computed: {
+    getBadges() {
+      return (item) => {
+        return [
+          { class: 'text-white bg-primary q-mr-sm', text: toKr(item.type_house), isShow: true },
+          { class: 'text-primary bg-white q-mr-sm', text: "투미추천 매물", isShow: item.recommend, outline: true },
+          { class: 're-develop bg-white q-mr-sm', text: '재개발', isShow: item.redevelopment, icon: '~assets/icons/redevelop.svg' },
+          { class: 'date', text: toDateFormat(item.created), isShow: true }
+        ]
+      }
+    },
     sale() {
       const sale = {};
       sale.type = this.item.type_sale;
