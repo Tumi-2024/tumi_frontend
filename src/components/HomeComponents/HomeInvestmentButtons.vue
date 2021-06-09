@@ -7,10 +7,10 @@
     </div>
 
     <div class="row q-mt-sm q-col-gutter-sm">
-      <div class="col-3 flex justify-center" v-for="(list, index) in investments_btn" :key="index">
-        <q-btn flat class="investment-btn full-width" :to="{ name: 'map_city' }">
-          <q-icon class="investment-btn-icon" :name="`img:icons/home-page-icon/investment-icon/${list.icon}`" />
-          <p class="investment-btn-label">{{ list.label }}</p>
+      <div class="col-3 flex justify-center" v-for="(item, index) in investments_btn" :key="index">
+        <q-btn flat class="investment-btn full-width" :to="{ name: 'map_city', query: { category: item.category } }">
+          <q-icon class="investment-btn-icon" :name="`img:icons/home-page-icon/investment-icon/${item.icon}`" />
+          <p class="investment-btn-label">{{ item.label }}</p>
         </q-btn>
       </div>
     </div>
@@ -23,34 +23,42 @@ export default {
 		return {
 			investments_btn: [
         {
+          category: 'apartment',
           label: '아파트',
           icon: 'building.svg',
         },
         {
+          category: 'alliance',
           label: '연립/다세대',
           icon: 'obstacle.svg',
         },
         {
+          category: 'single',
           label: '단독/다가구',
           icon: 'paint.svg',
         },
         {
+          category: 'officetel',
           label: '오피스텔',
           icon: 'home.svg',
         },
         {
+          category: 'land',
           label: '토지',
           icon: 'land.svg',
         },
         {
+          category: 'commercial',
           label: '상업/업무용',
           icon: 'sanga.svg',
         },
         {
+          category: '',
           label: '분양권',
           icon: 'ticket.svg',
         },
         {
+          category: '',
           label: '입주권',
           icon: 'ticket2.svg',
         },
