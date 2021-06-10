@@ -6,13 +6,17 @@
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <q-btn flat class="text-primary">최신순</q-btn>
-      <q-separator vertical />
-      <q-btn flat>추천순</q-btn>
-      <q-separator vertical />
-      <q-btn flat>면적순</q-btn>
-      <q-separator vertical />
-      <q-btn flat>가격순</q-btn>
+      <div class="flex row justify-between">
+        <template v-for="(btn, btnIndex) of sortButtons">
+          <div class="flex items-center" :key="btnIndex">
+            <q-btn flat :class="btn.class" >
+              {{ btn.text }}
+              </q-btn>
+            <q-separator v-if="btnIndex !== sortButtons.length -1" vertical />
+          </div>
+        </template>
+      </div>
+        <area-list-filter />
     </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
@@ -33,9 +37,21 @@
 <script>
 import { toQueryString } from 'src/utils';
 import AreaItem from "./AreaItem";
+import AreaListFilter from "./AreaListFilter";
 export default {
   components: {
-    "area-item": AreaItem
+    "area-item": AreaItem,
+    "area-list-filter": AreaListFilter
+  },
+  data() {
+    return {
+      sortButtons: [
+        { text: '최신순', class: "text-primary" },
+        { text: '추천순' },
+        { text: '면적순' },
+        { text: '가격순' }
+      ]
+    }
   },
   mounted() {
     // console.log('this.$route.params.type', this.$route.params.type);
@@ -58,9 +74,11 @@ export default {
 
 <style lang="scss" scoped>
 .sort-section {
+  padding: 5px 0;
+  justify-content: space-between;
   .q-btn {
     font-size: 14px;
-    line-height: 44px;
+    line-height: 40px;
     text-align: center;
     letter-spacing: -1.05px;
     color: #707070;

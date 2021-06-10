@@ -211,8 +211,8 @@ export const toQueryString = params => {
 
 export const toMoneyString = (val) => {
   val = parseInt(val);
-  const uk = Math.floor(val / 100000000);
-  const man = Math.floor((val - uk * 100000000) / 10000);
+  const uk = Math.floor(val / 10000);
+  const man = Math.floor((val - uk * 10000));
   const price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
   return price;
 }

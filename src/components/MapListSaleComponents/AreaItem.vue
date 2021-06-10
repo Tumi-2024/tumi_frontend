@@ -4,7 +4,7 @@
     :to="{ name: 'for_sale_apartment', params: { data: item } }"
   >
     <div class="row">
-      <div class="column align-start" style="flex-basis: 300px">
+      <div class="column align-start" style="flex-basis: 400px">
         <q-item-section>
           <div class="row">
             <template v-for="(badge, index) of getBadges(item)">
@@ -12,7 +12,9 @@
                 <q-icon v-if="badge.icon">
                   <img :src="badge.icon" alt="" srcset="" />
                 </q-icon>
+                <slot name="label">
                 {{badge.text}}
+                </slot>
               </q-badge>
             </template>
           </div>
@@ -20,10 +22,7 @@
         <q-item-section class="area-name q-pt-sm">
           {{ item.address }}
         </q-item-section>
-        <q-item-section class="area-amount">
-          {{ `${toKr(sale.type)} ${sale.price !== "" ? "/ " + sale.price : ""}` }}
-        </q-item-section>
-        <div class="additional-info row items-center q-pt-sm">
+        <!-- <div class="additional-info row items-center q-pt-sm">
           <div>
             {{
               item.area_common
@@ -34,16 +33,11 @@
             }}
           </div>
           <div>{{ item.floor && `${item.floor}층` }}</div>
-          <q-icon size="16px">
-            <img src="~assets/icons/sun.svg" />
-          </q-icon>
-          <div>
-            {{ item.type_direction && `${toKr(item.type_direction)}향` }}
-          </div>
-        </div>
+
+        </div> -->
       </div>
       <div class="flex items-center justify-center q-py-sm" style="flex: 1 1 500px">
-        <area-item-info />
+        <area-item-info :item="item" />
       </div>
     </div>
     <q-separator style="margin-top: 20px" />
@@ -69,11 +63,14 @@ export default {
   computed: {
     getBadges() {
       return (item) => {
+        console.log(item)
         return [
           { class: 'text-white bg-primary q-mr-sm', text: toKr(item.type_house), isShow: true },
+          { class: 'text-white bg-green q-mr-sm', text: item.pyeong + '평', isShow: true },
           { class: 'text-primary bg-white q-mr-sm', text: "투미추천 매물", isShow: item.recommend, outline: true },
           { class: 're-develop bg-white q-mr-sm', text: '재개발', isShow: item.redevelopment, icon: '~assets/icons/redevelop.svg' },
-          { class: 'date', text: toDateFormat(item.created), isShow: true }
+          { class: 'bg-blue q-mr-sm', text: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}`, isShow: true },
+          { class: 'date text-white bg-black', text: toDateFormat(item.created), isShow: true }
         ]
       }
     },
@@ -120,23 +117,14 @@ export default {
 .q-badge {
   font-weight: bold;
   font-size: 12px;
-  line-height: 24px;
+  line-height: 16px;
   text-align: center;
   letter-spacing: -0.9px;
 
-  &.date,
-  &.re-develop {
-    border: 1px solid #dbdbdb;
-    box-sizing: border-box;
-    border-radius: 4px;
-    font-weight: 500;
-    color: #909090;
-    background: white;
-  }
 }
 .area-name {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   letter-spacing: -1.05px;
   color: #707070;
