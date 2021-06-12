@@ -6,7 +6,6 @@
       </span>
     </div>
     <div class="col field-info">
-      <q-icon v-if="!value" size="14px" />
       <span v-if="value">{{ value }}</span>
       <q-icon v-else size="14px">
         <img src="~/assets/icons/empty.svg" />
@@ -32,15 +31,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title-heading {
-  font-family: "notosanskr-bold";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 26px;
-  letter-spacing: -1.275px;
-  color: #1a1a1a;
-}
+// .title-heading {
+//   font-family: "notosanskr-bold";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 17px;
+//   line-height: 26px;
+//   letter-spacing: -1.275px;
+//   color: #1a1a1a;
+// }
 
 .list-hightlight {
   color: #ff5100;
