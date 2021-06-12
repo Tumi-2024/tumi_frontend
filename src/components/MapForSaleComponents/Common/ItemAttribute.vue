@@ -31,8 +31,7 @@ export default {
       default: ""
     },
     value: {
-      type: String,
-      default: ""
+      type: [Number, String]
     },
     label: {
       type: String,
