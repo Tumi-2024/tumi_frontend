@@ -52,7 +52,6 @@ export default {
   computed: {
     getBadges() {
       return (item) => {
-        console.log(item)
         return [
           { type: 'houseType', value: toKr(item.type_house) },
           { type: 'pyeong', value: item.pyeong + '평' },
