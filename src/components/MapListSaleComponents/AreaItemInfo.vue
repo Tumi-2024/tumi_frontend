@@ -3,15 +3,15 @@
       <div class="row items-center">
         <template v-for="(row, rIndex) of mainInfo" >
           <span
-            class="q-px-sm justify-start"
-            style="flex: 1 1 170px;"
+            class="q-pa-xs justify-start align-start"
+            style="flex: 1 1 auto;"
             :key="`col-${rIndex}`"
           >
-            <span class="col-main-text bold">{{row.title}} :&nbsp;&nbsp;&nbsp;</span>
+            <span class="col-text main title">{{row.title}} :&nbsp;&nbsp;&nbsp;</span>
           <q-icon size="16px" v-if="row.isDirection">
             <img src="~assets/icons/sun.svg" />
           </q-icon>
-            <span class="col-main-text">{{row.value}}</span>
+            <span class="col-text main desc">{{row.value}}</span>
           </span>
         </template>
       </div>
@@ -19,11 +19,11 @@
       <div class="row q-mt-sm">
         <template v-for="(row, rIndex) of subInfo" >
           <span
-            class="flex justify-between col-sm-3 col-xs-6"
+            class="flex  col-sm-3 col-xs-6 q-px-sm"
             :key="`col-${rIndex}`"
           >
-            <span class="col-main-text main">{{row.title}}:</span>
-            <span class="col-main-text" :class="{'q-mr-md': rIndex % 4 !== 3}">{{row.value}}</span>
+            <span class="col-text">{{row.title}}:&nbsp;&nbsp;&nbsp;</span>
+            <span class="col-text">{{row.value}}</span>
           </span>
         </template>
       </div>
@@ -61,11 +61,14 @@ export default {
 }
 </script>
 <style lang="scss">
-  .col-main-text {
+  .col-text {
     font-size: 12px;
     color:#707070;
-    &.bold {
-      font-weight: bold;
+    &.main {
+      font-size: 14px;
+      &.title {
+        font-weight: bold;
+      }
     }
   }
 </style>

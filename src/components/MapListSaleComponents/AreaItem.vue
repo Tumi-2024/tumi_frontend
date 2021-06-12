@@ -4,23 +4,9 @@
     :to="{ name: 'for_sale_apartment', params: { data: item } }"
   >
     <div class="row">
-      <div class="column align-start" style="flex-basis: 400px">
+      <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
-          <div class="row">
-            <template v-for="(badge, index) of getBadges(item)">
-              <q-badge :key="index" :class="badge.class" v-if="badge.isShow">
-                <q-icon v-if="badge.icon">
-                  <img :src="badge.icon" alt="" srcset="" />
-                </q-icon>
-                <slot name="label">
-                {{badge.text}}
-                </slot>
-              </q-badge>
-            </template>
-          </div>
-        </q-item-section>
-        <q-item-section class="area-name q-pt-sm">
-          {{ item.address }}
+          <address-with-badges :item="item" :tags="getBadges(item)" />
         </q-item-section>
         <!-- <div class="additional-info row items-center q-pt-sm">
           <div>
@@ -36,7 +22,7 @@
 
         </div> -->
       </div>
-      <div class="flex items-center justify-center q-py-sm" style="flex: 1 1 500px">
+      <div class="flex items-center q-py-sm" style="flex: 1 1 600px">
         <area-item-info :item="item" />
       </div>
     </div>
@@ -47,10 +33,13 @@
 <script>
 import { toMoneyString, toKr, toDateFormat } from "src/utils";
 import areaItemInfo from './AreaItemInfo'
+import AddressWithBadges from '../Address/AddressWithBadges';
+
 export default {
   name: "AreaItem",
   components: {
-    "area-item-info": areaItemInfo
+    "area-item-info": areaItemInfo,
+    "address-with-badges": AddressWithBadges
   },
   props: {
     item: Object
@@ -65,12 +54,12 @@ export default {
       return (item) => {
         console.log(item)
         return [
-          { class: 'text-white bg-primary q-mr-sm', text: toKr(item.type_house), isShow: true },
-          { class: 'text-white bg-green q-mr-sm', text: item.pyeong + '평', isShow: true },
-          { class: 'text-primary bg-white q-mr-sm', text: "투미추천 매물", isShow: item.recommend, outline: true },
-          { class: 're-develop bg-white q-mr-sm', text: '재개발', isShow: item.redevelopment, icon: '~assets/icons/redevelop.svg' },
-          { class: 'bg-blue q-mr-sm', text: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}`, isShow: true },
-          { class: 'date text-white bg-black', text: toDateFormat(item.created), isShow: true }
+          { type: 'houseType', value: toKr(item.type_house) },
+          { type: 'pyeong', value: item.pyeong + '평' },
+          { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
+          { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area, icon: '~assets/icons/redevelop.svg' },
+          { type: 'price', value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
+          { type: 'date', value: toDateFormat(item.created) }
         ]
       }
     },
@@ -114,14 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.q-badge {
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-  text-align: center;
-  letter-spacing: -0.9px;
 
-}
 .area-name {
   font-weight: 500;
   font-size: 16px;
@@ -129,6 +111,10 @@ export default {
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
+  &.sub {
+  font-size: 14px;
+
+  }
 }
 .area-amount {
   font-weight: 500;

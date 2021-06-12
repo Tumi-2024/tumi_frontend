@@ -1,18 +1,14 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <area-tags :tag="tags" />
-
-      <div class="area-name q-mt-sm">
-        {{ areaName }}
-      </div>
+      <address-with-badges :item="{address: areaName}" :tags="getBadgeOptions" />
       <div class="price-name">
-        <span>매매</span>
         {{ sales }}
       </div>
       <div class="initial-investments row q-pa-sm q-mt-sm items-center">
         <q-icon>
           <img src="~assets/icons/coins.svg" alt="" />
+
         </q-icon>
 
         <div class="q-ml-md title">초기투자금</div>
@@ -37,11 +33,12 @@
 </template>
 
 <script>
-import AreaTags from "components/Utilities/AreaTags";
+import AddressWithBadges from '../Address/AddressWithBadges.vue';
 export default {
   name: "sale-title",
   components: {
-    AreaTags
+    // AreaTags,
+    AddressWithBadges
   },
   data() {
     return {};
@@ -67,6 +64,16 @@ export default {
       type: String,
       default: ""
     }
+  },
+  computed: {
+    getBadgeOptions() {
+      return [
+        { type: 'houseType', value: this.tags.type }
+      ]
+    }
+  },
+  mounted() {
+    console.log(this.tags)
   }
 };
 </script>
