@@ -6,7 +6,7 @@
         type: toKr(estate.type_house),
         redevelopment: redevelopment,
         stageProgress: redevelopment && redevelopment.redevelopment_step,
-        transactionStatus: estate.is_sold && '거래완료' 
+        transactionStatus: estate.is_sold && '거래완료'
       }"
       :areaName="estate.address"
       :sales="toMoneyString(estate.price)"
@@ -14,7 +14,7 @@
       :quote='estate.description'
     />
     <!--  토지 매물정보  -->
-    <area-information :informations="propertyInformation" class="q-mt-sm" />
+    <area-information :informations="getInformation" class="q-mt-sm" />
     <more-information
       :transactionType="toKr(estate.type_sale)"
       :exclusiveArea="estate.area_exclusive && `${estate.area_exclusive}㎡ (${Math.round(estate.area_exclusive/3.3)}평)`"
@@ -81,68 +81,73 @@ export default {
   },
   mounted() {
     this.estate = this.$route.params.data;
-    if(this.estate === undefined) return 
+    console.log(this.estate, 'estate')
+    if (this.estate === undefined) return
     this.$store.dispatch('addRecentlyViewedHouse', this.estate)
     this.redevelopment = this.estate.redevelopment
   },
   methods: {
     toKr,
-    toMoneyString,
+    toMoneyString
+  },
+  computed: {
+    getInformation() {
+      return [
+        {
+          // number of floors
+          label: "동",
+          value: `${this.estate.dong}동`,
+          icon: "building-area.svg"
+        },
+        {
+          // number of floors
+          label: "층",
+          value: `${this.estate.floor}층`,
+          icon: "number-floors.svg"
+        },
+        {
+          // direction
+          label: "방향",
+          value: `${toKr(this.estate.type_direction)}향`,
+          icon: "direction.svg"
+        },
+        {
+          // station-area
+          label: "방/욕실",
+          value: `${this.estate.room_count}/${this.estate.bathroom_count}`,
+          icon: "building-area.svg"
+        },
+        {
+          // exclusive Area
+          label: "공용 면적",
+          value: `${this.estate.area_common}㎡`,
+          icon: "land-area.svg"
+        },
+        {
+          // exclusive Area
+          label: "전용 면적",
+          value: `${this.estate.area_exclusive}㎡`,
+          icon: "land-area.svg"
+        },
+        {
+          // Right
+          label: "해당 면적 세대 수",
+          value: this.estate.area_household_count,
+          icon: "building-area.svg"
+        },
+        {
+          // Premium price
+          label: "관리비",
+          value: this.estate.administration_cost,
+          icon: "right.svg"
+        }
+      ]
+    }
   },
   data() {
     return {
       redevelopment: null,
       estate: null,
-      propertyInformation: [
-        {
-          // exclusive Area
-          label: "전용면적",
-          value: `${this.$route.params.data.area_exclusive}㎡`,
-          icon: "land-area.svg"
-        },
-        {
-          // direction
-          label: "방향",
-          value: `${toKr(this.$route.params.data.type_direction)}향`,
-          icon: "direction.svg"
-        },
-        {
-          // number of floors
-          label: "층수",
-          value: `${this.$route.params.data.floor}층`,
-          icon: "number-floors.svg"
-        },
-        {
-          // station-area
-          label: "역세권",
-          value: this.$route.params.data.station,
-          icon: "station-area.svg"
-        },
-        {
-          // connoisseur
-          label: "감정가",
-          value: toMoneyString(this.$route.params.data.price_appraised),
-          icon: "connoisseur.svg"
-        },
-        {
-          // Right
-          label: "권리가",
-          value: toMoneyString(this.$route.params.data.price_rights),
-          icon: "right.svg"
-        },
-        {
-          // Premium price
-          label: "프리미엄가",
-          value: toMoneyString(this.$route.params.data.price_premium),
-          icon: "premium-price.svg"
-        },
-        // {
-        //   // progress
-        //   label: "진행단계",
-        //   value: "준공인가",
-        //   icon: "progress.svg"
-        // }
-      ],
       adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },
         { label: "겨울", value: "21만원", icon: "windy.svg" },
