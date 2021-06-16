@@ -10,6 +10,28 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
+      <!-- THIS IS INFO WINDOW -->
+      <gmap-info-window
+        :options="infoOptions"
+        :position="{ lat: position.lat, lng: position.lng }"
+        opened
+        @closeclick="infoWinOpen = false"
+        class="q-pa-lg"
+        v-if="estate"
+      >
+        <!-- INPUT DESIRED CONTENTS -->
+        <info-top-content :marker="{}" />
+        <info-window-content
+          @viewArea="viewArea(m)"
+          :price="0"
+          :count="0"
+          :badges="{
+            type_sale: estate.type_sale,
+            type_house: estate.type_house,
+            area: estate.pyeong
+          }"
+        />
+      </gmap-info-window>
     </GmapMap>
   </div>
 </template>
@@ -17,20 +39,31 @@
 <script>
 import { gmapApi } from "gmap-vue";
 import { mapGetters } from "vuex";
+
+import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
+import InfoTopContent from "../MapCityComponents/InfoTopContent";
 export default {
-  components: {},
+  components: {
+    InfoWindowContent,
+    InfoTopContent
+  },
   props: {
     position: Object,
     // polygon = [{lat: xxx, lng: xxx}, {lat: xxx, lng: xxx}]
     polygon: {
       type: Array,
       default: null
-    }
+    },
+    estate: Object
   },
   data() {
     return {
       map: null,
-      mapSize: { height: "", width: "" }
+      mapSize: { height: "", width: "" },
+      infoOptions: {
+        pixelOffset: { width: 0, height: -35 },
+        disableAutoPan: true
+      }
     };
   },
   computed: {
@@ -60,6 +93,7 @@ export default {
       this.mapSize.width = w + "px";
     },
     setAreaPolygon() {
+      let path;
       if (!this.polygon) {
         // IF THERES NO POLYGON WE CREATE OUR OWN
         const position = new this.google.maps.LatLng(
@@ -86,7 +120,7 @@ export default {
           200,
           -100
         );
-        this.polygon = [coord1, coord2, coord3, coord4];
+        path = [coord1, coord2, coord3, coord4];
       }
       const style = {
         strokeColor: "#FF5100",
@@ -97,7 +131,7 @@ export default {
       };
       this.area = new this.google.maps.Polygon({
         ...style,
-        paths: this.polygon,
+        paths: this.polygon || path,
         map: this.map,
         center: this.position
       });
