@@ -15,14 +15,12 @@
         :options="infoOptions"
         :position="{ lat: position.lat, lng: position.lng }"
         opened
-        @closeclick="infoWinOpen = false"
         class="q-pa-lg"
         v-if="estate"
       >
         <!-- INPUT DESIRED CONTENTS -->
         <info-top-content :marker="{}" />
         <info-window-content
-          @viewArea="viewArea(m)"
           :price="0"
           :count="0"
           :badges="{
