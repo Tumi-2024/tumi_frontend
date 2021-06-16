@@ -14,7 +14,9 @@
           :borderBottom="i < 4 && informations.length > 4"
         >
           <template v-slot:icon>
-            <img :src="getImage(item.icon)" />
+            <!-- <img src="assets/iconsNew/아파트.jpeg" -->
+            <img :key="i" :src="getImage(icon, item.new)" style="width: 40px; height: auto;" v-for="(icon, i) of item.icon" />
+            <!-- <img style="width: 40px; height: auto;" :src="getImage(icon, item.new)" /> -->
           </template>
         </ItemAttribute>
       </div>
@@ -37,8 +39,12 @@ export default {
     }
   },
   methods: {
-    getImage(name) {
-      return require(`assets/icons/ActualTransaction/ForSale/${name}`);
+    getImage(name, full) {
+      if (!full) {
+        return require(`assets/icons/ActualTransaction/ForSale/${name}`);
+      } else {
+        return require(`assets/iconsNew/${name}`);
+      }
     }
   }
 };

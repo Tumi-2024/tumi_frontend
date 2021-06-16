@@ -7,8 +7,9 @@
           unelevated
           padding="0px"
           class="q-mr-xs q-px-md"
+          :class="getColor(filter.type)"
         >
-          {{ filter }}
+          {{ filter.label }}
         </q-btn>
       </div>
       <q-btn
@@ -30,8 +31,38 @@
 export default {
   data() {
     return {
-      filters: ["주택유형", "거래유형", "매매가", "전세가/보증금"]
+      filters: [
+        { label: "주택유형", type: 'houseType' },
+        { label: "거래유형", type: 'pyeong' },
+        { label: "매매가", type: 'sale' },
+        { label: "전세가/보증금", type: 'charter' },
+        { label: '매물 등록일자', type: 'date' }
+      ]
     };
+  },
+  computed: {
+    getColor() {
+      return (type) => {
+        switch (type) {
+          case 'houseType':
+            return 'text-white bg-primary'
+          case 'pyeong':
+            return 'text-white bg-green'
+          case 'recommend':
+            return 'text-white  bg-white'
+          case 'redevelopment':
+            return 'text-white  bg-white'
+          case 'charter':
+            return 'text-white bg-blue-grey'
+          case 'sale':
+            return 'text-white bg-blue'
+          case 'date':
+            return 'date text-white bg-black'
+          default:
+            return ''
+        }
+      }
+    }
   }
 };
 </script>

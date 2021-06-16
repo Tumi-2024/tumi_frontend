@@ -21,6 +21,12 @@ export default {
     pyeong: {
       type: Boolean
     },
+    charter: {
+      type: Boolean
+    },
+    sale: {
+      type: Boolean
+    },
     recommend: {
       type: Boolean
     },
@@ -54,9 +60,12 @@ export default {
       case this.redevelopment:
         this.badgeClass = 're-develop bg-white'
         break;
-      case this.price:
+      case this.charter:
+        this.badgeClass = 'bg-blue-grey'
+        break
+      case this.sale:
         this.badgeClass = 'bg-blue'
-        break;
+        break
       case this.date:
         this.badgeClass = 'date text-white bg-black'
         break;

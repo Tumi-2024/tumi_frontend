@@ -19,7 +19,7 @@
 
     <div class="col">
       <div class="info-heading notosanskr-medium">
-        {{ toMoneyString(price*10000) }}
+        {{ toMoneyString(price) }}
         <!-- {{ price }} -->
       </div>
       <div class="row bottom-toolbar notosanskr-regular">
@@ -67,7 +67,7 @@ import { toMoneyString } from 'src/utils';
 export default {
   props: {
     item: {
-      type: Object,
+      type: Object
     },
     price: {
       type: Number,
@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    toMoneyString: toMoneyString,
+    toMoneyString: toMoneyString
   }
 };
 </script>

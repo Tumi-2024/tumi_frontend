@@ -57,7 +57,7 @@ export default {
           { type: 'pyeong', value: item.pyeong + '평' },
           { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
           { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area, icon: '~assets/icons/redevelop.svg' },
-          { type: 'price', value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
+          { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
           { type: 'date', value: toDateFormat(item.created) }
         ]
       }
