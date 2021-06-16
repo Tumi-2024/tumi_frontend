@@ -100,49 +100,51 @@ export default {
           // number of floors
           label: "동",
           value: `${this.estate.dong}동`,
-          icon: "building-area.svg"
+          icon: ["아파트.jpeg"],
+          new: true
         },
         {
           // number of floors
           label: "층",
           value: `${this.estate.floor}층`,
-          icon: "number-floors.svg"
+          icon: ["number-floors.svg"]
         },
         {
           // direction
           label: "방향",
           value: `${toKr(this.estate.type_direction)}향`,
-          icon: "direction.svg"
+          icon: ["direction.svg"]
         },
         {
           // station-area
           label: "방/욕실",
           value: `${this.estate.room_count}/${this.estate.bathroom_count}`,
-          icon: "building-area.svg"
+          icon: ["방침대.jpeg", "욕실.jpeg"],
+          new: true
         },
         {
           // exclusive Area
           label: "공용 면적",
           value: `${this.estate.area_common}㎡`,
-          icon: "land-area.svg"
+          icon: ["land-area.svg"]
         },
         {
           // exclusive Area
           label: "전용 면적",
           value: `${this.estate.area_exclusive}㎡`,
-          icon: "land-area.svg"
+          icon: ["land-area.svg"]
         },
         {
           // Right
           label: "해당 면적 세대 수",
           value: this.estate.area_household_count,
-          icon: "building-area.svg"
+          icon: ["building-area.svg"]
         },
         {
           // Premium price
           label: "관리비",
           value: this.estate.administration_cost,
-          icon: "right.svg"
+          icon: ["right.svg"]
         }
       ]
     }

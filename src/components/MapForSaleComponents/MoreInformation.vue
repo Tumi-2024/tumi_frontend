@@ -1,4 +1,8 @@
 <template>
+<q-card class="q-mt-sm">
+  <q-card-section class="heading-title">
+    단지/건물 정보
+  </q-card-section>
   <q-card-section class="bg-white">
     <div class="row q-py-lg">
       <div class="col-6 q-px-sm">
@@ -19,6 +23,7 @@
       </div>
     </div>
   </q-card-section>
+</q-card>
 </template>
 
 <script>
@@ -31,21 +36,21 @@ export default {
         { label: "층수 (지상/지하)", value: 30 },
         { label: "주차대수 (지상/지하)", value: '1000/500' },
         { label: "엘리베이터 수", value: 3 },
+        { label: "사용승인일", value: '2010.02.26' },
         { label: "대지면적 (m2)", value: '10000㎡' },
         { label: "연면적 (m2)", value: '120366.16㎡' },
         { label: "건축면적 (m2)", value: '1500㎡' },
+        { label: "난방방식", value: '개별난방' },
         { label: "용적률", value: '1000%' },
         { label: "건폐율", value: '50%' },
-        { label: "분양형태", value: '분양' },
-        { label: "복도유형", value: '계단식' },
-        { label: "난방방식", value: '개별난방' },
-        { label: "부대복리시설", value: '헬스장, 수영장' },
-        { label: "주건물구조", value: '주건물구조' },
         { label: "시공사", value: '지에스건설주식회사' },
         { label: "시행사", value: '서강주택재건축정비사업조합' },
-        { label: "사용승인일", value: '2010.02.26' },
+        { label: "분양형태", value: '분양' },
+        { label: "복도유형", value: '계단식' },
+        { label: "주건물구조", value: '주건물구조' },
         { label: "역세권", value: '강남역' },
-        { label: "관리사무소 연락처", value: '02-123-4567' }
+        { label: "관리사무소 연락처", value: '02-123-4567' },
+        { label: "부대복리시설", value: '헬스장, 수영장' }
       ]
     }
   },
@@ -81,6 +86,15 @@ export default {
   &.sub {
   font-weight: 500;
   }
-
 }
+.heading-title {
+  font-family: "notosanskr-medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -1.275px;
+  color: #1a1a1a;
+}
+
 </style>

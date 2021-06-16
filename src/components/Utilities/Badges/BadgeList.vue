@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-const tagsOrder = ['houseType', 'pyeong', 'recommend', 'redevelopment', 'price', 'date']
+const tagsOrder = ['houseType', 'pyeong', 'recommend', 'redevelopment', 'charter', 'sale', 'date']
 
 import Badge from './Badge'
 
