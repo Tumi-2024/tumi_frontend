@@ -20,7 +20,12 @@ import { mapGetters } from "vuex";
 export default {
   components: {},
   props: {
-    position: Object
+    position: Object,
+    // polygon = [{lat: xxx, lng: xxx}, {lat: xxx, lng: xxx}]
+    polygon: {
+      type: Array,
+      default: null
+    }
   },
   data() {
     return {
@@ -34,18 +39,17 @@ export default {
   },
 
   async mounted() {
-    this.setGmapContainerSize();
+    console.log(this.position.lat, this.position.lng, "position");
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
-    this.map.setOptions({
-      zoomControl: false,
-      scrollwheel: false
+    this.setGmapContainerSize();
+    this.map.setOptions({ zoomControl: true, scrollwheel: true });
+    this.map.addListener("click", e => {
+      /** * access click event */
+      console.log(e.latLng.lat(), e.latLng.lng());
     });
-    // this.map.data.addGeoJson(TUMI_AREA_FOR_SALE);
-    // apply styles on geojson layers
-    this.map.data.setStyle(function(feature) {
-      return { fillColor: "#0BCDC7", strokeColor: "#FF5100", strokeWeight: 2 };
-    });
+
+    this.setAreaPolygon();
   },
 
   methods: {
@@ -54,6 +58,49 @@ export default {
       const w = this.$refs.gmapContainer.clientWidth;
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
+    },
+    setAreaPolygon() {
+      if (!this.polygon) {
+        // IF THERES NO POLYGON WE CREATE OUR OWN
+        const position = new this.google.maps.LatLng(
+          this.position.lat,
+          this.position.lng
+        );
+        const coord1 = this.google.maps.geometry.spherical.computeOffset(
+          position,
+          250,
+          0
+        );
+        const coord2 = this.google.maps.geometry.spherical.computeOffset(
+          position,
+          250,
+          120
+        );
+        const coord3 = this.google.maps.geometry.spherical.computeOffset(
+          position,
+          250,
+          -120
+        );
+        const coord4 = this.google.maps.geometry.spherical.computeOffset(
+          position,
+          200,
+          -100
+        );
+        this.polygon = [coord1, coord2, coord3, coord4];
+      }
+      const style = {
+        strokeColor: "#FF5100",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#0BCDC7",
+        fillOpacity: 0.35
+      };
+      this.area = new this.google.maps.Polygon({
+        ...style,
+        paths: this.polygon,
+        map: this.map,
+        center: this.position
+      });
     }
   }
 };
