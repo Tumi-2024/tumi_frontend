@@ -1,5 +1,5 @@
 <template>
-  <q-card flat>
+  <q-card>
     <q-card-section class="heading-title">
       매물정보
     </q-card-section>

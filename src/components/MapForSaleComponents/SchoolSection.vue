@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="bg-white notosanskr-medium">
+  <q-card class="bg-white notosanskr-medium">
     <q-card-section class="heading-title">
       학교
     </q-card-section>

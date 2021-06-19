@@ -1,5 +1,5 @@
 <template>
-  <q-card flat>
+  <q-card>
     <q-card-section>
       <address-with-badges :item="{address: areaName}" :tags="getBadgeOptions" />
       <div class="price-name">

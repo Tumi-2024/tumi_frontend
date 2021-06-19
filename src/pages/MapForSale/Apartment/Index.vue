@@ -14,8 +14,9 @@
       :quote='estate.description'
     />
     <!--  토지 매물정보  -->
-    <area-information :informations="getInformation" class="q-mt-sm" />
+    <area-information :informations="getInformation" class="q-mt-md" />
     <more-information
+      class="q-mt-md"
       :estate="estate"
       v-bind="{
         transactionType: toKr(estate.type_sale),
@@ -43,13 +44,13 @@
       startConstruction="2005.05.19"
       generalSales=""
       completion="2005.05.19"
-      class="q-mt-sm"
+      class="q-mt-md"
     />
-    <administration-cost :cost="adminCost" class="q-my-sm" />
-    <school-section :tabs="schoolTabs" :active="activeSchoolTab" />
+    <administration-cost :cost="adminCost" class="q-mt-md" />
+    <school-section class="q-mt-md" :tabs="schoolTabs" :active="activeSchoolTab" />
 
     <recent-pricing
-      class="q-mt-sm"
+      class="q-mt-md"
       :salePrice="salePrice"
       :charter="charter"
       :extraDetails="extraDetails"
@@ -136,7 +137,7 @@ export default {
         },
         {
           // Right
-          label: "해당 면적 세대 수",
+          label: "동일 면적 세대 수",
           value: this.estate.area_household_count,
           icon: ["building-area.svg"]
         },

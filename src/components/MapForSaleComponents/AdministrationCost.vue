@@ -1,5 +1,5 @@
 <template>
-  <q-card class="bg-white q-pb-xl" flat :square="false">
+  <q-card class="bg-white q-pb-xl">
     <q-card-section class="heading-title notosanskr-medium">
       관리비
     </q-card-section>

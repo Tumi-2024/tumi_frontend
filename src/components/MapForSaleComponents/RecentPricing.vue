@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="bg-white notosanskr-medium">
+  <q-card class="bg-white notosanskr-medium">
     <q-card-section class="row q-pb-none justify-between">
       <div class="title-heading col-6">
         최근 실거래가

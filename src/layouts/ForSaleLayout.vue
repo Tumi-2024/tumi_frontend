@@ -12,7 +12,7 @@
       <toolbar-nav />
     </q-header>
 
-    <q-page-container style="background-color: #E5E5E5">
+    <q-page-container style="background-color: #F6F6F6; font-family: 'notosanskr-regular';">
       <router-view></router-view>
     </q-page-container>
   </q-layout>

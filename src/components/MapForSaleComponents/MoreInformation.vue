@@ -1,21 +1,21 @@
 <template>
-<q-card class="q-mt-sm">
+<q-card>
   <q-card-section class="heading-title">
     단지/건물 정보
   </q-card-section>
   <q-card-section class="bg-white">
-    <div class="row q-py-lg">
-      <div class="col-6 q-px-sm">
+    <div class="row q-pb-md">
+      <div class="col-sm-6 col-12 q-px-sm">
         <span class="information">K-APT 아파트명: &nbsp;&nbsp;&nbsp;</span>
          <span class="information sub">{{estate.apart_name || '삼성 힐스테이트 1단지'}}</span>
       </div>
-      <div class="col-6 q-px-sm">
+      <div class="col-sm-6 col-12 q-px-sm">
         <span class="information">K-APT 단지코드: &nbsp;&nbsp;&nbsp;</span>
         <span class="information sub">{{ estate.code || 'K-Apart Code' }}</span>
       </div>
     </div>
     <div class="row table">
-      <div class="col-md-4 col-6 row" v-for="(item, i) of getInfo" :key="i">
+      <div class="col-md-4 col-sm-6 col-12 row" v-for="(item, i) of getInfo" :key="i">
         <div class="q-pa-sm label">
           <span class="information">{{item.label}}</span>
         </div>
@@ -67,6 +67,11 @@ export default {
   border-top: 2px solid #555555;
   border-bottom: 1px solid #e9e9e9;
   >.row {
+    @media (max-width: 599px) {
+      &:not(:nth-last-child(-n+1)){
+        border-bottom: 1px solid #e9e9e9;
+      }
+    }
     &:not(:nth-last-child(-n+2)){
       border-bottom: 1px solid #e9e9e9;
     }

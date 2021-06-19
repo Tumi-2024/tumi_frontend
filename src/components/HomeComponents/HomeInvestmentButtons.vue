@@ -19,52 +19,52 @@
 
 <script>
 export default {
-	data() {
-		return {
-			investments_btn: [
+  data() {
+    return {
+      investments_btn: [
         {
           category: 'apartment',
           label: '아파트',
-          icon: 'building.svg',
+          icon: 'building.svg'
         },
         {
           category: 'alliance',
           label: '연립/다세대',
-          icon: 'obstacle.svg',
+          icon: 'obstacle.svg'
         },
         {
           category: 'single',
           label: '단독/다가구',
-          icon: 'paint.svg',
+          icon: 'paint.svg'
         },
         {
           category: 'officetel',
           label: '오피스텔',
-          icon: 'home.svg',
+          icon: 'home.svg'
         },
         {
           category: 'land',
           label: '토지',
-          icon: 'land.svg',
+          icon: 'land.svg'
         },
         {
           category: 'commercial',
           label: '상업/업무용',
-          icon: 'sanga.svg',
+          icon: 'sanga.svg'
         },
         {
           category: '',
           label: '분양권',
-          icon: 'ticket.svg',
+          icon: 'ticket.svg'
         },
         {
           category: '',
           label: '입주권',
-          icon: 'ticket2.svg',
-        },
+          icon: 'ticket2.svg'
+        }
       ]
-		}
-	},
+    }
+  }
 }
 </script>
 
