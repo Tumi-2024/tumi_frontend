@@ -5,8 +5,8 @@ import * as GmapVue from "gmap-vue";
 Vue.use(GmapVue, {
   load: {
     // key: process.env.GOOGLE_MAP_API.replace(/"/g, ""),
-    key: 'AIzaSyByeeufWvZT9GcXzWNSUoZs7ycQSUxaIJI',
-    libraries: "places" // This is required if you use the Autocomplete plugin
+    key: "AIzaSyByeeufWvZT9GcXzWNSUoZs7ycQSUxaIJI",
+    libraries: "geometry, places" // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)

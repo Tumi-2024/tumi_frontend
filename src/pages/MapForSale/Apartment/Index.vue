@@ -1,6 +1,12 @@
 <template>
   <div v-if="estate">
-    <google-map class="map" :position="estate.position" setMapAreaView />
+    <google-map
+      class="map"
+      :position="estate.position"
+      :polygon="null"
+      :estate="estate"
+      setMapAreaView
+    />
     <detail-summary
       :tags="{
         type: toKr(estate.type_house),
@@ -11,7 +17,7 @@
       :areaName="estate.address"
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
-      :quote='estate.description'
+      :quote="estate.description"
     />
     <!--  토지 매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
@@ -31,10 +37,10 @@
         numberHouseholds: estate.area_household_count,
         administrativeExpenses: estate.administration_cost && `${estate.administration_cost}원`
       }"
-
     />
     <!-- 재개발 정보 -->
-    <redevelopment-information v-if="redevelopment"
+    <redevelopment-information
+      v-if="redevelopment"
       approvalPromotionCommittee="2004.07.20"
       designationMaintenanceArea="2005.05.19"
       associationEstablishment="2005.05.19"
@@ -62,7 +68,7 @@
 </template>
 
 <script>
-import { toKr, toMoneyString } from 'src/utils';
+import { toKr, toMoneyString } from "src/utils";
 import {
   GoogleMap,
   DetailSummary,
@@ -86,9 +92,10 @@ export default {
   },
   mounted() {
     this.estate = this.$route.params.data;
-    if (this.estate === undefined) return
-    this.$store.dispatch('addRecentlyViewedHouse', this.estate)
-    this.redevelopment = this.estate.redevelopment
+    if (this.estate === undefined) return;
+    this.$store.dispatch("addRecentlyViewedHouse", this.estate);
+    this.redevelopment = this.estate.redevelopment;
+    console.log(this.estate);
   },
   methods: {
     toKr,
@@ -147,7 +154,7 @@ export default {
           value: this.estate.administration_cost,
           icon: ["right.svg"]
         }
-      ]
+      ];
     }
   },
   data() {
