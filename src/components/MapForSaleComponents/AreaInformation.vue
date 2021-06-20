@@ -15,7 +15,10 @@
         >
           <template v-slot:icon>
             <!-- <img src="assets/iconsNew/아파트.jpeg" -->
-            <img :key="i" :src="getImage(icon, item.new)" style="width: 40px; height: auto;" v-for="(icon, i) of item.icon" />
+            <template v-for="(text, i) of item.text">
+            <span :key="i" v-if="text">{{text}}</span>
+            </template>
+            <img v-show="!item.text" :key="i" :src="getImage(icon, item.new)" style="width: 40px; height: auto;" v-for="(icon, i) of item.icon" />
             <!-- <img style="width: 40px; height: auto;" :src="getImage(icon, item.new)" /> -->
           </template>
         </ItemAttribute>
