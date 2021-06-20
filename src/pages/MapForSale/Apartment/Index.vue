@@ -108,7 +108,8 @@ export default {
           // number of floors
           label: "동",
           value: `${this.estate.dong}동`,
-          icon: ["아파트.jpeg"],
+          icon: [],
+          text: ['🏢'],
           new: true
         },
         {
@@ -127,7 +128,8 @@ export default {
           // station-area
           label: "방/욕실",
           value: `${this.estate.room_count}/${this.estate.bathroom_count}`,
-          icon: ["방침대.jpeg", "욕실.jpeg"],
+          icon: [],
+          text: ['🛏', '🛁'],
           new: true
         },
         {
