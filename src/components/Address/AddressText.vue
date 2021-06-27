@@ -1,6 +1,6 @@
 <template>
   <q-item-section>
-    <div class="area-name" :class="this.textClass"> {{address}} </div>
+    <div class="area-name" :class="this.textClass"> {{address.replace(/대한민국/gi, '')}} </div>
     <div class="area-name sub">{{building}}</div>
   </q-item-section>
 </template>

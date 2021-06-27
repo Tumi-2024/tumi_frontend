@@ -6,6 +6,7 @@
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
+      <area-list-filter />
       <div class="flex row justify-between">
         <template v-for="(btn, btnIndex) of sortButtons">
           <div class="flex items-center" :key="btnIndex">
@@ -16,7 +17,6 @@
           </div>
         </template>
       </div>
-        <area-list-filter />
     </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >

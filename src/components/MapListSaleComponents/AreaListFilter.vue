@@ -33,10 +33,10 @@ export default {
     return {
       filters: [
         { label: "주택유형", type: 'houseType' },
-        { label: "거래유형", type: 'pyeong' },
+        { label: "평형", type: 'pyeong' },
         { label: "매매가", type: 'sale' },
-        { label: "전세가/보증금", type: 'charter' },
-        { label: '매물 등록일자', type: 'date' }
+        { label: "전월세가", type: 'charter' },
+        { label: '매물등록일자', type: 'date' }
       ]
     };
   },

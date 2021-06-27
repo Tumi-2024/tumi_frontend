@@ -22,22 +22,30 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async context => {
       try {
-        let areas = []
-        let url = "/redevelopment_areas";
-        while (true) {
-          console.log(url);
-          const result = await Vue.prototype.$axios.get(url, {
-            timeout: 10000
-          });
-          areas = areas.concat(result.data.results);
-          context.commit("setMapAreas", context.state.areas.concat(result.data.results));
-          if (!result.data.next) {
-            break;
-          } else {
-            url = result.data.next;
-          }
-        }
-        context.commit("setMapAreas", areas);
+        // let areas = []
+        const url = "/redevelopment_areas?page_size=1000";
+        const { data } = await Vue.prototype.$axios.get(url, {
+          timeout: 10000
+        });
+        console.log(data)
+        context.commit("setMapAreas", data.results);
+        // const areas = tconcat.results
+        // const areas = results.reduce((acc, val) => acc.concat(val), [])
+        // areas = areas.concat(result.data.results);
+        // while (true) {
+        //   console.log(url);
+        //   const result = await Vue.prototype.$axios.get(url, {
+        //     timeout: 10000
+        //   });
+        //   areas = areas.concat(result.data.results);
+        //   context.commit("setMapAreas", context.state.areas.concat(result.data.results));
+        //   if (!result.data.next) {
+        //     break;
+        //   } else {
+        //     url = result.data.next;
+        //   }
+        // }
+        // context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data

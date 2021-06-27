@@ -1,36 +1,36 @@
 <template>
   <div
-    class="row"
-    style="width: 192px; overflow-y: hidden"
+    style="min-width: 192px; overflow-y: hidden; flex-direction: column;"
     @click="$emit('viewArea')"
   >
-    <q-img
-      src="~assets/icons/house_orange.svg"
-      spinner-color="white"
-      style="height: 20px; max-width: 20px"
-      class="q-mr-xs q-mt-xs"
-    />
+    <div style="display: flex;">
+      <q-img
+        src="~assets/icons/house_orange.svg"
+        spinner-color="white"
+        style="height: 20px; max-width: 20px"
+        class="q-mr-xs q-mt-xs"
+      />
 
-    <div v-if="count && count > 1" style="height: 28px; width:28px; background-color: #FF7D36; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1">
-      <div style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;">
-        {{ `${count}` }}
+      <div v-if="count && count > 1" style="height: 28px; width:28px; background-color: #FF7D36; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1">
+        <div style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;">
+          {{ `${count}` }}
+        </div>
+      </div>
+       <div class="info-heading notosanskr-medium">
+        {{ item.title }}
       </div>
     </div>
-
     <div class="col">
-      <div class="info-heading notosanskr-medium">
-        {{ toMoneyString(price) }}
-        <!-- {{ price }} -->
-      </div>
+
       <div class="row bottom-toolbar notosanskr-regular">
-        <div class="info-text" v-if="badges.type_house">{{ (badges.type_house === 'apartment') ? '아파트' : ''}}</div>
+        <div class="info-text" v-if="item.type_house">{{ (item.type_house[0] === 'apartment') ? '아파트' : ''}}</div>
         <q-badge class="re-develop bg-white q-mr-sm" v-if="badges.redevelop">
           <q-icon>
             <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
           </q-icon>
         </q-badge>
-
-        <q-badge
+        <!-- {{badges.type_sale.includes("RENT")}} -->
+        <!-- <q-badge
           color="white"
           text-color="primary"
           label="월세"
@@ -46,17 +46,18 @@
           color="white"
           style="color: #FF5100"
           label="매매"
-          v-if="badges.type_sale.includes('sale')"
+          v-if="badges.type_sale.includes('SALE')"
         />
         <q-badge
           color="white"
           style="color: #FF5100"
           label="매매"
           v-if="badges.type_sale.includes('half-charter')"
-        />
+        /> -->
         <q-separator vertical class="q-ma-xs" />
         <div class="info-text" v-if="badges.area">{{ badges.area }}평</div>
-        <!-- <div class="info-text" v-if="badges.area">{{ Math.round(badges.area/3.3) }}평</div> -->
+        <q-separator vertical class="q-ma-xs" />
+        <div class="info-text" v-if="badges.area">{{ toMoneyString(price) }}</div>
       </div>
     </div>
   </div>

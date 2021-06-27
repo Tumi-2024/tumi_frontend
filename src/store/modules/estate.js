@@ -9,7 +9,8 @@ export const estateStore = {
     interest_houses: [],
     current_house: {},
     recently_viewed_houses: [],
-    count_estate: 0
+    count_estate: 0,
+    simple_houses_type: ''
   },
   getters: {
     simple_houses: (state, getters) => {
@@ -30,7 +31,11 @@ export const estateStore = {
     }
   },
   mutations: {
+    setSimpleHousesType: function (state, payload) {
+      state.simple_houses_type = payload
+    },
     setSimpleHouses: function (state, payload) {
+      console.log(payload, 'payload')
       state.simple_houses = payload
     },
     setDetailHouses: function (state, payload) {
@@ -57,12 +62,36 @@ export const estateStore = {
   },
   actions: {
     getSimpleHouses: async function (context, payload) {
-      const response = await Vue.prototype.$axios.get(
-        `/houses/simple${payload ? `?${payload}` : ""}`, {
-          timeout: 10000
-        }
-      );
-      context.commit('setSimpleHouses', response.data.filter(item => item.latitude && item.longitude).map(item =>
+      let data;
+      console.log(context, payload)
+      // if (context.state.simple_houses_type === payload.type) return
+      if (payload.type === 'city') {
+        data = await Vue.prototype.$axios.get(
+          `/cities`, {
+            timeout: 10000
+          }
+        );
+      } else if (payload.type === 'subcity') {
+        data = await Vue.prototype.$axios.get(
+          `/sub_cities?latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
+            timeout: 10000
+          }
+        );
+      } else if (payload.type === 'locations') {
+        data = await Vue.prototype.$axios.get(
+          `/locations?page_size=1000&latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
+            timeout: 10000
+          }
+        );
+      } else {
+        data = await Vue.prototype.$axios.get(
+          `/transaction_groups/?page_size=1000&latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
+            timeout: 10000
+          }
+        );
+      }
+      console.log(data)
+      context.commit('setSimpleHouses', data.data.results.map(item =>
         ({
           ...item,
           position: {
@@ -71,6 +100,7 @@ export const estateStore = {
           }
         }))
       )
+      context.commit('setSimpleHousesType', payload.type)
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(

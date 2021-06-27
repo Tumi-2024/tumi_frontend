@@ -64,6 +64,7 @@
       show-units
       :unit="unit"
     />
+    <person-charge-of class="q-my-md" />
   </div>
 </template>
 
@@ -77,7 +78,8 @@ import {
   RedevelopmentInformation,
   AdministrationCost,
   SchoolSection,
-  RecentPricing
+  RecentPricing,
+  PersonChargeOf
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -88,7 +90,8 @@ export default {
     AdministrationCost,
     SchoolSection,
     RecentPricing,
-    "google-map": GoogleMap
+    "google-map": GoogleMap,
+    PersonChargeOf
   },
   mounted() {
     this.estate = this.$route.params.data;
