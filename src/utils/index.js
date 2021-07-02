@@ -209,10 +209,10 @@ export const toQueryString = params => {
   return condition.join('&');
 };
 
-export const toMoneyString = (val) => {
+export const toMoneyString = (val, add = 1) => {
   val = parseInt(val);
-  const uk = Math.floor(val / 10000);
-  const man = Math.floor((val - uk * 10000));
+  const uk = Math.floor(val * add / 10000);
+  const man = Math.floor((val * add - uk * 10000));
   const price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
   return price;
 }

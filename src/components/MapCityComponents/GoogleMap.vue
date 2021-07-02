@@ -21,15 +21,16 @@
           :key="index"
           :options="infoOptions"
           :position="m.position"
-          :opened="showInfoWindow && showEstates"
-          @closeclick="infoWinOpen = false"
+          :opened="showInfoWindow"
           class="q-pa-lg">
+          <!-- @closeclick="infoWinOpen = false" -->
 
-          <info-top-content :marker="m" />
-
+          <!-- <info-top-content :marker="m" /> -->
+          <!-- :item="{title: m.road_name || m.address}" -->
+          
           <info-window-content
             @viewArea="viewArea(m)"
-            :item="{title: m.road_name || m.address}"
+            :item="m"
             :price="getPriceFromText(m)"
             :count="m.transactions_count"
             :badges="{
@@ -88,7 +89,7 @@ import { gmapApi } from "gmap-vue";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
 /** custom components */
 import InfoWindowContent from "./InfoWindowContent";
-import InfoTopContent from "./InfoTopContent";
+// import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
 // import { toQueryString } from 'src/utils';
 import { mapGetters, mapActions } from "vuex";
@@ -98,7 +99,7 @@ const { Geolocation } = Plugins;
 
 export default {
   components: {
-    "info-top-content": InfoTopContent,
+    // "info-top-content": InfoTopContent,
     "info-window-content": InfoWindowContent,
     "action-buttons": ActionButtons,
     "gmap-custom-marker": GmapCustomMarker
@@ -212,9 +213,7 @@ export default {
         lng: center.lng()
       })
       this.setLocationLoading(false);
-      // if (this.showInfoWindow && this.showEstates) {
-      //   this.getDistinctHouses();
-      // }
+      this.getHouseInfo()
     });
 
     this.map.addListener("dragend", _ => {
@@ -228,7 +227,6 @@ export default {
       /**
        *  access click event
        */
-      console.log(e.latLng.lat(), e.latLng.lng());
     });
     // apply zoom change listeners
     this.map.addListener("zoom_changed", () => {
@@ -257,7 +255,6 @@ export default {
     getPriceFromText(obj) {
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price
-        console.log(string, Number(string.replace(/,/g, '')))
         if (string) {
           return Number(string.replace(',', '')) * 1000
         } else {
@@ -286,13 +283,16 @@ export default {
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'city' });
         // subcities
-      } else if (zoomLevel < 15) {
+      } else if (zoomLevel <= 14) {
+        console.log('구')
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'subcity', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
-      } else if (zoomLevel < 18) {
+      } else if (zoomLevel <= 17) {
+        console.log('동')
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'locations', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
       } else {
+        console.log('')
         this.showInfoWindow = true
         this.$store.dispatch('getSimpleHouses', { type: 'detail', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
       }
@@ -304,23 +304,6 @@ export default {
         }
       }, 500);
     },
-    // getDetailHouses() {
-    //   const bounds = this.map.getBounds();
-    //   this.$store.dispatch('getDetailHouses', toQueryString({f
-    //     latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-    //     longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
-    //     ...this.$store.state.search
-    //   }));
-    // },
-    // getDistinctHouses() {
-    //   const bounds = this.map.getBounds();
-    //   this.$store.dispatch('getDistinctHouses', toQueryString({
-    //     latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-    //     longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()],
-    //     ...this.$store.state.search
-    //   }));
-    //   console.log(this.$store.state);
-    // },
     setMapGeojson(geojson) {
       /**
        *  we use loadGeoJson() for url
@@ -376,7 +359,6 @@ export default {
               visible
             })
           }
-          // console.log(item)
 
           item.addListener("click", _ => {
             this.changeMapSelectedArea(area);
@@ -420,7 +402,6 @@ export default {
               center: { lat: Number(obj.latitude), lng: Number(obj.longitude) }, title: obj.title
             }
           })
-      console.log(this.areaBadges, 'this.areaBadges')
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
@@ -445,9 +426,16 @@ export default {
     viewArea(item) {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
-        this.changeMapZoom(18);
+        // this.changeMapZoom(18);
         this.changeMapCenter(item.position);
-        this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });
+        console.log(item)
+        this.$router.push({
+          name: 'map_list_sale',
+          query: {
+            transactionid: this.$route.path === '/map/city/area' ? item.id : undefined
+          }
+        })
+        // this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });
       });
     },
     typeForHouse(type) {
@@ -466,21 +454,17 @@ export default {
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(position => {
         const { latitude: lat, longitude: lng } = position.coords;
-        // console.log("Current", lat, lng);
         this.changeUserLocation({ lat, lng });
       }).catch(e => {
-        console.log(e, "error");
       });
     },
     async showHideArea(value) {
       if (!value) {
         // if value is false; remove area from map
         this.showAreaBadges = false;
-        console.log('hide Area', this.polygons)
         this.polygons.forEach(obj => obj.setVisible(false))
       } else {
         this.showAreaBadges = true;
-        console.log('show Area', this.polygons)
         this.polygons.forEach(obj => obj.setVisible(true))
         this.setMapAreas();
       }

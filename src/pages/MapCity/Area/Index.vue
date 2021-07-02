@@ -1,7 +1,6 @@
 <template>
   <div v-if="pageReady && headerHeight">
     <google-map
-      :showEstates="false"
       class="page-container full-width"
       :style="`min-height: calc(100vh - ${headerHeight}px)`"
     />

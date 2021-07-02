@@ -17,7 +17,7 @@
         </div>
       </div>
        <div class="info-heading notosanskr-medium">
-        {{ item.title }}
+        {{ item.road_name || item.address }}
       </div>
     </div>
     <div class="col">
@@ -29,35 +29,39 @@
             <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
           </q-icon>
         </q-badge>
+        <div class="info-text">
+          {{(category.find(ct => item.categories.indexOf(ct.key) >= 0) || {label: item.categories}).label}}
+        </div>
+        <q-separator vertical class="q-ma-xs" />
         <!-- {{badges.type_sale.includes("RENT")}} -->
-        <!-- <q-badge
+        <q-badge
           color="white"
           text-color="primary"
           label="월세"
-          v-if="badges.type_sale.includes('rent')"
+          v-if="item.types.includes('RENT')"
         />
         <q-badge
           color="white"
           text-color="secondary"
           label="전세"
-          v-if="badges.type_sale.includes('charter')"
+          v-if="item.types.includes('CHARTER')"
         />
         <q-badge
           color="white"
           style="color: #FF5100"
           label="매매"
-          v-if="badges.type_sale.includes('SALE')"
+          v-if="item.types.includes('SALE')"
         />
         <q-badge
           color="white"
           style="color: #FF5100"
           label="매매"
-          v-if="badges.type_sale.includes('half-charter')"
-        /> -->
+          v-if="item.types.includes('half-charter')"
+        />
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="badges.area">{{ badges.area }}평</div>
+        <div class="info-text">{{ item.area ? item.area : '- ' }}평</div>
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text" v-if="badges.area">{{ toMoneyString(price) }}</div>
+        <div class="info-text">{{ toMoneyString(item.recent_transactions.SALE.text_price, 1000) }}</div>
       </div>
     </div>
   </div>
@@ -91,6 +95,18 @@ export default {
   },
   methods: {
     toMoneyString: toMoneyString
+  },
+  data() {
+    return {
+      category: [
+        { key: 'COMMERCIAL ', label: '상업업무용' },
+        { key: 'SINGLE', label: '단독다가구' },
+        { key: 'OFFICETEL', label: '오피스텔' },
+        { key: 'APARTMENT', label: '아파트' },
+        { key: 'LAND', label: '토지' },
+        { key: 'ALLIANCE', label: '연립/다세대' }
+      ]
+    }
   }
 };
 </script>

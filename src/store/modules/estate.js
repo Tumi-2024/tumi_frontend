@@ -35,7 +35,6 @@ export const estateStore = {
       state.simple_houses_type = payload
     },
     setSimpleHouses: function (state, payload) {
-      console.log(payload, 'payload')
       state.simple_houses = payload
     },
     setDetailHouses: function (state, payload) {
@@ -90,7 +89,6 @@ export const estateStore = {
           }
         );
       }
-      console.log(data)
       context.commit('setSimpleHouses', data.data.results.map(item =>
         ({
           ...item,

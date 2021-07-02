@@ -1,7 +1,7 @@
 <template>
     <div class="column">
       <div class="row items-center">
-        <template v-for="(row, rIndex) of mainInfo" >
+        <template v-for="(row, rIndex) of infoProps ? infoProps : mainInfo" >
           <span
             class="q-pa-xs justify-start align-start"
             style="flex: 1 1 auto;"
@@ -17,7 +17,7 @@
       </div>
       <q-separator />
       <div class="row q-mt-sm">
-        <template v-for="(row, rIndex) of subInfo" >
+        <template v-for="(row, rIndex) of subInfoProps ? subInfoProps: subInfo" >
           <span
             class="flex  col-sm-3 col-xs-6 q-px-sm"
             :key="`col-${rIndex}`"
@@ -34,7 +34,9 @@ import { toKr } from "src/utils";
 
 export default {
   props: {
-    item: Object
+    item: Object,
+    infoProps: Array,
+    subInfoProps: Array
   },
   methods: {
     toKr
@@ -43,7 +45,7 @@ export default {
     return {
       mainInfo: [
         { title: "층수(지상/지하)", value: '11층 / 22층' },
-        { title: "방향", value: this.item.type_direction && `${toKr(this.item.type_direction)}향`, isDirection: true },
+        { title: "방향", value: this.item && this.item.type_direction ? `${toKr(this.item.type_direction)}향` : ``, isDirection: true },
         { title: "방수/욕실수", value: '3/2' }
       ],
       subInfo: [
