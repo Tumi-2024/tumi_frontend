@@ -38,7 +38,14 @@
               type_house: m.categories,
             }" />
               <!-- area: m.pyeong, -->
-
+            <div v-else>
+              <q-spinner-pie
+                style="margin-left: 10px; margin-top: 5px;"
+                color="primary"
+                size="30px"
+              />
+              <q-tooltip>QSpinnerPie</q-tooltip>
+            </div>
         </gmap-info-window>
       </template>
 

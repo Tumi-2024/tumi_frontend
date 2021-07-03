@@ -81,21 +81,21 @@ export const mapStore = {
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     changeMapCenter: async (context, data) => {
       context.commit("setMapCenter", data)
-      // Vue.prototype.$axios.post(`/locations/find/`, Vue.prototype.$qs.stringify({ latitude: data.lat, longitude: data.lng })).then(result => {
-      //   const string = result.data.address.split(' ');
-      //   context.commit("setMapAddress", `${string[1]} ${string[2]}`)
-      //   context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
-      //   // console.log('changeMapCenter', result.data)
-      //   if (result.data.location && result.data.location.subcity &&
-      //     result.data.location.subcity.interest && result.data.location.subcity.interest.subcity) {
-      //     context.commit("setIsInterest", true);
-      //   } else {
-      //     context.commit("setIsInterest", false);
-      //   }
-      //   // console.log(context.state);
-      //   // context.commit("");
-      //   // data.lat, longitude: data.lng
-      // })
+      Vue.prototype.$axios.post(`/locations/find/`, Vue.prototype.$qs.stringify({ latitude: data.lat, longitude: data.lng })).then(result => {
+        const string = result.data.address.split(' ');
+        context.commit("setMapAddress", `${string[1]} ${string[2]}`)
+        context.commit("setToolbarTitle", `${string[1]} ${string[2]}`)
+        // console.log('changeMapCenter', result.data)
+        if (result.data.location && result.data.location.subcity &&
+          result.data.location.subcity.interest && result.data.location.subcity.interest.subcity) {
+          context.commit("setIsInterest", true);
+        } else {
+          context.commit("setIsInterest", false);
+        }
+        // console.log(context.state);
+        // context.commit("");
+        // data.lat, longitude: data.lng
+      })
     },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
     changeToolbarTitle: (context, data) => context.commit("setToolbarTitle", data),
