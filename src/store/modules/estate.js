@@ -62,8 +62,7 @@ export const estateStore = {
   actions: {
     getSimpleHouses: async function (context, payload) {
       let data;
-      console.log(context, payload)
-      // if (context.state.simple_houses_type === payload.type) return
+      if (context.state.simple_houses_type === payload.type) return
       if (payload.type === 'city') {
         data = await Vue.prototype.$axios.get(
           `/cities`, {

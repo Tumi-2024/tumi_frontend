@@ -107,6 +107,9 @@ export default {
         { key: 'ALLIANCE', label: '연립/다세대' }
       ]
     }
+  },
+  mounted() {
+    console.log(this.item, 'item')
   }
 };
 </script>

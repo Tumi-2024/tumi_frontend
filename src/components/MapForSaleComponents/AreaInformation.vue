@@ -18,7 +18,9 @@
             <template v-for="(text, i) of item.text">
             <span :key="i" v-if="text">{{text}}</span>
             </template>
-            <img v-show="!item.text" :key="i" :src="getImage(icon, item.new)" style="width: 40px; height: auto;" v-for="(icon, i) of item.icon" />
+            <div v-show="!item.text">
+              <img :key="i" :src="getImage(icon, item.new)" style="width: 30px; height: auto;" v-for="(icon, i) of item.icon" />
+            </div>
             <!-- <img style="width: 40px; height: auto;" :src="getImage(icon, item.new)" /> -->
           </template>
         </ItemAttribute>

@@ -6,6 +6,7 @@ import PropertyMonthly from "./PropertyMonthly";
 import ExclusiveArea from "./ExclusiveArea";
 import PropertyPremiumPrice from "./PropertyPremiumPrice";
 import PropertyConnoisseur from "./PropertyConnoisseur";
+import MaintenanceType from './MaintenanceType'
 
 export {
   TransactionType,
@@ -15,5 +16,6 @@ export {
   PropertyMonthly,
   ExclusiveArea,
   PropertyPremiumPrice,
-  PropertyConnoisseur
+  PropertyConnoisseur,
+  MaintenanceType
 };

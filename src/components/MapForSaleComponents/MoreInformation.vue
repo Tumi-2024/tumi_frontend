@@ -19,7 +19,8 @@
         <div class="q-pa-sm label">
           <span class="information">{{item.label}}</span>
         </div>
-        <span class="information sub flex items-center q-px-sm">{{ item.value }}</span>
+        <a class="information sub flex items-center q-px-sm" :href='`tel:${item.value}`' v-if="item.phone">{{item.value}}</a>
+        <span class="information sub flex items-center q-px-sm" v-else>{{ item.value }}</span>
       </div>
     </div>
   </q-card-section>
@@ -50,7 +51,9 @@ export default {
         { label: "주건물구조", value: '주건물구조' },
         { label: "역세권", value: '강남역' },
         { label: "관리사무소 연락처", value: '02-123-4567' },
-        { label: "부대복리시설", value: '헬스장, 수영장' }
+        { label: "부대복리시설", value: '헬스장, 수영장' },
+        { label: "매물담당자", value: '홍길동' },
+        { label: "담당자 연락처", value: '01025914024', phone: true }
       ]
     }
   },

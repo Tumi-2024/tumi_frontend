@@ -8,27 +8,35 @@
           padding="0px"
           class="q-mr-xs q-px-md"
           :class="getColor(filter.type)"
+          :label="filter.label"
         >
-          {{ filter.label }}
+          <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup>
+              <q-item-section>New tab</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section>New incognito tab</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-close-popup>
+              <q-item-section>Recent tabs</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section>History</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
         </q-btn>
       </div>
-      <q-btn
-        unelevated
-        outline
-        color="primary"
-        padding="8px"
-        style="border-radius: 8px; height: 36px;"
-        class="q-mr-sm"
-      >
-        <q-icon size="20px">
-          <img src="~assets/icons/Filter.svg" />
-        </q-icon>
-      </q-btn>
+      <!-- <toolbar-filter /> -->
   </div>
 </template>
 
 <script>
+import ToolbarFilter from './ToolbarFilter.vue';
 export default {
+  components: { ToolbarFilter },
   data() {
     return {
       filters: [
@@ -93,5 +101,8 @@ export default {
 }
 .scrolling-wrapper-flexbox::-webkit-scrollbar {
   display: none;
+}
+button .without-icon i {
+  display: none
 }
 </style>

@@ -14,6 +14,7 @@
               <specific-filter
                 :label="filter.label"
                 :transactionType="filter.type === 'transactionType'"
+                :maintenanceType="filter.type === 'maintenanceType'"
                 :propertyType="filter.type === 'propertyType'"
                 :salePrice="filter.type === 'salePrice'"
                 :charterPriceDeposit="filter.type === 'charterPriceDeposit'"
@@ -45,7 +46,11 @@ export default {
           type: "transactionType"
         },
         {
-          label: "매물유형",
+          label: "정비구역 유형",
+          type: "maintenanceType"
+        },
+        {
+          label: "주택유형",
           type: "propertyType"
         },
         {

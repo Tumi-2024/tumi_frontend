@@ -37,7 +37,12 @@
             class="bg-white q-pb-xl q-pt-md"
             @select="setSelected('transactionType', $event)"
           ></transaction-type>
-          <!-- Property Type | 매물유형 -->
+          <!-- Maintenance type | 거래유형 -->
+          <maintenance-type
+            class="bg-white q-pb-xl q-pt-md"
+            @select="setSelected('maintenanceType', $event)"
+          ></maintenance-type>
+          <!-- Property Type | 주택 유형 -->
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
@@ -127,11 +132,13 @@ import {
   PropertyMonthly,
   ExclusiveArea,
   PropertyPremiumPrice,
-  PropertyConnoisseur
+  PropertyConnoisseur,
+  MaintenanceType
 } from "components/Utilities/PropertySearchFilter/Selections";
 export default {
   components: {
     "transaction-type": TransactionType,
+    "maintenance-type": MaintenanceType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit,

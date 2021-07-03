@@ -58,12 +58,14 @@ import {
   TransactionType,
   PropertyType,
   PropertySalePrice,
-  CharterPriceDeposit
+  CharterPriceDeposit,
+  MaintenanceType
 } from "components/Utilities/PropertySearchFilter/Selections";
 import { mapActions, mapGetters } from 'vuex';
 export default {
   components: {
     "transaction-type": TransactionType,
+    "maintenance-type": MaintenanceType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit
@@ -77,6 +79,7 @@ export default {
   },
   props: {
     label: { type: String, default: "" },
+    maintenanceType: { type: Boolean, default: false },
     transactionType: { type: Boolean, default: false },
     propertyType: { type: Boolean, default: false },
     salePrice: { type: Boolean, default: false },
@@ -88,6 +91,9 @@ export default {
       let component;
       if (this.transactionType) {
         component = "transaction-type";
+      }
+      if (this.maintenanceType) {
+        component = "maintenance-type";
       }
       if (this.propertyType) {
         component = "property-type";

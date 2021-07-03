@@ -64,7 +64,7 @@
       show-units
       :unit="unit"
     />
-    <person-charge-of class="q-my-md" />
+    <!-- <person-charge-of class="q-my-md" /> -->
   </div>
 </template>
 
@@ -79,7 +79,6 @@ import {
   AdministrationCost,
   SchoolSection,
   RecentPricing,
-  PersonChargeOf
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -91,7 +90,6 @@ export default {
     SchoolSection,
     RecentPricing,
     "google-map": GoogleMap,
-    PersonChargeOf
   },
   mounted() {
     this.estate = this.$route.params.data;
@@ -109,15 +107,14 @@ export default {
       return [
         {
           // number of floors
-          label: "동",
+          label: "해당 동수",
           value: `${this.estate.dong}동`,
-          icon: [],
-          text: ['🏢'],
+          icon: ["11아파트.png"],
           new: true
         },
         {
           // number of floors
-          label: "층",
+          label: "해당 층수",
           value: `${this.estate.floor}층`,
           icon: ["number-floors.svg"]
         },
@@ -129,27 +126,26 @@ export default {
         },
         {
           // station-area
-          label: "방/욕실",
+          label: "방수/욕실수",
           value: `${this.estate.room_count}/${this.estate.bathroom_count}`,
-          icon: [],
-          text: ['🛏', '🛁'],
+          icon: ["31방침대.png", "31욕실.png"],
           new: true
         },
         {
           // exclusive Area
-          label: "공용 면적",
+          label: "공용 면적 (m2)",
           value: `${this.estate.area_common}㎡`,
           icon: ["land-area.svg"]
         },
         {
           // exclusive Area
-          label: "전용 면적",
+          label: "전용 면적 (m2❘평형)",
           value: `${this.estate.area_exclusive}㎡`,
           icon: ["land-area.svg"]
         },
         {
           // Right
-          label: "동일 면적 세대 수",
+          label: "해당면적 세대수",
           value: this.estate.area_household_count,
           icon: ["building-area.svg"]
         },

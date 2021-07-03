@@ -4,12 +4,13 @@
       전체 {{this.type === 'transaction' ? '실거래가' :'매물'}}
       <span class="text-primary">
         {{this.type === 'transaction' ? saleList.length :$store.state.estate.detail_houses.length}}
+        {{$store.state.estate.detail_houses.length}}
         </span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <area-list-filter v-if="this.type !== 'transaction'" />
+      <area-list-filter />
       <div class="flex row justify-between">
         <template v-for="(btn, btnIndex) of sortButtons">
           <div class="flex items-center" :key="btnIndex">
