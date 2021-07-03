@@ -3,11 +3,18 @@
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
-          <address-with-badges :item="{address: currentItem.address}" :tags="getBadges(item)" />
+          <address-with-badges
+            :item="{
+              address: `${item.address} (${item.text_road})`,
+              building: `${item.text_building ? item.text_building : ''} ${`${item.text_floor ? item.text_floor + '층' : ''}`}`
+            }"
+            :tags="getBadges(item, ctgr)"
+          />
         </q-item-section>
       </div>
       <div class="flex items-center q-py-sm" style="flex: 1 1 600px">
-        <area-item-info :infoProps="[]" :subInfoProps="[]" />
+        <area-item-info :infoProps="[]" :subInfoProps="getSubInfoProps(item)" col="4"
+        />
       </div>
     </div>
     <q-separator style="margin-top: 20px" />
@@ -15,7 +22,7 @@
 </template>
 
 <script>
-import { toMoneyString, toKr, toDateFormat } from "src/utils";
+import { toMoneyString, toKr } from "src/utils";
 import areaItemInfo from './AreaItemInfo'
 import AddressWithBadges from '../Address/AddressWithBadges';
 
@@ -27,8 +34,10 @@ export default {
   },
   props: {
     item: Object,
-    currentItem: Object
+    ctgr: Array,
+    type: Array
   },
+  mounted() {},
   data() {
     return {
       category: [
@@ -39,9 +48,8 @@ export default {
         { key: 'LAND', label: '토지' },
         { key: 'ALLIANCE', label: '연립/다세대' }
       ],
-      sellType: [
-
-      ]
+      sellType: [{ key: 'SALE', label: '매매' }, { key: 'RENT', label: '임대' }],
+      subInfoProps: []
     }
   },
   methods: {
@@ -53,16 +61,104 @@ export default {
       if (str2.length === 1) {
         str2 = 0 + str2
       }
-      return str1.slice(0,4) + '.' + str1.slice(4,6) + '.' + str2
+      return str1.slice(0, 4) + '.' + str1.slice(4, 6) + '.' + str2
     }
   },
   computed: {
-    getBadges() {
+    getSubInfoProps() {
+      console.log(this.ctgr[0])
       return (item) => {
+        switch (this.ctgr[0]) {
+          case 'COMMERCIAL ':
+            return [
+              { title: '유형', value: item.text_type },
+              { title: '용도지역', value: item.text_type_area },
+              { title: '건축물주용도', value: item.text_type_yongdo },
+              { title: '도로조건', value: item.text_type_road },
+              { title: '전용/연면적(㎡)', value: item.text_size_total },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '층', value: `${item.text_floor}층` },
+              { title: '건축년도', value: item.text_year },
+              { title: '해제사유발생일', value: '해제 사유' }]
+          case 'SINGLE':
+            return [
+              { title: '주택유형', value: item.text_house_type },
+              { title: '도로조건', value: item.text_type_road },
+              { title: '연면적(㎡)', value: item.text_size_yean },
+              { title: '대지면적(㎡)', value: item.text_size_daeji },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '건축년도', value: item.text_year },
+              { title: '해제사유발생', value: '해제 사유' }]
+          case 'OFFICETEL':
+            return [
+              { title: '단지명', value: item.text_danji },
+              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '층', value: `${item.text_floor}층` },
+              { title: '건축년도', value: item.text_year },
+              { title: '해제사유발생', value: '해제 사유' }]
+          case 'APARTMENT':
+            return [
+              { title: '단지명', value: item.text_danji },
+              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '층', value: `${item.text_floor}층` },
+              { title: '건축년도', value: item.text_year },
+              { title: '해제사유발생', value: '해제 사유' }]
+          case 'LAND':
+            return [
+              { title: '지목', value: item.text_jimog },
+              { title: '용도지역', value: item.text_type_area },
+              { title: '도로조건', value: item.text_type_road },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '계약면적(㎡)', value: item.text_size_contract },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '지분구분', value: item.text_type_land },
+              { title: '해제사유발생', value: '해제 사유' }
+            ]
+          case 'ALLIANCE':
+            return [
+              { title: '건물명', value: item.text_building },
+              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '대지권면적(㎡)', value: item.text_size_land },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '층', value: `${item.text_floor}층` },
+              { title: '건축년도', value: item.text_year },
+              { title: '해제사유발생', value: '해제 사유' }]
+
+          case '분양':
+            return [
+              { title: '분양/입주', value: '분양/입주' },
+              { title: '단지명', value: item.text_danji },
+              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
+              { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
+              { title: '거래금액(만원)', value: item.text_price },
+              { title: '층', value: `${item.text_floor}층` },
+              { title: '해제사유발생', value: '해제 사유' }]
+          default:
+            return []
+        }
+      }
+    },
+
+    getBadges() {
+      return (item, ctgr) => {
         return [
-          { type: 'houseType', value: (this.category.find(ctgr => ctgr.key === item.category) || {label: ''} ).label },
-          { type: 'pyeong', value: item.pyeong || '-' + '평' },
-          { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
+          { type: 'houseType', value: (this.category.find(obj => obj.key === this.ctgr[0]) || { label: '' }).label },
+          // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
+          { type: this.type[0].toLowerCase(), value: `${toMoneyString(item.price)}` },
           { type: 'date', value: this.getdate(item.text_month, item.text_day) }
         ]
       }

@@ -61,7 +61,7 @@
         <q-separator vertical class="q-ma-xs" />
         <div class="info-text">{{ item.area ? item.area : '- ' }}평</div>
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text">{{ toMoneyString(item.recent_transactions.SALE.text_price, 1000) }}</div>
+        <div class="info-text">{{ toMoneyString(item.recent_transactions[item.categories[0]].text_price, 1000) }}</div>
       </div>
     </div>
   </div>

@@ -27,8 +27,8 @@
 
           <!-- <info-top-content :marker="m" /> -->
           <!-- :item="{title: m.road_name || m.address}" -->
-          
           <info-window-content
+            v-if="m.categories && m.categories.length > 0"
             @viewArea="viewArea(m)"
             :item="m"
             :price="getPriceFromText(m)"

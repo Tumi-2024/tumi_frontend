@@ -27,13 +27,17 @@
         ></area-item>
       </q-list>
     </q-card-section>
+    <!-- Transactions -->
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md" v-if="saleList">
         <area-transaction
           v-for="(item, i) of saleList"
           :key="i"
           :item="item"
-          :currentItem="currentItem"
+          v-bind="{
+            ctgr: currentItem.categories,
+            type: currentItem.types
+          }"
         >
         </area-transaction>
       </q-list>
@@ -70,12 +74,12 @@ export default {
     if (this.$route.query?.transactionid) {
       this.type = 'transaction'
 
-      const data = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}/`);
-      const keys = Object.keys(data.data.recent_transactions)
-      this.saleList = keys.map(key => {
-        return data.data.recent_transactions[key]
-      })
-      this.currentItem = data.data
+      const { data: currentItem } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}`);
+      this.currentItem = currentItem
+
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}/transactions`);
+
+      this.saleList = data
     } else {
       this.type = 'sell'
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <badge-list :tags="tags" />
-    <address-text class="q-mt-sm" :address="item.address"  />
+    <address-text class="q-mt-sm" :address="item.address" :building="item.building" />
   </div>
 </template>
 <script>

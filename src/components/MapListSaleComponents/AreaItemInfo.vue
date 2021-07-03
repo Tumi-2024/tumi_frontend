@@ -15,11 +15,12 @@
           </span>
         </template>
       </div>
-      <q-separator />
+      <q-separator v-if="infoProps.length > 0 || this.$q.screen.lt.md" />
       <div class="row q-mt-sm">
         <template v-for="(row, rIndex) of subInfoProps ? subInfoProps: subInfo" >
           <span
-            class="flex  col-sm-3 col-xs-6 q-px-sm"
+            class="flex col-sm-3 col-xs-6 q-px-sm"
+            :class="`col-sm-${col}`"
             :key="`col-${rIndex}`"
           >
             <span class="col-text">{{row.title}}:&nbsp;&nbsp;&nbsp;</span>
@@ -36,7 +37,8 @@ export default {
   props: {
     item: Object,
     infoProps: Array,
-    subInfoProps: Array
+    subInfoProps: Array,
+    col: String
   },
   methods: {
     toKr
