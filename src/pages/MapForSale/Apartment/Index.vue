@@ -2,7 +2,7 @@
   <div v-if="estate">
     <google-map
       class="map"
-      :position="estate.position"
+      :position="{lat: Number(estate.latitude), lng: Number(estate.longitude)}"
       :polygon="null"
       :estate="estate"
       setMapAreaView
@@ -64,12 +64,24 @@
       show-units
       :unit="unit"
     />
+    <recent-history class="q-mt-md"/>
+    <recent-average-history class="q-mt-md" :areaOptions="areaOptions"/>
+    <!-- <recent-pricing
+      class="q-mt-md"
+      :salePrice="salePrice"
+      :charter="charter"
+      :extraDetails="extraDetails"
+      :areaOptions="areaOptions"
+      show-units
+      :unit="unit"
+    /> -->
     <!-- <person-charge-of class="q-my-md" /> -->
   </div>
 </template>
 
 <script>
 import { toKr, toMoneyString } from "src/utils";
+import Vue from 'vue'
 import {
   GoogleMap,
   DetailSummary,
@@ -79,6 +91,8 @@ import {
   AdministrationCost,
   SchoolSection,
   RecentPricing,
+  RecentHistory,
+  RecentAverageHistory
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -89,14 +103,20 @@ export default {
     AdministrationCost,
     SchoolSection,
     RecentPricing,
-    "google-map": GoogleMap,
+    RecentHistory,
+    RecentAverageHistory,
+    "google-map": GoogleMap
   },
   mounted() {
     this.estate = this.$route.params.data;
+    if (!this.estate) {
+      Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}`).then(res => {
+        this.estate = res.data
+      })
+    }
     if (this.estate === undefined) return;
     this.$store.dispatch("addRecentlyViewedHouse", this.estate);
     this.redevelopment = this.estate.redevelopment;
-    console.log(this.estate);
   },
   methods: {
     toKr,

@@ -23,12 +23,12 @@
     </q-card-section>
 
     <!-- GRAPH -->
-    <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type === 'transaction'">
+    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type === 'transaction'">
       <q-list class="q-pa-md">
         <transaction-graph />
       </q-list>
-    </q-card-section>
-    <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type !== 'transaction'">
+    </q-card-section> -->
+    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type !== 'transaction'">
       <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
         <area-item
           v-for="(item, i) of $store.state.estate.detail_houses"
@@ -36,7 +36,7 @@
           :item="item"
         ></area-item>
       </q-list>
-    </q-card-section>
+    </q-card-section> -->
 
     <!-- Transactions -->
     <q-card-section class="list-items q-pa-none notosanskr-regular">
@@ -61,13 +61,11 @@ import Vue from 'vue'
 import AreaItem from "./AreaItem";
 import AreaListFilter from "./AreaListFilter";
 import AreaTransaction from './AreaTransaction.vue';
-import TransactionGraph from './TransactionGraph'
 export default {
   components: {
     "area-item": AreaItem,
     "area-list-filter": AreaListFilter,
-    "area-transaction": AreaTransaction,
-    "transaction-graph": TransactionGraph
+    "area-transaction": AreaTransaction
   },
   data() {
     return {
@@ -92,8 +90,14 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}/transactions`);
 
       this.saleList = data
-    } else {
+    } else if (this.$route.query?.sellid) {
       this.type = 'sell'
+      const { data: currentItem } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}`);
+      this.currentItem = currentItem
+
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}/transactions`);
+
+      this.saleList = data
     }
     // console.log('this.$route.params.type', this.$route.params.type);
     // console.log('this.$route.params.apartment', this.$route.params.apartment);

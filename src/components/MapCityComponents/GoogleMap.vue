@@ -435,11 +435,12 @@ export default {
       this.map.addListener("idle", () => {
         // this.changeMapZoom(18);
         this.changeMapCenter(item.position);
-        console.log(item)
+        console.log(this.$route.path, item)
         this.$router.push({
           name: 'map_list_sale',
           query: {
-            transactionid: this.$route.path === '/map/city/area' ? item.id : undefined
+            transactionid: this.$route.path === '/map/city/area' ? item.id : undefined,
+            sellid: this.$route.path === '/map/city' ? item.id : undefined
           }
         })
         // this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });

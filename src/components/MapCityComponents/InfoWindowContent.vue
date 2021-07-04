@@ -2,6 +2,7 @@
   <div
     style="min-width: 192px; overflow-y: hidden; flex-direction: column;"
     @click="$emit('viewArea')"
+    v-if="$route.path !== '/for-sale/apartment'"
   >
     <div style="display: flex; align-items: center; padding-bottom: 4px;">
       <q-img

@@ -1,5 +1,5 @@
 <template>
-  <q-item class="column  notosanskr-regular">
+  <q-item class="column  notosanskr-regular" :to="getToOptions(item)">
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
@@ -65,6 +65,15 @@ export default {
     }
   },
   computed: {
+    getToOptions() {
+      return item => {
+        const { transactionid } = this.$route.query
+        if (transactionid) {
+          return null
+        }
+        return { name: 'for_sale_apartment', params: { data: item }, query: this.$route.query }
+      }
+    },
     getSubInfoProps() {
       console.log(this.ctgr[0])
       return (item) => {

@@ -9,8 +9,8 @@ import RecentPricing from "./RecentPricing";
 import TransactionPriceHistory from "./TransactionPriceHistory";
 import SimilarTransaction from "./SimilarTransaction";
 import AveragePriceHistory from "./AveragePriceHistory";
-import PersonChargeOf from "./PersonChargeOf";
-
+import RecentHistory from './RecentHistory'
+import RecentAverageHistory from './RecentAverageHistory'
 export {
   GoogleMap,
   DetailSummary,
@@ -23,5 +23,6 @@ export {
   TransactionPriceHistory,
   SimilarTransaction,
   AveragePriceHistory,
-  PersonChargeOf
+  RecentHistory,
+  RecentAverageHistory
 };
