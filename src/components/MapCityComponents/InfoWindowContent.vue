@@ -3,12 +3,12 @@
     style="min-width: 192px; overflow-y: hidden; flex-direction: column;"
     @click="$emit('viewArea')"
   >
-    <div style="display: flex;">
+    <div style="display: flex; align-items: center; padding-bottom: 4px;">
       <q-img
         src="~assets/icons/house_orange.svg"
         spinner-color="white"
         style="height: 20px; max-width: 20px"
-        class="q-mr-xs q-mt-xs"
+        class="q-mr-xs"
       />
 
       <div v-if="count && count > 1" style="height: 28px; width:28px; background-color: #FF7D36; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1">
@@ -16,8 +16,12 @@
           {{ `${count}` }}
         </div>
       </div>
-       <div class="info-heading notosanskr-medium">
-        {{ item.road_name || item.address }}
+      <div class="info-heading notosanskr-medium">
+        {{ getItemInfo(item).text_building || getItemInfo(item).text_danji || getItemInfo(item).road_name  }}
+      </div>
+      <q-separator vertical class="q-ma-xs q-mx-sm" />
+        <div class="info-heading small notosanskr-medium">
+        {{ getItemInfo(item).text_month.slice(0,4) + '.' + getItemInfo(item).text_month.slice(4,6) }}
       </div>
     </div>
     <div class="col">
@@ -59,9 +63,9 @@
           v-if="item.types.includes('half-charter')"
         />
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text">{{ item.area ? item.area : '- ' }}평</div>
+        <div class="info-text">{{ getItemInfo(item).text_size_land ? Math.floor(getItemInfo(item).text_size_land / 3.3) : '- ' }}평</div>
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text">{{ toMoneyString(item.recent_transactions[item.categories[0]].text_price, 1000) }}</div>
+        <div class="info-text">{{ toMoneyString(getItemInfo(item).text_price, 1000) }}</div>
       </div>
     </div>
   </div>
@@ -108,8 +112,15 @@ export default {
       ]
     }
   },
+  computed: {
+    getItemInfo() {
+      return item => {
+        return item.recent_transactions[item.categories[0]]
+      }
+    }
+  },
   mounted() {
-    console.log(this.item, 'item')
+    // console.log(this.item, 'item')
   }
 };
 </script>
@@ -121,7 +132,11 @@ export default {
   line-height: 22px;
   letter-spacing: -1.125px;
   color: #1a1a1a;
-  padding-bottom: 4px;
+  &.small {
+  font-weight: 500;
+    font-size: 12px;
+  line-height: 15px;
+  }
 }
 .bottom-toolbar {
   display: flex;
