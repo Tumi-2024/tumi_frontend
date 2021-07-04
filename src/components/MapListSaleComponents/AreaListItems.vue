@@ -4,7 +4,6 @@
       전체 {{this.type === 'transaction' ? '실거래가' :'매물'}}
       <span class="text-primary">
         {{this.type === 'transaction' ? saleList.length :$store.state.estate.detail_houses.length}}
-        {{$store.state.estate.detail_houses.length}}
         </span>개
     </q-card-section>
     <q-card-section
@@ -22,6 +21,13 @@
         </template>
       </div>
     </q-card-section>
+
+    <!-- GRAPH -->
+    <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type === 'transaction'">
+      <q-list class="q-pa-md">
+        <transaction-graph />
+      </q-list>
+    </q-card-section>
     <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type !== 'transaction'">
       <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
         <area-item
@@ -31,6 +37,7 @@
         ></area-item>
       </q-list>
     </q-card-section>
+
     <!-- Transactions -->
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md" v-if="saleList">
@@ -50,16 +57,17 @@
 </template>
 
 <script>
-import { toQueryString } from 'src/utils';
 import Vue from 'vue'
 import AreaItem from "./AreaItem";
 import AreaListFilter from "./AreaListFilter";
 import AreaTransaction from './AreaTransaction.vue';
+import TransactionGraph from './TransactionGraph'
 export default {
   components: {
     "area-item": AreaItem,
     "area-list-filter": AreaListFilter,
-    "area-transaction": AreaTransaction
+    "area-transaction": AreaTransaction,
+    "transaction-graph": TransactionGraph
   },
   data() {
     return {
