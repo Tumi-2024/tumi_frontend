@@ -96,7 +96,7 @@ export default {
           case 'OFFICETEL':
             return [
               { title: '단지명', value: item.text_danji },
-              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '전용면적(㎡)', value: item.text_size_private },
               { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
               { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
               { title: '거래금액(만원)', value: item.text_price },
@@ -106,7 +106,7 @@ export default {
           case 'APARTMENT':
             return [
               { title: '단지명', value: item.text_danji },
-              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '전용면적(㎡)', value: item.text_size_private },
               { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
               { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
               { title: '거래금액(만원)', value: item.text_price },
@@ -128,7 +128,7 @@ export default {
           case 'ALLIANCE':
             return [
               { title: '건물명', value: item.text_building },
-              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '전용면적(㎡)', value: item.text_size_private },
               { title: '대지권면적(㎡)', value: item.text_size_land },
               { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
               { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
@@ -141,7 +141,7 @@ export default {
             return [
               { title: '분양/입주', value: '분양/입주' },
               { title: '단지명', value: item.text_danji },
-              { title: '전용면적(㎡)', value: item.text_size_total },
+              { title: '전용면적(㎡)', value: item.text_size_private },
               { title: '계약년월', value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(4, 6)}` },
               { title: '계약일', value: `${item.text_day.length === 1 ? '0' + item.text_day : item.text_day}` },
               { title: '거래금액(만원)', value: item.text_price },
