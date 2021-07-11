@@ -212,31 +212,19 @@ export default {
     });
 
     this.$store.dispatch('getSimpleHouses', { type: 'city' });
+    this.getHouseInfo()
 
-    this.map.addListener("idle", _ => {
+    this.map.addListener("zoom_changed", _ => {
+      this.getHouseInfo()
+    });
+
+    this.map.addListener("dragend", _ => {
       const center = this.map.getCenter();
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
       })
       this.setLocationLoading(false);
-      this.getHouseInfo()
-    });
-
-    this.map.addListener("dragend", _ => {
-      this.setMapAreas();
-      this.getHouseInfo()
-      this.setLocationLoading(true);
-    });
-
-    // apply click event on map
-    this.map.addListener("click", e => {
-      /**
-       *  access click event
-       */
-    });
-    // apply zoom change listeners
-    this.map.addListener("zoom_changed", () => {
       this.getHouseInfo()
     });
     // Load geojson if any
@@ -286,20 +274,18 @@ export default {
     getHouseInfo() {
       const zoomLevel = this.map.getZoom()
       const bounds = this.map.getBounds();
+      console.log('getHouseInfo', bounds)
       if (zoomLevel < 13) {
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'city' });
         // subcities
       } else if (zoomLevel <= 14) {
-        console.log('구')
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'subcity', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
       } else if (zoomLevel <= 17) {
-        console.log('동')
         this.showInfoWindow = false
         this.$store.dispatch('getSimpleHouses', { type: 'locations', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
       } else {
-        console.log('')
         this.showInfoWindow = true
         this.$store.dispatch('getSimpleHouses', { type: 'detail', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
       }
