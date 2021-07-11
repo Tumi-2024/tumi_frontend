@@ -7,10 +7,12 @@ const TYPE_SALE_ENG = {
 }
 
 const TYPE_HOUSE_ENG = {
-  아파트: 'apartment',
-  재개발: 'redevelop',
-  가로주택: 'house',
-  기타매물: 'etc'
+  상업업무용: 'COMMERCIAL',
+  단독다가구: 'SINGLE',
+  오피스텔: 'OFFICETEL',
+  아파트: 'APARTMENT',
+  토지: 'LAND',
+  '연립/다세대': 'ALLIANCE'
 }
 
 const TYPE_HOUSE_DETAIL_ENG = {
@@ -96,9 +98,9 @@ export const toQueryString = params => {
       condition.push(`longitude=${params.longitude}`);
     }
   }
-
+  console.log(params)
   if (TYPE_SALE_ENG[params.typeSale]) {
-    condition.push(`type_sale=${TYPE_SALE_ENG[params.typeSale]}`);
+    condition.push(`types=${TYPE_SALE_ENG[params.typeSale]}`);
   }
 
   if (TYPE_HOUSE_ENG[params.typeHouse]) {

@@ -40,7 +40,6 @@
   </q-card>
 </template>
 <script>
-import Vue from 'vue'
 import { toMoneyString } from 'src/utils';
 import BarChart from 'src/utils/BarChart'
 
@@ -49,7 +48,8 @@ export default {
     BarChart
   },
   props: {
-    areaOptions: Array
+    areaOptions: Array,
+    item: Object
   },
   data() {
     return {
@@ -129,13 +129,8 @@ export default {
   },
   computed: {
     getTransactions() {
-      return this.transactions
+      return this.item
     }
-  },
-  mounted() {
-    Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}/transactions`).then(res => {
-      this.transactions = res.data
-    })
   },
   methods: {
     toMoneyString(value, add) {

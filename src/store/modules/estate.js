@@ -62,7 +62,13 @@ export const estateStore = {
   actions: {
     getSimpleHouses: async function (context, payload) {
       let data;
-      if (context.state.simple_houses_type === payload.type) return
+      if (payload.query) {
+        data = await Vue.prototype.$axios.get(
+          `/transaction_groups/?page_size=1000&${payload.query}`, {
+            timeout: 10000
+          }
+        );
+      }
       if (payload.type === 'city') {
         data = await Vue.prototype.$axios.get(
           `/cities`, {
@@ -187,7 +193,6 @@ export const estateStore = {
       context.commit("setRecentlyViewedHouses", data.results)
     },
     filterHousesType: (context, parameter) => {
-      console.log(parameter)
     }
   }
 }

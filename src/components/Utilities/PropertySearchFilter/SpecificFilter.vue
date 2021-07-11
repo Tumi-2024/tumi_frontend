@@ -128,37 +128,44 @@ export default {
       this.selectedDetail = val;
     },
     save() {
+        console.log(this.selected, 'selected')
+        console.log(this.propertyType, 'propertyType')
       if (this.selected) {
         console.log('저장 ', this.selected, this.selectedDetail);
         if (this.transactionType) {
           // this.$store.search.dispatch('setTypeSale', this.selected);
+          console.log('transactionType')
           this.setTypeSale(this.selected);
         }
         if (this.propertyType) {
+          console.log(this.propertyType, 'propertyType', this.selected)
           // this.$store.search.dispatch('setTypeHouse', this.selected);
-          this.setTypeHouse(this.selected);
+          this.setTypeHouse(this.selectedDetail);
           if (this.selectedDetail) {
+          console.log('selectedDetail')
             // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
             this.setTypeHouseDetail(this.selectedDetail);
           }
         }
         if (this.salePrice) {
+          console.log('salePrice')
           // this.$store.search.dispatch('setSalePrice', this.selected);
           this.setSalePrice(this.selected);
         }
         if (this.charterPriceDeposit) {
+          console.log('charterPriceDeposit')
           // this.$store.search.dispatch('setDepositPrice', this.selected);
           this.setDepositPrice(this.selected)
         }
       }
       console.log(toQueryString(this.search));
-      this.$store.dispatch('getSimpleHouses', toQueryString(this.search));
-      this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
-      this.$store.dispatch('getDetailHouses', toQueryString({
-        latitude: this.getMapCenter.lat,
-        longitude: this.getMapCenter.lng,
-        ...this.search
-      }));
+      this.$store.dispatch('getSimpleHouses', { query: toQueryString(this.search) });
+      // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
+      // this.$store.dispatch('getDetailHouses', toQueryString({
+      //   latitude: this.getMapCenter.lat,
+      //   longitude: this.getMapCenter.lng,
+      //   ...this.search
+      // }));
       this.modal = false;
     },
     init() {

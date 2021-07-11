@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     changeValue(val) {
+      console.log(val)
       this.selected = val;
       this.$emit("select", val);
       // this.$store.dispatch('setTypeSale', val);

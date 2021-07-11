@@ -46,8 +46,8 @@
           :key="i"
           :item="item"
           v-bind="{
-            ctgr: currentItem.categories,
-            type: currentItem.types
+            ctgr: item.category,
+            type: item.type
           }"
         >
         </area-transaction>
@@ -58,12 +58,10 @@
 
 <script>
 import Vue from 'vue'
-import AreaItem from "./AreaItem";
 import AreaListFilter from "./AreaListFilter";
 import AreaTransaction from './AreaTransaction.vue';
 export default {
   components: {
-    "area-item": AreaItem,
     "area-list-filter": AreaListFilter,
     "area-transaction": AreaTransaction
   },
@@ -81,20 +79,16 @@ export default {
     }
   },
   async mounted() {
-    if (this.$route.query?.transactionid) {
+    console.log(this.$route)
+    if (this.$route.query.transactionid) {
       this.type = 'transaction'
-
-      const { data: currentItem } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}`);
-      this.currentItem = currentItem
+      console.log('transaction')
 
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}/transactions`);
 
       this.saleList = data
-    } else if (this.$route.query?.sellid) {
+    } else if (this.$route.query.sellid) {
       this.type = 'sell'
-      const { data: currentItem } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}`);
-      this.currentItem = currentItem
-
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}/transactions`);
 
       this.saleList = data

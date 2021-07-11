@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <text-under-highlight text="매물유형"></text-under-highlight>
+    <text-under-highlight text="주택 유형"></text-under-highlight>
     <!-- selection of choices | 선택의 선택 -->
     <div class="selection row q-mt-lg">
       <q-btn

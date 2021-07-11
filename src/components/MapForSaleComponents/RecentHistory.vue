@@ -70,12 +70,14 @@
   </q-card>
 </template>
 <script>
-import Vue from 'vue'
 import { toMoneyString } from 'src/utils';
 
 export default {
   components: {
     // TextUnderHighlight
+  },
+  props: {
+    item: Array
   },
   data() {
     return {
@@ -95,14 +97,15 @@ export default {
   },
   computed: {
     getTransactions() {
-      return this.transactions
+      return this.item
     }
   },
-  mounted() {
-    Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}/transactions`).then(res => {
-      this.transactions = res.data
-    })
-  },
+  // mounted() {
+  //     console.log('call')
+  //   Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.group}/transactions`).then(res => {
+  //     this.transactions = res.data
+  //   })
+  // },
   methods: {
     toMoneyString(value, add) {
       return toMoneyString(value, add)

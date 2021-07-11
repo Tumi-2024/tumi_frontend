@@ -19,7 +19,7 @@
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"
     />
-    <!--  토지 매물정보  -->
+    <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
     <more-information
       class="q-mt-md"
@@ -107,13 +107,10 @@ export default {
     RecentAverageHistory,
     "google-map": GoogleMap
   },
-  mounted() {
-    this.estate = this.$route.params.data;
-    if (!this.estate) {
-      Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}`).then(res => {
-        this.estate = res.data
-      })
-    }
+  async mounted() {
+    const group = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.group}`)
+    this.estate = group.data
+    console.log(this.estate)
     if (this.estate === undefined) return;
     this.$store.dispatch("addRecentlyViewedHouse", this.estate);
     this.redevelopment = this.estate.redevelopment;
