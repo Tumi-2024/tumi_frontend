@@ -21,7 +21,7 @@
           ></q-icon>
         </div>
         <q-separator vertical inset />
-        <div class="heading-nav-bar q-ml-sm">동대문구 전농동</div>
+        <div class="heading-nav-bar q-ml-sm">{{getToolbarTitle}}</div>
       </q-btn>
 
       <!-- Right side starts here -->
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: 'ToolbarNav',
   methods: {
@@ -51,9 +53,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
     is_interest() {
       return this.$store.getters.current_house &&
-        this.$store.getters.current_house.interest && 
+        this.$store.getters.current_house.interest &&
         this.$store.getters.current_house.interest.house
     }
   }
