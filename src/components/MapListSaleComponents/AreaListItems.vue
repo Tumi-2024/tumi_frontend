@@ -9,7 +9,7 @@
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <area-list-filter />
+      <toolbar-filter class="q-pt-xs q-px-sm" :disable="getMapMode === 'redevelop-area'"/>
       <div class="flex row justify-between">
         <template v-for="(btn, btnIndex) of sortButtons">
           <div class="flex items-center" :key="btnIndex">
@@ -22,25 +22,23 @@
       </div>
     </q-card-section>
 
-    <!-- GRAPH -->
-    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type === 'transaction'">
-      <q-list class="q-pa-md">
-        <transaction-graph />
-      </q-list>
-    </q-card-section> -->
-    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type !== 'transaction'">
-      <q-list class="q-pt-md" v-if="$store.state.estate.detail_houses && $store.state.estate.detail_houses.length > 0" >
+    <q-card-section class="list-items q-pa-none notosanskr-regular" v-if="type !== 'transaction'">
+      <q-list class="q-pt-md">
         <area-item
-          v-for="(item, i) of $store.state.estate.detail_houses"
+          v-for="(item, i) of saleList"
           :key="i"
           :item="item"
+          v-bind="{
+            ctgr: item.category,
+            type: item.type
+          }"
         ></area-item>
       </q-list>
-    </q-card-section> -->
+    </q-card-section>
 
     <!-- Transactions -->
-    <q-card-section class="list-items q-pa-none notosanskr-regular">
-      <q-list class="q-pt-md" v-if="saleList">
+    <q-card-section class="list-items q-pa-none notosanskr-regular" v-else>
+      <q-list class="q-pt-md">
         <area-transaction
           v-for="(item, i) of saleList"
           :key="i"
@@ -58,12 +56,17 @@
 
 <script>
 import Vue from 'vue'
-import AreaListFilter from "./AreaListFilter";
 import AreaTransaction from './AreaTransaction.vue';
+import AreaItem from './AreaItem.vue'
+import ToolbarFilter from "components/Utilities/ToolbarFilter";
+
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
-    "area-list-filter": AreaListFilter,
-    "area-transaction": AreaTransaction
+    "area-transaction": AreaTransaction,
+    'area-item': AreaItem,
+    'toolbar-filter': ToolbarFilter
   },
   data() {
     return {
@@ -78,35 +81,25 @@ export default {
       currentItem: {}
     }
   },
+  computed: {
+    ...mapGetters("map", ["getMapMode"])
+  },
   async mounted() {
     console.log(this.$route)
-    if (this.$route.query.transactionid) {
+    if (this.$route.query && this.$route.query.transactionid) {
       this.type = 'transaction'
       console.log('transaction')
 
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.transactionid}/transactions`);
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query.transactionid}/transactions`);
 
       this.saleList = data
-    } else if (this.$route.query.sellid) {
+    } else if (this.$route.query && this.$route.query.sellid) {
       this.type = 'sell'
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.sellid}/transactions`);
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query.sellid}/transactions`);
 
       this.saleList = data
+      console.log(data)
     }
-    // console.log('this.$route.params.type', this.$route.params.type);
-    // console.log('this.$route.params.apartment', this.$route.params.apartment);
-    // console.log('this.$route.params.apartment.id', this.$route.params.apartment.id);
-    // console.log('this.$route.params.apartment', this.$route.params.apartment)
-    // if (this.$route.params.apartment) {
-    //   console.log('getDetailHousesgetDetailHousesgetDetailHouses')
-    //   this.$store.dispatch('getDetailHouses', `apartment=${this.$route.params.apartment.id}`);
-    // } else if (this.$route.params.type === 'location') {
-    //   this.$store.dispatch('getDetailHouses', toQueryString({
-    //     latitude: this.$route.params.position.lat,
-    //     longitude: this.$route.params.position.lng,
-    //     ...this.$store.state.search
-    //   }));
-    // }
   }
 };
 </script>

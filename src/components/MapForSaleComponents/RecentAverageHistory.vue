@@ -49,7 +49,16 @@ export default {
   },
   props: {
     areaOptions: Array,
-    item: Object
+    item: Object,
+    graph: {
+      type: Array,
+      validator(value) {
+        return value.length === 3
+      },
+      default() {
+        return []
+      }
+    }
   },
   data() {
     return {
@@ -72,7 +81,7 @@ export default {
                   return 'rgba(255, 125, 54, 0.2)'
               }
             },
-            data: [135 * 1000, 144 * 1000, 148 * 1000]
+            data: [this.graph[0].sale, this.graph[1].sale, this.graph[2].sale]
           },
           {
             backgroundColor: ({ dataIndex: index }) => {
@@ -87,7 +96,7 @@ export default {
                   return 'rgba(11, 205, 199, 0.2)'
               }
             },
-            data: [128 * 1000, 138 * 1000, 141 * 1000]
+            data: [this.graph[0].rent, this.graph[1].rent, this.graph[2].rent]
           }
         ]
       },
@@ -105,20 +114,13 @@ export default {
               drawTicks: false,
               drawOnChartArea: false
             },
-            ticks: {
-            //   callback: () => '',
-              max: 150 * 1000,
-              min: 120 * 1000
-            }
+            ticks: { max: 100000, min: 95000 }
           }],
           xAxes: [{
             gridLines: {
               drawTicks: false,
               drawOnChartArea: false
             }
-            // ticks: {
-            //   callback: () => '',
-            // }
           }]
         },
         legend: {
@@ -130,12 +132,25 @@ export default {
   computed: {
     getTransactions() {
       return this.item
+    },
+    getTicks() {
+      // console.log(this.graph)
+      // const getMax = this.graph.reduce((acc, curr) => {
+      //   return acc <= curr.scale ? curr.scale : acc
+      // }, 0)
+      // const getMin = this.graph.reduce((acc, curr) => {
+      //   return acc >= curr.rent ? curr.rent : acc
+      // }, 0)
+      return { max: 10000, min: 10000 }
     }
   },
   methods: {
     toMoneyString(value, add) {
       return toMoneyString(value, add)
     }
+  },
+  mounted() {
+    console.log(this.transactions)
   }
 };
 </script>

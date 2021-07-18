@@ -19,7 +19,7 @@
         </q-card-section>
 
         <q-card-section class="q-pa-none bg-white notosanskr-medium">
-          <component :is="contentComponent" v-on:select="select" v-on:selectDetail="selectDetail" />
+          <component :is="contentComponent" @select="select" @selectDetail="selectDetail" />
         </q-card-section>
 
         <q-card-section class="q-pt-lg bg-white">
@@ -128,8 +128,8 @@ export default {
       this.selectedDetail = val;
     },
     save() {
-        console.log(this.selected, 'selected')
-        console.log(this.propertyType, 'propertyType')
+      console.log(this.selected, 'selected')
+      console.log(this.propertyType, 'propertyType')
       if (this.selected) {
         console.log('저장 ', this.selected, this.selectedDetail);
         if (this.transactionType) {
@@ -142,7 +142,7 @@ export default {
           // this.$store.search.dispatch('setTypeHouse', this.selected);
           this.setTypeHouse(this.selectedDetail);
           if (this.selectedDetail) {
-          console.log('selectedDetail')
+            console.log('selectedDetail')
             // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
             this.setTypeHouseDetail(this.selectedDetail);
           }
@@ -158,7 +158,7 @@ export default {
           this.setDepositPrice(this.selected)
         }
       }
-      console.log(toQueryString(this.search));
+      // console.log(toQueryString(this.search));
       this.$store.dispatch('getSimpleHouses', { query: toQueryString(this.search) });
       // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
       // this.$store.dispatch('getDetailHouses', toQueryString({

@@ -38,7 +38,7 @@
             />
           </q-tabs>
 
-          <q-tab-panels v-model="tab" animated class="bg-transparent ">
+          <q-tab-panels v-model="tab" animated class="bg-transparent">
             <!-- More Information | 상세정보 -->
             <q-tab-panel
               name="more_information"
@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .q-card.dialog {
   width: 100%;
   max-width: 1000px;
@@ -108,5 +108,8 @@ export default {
   text-align: center;
   letter-spacing: -1.2px;
   color: #707070;
+  .q-tab__content {
+    width: 100%
+  }
 }
 </style>

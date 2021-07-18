@@ -34,16 +34,14 @@
 </template>
 
 <script>
-import ToolbarFilter from './ToolbarFilter.vue';
 export default {
-  components: { ToolbarFilter },
   data() {
     return {
       filters: [
         { label: "주택유형", type: 'houseType' },
         { label: "평형", type: 'pyeong' },
         { label: "매매가", type: 'sale' },
-        { label: "전월세가", type: 'charter' },
+        // { label: "전월세가", type: 'charter' },
         { label: '매물등록일자', type: 'date' }
       ]
     };

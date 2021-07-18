@@ -43,12 +43,12 @@
               <div>층수</div>
             </q-item>
             <q-virtual-scroll
-              style="max-height: 220px;"
+              style="min-height: 220px;"
               :items="getTransactions"
               separator
             >
             <template v-slot="{ item, index }">
-              <q-item class="item" :key="index">
+              <q-item class="item" :style="{backgroundColor: isSale(item) ? 'rgba(255, 81, 0, 0.05)': 'rgba(0, 164, 170, 0.05)'}" :key="index">
                 <div>
                   {{
                     item.text_month.slice(0,4)
@@ -56,9 +56,9 @@
                     + '.' + (item.text_day.length === 1 ? '0' + item.text_day : item.text_day)
                   }}
                   </div>
-                  <div> 매매/전세/월세 </div>
-                  <div> {{toMoneyString(item.price)}} </div>
-                  <div> {{item.text_floor}}층</div>
+                  <div class="text-weight-medium" :style="{color: isSale(item) ? 'rgba(255, 81, 0)': 'rgba(0, 164, 170)'}"> {{tabs.find(tab => tab.level === item.type).label}} </div>
+                  <div class="text-weight-bold"> {{toMoneyString(item.price)}} </div>
+                  <div> {{item.text_floor.replace(/null/i, '-')}}층</div>
               </q-item>
             </template>
             </q-virtual-scroll>
@@ -84,28 +84,28 @@ export default {
       areaSelected: "",
       activeTab: "all",
       tabs: [
-        {
-          level: "all",
-          label: "전체"
-        },
-        { level: "sell", label: "매매" },
-        { level: "charter", label: "전세" },
-        { level: "monthly", label: "월세" }
+        { level: "all", label: "전체" },
+        { level: "SALE", label: "매매" },
+        { level: "RENT", label: "전세" }
+        // { level: "monthly", label: "월세" }
       ],
       transactions: []
     };
   },
   computed: {
     getTransactions() {
-      return this.item
+      if (this.activeTab === 'all') {
+        return this.item
+      }
+      return this.item.filter(transaction => transaction.type === this.activeTab)
+    },
+    isRent() {
+      return (item) => item.type === this.tabs[2].level
+    },
+    isSale() {
+      return (item) => item.type === this.tabs[1].level
     }
   },
-  // mounted() {
-  //     console.log('call')
-  //   Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.group}/transactions`).then(res => {
-  //     this.transactions = res.data
-  //   })
-  // },
   methods: {
     toMoneyString(value, add) {
       return toMoneyString(value, add)

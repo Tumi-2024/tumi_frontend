@@ -19,8 +19,8 @@
         :key="i"
         flat
         class="col-2 notosanskr-medium"
-        :class="{ selected: selected === price && selected != '' }"
-        :label="price"
+        :class="{ selected: selected }"
+        :label="price.label"
         @click="changePriceText(price)"
       />
     </div>
@@ -77,35 +77,38 @@ export default {
     this.min = this.$store.state.search.salePrice.min;
     this.max = this.$store.state.search.salePrice.max;
   },
+  computed: {
+  },
   data() {
     return {
       selected: "전체",
       min: null,
       max: null,
       prices: [
-        "전체",
-        "~1억",
-        "1억",
-        "2억",
-        "3억",
-        "4억",
-        "5억",
-        "6억",
-        "7억",
-        "8억",
-        "9억",
-        "10억",
-        "11억",
-        "12억",
-        "13억",
-        "14억",
-        "15억",
-        "16억~"
+        { label: "전체", min: 0, max: 1000 * 1000 * 1000 * 1000 },
+        { label: "~1억", min: 0, max: 10 * 1000 },
+        { label: "1억", min: 10 * 1000 - 1, max: 20 * 1000 - 1 },
+        { label: "2억", min: 20 * 1000 - 1, max: 30 * 1000 - 1 },
+        { label: "3억", min: 30 * 1000 - 1, max: 40 * 1000 - 1 },
+        { label: "4억", min: 40 * 1000 - 1, max: 50 * 1000 - 1 },
+        { label: "5억", min: 50 * 1000 - 1, max: 60 * 1000 - 1 },
+        { label: "6억", min: 60 * 1000 - 1, max: 70 * 1000 - 1 },
+        { label: "7억", min: 70 * 1000 - 1, max: 80 * 1000 - 1 },
+        { label: "8억", min: 80 * 1000 - 1, max: 90 * 1000 - 1 },
+        { label: "9억", min: 90 * 1000 - 1, max: 100 * 1000 - 1 },
+        { label: "10억", min: 100 * 1000 - 1, max: 110 * 1000 - 1 },
+        { label: "11억", min: 110 * 1000 - 1, max: 120 * 1000 - 1 },
+        { label: "12억", min: 120 * 1000 - 1, max: 130 * 1000 - 1 },
+        { label: "13억", min: 130 * 1000 - 1, max: 140 * 1000 - 1 },
+        { label: "14억", min: 140 * 1000 - 1, max: 150 * 1000 - 1 },
+        { label: "15억", min: 150 * 1000 - 1, max: 160 * 1000 - 1 },
+        { label: "16억~", min: 160 * 1000 - 1, max: 100 * 1000 * 1000 }
       ]
     };
   },
   methods: {
     changePriceText(text) {
+      console.log(text)
       this.selected = text;
       this.$emit('select', {
         text: this.selected,

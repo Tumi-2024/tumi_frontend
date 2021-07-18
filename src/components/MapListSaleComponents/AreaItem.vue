@@ -1,26 +1,13 @@
 <template>
   <q-item
     class="column  notosanskr-regular "
-    :to="{ name: 'for_sale_apartment', params: { data: item } }"
+    :to="{ name: 'for_sale_apartment', query: $route.query }"
   >
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
-          <address-with-badges :item="item" :tags="getBadges(item)" />
+          <address-with-badges :item="{address: item.address}" :tags="getBadges(item)" />
         </q-item-section>
-        <!-- <div class="additional-info row items-center q-pt-sm">
-          <div>
-            {{
-              item.area_common
-                ? `전용면적 ${item.area_common}㎡(${Math.round(
-                    item.area_common / 3.3
-                  )}평)`
-                : ""
-            }}
-          </div>
-          <div>{{ item.floor && `${item.floor}층` }}</div>
-
-        </div> -->
       </div>
       <div class="flex items-center q-py-sm" style="flex: 1 1 600px">
         <area-item-info :item="item" />
@@ -42,26 +29,58 @@ export default {
     "address-with-badges": AddressWithBadges
   },
   props: {
-    item: Object
+    item: Object,
+    ctgr: String,
+    type: String
   },
   methods: {
     toKr,
     toMoneyString,
-    toDateFormat
+    toDateFormat,
+    getdate(string1, string2) {
+      const str1 = string1
+      let str2 = string2
+      if (str2.length === 1) {
+        str2 = 0 + str2
+      }
+      return str1.slice(0, 4) + '.' + str1.slice(4, 6) + '.' + str2
+    }
+  },
+  data() {
+    return {
+      category: [
+        { key: 'COMMERCIAL ', label: '상업업무용' },
+        { key: 'SINGLE', label: '단독다가구' },
+        { key: 'OFFICETEL', label: '오피스텔' },
+        { key: 'APARTMENT', label: '아파트' },
+        { key: 'LAND', label: '토지' },
+        { key: 'ALLIANCE', label: '연립/다세대' }
+      ]
+    }
   },
   computed: {
     getBadges() {
-      return (item) => {
+      return (item, ctgr) => {
         return [
-          { type: 'houseType', value: toKr(item.type_house) },
-          { type: 'pyeong', value: item.pyeong + '평' },
-          { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
-          { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area, icon: '~assets/icons/redevelop.svg' },
-          { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
-          { type: 'date', value: toDateFormat(item.created) }
+          { type: 'houseType', value: (this.category.find(obj => obj.key === this.ctgr) || { label: '' }).label },
+          // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
+          { type: this.type[0].toLowerCase(), value: `${toMoneyString(item.price)}` },
+          { type: 'date', value: this.getdate(item.text_month, item.text_day) }
         ]
       }
     },
+    // getBadges() {
+    //   return (item) => {
+    //     return [
+    //       { type: 'houseType', value: toKr(item.type_house) },
+    //       { type: 'pyeong', value: item.pyeong + '평' },
+    //       { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
+    //       { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area, icon: '~assets/icons/redevelop.svg' },
+    //       { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
+    //       { type: 'date', value: toDateFormat(item.created) }
+    //     ]
+    //   }
+    // },
     sale() {
       const sale = {};
       sale.type = this.item.type_sale;

@@ -37,11 +37,13 @@
             class="bg-white q-pb-xl q-pt-md"
             @select="setSelected('transactionType', $event)"
           ></transaction-type>
-          <!-- Maintenance type | 거래유형 -->
+
+          <!-- Maintenance type | 정비구역 유형 -->
           <maintenance-type
             class="bg-white q-pb-xl q-pt-md"
             @select="setSelected('maintenanceType', $event)"
           ></maintenance-type>
+
           <!-- Property Type | 주택 유형 -->
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
@@ -49,25 +51,28 @@
             @select="setSelected('propertyType', $event)"
             @selectDetail="setSelected('propertyTypeDetailed', $event)"
           ></property-type>
+
           <!-- property sale | 부동산 매매  -->
           <property-sale-price
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('propertySalePrice', $event)"
           ></property-sale-price>
+
           <!--  Charter price deposit | 전세가 / 보증금 -->
-          <charter-price-deposit
+          <!-- <charter-price-deposit
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('charterPriceDeposit', $event)"
-          ></charter-price-deposit>
+          ></charter-price-deposit> -->
           <!-- Property Monthly | 매월 부동산 -->
-          <property-monthly
+          <!-- <property-monthly
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('propertyMonthly', $event)"
-          ></property-monthly>
+          ></property-monthly> -->
           <!-- Exclusive Area | 전용면적 -->
+
           <exclusive-area
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
@@ -166,26 +171,35 @@ export default {
   methods: {
     setInitValue() {
       return {
+        // 거래 유형
         transactionType: "전체",
+        // 주택 유형
         propertyType: "아파트",
+        // 재개발 or 가로주택 시 주택 세부 유형
         propertyTypeDetailed: null,
+        // 매매가
         propertySalePrice: {
           max: null,
           min: null,
           text: "전체"
         },
+        // 매매가
         charterPriceDeposit: {
           max: null,
           min: null,
           text: "전체"
         },
+        // 월세
         propertyMonthly: {
           max: null,
           min: null,
           text: "전체"
         },
+        // 전용 면적
         exclusiveArea: "10평대",
+        // 프리미엄가
         propertyPremiumPrice: null,
+        // 감정가
         propertyConnoisseur: null
       };
     },
@@ -195,7 +209,6 @@ export default {
     },
     setSelected(property, value) {
       this.overallFilter[property] = value;
-      console.log(property, this.overallFilter[property]);
     },
     applyFilters() {
       console.log(this.overallFilter);

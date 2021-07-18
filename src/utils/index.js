@@ -1,13 +1,13 @@
 const TYPE_SALE_ENG = {
   전체: false,
-  매매: 'sale',
-  전세: 'charter',
-  월세: 'rent',
-  반전세: 'half-charter'
+  매매: 'SALE',
+  전세: 'RENT',
+  월세: 'RENT'
+  // 반전세: 'half-charter'
 }
 
 const TYPE_HOUSE_ENG = {
-  상업업무용: 'COMMERCIAL',
+  상업업무용: 'COMMERCIAL ',
   단독다가구: 'SINGLE',
   오피스텔: 'OFFICETEL',
   아파트: 'APARTMENT',
@@ -102,9 +102,8 @@ export const toQueryString = params => {
   if (TYPE_SALE_ENG[params.typeSale]) {
     condition.push(`types=${TYPE_SALE_ENG[params.typeSale]}`);
   }
-
   if (TYPE_HOUSE_ENG[params.typeHouse]) {
-    condition.push(`type_house=${TYPE_HOUSE_ENG[params.typeHouse]}`);
+    condition.push(`categories=${TYPE_HOUSE_ENG[params.typeHouse]}`);
     if (TYPE_HOUSE_ENG[params.typeHouse] === 'redevelop' || TYPE_HOUSE_ENG[params.typeHouse] === 'house') {
       if (TYPE_HOUSE_DETAIL_ENG[params.typeHouseDetail]) {
         condition.push(`type_house_detail=${TYPE_HOUSE_DETAIL_ENG[params.typeHouseDetail]}`);
@@ -216,6 +215,13 @@ export const toMoneyString = (val, add = 1) => {
   const uk = Math.floor(val * add / 10000);
   const man = Math.floor((val * add - uk * 10000));
   const price = `${(uk > 0) ? `${uk}억 ` : ''}${(man > 0) ? ` ${man}만` : ''}`;
+  return price;
+}
+
+export const toSimpleMoneyString = (val) => {
+  val = parseInt(val);
+  const uk = Math.floor(val / 1000);
+  const price = `${uk / 10}억 `;
   return price;
 }
 

@@ -64,8 +64,12 @@
       show-units
       :unit="unit"
     />
-    <recent-history class="q-mt-md"/>
-    <recent-average-history class="q-mt-md" :areaOptions="areaOptions"/>
+    <recent-history class="q-mt-md" :item="transactions" />
+    <recent-average-history class="q-mt-md"
+    v-if="graphData.length > 0"
+      :areaOptions="areaOptions"
+      :graph="graphData"
+    />
     <!-- <recent-pricing
       class="q-mt-md"
       :salePrice="salePrice"
@@ -107,17 +111,38 @@ export default {
     RecentAverageHistory,
     "google-map": GoogleMap
   },
-  async mounted() {
-    const group = await Vue.prototype.$axios.get(`/transaction_groups/${this.$route.query?.group}`)
-    this.estate = group.data
-    console.log(this.estate)
-    if (this.estate === undefined) return;
-    this.$store.dispatch("addRecentlyViewedHouse", this.estate);
-    this.redevelopment = this.estate.redevelopment;
+  async beforeMount() {
+    const { query } = this.$route
+    if (query) {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${query.sellid}`)
+      this.estate = data
+      this.redevelopment = this.estate.redevelopment ? this.estate.redevelopment : null;
+
+      const { data: transactions } = await Vue.prototype.$axios.get(`/transaction_groups/${query.sellid}/transactions`)
+      this.transactions = transactions
+      this.getGraphData()
+    }
   },
   methods: {
     toKr,
-    toMoneyString
+    toMoneyString,
+    getGraphData() {
+      const graphData = (type, yyyyMM) =>
+        this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
+          .reduce((acc, curr) => {
+            const isValidtype = type
+            if (isValidtype) {
+              console.log(curr)
+              return acc + curr.price
+            }
+            return acc
+          }, 0) / this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0).length
+      this.graphData = [
+        { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
+        { sale: graphData("SALE", "2019"), rent: graphData("RENT", "2019") },
+        { sale: graphData("SALE", "202006"), rent: graphData("RENT", "202006") }
+      ]
+    }
   },
   computed: {
     getInformation() {
@@ -178,6 +203,8 @@ export default {
   data() {
     return {
       redevelopment: null,
+      transactions: null,
+      graphData: [],
       estate: null,
       adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },

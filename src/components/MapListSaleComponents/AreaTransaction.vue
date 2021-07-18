@@ -1,5 +1,5 @@
 <template>
-  <q-item class="column  notosanskr-regular" :to="getToOptions(item)">
+  <q-item class="column  notosanskr-regular">
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
@@ -35,7 +35,7 @@ export default {
   props: {
     item: Object,
     ctgr: String,
-    type: Array
+    type: String
   },
   mounted() {},
   data() {
@@ -65,15 +65,6 @@ export default {
     }
   },
   computed: {
-    getToOptions() {
-      return item => {
-        const { transactionid, sellid } = this.$route.query
-        if (transactionid) {
-          return null
-        }
-        return { name: 'for_sale_apartment', query: { group: sellid, id: item.id } }
-      }
-    },
     getSubInfoProps() {
       return (item) => {
         switch (this.ctgr) {

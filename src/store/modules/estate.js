@@ -63,37 +63,28 @@ export const estateStore = {
     getSimpleHouses: async function (context, payload) {
       let data;
       if (payload.query) {
-        data = await Vue.prototype.$axios.get(
-          `/transaction_groups/?page_size=1000&${payload.query}`, {
-            timeout: 10000
-          }
-        );
-      }
-      if (payload.type === 'city') {
-        data = await Vue.prototype.$axios.get(
-          `/cities`, {
-            timeout: 10000
-          }
-        );
-      } else if (payload.type === 'subcity') {
-        data = await Vue.prototype.$axios.get(
-          `/sub_cities?latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
-            timeout: 10000
-          }
-        );
-      } else if (payload.type === 'locations') {
-        data = await Vue.prototype.$axios.get(
-          `/locations?page_size=1000&latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
-            timeout: 10000
-          }
-        );
+        data = await Vue.prototype.$axios.get(`/transaction_groups/?page_size=1000&${payload.query}`, { timeout: 10000 });
       } else {
-        data = await Vue.prototype.$axios.get(
-          `/transaction_groups/?page_size=1000&latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`, {
-            timeout: 10000
-          }
-        );
+        let rangeQuery
+        if (payload.latitude) {
+          rangeQuery = `latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`
+        }
+        switch (payload.type) {
+          case 'city':
+            data = await Vue.prototype.$axios.get(`/cities`, { timeout: 10000 });
+            break;
+          case 'subcity':
+            data = await Vue.prototype.$axios.get(`/sub_cities?${rangeQuery}`, { timeout: 10000 });
+            break;
+          case 'locations':
+            data = await Vue.prototype.$axios.get(`/locations?${rangeQuery}`, { timeout: 10000 });
+            break;
+          default:
+            data = await Vue.prototype.$axios.get(`/transaction_groups?${rangeQuery}`, { timeout: 10000 });
+            break;
+        }
       }
+      context.dispatch('map/setLocationLoading', true)
       context.commit('setSimpleHouses', data.data.results.map(item =>
         ({
           ...item,

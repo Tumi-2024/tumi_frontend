@@ -39,6 +39,32 @@
       </div>
     </section>
 
+    <section class="area-stats-section bg-white">
+      <div style="justify-content: flex-end; display: flex">
+        <q-select
+          style="width: 150px; margin-right: 20px"
+          label="카테고리"
+          color="primary"
+          label-color="primary"
+          :value="ctgr1"
+          emit-value
+          map-options
+          @input="getCtgrGraphData"
+          :options="[
+          {label: '아파트', value: 'APARTMENT'},
+          {label: '오피스텔', value: 'OFFICETEL'},
+          {label: '상업업무용', value: 'COMMERCIAL '},
+          {label: '분양/입주권', value: 'LAND'},
+          {label: '연립/다세대', value: 'ALLIANCE'},
+          {label: '단독/다가구', value: 'SINGLE'},
+          {label: '토지', value: 'LAND'}
+          ]"
+        />
+      </div>
+      <!-- <BarChart :height="300" :chart-data="datacollection" :options="options" /> -->
+      <LineChart :chart-data="datacollection" :options="options" style="margin: 0 20px" />
+    </section>
+
     <redevelopment-progress :items="getRedevelopmentSteps()" title="진행단계" />
 
     <section
@@ -68,14 +94,23 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
+import BarChart from 'src/utils/BarChart'
+import LineChart from 'src/utils/lineChart'
+import { toMoneyString, toSimpleMoneyString } from 'src/utils';
 import { mapGetters } from "vuex";
 export default {
   components: {
-    "redevelopment-progress": RedevelopmentProgress
+    "redevelopment-progress": RedevelopmentProgress,
+    // BarChart,
+    LineChart
   },
   data() {
     return {
+      ctgr1: 'ALLIANCE',
+      transactions: [],
+      defaultPeriods: ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
       stats: [
         {
           icon: "AreaStats/area.svg",
@@ -122,7 +157,76 @@ export default {
           title: "시공사",
           value: "construction_company"
         }
-      ]
+      ],
+      datacollection: {
+        maintainAspectRatio: false,
+        labels: ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
+        datasets: [
+          {
+            backgroundColor: ({ dataIndex: index }) => {
+              switch (index) {
+                case 0:
+                  return 'rgba(255, 125, 54, 0.2)'
+                case 1:
+                  return 'rgba(255, 125, 54, 0.6)'
+                case 2:
+                  return 'rgba(255, 125, 54, 1)'
+                default:
+                  return 'rgba(255, 125, 54, 0.2)'
+              }
+            },
+            data: []
+          }
+          // {
+          //   backgroundColor: ({ dataIndex: index }) => {
+          //     switch (index) {
+          //       case 0:
+          //         return 'rgba(11, 205, 199, 0.2)'
+          //       case 1:
+          //         return 'rgba(11, 205, 199, 0.6)'
+          //       case 2:
+          //         return 'rgba(11, 205, 199, 1)'
+          //       default:
+          //         return 'rgba(11, 205, 199, 0.2)'
+          //     }
+          //   },
+          //   data: [99000, 99000, 99000]
+          // }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            formatter: (d) => toMoneyString(d)
+          }
+        },
+        scales: {
+          yAxes: [{
+            gridLines: {
+              drawTicks: false,
+              drawOnChartArea: false
+            },
+            ticks: {
+              min: 20000,
+              callback: function(val, index) {
+                // Hide the label of every 2nd dataset
+                return index % 2 === 1 ? toSimpleMoneyString(val) : '';
+              }
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              drawTicks: false,
+              drawOnChartArea: false
+            }
+          }]
+        },
+        legend: {
+          display: false
+        }
+      }
     };
   },
   computed: {
@@ -147,6 +251,9 @@ export default {
           return this.getMapSelectedArea.construction_company || "-";
       }
     },
+    toMoneyString(value, add) {
+      return toMoneyString(value, add)
+    },
     getRedevelopmentSteps() {
       let steps = [];
       if (this.getMapSelectedArea.steps) {
@@ -156,7 +263,38 @@ export default {
         }));
       }
       return steps;
+    },
+    getCtgrGraphData(value) {
+      this.ctgr1 = value
+      const t = this.transactions.filter(obj => obj.categories[0] === this.ctgr1).map(obj => obj.recent_transactions[obj.categories[0]])
+      const periods = []
+      t.forEach(obj => {
+        const textYear = obj.text_month.slice(0, 4)
+        const hasPeriod = periods.some(obj => obj.period === textYear)
+
+        if (!hasPeriod) {
+          periods.push({ period: textYear, price: [obj.price] })
+        } else {
+          periods.find(obj => obj.period === textYear).price.push(obj.price)
+        }
+      })
+      // this.datacollection.labels = a.map(obj => obj.period).sort()
+      this.datacollection.datasets[0].data = this.defaultPeriods.map(period => {
+        const prices = periods.find(pr => pr.period === period)
+        if (prices) {
+          const result = prices.price.reduce(function add(sum, currValue) {
+            return sum + currValue;
+          }, 0);
+          return result / prices.price.length;
+        }
+      })
+      this.datacollection = Object.assign({}, this.datacollection);
     }
+  },
+  async beforeMount() {
+    const { data } = await Vue.prototype.$axios.post(`redevelopment_areas/${this.getMapSelectedArea.id}/transaction_groups?page_size=1000`)
+    this.transactions = data.results
+    this.getCtgrGraphData('ALLIANCE')
   }
 };
 </script>

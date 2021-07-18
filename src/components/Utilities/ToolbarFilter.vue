@@ -1,32 +1,31 @@
 <template>
-  <q-card flat>
-    <q-card-section class="row justify-between q-pa-none q-ma-none">
-      <!-- Dialog containing all filters-->
-      <overall-filter :disable="disable" />
+  <q-card-section class="row items-center flex justify-between q-pa-none q-ma-none">
+    <!-- Dialog containing all filters-->
+    <overall-filter :disable="disable" />
 
-      <div class="col w-100" :class="{ 'set-height': $q.platform.is.desktop }">
-        <div
-          class="scrolling-wrapper-flexbox notosanskr-medium row w-100 float-right"
-          :class="{ hideScrollbar: $q.platform.is.mobile }"
-        >
-          <slot>
-            <div class="items" v-for="(filter, i) of filters" :key="i">
-              <specific-filter
-                :label="filter.label"
-                :transactionType="filter.type === 'transactionType'"
-                :maintenanceType="filter.type === 'maintenanceType'"
-                :propertyType="filter.type === 'propertyType'"
-                :salePrice="filter.type === 'salePrice'"
-                :charterPriceDeposit="filter.type === 'charterPriceDeposit'"
-                :disable="disable"
-              />
-            </div>
-          </slot>
-          <div class="q-px-xs"></div>
-        </div>
+    <div class="col flex items-center">
+      <div
+        class="scrolling-wrapper-flexbox notosanskr-medium row float-right"
+        :class="{ hideScrollbar: $q.platform.is.mobile }"
+      >
+        <slot>
+          <div class="items" v-for="(filter, i) of filters" :key="i">
+            <specific-filter
+              :label="filter.label"
+              :transactionType="filter.type === 'transactionType'"
+              :maintenanceType="filter.type === 'maintenanceType'"
+              :propertyType="filter.type === 'propertyType'"
+              :salePrice="filter.type === 'salePrice'"
+              :registrationDate="filter.type === 'registrationDate'"
+              :disable="disable"
+            />
+              <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
+          </div>
+        </slot>
+        <div class="q-px-xs"></div>
       </div>
-    </q-card-section>
-  </q-card>
+    </div>
+  </q-card-section>
 </template>
 
 <script>
@@ -58,8 +57,8 @@ export default {
           type: "salePrice"
         },
         {
-          label: "전세가/보증금",
-          type: "charterPriceDeposit"
+          label: "매물등록일자",
+          type: "registrationDate"
         }
       ]
     };
@@ -83,7 +82,6 @@ export default {
   flex-wrap: nowrap;
   overflow-x: auto;
   scroll-padding: 0px;
-  padding-bottom: 4px;
   -webkit-overflow-scrolling: touch;
 
   .items {

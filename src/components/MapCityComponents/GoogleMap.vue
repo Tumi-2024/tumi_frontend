@@ -23,10 +23,6 @@
           :position="m.position"
           :opened="showInfoWindow"
           class="q-pa-lg">
-          <!-- @closeclick="infoWinOpen = false" -->
-
-          <!-- <info-top-content :marker="m" /> -->
-          <!-- :item="{title: m.road_name || m.address}" -->
           <info-window-content
             v-if="m.categories && m.categories.length > 0"
             @viewArea="viewArea(m)"
@@ -37,7 +33,6 @@
               type_sale: m.types,
               type_house: m.categories,
             }" />
-              <!-- area: m.pyeong, -->
             <div v-else>
               <q-spinner-pie
                 style="margin-left: 10px; margin-top: 5px;"
@@ -82,10 +77,6 @@
           {{ badge.title | truncate(15) }}
         </div>
       </gmap-custom-marker>
-      <!-- Users Location Marker-->
-      <!-- <gmap-custom-marker :marker="getUserLocation" v-if="getUserLocation">
-        <div class="user-marker"></div>
-      </gmap-custom-marker> -->
     </GmapMap>
   </div>
 </template>
@@ -172,7 +163,8 @@ export default {
           anchorText: [30, 0],
           gridSize: 96
         }
-      ]
+      ],
+      isMounted: false
     };
   },
   props: {
@@ -194,28 +186,38 @@ export default {
     ]),
     ...mapGetters('area', ['getMapAreas']),
     ...mapGetters(["getUserLocation"]),
+    ...mapGetters(["estate", "simple_houses"]),
     google: gmapApi
   },
 
   async mounted() {
     this.setGmapContainerSize();
-    // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
     this.map.panTo(this.getMapCenter);
-    this.initializeRedevelopArea(this.getMapMode === 'redevelop-area')
-    // apply options to map
-    // here we can overide "getMapOptions" values
     this.map.setOptions({
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
       }
     });
+    this.geojson && this.setMapGeojson(this.geojson);
 
-    this.$store.dispatch('getSimpleHouses', { type: 'city' });
-    this.getHouseInfo()
+    this.markers = this.$store.state.estate.simple_houses;
+
+    this.map.addListener("tilesloaded", _ => {
+      if (!this.isMounted) {
+        this.setLocationLoading(false);
+        this.getHouseInfo()
+        this.isMounted = true
+        if (this.polygons.length === 0) {
+          this.initializeRedevelopArea(this.getMapMode === 'redevelop-area')
+        }
+      }
+    });
 
     this.map.addListener("zoom_changed", _ => {
+      this.setLocationLoading(false);
       this.getHouseInfo()
+      this.isMounted = true
     });
 
     this.map.addListener("dragend", _ => {
@@ -227,11 +229,6 @@ export default {
       this.setLocationLoading(false);
       this.getHouseInfo()
     });
-    // Load geojson if any
-    this.geojson && this.setMapGeojson(this.geojson);
-    // Load Areas if mode is redevelop-area
-
-    this.markers = this.$store.state.estate.simple_houses;
   },
 
   watch: {
@@ -259,13 +256,13 @@ export default {
         return 0
       }
     },
-    calculatorMarker(markers, numStyles) {
+    calculatorMarker(markers) {
       const { lat, lng } = markers[0].position
-      const { transaction_groups_count: text } = this.$store.state.estate.simple_houses.find(obj => {
+      const { transaction_groups_count: text } = this.simple_houses.find(obj => {
         return Number(obj.latitude) === lat() && Number(obj.longitude) === lng()
       })
       return {
-        text: text || '',
+        text: text || '-',
         index: 0,
         title: 'count'
       };
@@ -274,21 +271,22 @@ export default {
     getHouseInfo() {
       const zoomLevel = this.map.getZoom()
       const bounds = this.map.getBounds();
-      console.log('getHouseInfo', bounds)
+      const location = { latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] }
+      let payload = { type: 'city' }
       if (zoomLevel < 13) {
         this.showInfoWindow = false
-        this.$store.dispatch('getSimpleHouses', { type: 'city' });
         // subcities
       } else if (zoomLevel <= 14) {
         this.showInfoWindow = false
-        this.$store.dispatch('getSimpleHouses', { type: 'subcity', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
+        payload = { type: 'subcity', ...location }
       } else if (zoomLevel <= 17) {
         this.showInfoWindow = false
-        this.$store.dispatch('getSimpleHouses', { type: 'locations', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
+        payload = { type: 'locations', ...location }
       } else {
         this.showInfoWindow = true
-        this.$store.dispatch('getSimpleHouses', { type: 'detail', latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] })
+        payload = { type: 'detail', ...location }
       }
+      this.$store.dispatch('getSimpleHouses', payload);
       setTimeout(() => {
         this.showAreaBadges = zoomLevel > 14
         this.disableHeart = zoomLevel < 18;
@@ -315,62 +313,54 @@ export default {
       });
     },
     async initializeRedevelopArea(visible) {
-      if (this.polygons.length === 0) {
-        await this.fetchMapAreas();
-        this.polygons = this.getMapAreas.map(area => {
-          const center = {
-            lat: Number(area.latitude),
-            lng: Number(area.longitude)
-          };
-          const style = {
-            strokeColor: "#FF5100",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#0BCDC7",
-            fillOpacity: 0.35
-          };
-          let item = null;
+      this.polygons = this.getMapAreas.map(area => {
+        const center = {
+          lat: Number(area.latitude),
+          lng: Number(area.longitude)
+        };
 
-          if (area.redevelopment_area_locations.length >= 1) {
-            const paths = area.redevelopment_area_locations
-              .map(obj => {
-                return { lat: Number(obj.lat), lng: Number(obj.lng) }
-              })
-            item = new this.google.maps.Polygon({
-              ...style,
-              paths: paths,
-              map: this.map,
-              center,
-              visible
-            })
-          } else {
-            item = new this.google.maps.Circle({
-              ...style,
-              map: this.map,
-              center,
-              radius: area.radius || 200,
-              visible
-            })
-          }
+        const isProgress = area.status === '운영'
 
-          item.addListener("click", _ => {
-            this.changeMapSelectedArea(area);
-            let { latitude: lat, longitude: lng } = area;
-            lat = Number(lat)
-            lng = Number(lng)
-            this.goToLocation({ lat, lng });
-          });
-          this.showAreaBadges = true;
-          return item
+        const style = {
+          strokeColor: isProgress ? "#FF5100" : 'black',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: isProgress ? "#0BCDC7" : "gray",
+          fillOpacity: 0.35
+        };
+        let item = null;
+
+        const paths = area.redevelopment_area_locations
+          .map(obj => {
+            return { lat: Number(obj.lat), lng: Number(obj.lng) }
+          })
+
+        item = new this.google.maps.Polygon({
+          ...style,
+          paths: paths,
+          map: this.map,
+          center,
+          visible
+        })
+
+        item.addListener("click", _ => {
+          this.changeMapSelectedArea(area);
+          let { latitude: lat, longitude: lng } = area;
+          lat = Number(lat)
+          lng = Number(lng)
+          this.goToLocation({ lat, lng });
         });
-        const bounds = this.map.getBounds();
+        this.showAreaBadges = true;
+        return item
+      });
+      const bounds = this.map.getBounds();
 
-        const getVisible = (lat, lng) => (bounds.getSouthWest().lat() < Number(lat) &&
+      const getVisible = (lat, lng) => (bounds.getSouthWest().lat() < Number(lat) &&
               Number(lat) < bounds.getNorthEast().lat() &&
               bounds.getSouthWest().lng() < Number(lng) &&
               Number(lng) < bounds.getNorthEast().lng())
 
-        this.areaBadges =
+      this.areaBadges =
         this.getMapAreas
           .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
           .map(obj => {
@@ -378,7 +368,6 @@ export default {
               center: { lat: Number(obj.latitude), lng: Number(obj.longitude) }, title: obj.title
             }
           })
-      }
     },
     setMapAreas() {
       const bounds = this.map.getBounds();
@@ -441,9 +430,7 @@ export default {
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);
-      setTimeout(() => {
-        this.map.setZoom(17);
-      }, 500);
+      this.map.setZoom(17);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(position => {
