@@ -6,13 +6,16 @@
   >
     <div style="display: flex; align-items: center; padding-bottom: 4px;">
       <q-img
-        src="~assets/icons/house_orange.svg"
+        :src="isDev ? require('src/assets/icons/house_green.svg') : require('src/assets/icons/house_orange.svg')"
         spinner-color="white"
         style="height: 20px; max-width: 20px"
         class="q-mr-xs"
       />
-
-      <div v-if="count && count > 1" style="height: 28px; width:28px; background-color: #FF7D36; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1">
+      <div
+        v-if="count && count > 1"
+        style="height: 28px; width:28px; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1"
+        :style="{backgroundColor: isDev ? '#007C87': '#FF7D36'}"
+      >
         <div style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;">
           {{ `${count}` }}
         </div>
@@ -96,6 +99,10 @@ export default {
         trading: false,
         area: "0평"
       })
+    },
+    isDev: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

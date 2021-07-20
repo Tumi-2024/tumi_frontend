@@ -22,7 +22,8 @@
           :options="infoOptions"
           :position="m.position"
           :opened="showInfoWindow"
-          class="q-pa-lg">
+          class="q-pa-lg"
+        >
           <info-window-content
             v-if="m.categories && m.categories.length > 0"
             @viewArea="viewArea(m)"
@@ -32,7 +33,9 @@
             :badges="{
               type_sale: m.types,
               type_house: m.categories,
-            }" />
+            }"
+            :is-dev="!!m.redevelopment_area"
+          />
             <div v-else>
               <q-spinner-pie
                 style="margin-left: 10px; margin-top: 5px;"
