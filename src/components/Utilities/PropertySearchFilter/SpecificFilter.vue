@@ -4,7 +4,7 @@
       unelevated
       padding="0px"
       class="modal-btn q-ma-none no-wrap"
-      :class="{ disable: disable }"
+      :class="[disable, propsClass]"
       @click="modal = true"
       :disable="disable"
     >
@@ -19,7 +19,11 @@
         </q-card-section>
 
         <q-card-section class="q-pa-none bg-white notosanskr-medium">
-          <component :is="contentComponent" @select="select" @selectDetail="selectDetail" />
+          <component
+            :is="contentComponent"
+            @select="select"
+            @selectDetail="selectDetail"
+          />
         </q-card-section>
 
         <q-card-section class="q-pt-lg bg-white">
@@ -53,7 +57,7 @@
 </template>
 
 <script>
-import { toQueryString } from 'src/utils'
+import { toQueryString } from "src/utils";
 import {
   TransactionType,
   PropertyType,
@@ -61,7 +65,7 @@ import {
   CharterPriceDeposit,
   MaintenanceType
 } from "components/Utilities/PropertySearchFilter/Selections";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "transaction-type": TransactionType,
@@ -73,8 +77,8 @@ export default {
   data() {
     return {
       modal: false,
-      selected: '',
-      selectedDetail: ''
+      selected: "",
+      selectedDetail: ""
     };
   },
   props: {
@@ -84,7 +88,8 @@ export default {
     propertyType: { type: Boolean, default: false },
     salePrice: { type: Boolean, default: false },
     charterPriceDeposit: { type: Boolean, default: false },
-    disable: { type: Boolean, default: false }
+    disable: { type: Boolean, default: false },
+    propsClass: { type: String, default: "" }
   },
   computed: {
     contentComponent() {
@@ -106,17 +111,17 @@ export default {
       }
       return component;
     },
-    ...mapGetters('search', ['search']),
-    ...mapGetters('map', ['getMapCenter'])
+    ...mapGetters("search", ["search"]),
+    ...mapGetters("map", ["getMapCenter"])
   },
   methods: {
     // STORE MODULE ACTIONS ***
-    ...mapActions('search', [
-      'setTypeSale',
-      'setTypeHouse',
-      'setTypeHouseDetail',
-      'setSalePrice',
-      'setDepositPrice'
+    ...mapActions("search", [
+      "setTypeSale",
+      "setTypeHouse",
+      "setTypeHouseDetail",
+      "setSalePrice",
+      "setDepositPrice"
     ]),
     // COMPONENTS METHODS STARTS ***
     select(val) {
@@ -128,38 +133,40 @@ export default {
       this.selectedDetail = val;
     },
     save() {
-      console.log(this.selected, 'selected')
-      console.log(this.propertyType, 'propertyType')
+      console.log(this.selected, "selected");
+      console.log(this.propertyType, "propertyType");
       if (this.selected) {
-        console.log('저장 ', this.selected, this.selectedDetail);
+        console.log("저장 ", this.selected, this.selectedDetail);
         if (this.transactionType) {
           // this.$store.search.dispatch('setTypeSale', this.selected);
-          console.log('transactionType')
+          console.log("transactionType");
           this.setTypeSale(this.selected);
         }
         if (this.propertyType) {
-          console.log(this.propertyType, 'propertyType', this.selected)
+          console.log(this.propertyType, "propertyType", this.selected);
           // this.$store.search.dispatch('setTypeHouse', this.selected);
           this.setTypeHouse(this.selectedDetail);
           if (this.selectedDetail) {
-            console.log('selectedDetail')
+            console.log("selectedDetail");
             // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
             this.setTypeHouseDetail(this.selectedDetail);
           }
         }
         if (this.salePrice) {
-          console.log('salePrice')
+          console.log("salePrice");
           // this.$store.search.dispatch('setSalePrice', this.selected);
           this.setSalePrice(this.selected);
         }
         if (this.charterPriceDeposit) {
-          console.log('charterPriceDeposit')
+          console.log("charterPriceDeposit");
           // this.$store.search.dispatch('setDepositPrice', this.selected);
-          this.setDepositPrice(this.selected)
+          this.setDepositPrice(this.selected);
         }
       }
       // console.log(toQueryString(this.search));
-      this.$store.dispatch('getSimpleHouses', { query: toQueryString(this.search) });
+      this.$store.dispatch("getSimpleHouses", {
+        query: toQueryString(this.search)
+      });
       // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
       // this.$store.dispatch('getDetailHouses', toQueryString({
       //   latitude: this.getMapCenter.lat,
@@ -170,47 +177,47 @@ export default {
     },
     init() {
       if (this.selected) {
-        console.log('저장 ', this.selected);
+        console.log("저장 ", this.selected);
         if (this.transactionType) {
-          this.selected = '전체';
+          this.selected = "전체";
           // this.$store.search.dispatch('setTypeSale', '전체');
-          this.setTypeSale('전체');
+          this.setTypeSale("전체");
         }
         if (this.propertyType) {
-          this.selected = '';
+          this.selected = "";
           // this.$store.search.dispatch('setTypeHouse', '');
-          this.setTypeHouse('')
+          this.setTypeHouse("");
           if (this.selectedDetail) {
-            this.selectedDetail = '전체';
+            this.selectedDetail = "전체";
             // this.$store.search.dispatch('setTypeHouseDetail', '전체');
-            this.setTypeHouseDetail('전체')
+            this.setTypeHouseDetail("전체");
           }
         }
         if (this.salePrice) {
-          this.selected = { text: '전체', min: null, max: null };
+          this.selected = { text: "전체", min: null, max: null };
           // this.$store.search.dispatch('setSalePrice', {
           //   text: '전체',
           //   min: null,
           //   max: null
           // });
           this.setSalePrice({
-            text: '전체',
+            text: "전체",
             min: null,
             max: null
-          })
+          });
         }
         if (this.charterPriceDeposit) {
-          this.selected = { text: '전체', min: null, max: null };
+          this.selected = { text: "전체", min: null, max: null };
           // this.$store.search.dispatch('setDepositPrice', {
           //   text: '전체',
           //   min: null,
           //   max: null
           // });
           this.setDepositPrice({
-            text: '전체',
+            text: "전체",
             min: null,
             max: null
-          })
+          });
         }
       }
       this.modal = false;

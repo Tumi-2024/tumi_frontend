@@ -1,5 +1,7 @@
 <template>
-  <q-card-section class="row items-center flex justify-between q-pa-none q-ma-none">
+  <q-card-section
+    class="row items-center flex justify-between q-pa-none q-ma-none"
+  >
     <!-- Dialog containing all filters-->
     <overall-filter :disable="disable" />
 
@@ -10,16 +12,17 @@
       >
         <slot>
           <div class="items" v-for="(filter, i) of filters" :key="i">
+            <!-- :transactionType="filter.type === 'transactionType'"
+              :maintenanceType="filter.type === 'maintenanceType'" -->
             <specific-filter
+              :propsClass="filter.class"
               :label="filter.label"
-              :transactionType="filter.type === 'transactionType'"
-              :maintenanceType="filter.type === 'maintenanceType'"
               :propertyType="filter.type === 'propertyType'"
               :salePrice="filter.type === 'salePrice'"
               :registrationDate="filter.type === 'registrationDate'"
               :disable="disable"
             />
-              <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
+            <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
           </div>
         </slot>
         <div class="q-px-xs"></div>
@@ -40,25 +43,33 @@ export default {
   data() {
     return {
       filters: [
-        {
-          label: "거래유형",
-          type: "transactionType"
-        },
-        {
-          label: "정비구역 유형",
-          type: "maintenanceType"
-        },
+        // {
+        //   label: "거래유형",
+        //   type: "transactionType"
+        // },
+        // {
+        //   label: "정비구역 유형",
+        //   type: "maintenanceType"
+        // },
         {
           label: "주택유형",
-          type: "propertyType"
+          type: "propertyType",
+          class: "text-white bg-primary"
+        },
+        {
+          label: "평형",
+          type: "propertyType",
+          class: "text-white bg-green"
         },
         {
           label: "매매가",
-          type: "salePrice"
+          type: "salePrice",
+          class: "text-white bg-blue"
         },
         {
           label: "매물등록일자",
-          type: "registrationDate"
+          type: "registrationDate",
+          class: "text-white bg-black"
         }
       ]
     };

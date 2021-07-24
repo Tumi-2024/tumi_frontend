@@ -6,7 +6,12 @@
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
-          <address-with-badges :item="{address: item.address}" :tags="getBadges(item)" />
+          <address-with-badges
+            :item="{
+              address: (item.status.length > 0 ? '[재개발]' : '') + item.address
+            }"
+            :tags="getBadges(item)"
+          />
         </q-item-section>
       </div>
       <div class="flex items-center q-py-sm" style="flex: 1 1 600px">
@@ -19,8 +24,8 @@
 
 <script>
 import { toMoneyString, toKr, toDateFormat } from "src/utils";
-import areaItemInfo from './AreaItemInfo'
-import AddressWithBadges from '../Address/AddressWithBadges';
+import areaItemInfo from "./AreaItemInfo";
+import AddressWithBadges from "../Address/AddressWithBadges";
 
 export default {
   name: "AreaItem",
@@ -38,36 +43,44 @@ export default {
     toMoneyString,
     toDateFormat,
     getdate(string1, string2) {
-      const str1 = string1
-      let str2 = string2
+      const str1 = string1;
+      let str2 = string2;
       if (str2.length === 1) {
-        str2 = 0 + str2
+        str2 = 0 + str2;
       }
-      return str1.slice(0, 4) + '.' + str1.slice(4, 6) + '.' + str2
+      return str1.slice(0, 4) + "." + str1.slice(4, 6) + "." + str2;
     }
   },
   data() {
     return {
       category: [
-        { key: 'COMMERCIAL ', label: '상업업무용' },
-        { key: 'SINGLE', label: '단독다가구' },
-        { key: 'OFFICETEL', label: '오피스텔' },
-        { key: 'APARTMENT', label: '아파트' },
-        { key: 'LAND', label: '토지' },
-        { key: 'ALLIANCE', label: '연립/다세대' }
+        { key: "COMMERCIAL ", label: "상업업무용" },
+        { key: "SINGLE", label: "단독다가구" },
+        { key: "OFFICETEL", label: "오피스텔" },
+        { key: "APARTMENT", label: "아파트" },
+        { key: "LAND", label: "토지" },
+        { key: "ALLIANCE", label: "연립/다세대" }
       ]
-    }
+    };
   },
   computed: {
     getBadges() {
       return (item, ctgr) => {
         return [
-          { type: 'houseType', value: (this.category.find(obj => obj.key === this.ctgr) || { label: '' }).label },
+          {
+            type: "houseType",
+            value: (
+              this.category.find(obj => obj.key === this.ctgr) || { label: "" }
+            ).label
+          },
           // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
-          { type: this.type[0].toLowerCase(), value: `${toMoneyString(item.price)}` },
-          { type: 'date', value: this.getdate(item.text_month, item.text_day) }
-        ]
-      }
+          {
+            type: this.type[0].toLowerCase(),
+            value: `${toMoneyString(item.price)}`
+          },
+          { type: "date", value: this.getdate(item.text_month, item.text_day) }
+        ];
+      };
     },
     // getBadges() {
     //   return (item) => {
@@ -121,7 +134,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .area-name {
   font-weight: 500;
   font-size: 16px;
@@ -130,8 +142,7 @@ export default {
   color: #707070;
   margin-left: 0px;
   &.sub {
-  font-size: 14px;
-
+    font-size: 14px;
   }
 }
 .area-amount {

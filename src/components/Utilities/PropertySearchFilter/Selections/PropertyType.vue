@@ -23,7 +23,10 @@
       </q-btn>
     </div>
 
-    <property-detailed-type :selectedCategory="selected" v-on:select="select"></property-detailed-type>
+    <property-detailed-type
+      :selectedCategory="selected"
+      v-on:select="select"
+    ></property-detailed-type>
   </q-card-section>
 </template>
 
@@ -71,11 +74,11 @@ export default {
       return require(`src/assets/icons/PropertySearchFilter/${pic}.svg`);
     },
     select(val) {
-      this.$emit('selectDetail', val)
+      this.$emit("selectDetail", val);
     },
     changeValue(val) {
       this.selected = val;
-      this.$emit('select', val);
+      this.$emit("select", val);
     }
   }
 };
