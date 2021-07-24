@@ -11,7 +11,7 @@
           outline
           color="primary"
           class="badge-type notosanskr-medium"
-          label="공공주택지구"
+          :label="getMapSelectedArea.category"
         />
       </div>
       <div class="info q-mt-sm notosanskr-medium" v-if="getMapSelectedArea">
@@ -41,7 +41,7 @@
           <div class="row q-mt-xs">
             <div class="title q-pr-xs">·사업단계 :</div>
             <div class="content" v-if="getMapSelectedArea.redevelopment_step">
-              {{ getMapSelectedArea.redevelopment_step.title }}
+              {{ getMapSelectedArea.redevelopment_step }}
             </div>
           </div>
         </div>

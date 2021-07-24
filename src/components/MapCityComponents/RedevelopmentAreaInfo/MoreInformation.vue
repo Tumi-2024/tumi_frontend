@@ -16,56 +16,114 @@
         {{ getMapSelectedArea.address }}
       </div>
     </section>
-
-    <section class="area-stats-section bg-white">
-      <div v-for="(stat, i) of stats" :key="i">
-        <div class="row q-pa-md">
-          <q-icon size="56px" style="margin-right: 12px">
-            <img :src="require(`assets/icons/${stat.icon}`)" alt="" />
-          </q-icon>
-          <section class="column">
-            <div class="stat-title notosanskr-medium">
-              {{ stat.title }}
-            </div>
-            <div class="stat-value notosanskr-medium" v-if="stat.default == 0">
-              {{ getStatValue(stat.value) | number("0,0") }} {{ stat.unit }}
-            </div>
-            <div class="stat-value notosanskr-medium" v-else>
-              {{ getStatValue(stat.value) }}
-            </div>
-          </section>
+    <section class="investment-point bg-white">
+      <div class="title-heading notosanskr-medium">
+        정비사업 개요
+      </div>
+      <div class="row table">
+        <div class="col-sm-4 col-12 row" v-for="(item, i) of getInfo" :key="i">
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <a
+            class="information sub flex items-center q-px-sm"
+            :href="`tel:${item.value}`"
+            v-if="item.phone"
+            >{{ item.value }}</a
+          >
+          <span class="information sub flex items-center q-px-sm" v-else>{{
+            item.value
+          }}</span>
         </div>
-        <q-separator inset v-if="stats.length - 1 !== i" />
       </div>
     </section>
-
-    <section class="area-stats-section bg-white">
-      <div style="justify-content: flex-end; display: flex">
-        <q-select
-          style="width: 150px; margin-right: 20px"
-          label="카테고리"
-          color="primary"
-          label-color="primary"
-          :value="ctgr1"
-          emit-value
-          map-options
-          @input="getCtgrGraphData"
-          :options="[
-          {label: '아파트', value: 'APARTMENT'},
-          {label: '오피스텔', value: 'OFFICETEL'},
-          {label: '상업업무용', value: 'COMMERCIAL '},
-          {label: '분양/입주권', value: 'LAND'},
-          {label: '연립/다세대', value: 'ALLIANCE'},
-          {label: '단독/다가구', value: 'SINGLE'},
-          {label: '토지', value: 'LAND'}
-          ]"
-        />
+    <section class="investment-point bg-white">
+      <div class="title-heading notosanskr-medium">
+        도시계획 사항
       </div>
-      <!-- <BarChart :height="300" :chart-data="datacollection" :options="options" /> -->
-      <LineChart :chart-data="datacollection" :options="options" style="margin: 0 20px" />
+      <div class="row table">
+        <div class="col-sm-4 col-12 row" v-for="(item, i) of getInfo1" :key="i">
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <a
+            class="information sub flex items-center q-px-sm"
+            :href="`tel:${item.value}`"
+            v-if="item.phone"
+            >{{ item.value }}</a
+          >
+          <span class="information sub flex items-center q-px-sm" v-else>{{
+            item.value
+          }}</span>
+        </div>
+      </div>
     </section>
-
-    <redevelopment-progress :items="getRedevelopmentSteps()" title="진행단계" />
+    <section class="investment-point bg-white">
+      <div class="title-heading notosanskr-medium">
+        건축 계획
+      </div>
+      <div class="row table">
+        <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo2" :key="i">
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <a
+            class="information sub flex items-center q-px-sm"
+            :href="`tel:${item.value}`"
+            v-if="item.phone"
+            >{{ item.value }}</a
+          >
+          <span class="information sub flex items-center q-px-sm" v-else>{{
+            item.value
+          }}</span>
+        </div>
+      </div>
+    </section>
+    <section class="investment-point bg-white">
+      <div class="title-heading notosanskr-medium">
+        주택 공급 계획
+      </div>
+      <span style="font-weight: 500">분양 계획</span>
+      <div class="row table" style="margin-bottom: 20px; ">
+        <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <a
+            class="information sub flex items-center q-px-sm"
+            :href="`tel:${item.value}`"
+            v-if="item.phone"
+            >{{ item.value }}</a
+          >
+          <span class="information sub flex items-center q-px-sm" v-else>{{
+            item.value
+          }}</span>
+        </div>
+      </div>
+      <span style="font-weight: 500;">임대 계획</span>
+      <div class="row table">
+        <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <a
+            class="information sub flex items-center q-px-sm"
+            :href="`tel:${item.value}`"
+            v-if="item.phone"
+            >{{ item.value }}</a
+          >
+          <span class="information sub flex items-center q-px-sm" v-else>{{
+            item.value
+          }}</span>
+        </div>
+      </div>
+    </section>
+    <section class="investment-point bg-white">
+      <redevelopment-progress
+        :items="getRedevelopmentSteps()"
+        title="진행단계"
+      />
+    </section>
 
     <section
       class="investment-point notosanskr-regular"
@@ -94,143 +152,180 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import RedevelopmentProgress from "components/Utilities/RedevelopmentProgress";
-import BarChart from 'src/utils/BarChart'
-import LineChart from 'src/utils/lineChart'
-import { toMoneyString, toSimpleMoneyString } from 'src/utils';
+
+import { toMoneyString } from "src/utils";
 import { mapGetters } from "vuex";
 export default {
   components: {
-    "redevelopment-progress": RedevelopmentProgress,
+    "redevelopment-progress": RedevelopmentProgress
     // BarChart,
-    LineChart
   },
-  data() {
-    return {
-      ctgr1: 'ALLIANCE',
-      transactions: [],
-      defaultPeriods: ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
-      stats: [
-        {
-          icon: "AreaStats/area.svg",
-          title: "면적",
-          value: "size_area",
-          default: 0,
-          unit: "m²"
-        },
-        {
-          icon: "AreaStats/number-household.svg",
-          title: "소유자 수",
-          value: "count_owner",
-          default: 0,
-          unit: "명"
-        },
-        {
-          icon: "AreaStats/number-household.svg",
-          title: "세입자 수",
-          value: "count_house",
-          default: 0,
-          unit: "명"
-        },
-        {
-          icon: "AreaStats/number-household.svg",
-          title: "조합원 수",
-          value: "count_member",
-          default: 0,
-          unit: "명"
-        },
-        {
-          icon: "AreaStats/number-members.svg",
-          title: "조합원 수",
-          value: "count_member",
-          default: 0,
-          unit: "명"
-        },
-        {
-          icon: "AreaStats/progress.svg",
-          title: "진행단계",
-          value: "redevelopment_step"
-        },
-        {
-          icon: "AreaStats/constructor.svg",
-          title: "시공사",
-          value: "construction_company"
-        }
-      ],
-      datacollection: {
-        maintainAspectRatio: false,
-        labels: ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
-        datasets: [
-          {
-            backgroundColor: ({ dataIndex: index }) => {
-              switch (index) {
-                case 0:
-                  return 'rgba(255, 125, 54, 0.2)'
-                case 1:
-                  return 'rgba(255, 125, 54, 0.6)'
-                case 2:
-                  return 'rgba(255, 125, 54, 1)'
-                default:
-                  return 'rgba(255, 125, 54, 0.2)'
-              }
-            },
-            data: []
-          }
-          // {
-          //   backgroundColor: ({ dataIndex: index }) => {
-          //     switch (index) {
-          //       case 0:
-          //         return 'rgba(11, 205, 199, 0.2)'
-          //       case 1:
-          //         return 'rgba(11, 205, 199, 0.6)'
-          //       case 2:
-          //         return 'rgba(11, 205, 199, 1)'
-          //       default:
-          //         return 'rgba(11, 205, 199, 0.2)'
-          //     }
-          //   },
-          //   data: [99000, 99000, 99000]
-          // }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          datalabels: {
-            formatter: (d) => toMoneyString(d)
-          }
-        },
-        scales: {
-          yAxes: [{
-            gridLines: {
-              drawTicks: false,
-              drawOnChartArea: false
-            },
-            ticks: {
-              min: 20000,
-              callback: function(val, index) {
-                // Hide the label of every 2nd dataset
-                return index % 2 === 1 ? toSimpleMoneyString(val) : '';
-              }
-            }
-          }],
-          xAxes: [{
-            gridLines: {
-              drawTicks: false,
-              drawOnChartArea: false
-            }
-          }]
-        },
-        legend: {
-          display: false
-        }
-      }
-    };
-  },
+
   computed: {
-    ...mapGetters("area", ["getMapSelectedArea"])
+    ...mapGetters("area", ["getMapSelectedArea"]),
+    getInfo() {
+      console.log(this.getMapSelectedArea);
+      return [
+        { label: "사업번호", value: this.getMapSelectedArea.business_number },
+        {
+          label: "사업 구분",
+          value: this.getMapSelectedArea.business_classification
+        },
+        { label: "사업 유형", value: this.getMapSelectedArea.business_type },
+        {
+          label: "사업시행 예정시기",
+          value: this.getMapSelectedArea.scheduled_time
+        },
+        {
+          label: "공공지원 대상여부",
+          value: this.getMapSelectedArea.status_public_support
+        },
+        {
+          label: "건축계획",
+          value: this.getMapSelectedArea.status_architectural_plan
+        },
+        {
+          label: "주택공유계획",
+          value: this.getMapSelectedArea.status_sharing_plan
+        },
+        {
+          label: "추진위 수행여부",
+          value: this.getMapSelectedArea.status_promotion_committee
+        }
+      ];
+    },
+    getInfo1() {
+      return [
+        { label: "용도 지역", value: this.getMapSelectedArea.usage_area },
+        { label: "용도 지구", value: this.getMapSelectedArea.district },
+        { label: "주용도", value: this.getMapSelectedArea.main_use },
+        {
+          label: "건폐율",
+          value: this.getMapSelectedArea.percentage_building_to_land
+        },
+        {
+          label: "용적률",
+          value: this.getMapSelectedArea.percentage_floor_area
+        },
+        {
+          label: "층수(지상 | 지하)",
+          value: `${this.getMapSelectedArea.floor_up}층 | ${this.getMapSelectedArea.floor_down}층`
+        }
+      ];
+    },
+    getInfo2() {
+      return [
+        {
+          label: "대지 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_land_area)
+        },
+        {
+          label: "연 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_total_area)
+        },
+        {
+          label: "건축 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_building_area)
+        },
+        {
+          label: "구역 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_area)
+        },
+        {
+          label: "택지 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_land)
+        },
+        {
+          label: "도로 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_road)
+        },
+        {
+          label: "공원 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_park)
+        },
+        {
+          label: "녹지 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_greenery)
+        },
+        {
+          label: "공공공지 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_public)
+        },
+        {
+          label: "학교 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_school)
+        },
+        {
+          label: "기타 면적(m²)",
+          value: this.toNumberString(this.getMapSelectedArea.size_etc)
+        }
+      ];
+    },
+    // 주택 공급 계획 (분양)
+    getInfo3() {
+      return [
+        { label: "총 세대수", value: this.getMapSelectedArea.count_sale },
+        { label: "60m² 이하", value: this.getMapSelectedArea.count_sale_lt_60 },
+        {
+          label: "60m² ~ 85m²",
+          value: this.getMapSelectedArea.count_sale_gt_60_lt_85
+        },
+        { label: "85m² 초과", value: this.getMapSelectedArea.count_sale_gt_85 }
+      ];
+    },
+    // 주택 공급 계획 (임대)
+    getInfo4() {
+      return [
+        { label: "총 세대수", value: this.getMapSelectedArea.count_rent },
+        { label: "60m² 이하", value: this.getMapSelectedArea.count_rent_lt_60 },
+        {
+          label: "60m² ~ 85m²",
+          value: this.getMapSelectedArea.count_rent_gt_60_lt_85
+        },
+        { label: "85m² 초과", value: this.getMapSelectedArea.count_rent_gt_85 }
+      ];
+    },
+    getInfo5() {
+      return [
+        { label: "총 세대수", value: this.getMapSelectedArea.count_rent },
+        { label: "60m² 이하", value: this.getMapSelectedArea.count_rent_lt_60 },
+        {
+          label: "60m² ~ 85m²",
+          value: this.getMapSelectedArea.count_rent_gt_60_lt_85
+        },
+        { label: "85m² 초과", value: this.getMapSelectedArea.count_rent_gt_85 }
+      ];
+    },
+    getSelectOptions() {
+      const options = [
+        { label: "아파트", value: "APARTMENT" },
+        { label: "오피스텔", value: "OFFICETEL" },
+        { label: "상업업무용", value: "COMMERCIAL " },
+        { label: "분양/입주권", value: "LAND" },
+        { label: "연립/다세대", value: "ALLIANCE" },
+        { label: "단독/다가구", value: "SINGLE" },
+        { label: "토지", value: "LAND" }
+      ];
+
+      const getDisable = value =>
+        this.transactions.every(transaction => {
+          return !transaction.recent_transactions[value];
+        });
+
+      return options.map(option => {
+        return { ...option, disable: getDisable(option.value) };
+      });
+    },
+    toNumberString() {
+      return value => {
+        if (!value) {
+          return "-";
+        }
+        const _value = Number(value);
+        return _value.toLocaleString();
+      };
+    }
   },
   methods: {
     getStatValue(value) {
@@ -252,7 +347,7 @@ export default {
       }
     },
     toMoneyString(value, add) {
-      return toMoneyString(value, add)
+      return toMoneyString(value, add);
     },
     getRedevelopmentSteps() {
       let steps = [];
@@ -263,38 +358,7 @@ export default {
         }));
       }
       return steps;
-    },
-    getCtgrGraphData(value) {
-      this.ctgr1 = value
-      const t = this.transactions.filter(obj => obj.categories[0] === this.ctgr1).map(obj => obj.recent_transactions[obj.categories[0]])
-      const periods = []
-      t.forEach(obj => {
-        const textYear = obj.text_month.slice(0, 4)
-        const hasPeriod = periods.some(obj => obj.period === textYear)
-
-        if (!hasPeriod) {
-          periods.push({ period: textYear, price: [obj.price] })
-        } else {
-          periods.find(obj => obj.period === textYear).price.push(obj.price)
-        }
-      })
-      // this.datacollection.labels = a.map(obj => obj.period).sort()
-      this.datacollection.datasets[0].data = this.defaultPeriods.map(period => {
-        const prices = periods.find(pr => pr.period === period)
-        if (prices) {
-          const result = prices.price.reduce(function add(sum, currValue) {
-            return sum + currValue;
-          }, 0);
-          return result / prices.price.length;
-        }
-      })
-      this.datacollection = Object.assign({}, this.datacollection);
     }
-  },
-  async beforeMount() {
-    const { data } = await Vue.prototype.$axios.post(`redevelopment_areas/${this.getMapSelectedArea.id}/transaction_groups?page_size=1000`)
-    this.transactions = data.results
-    this.getCtgrGraphData('ALLIANCE')
   }
 };
 </script>
@@ -353,6 +417,10 @@ export default {
     background: white;
     margin-top: 8px;
     padding: 24px 16px;
+    .table {
+      margin-top: 10px;
+      border-top: 1px solid #1a1a1a;
+    }
     .title-heading {
       font-weight: 500;
       font-size: 17px;

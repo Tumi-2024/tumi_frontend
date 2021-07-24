@@ -14,7 +14,7 @@
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
-      >
+    >
       <template v-if="showInfoWindow">
         <gmap-info-window
           v-for="(m, index) in $store.state.estate.simple_houses"
@@ -32,18 +32,18 @@
             :count="m.transactions_count"
             :badges="{
               type_sale: m.types,
-              type_house: m.categories,
+              type_house: m.categories
             }"
             :is-dev="!!m.redevelopment_area"
           />
-            <div v-else>
-              <q-spinner-pie
-                style="margin-left: 10px; margin-top: 5px;"
-                color="primary"
-                size="30px"
-              />
-              <q-tooltip>QSpinnerPie</q-tooltip>
-            </div>
+          <div v-else>
+            <q-spinner-pie
+              style="margin-left: 10px; margin-top: 5px;"
+              color="primary"
+              size="30px"
+            />
+            <q-tooltip>QSpinnerPie</q-tooltip>
+          </div>
         </gmap-info-window>
       </template>
 
@@ -59,7 +59,7 @@
         v-if="showEstates"
       >
         <gmap-marker
-          v-for="(m, mIndex) in $store.state.estate.simple_houses"
+          v-for="(m, mIndex) in getSimpleHouse"
           :key="`marker-${mIndex}`"
           :position="m.position"
           :clickable="true"
@@ -73,7 +73,10 @@
         :key="'area' + i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges && $route.path === '/map/city/area'">
+        <div
+          class="area-badge-info notosanskr-medium"
+          v-if="showAreaBadges && $route.path === '/map/city/area'"
+        >
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
@@ -187,10 +190,19 @@ export default {
       "getMapCenter",
       "getMapOptions"
     ]),
-    ...mapGetters('area', ['getMapAreas']),
+    ...mapGetters("area", ["getMapAreas"]),
     ...mapGetters(["getUserLocation"]),
     ...mapGetters(["estate", "simple_houses"]),
-    google: gmapApi
+    google: gmapApi,
+    getSimpleHouse() {
+      return this.$store.state.estate.simple_houses.filter(house => {
+        if (this.getMapMode === "redevelop-area") {
+          return house.transaction_groups_count !== 0;
+        } else {
+          return house.count_estates !== 0;
+        }
+      });
+    }
   },
 
   async mounted() {
@@ -209,18 +221,18 @@ export default {
     this.map.addListener("tilesloaded", _ => {
       if (!this.isMounted) {
         this.setLocationLoading(false);
-        this.getHouseInfo()
-        this.isMounted = true
+        this.getHouseInfo();
+        this.isMounted = true;
         if (this.polygons.length === 0) {
-          this.initializeRedevelopArea(this.getMapMode === 'redevelop-area')
+          this.initializeRedevelopArea(this.getMapMode === "redevelop-area");
         }
       }
     });
 
     this.map.addListener("zoom_changed", _ => {
       this.setLocationLoading(false);
-      this.getHouseInfo()
-      this.isMounted = true
+      this.getHouseInfo();
+      this.isMounted = true;
     });
 
     this.map.addListener("dragend", _ => {
@@ -228,72 +240,86 @@ export default {
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
-      })
+      });
       this.setLocationLoading(false);
-      this.getHouseInfo()
+      this.getHouseInfo();
     });
   },
 
   watch: {
     getUserLocation(newVal) {
-      this.markUsersLocation(newVal)
+      this.markUsersLocation(newVal);
       this.goToLocation(newVal);
     }
   },
 
   methods: {
     // have access to vuex actions
-    ...mapActions("map", ["changeMapZoom", "changeMapCenter", "setLocationLoading"]),
+    ...mapActions("map", [
+      "changeMapZoom",
+      "changeMapCenter",
+      "setLocationLoading"
+    ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
 
     getPriceFromText(obj) {
       if (obj.recent_transactions) {
-        const string = obj.recent_transactions[obj.categories[0]].text_price
+        const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
-          return Number(string.replace(',', '')) * 1000
+          return Number(string.replace(",", "")) * 1000;
         } else {
-          return 0
+          return 0;
         }
       } else {
-        return 0
+        return 0;
       }
     },
     calculatorMarker(markers) {
-      const { lat, lng } = markers[0].position
-      const { transaction_groups_count: text } = this.simple_houses.find(obj => {
-        return Number(obj.latitude) === lat() && Number(obj.longitude) === lng()
-      })
-      return {
-        text: text || '-',
-        index: 0,
-        title: 'count'
-      };
+      const { lat, lng } = markers[0].position;
+      const {
+        transaction_groups_count: transactionsCount,
+        count_estates: estateCount
+      } = this.simple_houses.find(obj => {
+        return (
+          Number(obj.latitude) === lat() && Number(obj.longitude) === lng()
+        );
+      });
+
+      const text =
+        (this.getMapMode === "redevelop-area"
+          ? transactionsCount
+          : estateCount) || "";
+      console.log(text);
+      return { text, index: 0, title: "count" };
     },
 
     getHouseInfo() {
-      const zoomLevel = this.map.getZoom()
+      const zoomLevel = this.map.getZoom();
       const bounds = this.map.getBounds();
-      const location = { latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()], longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()] }
-      let payload = { type: 'city' }
+      const location = {
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
+      };
+      let payload = { type: "city" };
       if (zoomLevel < 13) {
-        this.showInfoWindow = false
+        this.showInfoWindow = false;
         // subcities
       } else if (zoomLevel <= 14) {
-        this.showInfoWindow = false
-        payload = { type: 'subcity', ...location }
+        this.showInfoWindow = false;
+        payload = { type: "subcity", ...location };
       } else if (zoomLevel <= 17) {
-        this.showInfoWindow = false
-        payload = { type: 'locations', ...location }
+        this.showInfoWindow = false;
+        payload = { type: "locations", ...location };
       } else {
-        this.showInfoWindow = true
-        payload = { type: 'detail', ...location }
+        this.showInfoWindow = true;
+        payload = { type: "detail", ...location };
       }
-      this.$store.dispatch('getSimpleHouses', payload);
+      this.$store.dispatch("getSimpleHouses", payload);
       setTimeout(() => {
-        this.showAreaBadges = zoomLevel > 14
+        this.showAreaBadges = zoomLevel > 14;
         this.disableHeart = zoomLevel < 18;
-        if (this.getMapAreas.length && this.getMapMode === 'redevelop-area') {
+        if (this.getMapAreas.length && this.getMapMode === "redevelop-area") {
           this.setMapAreas();
         }
       }, 500);
@@ -322,10 +348,10 @@ export default {
           lng: Number(area.longitude)
         };
 
-        const isProgress = area.status === '운영'
+        const isProgress = area.status === "운영";
 
         const style = {
-          strokeColor: isProgress ? "#FF5100" : 'black',
+          strokeColor: isProgress ? "#FF5100" : "black",
           strokeOpacity: 0.8,
           strokeWeight: 2,
           fillColor: isProgress ? "#0BCDC7" : "gray",
@@ -333,10 +359,9 @@ export default {
         };
         let item = null;
 
-        const paths = area.redevelopment_area_locations
-          .map(obj => {
-            return { lat: Number(obj.lat), lng: Number(obj.lng) }
-          })
+        const paths = area.redevelopment_area_locations.map(obj => {
+          return { lat: Number(obj.lat), lng: Number(obj.lng) };
+        });
 
         item = new this.google.maps.Polygon({
           ...style,
@@ -344,49 +369,51 @@ export default {
           map: this.map,
           center,
           visible
-        })
+        });
 
         item.addListener("click", _ => {
           this.changeMapSelectedArea(area);
           let { latitude: lat, longitude: lng } = area;
-          lat = Number(lat)
-          lng = Number(lng)
+          lat = Number(lat);
+          lng = Number(lng);
           this.goToLocation({ lat, lng });
         });
         this.showAreaBadges = true;
-        return item
+        return item;
       });
       const bounds = this.map.getBounds();
 
-      const getVisible = (lat, lng) => (bounds.getSouthWest().lat() < Number(lat) &&
-              Number(lat) < bounds.getNorthEast().lat() &&
-              bounds.getSouthWest().lng() < Number(lng) &&
-              Number(lng) < bounds.getNorthEast().lng())
+      const getVisible = (lat, lng) =>
+        bounds.getSouthWest().lat() < Number(lat) &&
+        Number(lat) < bounds.getNorthEast().lat() &&
+        bounds.getSouthWest().lng() < Number(lng) &&
+        Number(lng) < bounds.getNorthEast().lng();
 
-      this.areaBadges =
-        this.getMapAreas
-          .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
-          .map(obj => {
-            return {
-              center: { lat: Number(obj.latitude), lng: Number(obj.longitude) }, title: obj.title
-            }
-          })
+      this.areaBadges = this.getMapAreas
+        .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
+        .map(obj => {
+          return {
+            center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+            title: obj.title
+          };
+        });
     },
     setMapAreas() {
       const bounds = this.map.getBounds();
-      const getVisible = (lat, lng) => (bounds.getSouthWest().lat() < Number(lat) &&
-              Number(lat) < bounds.getNorthEast().lat() &&
-              bounds.getSouthWest().lng() < Number(lng) &&
-              Number(lng) < bounds.getNorthEast().lng())
+      const getVisible = (lat, lng) =>
+        bounds.getSouthWest().lat() < Number(lat) &&
+        Number(lat) < bounds.getNorthEast().lat() &&
+        bounds.getSouthWest().lng() < Number(lng) &&
+        Number(lng) < bounds.getNorthEast().lng();
 
-      this.areaBadges =
-        this.getMapAreas
-          .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
-          .map(obj => {
-            return {
-              center: { lat: Number(obj.latitude), lng: Number(obj.longitude) }, title: obj.title
-            }
-          })
+      this.areaBadges = this.getMapAreas
+        .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
+        .map(obj => {
+          return {
+            center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+            title: obj.title
+          };
+        });
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
@@ -413,14 +440,15 @@ export default {
       this.map.addListener("idle", () => {
         // this.changeMapZoom(18);
         this.changeMapCenter(item.position);
-        console.log(this.$route.path, item)
+        console.log(this.$route.path, item);
         this.$router.push({
-          name: 'map_list_sale',
+          name: "map_list_sale",
           query: {
-            transactionid: this.$route.path === '/map/city/area' ? item.id : undefined,
-            sellid: this.$route.path === '/map/city' ? item.id : undefined
+            transactionid:
+              this.$route.path === "/map/city/area" ? item.id : undefined,
+            sellid: this.$route.path === "/map/city" ? item.id : undefined
           }
-        })
+        });
         // this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });
       });
     },
@@ -436,47 +464,50 @@ export default {
       this.map.setZoom(17);
     },
     getCurrentPosition() {
-      Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(position => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        this.changeUserLocation({ lat, lng });
-      }).catch(e => {
-      });
+      Geolocation.getCurrentPosition({ enableHighAccuracy: true })
+        .then(position => {
+          const { latitude: lat, longitude: lng } = position.coords;
+          this.changeUserLocation({ lat, lng });
+        })
+        .catch(e => {});
     },
     async showHideArea(value) {
       if (!value) {
         // if value is false; remove area from map
         this.showAreaBadges = false;
-        this.polygons.forEach(obj => obj.setVisible(false))
+        this.polygons.forEach(obj => obj.setVisible(false));
       } else {
         this.showAreaBadges = true;
-        this.polygons.forEach(obj => obj.setVisible(true))
+        this.polygons.forEach(obj => obj.setVisible(true));
         this.setMapAreas();
       }
     },
     markUsersLocation(position = { lat: 0, lng: 0 }) {
-      (() => new this.google.maps.Circle({
-        strokeColor: "#FF5100",
-        strokeOpacity: 0.8,
-        strokeWeight: 1,
-        fillColor: "#FF7D36",
-        fillOpacity: 0.35,
-        map: this.map,
-        center: position,
-        radius: 50
-      }))();
+      (() =>
+        new this.google.maps.Circle({
+          strokeColor: "#FF5100",
+          strokeOpacity: 0.8,
+          strokeWeight: 1,
+          fillColor: "#FF7D36",
+          fillOpacity: 0.35,
+          map: this.map,
+          center: position,
+          radius: 50
+        }))();
 
-      (() => new this.google.maps.Marker({
-        icon: {
-          url: "/icons/marker.png",
-          size: this.google.maps.Size(30, 30),
-          origin: this.google.maps.Point(0, 0),
-          anchor: this.google.maps.Point(12, 15),
-          scaledSize: this.google.maps.Size(25, 25)
-        },
-        position,
-        map: this.map,
-        title: "Hello World!"
-      }))();
+      (() =>
+        new this.google.maps.Marker({
+          icon: {
+            url: "/icons/marker.png",
+            size: this.google.maps.Size(30, 30),
+            origin: this.google.maps.Point(0, 0),
+            anchor: this.google.maps.Point(12, 15),
+            scaledSize: this.google.maps.Size(25, 25)
+          },
+          position,
+          map: this.map,
+          title: "Hello World!"
+        }))();
     }
   }
 };
@@ -493,7 +524,7 @@ export default {
     border-radius: 8px;
     padding: 8px;
     box-shadow: 0;
-    border: 1px solid #D5D5D5;
+    border: 1px solid #d5d5d5;
     border-bottom: 0;
   }
 }
@@ -517,5 +548,4 @@ export default {
   border-radius: 8px;
   padding: 0 8px;
 }
-
 </style>

@@ -27,6 +27,11 @@
             narrow-indicator
           >
             <q-tab
+              name="summary"
+              class="tabs-text notosanskr-medium"
+              label="주요정보"
+            />
+            <q-tab
               name="more_information"
               class="tabs-text notosanskr-medium"
               label="상세정보"
@@ -40,6 +45,12 @@
 
           <q-tab-panels v-model="tab" animated class="bg-transparent">
             <!-- More Information | 상세정보 -->
+            <q-tab-panel
+              name="summary"
+              class="bg-transparent q-pa-none q-ma-none"
+            >
+              <Summary></Summary>
+            </q-tab-panel>
             <q-tab-panel
               name="more_information"
               class="bg-transparent q-pa-none q-ma-none"
@@ -59,15 +70,17 @@
 
 <script>
 import MoreInformation from "./MoreInformation";
+import Summary from "./Summary";
 import ImageMaterial from "./ImageMaterial";
 export default {
   components: {
     "more-information": MoreInformation,
-    "image-material": ImageMaterial
+    "image-material": ImageMaterial,
+    Summary
   },
   data() {
     return {
-      tab: "more_information",
+      tab: "summary",
       dialog: false
     };
   },
@@ -109,7 +122,7 @@ export default {
   letter-spacing: -1.2px;
   color: #707070;
   .q-tab__content {
-    width: 100%
+    width: 100%;
   }
 }
 </style>
