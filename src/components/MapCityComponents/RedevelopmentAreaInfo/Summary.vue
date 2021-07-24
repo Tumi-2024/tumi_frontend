@@ -74,6 +74,7 @@
         label="이지역 투자매물 보러가기"
       />
     </section>
+    <section style="min-height: 200px;"></section>
   </div>
 </template>
 <script>
