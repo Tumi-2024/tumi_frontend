@@ -1,25 +1,33 @@
 <template>
   <div class="action-container q-px-sm">
-
-    <q-btn v-if="!$store.state.map.locationLoading" color="white" padding="8px" @click="interestLocation()">
+    <q-btn
+      v-show="$store.state.map.locationLoading"
+      color="white"
+      padding="8px"
+      @click="interestLocation()"
+    >
       <q-icon size="24px">
-        <img v-if="!$store.state.map.isInterest" src="~assets/icons/heart.svg" alt="" srcset="" />
-        <img v-if="$store.state.map.isInterest" src="~assets/icons/hearted.svg" alt="" srcset="" />
+        <img
+          v-if="!$store.state.map.isInterest"
+          src="~assets/icons/heart.svg"
+          alt=""
+          srcset=""
+        />
+        <img v-else src="~assets/icons/hearted.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
 
     <q-btn
-      :color="cone ? 'primary' : 'white'"
+      :color="getIsCone ? 'primary' : 'white'"
       @click="showRedevelopmentArea"
       padding="8px"
-      v-if="!hideCone"
     >
       <div>
         <q-icon size="24px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div class="off text-dark notosanskr-bold">
-          {{ cone ? "ON" : "OFF" }}
+          {{ getIsCone ? "ON" : "OFF" }}
         </div>
       </div>
     </q-btn>
@@ -34,22 +42,26 @@
         <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
+    <!-- <q-btn
+      :color="this.getViewRedevOnly ? 'primary' : 'white'"
+      padding="8px"
+      @click="$emit('viewRedevOnly')"
+    >
+      <img
+        :width="24"
+        src="~assets/iconsNew/20정비사업(재개발).png"
+        alt=""
+        srcset=""
+      />
+    </q-btn> -->
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
-import {
-  loginModalMutation,
-  loginModalStore
-} from "src/components/Utilities/LoginModal/LoginModalState";
+import { mapGetters, mapActions } from "vuex";
+import { loginModalMutation } from "src/components/Utilities/LoginModal/LoginModalState";
 
 export default {
-  data() {
-    return {
-      cone: false
-    };
-  },
   props: {
     disableHeart: {
       type: Boolean,
@@ -65,28 +77,29 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", [
-      "addInterestLocation"
-    ]),
+    ...mapActions("map", ["addInterestLocation", "setIsCone"]),
     showRedevelopmentArea() {
-      this.cone = !this.cone;
-      this.$emit("showArea", this.cone);
+      this.setIsCone(!this.getIsCone);
+      this.$emit("showArea", !this.getIsCone);
     },
     interestLocation() {
       try {
-        let token = this.$store.state.user.data.token;
-        if (token) {
+        if (this.$store.state.user.data.token) {
           this.addInterestLocation();
         } else {
           this.setModal();
         }
-      } catch(e) {
+      } catch (e) {
         this.setModal();
       }
     },
     setModal() {
       loginModalMutation.setModal();
     }
+  },
+  computed: {
+    ...mapGetters(["estate", "getViewRedevOnly"]),
+    ...mapGetters("map", ["getIsCone"])
   }
 };
 </script>

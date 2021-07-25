@@ -23,11 +23,14 @@ export const areaStore = {
     fetchMapAreas: async context => {
       try {
         // let areas = []
+        if (context.state.areas.length > 0) {
+          return;
+        }
         const url = "/redevelopment_areas?page_size=1000";
         const { data } = await Vue.prototype.$axios.get(url, {
           timeout: 10000
         });
-        console.log(data)
+        console.log(data);
         context.commit("setMapAreas", data.results);
         // const areas = tconcat.results
         // const areas = results.reduce((acc, val) => acc.concat(val), [])

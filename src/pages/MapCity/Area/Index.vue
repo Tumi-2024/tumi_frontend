@@ -1,5 +1,5 @@
 <template>
-  <div v-if="pageReady && headerHeight">
+  <div v-if="headerHeight">
     <google-map
       class="page-container full-width"
       :style="`min-height: calc(100vh - ${headerHeight}px)`"
@@ -29,18 +29,13 @@ export default {
   computed: {
     ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
   },
-  async mounted() {
-    await this.fetchMapAreas();
-    this.pageReady = true;
-  },
   methods: {
     ...mapActions("map", [
       "changeMapMode",
       "changeMapZoom",
       "changeMapCenter",
       "changeToolbarTitle"
-    ]),
-    ...mapActions("area", ["fetchMapAreas"])
+    ])
   },
   created() {
     // we will set the desired settings view(lat&lng / zoom & etc...)

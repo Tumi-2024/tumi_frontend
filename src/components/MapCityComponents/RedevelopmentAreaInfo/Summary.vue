@@ -66,6 +66,7 @@
         style="margin: 0 20px"
       />
     </section>
+    <recent-history :item="getTransactions" />
     <section class="button-fixed-bottom">
       <q-btn
         color="primary"
@@ -74,6 +75,7 @@
         label="이지역 투자매물 보러가기"
       />
     </section>
+
     <section style="min-height: 200px;"></section>
   </div>
 </template>
@@ -82,9 +84,11 @@ import { mapGetters } from "vuex";
 import Vue from "vue";
 import LineChart from "src/utils/lineChart";
 import { toMoneyString, toSimpleMoneyString } from "src/utils";
+import { RecentHistory } from "components/MapForSaleComponents";
 export default {
   components: {
-    LineChart
+    LineChart,
+    "recent-history": RecentHistory
   },
   data() {
     return {
@@ -137,32 +141,8 @@ export default {
       ctgr1: "ALLIANCE",
       transactions: [],
 
-      defaultPeriods: [
-        "2011",
-        "2012",
-        "2013",
-        "2014",
-        "2015",
-        "2016",
-        "2017",
-        "2018",
-        "2019",
-        "2020"
-      ],
       datacollection: {
         maintainAspectRatio: false,
-        labels: [
-          "2011",
-          "2012",
-          "2013",
-          "2014",
-          "2015",
-          "2016",
-          "2017",
-          "2018",
-          "2019",
-          "2020"
-        ],
         datasets: [
           {
             backgroundColor: ({ dataIndex: index }) => {
@@ -251,8 +231,14 @@ export default {
             periods.find(obj => obj.period === textYear).price.push(info.price);
           }
         });
+      const startYear = 2016;
+      const defaultPeriods = [];
+      for (let i = 0; i < new Date().getFullYear() - startYear; i++) {
+        defaultPeriods[i] = String(startYear + i);
+      }
 
-      this.datacollection.datasets[0].data = this.defaultPeriods.map(period => {
+      this.datacollection.labels = defaultPeriods;
+      this.datacollection.datasets[0].data = defaultPeriods.map(period => {
         const prices = periods.find(pr => pr.period === period);
         if (prices) {
           const result = prices.price.reduce(function add(sum, currValue) {
@@ -285,6 +271,20 @@ export default {
   },
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"]),
+    getTransactions() {
+      const test = [];
+
+      this.transactions.forEach(({ recent_transactions }) => {
+        for (const t in recent_transactions) {
+          test.push(recent_transactions[t]);
+        }
+      });
+      console.log(test, this.ctgr1);
+      return test
+        .sort((a, b) => b.text_month - a.text_month)
+        .filter(({ category }) => category === this.ctgr1);
+      // return this.transactions.map(({ recent_transactions: t }) => t);
+    },
     getSelectOptions() {
       const options = [
         { label: "아파트", value: "APARTMENT" },
