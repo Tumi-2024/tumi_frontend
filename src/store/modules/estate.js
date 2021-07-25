@@ -66,9 +66,14 @@ export const estateStore = {
     },
     getSimpleHouses: async function(context, payload) {
       let data;
+      const requestUrl =
+        context.rootState.map.mode === "redevelop-area"
+          ? "transaction_groups"
+          : "houses";
+      console.log(requestUrl);
       if (payload.query) {
         data = await Vue.prototype.$axios.get(
-          `/transaction_groups/?page_size=1000&${payload.query}`,
+          `/${requestUrl}/?page_size=1000&${payload.query}`,
           { timeout: 10000 }
         );
       } else {
@@ -94,7 +99,7 @@ export const estateStore = {
             break;
           default:
             data = await Vue.prototype.$axios.get(
-              `/transaction_groups?${rangeQuery}`,
+              `/${requestUrl}/?${rangeQuery}`,
               { timeout: 10000 }
             );
             break;
