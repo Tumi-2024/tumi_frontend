@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       selected: "일반매물",
-      transactions: ["일반매물", "재개발", "재건축", "가로주택", "기타 사업개발권"]
+      transactions: ["일반매물", "재개발", "재건축", "가로주택"]
     };
   },
   methods: {

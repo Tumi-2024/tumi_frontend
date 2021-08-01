@@ -341,7 +341,7 @@ export default {
       }
       this.$store.dispatch("getSimpleHouses", payload);
       setTimeout(() => {
-        this.showAreaBadges = zoomLevel > 14;
+        this.showAreaBadges = this.getIsCone && zoomLevel > 14;
         this.disableHeart = zoomLevel <= 18;
         if (this.getMapAreas.length && this.getMapMode === "redevelop-area") {
           this.setMapAreas();
@@ -495,6 +495,8 @@ export default {
     },
     async showHideArea(value) {
       this.setMapAreas();
+      const zoomLevel = this.map.getZoom();
+      this.showAreaBadges = this.getIsCone && zoomLevel > 14;
       if (this.getMapMode !== "redevelop-area") {
         this.polygons.forEach(obj => obj.setVisible(!value));
       }

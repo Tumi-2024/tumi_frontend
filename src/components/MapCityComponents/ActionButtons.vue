@@ -1,11 +1,6 @@
 <template>
   <div class="action-container q-px-sm">
-    <q-btn
-      v-show="$store.state.map.locationLoading"
-      color="white"
-      padding="8px"
-      @click="interestLocation()"
-    >
+    <q-btn color="white" padding="8px" @click="interestLocation()">
       <q-icon size="24px">
         <img
           v-if="!$store.state.map.isInterest"

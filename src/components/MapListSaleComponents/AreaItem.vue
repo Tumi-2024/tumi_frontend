@@ -7,8 +7,9 @@
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
           <address-with-badges
+            :isRedevelop="item.status.length > 0"
             :item="{
-              address: (item.status.length > 0 ? '[재개발]' : '') + item.address
+              address: +item.address
             }"
             :tags="getBadges(item)"
           />

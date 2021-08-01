@@ -14,7 +14,7 @@
       <p class="btn-title1" v-html="btn.text" />
       <p class="btn-title2" v-html="btn.subText1" />
       <p class="btn-title3" v-html="btn.subText2" />
-      <q-icon class="btn-icon" :name="btn.img" />
+      <img class="btn-icon" :src="btn.img" />
     </q-btn>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
           backgroundColor: "#4B62DE",
           text: "추천 매물",
           subText1: "지도에서 쉽게<br/>추천매물 찾기",
-          img: "img:icons/home-page-icon/4btns/1.svg",
+          img: require("assets/iconsNew/20지도.png"),
           func: this.toMapCity
         },
         {
@@ -40,20 +40,20 @@ export default {
           text: "재개발 구역",
           subText1: `지도에서 쉽게`,
           subText2: `재개발구역과 실거래가 찾기`,
-          img: "img:icons/home-page-icon/4btns/3.svg",
+          img: require("assets/iconsNew/20정비사업(재개발).png"),
           func: this.toRedevelopmentArea
         },
         {
           backgroundColor: "#FF7D36",
           text: "매물 검색",
           subText1: "투미매물<br/>상세 검색하기",
-          img: "img:icons/home-page-icon/4btns/2.svg",
+          img: require("assets/iconsNew/검색조회.png"),
           func: () => this.$router.push({ name: "map_list_sale" })
         },
         {
           backgroundColor: "#5893F7",
           text: "부동산<br />인사이트",
-          img: "img:icons/home-page-icon/4btns/4.svg",
+          img: require("assets/iconsNew/20인사이트.png"),
           func: () => this.$router.push("/insights/부동산팁")
         }
       ]
@@ -133,7 +133,6 @@ export default {
   right: 0;
   margin-top: 108px;
   margin-right: 20px;
-  width: 52px;
-  height: 52px;
+  width: 40px;
 }
 </style>

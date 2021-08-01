@@ -1,12 +1,7 @@
 <template>
   <q-item-section>
     <div class="area-name" :class="this.textClass">
-      <span
-        style="display: inline-block; font-weight: bold"
-        v-show="isRedevelop"
-      >
-        [ 재개발 ]
-      </span>
+      <q-badge v-show="isRedevelop">재개발</q-badge>
       {{ address.replace(/대한민국/gi, "") }}
     </div>
     <div class="area-name sub">{{ building }}</div>

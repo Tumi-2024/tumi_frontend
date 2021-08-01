@@ -4,6 +4,7 @@
       <div ref="navHeader">
         <toolbar-nav />
         <toolbar-filter
+          style="margin-bottom: 12px"
           v-show="$route.path !== '/map/list-sale'"
           class="q-pt-xs q-px-sm"
           :disable="getMapMode === 'redevelop-area'"

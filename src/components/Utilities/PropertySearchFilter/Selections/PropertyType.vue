@@ -4,6 +4,7 @@
     <!-- selection of choices | 선택의 선택 -->
     <div class="selection row q-mt-lg">
       <q-btn
+        style="flex-basis: 20%; margin-bottom: 10px;"
         v-for="(property, i) of properties"
         :key="i"
         flat
@@ -11,13 +12,8 @@
         :class="{ selected: selected === property.title }"
         @click="changeValue(property.title)"
       >
-        <div class="full-width column q-py-lg">
-          <img
-            :src="getImgUrl(property.iconColored)"
-            :alt="property.icon"
-            v-if="property.title == selected"
-          />
-          <img :src="getImgUrl(property.icon)" :alt="property.icon" v-else />
+        <div class="full-width column q-py-lg items-center">
+          <img :width="30" :src="property.icon" :alt="property.icon" />
           {{ property.title }}
         </div>
       </q-btn>
@@ -44,24 +40,36 @@ export default {
       selected: "아파트",
       properties: [
         {
-          icon: "filter-apartment-outline",
-          iconColored: "filter-apartment-colored",
+          icon: require("assets/iconsNew/11아파트.png"),
           title: "아파트"
         },
         {
-          icon: "filter-redevelop-outline",
-          iconColored: "filter-redevelop-colored",
-          title: "재개발"
+          icon: require("assets/iconsNew/12연립다세대.png"),
+          title: "연립/다세대"
         },
         {
-          icon: "filter-street-housing-outline",
-          iconColored: "filter-street-housing-colored",
-          title: "가로주택"
+          icon: require("assets/iconsNew/13단독다가구.png"),
+          title: "단독/다가구"
         },
         {
-          icon: "filter-other-forsale-outline",
-          iconColored: "filter-other-forsale-outline",
-          title: "기타매물"
+          icon: require("assets/iconsNew/14오피스텔.png"),
+          title: "원룸/오피스텔"
+        },
+        {
+          icon: require("assets/iconsNew/16상업업무용.png"),
+          title: "상업업무용"
+        },
+        {
+          icon: require("assets/iconsNew/15토지.png"),
+          title: "토지"
+        },
+        {
+          icon: require("assets/iconsNew/17분양권.png"),
+          title: "무허가 건축물"
+        },
+        {
+          icon: require("assets/iconsNew/19티켓.png"),
+          title: "입주권"
         }
       ]
     };
@@ -70,9 +78,6 @@ export default {
     this.selected = this.$store.state.search.typeHouse;
   },
   methods: {
-    getImgUrl(pic) {
-      return require(`src/assets/icons/PropertySearchFilter/${pic}.svg`);
-    },
     select(val) {
       this.$emit("selectDetail", val);
     },

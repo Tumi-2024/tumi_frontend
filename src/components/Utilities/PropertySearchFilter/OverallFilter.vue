@@ -32,17 +32,17 @@
         </q-card-section>
         <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
-          <!-- Transaction type | 거래유형 -->
-          <transaction-type
-            class="bg-white q-pb-xl q-pt-md"
-            @select="setSelected('transactionType', $event)"
-          ></transaction-type>
-
           <!-- Maintenance type | 정비구역 유형 -->
           <maintenance-type
             class="bg-white q-pb-xl q-pt-md"
             @select="setSelected('maintenanceType', $event)"
           ></maintenance-type>
+
+          <!-- Transaction type | 거래유형 -->
+          <transaction-type
+            class="bg-white q-pb-xl q-pt-md"
+            @select="setSelected('transactionType', $event)"
+          ></transaction-type>
 
           <!-- Property Type | 주택 유형 -->
           <property-type

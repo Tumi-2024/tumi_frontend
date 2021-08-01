@@ -28,7 +28,7 @@
           :key="`col-${rIndex}`"
         >
           <span class="col-text">{{ row.title }}:&nbsp;&nbsp;&nbsp;</span>
-          <span class="col-text">{{ row.value }}</span>
+          <span class="col-text value">{{ row.value }}</span>
         </span>
       </template>
     </div>
@@ -78,8 +78,11 @@ export default {
 </script>
 <style lang="scss">
 .col-text {
-  font-size: 12px;
-  color: #707070;
+  font-size: 14px;
+  color: #000000;
+  &.value {
+    font-weight: 500;
+  }
   &.main {
     font-size: 14px;
     &.title {
