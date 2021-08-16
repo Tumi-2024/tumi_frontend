@@ -5,11 +5,10 @@
         <q-item-section>
           <address-with-badges
             :item="{
-              isRedevelop: isRedevelop,
-              address: `${item.address} ${
-                item.text_road ? '(' + item.text_road + ')' : ''
-              }`,
-              building: `${item.text_building || item.text_danji || ''}`
+              isRedevelop,
+              address: `${item.address}`,
+              building: `${item.text_road ? item.text_road : ''}
+              ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item, ctgr)"
           />
@@ -75,6 +74,20 @@ export default {
     }
   },
   computed: {
+    getReleaseDate() {
+      return dateString => {
+        if (!dateString) {
+          return "-";
+        }
+        return (
+          dateString.slice(0, 4) +
+          "." +
+          dateString.slice(4, 6) +
+          "." +
+          dateString.slice(6, 8)
+        );
+      };
+    },
     getSubInfoProps() {
       return item => {
         switch (this.ctgr) {
@@ -102,7 +115,10 @@ export default {
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
               { title: "건축년도", value: item.text_year },
-              { title: "해제사유발생일", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           case "SINGLE":
             return [
@@ -123,7 +139,10 @@ export default {
               { title: "연면적(㎡)", value: item.text_size_yean },
               { title: "도로조건", value: item.text_type_road },
               { title: "건축년도", value: item.text_year },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           case "OFFICETEL":
             return [
@@ -146,7 +165,10 @@ export default {
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
               { title: "건축년도", value: item.text_year },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           case "APARTMENT":
             return [
@@ -169,7 +191,10 @@ export default {
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
               { title: "건축년도", value: item.text_year },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           case "LAND":
             return [
@@ -190,7 +215,10 @@ export default {
               { title: "도로조건", value: item.text_type_road },
               { title: "지목", value: item.text_jimog },
               { title: "지분구분", value: item.text_type_land },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           case "ALLIANCE":
             return [
@@ -214,7 +242,10 @@ export default {
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
               { title: "건축년도", value: item.text_year },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
 
           case "분양":
@@ -238,7 +269,10 @@ export default {
                 title: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
-              { title: "해제사유발생", value: "해제 사유" }
+              {
+                title: "해제사유발생일",
+                value: this.getReleaseDate(item.text_date_release)
+              }
             ];
           default:
             return [];

@@ -375,11 +375,11 @@ export default {
         const isProgress = area.status === "운영";
 
         const style = {
-          strokeColor: isProgress ? "#FF5100" : "black",
+          strokeColor: isProgress ? "#FF5100" : "gray",
           strokeOpacity: 0.8,
           strokeWeight: 2,
           fillColor: isProgress ? "#0BCDC7" : "gray",
-          fillOpacity: 0.35
+          fillOpacity: isProgress ? 0.35 : 0.6
         };
         let item = null;
 

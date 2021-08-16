@@ -1,7 +1,8 @@
 <template>
   <q-item-section>
     <div class="area-name" :class="this.textClass">
-      <q-badge v-show="isRedevelop">재개발</q-badge>
+      <q-badge outline color="primary" v-show="isRedevelop">재개발</q-badge>
+
       {{ address.replace(/대한민국/gi, "") }}
     </div>
     <div class="area-name sub">{{ building }}</div>
@@ -37,7 +38,7 @@ export default {
   color: #707070;
   margin-left: 0px;
   &.sub {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 </style>

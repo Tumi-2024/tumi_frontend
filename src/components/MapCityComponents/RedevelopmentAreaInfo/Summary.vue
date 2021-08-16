@@ -45,6 +45,50 @@
       <div class="title-heading notosanskr-medium">
         실거래가
       </div>
+      <div class="row justify-between">
+        <div class="sub-title notosanskr-medium">
+          실거래 정보
+        </div>
+        <div class="help-text">
+          {{ getCurrTransactions.year }} 년 {{ getCurrTransactions.month }} 월
+          기준
+        </div>
+      </div>
+      <div class="row table">
+        <div class="col-12 row">
+          <div class="q-pa-sm label">
+            <span class="information">실거래가</span>
+          </div>
+          <a class="information sub flex items-center q-px-sm">
+            {{ getCurrTransactions.priceText }}
+          </a>
+        </div>
+        <div
+          class="col-sm-4 col-12 row"
+          :class="`col-sm-${12 / getInfo().length}`"
+          v-for="(item, i) of getInfo()"
+          :key="i"
+        >
+          <div class="q-pa-sm label">
+            <span class="information">{{ item.label }}</span>
+          </div>
+          <div class="row justify-between items-center" style="flex:1;">
+            <span style="padding: 0 8px;" class="information sub">
+              {{ item.price }} 원 / 평
+            </span>
+            <span
+              class="information sub flex items-center q-px-sm"
+              :href="`tel:${item.value}`"
+              v-if="item.phone"
+            >
+              {{ item.value }}
+            </span>
+            <span class="information sub flex items-center q-px-sm" v-else>
+              {{ item.value }}
+            </span>
+          </div>
+        </div>
+      </div>
       <div
         style="justify-content: flex-end; display: flex; margin-bottom: 20px;"
       >
@@ -159,21 +203,6 @@ export default {
             },
             data: []
           }
-          // {
-          //   backgroundColor: ({ dataIndex: index }) => {
-          //     switch (index) {
-          //       case 0:
-          //         return 'rgba(11, 205, 199, 0.2)'
-          //       case 1:
-          //         return 'rgba(11, 205, 199, 0.6)'
-          //       case 2:
-          //         return 'rgba(11, 205, 199, 1)'
-          //       default:
-          //         return 'rgba(11, 205, 199, 0.2)'
-          //     }
-          //   },
-          //   data: [99000, 99000, 99000]
-          // }
         ]
       },
       options: {
@@ -220,15 +249,14 @@ export default {
       this.ctgr1 = value;
       const periods = [];
       this.transactions
-        .filter(obj => obj.categories[0] === this.ctgr1)
-        .forEach(({ recent_transactions: transactions, categories: ctgr }) => {
-          const info = transactions[ctgr[0]];
-          const textYear = info.text_month.slice(0, 4);
+        .filter(obj => obj.category === this.ctgr1)
+        .forEach(obj => {
+          const textYear = obj.text_month.slice(0, 4);
 
           if (!periods.some(obj => obj.period === textYear)) {
-            periods.push({ period: textYear, price: [info.price] });
+            periods.push({ period: textYear, price: [obj.price] });
           } else {
-            periods.find(obj => obj.period === textYear).price.push(info.price);
+            periods.find(obj => obj.period === textYear).price.push(obj.price);
           }
         });
       const startYear = 2016;
@@ -271,19 +299,110 @@ export default {
   },
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"]),
-    getTransactions() {
-      const test = [];
+    getCurrTransactions() {
+      // "202007"
+      const _currTrArr = this.transactions
+        .filter(({ category }) => category === this.ctgr1)
+        .filter(({ type }) => type === "SALE");
 
-      this.transactions.forEach(({ recent_transactions }) => {
-        for (const t in recent_transactions) {
-          test.push(recent_transactions[t]);
+      const currTrArr = _currTrArr.filter(
+        ({ text_month: tm }) => tm === _currTrArr[0].text_month
+      );
+      const currTr = currTrArr.reduce(
+        (acc, curr) => {
+          return {
+            size_contract: acc.size_contract + curr.size_contract,
+            size_daeji: acc.size_daeji + curr.size_daeji,
+            size_land: acc.size_land + curr.size_land,
+            size_private: acc.size_private + curr.size_private,
+            size_total: acc.size_total + curr.size_total,
+            size_yean: acc.size_yean + curr.size_yean,
+            price: acc.price + curr.price
+          };
+        },
+        {
+          size_contract: 0,
+          size_daeji: 0,
+          size_land: 0,
+          size_private: 0,
+          size_total: 0,
+          size_yean: 0,
+          price: 0
         }
-      });
-      console.log(test, this.ctgr1);
-      return test
-        .sort((a, b) => b.text_month - a.text_month)
-        .filter(({ category }) => category === this.ctgr1);
-      // return this.transactions.map(({ recent_transactions: t }) => t);
+      );
+
+      for (const tr in currTr) {
+        currTr[tr] = currTr[tr] / currTrArr.length;
+      }
+      console.log(currTrArr);
+      currTr.year = currTrArr[0]?.text_month.slice(0, 4);
+      currTr.month = currTrArr[0]?.text_month.slice(4, 6);
+      currTr.priceText = toMoneyString(currTr.price);
+
+      return currTr;
+    },
+    getInfo() {
+      return () => {
+        const options = [];
+        const TI = this.getCurrTransactions;
+
+        if (
+          this.ctgr1 === "APARTMENT" ||
+          this.ctgr1 === "OFFICETEL" ||
+          this.ctgr1 === "COMMERCIAL "
+        ) {
+          options.push({
+            label: "전용/연면적",
+            value: `${
+              TI?.size_private
+                ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
+                : " -"
+            }/${
+              TI?.size_yean ? (TI?.size_yean / 3.3).toFixed(2) + " 평 " : " -"
+            }`
+          });
+        } else if (this.ctgr1 === "ALLIANCE" || this.ctgr1 === "SINGLE") {
+          options.push({
+            label: "전용/연면적",
+            price: `${(
+              (this.getCurrTransactions.price / (TI?.size_private / 3.3)) *
+              10000
+            ).toFixed(0)}`,
+            value: `거래면적 : ${
+              TI?.size_private
+                ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
+                : " -"
+            }`
+          });
+          options.push({
+            label: "대지(권)면적",
+            price: `${(
+              (this.getCurrTransactions.price / (TI?.size_land / 3.3)) *
+              10000
+            ).toFixed(0)}`,
+            value: `거래면적 : ${
+              TI?.size_land ? (TI?.size_land / 3.3).toFixed(2) + " 평 " : " -"
+            }`
+          });
+        } else {
+          options.push({
+            label: "토지 계약 면적",
+            price: `${(
+              (this.getCurrTransactions.price / (TI.size_daeji / 3.3)) *
+              10000
+            ).toFixed(0)}`,
+            value: `거래면적 : ${
+              TI.size_daeji ? (TI.size_daeji / 3.3).toFixed(2) + " m² " : " -"
+            }`
+          });
+        }
+        return options;
+      };
+    },
+    getTransactions() {
+      return this.transactions.filter(
+        ({ category }) => category === this.ctgr1
+      );
     },
     getSelectOptions() {
       const options = [
@@ -297,8 +416,8 @@ export default {
       ];
 
       const getDisable = value =>
-        this.transactions.every(transaction => {
-          return !transaction.recent_transactions[value];
+        !this.transactions.some(transaction => {
+          return transaction.category === value;
         });
 
       return options.map(option => {
@@ -308,7 +427,7 @@ export default {
   },
   async beforeMount() {
     const { data } = await Vue.prototype.$axios.post(
-      `redevelopment_areas/${this.getMapSelectedArea.id}/transaction_groups?page_size=1000`
+      `redevelopment_areas/${this.getMapSelectedArea.id}/transactions?page_size=1000`
     );
     this.transactions = data.results;
     this.getCtgrGraphData("ALLIANCE");
@@ -324,15 +443,16 @@ export default {
 }
 .table {
   border-top: 2px solid #555555;
-  border-bottom: 1px solid #e9e9e9;
   > .row {
     @media (max-width: 599px) {
       &:not(:nth-last-child(-n + 1)) {
         border-bottom: 1px solid #e9e9e9;
       }
     }
-    &:not(:nth-last-child(-n + 2)) {
-      border-bottom: 1px solid #e9e9e9;
+    @media (min-width: 600px) {
+      &:not(:nth-last-child(-n + 2)) {
+        border-bottom: 1px solid #e9e9e9;
+      }
     }
     > .label {
       background-color: #f6f6f6;
@@ -384,12 +504,17 @@ export default {
       letter-spacing: -1.575px;
       color: #1a1a1a;
     }
-    .sub-title {
-      font-size: 16px;
-      line-height: 24px;
-      letter-spacing: -1.2px;
-      color: #707070;
-    }
+  }
+  .sub-title {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+  }
+  .help-text {
+    font-size: 12px;
+    line-height: 24px;
+    color: #707071;
   }
 
   .area-stats-section {

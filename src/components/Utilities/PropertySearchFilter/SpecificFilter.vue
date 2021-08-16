@@ -62,7 +62,8 @@ import {
   PropertyType,
   PropertySalePrice,
   CharterPriceDeposit,
-  MaintenanceType
+  MaintenanceType,
+  ExclusiveArea
 } from "components/Utilities/PropertySearchFilter/Selections";
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -71,7 +72,8 @@ export default {
     "maintenance-type": MaintenanceType,
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
-    "charter-price-deposit": CharterPriceDeposit
+    "charter-price-deposit": CharterPriceDeposit,
+    "exclusive-area": ExclusiveArea
   },
   data() {
     return {
@@ -86,6 +88,7 @@ export default {
     maintenanceType: { type: Boolean, default: false },
     transactionType: { type: Boolean, default: false },
     propertyType: { type: Boolean, default: false },
+    exclusiveArea: { type: Boolean, default: false },
     salePrice: { type: Boolean, default: false },
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
@@ -96,6 +99,9 @@ export default {
       let component;
       if (this.transactionType) {
         component = "transaction-type";
+      }
+      if (this.exclusiveArea) {
+        component = "exclusive-area";
       }
       if (this.maintenanceType) {
         component = "maintenance-type";

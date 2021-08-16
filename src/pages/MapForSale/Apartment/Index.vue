@@ -2,7 +2,10 @@
   <div v-if="estate">
     <google-map
       class="map"
-      :position="{lat: Number(estate.latitude), lng: Number(estate.longitude)}"
+      :position="{
+        lat: Number(estate.latitude),
+        lng: Number(estate.longitude)
+      }"
       :polygon="null"
       :estate="estate"
       setMapAreaView
@@ -26,16 +29,26 @@
       :estate="estate"
       v-bind="{
         transactionType: toKr(estate.type_sale),
-        exclusiveArea: estate.area_exclusive && `${estate.area_exclusive}㎡ (${Math.round(estate.area_exclusive/3.3)}평)`,
-        commonArea: estate.area_common && `${estate.area_common}㎡ (${Math.round(estate.area_common/3.3)}평)`,
+        exclusiveArea:
+          estate.area_exclusive &&
+          `${estate.area_exclusive}㎡ (${Math.round(
+            estate.area_exclusive / 3.3
+          )}평)`,
+        commonArea:
+          estate.area_common &&
+          `${estate.area_common}㎡ (${Math.round(estate.area_common / 3.3)}평)`,
         direction: `${estate.type_direction && toKr(estate.type_direction)}향`,
         numberFloors: estate.floor && `${estate.floor}층`,
         stationArea: estate.station,
         elevator: estate.elevator ? `${estate.elevator}대` : '',
-        numberRooms: estate.room_count && estate.bathroom_count && `${estate.room_count} / ${estate.bathroom_count}개`,
+        numberRooms:
+          estate.room_count &&
+          estate.bathroom_count &&
+          `${estate.room_count} / ${estate.bathroom_count}개`,
         heating: estate.heating_system,
         numberHouseholds: estate.area_household_count,
-        administrativeExpenses: estate.administration_cost && `${estate.administration_cost}원`
+        administrativeExpenses:
+          estate.administration_cost && `${estate.administration_cost}원`
       }"
     />
     <!-- 재개발 정보 -->
@@ -53,7 +66,11 @@
       class="q-mt-md"
     />
     <administration-cost :cost="adminCost" class="q-mt-md" />
-    <school-section class="q-mt-md" :tabs="schoolTabs" :active="activeSchoolTab" />
+    <school-section
+      class="q-mt-md"
+      :tabs="schoolTabs"
+      :active="activeSchoolTab"
+    />
 
     <recent-pricing
       class="q-mt-md"
@@ -65,8 +82,9 @@
       :unit="unit"
     />
     <recent-history class="q-mt-md" :item="transactions" />
-    <recent-average-history class="q-mt-md"
-    v-if="graphData.length > 0"
+    <recent-average-history
+      class="q-mt-md"
+      v-if="graphData.length > 0"
       :areaOptions="areaOptions"
       :graph="graphData"
     />
@@ -85,7 +103,7 @@
 
 <script>
 import { toKr, toMoneyString } from "src/utils";
-import Vue from 'vue'
+import Vue from "vue";
 import {
   GoogleMap,
   DetailSummary,
@@ -112,15 +130,21 @@ export default {
     "google-map": GoogleMap
   },
   async beforeMount() {
-    const { query } = this.$route
+    const { query } = this.$route;
     if (query) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/${query.sellid}`)
-      this.estate = data
-      this.redevelopment = this.estate.redevelopment ? this.estate.redevelopment : null;
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${query.sellid}`
+      );
+      this.estate = data;
+      this.redevelopment = this.estate.redevelopment
+        ? this.estate.redevelopment
+        : null;
 
-      const { data: transactions } = await Vue.prototype.$axios.get(`/transaction_groups/${query.sellid}/transactions`)
-      this.transactions = transactions
-      this.getGraphData()
+      const { data: transactions } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${query.sellid}/transactions`
+      );
+      this.transactions = transactions;
+      this.getGraphData();
     }
   },
   methods: {
@@ -128,20 +152,21 @@ export default {
     toMoneyString,
     getGraphData() {
       const graphData = (type, yyyyMM) =>
-        this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
+        this.transactions
+          .filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
           .reduce((acc, curr) => {
-            const isValidtype = type
-            if (isValidtype) {
-              console.log(curr)
-              return acc + curr.price
+            if (type) {
+              return acc + curr.price;
             }
-            return acc
-          }, 0) / this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0).length
+            return acc;
+          }, 0) /
+        this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
+          .length;
       this.graphData = [
         { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
         { sale: graphData("SALE", "2019"), rent: graphData("RENT", "2019") },
         { sale: graphData("SALE", "202006"), rent: graphData("RENT", "202006") }
-      ]
+      ];
     }
   },
   computed: {

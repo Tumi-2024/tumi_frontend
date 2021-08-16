@@ -92,6 +92,7 @@
                   </div>
                   <div class="text-weight-bold">
                     {{ toMoneyString(item.price) }}
+                    {{ toMoneyString(item.price_deposit) }}
                   </div>
                   <div>
                     {{ (item.text_floor || "").replace(/null/i, "-") }}층

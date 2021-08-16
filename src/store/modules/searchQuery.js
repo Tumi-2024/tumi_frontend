@@ -10,7 +10,9 @@ export const searchQueryStore = {
         const keyName = Object.keys(curr)[0];
         return acc + `${keyName}=${curr[keyName]}`;
       }, "");
-      return `${test}`;
+      console.log(test);
+      return ``;
+      // return `${test}`;
     },
     getQuery: (state, getters) => key => {
       const obj = state.query.find(obj => Object.keys(obj)[0] === key);

@@ -29,8 +29,9 @@
             class="information sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
-            >{{ item.value }}</a
           >
+            {{ item.value }}
+          </a>
           <span class="information sub flex items-center q-px-sm" v-else>{{
             item.value
           }}</span>

@@ -56,7 +56,7 @@ export default {
   methods: {
     changeValue(val) {
       this.selected = val;
-      this.$emit('select', val);
+      this.$emit("select", val);
     }
   }
 };

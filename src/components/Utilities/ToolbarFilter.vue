@@ -18,9 +18,9 @@
               :propsClass="filter.class"
               :label="filter.label"
               :propertyType="filter.type === 'propertyType'"
+              :exclusiveArea="filter.type === 'exclusiveArea'"
               :salePrice="filter.type === 'salePrice'"
               :registrationDate="filter.type === 'registrationDate'"
-              :disable="disable"
             />
             <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
           </div>
@@ -50,7 +50,7 @@ export default {
         },
         {
           label: "평형",
-          type: "propertyType",
+          type: "exclusiveArea",
           class: "text-white bg-green"
         },
         {
