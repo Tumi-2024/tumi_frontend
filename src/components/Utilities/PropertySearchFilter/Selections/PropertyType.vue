@@ -9,12 +9,12 @@
         :key="i"
         flat
         class="col notosanskr-medium q-mx-xs"
-        :class="{ selected: selected === property.title }"
-        @click="changeValue(property.title)"
+        :class="{ selected: selected === property.value }"
+        @click="changeValue(property.value)"
       >
         <div class="full-width column q-py-lg items-center">
           <img :width="30" :src="property.icon" :alt="property.icon" />
-          {{ property.title }}
+          {{ property.label }}
         </div>
       </q-btn>
     </div>
@@ -29,11 +29,15 @@
 <script>
 import PropertyDetailedType from "./PropertyDetailedType";
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     "property-detailed-type": PropertyDetailedType,
     "text-under-highlight": TextUnderHighlight
+  },
+  computed: {
+    ...mapGetters("searchQuery", ["getQueryString", "getQuery"])
   },
   data() {
     return {
@@ -41,41 +45,39 @@ export default {
       properties: [
         {
           icon: require("assets/iconsNew/11아파트.png"),
-          title: "아파트"
+          label: "아파트",
+          value: "APARTMENT"
         },
         {
           icon: require("assets/iconsNew/12연립다세대.png"),
-          title: "연립/다세대"
+          label: "연립/다세대",
+          value: "ALLIANCE"
         },
         {
           icon: require("assets/iconsNew/13단독다가구.png"),
-          title: "단독/다가구"
+          label: "단독/다가구",
+          value: "SINGLE"
         },
         {
           icon: require("assets/iconsNew/14오피스텔.png"),
-          title: "원룸/오피스텔"
+          label: "원룸/오피스텔",
+          value: "OFFICETEL"
         },
         {
           icon: require("assets/iconsNew/16상업업무용.png"),
-          title: "상업업무용"
+          label: "상업업무용",
+          value: "COMMERCIAL"
         },
         {
           icon: require("assets/iconsNew/15토지.png"),
-          title: "토지"
-        },
-        {
-          icon: require("assets/iconsNew/17분양권.png"),
-          title: "무허가 건축물"
-        },
-        {
-          icon: require("assets/iconsNew/19티켓.png"),
-          title: "입주권"
+          label: "토지",
+          value: "LAND"
         }
       ]
     };
   },
   mounted() {
-    this.selected = this.$store.state.search.typeHouse;
+    this.selected = this.getQuery("categories");
   },
   methods: {
     select(val) {
@@ -83,7 +85,8 @@ export default {
     },
     changeValue(val) {
       this.selected = val;
-      this.$emit("select", val);
+      console.log(this.selected);
+      this.$emit("select", val, "categories");
     }
   }
 };

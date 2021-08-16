@@ -43,14 +43,6 @@ export default {
   data() {
     return {
       filters: [
-        // {
-        //   label: "거래유형",
-        //   type: "transactionType"
-        // },
-        // {
-        //   label: "정비구역 유형",
-        //   type: "maintenanceType"
-        // },
         {
           label: "주택유형",
           type: "propertyType",

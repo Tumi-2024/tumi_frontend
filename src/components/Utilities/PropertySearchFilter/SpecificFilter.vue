@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import { toQueryString } from "src/utils";
 import {
   TransactionType,
   PropertyType,
@@ -77,6 +76,7 @@ export default {
   data() {
     return {
       modal: false,
+      keyName: "",
       selected: "",
       selectedDetail: ""
     };
@@ -111,68 +111,72 @@ export default {
       }
       return component;
     },
-    ...mapGetters("search", ["search"]),
+    ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
     ...mapGetters("map", ["getMapCenter"])
   },
   methods: {
+    ...mapActions("searchQuery", ["setQuery"]),
     // STORE MODULE ACTIONS ***
-    ...mapActions("search", [
-      "setTypeSale",
-      "setTypeHouse",
-      "setTypeHouseDetail",
-      "setSalePrice",
-      "setDepositPrice"
-    ]),
+    // ...mapActions("searchQuery", [
+    //   "setTypeSale",
+    //   "setTypeHouse",
+    //   "setTypeHouseDetail",
+    //   "setSalePrice",
+    //   "setDepositPrice"
+    // ]),
     // COMPONENTS METHODS STARTS ***
-    select(val) {
-      console.log(val);
+    select(val, key) {
+      console.log(val, key);
       this.selected = val;
+      this.keyName = key;
     },
     selectDetail(val) {
       console.log(val);
       this.selectedDetail = val;
     },
     save() {
-      console.log(this.selected, "selected");
-      console.log(this.propertyType, "propertyType");
-      if (this.selected) {
-        console.log("저장 ", this.selected, this.selectedDetail);
-        if (this.transactionType) {
-          // this.$store.search.dispatch('setTypeSale', this.selected);
-          console.log("transactionType");
-          this.setTypeSale(this.selected);
-        }
-        if (this.propertyType) {
-          console.log(this.propertyType, "propertyType", this.selected);
-          // this.$store.search.dispatch('setTypeHouse', this.selected);
-          this.setTypeHouse(this.selectedDetail);
-          if (this.selectedDetail) {
-            console.log("selectedDetail");
-            // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
-            this.setTypeHouseDetail(this.selectedDetail);
-          }
-        }
-        if (this.salePrice) {
-          console.log("salePrice");
-          // this.$store.search.dispatch('setSalePrice', this.selected);
-          this.setSalePrice(this.selected);
-        }
-        if (this.charterPriceDeposit) {
-          console.log("charterPriceDeposit");
-          // this.$store.search.dispatch('setDepositPrice', this.selected);
-          this.setDepositPrice(this.selected);
-        }
-      }
-      // console.log(toQueryString(this.search));
-      this.$store.dispatch("getSimpleHouses", {
-        query: toQueryString(this.search)
-      });
-      // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
-      // this.$store.dispatch('getDetailHouses', toQueryString({
-      //   latitude: this.getMapCenter.lat,
-      //   longitude: this.getMapCenter.lng,
-      //   ...this.search
-      // }));
+      this.setQuery({ [this.keyName]: this.selected });
+      console.log(this.getQuery("categories"));
+      // console.log(this.selected, "selected");
+      // console.log(this.propertyType, "propertyType");
+      // if (this.selected) {
+      //   console.log("저장 ", this.selected, this.selectedDetail);
+      //   if (this.transactionType) {
+      //     // this.$store.search.dispatch('setTypeSale', this.selected);
+      //     console.log("transactionType");
+      //     this.setTypeSale(this.selected);
+      //   }
+      //   if (this.propertyType) {
+      //     console.log(this.propertyType, "propertyType", this.selected);
+      //     // this.$store.search.dispatch('setTypeHouse', this.selected);
+      //     this.setTypeHouse(this.selectedDetail);
+      //     if (this.selectedDetail) {
+      //       console.log("selectedDetail");
+      //       // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
+      //       this.setTypeHouseDetail(this.selectedDetail);
+      //     }
+      //   }
+      //   if (this.salePrice) {
+      //     console.log("salePrice");
+      //     // this.$store.search.dispatch('setSalePrice', this.selected);
+      //     this.setSalePrice(this.selected);
+      //   }
+      //   if (this.charterPriceDeposit) {
+      //     console.log("charterPriceDeposit");
+      //     // this.$store.search.dispatch('setDepositPrice', this.selected);
+      //     this.setDepositPrice(this.selected);
+      //   }
+      // }
+      // // console.log(toQueryString(this.search));
+      // this.$store.dispatch("getSimpleHouses", {
+      //   query: toQueryString(this.search)
+      // });
+      // // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
+      // // this.$store.dispatch('getDetailHouses', toQueryString({
+      // //   latitude: this.getMapCenter.lat,
+      // //   longitude: this.getMapCenter.lng,
+      // //   ...this.search
+      // // }));
       this.modal = false;
     },
     init() {

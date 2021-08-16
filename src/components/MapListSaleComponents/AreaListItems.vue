@@ -13,10 +13,7 @@
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <toolbar-filter
-        class="q-pt-xs q-px-sm"
-        :disable="getMapMode === 'redevelop-area'"
-      />
+      <toolbar-filter class="q-pt-xs q-px-sm" />
       <div class="flex row justify-between">
         <template v-for="(btn, btnIndex) of sortButtons">
           <div class="flex items-center" :key="btnIndex">

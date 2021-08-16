@@ -1,18 +1,19 @@
 // Import Section
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 // Modules
-import { userStore } from './modules/user';
-import { insightsStore } from './modules/insights';
-import { mapStore } from './modules/map';
-import { estateStore } from './modules/estate';
-import { searchStore } from './modules/search';
-import { areaStore } from './modules/area';
+import { userStore } from "./modules/user";
+import { insightsStore } from "./modules/insights";
+import { mapStore } from "./modules/map";
+import { estateStore } from "./modules/estate";
+import { searchStore } from "./modules/search";
+import { areaStore } from "./modules/area";
+import { searchQueryStore } from "./modules/searchQuery";
 
 // Main Section
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -23,7 +24,7 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
+export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user: userStore,
@@ -31,18 +32,21 @@ export default function (/* { ssrContext } */) {
       map: mapStore,
       estate: estateStore,
       search: searchStore,
-      area: areaStore
+      area: areaStore,
+      searchQuery: searchQueryStore
     },
 
-    plugins: [createPersistedState({
-      // enable presisted state for users only
-      paths: ['user.data']
-    })],
+    plugins: [
+      createPersistedState({
+        // enable presisted state for users only
+        paths: ["user.data"]
+      })
+    ],
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEBUGGING
   });
 
-  return Store
+  return Store;
 }

@@ -8,9 +8,9 @@
         :key="i"
         flat
         class="col-3 notosanskr-medium"
-        :class="{ selected: selected === transaction }"
-        :label="transaction"
-        @click="changeValue(transaction)"
+        :class="{ selected: selected === transaction.label }"
+        :label="transaction.label"
+        @click="changeValue(transaction.value)"
       />
     </div>
   </q-card-section>
@@ -26,12 +26,17 @@ export default {
   data() {
     return {
       selected: "전체",
-      transactions: ["전체", "매매", "전세", "월세"]
+      transactions: [
+        { value: "", label: "전체" },
+        { value: "SALE", label: "매매" },
+        { value: "RENT", label: "전세" }
+        // { value: "", label: "월세" }
+      ]
     };
   },
   methods: {
     changeValue(val) {
-      console.log(val)
+      console.log(val);
       this.selected = val;
       this.$emit("select", val);
       // this.$store.dispatch('setTypeSale', val);

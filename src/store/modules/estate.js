@@ -66,6 +66,7 @@ export const estateStore = {
     },
     getSimpleHouses: async function(context, payload) {
       let data;
+      const query = context.getters["searchQuery/getQueryString"];
       const requestUrl =
         context.rootState.map.mode === "redevelop-area"
           ? "transaction_groups"
@@ -79,11 +80,11 @@ export const estateStore = {
       } else {
         let rangeQuery;
         if (payload.latitude) {
-          rangeQuery = `latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}`;
+          rangeQuery = `latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}&${query}`;
         }
         switch (payload.type) {
           case "city":
-            data = await Vue.prototype.$axios.get(`/cities`, {
+            data = await Vue.prototype.$axios.get(`/cities?${query}`, {
               timeout: 10000
             });
             break;
