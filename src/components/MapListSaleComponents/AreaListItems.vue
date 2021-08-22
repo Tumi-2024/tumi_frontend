@@ -38,7 +38,8 @@
           v-bind="{
             ctgr: item.category,
             type: item.type,
-            isRedevelop
+            isRedevelop,
+            address: item.address
           }"
         ></area-item>
       </q-list>
@@ -96,7 +97,7 @@ export default {
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
-  async mounted() {
+  async beforeMount() {
     console.log(this.$route);
     if (this.$route.query && this.$route.query.transactionid) {
       this.type = "transaction";
@@ -108,14 +109,13 @@ export default {
 
       this.saleList = data;
       console.log(data);
-    } else if (this.$route.query && this.$route.query.sellid) {
+    } else if (this.$route.query && this.$route.query?.sellid) {
       this.type = "sell";
       const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.$route.query.sellid}/transactions`
+        `/houses/${this.$route.query.sellid}/transactions`
       );
 
-      this.saleList = data;
-      console.log(data);
+      this.saleList = data.results;
     }
   }
 };

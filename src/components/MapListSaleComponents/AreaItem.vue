@@ -9,7 +9,9 @@
           <address-with-badges
             :isRedevelop="item.status.length > 0"
             :item="{
-              address: +item.address
+              address: item.address,
+              building: `${item.text_road ? item.text_road : ''}
+              ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item)"
           />

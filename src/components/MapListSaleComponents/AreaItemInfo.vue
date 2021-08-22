@@ -78,13 +78,14 @@ export default {
 </script>
 <style lang="scss">
 .col-text {
-  font-size: 14px;
-  color: #000000;
+  color: #444444;
+  align-self: center;
+  font-size: 12px;
   &.value {
     font-weight: 500;
   }
   &.main {
-    font-size: 14px;
+    font-size: 13px;
     &.title {
       font-weight: bold;
     }

@@ -26,10 +26,18 @@ export default {
     if (!this.$route.query?.transactionid) {
       return;
     }
-    const { data } = await Vue.prototype.$axios.get(
-      `/transaction_groups/${this.$route.query.transactionid}`
-    );
-    this.isRedevelop = !!data.redevelopment_area;
+    if (this.$route.query?.sellid) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${this.$route.query.transactionid}`
+      );
+      this.isRedevelop = !!data.redevelopment_area;
+    }
+    if (this.$route.query?.transactionid) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${this.$route.query.transactionid}`
+      );
+      this.isRedevelop = !!data.redevelopment_area;
+    }
   }
 };
 </script>

@@ -24,25 +24,27 @@
           class="q-pa-lg"
         >
           <info-window-content
-            v-if="m.categories && m.categories.length > 0"
             @viewArea="viewArea(m)"
             :item="m"
             :price="getPriceFromText(m)"
             :count="m.count_transactions"
             :badges="{
-              type_sale: m.types,
-              type_house: m.categories
+              category: getCategoryLabel(m.categories || m.type_sale),
+              type: getType(m.types || m.type_house),
+              charter: m.test,
+              trading: false
             }"
             :is-dev="!!m.redevelopment_area"
           />
-          <div v-else>
+          <!-- type: 'test', -->
+          <!-- <div v-else>
             <q-spinner-pie
               style="margin-left: 10px; margin-top: 5px;"
               color="primary"
               size="30px"
             />
             <q-tooltip>QSpinnerPie</q-tooltip>
-          </div>
+          </div> -->
         </gmap-info-window>
       </template>
 
@@ -95,6 +97,7 @@ import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
+import { toMoneyString } from "src/utils";
 const { Geolocation } = Plugins;
 
 export default {
@@ -191,6 +194,40 @@ export default {
     ...mapGetters(["getUserLocation"]),
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
+    getType() {
+      return value => {
+        if (!Array.isArray(value)) {
+          return value;
+        }
+        const types = [
+          { key: "all", label: "전체" },
+          { key: "SALE", label: "매매" },
+          { key: "RENT", label: "전세" }
+          // { level: "monthly", label: "월세" }
+        ].find(({ key }) => key === value?.[0]);
+        if (types) {
+          return types.label;
+        }
+      };
+    },
+    getCategoryLabel() {
+      return value => {
+        if (!Array.isArray(value)) {
+          return value;
+        }
+        const category = [
+          { key: "COMMERCIAL ", label: "상업업무용" },
+          { key: "SINGLE", label: "단독다가구" },
+          { key: "OFFICETEL", label: "오피스텔" },
+          { key: "APARTMENT", label: "아파트" },
+          { key: "LAND", label: "토지" },
+          { key: "ALLIANCE", label: "연립/다세대" }
+        ].find(({ key }) => key === value?.[0]);
+        if (category) {
+          return category.label;
+        }
+      };
+    },
     getSimpleHouse() {
       return this.$store.state.estate.simple_houses
         .filter(h => {
@@ -198,6 +235,7 @@ export default {
         })
         .filter(house => {
           const isOnlyRedev = this.getIsCone;
+          console.log(house);
           if (this.getMapMode === "redevelop-area") {
             if (isOnlyRedev) {
               return house.count_transaction_groups_redevelopment_area !== 0;
@@ -206,9 +244,9 @@ export default {
             }
           } else {
             if (isOnlyRedev) {
-              return house.count_estates_redevelopment_area !== 0;
+              return house.count_houses_redevelopment_area !== 0;
             }
-            return house.count_estates !== 0;
+            return house.count_houses !== 0;
           }
         });
     }
@@ -278,15 +316,16 @@ export default {
       this.setViewRedevOnly();
     },
     getPriceFromText(obj) {
+      console.log(obj);
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
-          return Number(string.replace(",", "")) * 1000;
+          return Number(string.replace(",", ""));
         } else {
           return 0;
         }
       } else {
-        return 0;
+        return obj.price_sale;
       }
     },
     calculatorMarker(markers) {
@@ -343,7 +382,7 @@ export default {
       setTimeout(() => {
         this.showAreaBadges = this.getIsCone && zoomLevel > 14;
         this.disableHeart = zoomLevel <= 18;
-        if (this.getMapAreas.length && this.getMapMode === "redevelop-area") {
+        if (this.getMapAreas.length) {
           this.setMapAreas();
         }
       }, 500);

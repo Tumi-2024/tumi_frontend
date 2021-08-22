@@ -130,8 +130,8 @@ export default {
     "google-map": GoogleMap
   },
   async beforeMount() {
-    const { query } = this.$route;
-    if (query) {
+    if (this.$route?.query?.sellid) {
+      const { query } = this.$route;
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/${query.sellid}`
       );

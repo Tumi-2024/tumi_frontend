@@ -6,7 +6,11 @@
   >
     <div style="display: flex; align-items: center; padding-bottom: 4px;">
       <q-img
-        :src="isDev ? require('src/assets/icons/house_green.svg') : require('src/assets/icons/house_orange.svg')"
+        :src="
+          isDev
+            ? require('src/assets/icons/house_green.svg')
+            : require('src/assets/icons/house_orange.svg')
+        "
         spinner-color="white"
         style="height: 20px; max-width: 20px"
         class="q-mr-xs"
@@ -14,69 +18,39 @@
       <div
         v-if="count && count > 1"
         style="height: 28px; width:28px; position: absolute; right: 0; top: 14px; border-radius: 14px; flex: 1"
-        :style="{backgroundColor: isDev ? '#007C87': '#FF7D36'}"
+        :style="{ backgroundColor: isDev ? '#007C87' : '#FF7D36' }"
       >
-        <div style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;">
+        <div
+          style="color: white; font-size: 12px; font-weight: bold; line-height: 18px; text-align:center; margin-top: 6px;"
+        >
           {{ `${count}` }}
         </div>
       </div>
       <div class="info-heading notosanskr-medium">
-        {{ getItemInfo(item).text_building || getItemInfo(item).text_danji || getItemInfo(item).road_name  }}
-      </div>
-      <q-separator vertical class="q-ma-xs q-mx-sm" />
-        <div class="info-heading small notosanskr-medium">
-        {{ getItemInfo(item).text_month.slice(0,4) + '.' + getItemInfo(item).text_month.slice(4,6) }}
+        {{ getItemInfo(item).address }}
       </div>
     </div>
     <div class="col">
-
       <div class="row bottom-toolbar notosanskr-regular">
-        <div class="info-text" v-if="item.type_house">{{ (item.type_house[0] === 'apartment') ? '아파트' : ''}}</div>
-        <q-badge class="re-develop bg-white q-mr-sm" v-if="badges.redevelop">
-          <q-icon>
-            <img src="~assets/icons/redevelop.svg" alt="" srcset="" />
-          </q-icon>
-        </q-badge>
         <div class="info-text">
-          {{(category.find(ct => item.categories.indexOf(ct.key) >= 0) || {label: item.categories}).label}}
+          {{ badges.category }}
         </div>
         <q-separator vertical class="q-ma-xs" />
-        <!-- {{badges.type_sale.includes("RENT")}} -->
-        <q-badge
-          color="white"
-          text-color="primary"
-          label="월세"
-          v-if="item.types.includes('RENT')"
-        />
-        <q-badge
-          color="white"
-          text-color="secondary"
-          label="전세"
-          v-if="item.types.includes('CHARTER')"
-        />
-        <q-badge
-          color="white"
-          style="color: #FF5100"
-          label="매매"
-          v-if="item.types.includes('SALE')"
-        />
-        <q-badge
-          color="white"
-          style="color: #FF5100"
-          label="매매"
-          v-if="item.types.includes('half-charter')"
-        />
+        <q-badge color="white" text-color="primary" :label="badges.type" />
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text">{{ getItemInfo(item).text_size_land ? Math.floor(getItemInfo(item).text_size_land / 3.3) : '- ' }}평</div>
+        <div class="info-text">{{ getItemInfo(item).land }}평</div>
         <q-separator vertical class="q-ma-xs" />
-        <div class="info-text">{{ toMoneyString(getItemInfo(item).text_price, 1000) }}</div>
+        <div class="info-text">
+          {{ toMoneyString(price) }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { toMoneyString } from 'src/utils';
+import { toMoneyString } from "src/utils";
+import { mapGetters } from "vuex";
 export default {
   props: {
     item: {
@@ -111,20 +85,54 @@ export default {
   data() {
     return {
       category: [
-        { key: 'COMMERCIAL ', label: '상업업무용' },
-        { key: 'SINGLE', label: '단독다가구' },
-        { key: 'OFFICETEL', label: '오피스텔' },
-        { key: 'APARTMENT', label: '아파트' },
-        { key: 'LAND', label: '토지' },
-        { key: 'ALLIANCE', label: '연립/다세대' }
+        { key: "COMMERCIAL ", label: "상업업무용" },
+        { key: "SINGLE", label: "단독다가구" },
+        { key: "OFFICETEL", label: "오피스텔" },
+        { key: "APARTMENT", label: "아파트" },
+        { key: "LAND", label: "토지" },
+        { key: "ALLIANCE", label: "연립/다세대" }
       ]
-    }
+    };
   },
   computed: {
+    ...mapGetters("map", [
+      "getMapMode",
+      "getMapZoom",
+      "getMapCenter",
+      "getMapOptions",
+      "getIsCone"
+    ]),
     getItemInfo() {
       return item => {
-        return item.recent_transactions[item.categories[0]]
-      }
+        console.log(this.price);
+        if (this.getMapMode === "redevelop-area") {
+          const transactionItem =
+            item.recent_transactions?.[item.categories[0]];
+          return {
+            address:
+              transactionItem?.text_building ||
+              transactionItem?.text_danji ||
+              transactionItem?.road_name,
+            date:
+              transactionItem?.text_month.slice(0, 4) +
+              "." +
+              transactionItem?.text_month.slice(4, 6),
+            land: transactionItem?.text_size_land
+              ? Math.floor(transactionItem?.text_size_land / 3.3)
+              : "- ",
+            price: toMoneyString(this.price, 1000),
+            ...transactionItem
+          };
+        } else {
+          return {
+            address: item.address,
+            date: item.created,
+            land: 0,
+            price: toMoneyString(item.price, 1000),
+            types: []
+          };
+        }
+      };
     }
   },
   mounted() {
@@ -141,9 +149,9 @@ export default {
   letter-spacing: -1.125px;
   color: #1a1a1a;
   &.small {
-  font-weight: 500;
+    font-weight: 500;
     font-size: 12px;
-  line-height: 15px;
+    line-height: 15px;
   }
 }
 .bottom-toolbar {
