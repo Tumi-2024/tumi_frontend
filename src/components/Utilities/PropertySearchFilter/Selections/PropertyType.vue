@@ -44,32 +44,32 @@ export default {
       selected: "아파트",
       properties: [
         {
-          icon: require("assets/iconsNew/11아파트.png"),
+          icon: require("assets/iconsNew/11.png"),
           label: "아파트",
           value: "APARTMENT"
         },
         {
-          icon: require("assets/iconsNew/12연립다세대.png"),
+          icon: require("assets/iconsNew/12.png"),
           label: "연립/다세대",
           value: "ALLIANCE"
         },
         {
-          icon: require("assets/iconsNew/13단독다가구.png"),
+          icon: require("assets/iconsNew/13.png"),
           label: "단독/다가구",
           value: "SINGLE"
         },
         {
-          icon: require("assets/iconsNew/14오피스텔.png"),
+          icon: require("assets/iconsNew/14.png"),
           label: "원룸/오피스텔",
           value: "OFFICETEL"
         },
         {
-          icon: require("assets/iconsNew/16상업업무용.png"),
+          icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
           value: "COMMERCIAL"
         },
         {
-          icon: require("assets/iconsNew/15토지.png"),
+          icon: require("assets/iconsNew/15.png"),
           label: "토지",
           value: "LAND"
         }

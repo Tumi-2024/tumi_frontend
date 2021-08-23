@@ -7,9 +7,23 @@
     </div>
 
     <div class="row q-mt-sm q-col-gutter-sm">
-      <div class="col-3 flex justify-center" v-for="(item, index) in investments_btn" :key="index">
-        <q-btn flat class="investment-btn full-width" :to="{ name: 'map_city', query: { category: item.category } }">
-          <q-icon class="investment-btn-icon" :name="`img:icons/home-page-icon/investment-icon/${item.icon}`" />
+      <div
+        class="col-3 flex justify-center"
+        v-for="(item, index) in investments_btn"
+        :key="index"
+      >
+        <q-btn
+          flat
+          class="investment-btn full-width"
+          :to="{ name: 'map_city', query: { category: item.category } }"
+        >
+          <q-icon class="investment-btn-icon">
+            <img
+              :src="require(`assets/iconsNew/${item.icon}`)"
+              width="24px"
+              alt=""
+            />
+          </q-icon>
           <p class="investment-btn-label">{{ item.label }}</p>
         </q-btn>
       </div>
@@ -23,64 +37,65 @@ export default {
     return {
       investments_btn: [
         {
-          category: 'apartment',
-          label: '아파트',
-          icon: 'building.svg'
+          category: "apartment",
+          label: "아파트",
+          icon: "11.png"
         },
         {
-          category: 'alliance',
-          label: '연립/다세대',
-          icon: 'obstacle.svg'
+          category: "alliance",
+          label: "연립/다세대",
+          icon: "12.png"
         },
         {
-          category: 'single',
-          label: '단독/다가구',
-          icon: 'paint.svg'
+          category: "single",
+          label: "단독/다가구",
+          icon: "13.png"
         },
         {
-          category: 'officetel',
-          label: '오피스텔',
-          icon: 'home.svg'
+          category: "officetel",
+          label: "오피스텔",
+          icon: "14.png"
         },
         {
-          category: 'land',
-          label: '토지',
-          icon: 'land.svg'
+          category: "land",
+          label: "토지",
+          icon: "15.png"
         },
         {
-          category: 'commercial',
-          label: '상업/업무용',
-          icon: 'sanga.svg'
+          category: "commercial",
+          label: "상업/업무용",
+          icon: "16.png"
         },
         {
-          category: '',
-          label: '분양권',
-          icon: 'ticket.svg'
+          category: "",
+          label: "분양권",
+          icon: "17.png"
         },
         {
-          category: '',
-          label: '입주권',
-          icon: 'ticket2.svg'
+          category: "",
+          label: "입주권",
+          icon: "18.png"
         }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
 .title1 {
-  font-family: 'notosanskr-regular';
+  font-family: "notosanskr-regular";
   font-size: 17px;
 }
 
 .investment-btn {
   width: 77px;
   height: 96px;
-  background: #FCFCFC;
-  border: 1px solid #FDFCFC;
+  background: #fcfcfc;
+  border: 1px solid #fdfcfc;
   box-sizing: border-box;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
 }
 
@@ -97,6 +112,6 @@ export default {
   top: 0;
   margin-top: 60px;
   text-align: center;
-  font-size: 13px
+  font-size: 13px;
 }
 </style>
