@@ -32,7 +32,7 @@ export default {
           backgroundColor: "#4B62DE",
           text: "추천 매물",
           subText1: "지도에서 쉽게<br/>추천매물 찾기",
-          img: require("assets/iconsNew/20지도.png"),
+          img: require("assets/iconsNew/20map.png"),
           func: this.toMapCity
         },
         {
@@ -40,20 +40,20 @@ export default {
           text: "재개발 구역",
           subText1: `지도에서 쉽게`,
           subText2: `재개발구역과 실거래가 찾기`,
-          img: require("assets/iconsNew/20정비사업(재개발).png"),
+          img: require("assets/iconsNew/20Redev.png"),
           func: this.toRedevelopmentArea
         },
         {
           backgroundColor: "#FF7D36",
           text: "매물 검색",
           subText1: "투미매물<br/>상세 검색하기",
-          img: require("assets/iconsNew/검색조회.png"),
+          img: require("assets/iconsNew/search.png"),
           func: () => this.$router.push({ name: "map_list_sale" })
         },
         {
           backgroundColor: "#5893F7",
           text: "부동산<br />인사이트",
-          img: require("assets/iconsNew/20인사이트.png"),
+          img: require("assets/iconsNew/20InSight.png"),
           func: () => this.$router.push("/insights/부동산팁")
         }
       ]
