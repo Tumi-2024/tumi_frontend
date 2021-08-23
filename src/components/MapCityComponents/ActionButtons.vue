@@ -37,18 +37,6 @@
         <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
-    <!-- <q-btn
-      :color="this.getViewRedevOnly ? 'primary' : 'white'"
-      padding="8px"
-      @click="$emit('viewRedevOnly')"
-    >
-      <img
-        :width="24"
-        src="~assets/iconsNew/20정비사업(재개발).png"
-        alt=""
-        srcset=""
-      />
-    </q-btn> -->
   </div>
 </template>
 
