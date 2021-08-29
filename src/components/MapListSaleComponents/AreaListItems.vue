@@ -2,13 +2,7 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class=" notosanskr-medium">
       전체 {{ this.type === "transaction" ? "실거래가" : "매물" }}
-      <span class="text-primary">
-        {{
-          this.type === "transaction"
-            ? saleList.length
-            : $store.state.estate.detail_houses.length
-        }} </span
-      >개
+      <span class="text-primary"> {{ saleList.length }} </span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
@@ -35,13 +29,14 @@
           v-for="(item, i) of saleList"
           :key="i"
           :item="item"
+          :query="{ sellid: item.id }"
           v-bind="{
             ctgr: item.category,
             type: item.type,
             isRedevelop,
             address: item.address
           }"
-        ></area-item>
+        />
       </q-list>
     </q-card-section>
 
@@ -98,24 +93,30 @@ export default {
     ...mapGetters("map", ["getMapMode"])
   },
   async beforeMount() {
-    console.log(this.$route);
-    if (this.$route.query && this.$route.query.transactionid) {
-      this.type = "transaction";
-      console.log("transaction");
-
+    this.type = this.$route?.query?.transactionid ? "transaction" : "sell";
+    if (this.$route?.query?.transactionid) {
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/${this.$route.query.transactionid}/transactions`
       );
 
       this.saleList = data;
-      console.log(data);
-    } else if (this.$route.query && this.$route.query?.sellid) {
+    } else if (this.$route?.query?.sellid) {
       this.type = "sell";
       const { data } = await Vue.prototype.$axios.get(
         `/houses/${this.$route.query.sellid}/transactions`
       );
 
       this.saleList = data.results;
+    } else {
+      // const { data } = await Vue.prototype.$axios.get(
+      //   `/houses`
+      // );
+      const {
+        data: { results: houses }
+      } = await Vue.prototype.$axios.get("/houses/");
+      console.log("매물 가져옴", houses);
+      this.saleList = houses;
+      // this.saleList = data.results;
     }
   }
 };

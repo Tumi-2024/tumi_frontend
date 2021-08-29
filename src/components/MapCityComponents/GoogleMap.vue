@@ -30,8 +30,7 @@
             :count="m.count_transactions"
             :badges="{
               category: getCategoryLabel(m.categories || m.type_sale),
-              type: getType(m.types || m.type_house),
-              charter: m.test,
+              type: getType(m.types || m.group_building_house.type_house),
               trading: false
             }"
             :is-dev="!!m.redevelopment_area"
@@ -234,7 +233,6 @@ export default {
         })
         .filter(house => {
           const isOnlyRedev = this.getIsCone;
-          console.log(house);
           if (this.getMapMode === "redevelop-area") {
             if (isOnlyRedev) {
               return house.count_transaction_groups_redevelopment_area !== 0;

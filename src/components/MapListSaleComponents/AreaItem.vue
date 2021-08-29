@@ -1,16 +1,16 @@
 <template>
   <q-item
-    class="column  notosanskr-regular "
-    :to="{ name: 'for_sale_apartment', query: $route.query }"
+    class="column notosanskr-regular"
+    :to="{ name: 'for_sale_apartment', query }"
   >
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
           <address-with-badges
-            :isRedevelop="item.status.length > 0"
             :item="{
               address: item.address,
-              building: `${item.text_road ? item.text_road : ''}
+              building: `${item.transaction_group.building ||
+                item.transaction_group.text_road}
               ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item)"
@@ -39,7 +39,8 @@ export default {
   props: {
     item: Object,
     ctgr: String,
-    type: String
+    type: String,
+    query: Object
   },
   methods: {
     toKr,
@@ -70,18 +71,19 @@ export default {
     getBadges() {
       return (item, ctgr) => {
         return [
+          { type: "houseType", value: item.group_building_house.type_house },
+          { type: "redevelopment", value: item.redevelopment },
+          { type: "stageProgress", value: item.stageProgress },
           {
-            type: "houseType",
-            value: (
-              this.category.find(obj => obj.key === this.ctgr) || { label: "" }
-            ).label
-          },
-          // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
-          {
-            type: this.type[0].toLowerCase(),
-            value: `${toMoneyString(item.price)}`
-          },
-          { type: "date", value: this.getdate(item.text_month, item.text_day) }
+            type: "transactionStatus",
+            value: item.transactionStatus ? false : "재개발",
+            icon: require("src/assets/icons/redevelop.svg")
+          }
+          // {
+          //   type: this.type[0].toLowerCase(),
+          //   value: `${toMoneyString(item.price)}`
+          // },
+          // { type: "date", value: this.getdate(item.text_month, item.text_day) }
         ];
       };
     },

@@ -50,60 +50,63 @@ export default {
       return [
         {
           label: "동 (개)수",
-          value: `${houseInfo.count_building ?? ""}개 동`
+          value: `${houseInfo.count_building ?? "-"}개 동`
         },
-        { label: "세대 수", value: `${houseInfo.count_household ?? ""} 세대` },
+        { label: "세대 수", value: `${houseInfo.count_household ?? "-"} 세대` },
         {
           label: "층수 (지상/지하)",
           value: `지상 ${houseInfo.count_floor_up ??
-            ""}층 / 지하 ${houseInfo.count_floor_down ?? ""}층`
+            ""}층 / 지하 ${houseInfo.count_floor_down ?? "-"}층`
         },
         {
           label: "주차대수 (지상/지하)",
           value: `지상 ${houseInfo.count_parking_up ??
-            ""}개 / 지하 ${houseInfo.count_parking_down ?? ""}개`
+            ""}개 / 지하 ${houseInfo.count_parking_down ?? "-"}개`
         },
-        { label: "엘리베이터 수", value: `${houseInfo.count_elevator ?? ""}` },
+        { label: "엘리베이터 수", value: `${houseInfo.count_elevator ?? "-"}` },
         { label: "사용승인일", value: houseInfo.date_approval_use },
-        { label: "대지면적 (㎡)", value: `${houseInfo.size_land_area ?? ""}` },
+        { label: "대지면적 (㎡)", value: `${houseInfo.size_land_area ?? "-"}` },
         {
           label: "연면적 (㎡)",
-          value: `${houseInfo.size_gross_floor_area ?? ""}`
+          value: `${houseInfo.size_gross_floor_area ?? "-"}`
         },
         {
           label: "건축면적 (㎡)",
-          value: `${houseInfo.size_building_area ?? ""}`
+          value: `${houseInfo.size_building_area ?? "-"}`
         },
-        { label: "난방방식", value: `${houseInfo.type_heating ?? ""}` },
-        { label: "용적률", value: `${houseInfo.percentage_floor_area ?? ""}` },
+        { label: "난방방식", value: `${houseInfo.type_heating ?? "-"}` },
+        { label: "용적률", value: `${houseInfo.percentage_floor_area ?? "-"}` },
         {
           label: "건폐율",
-          value: `${houseInfo.percentage_building_cover ?? ""}`
+          value: `${houseInfo.percentage_building_cover ?? "-"}`
         },
-        { label: "시공사", value: `${houseInfo.title_contractor ?? ""}` },
-        { label: "시행사", value: `${houseInfo.title_executor ?? ""}` },
-        { label: "분양형태", value: `${houseInfo.description_sale ?? ""}` },
-        { label: "복도유형", value: `${houseInfo.type_corridor ?? ""}` },
+        { label: "시공사", value: `${houseInfo.title_contractor ?? "-"}` },
+        { label: "시행사", value: `${houseInfo.title_executor ?? "-"}` },
+        { label: "분양형태", value: `${houseInfo.description_sale ?? "-"}` },
+        { label: "복도유형", value: `${houseInfo.type_corridor ?? "-"}` },
         {
           label: "주건물구조",
-          value: `${houseInfo.type_structure_building ?? ""}`
+          value: `${this.estate.group_land_use.type_structure_building ?? "-"}`
         },
         {
           label: "역세권",
-          value: `${houseInfo.description_station_area ?? ""}`
+          value: `${houseInfo.description_station_area ?? "-"}`
         },
         {
           label: "관리사무소 연락처",
-          value: `${houseInfo.call_management_office ?? ""}`
+          value: `${houseInfo.call_management_office ?? "-"}`
         },
         {
           label: "부대복리시설",
-          value: `${houseInfo.types_incidental_welfare_facilities ?? ""}`
+          value: `${houseInfo.types_incidental_welfare_facilities ?? "-"}`
         },
-        { label: "매물담당자", value: `${houseInfo.staff_name ?? ""}` },
+        {
+          label: "매물담당자",
+          value: `${this.estate.group_etc.staff_name ?? "-"}`
+        },
         {
           label: "담당자 연락처",
-          value: `${houseInfo.staff_contact ?? ""}`,
+          value: `${this.estate.group_etc.staff_contact ?? "-"}`,
           phone: true
         }
       ];

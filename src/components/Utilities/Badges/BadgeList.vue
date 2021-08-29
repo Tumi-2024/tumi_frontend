@@ -11,15 +11,15 @@
   </div>
 </template>
 <script>
-const tagsOrder = [
-  "houseType",
-  "pyeong",
-  "recommend",
-  "redevelopment",
-  "charter",
-  "sale",
-  "date"
-];
+// const tagsOrder = [
+//   "houseType",
+//   "pyeong",
+//   "recommend",
+//   "redevelopment",
+//   "charter",
+//   "sale",
+//   "date"
+// ];
 
 import Badge from "./Badge";
 
@@ -35,11 +35,10 @@ export default {
      * @desc ordering
      */
     getTagsOptions() {
-      const orderedTags = tagsOrder.reduce((acc, curr) => {
-        const tag = this.tags.find(t => t.type === curr);
-        return tag ? [...acc, tag] : acc;
-      }, []);
-      console.log([...orderedTags, ...this.tags]);
+      // const orderedTags = tagsOrder.reduce((acc, curr) => {
+      //   const tag = this.tags.find(t => t.type === curr);
+      //   return tag ? [...acc, tag] : acc;
+      // }, []);
       return this.tags;
       // return [...orderedTags, ...this.tags];
     }

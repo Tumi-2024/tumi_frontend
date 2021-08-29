@@ -122,7 +122,10 @@ export default {
           return {
             address: item.address,
             date: item.created,
-            land: Math.floor(item?.size_dedicated_area / 3.3) || "- ",
+            land:
+              Math.floor(
+                item?.group_individual_household.size_dedicated_area / 3.3
+              ) || "- ",
             price: toMoneyString(item.price, 1000),
             types: []
           };
