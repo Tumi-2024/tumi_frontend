@@ -1,14 +1,16 @@
 <template>
   <q-card>
     <q-card-section>
-      <address-with-badges :item="{address: areaName}" :tags="getBadgeOptions" />
+      <address-with-badges
+        :item="{ address: areaName, building }"
+        :tags="getBadgeOptions"
+      />
       <div class="price-name">
         {{ sales }}
       </div>
       <div class="initial-investments row q-pa-sm q-mt-sm items-center">
         <q-icon>
           <img src="~assets/icons/coins.svg" alt="" />
-
         </q-icon>
 
         <div class="q-ml-md title">초기투자금</div>
@@ -33,7 +35,7 @@
 </template>
 
 <script>
-import AddressWithBadges from '../Address/AddressWithBadges.vue';
+import AddressWithBadges from "../Address/AddressWithBadges.vue";
 export default {
   name: "sale-title",
   components: {
@@ -47,6 +49,10 @@ export default {
     tags: {
       type: Object,
       default: () => {}
+    },
+    building: {
+      type: String,
+      default: ""
     },
     areaName: {
       type: String,
@@ -67,13 +73,21 @@ export default {
   },
   computed: {
     getBadgeOptions() {
+      console.log(this.tags);
       return [
-        { type: 'houseType', value: this.tags.type }
-      ]
+        { type: "houseType", value: this.tags.type },
+        { type: "redevelopment", value: this.tags.redevelopment },
+        { type: "stageProgress", value: this.tags.stageProgress },
+        {
+          type: "transactionStatus",
+          value: this.tags.transactionStatus ? false : "재개발",
+          icon: require("src/assets/icons/redevelop.svg")
+        }
+      ];
     }
   },
   mounted() {
-    console.log(this.tags)
+    console.log(this.tags);
   }
 };
 </script>

@@ -12,18 +12,20 @@
     />
     <detail-summary
       :tags="{
-        type: toKr(estate.type_house),
+        type: estate.group_building_house.type_house,
         redevelopment: redevelopment,
         stageProgress: redevelopment && redevelopment.redevelopment_step,
-        transactionStatus: estate.is_sold && '거래완료'
+        transactionStatus: estate.group_etc.is_sold
       }"
-      :areaName="estate.address"
+      :building="estate.transaction_group.building"
+      :areaName="estate.transaction_group.address"
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
+    <!-- 단지 건물 정보 -->
     <more-information
       class="q-mt-md"
       :estate="estate"
@@ -133,15 +135,16 @@ export default {
     if (this.$route?.query?.sellid) {
       const { query } = this.$route;
       const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${query.sellid}`
+        `/houses/${query.sellid}`
       );
       this.estate = data;
+      console.log(data);
       this.redevelopment = this.estate.redevelopment
         ? this.estate.redevelopment
         : null;
 
       const { data: transactions } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${query.sellid}/transactions`
+        `/transaction_groups/${this.estate.transaction_group.id}/transactions`
       );
       this.transactions = transactions;
       this.getGraphData();
@@ -171,55 +174,62 @@ export default {
   },
   computed: {
     getInformation() {
+      console.log(this.estate);
       return [
         {
           // number of floors
           label: "해당 동수",
-          value: `${this.estate.dong}동`,
+          value: `${this.estate.group_individual_household.num_dong}동`,
           icon: ["11.png"],
           new: true
         },
         {
           // number of floors
           label: "해당 층수",
-          value: `${this.estate.floor}층`,
+          value: `${this.estate.group_individual_household.num_floor}층`,
           icon: ["number-floors.svg"]
         },
         {
           // direction
           label: "방향",
-          value: `${toKr(this.estate.type_direction)}향`,
+          value: `${this.estate.group_individual_household.type_direction}`,
           icon: ["direction.svg"]
         },
         {
           // station-area
           label: "방수/욕실수",
-          value: `${this.estate.room_count}/${this.estate.bathroom_count}`,
+          value: `${this.estate.group_individual_household.count_room}/${this.estate.group_individual_household.count_bathroom}`,
           icon: ["31A.png", "31B.png"],
           new: true
         },
         {
           // exclusive Area
           label: "공용 면적 (m2)",
-          value: `${this.estate.area_common}㎡`,
+          value: `${this.estate.group_individual_household.size_supply_area}㎡`,
           icon: ["land-area.svg"]
         },
         {
           // exclusive Area
           label: "전용 면적 (m2❘평형)",
-          value: `${this.estate.area_exclusive}㎡`,
+          value: `${
+            this.estate.group_individual_household.size_dedicated_area
+          }㎡ | 
+            ${Math.floor(
+              this.estate.group_individual_household.size_dedicated_area / 3.3
+            )}평`,
           icon: ["land-area.svg"]
         },
         {
           // Right
           label: "해당면적 세대수",
-          value: this.estate.area_household_count,
+          value: this.estate.group_individual_household
+            .count_household_same_area,
           icon: ["building-area.svg"]
         },
         {
           // Premium price
           label: "관리비",
-          value: this.estate.administration_cost,
+          value: this.estate.group_individual_household.price_maintenance,
           icon: ["right.svg"]
         }
       ];

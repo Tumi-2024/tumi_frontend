@@ -32,12 +32,10 @@
     </div>
     <div class="col">
       <div class="row bottom-toolbar notosanskr-regular">
-        <div class="info-text">
-          {{ badges.category }}
-        </div>
+        <div class="info-text">{{ badges.type }}</div>
         <q-separator vertical class="q-ma-xs" />
-        <q-badge color="white" text-color="primary" :label="badges.type" />
-        <q-separator vertical class="q-ma-xs" />
+        <!-- <q-badge color="white" text-color="primary" :label="badges.type" /> -->
+        <!-- <q-separator vertical class="q-ma-xs" /> -->
         <div class="info-text">{{ getItemInfo(item).land }}평</div>
         <q-separator vertical class="q-ma-xs" />
         <div class="info-text">
@@ -104,7 +102,6 @@ export default {
     ]),
     getItemInfo() {
       return item => {
-        console.log(this.price);
         if (this.getMapMode === "redevelop-area") {
           const transactionItem =
             item.recent_transactions?.[item.categories[0]];
@@ -117,9 +114,7 @@ export default {
               transactionItem?.text_month.slice(0, 4) +
               "." +
               transactionItem?.text_month.slice(4, 6),
-            land: transactionItem?.text_size_land
-              ? Math.floor(transactionItem?.text_size_land / 3.3)
-              : "- ",
+            land: Math.floor(transactionItem?.text_size_land / 3.3) || "- ",
             price: toMoneyString(this.price, 1000),
             ...transactionItem
           };
@@ -127,7 +122,7 @@ export default {
           return {
             address: item.address,
             date: item.created,
-            land: 0,
+            land: Math.floor(item?.size_dedicated_area / 3.3) || "- ",
             price: toMoneyString(item.price, 1000),
             types: []
           };

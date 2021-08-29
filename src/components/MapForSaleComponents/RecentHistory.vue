@@ -55,8 +55,9 @@
               <div>층수</div>
             </q-item>
             <q-virtual-scroll
-              style="min-height: 220px;"
+              style="min-height: 220px; max-height: 500px;"
               :items="getTransactions"
+              :virtual-scroll-slice-size="100"
               separator
             >
               <template v-slot="{ item, index }">

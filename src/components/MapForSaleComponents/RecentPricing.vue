@@ -270,7 +270,6 @@ export default {
 .monthly {
   font-weight: 500;
   font-size: 13px;
-  line-height: 40px;
   letter-spacing: -0.98px;
   color: #1a1a1a;
   span {

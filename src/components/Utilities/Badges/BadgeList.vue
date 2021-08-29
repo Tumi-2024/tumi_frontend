@@ -1,19 +1,27 @@
 <template>
   <div class="row">
-    <template v-for="(badge, index) of getTagsOptions" >
+    <template v-for="(badge, index) of getTagsOptions">
       <badge
         :key="index"
-        v-if="badge.isShow !== undefined ? badge.isShow: true"
-        v-bind="{icon: badge.icon, value: badge.value, [badge.type]: true}"
-        :class="{'q-mr-sm': index !== tags.length -1}"
+        v-if="badge.value"
+        v-bind="{ icon: badge.icon, value: badge.value, [badge.type]: true }"
+        :class="{ 'q-mr-sm': index !== tags.length - 1 }"
       />
     </template>
   </div>
 </template>
 <script>
-const tagsOrder = ['houseType', 'pyeong', 'recommend', 'redevelopment', 'charter', 'sale', 'date']
+const tagsOrder = [
+  "houseType",
+  "pyeong",
+  "recommend",
+  "redevelopment",
+  "charter",
+  "sale",
+  "date"
+];
 
-import Badge from './Badge'
+import Badge from "./Badge";
 
 export default {
   components: { badge: Badge },
@@ -27,11 +35,14 @@ export default {
      * @desc ordering
      */
     getTagsOptions() {
-      return tagsOrder.reduce((acc, curr) => {
-        const tag = this.tags.find(t => t.type === curr)
-        return tag ? [...acc, tag] : acc
-      }, [])
+      const orderedTags = tagsOrder.reduce((acc, curr) => {
+        const tag = this.tags.find(t => t.type === curr);
+        return tag ? [...acc, tag] : acc;
+      }, []);
+      console.log([...orderedTags, ...this.tags]);
+      return this.tags;
+      // return [...orderedTags, ...this.tags];
     }
   }
-}
+};
 </script>

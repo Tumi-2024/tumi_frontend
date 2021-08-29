@@ -1,10 +1,10 @@
 <template>
-  <q-badge :class="badgeClass" class="">
+  <q-badge :class="badgeClass" outline>
     <q-icon v-if="icon">
       <img :src="icon" alt="" srcset="" />
     </q-icon>
     <slot name="label">
-    {{value}}
+      {{ value }}
     </slot>
   </q-badge>
 </template>
@@ -38,42 +38,44 @@ export default {
     },
     date: {
       type: Boolean
+    },
+    houseType: {
+      type: Boolean
     }
-
   },
   data() {
     return {
-      badgeClass: ''
-    }
+      badgeClass: ""
+    };
   },
   mounted() {
     switch (true) {
       case this.houseType:
-        this.badgeClass = 'text-white bg-primary'
+        this.badgeClass = "text-white bg-primary";
         break;
       case this.pyeong:
-        this.badgeClass = 'text-white bg-green'
+        this.badgeClass = "text-white bg-green";
         break;
       case this.recommend:
-        this.badgeClass = 'text-primary bg-white'
+        this.badgeClass = "text-primary bg-white";
         break;
       case this.redevelopment:
-        this.badgeClass = 're-develop bg-white'
+        this.badgeClass = "re-develop bg-white";
         break;
       case this.charter:
-        this.badgeClass = 'bg-blue-grey'
-        break
+        this.badgeClass = "bg-blue-grey";
+        break;
       case this.sale:
-        this.badgeClass = 'bg-blue'
-        break
+        this.badgeClass = "bg-blue";
+        break;
       case this.date:
-        this.badgeClass = 'date text-white bg-black'
+        this.badgeClass = "date text-white bg-black";
         break;
       default:
-        this.badgeClass = ''
+        this.badgeClass = "text-grey";
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .q-badge {

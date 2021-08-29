@@ -36,7 +36,6 @@
             }"
             :is-dev="!!m.redevelopment_area"
           />
-          <!-- type: 'test', -->
           <!-- <div v-else>
             <q-spinner-pie
               style="margin-left: 10px; margin-top: 5px;"
@@ -97,7 +96,6 @@ import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
-import { toMoneyString } from "src/utils";
 const { Geolocation } = Plugins;
 
 export default {
@@ -212,6 +210,7 @@ export default {
     },
     getCategoryLabel() {
       return value => {
+        console.log(value);
         if (!Array.isArray(value)) {
           return value;
         }
@@ -502,15 +501,18 @@ export default {
       this.map.addListener("idle", () => {
         // this.changeMapZoom(18);
         this.changeMapCenter(item.position);
+        console.log(item);
         this.$router.push({
-          name: "map_list_sale",
+          name:
+            this.$route.path === "/map/city/area"
+              ? "map_list_sale"
+              : "for_sale_apartment",
           query: {
             transactionid:
               this.$route.path === "/map/city/area" ? item.id : undefined,
             sellid: this.$route.path === "/map/city" ? item.id : undefined
           }
         });
-        // this.$router.push({ name: 'map_list_sale', params: { type: 'location', position: item.position, apartment: item } });
       });
     },
     typeForHouse(type) {
