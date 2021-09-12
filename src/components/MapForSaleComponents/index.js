@@ -11,6 +11,8 @@ import SimilarTransaction from "./SimilarTransaction";
 import AveragePriceHistory from "./AveragePriceHistory";
 import RecentHistory from './RecentHistory'
 import RecentAverageHistory from './RecentAverageHistory'
+import CommonInformation from './CommonInformation'
+
 export {
   GoogleMap,
   DetailSummary,
@@ -24,5 +26,6 @@ export {
   SimilarTransaction,
   AveragePriceHistory,
   RecentHistory,
-  RecentAverageHistory
+  RecentAverageHistory,
+  CommonInformation
 };

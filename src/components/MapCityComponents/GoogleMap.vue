@@ -35,14 +35,6 @@
             }"
             :is-dev="!!m.redevelopment_area"
           />
-          <!-- <div v-else>
-            <q-spinner-pie
-              style="margin-left: 10px; margin-top: 5px;"
-              color="primary"
-              size="30px"
-            />
-            <q-tooltip>QSpinnerPie</q-tooltip>
-          </div> -->
         </gmap-info-window>
       </template>
 
@@ -50,7 +42,7 @@
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
-        :maxZoom="18"
+        :maxZoom="17"
         :calculator="calculatorMarker"
         :minimumClusterSize="1"
         @click="clusterClicked"
@@ -368,7 +360,7 @@ export default {
       } else if (zoomLevel <= 14) {
         this.showInfoWindow = false;
         payload = { type: "subcity", ...location };
-      } else if (zoomLevel <= 18) {
+      } else if (zoomLevel <= 17) {
         this.showInfoWindow = false;
         payload = { type: "locations", ...location };
       } else {
@@ -378,7 +370,7 @@ export default {
       this.$store.dispatch("getSimpleHouses", payload);
       setTimeout(() => {
         this.showAreaBadges = this.getIsCone && zoomLevel > 14;
-        this.disableHeart = zoomLevel <= 18;
+        this.disableHeart = zoomLevel <= 17;
         if (this.getMapAreas.length) {
           this.setMapAreas();
         }
@@ -499,7 +491,6 @@ export default {
       this.map.addListener("idle", () => {
         // this.changeMapZoom(18);
         this.changeMapCenter(item.position);
-        console.log(item);
         this.$router.push({
           name:
             this.$route.path === "/map/city/area"
@@ -533,7 +524,7 @@ export default {
         .catch(e => {});
     },
     async showHideArea(value) {
-      this.setMapAreas();
+      this.getHouseInfo();
       const zoomLevel = this.map.getZoom();
       this.showAreaBadges = this.getIsCone && zoomLevel > 14;
       if (this.getMapMode !== "redevelop-area") {

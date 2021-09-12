@@ -21,7 +21,7 @@
         정비사업 개요
       </div>
       <div class="row table">
-        <div class="col-sm-4 col-12 row" v-for="(item, i) of getInfo" :key="i">
+        <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo" :key="i">
           <div class="q-pa-sm label">
             <span class="information">{{ item.label }}</span>
           </div>
@@ -43,7 +43,7 @@
         도시계획 사항
       </div>
       <div class="row table">
-        <div class="col-sm-4 col-12 row" v-for="(item, i) of getInfo1" :key="i">
+        <div class="col-sm-6 col-12 row" :class="[{'col-sm-12': i === 0}, {'col-sm-6': i < 3}]" v-for="(item, i) of getInfo1" :key="i">
           <div class="q-pa-sm label">
             <span class="information">{{ item.label }}</span>
           </div>
@@ -168,15 +168,18 @@ export default {
     getInfo() {
       console.log(this.getMapSelectedArea);
       return [
-        { label: "사업번호", value: this.getMapSelectedArea.business_number },
+        { label: "개발사업 유형", value: this.getMapSelectedArea.business_type },
+        { label: "개발구역 명칭(단축)", value: this.getMapSelectedArea.title },
+        { label: "개발구역 명칭(조합)", value: this.getMapSelectedArea.title_area },
+        { label: "사업 추진 경과", value: this.getMapSelectedArea.redevelopment_step },
+        { label: "사업 유형", value: this.getMapSelectedArea.business_type },
         {
           label: "사업 구분",
           value: this.getMapSelectedArea.business_classification
         },
-        { label: "사업 유형", value: this.getMapSelectedArea.business_type },
         {
-          label: "사업시행 예정시기",
-          value: this.getMapSelectedArea.scheduled_time
+          label: "추진위 수행여부",
+          value: this.getMapSelectedArea.status_promotion_committee
         },
         {
           label: "공공지원 대상여부",
@@ -187,12 +190,19 @@ export default {
           value: this.getMapSelectedArea.status_architectural_plan
         },
         {
-          label: "주택공유계획",
+          label: "주택공급계획",
           value: this.getMapSelectedArea.status_sharing_plan
         },
+        { label: "정비구역 위치", value: this.getMapSelectedArea.area },
+        { label: "구역면적 (m²)", value: this.getMapSelectedArea.size_area },
+        { label: "조합원 수", value: this.getMapSelectedArea.count_member },
         {
-          label: "추진위 수행여부",
-          value: this.getMapSelectedArea.status_promotion_committee
+          label: "부동산 소유자 수",
+          value: this.getMapSelectedArea.count_owner
+        },
+        {
+          label: "세입자 수",
+          value: this.getMapSelectedArea.count_house
         }
       ];
     },
@@ -369,6 +379,9 @@ export default {
   overflow-y: auto;
   height: 90vh;
   margin-bottom: 200px;
+  .table > .row:not(:nth-last-child(-n+1)) {
+    border-bottom: 1px solid #e9e9e9;
+}
 
   .address-section {
     padding: 24px 16px;

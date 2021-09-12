@@ -50,8 +50,20 @@
           <q-list separator style="border-top: 1px solid #1A1A1A;">
             <q-item class="item header">
               <div>계약일</div>
-              <div>거래</div>
-              <div>가격</div>
+              <div>거래유형</div>
+              <div>번지/건물단지명</div>
+              <div>
+                <q-select
+                style="flex: 1"
+                item-aligned
+                v-model="select"
+                :options="getSelectOptions"
+                :option-value="(item) => item === null ? null : item.label"
+                dense
+                />
+              </div>
+              <div>거래가격</div>
+              <div>면적당 가격</div>
               <div>층수</div>
             </q-item>
             <q-virtual-scroll
@@ -70,6 +82,7 @@
                   }"
                   :key="index"
                 >
+                  <!-- 계약일 -->
                   <div>
                     {{
                       item.text_month.slice(0, 4) +
@@ -81,6 +94,7 @@
                           : item.text_day)
                     }}
                   </div>
+                  <!-- 거래 유형 -->
                   <div
                     class="text-weight-medium"
                     :style="{
@@ -91,7 +105,24 @@
                   >
                     {{ tabs.find(tab => tab.level === item.type).label }}
                   </div>
-                  <div class="text-weight-bold">
+                  <!-- 번지/ 건물단지 명 -->
+                  <div class="column">
+                    <div style="display: flex;">
+                      {{ `${item.text_road} ` }}
+                    </div>
+                    <div style="display: flex;">
+                      {{ `${item.text_danji}` }}
+                    </div>
+                  </div>
+                  <!-- 면적 -->
+                  <div>
+                    {{ getItemSize(item, select) }}
+                  </div>
+                  <!-- 거래가격 -->
+                  <div>
+                    {{toMoneyString(item.price || item.price_deposit)}}
+                  </div>
+                  <div>
                     {{ toMoneyString(item.price) }}
                     {{ toMoneyString(item.price_deposit) }}
                   </div>
@@ -126,11 +157,48 @@ export default {
         { level: "SALE", label: "매매" },
         { level: "RENT", label: "전세" }
         // { level: "monthly", label: "월세" }
-      ]
+      ],
+      select: {
+        label: '전용면적',
+        value: 'text_size_private'
+      }
     };
   },
   computed: {
+    getItemSize() {
+      return (item, select) => {
+        if (item[select.value]) {
+          return item[select.value]
+        }
+        return '-'
+      }
+    },
+    getSelectOptions() {
+      return [
+        {
+          label: '전용면적',
+          value: 'text_size_private'
+        },
+        {
+          label: '대지권면적',
+          value: 'text_size_land'
+        },
+        {
+          label: '연면적',
+          value: 'text_size_yean'
+        },
+        {
+          label: '계약면적',
+          value: 'text_size_contract'
+        },
+        {
+          label: '전용/연면적',
+          value: 'text_size_total'
+        }
+      ]
+    },
     getTransactions() {
+      console.log('item', this.item)
       if (this.activeTab === "all") {
         return this.item;
       }

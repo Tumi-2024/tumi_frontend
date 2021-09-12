@@ -66,7 +66,11 @@ export const estateStore = {
     },
     getSimpleHouses: async function(context, payload) {
       let data;
-      const query = context.getters["searchQuery/getQueryString"];
+      const redevelopQuery = `redevelopment_area__isnull=${!context.getters[
+        "map/getIsCone"
+      ]}`;
+      const searchQuery = context.getters["searchQuery/getQueryString"];
+      const query = searchQuery + redevelopQuery;
       const requestUrl =
         context.rootState.map.mode === "redevelop-area"
           ? "transaction_groups"

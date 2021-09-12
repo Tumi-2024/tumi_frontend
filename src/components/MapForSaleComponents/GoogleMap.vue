@@ -92,6 +92,7 @@ export default {
     },
     setAreaPolygon() {
       let path;
+      console.log(this.estate)
       if (!this.polygon) {
         // IF THERES NO POLYGON WE CREATE OUR OWN
         const position = new this.google.maps.LatLng(
@@ -100,25 +101,25 @@ export default {
         );
         const coord1 = this.google.maps.geometry.spherical.computeOffset(
           position,
-          250,
-          0
+          100,
+          100
         );
         const coord2 = this.google.maps.geometry.spherical.computeOffset(
           position,
-          250,
-          120
+          -100,
+          -100
         );
         const coord3 = this.google.maps.geometry.spherical.computeOffset(
           position,
-          250,
-          -120
+          100,
+          -100
         );
         const coord4 = this.google.maps.geometry.spherical.computeOffset(
           position,
-          200,
-          -100
+          -100,
+          100
         );
-        path = [coord1, coord2, coord3, coord4];
+        path = [coord1, coord2, coord4, coord3];
       }
       const style = {
         strokeColor: "#FF5100",
