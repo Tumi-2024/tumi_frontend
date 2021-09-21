@@ -3,10 +3,11 @@
     <q-card-section class="heading-title">
       {{title}}
     </q-card-section>
-    <q-card-section class="bg-white">
+    <q-card-section class="bg-white q-pt-none">
       <div class="row table">
         <div
           class="col-md-4 col-sm-6 col-12 row"
+          :class="item.class"
           v-for="(item, i) of getOptions"
           :key="i"
         >
@@ -63,7 +64,7 @@ export default {
 .information {
   font-weight: 700;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 16px;
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
@@ -76,7 +77,7 @@ export default {
   font-style: normal;
   font-weight: 500;
   font-size: 17px;
-  line-height: 26px;
+  line-height: 19px;
   letter-spacing: -1.275px;
   color: #1a1a1a;
 }

@@ -6,7 +6,7 @@
         lat: Number(estate.latitude),
         lng: Number(estate.longitude)
       }"
-      :polygon="null"
+      :polygon="redevelopmentArea"
       :estate="estate"
       setMapAreaView
     />
@@ -124,7 +124,7 @@ export default {
         `/houses/${query.sellid}`
       );
       this.estate = data;
-      console.log(data);
+      this.makePolygon(data.group_location.redevelopment_area)
       this.redevelopment = this.estate.redevelopment
         ? this.estate.redevelopment
         : null;
@@ -133,12 +133,18 @@ export default {
         `/transaction_groups/${this.estate.transaction_group.id}/transactions`
       );
       this.transactions = transactions;
+
       this.getGraphData();
     }
   },
   methods: {
     toKr,
     toMoneyString,
+    makePolygon(area) {
+      this.redevelopmentArea = area.redevelopment_area_locations.map(obj => {
+        return { lat: Number(obj.lat), lng: Number(obj.lng) };
+      });
+    },
     getGraphData() {
       const graphData = (type, yyyyMM) =>
         this.transactions
@@ -304,11 +310,11 @@ export default {
         { label: "엘리베이터 수", value: houseInfo.count_elevator },
         { label: "난방방식", value: houseInfo.type_heating },
         { label: "관리사무소 연락처", value: houseInfo.call_management_office },
-        { label: "건물 총 층수", value: houseInfo3.num_total_floor },
+        // { label: "건물 총 층수", value: houseInfo3.num_total_floor },
         { label: "주건물구조", value: houseInfo4.type_structure_building },
         { label: "시공사", value: houseInfo.title_contractor },
         { label: "시행사", value: houseInfo.title_executor },
-        { label: "부대복리시설", value: (houseInfo.types_incidental_welfare_facilities || []).join(',') },
+        { label: "부대복리시설", value: (houseInfo.types_incidental_welfare_facilities || []).join(','), class: 'col-sm-12 col-md-12' },
         { label: "표준지/표준주택 공시지가", value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}/${toMoneyString(houseInfo.price_standard_housing, 1 / 10000)}` },
         { label: "대지권 종류", value: houseInfo.type_land },
         { label: "대지권 비율", value: houseInfo.percentage_land }
@@ -320,9 +326,11 @@ export default {
       return [
         {
           label: "(메모) 매물특징",
-          value: houseInfo.description_estate
+          value: houseInfo.description_estate,
+          class: 'col-sm-12 col-md-12'
         },
         { label: "동 번호", value: houseInfo.num_ho },
+        { label: "호수 <저층/중층/고층>", value: houseInfo.num_ho, class: 'col-sm-12 col-md-8' },
         {
           label: "총 세대수",
           value: houseInfo.num_total_floor
@@ -345,14 +353,14 @@ export default {
           label: "방수/욕실수",
           value: `${houseInfo.count_room}/${houseInfo.count_bathroom}`
         },
-        { label: "방향", value: houseInfo.type_direction },
-        { label: "공동주택 공시가격", value: houseInfo.price_public_housing },
-        { label: "공동주택 개별 공시지가", value: houseInfo.price_individual_published },
+        { label: "방향", value: houseInfo.type_direction, class: 'col-sm-12 col-md-8' },
         // 최근 관리비 없음
         { label: "최근 관리비", value: houseInfo.price_maintenance },
         { label: "연평균 관리비", value: houseInfo.price_maintenance },
         { label: "하절기 평균 관리비", value: houseInfo.price_maintenance_summer },
-        { label: "동절기 평균 관리비", value: houseInfo.price_maintenance_winter }
+        { label: "동절기 평균 관리비", value: houseInfo.price_maintenance_winter },
+        { label: "공동주택 공시가격", value: houseInfo.price_public_housing },
+        { label: "공동주택 개별 공시지가", value: houseInfo.price_individual_published }
       ];
     },
     getTradeOptions() {
@@ -365,7 +373,14 @@ export default {
         { label: "희망 입주 일자", value: houseInfo.description_move_condition },
         { label: "희망 임대차계약 만기일", value: houseInfo.date_due_move },
         { label: "융자금", value: houseInfo.price_loan },
-        { label: "희망 이사조건", value: houseInfo.type_move }
+        { label: "희망 이사조건", value: houseInfo.type_move },
+        { label: "[옵션] 세안고", value: '' },
+        { label: "[옵션] 올수리", value: '' },
+        { label: "[옵션] 인테리어", value: '' },
+        { label: "[옵션] 보일러교체", value: '' },
+        { label: "[옵션] 주택구조", value: '' },
+        { label: "[옵션] 애완동물", value: '' },
+        { label: "[옵션] 외국인", value: '' }
       ]
     }
   },
@@ -375,6 +390,7 @@ export default {
       transactions: null,
       graphData: [],
       estate: null,
+      redevelopmentArea: [],
       adminCost: [
         { label: "여름", value: "28만원", icon: "summer.svg" },
         { label: "겨울", value: "21만원", icon: "windy.svg" },
