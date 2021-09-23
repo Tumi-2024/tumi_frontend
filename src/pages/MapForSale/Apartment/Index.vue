@@ -37,6 +37,7 @@
     <common-information class="q-mt-md" title="개별세대 정보" :getOptions="getGenerationOptions" />
     <!-- 매물 거래 조건 정보 -->
     <common-information class="q-mt-md" title="매물 거래조건(매수/매도 공통)" :getOptions="getTradeOptions" />
+    <common-information class="q-mt-md" title="개발정비사업" :getOptions="getRedevOptions" />
     <!-- 재개발 정보 -->
     <redevelopment-information
       v-if="redevelopment"
@@ -381,6 +382,26 @@ export default {
         { label: "[옵션] 주택구조", value: '' },
         { label: "[옵션] 애완동물", value: '' },
         { label: "[옵션] 외국인", value: '' }
+      ]
+    },
+    getRedevOptions() {
+      const { group_location: { redevelopment_area: houseInfo } } = this.estate;
+      return [
+        { label: "개발사업 유형", value: houseInfo.category },
+        { label: "개발구역 명칭(단축)", value: houseInfo.title },
+        { label: "개발구역 명칭(조합)", value: houseInfo.title_area },
+        { label: "사업 추진 경과", value: houseInfo.redevelopment_step },
+        { label: "사업 유형", value: houseInfo.business_type },
+        { label: "사업 구분", value: houseInfo.business_classification },
+        { label: "추진위 수행여부", value: houseInfo.status_promotion_committee },
+        { label: "공공지원 대상여부", value: houseInfo.status_public_support },
+        { label: "건축 계획", value: houseInfo.status_architectural_plan },
+        { label: "주택공급계획", value: houseInfo.status_sharing_plan },
+        { label: "정비구역 위치", value: houseInfo.price_selling_hope },
+        { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
+        { label: "조합원 수", value: houseInfo.count_member },
+        { label: "부동산 소유자 수", value: houseInfo.count_owner },
+        { label: "세입자 수", value: houseInfo.count_house }
       ]
     }
   },
