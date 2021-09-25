@@ -76,7 +76,7 @@ export default {
       const { group_building_house: houseInfo } = this.item;
       return [
         { label: "세대 수", value: `${houseInfo.count_household ?? "-"} 세대` },
-        { label: "세대당 주차대수", value: "???" },
+        { label: "세대당 주차대수", value: ((houseInfo.count_parking_down + houseInfo.count_parking_up) / houseInfo.count_household).toFixed(2) },
         { label: "난방방식", value: `${houseInfo.type_heating ?? "-"}` },
         { label: "사용승인일", value: houseInfo.date_approval_use ?? "-" },
         {

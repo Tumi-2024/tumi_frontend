@@ -18,7 +18,7 @@
         transactionStatus: estate.group_etc.is_sold
       }"
       :building="estate.transaction_group.building"
-      :areaName="estate.transaction_group.address"
+      :areaName="estate.address"
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"
@@ -125,6 +125,8 @@ export default {
         `/houses/${query.sellid}`
       );
       this.estate = data;
+      console.log(data, 'estate')
+
       this.makePolygon(data.group_location.redevelopment_area)
       this.redevelopment = this.estate.redevelopment
         ? this.estate.redevelopment

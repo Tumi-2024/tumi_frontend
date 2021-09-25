@@ -70,20 +70,27 @@ export default {
   computed: {
     getBadges() {
       return (item, ctgr) => {
+        const getDate = (date) => {
+          const d = new Date(date)
+          const y = String(d.getFullYear()).split(0, 2)[1]
+          return y + String('.' + d.getMonth() + '.' + d.getDate())
+        }
+
         return [
-          { type: "houseType", value: item.group_building_house.type_house },
-          { type: "redevelopment", value: item.redevelopment },
-          { type: "stageProgress", value: item.stageProgress },
           {
             type: "transactionStatus",
             value: item.transactionStatus ? false : "재개발",
             icon: require("src/assets/icons/redevelop.svg")
-          }
-          // {
-          //   type: this.type[0].toLowerCase(),
-          //   value: `${toMoneyString(item.price)}`
-          // },
-          // { type: "date", value: this.getdate(item.text_month, item.text_day) }
+          },
+          { type: "houseType", value: item.group_building_house.type_house },
+          { type: "redevelopment", value: item.redevelopment },
+          { type: "stageProgress", value: item.stageProgress },
+          { type: 'pyeong', value: (item.group_individual_household.size_dedicated_area / 3.3).toFixed(0) + '평' },
+          {
+            type: 'price',
+            value: `${toMoneyString(item.group_trading_terms.price_selling_hope || item.group_trading_terms.price_charter_deposit_hope)}`
+          },
+          { type: "date", value: getDate(item.created) }
         ];
       };
     },
