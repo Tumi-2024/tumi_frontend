@@ -19,9 +19,10 @@
         v-if="estate"
       >
         <!-- INPUT DESIRED CONTENTS -->
-        <info-top-content :marker="{}" />
+        <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
-          :price="0"
+          :price="estate.group_price.price_expected"
+          :item="estate"
           :count="0"
           :badges="{
             type_sale: estate.type_sale,
@@ -39,11 +40,9 @@ import { gmapApi } from "gmap-vue";
 import { mapGetters } from "vuex";
 
 import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
-import InfoTopContent from "../MapCityComponents/InfoTopContent";
 export default {
   components: {
-    InfoWindowContent,
-    InfoTopContent
+    InfoWindowContent
   },
   props: {
     position: Object,

@@ -13,11 +13,10 @@
     <detail-summary
       :tags="{
         type: estate.group_building_house.type_house,
-        redevelopment: redevelopment,
-        stageProgress: redevelopment && redevelopment.redevelopment_step,
+        stageProgress: redevelopment.redevelopment_step,
         transactionStatus: estate.group_etc.is_sold
       }"
-      :building="estate.transaction_group.building"
+      :building="estate.group_building_house.title_building"
       :areaName="estate.address"
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
@@ -40,7 +39,7 @@
     <common-information class="q-mt-md" title="개발정비사업" :getOptions="getRedevOptions" />
     <!-- 재개발 정보 -->
     <redevelopment-information
-      v-if="redevelopment"
+      v-if="!!redevelopment"
       approvalPromotionCommittee="2004.07.20"
       designationMaintenanceArea="2005.05.19"
       associationEstablishment="2005.05.19"
@@ -128,10 +127,9 @@ export default {
       console.log(data, 'estate')
 
       this.makePolygon(data.group_location.redevelopment_area)
-      this.redevelopment = this.estate.redevelopment
-        ? this.estate.redevelopment
-        : null;
-
+      console.log(this.estate.group_location)
+      this.redevelopment = this.estate.group_location?.redevelopment_area || false
+      console.log(this.redevelopment)
       const { data: transactions } = await Vue.prototype.$axios.get(
         `/transaction_groups/${this.estate.transaction_group.id}/transactions`
       );
