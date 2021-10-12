@@ -12,7 +12,10 @@
           class="btn-view-properties full-width notosanskr-medium"
           :to="{ name: 'map_list_sale' }"
         >
-          {{$store.state.map.toolbarTitle.split(' ')[1]}} 매물보기 <span style="color: #FF5A00">{{` ${$store.state.estate.count_estate}개`}}</span>
+          {{ $store.state.map.toolbarTitle.split(" ")[1] }} 매물보기
+          <span style="color: #FF5A00">{{
+            ` ${$store.state.estate.count_estate}개`
+          }}</span>
         </q-btn>
       </q-card-section>
 
@@ -55,7 +58,7 @@ export default {
   width: 100%;
   max-width: 1000px;
   height: auto;
-  border: 1px solid #D5D5D5;
+  border: 1px solid #d5d5d5;
   border-bottom: 0;
   // border-radius: 16px;
   border-top-left-radius: 16px;

@@ -53,11 +53,11 @@
           ></property-type>
 
           <!-- property sale | 부동산 매매  -->
-          <property-sale-price
+          <!-- <property-sale-price
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('propertySalePrice', $event)"
-          ></property-sale-price>
+          ></property-sale-price> -->
 
           <!--  Charter price deposit | 전세가 / 보증금 -->
           <!-- <charter-price-deposit

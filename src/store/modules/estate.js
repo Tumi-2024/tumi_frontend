@@ -11,7 +11,10 @@ export const estateStore = {
     recently_viewed_houses: [],
     count_estate: 0,
     simple_houses_type: "",
-    viewRedevOnly: true
+    viewRedevOnly: true,
+    latitude: [],
+    longitude: [],
+    requestUrl: ""
   },
   getters: {
     simple_houses: (state, getters) => {
@@ -58,6 +61,15 @@ export const estateStore = {
     },
     removeInterestHouse: function(state, payload) {
       state.current_house.interest.house = null;
+    },
+    setLatitude: function(state, payload) {
+      state.latitude = payload;
+    },
+    setLongitude: function(state, payload) {
+      state.longitude = payload;
+    },
+    setRequestUrl: function(state, payload) {
+      state.requestUrl = payload;
     }
   },
   actions: {
@@ -65,51 +77,52 @@ export const estateStore = {
       context.commit("setViewRedevOnly");
     },
     getSimpleHouses: async function(context, payload) {
-      let data;
       const redevelopQuery = `redevelopment_area__isnull=${!context.getters[
         "map/getIsCone"
       ]}`;
       const searchQuery = context.getters["searchQuery/getQueryString"];
-      const query = searchQuery + redevelopQuery;
-      const requestUrl =
-        context.rootState.map.mode === "redevelop-area"
-          ? "transaction_groups"
-          : "houses";
-      console.log(requestUrl);
-      if (payload.query) {
-        data = await Vue.prototype.$axios.get(
-          `/${requestUrl}/?page_size=1000&${payload.query}`,
-          { timeout: 10000 }
-        );
-      } else {
-        let rangeQuery;
-        if (payload.latitude) {
-          rangeQuery = `latitude__range=${payload.latitude[0]},${payload.latitude[1]}&longitude__range=${payload.longitude[0]},${payload.longitude[1]}&${query}`;
-        }
-        switch (payload.type) {
-          case "city":
-            data = await Vue.prototype.$axios.get(`/cities?${query}`, {
-              timeout: 10000
-            });
-            break;
-          case "subcity":
-            data = await Vue.prototype.$axios.get(`/sub_cities?${rangeQuery}`, {
-              timeout: 10000
-            });
-            break;
-          case "locations":
-            data = await Vue.prototype.$axios.get(`/locations?${rangeQuery}`, {
-              timeout: 10000
-            });
-            break;
-          default:
-            data = await Vue.prototype.$axios.get(
-              `/${requestUrl}/?${rangeQuery}`,
-              { timeout: 10000 }
-            );
-            break;
-        }
+      const query = searchQuery + "&" + redevelopQuery;
+      if (payload.latitude) {
+        await context.commit("setLatitude", payload.latitude);
+        await context.commit("setLongitude", payload.longitude);
       }
+      const lat = context.state.latitude;
+      const long = context.state.longitude;
+      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}&${query}`;
+      console.log(payload.type);
+      switch (payload.type) {
+        case "city":
+          await context.commit("setRequestUrl", "cities");
+          break;
+        case "subcity":
+          await context.commit("setRequestUrl", "sub_cities");
+          break;
+        case "locations":
+          await context.commit("setRequestUrl", "locations");
+          break;
+        case "transaction_groups":
+          await context.commit("setRequestUrl", "transaction_groups");
+          break;
+        case "houses":
+          await context.commit("setRequestUrl", "houses");
+          break;
+        // default:
+        //   await context.commit("setRequestUrl", context.state.requestUrl)
+      }
+      console.log(context.state.requestUrl);
+
+      const data = await Vue.prototype.$axios.get(
+        `/${context.state.requestUrl}/?${rangeQuery}`,
+        { timeout: 10000 }
+      );
+      // if (payload.query) {
+      //   data = await Vue.prototype.$axios.get(
+      //     `/${requestUrl}/?page_size=1000&${payload.query}`,
+      //     { timeout: 10000 }
+      //   );
+      // } else {
+
+      // }
       context.dispatch("map/setLocationLoading", true);
       context.commit(
         "setSimpleHouses",

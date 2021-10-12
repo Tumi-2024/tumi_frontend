@@ -53,8 +53,14 @@ export default {
         },
         {
           category: "officetel",
-          label: "오피스텔",
+          label: "원룸/ 오피스텔",
           icon: "14.png"
+        },
+
+        {
+          category: "commercial",
+          label: "상업업무용",
+          icon: "16.png"
         },
         {
           category: "land",
@@ -62,13 +68,8 @@ export default {
           icon: "15.png"
         },
         {
-          category: "commercial",
-          label: "상업/업무용",
-          icon: "16.png"
-        },
-        {
           category: "",
-          label: "분양권",
+          label: "무허가 건축물",
           icon: "17.png"
         },
         {

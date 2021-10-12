@@ -240,7 +240,6 @@ export default {
         });
     }
   },
-
   async mounted() {
     this.setGmapContainerSize();
     this.map = await this.$refs.mapRef.$mapPromise;
@@ -297,7 +296,8 @@ export default {
     ...mapActions("map", [
       "changeMapZoom",
       "changeMapCenter",
-      "setLocationLoading"
+      "setLocationLoading",
+      "setMapMode"
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
@@ -356,7 +356,6 @@ export default {
       let payload = { type: "city" };
       if (zoomLevel < 13) {
         this.showInfoWindow = false;
-        // subcities
       } else if (zoomLevel <= 14) {
         this.showInfoWindow = false;
         payload = { type: "subcity", ...location };
@@ -365,7 +364,13 @@ export default {
         payload = { type: "locations", ...location };
       } else {
         this.showInfoWindow = true;
-        payload = { type: "detail", ...location };
+        payload = {
+          type:
+            this.getMapMode === "redevelop-area"
+              ? "transaction_groups"
+              : "houses",
+          ...location
+        };
       }
       this.$store.dispatch("getSimpleHouses", payload);
       setTimeout(() => {

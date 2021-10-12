@@ -39,8 +39,8 @@ export default {
     return {
       filters: [
         { label: "주택유형", type: 'houseType' },
-        { label: "평형", type: 'pyeong' },
-        { label: "매매가", type: 'sale' },
+        { label: "면적종류", type: 'areaSize' },
+        // { label: "매매가", type: 'sale' },
         // { label: "전월세가", type: 'charter' },
         { label: '매물등록일자', type: 'date' }
       ]
@@ -52,7 +52,7 @@ export default {
         switch (type) {
           case 'houseType':
             return 'text-white bg-primary'
-          case 'pyeong':
+          case 'areaSize':
             return 'text-white bg-green'
           case 'recommend':
             return 'text-white  bg-white'

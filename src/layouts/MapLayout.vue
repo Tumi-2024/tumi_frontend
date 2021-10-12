@@ -7,8 +7,8 @@
           style="margin-bottom: 12px"
           v-show="$route.path !== '/map/list-sale'"
           class="q-pt-xs q-px-sm"
-          :disable="getMapMode === 'redevelop-area'"
         />
+        <!-- :disable="getMapMode === 'redevelop-area'" -->
       </div>
     </q-header>
 

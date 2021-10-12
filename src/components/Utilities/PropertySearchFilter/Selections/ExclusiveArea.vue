@@ -4,8 +4,7 @@
       class="title q-pa-none row justify-between items-center notosanskr-medium"
     >
       <div class="title row">
-        <text-under-highlight text="전용면적"></text-under-highlight>
-        <span class="notosanskr-regular q-ml-xs">(평)</span>
+        <text-under-highlight text="전용면적" />
       </div>
       <q-btn
         flat
@@ -13,7 +12,6 @@
         color="white"
         padding="0px 10px"
         text-color="secondary"
-        label="66m~165m"
       />
     </div>
 
@@ -22,7 +20,8 @@
         v-for="(pyeong, i) of pyeongs"
         :key="i"
         flat
-        class="col-3 notosanskr-medium"
+        class="notosanskr-medium"
+        style="flex: 1;"
         :class="{ selected: selected === pyeong && selected != '' }"
         :label="pyeong"
         @click="changeValue(pyeong)"
@@ -40,16 +39,13 @@ export default {
   },
   data() {
     return {
-      selected: "",
+      selected: "전용면적",
       pyeongs: [
-        "10평대",
-        "20평대",
-        "30평대",
-        "40평대",
-        "50평대",
-        "60평대",
-        "70평대",
-        "80평대"
+        "전용면적",
+        "연면적",
+        "건축면적",
+        "공급면적",
+        "대지면적"
       ]
     };
   },

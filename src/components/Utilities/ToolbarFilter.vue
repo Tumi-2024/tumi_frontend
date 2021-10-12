@@ -19,9 +19,9 @@
               :label="filter.label"
               :propertyType="filter.type === 'propertyType'"
               :exclusiveArea="filter.type === 'exclusiveArea'"
-              :salePrice="filter.type === 'salePrice'"
               :registrationDate="filter.type === 'registrationDate'"
             />
+              <!-- :salePrice="filter.type === 'salePrice'" -->
             <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
           </div>
         </slot>
@@ -49,15 +49,15 @@ export default {
           class: "text-white bg-primary"
         },
         {
-          label: "평형",
+          label: "면적종류",
           type: "exclusiveArea",
           class: "text-white bg-green"
         },
-        {
-          label: "매매가",
-          type: "salePrice",
-          class: "text-white bg-blue"
-        },
+        // {
+        //   label: "매매가",
+        //   type: "salePrice",
+        //   class: "text-white bg-blue"
+        // },
         {
           label: "매물등록일자",
           type: "registrationDate",

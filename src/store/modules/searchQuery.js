@@ -11,8 +11,8 @@ export const searchQueryStore = {
         return acc + `${keyName}=${curr[keyName]}`;
       }, "");
       console.log(test);
-      return ``;
-      // return `${test}`;
+      console.log(state);
+      return `${test}`;
     },
     getQuery: (state, getters) => key => {
       const obj = state.query.find(obj => Object.keys(obj)[0] === key);
@@ -27,6 +27,7 @@ export const searchQueryStore = {
     SET_QUERY: (state, payload) => {
       const keyName = Object.keys(payload)[0];
       const keyObj = state.query.find(obj => Object.keys(obj)[0] === keyName);
+      if (!keyName) return
       if (keyObj) {
         keyObj[keyName] = payload[keyName];
       } else {
@@ -35,6 +36,10 @@ export const searchQueryStore = {
     }
   },
   actions: {
-    setQuery: (context, data) => context.commit("SET_QUERY", data)
+    setQuery: (context, data) => {
+      context.commit("SET_QUERY", data)
+      console.log(context)
+      context.dispatch("getSimpleHouses", {}, { root: true })
+    }
   }
 };

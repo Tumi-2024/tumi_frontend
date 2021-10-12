@@ -44,10 +44,7 @@ export const mapStore = {
     myInterestArea: state => state.interest
   },
   mutations: {
-    setMapMode: (state, payload) => {
-      console.log(payload);
-      return (state.mode = payload);
-    },
+    setMapMode: (state, payload) => (state.mode = payload),
     setMapZoom: (state, payload) => (state.mapZoom = payload),
     setMapCenter: (state, payload) => (state.mapCenter = payload),
     setMapAddress: (state, payload) => (state.mapAddress = payload),
@@ -59,6 +56,7 @@ export const mapStore = {
     setIsCone: (state, payload) => (state.isCone = payload)
   },
   actions: {
+    setMapMode: (context, payload) => context.commit("setMapMode", payload),
     setIsCone: (context, payload) => context.commit("setIsCone", payload),
     setLocationLoading: (context, payload) =>
       context.commit("setLocationLoading", payload),

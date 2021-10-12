@@ -30,23 +30,23 @@ export default {
       btnGroup: [
         {
           backgroundColor: "#4B62DE",
-          text: "추천 매물",
-          subText1: "지도에서 쉽게<br/>추천매물 찾기",
+          text: '"매물" 검색 (지도로 찾기)',
+          subText1: "지도에서 쉽게<br/>매물 찾기",
           img: require("assets/iconsNew/20map.png"),
           func: this.toMapCity
         },
         {
           backgroundColor: "#3ECCB2",
-          text: "재개발 구역",
+          text: "실거래가 검색",
           subText1: `지도에서 쉽게`,
-          subText2: `재개발구역과 실거래가 찾기`,
+          subText2: `"개발지역"과 "실거래가" 찾기`,
           img: require("assets/iconsNew/20Redev.png"),
           func: this.toRedevelopmentArea
         },
         {
           backgroundColor: "#FF7D36",
-          text: "매물 검색",
-          subText1: "투미매물<br/>상세 검색하기",
+          text: '"매물"검색 (목록으로 찾기)',
+          subText1: "매물<br/>상세 검색하기",
           img: require("assets/iconsNew/search.png"),
           func: () => this.$router.push({ name: "map_list_sale" })
         },
