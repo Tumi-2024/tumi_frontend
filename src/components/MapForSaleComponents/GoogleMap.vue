@@ -23,7 +23,6 @@
         <info-window-content
           :price="estate.group_price.price_expected"
           :item="estate"
-          :count="0"
           :badges="{
             type_sale: estate.type_sale,
             type_house: estate.type_house,
@@ -91,7 +90,7 @@ export default {
     },
     setAreaPolygon() {
       let path;
-      console.log(this.estate)
+      console.log(this.estate);
       if (!this.polygon) {
         // IF THERES NO POLYGON WE CREATE OUR OWN
         const position = new this.google.maps.LatLng(

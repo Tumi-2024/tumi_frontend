@@ -21,18 +21,11 @@
           :options="infoOptions"
           :position="m.position"
           :opened="showInfoWindow"
-          class="q-pa-lg"
         >
           <info-window-content
             @viewArea="viewArea(m)"
             :item="m"
             :price="getPriceFromText(m)"
-            :count="m.count_transactions"
-            :badges="{
-              category: getCategoryLabel(m.categories || m.type_sale),
-              type: getType(m.types || m.group_building_house.type_house),
-              trading: false
-            }"
             :is-dev="!!m.redevelopment_area"
           />
         </gmap-info-window>
@@ -184,7 +177,8 @@ export default {
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
     getType() {
-      return value => {
+      return m => {
+        const value = m.types || m?.group_building_house?.type_house;
         if (!Array.isArray(value)) {
           return value;
         }
@@ -201,7 +195,6 @@ export default {
     },
     getCategoryLabel() {
       return value => {
-        console.log(value);
         if (!Array.isArray(value)) {
           return value;
         }
@@ -305,7 +298,6 @@ export default {
       this.setViewRedevOnly();
     },
     getPriceFromText(obj) {
-      console.log(obj);
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
@@ -574,6 +566,7 @@ export default {
   box-shadow: none;
   padding: 30px 3px 0 3px;
   .gm-style-iw-d {
+    overflow: hidden !important;
     background: white;
     border-radius: 8px;
     padding: 8px;
