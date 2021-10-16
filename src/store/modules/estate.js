@@ -82,6 +82,7 @@ export const estateStore = {
       ]}`;
       const searchQuery = context.getters["searchQuery/getQueryString"];
       const query = searchQuery + "&" + redevelopQuery;
+      console.log(payload);
       if (payload.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);

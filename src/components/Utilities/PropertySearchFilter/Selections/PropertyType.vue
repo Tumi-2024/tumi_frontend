@@ -72,6 +72,16 @@ export default {
           icon: require("assets/iconsNew/15.png"),
           label: "토지",
           value: "LAND"
+        },
+        {
+          icon: require("assets/iconsNew/17.png"),
+          label: "무허가 건축물",
+          value: "LAND"
+        },
+        {
+          icon: require("assets/iconsNew/18.png"),
+          label: "입주권",
+          value: "LAND"
         }
       ]
     };

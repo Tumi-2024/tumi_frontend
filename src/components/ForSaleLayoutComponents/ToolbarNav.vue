@@ -1,10 +1,5 @@
 <template>
-  <q-card
-    flat
-    square
-    class="row justify-between items-center q-px-md"
-    style="height: 60px"
-  >
+  <q-card flat square class="row justify-between items-center q-px-md">
     <q-card-section class="toolbar">
       <q-btn
         flat
@@ -21,7 +16,7 @@
           ></q-icon>
         </div>
         <q-separator vertical inset />
-        <div class="heading-nav-bar q-ml-sm">{{getToolbarTitle}}</div>
+        <div class="heading-nav-bar q-ml-sm">{{ getToolbarTitle }}</div>
       </q-btn>
 
       <!-- Right side starts here -->
@@ -46,18 +41,20 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: 'ToolbarNav',
+  name: "ToolbarNav",
   methods: {
-    like () {
-      this.$store.dispatch('toggleInterestHouse')
+    like() {
+      this.$store.dispatch("toggleInterestHouse");
     }
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
     is_interest() {
-      return this.$store.getters.current_house &&
+      return (
+        this.$store.getters.current_house &&
         this.$store.getters.current_house.interest &&
         this.$store.getters.current_house.interest.house
+      );
     }
   }
 };

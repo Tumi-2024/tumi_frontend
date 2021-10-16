@@ -35,7 +35,7 @@
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
-        :maxZoom="17"
+        :maxZoom="15"
         :calculator="calculatorMarker"
         :minimumClusterSize="1"
         @click="clusterClicked"
@@ -116,7 +116,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 14,
+          maxZoom: 15,
           textSize: 18,
           url: "icons/map-red-60x60.png",
           height: 60,
@@ -129,7 +129,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 14,
+          maxZoom: 15,
           textSize: 20,
           url: "icons/map-red-84x84.png",
           height: 84,
@@ -142,7 +142,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 14,
+          maxZoom: 15,
           textSize: 24,
           url: "icons/map-red-96x96.png",
           height: 96,
@@ -212,25 +212,27 @@ export default {
       };
     },
     getSimpleHouse() {
-      return this.$store.state.estate.simple_houses
-        .filter(h => {
-          return this.getIsCone ? h.redevelopment_area !== null : true;
-        })
-        .filter(house => {
-          const isOnlyRedev = this.getIsCone;
-          if (this.getMapMode === "redevelop-area") {
-            if (isOnlyRedev) {
-              return house.count_transaction_groups_redevelopment_area !== 0;
+      return (
+        this.$store.state.estate.simple_houses
+          // .filter(h => {
+          //   return this.getIsCone ? h.redevelopment_area !== null : true;
+          // })
+          .filter(house => {
+            const isOnlyRedev = this.getIsCone;
+            if (this.getMapMode === "redevelop-area") {
+              if (isOnlyRedev) {
+                return house.count_transaction_groups_redevelopment_area !== 0;
+              } else {
+                return house.count_transaction_groups !== 0;
+              }
             } else {
-              return house.count_transaction_groups !== 0;
+              if (isOnlyRedev) {
+                return house.count_houses_redevelopment_area !== 0;
+              }
+              return house.count_houses !== 0;
             }
-          } else {
-            if (isOnlyRedev) {
-              return house.count_houses_redevelopment_area !== 0;
-            }
-            return house.count_houses !== 0;
-          }
-        });
+          })
+      );
     }
   },
   async mounted() {
@@ -340,19 +342,15 @@ export default {
 
     getHouseInfo() {
       const zoomLevel = this.map.getZoom();
+      console.log(zoomLevel);
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
-      let payload = { type: "city" };
-      if (zoomLevel < 13) {
-        this.showInfoWindow = false;
-      } else if (zoomLevel <= 14) {
-        this.showInfoWindow = false;
-        payload = { type: "subcity", ...location };
-      } else if (zoomLevel <= 17) {
-        this.showInfoWindow = false;
+      let payload = { type: "subcity", ...location };
+      this.showInfoWindow = false;
+      if (zoomLevel <= 15) {
         payload = { type: "locations", ...location };
       } else {
         this.showInfoWindow = true;
@@ -366,8 +364,8 @@ export default {
       }
       this.$store.dispatch("getSimpleHouses", payload);
       setTimeout(() => {
-        this.showAreaBadges = this.getIsCone && zoomLevel > 14;
-        this.disableHeart = zoomLevel <= 17;
+        this.showAreaBadges = zoomLevel >= 15;
+        this.disableHeart = zoomLevel <= 15;
         if (this.getMapAreas.length) {
           this.setMapAreas();
         }
@@ -510,7 +508,7 @@ export default {
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);
-      this.map.setZoom(17);
+      this.map.setZoom(15);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })
@@ -520,13 +518,10 @@ export default {
         })
         .catch(e => {});
     },
-    async showHideArea(value) {
+    async showHideArea() {
       this.getHouseInfo();
       const zoomLevel = this.map.getZoom();
-      this.showAreaBadges = this.getIsCone && zoomLevel > 14;
-      if (this.getMapMode !== "redevelop-area") {
-        this.polygons.forEach(obj => obj.setVisible(!value));
-      }
+      this.showAreaBadges = zoomLevel > 14;
     },
     markUsersLocation(position = { lat: 0, lng: 0 }) {
       (() =>

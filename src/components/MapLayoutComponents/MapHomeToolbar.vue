@@ -1,16 +1,17 @@
 <template>
-  <q-card flat square style="height: 60px">
+  <q-card flat square>
     <q-card-section class="row justify-between items-center q-pa-none">
       <!-- left section items -->
       <q-btn class="row" flat padding="4px 16px">
         <div class="helper text-left col-12 notosanskr-regular">
           {{ getToolbarLabel }}
         </div>
-        <div class="q-mt-xs col-12 text-left notosanskr-medium">
-          <div class="location-text " flat text-color="black">
-            {{ getToolbarTitle }}
-            <!-- <q-icon name="keyboard_arrow_down" size="24px" /> -->
-          </div>
+        <div class="q-my-xs col-12 text-left notosanskr-medium">
+          <q-input v-model="searchText" filled dense placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </div>
       </q-btn>
       <!-- right section-items -->
@@ -42,6 +43,11 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
+  },
+  data() {
+    return {
+      searchText: ""
+    };
   },
   methods: {
     toggleHeaderTitle() {
