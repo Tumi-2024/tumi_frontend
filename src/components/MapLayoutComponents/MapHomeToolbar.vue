@@ -2,18 +2,31 @@
   <q-card flat square>
     <q-card-section class="row justify-between items-center q-pa-none">
       <!-- left section items -->
-      <q-btn class="row" flat padding="4px 16px">
-        <div class="helper text-left col-12 notosanskr-regular">
-          {{ getToolbarLabel }}
-        </div>
-        <div class="q-my-xs col-12 text-left notosanskr-medium">
-          <q-input v-model="searchText" filled dense placeholder="Search">
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </div>
-      </q-btn>
+      <div class="helper text-left col-12 notosanskr-regular">
+        {{ getToolbarLabel }}
+      </div>
+      <div class="q-my-xs col-4 text-left notosanskr-medium">
+        <q-select
+          filled
+          :label="getToolbarTitle"
+          :value="searchText"
+          @input="onSelect"
+          use-input
+          fill-input
+          hide-selected
+          :options="options"
+          @filter="filterFn"
+          style="width: 250px"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                No results
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </div>
       <!-- right section-items -->
       <section class="q-pr-md">
         <q-btn flat padding="4px" color="black" :to="{ name: 'my_page' }">
@@ -35,7 +48,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import Vue from "vue";
+
 // import DialogPropertyInformation from "./DialogPropertyInformation";
 export default {
   components: {
@@ -46,10 +61,41 @@ export default {
   },
   data() {
     return {
-      searchText: ""
+      searchText: "",
+      options: []
     };
   },
   methods: {
+    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+    onSelect(obj) {
+      console.log(obj, "onSelect");
+      this.searchText = obj;
+      this.changeMapCenter(obj.position);
+      this.changeMapZoom(16);
+    },
+    async filterFn(val, update, abort) {
+      if (val === "") {
+        update(() => {
+          this.options = [];
+        });
+      } else {
+        update(async () => {
+          const {
+            data: { results }
+          } = await Vue.prototype.$axios.get(
+            `redevelopment_areas/?search=${val}`
+          );
+          console.log(results);
+          this.options = results.map(({ title, latitude, longitude }) => {
+            return {
+              value: title,
+              label: title,
+              position: { lat: Number(latitude), lng: Number(longitude) }
+            };
+          });
+        });
+      }
+    },
     toggleHeaderTitle() {
       // this.getMapMode === "default"
       //   ? this.$router.push({ name: "map_view_search" })

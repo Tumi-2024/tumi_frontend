@@ -57,7 +57,10 @@
         :key="'area' + i"
         :marker="badge.center"
       >
-        <div class="area-badge-info notosanskr-medium" v-if="showAreaBadges">
+        <div
+          class="area-badge-info notosanskr-medium"
+          v-if="showAreaBadges && getMapZoom > 15"
+        >
           <q-icon size="20px" class="q-mr-xs">
             <img src="~assets/icons/area-info.svg" alt="area-info" />
           </q-icon>
@@ -99,11 +102,11 @@ export default {
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
       areaBadges: [],
-      showAreaBadges: false,
+      showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
         // optional: offset infowindow so it visually sits nicely on top of our marker
-        pixelOffset: { width: 0, height: -35 },
+        // pixelOffset: { width: 0, height: -35 },
         // prevent map from moving when showing infoWindow
         disableAutoPan: true
       },
@@ -264,6 +267,8 @@ export default {
     this.map.addListener("zoom_changed", _ => {
       this.setLocationLoading(false);
       this.getHouseInfo();
+      const zoomLevel = this.map.getZoom();
+      this.changeMapZoom(zoomLevel);
       this.isMounted = true;
     });
 
@@ -341,8 +346,8 @@ export default {
     },
 
     getHouseInfo() {
-      const zoomLevel = this.map.getZoom();
-      console.log(zoomLevel);
+      const zoomLevel = this.getMapZoom;
+      console.log(zoomLevel, this.getMapZoom);
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
@@ -363,13 +368,12 @@ export default {
         };
       }
       this.$store.dispatch("getSimpleHouses", payload);
-      setTimeout(() => {
-        this.showAreaBadges = zoomLevel >= 15;
-        this.disableHeart = zoomLevel <= 15;
-        if (this.getMapAreas.length) {
-          this.setMapAreas();
-        }
-      }, 500);
+      this.disableHeart = zoomLevel <= 15;
+      // setTimeout(() => {
+      //   if (this.getMapAreas.length) {
+      //     this.setMapAreas();
+      //   }
+      // }, 500);
     },
     setMapGeojson(geojson) {
       /**
@@ -389,6 +393,12 @@ export default {
       });
     },
     async initializeRedevelopArea(visible) {
+      this.areaBadges = this.getMapAreas.map(obj => {
+        return {
+          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+          title: obj.title
+        };
+      });
       this.polygons = this.getMapAreas.map(area => {
         const center = {
           lat: Number(area.latitude),
@@ -427,40 +437,16 @@ export default {
         });
         return item;
       });
-      const bounds = this.map.getBounds();
-
-      const getVisible = (lat, lng) =>
-        bounds.getSouthWest().lat() < Number(lat) &&
-        Number(lat) < bounds.getNorthEast().lat() &&
-        bounds.getSouthWest().lng() < Number(lng) &&
-        Number(lng) < bounds.getNorthEast().lng();
-
-      this.areaBadges = this.getMapAreas
-        .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
-        .map(obj => {
-          return {
-            center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-            title: obj.title
-          };
-        });
+      // this.setMapAreas();
     },
-    setMapAreas() {
-      const bounds = this.map.getBounds();
-      const getVisible = (lat, lng) =>
-        bounds.getSouthWest().lat() < Number(lat) &&
-        Number(lat) < bounds.getNorthEast().lat() &&
-        bounds.getSouthWest().lng() < Number(lng) &&
-        Number(lng) < bounds.getNorthEast().lng();
-
-      this.areaBadges = this.getMapAreas
-        .filter(({ latitude: lat, longitude: lng }) => getVisible(lat, lng))
-        .map(obj => {
-          return {
-            center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-            title: obj.title
-          };
-        });
-    },
+    // setMapAreas() {
+    //   this.areaBadges = this.getMapAreas.map(obj => {
+    //     return {
+    //       center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+    //       title: obj.title
+    //     };
+    //   });
+    // },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;
@@ -520,8 +506,7 @@ export default {
     },
     async showHideArea() {
       this.getHouseInfo();
-      const zoomLevel = this.map.getZoom();
-      this.showAreaBadges = zoomLevel > 14;
+      this.showAreaBadges = !this.showAreaBadges;
     },
     markUsersLocation(position = { lat: 0, lng: 0 }) {
       (() =>
