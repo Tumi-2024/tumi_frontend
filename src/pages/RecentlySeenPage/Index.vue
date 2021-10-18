@@ -3,17 +3,23 @@
     <toolbar-nav class="bg-white" style="margin-bottom: 12px"></toolbar-nav>
     <property-menu-sort hide-edit @sort="getProperties"></property-menu-sort>
     <property-filter @filter="filter"
-      :apartment="getCountApartment()"
-      :office="getCountOfficetels()"
+      :apartment="getCountType('아파트')"
+      :office="getCountType('오피스텔')"
+      :land="getCountType('토지')"
+      :alliance="getCountType('연립ￜ다세대')"
+      :commercial="getCountType('상업ￜ업무용')"
+      :single="getCountType('단독ￜ다가구')"
+      :unauthorized="getCountType('무허가 건축물')"
+      :right="getCountType('입주권')"
       class="bg-white"
     ></property-filter>
     <div class="bg-white">
       <div  style="border-bottom: 1px solid #e8e8e8; margin: 0 16px"></div>
     </div>
     <q-card-section class="bg-white list-items q-pa-none notosanskr-regular">
-      <q-list class="bg-white q-pt-md" v-if="this.properties && this.properties.length > 0" >
+      <q-list class="bg-white q-pt-md" v-if="properties && properties.length > 0" >
         <area-item
-          v-for="(item, i) of this.properties"
+          v-for="(item, i) of properties"
           :key="i"
           :item="item"
         ></area-item>
