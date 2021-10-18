@@ -9,8 +9,8 @@
           <address-with-badges
             :item="{
               address: item.address,
-              building: `${item.transaction_group.building ||
-                item.transaction_group.text_road}
+              building: `${item.transaction_group ? item.transaction_group.building ||
+                item.transaction_group.text_road : ''}
               ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item)"
@@ -53,6 +53,24 @@ export default {
         str2 = 0 + str2;
       }
       return str1.slice(0, 4) + "." + str1.slice(4, 6) + "." + str2;
+    },
+    reshape(item) {
+      if(!item.group_building_house) {
+        item['group_building_house'] = {'type_house': item.type_house}
+      }
+      if(!item.group_individual_household) {
+        item['group_individual_household'] = {'size_dedicated_area': item.size_dedicated_area}
+      }
+      if(!item.group_land_use) {
+        item['group_land_use'] = {'type_structure_building': item.type_structure_building}
+      }
+      if(!item.group_trading_terms) {
+        item['group_trading_terms'] = { 
+          'price_selling_hope': item.price_selling_hope,
+          'price_charter_deposit_hope': item.price_charter_deposit_hope,
+        }
+      }
+      return item
     }
   },
   data() {
@@ -70,6 +88,7 @@ export default {
   computed: {
     getBadges() {
       return (item, ctgr) => {
+        item = this.reshape(item)
         const getDate = (date) => {
           const d = new Date(date)
           const y = String(d.getFullYear()).split(0, 2)[1]
