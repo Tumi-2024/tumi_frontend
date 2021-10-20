@@ -22,6 +22,10 @@
           v-for="(item, i) of properties"
           :key="i"
           :item="item"
+          v-bind="{
+            ctgr: item.category,
+            type: item.type,
+          }"
         ></area-item>
       </q-list>
     </q-card-section>
