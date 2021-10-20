@@ -182,7 +182,7 @@ export const estateStore = {
           lng: Number(item.longitude)
         }
       }));
-      context.commit("setDetailHouses", results);
+      context.commit("setInterestHouses", results);
     },
     getContactHouses: async function(context, paramter) {
       const response = await Vue.prototype.$axios.get(`/houses/contacts/`, {
