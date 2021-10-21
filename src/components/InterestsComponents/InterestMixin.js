@@ -11,7 +11,7 @@ export default {
       });
     },
     getCountType(type) {
-      return this.$store.getters.recently_viewed_houses.filter(item => item.type_house === type).length;
+      return this.$store.getters.interest_houses.filter(item => item.group_building_house.type_house === type).length;
     },
     async getProperties(order) {
       await this.$store.dispatch('getInterestHouses');

@@ -1,5 +1,8 @@
 <template>
-    <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="current_filter === type ? 'dark' : undefined" @click="filter(type)">
+    <q-btn unelevated class="q-mr-sm" padding="0px 8px" 
+        :color="current_filter === type ? 'dark' : undefined" 
+        v-if="count > 0"
+        @click="filter(type)">
         #{{type}}({{ count }})
     </q-btn>
 </template>
