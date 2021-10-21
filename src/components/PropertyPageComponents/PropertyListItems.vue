@@ -12,6 +12,7 @@
             v-for="(item, i) of items"
             :key="i"
             :item="item"
+            :query="{ sellid: item.id }"
             v-bind="{
               ctgr: item.category,
               type: item.type,
