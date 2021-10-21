@@ -8,31 +8,17 @@
           class="row"
           @click="setSelected(item.id)"
         >
-          <div class="row items-center q-pl-md q-pr-xs" v-if="isEdit">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="10"
-                cy="10"
-                r="9.5"
-                fill="white"
-                :stroke="isSelected(item.id)"
-              />
-              <circle cx="10" cy="10" r="6" :fill="isSelected(item.id)" />
-            </svg>
-          </div>
-          <property-item
-            class="col"
-            :name="item.address"
-            :amount="item.amount"
-            :tags="item.tags"
+          <area-item
+            v-for="(item, i) of items"
+            :key="i"
+            :item="item"
+            v-bind="{
+              ctgr: item.category,
+              type: item.type,
+            }"
+            :is_selected="isSelected(item.id)"
             :disabled="isEdit"
-          />
+          ></area-item>
         </div>
       </q-list>
     </q-card-section>
@@ -73,12 +59,12 @@
 </template>
 
 <script>
-import PropertyItem from "components/Utilities/PropertyItem";
+import { AreaItem } from "components/MapListSaleComponents";
 
 
 export default {
   components: {
-    "property-item": PropertyItem
+    "area-item": AreaItem,
   },
   mounted () {
     
@@ -108,8 +94,7 @@ export default {
       }
     },
     isSelected(id) {
-      const checkSelected = this.selectedItems.find(item => item === id);
-      return checkSelected ? "#FF7D36" : "#D5D5D5";
+      return this.selectedItems.some(item => item === id);
     }
   },
   watch: {

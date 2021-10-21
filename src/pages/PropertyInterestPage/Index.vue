@@ -18,17 +18,11 @@
       <div  style="border-bottom: 1px solid #e8e8e8; margin: 0 16px"></div>
     </div>
     <q-card-section class="bg-white list-items q-pa-none notosanskr-regular">
-      <q-list class="bg-white q-pt-md" v-if="properties && properties.length > 0" >
-        <area-item
-          v-for="(item, i) of properties"
-          :key="i"
-          :item="item"
-          v-bind="{
-            ctgr: item.category,
-            type: item.type,
-          }"
-        ></area-item>
-      </q-list>
+      <property-list-items
+      :items="properties"
+      @deleteItems="deleteItems"
+      :isEdit="isEdit"
+    ></property-list-items>
     </q-card-section>
   </div>
 </template>

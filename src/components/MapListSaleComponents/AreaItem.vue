@@ -1,7 +1,11 @@
 <template>
   <q-item
     class="column notosanskr-regular"
-    :to="{ name: 'for_sale_apartment', query }"
+    :to="{ name: !disabled ? to : '', query }"
+    :manual-focus="disabled"
+    @mouseenter="onHover = true"
+    @mouseleave="onHover = false"
+    :focused="isSelected || onHover"
   >
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
@@ -40,7 +44,19 @@ export default {
     item: Object,
     ctgr: String,
     type: String,
-    query: Object
+    query: Object,
+    to: {
+      type: String,
+      default: "for_sale_apartment"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    is_selected: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     toKr,
@@ -82,10 +98,12 @@ export default {
         { key: "APARTMENT", label: "아파트" },
         { key: "LAND", label: "토지" },
         { key: "ALLIANCE", label: "연립/다세대" }
-      ]
+      ],
+      onHover: false
     };
   },
   computed: {
+    isSelected() { return this.is_selected },
     getBadges() {
       return (item, ctgr) => {
         item = this.reshape(item)
