@@ -60,10 +60,14 @@ export const estateStore = {
       state.interest_houses = payload;
     },
     addInterestHouse: function(state, payload) {
-      state.current_house.interest = true
+      state.current_house.interest.house = true
     },
     removeInterestHouse: function(state, payload) {
-      state.current_house.interest = null;
+      state.current_house.interest.house = null;
+    },
+    removeInterestHouses: function(state, payload) {
+      state.interest_houses = state.interest_houses.filter(house => !payload.some(id => id === house.id))
+      console.log('removeInterestHouses', payload)
     },
     setLatitude: function(state, payload) {
       state.latitude = payload;
@@ -175,9 +179,7 @@ export const estateStore = {
       context.commit("setDetailHouses", results);
     },
     getInterestHouses: async function(context, paramter) {
-      const response = await Vue.prototype.$axios.get(`/houses/interests/`, {
-        timeout: 10000
-      });
+      const response = await Vue.prototype.$axios.get(`/houses/interests/`);
       const results = response.data.results.map(item => ({
         ...item,
         position: {
@@ -220,7 +222,7 @@ export const estateStore = {
     },
     toggleInterestHouse: (context, parameter) => {
       const house = context.state.current_house;
-      if (house.interest) {
+      if (house.interest.house) {
         Vue.prototype.$axios
           .delete(`/houses/${house.id}/interest/`)
           .then(() => {
@@ -235,7 +237,8 @@ export const estateStore = {
         });
     },
     deleteInterestHouses: async (context, parameter) => {
-      console.log(parameter)
+      await Vue.prototype.$axios.post('interests/delete/', { houses: parameter })
+      context.commit('removeInterestHouses', parameter)
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const {

@@ -4,7 +4,7 @@
       @edit="e => (isEdit = e)"
       :isEdit="isEdit"
     ></property-menu-sort>
-    <property-filter
+    <property-filter @filter="filter"
       :apartment="getCountType('아파트')"
       :office="getCountType('오피스텔')"
       :land="getCountType('토지')"

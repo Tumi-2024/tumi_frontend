@@ -53,7 +53,9 @@ export default {
     is_interest() {
       return (
         this.$store.getters.current_house &&
-        this.$store.getters.current_house.interest
+        this.$store.getters.current_house.interest &&
+        this.$store.getters.current_house.interest.house
+
       );
     }
   }

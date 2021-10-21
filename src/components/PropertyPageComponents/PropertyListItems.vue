@@ -9,8 +9,6 @@
           @click="setSelected(item.id)"
         >
           <area-item
-            v-for="(item, i) of items"
-            :key="i"
             :item="item"
             :query="{ sellid: item.id }"
             v-bind="{
