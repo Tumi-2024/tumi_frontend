@@ -5,7 +5,7 @@
       style="height: 48px;"
     >
       <p style="line-height: 48px; padding-left: 16px;">
-        관심매물 <span style="color: #ff5a00;">{{ $store.getters.recently_viewed_houses.length }}</span>개
+        관심매물 <span style="color: #ff5a00;">{{ houseCount }}</span>개
       </p>
     </q-card-section>
 
@@ -73,6 +73,14 @@ export default {
   data () {
     return {
       order: 'created',
+    }
+  },
+  computed: {
+    houseCount() {
+      if(this.$route.name === 'recently_seen') {
+        return this.$store.getters.recently_viewed_houses.length
+      }
+      return this.$store.getters.interest_houses.length
     }
   },
   methods: {

@@ -59,8 +59,15 @@ export const estateStore = {
     setInterestHouses: function(state, payload) {
       state.interest_houses = payload;
     },
+    addInterestHouse: function(state, payload) {
+      state.current_house.interest.house = true
+    },
     removeInterestHouse: function(state, payload) {
       state.current_house.interest.house = null;
+    },
+    removeInterestHouses: function(state, payload) {
+      state.interest_houses = state.interest_houses.filter(house => !payload.some(id => id === house.id))
+      console.log('removeInterestHouses', payload)
     },
     setLatitude: function(state, payload) {
       state.latitude = payload;
@@ -175,9 +182,7 @@ export const estateStore = {
       context.commit("setDetailHouses", results);
     },
     getInterestHouses: async function(context, paramter) {
-      const response = await Vue.prototype.$axios.get(`/houses/interests/`, {
-        timeout: 10000
-      });
+      const response = await Vue.prototype.$axios.get(`/houses/interests/`);
       const results = response.data.results.map(item => ({
         ...item,
         position: {
@@ -185,7 +190,7 @@ export const estateStore = {
           lng: Number(item.longitude)
         }
       }));
-      context.commit("setDetailHouses", results);
+      context.commit("setInterestHouses", results);
     },
     getContactHouses: async function(context, paramter) {
       const response = await Vue.prototype.$axios.get(`/houses/contacts/`, {
@@ -224,15 +229,19 @@ export const estateStore = {
         Vue.prototype.$axios
           .delete(`/houses/${house.id}/interest/`)
           .then(() => {
-            context.commit("removeInterestHouse");
+            context.commit("removeInterestHouse", house);
           });
         return;
       }
       Vue.prototype.$axios
         .post(`/houses/${house.id}/interest/`)
         .then(result => {
-          context.commit("setSelectedHouse", result.data.house);
+          context.commit("addInterestHouse", result.data.house);
         });
+    },
+    deleteInterestHouses: async (context, parameter) => {
+      await Vue.prototype.$axios.post('interests/delete/', { houses: parameter })
+      context.commit('removeInterestHouses', parameter)
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const {

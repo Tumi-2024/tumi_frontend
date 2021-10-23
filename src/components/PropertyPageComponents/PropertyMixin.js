@@ -1,5 +1,3 @@
-import { toKr } from 'src/utils'
-
 export default {
   data() {
     return {
@@ -12,12 +10,8 @@ export default {
         this.properties = this.properties.filter(item => item.id !== id);
       });
     },
-    getCountOfficetels() {
-      return this.$store.getters.recently_viewed_houses.filter(item =>
-        toKr(item.type_house) === "오피스텔").length;
-    },
-    getCountApartment() {
-      return this.$store.getters.recently_viewed_houses.filter(item => toKr(item.type_house) === "아파트").length;
+    getCountType(type) {
+      return this.$store.getters.recently_viewed_houses.filter(item => item.group_building_house.type_house === type).length;
     },
     async getProperties(order) {
       await this.$store.dispatch('getRecentlyViewedHouses', order);

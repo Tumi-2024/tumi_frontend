@@ -20,6 +20,7 @@
       </q-btn>
 
       <!-- Right side starts here -->
+      
       <div class="flex-row">
         <q-btn flat padding="0 8px" class="bg-white" @click="like()">
           <q-icon size="44px">
@@ -54,6 +55,7 @@ export default {
         this.$store.getters.current_house &&
         this.$store.getters.current_house.interest &&
         this.$store.getters.current_house.interest.house
+
       );
     }
   }

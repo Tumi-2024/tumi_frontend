@@ -130,11 +130,12 @@ export default {
       console.log(this.estate.group_location)
       this.redevelopment = this.estate.group_location?.redevelopment_area || false
       console.log(this.redevelopment)
+
+      this.$store.dispatch('addRecentlyViewedHouse', data)
       const { data: transactions } = await Vue.prototype.$axios.get(
         `/transaction_groups/${this.estate.transaction_group.id}/transactions`
       );
       this.transactions = transactions;
-
       this.getGraphData();
     }
   },

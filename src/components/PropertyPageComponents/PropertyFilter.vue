@@ -3,20 +3,24 @@
     <q-card-section class="row justify-between card-section" style="">
       <div class="notosanskr-medium" style="">
         <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'all' ? 'dark' : undefined" @click="filter('all')">
-          #전체({{ apartment + office }})
+          #전체({{ all }})
         </q-btn>
-        <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'apartment' ? 'dark' : undefined" @click="filter('apartment')">
-          #아파트({{ apartment }})
-        </q-btn>
-        <q-btn unelevated class="q-mr-sm" padding="0px 8px" :color="filter_keyword === 'office' ? 'dark' : undefined" @click="filter('office')">
-          #오피스텔({{ office }})
-        </q-btn>
+        <filter-button :type="'아파트'" :count="apartment" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'연립ￜ다세대'" :count="alliance" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'단독ￜ다가구'" :count="single" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'오피스텔'" :count="office" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'상업ￜ업무용'" :count="commercial" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'토지'" :count="land" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'무허가 건축물'" :count="unauthorized" :current_filter="filter_keyword" @filter="filter"/>
+        <filter-button :type="'입주권'" :count="right" :current_filter="filter_keyword" @filter="filter"/>
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script>
+import FilterButton from './FilterButton.vue'
+
 export default {
   props: {
     apartment: {
@@ -26,6 +30,39 @@ export default {
     office: {
       type: Number,
       default: 0
+    },
+    land: {
+      type: Number,
+      default: 0
+    },
+    alliance: {
+      type: Number,
+      default: 0
+    },
+    commercial: {
+      type: Number,
+      default: 0
+    },
+    single: {
+      type: Number,
+      default: 0
+    },
+    unauthorized: {
+      type: Number,
+      default: 0
+    },
+    right: {
+      type: Number,
+      default: 0
+    }
+  },
+  components: {
+    FilterButton
+  },
+  computed: {
+    all() {
+      return this.apartment + this.office + this.land + this.alliance + 
+        this.commercial + this.single + this.unauthorized + this.right
     }
   },
   data() {
