@@ -2,30 +2,37 @@
   <q-card flat square>
     <q-card-section class="row justify-between items-center q-pa-none">
       <!-- left section items -->
-      <div class="helper text-left col-12 notosanskr-regular">
-        {{ getToolbarLabel }}
-      </div>
-      <div class="q-my-xs col-4 text-left notosanskr-medium">
-        <q-select
-          filled
-          :label="getToolbarTitle"
-          :value="searchText"
-          @input="onSelect"
-          use-input
-          fill-input
-          hide-selected
-          :options="options"
-          @filter="filterFn"
-          style="width: 250px"
-        >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey">
-                No results
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
+      <div class="row items-center">
+        <div class="column" style="width: 180px;">
+          <div class="helper text-left notosanskr-regular">
+            {{ getToolbarLabel }}
+          </div>
+          <div class="location-text text-left notosanskr-regular">
+            {{ getToolbarTitle }}
+          </div>
+        </div>
+        <div class="q-my-xs col-4 text-left notosanskr-medium">
+          <q-select
+            filled
+            label="검색"
+            :value="searchText"
+            @input="onSelect"
+            use-input
+            fill-input
+            hide-selected
+            :options="options"
+            @filter="filterFn"
+            style="width: 250px"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
       </div>
       <!-- right section-items -->
       <section class="q-pr-md">
@@ -97,9 +104,6 @@ export default {
       }
     },
     toggleHeaderTitle() {
-      // this.getMapMode === "default"
-      //   ? this.$router.push({ name: "map_view_search" })
-      //   : this.$refs.DialogPropertyInformation.showDialog();
       this.$router.push({ name: "map_view_search" });
     }
   }

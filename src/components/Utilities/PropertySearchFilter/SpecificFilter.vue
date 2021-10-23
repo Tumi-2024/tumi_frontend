@@ -79,7 +79,7 @@ export default {
     return {
       modal: false,
       keyName: "",
-      selected: "",
+      selected: [],
       selectedDetail: ""
     };
   },
@@ -121,7 +121,7 @@ export default {
     ...mapGetters("map", ["getMapCenter"])
   },
   methods: {
-    ...mapActions("searchQuery", ["setQuery"]),
+    ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
     // STORE MODULE ACTIONS ***
     // ...mapActions("searchQuery", [
     //   "setTypeSale",
@@ -131,105 +131,30 @@ export default {
     //   "setDepositPrice"
     // ]),
     // COMPONENTS METHODS STARTS ***
-    select(val, key) {
-      console.log(val, key);
-      this.selected = val;
+    select(obj, key) {
+      this.selected = obj;
       this.keyName = key;
     },
     selectDetail(val) {
-      console.log(val);
       this.selectedDetail = val;
     },
     save() {
-      this.setQuery({ [this.keyName]: this.selected });
-      console.log(this.getQuery("categories"));
-      // console.log(this.selected, "selected");
-      // console.log(this.propertyType, "propertyType");
-      // if (this.selected) {
-      //   console.log("저장 ", this.selected, this.selectedDetail);
-      //   if (this.transactionType) {
-      //     // this.$store.search.dispatch('setTypeSale', this.selected);
-      //     console.log("transactionType");
-      //     this.setTypeSale(this.selected);
-      //   }
-      //   if (this.propertyType) {
-      //     console.log(this.propertyType, "propertyType", this.selected);
-      //     // this.$store.search.dispatch('setTypeHouse', this.selected);
-      //     this.setTypeHouse(this.selectedDetail);
-      //     if (this.selectedDetail) {
-      //       console.log("selectedDetail");
-      //       // this.$store.search.dispatch('setTypeHouseDetail', this.selectedDetail);
-      //       this.setTypeHouseDetail(this.selectedDetail);
-      //     }
-      //   }
-      //   if (this.salePrice) {
-      //     console.log("salePrice");
-      //     // this.$store.search.dispatch('setSalePrice', this.selected);
-      //     this.setSalePrice(this.selected);
-      //   }
-      //   if (this.charterPriceDeposit) {
-      //     console.log("charterPriceDeposit");
-      //     // this.$store.search.dispatch('setDepositPrice', this.selected);
-      //     this.setDepositPrice(this.selected);
-      //   }
-      // }
-      // // console.log(toQueryString(this.search));
-      // this.$store.dispatch("getSimpleHouses", {
-      //   query: toQueryString(this.search)
-      // });
-      // // this.$store.dispatch('getDistinctHouses', toQueryString(this.search));
-      // // this.$store.dispatch('getDetailHouses', toQueryString({
-      // //   latitude: this.getMapCenter.lat,
-      // //   longitude: this.getMapCenter.lng,
-      // //   ...this.search
-      // // }));
+      // if (this.keyName )
+      const isTransaction = this.$route.path === "map/city/area";
+      if (isTransaction) {
+        this.selected.map(obj => {
+          return obj.valueTransaction;
+        });
+      } else {
+        this.selected.map(obj => {
+          return obj.valueHouse;
+        });
+      }
+      this.setQuery({ key: this.keyName, data: this.selected });
       this.modal = false;
     },
-    init() {
-      if (this.selected) {
-        console.log("저장 ", this.selected);
-        if (this.transactionType) {
-          this.selected = "전체";
-          // this.$store.search.dispatch('setTypeSale', '전체');
-          this.setTypeSale("전체");
-        }
-        if (this.propertyType) {
-          this.selected = "";
-          // this.$store.search.dispatch('setTypeHouse', '');
-          this.setTypeHouse("");
-          if (this.selectedDetail) {
-            this.selectedDetail = "전체";
-            // this.$store.search.dispatch('setTypeHouseDetail', '전체');
-            this.setTypeHouseDetail("전체");
-          }
-        }
-        if (this.salePrice) {
-          this.selected = { text: "전체", min: null, max: null };
-          // this.$store.search.dispatch('setSalePrice', {
-          //   text: '전체',
-          //   min: null,
-          //   max: null
-          // });
-          this.setSalePrice({
-            text: "전체",
-            min: null,
-            max: null
-          });
-        }
-        if (this.charterPriceDeposit) {
-          this.selected = { text: "전체", min: null, max: null };
-          // this.$store.search.dispatch('setDepositPrice', {
-          //   text: '전체',
-          //   min: null,
-          //   max: null
-          // });
-          this.setDepositPrice({
-            text: "전체",
-            min: null,
-            max: null
-          });
-        }
-      }
+    async init() {
+      this.selected = await this.initializeQuery("categories");
       this.modal = false;
     }
   }

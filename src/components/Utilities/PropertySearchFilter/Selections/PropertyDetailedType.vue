@@ -39,7 +39,7 @@ export default {
     };
   },
   props: {
-    selectedCategory: String
+    selectedCategory: Array
   },
   mounted() {
     this.selected = this.$store.state.search.typeHouseDetail;
@@ -47,7 +47,7 @@ export default {
   methods: {
     select(type) {
       this.selected = type;
-      this.$emit('select', type);
+      this.$emit("select", type);
     },
     isVisible() {
       return (

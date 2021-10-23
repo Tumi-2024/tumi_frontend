@@ -77,20 +77,24 @@ export const estateStore = {
       context.commit("setViewRedevOnly");
     },
     getSimpleHouses: async function(context, payload) {
-      const redevelopQuery = `redevelopment_area__isnull=${!context.getters[
-        "map/getIsCone"
-      ]}`;
-      const searchQuery = context.getters["searchQuery/getQueryString"];
-      const query = searchQuery + "&" + redevelopQuery;
-      console.log(payload);
+      const statusQuery = "redevelopment_area__status=운영";
+      const redevelopQuery = context.getters["map/getIsCone"]
+        ? statusQuery
+        : "" +
+          `redevelopment_area__isnull=${!context.getters["map/getIsCone"]}`;
+      const getQueryString = context.getters["searchQuery/getQueryString"];
+      const query =
+        getQueryString("categories", "type_house__in", "valueHouse") +
+        "&" +
+        redevelopQuery;
+      const encodedUrl = encodeURI(query);
       if (payload.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);
       }
       const lat = context.state.latitude;
       const long = context.state.longitude;
-      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}&${query}`;
-      console.log(payload.type);
+      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}&${encodedUrl}`;
       switch (payload.type) {
         case "city":
           await context.commit("setRequestUrl", "cities");
@@ -110,7 +114,6 @@ export const estateStore = {
         // default:
         //   await context.commit("setRequestUrl", context.state.requestUrl)
       }
-      console.log(context.state.requestUrl);
 
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/?${rangeQuery}`,

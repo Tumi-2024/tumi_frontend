@@ -259,7 +259,7 @@ export default {
         this.isMounted = true;
         if (this.polygons.length === 0) {
           await this.fetchMapAreas();
-          this.initializeRedevelopArea(true);
+          this.initializeRedevelopArea();
         }
       }
     });
@@ -392,7 +392,7 @@ export default {
         return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
       });
     },
-    async initializeRedevelopArea(visible) {
+    async initializeRedevelopArea(visible = true) {
       this.areaBadges = this.getMapAreas.map(obj => {
         return {
           center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
@@ -458,15 +458,15 @@ export default {
         this.map.setZoom(18);
       }, 500);
     },
-    setMapOnFocus() {
-      const query = this.$route.query;
-      if (query.onFocus) {
-        this.map.setZoom(query.zoom);
-        if (query.lat && query.lng) {
-          this.map.setCenter({ lat: query.lat, lng: query.lng });
-        }
-      }
-    },
+    // setMapOnFocus() {
+    //   const query = this.$route.query;
+    //   if (query.onFocus) {
+    //     this.map.setZoom(query.zoom);
+    //     if (query.lat && query.lng) {
+    //       this.map.setCenter({ lat: query.lat, lng: query.lng });
+    //     }
+    //   }
+    // },
     viewArea(item) {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
