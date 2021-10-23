@@ -142,8 +142,10 @@ export const searchQueryStore = {
         state.query[key].push(data);
       }
     },
-    INIT_QUERY: state => {
-      state = initState;
+    INIT_QUERY: (state, getters) => {
+      console.log(state.query);
+      state.query[getters] = initState.query[getters];
+      console.log(state.query, getters);
     }
   },
   actions: {

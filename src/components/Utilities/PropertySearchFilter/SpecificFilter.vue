@@ -140,22 +140,14 @@ export default {
     },
     save() {
       // if (this.keyName )
-      const isTransaction = this.$route.path === "map/city/area";
-      if (isTransaction) {
-        this.selected.map(obj => {
-          return obj.valueTransaction;
-        });
-      } else {
-        this.selected.map(obj => {
-          return obj.valueHouse;
-        });
-      }
       this.setQuery({ key: this.keyName, data: this.selected });
       this.modal = false;
     },
     async init() {
-      this.selected = await this.initializeQuery("categories");
       this.modal = false;
+      const test = await this.initializeQuery("categories");
+      this.selected = Array(test);
+      console.log(this.selected);
     }
   }
 };

@@ -104,6 +104,7 @@ export default {
   },
   beforeMount() {
     this.selected = [...this.getQuery("categories")];
+    console.log(this.getQuery("categories"));
   },
   methods: {
     select(val) {
