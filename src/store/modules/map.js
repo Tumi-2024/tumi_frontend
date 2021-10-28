@@ -2,6 +2,7 @@
 import Vue from "vue";
 
 const initState = {
+  isMapLoaded: true,
   mode: "default",
   mapZoom: 12,
   mapCenter: {
@@ -53,7 +54,11 @@ export const mapStore = {
     setInterest: (state, payload) => (state.interest = payload),
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
-    setIsCone: (state, payload) => (state.isCone = payload)
+    setIsCone: (state, payload) => (state.isCone = payload),
+    removeLocationInterest: (state, payload) => {
+      const index = state.interest.findIndex(area => area.id === payload)
+      state.interest.splice(index, 1)
+    }
   },
   actions: {
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
@@ -113,6 +118,10 @@ export const mapStore = {
           // console.log(context.state);
           // context.commit("");
           // data.lat, longitude: data.lng
+        }).catch((thrown) => {
+          if (Vue.prototype.$axios.isCancel(thrown)) {
+            console.log('request canceled')
+          }
         });
     },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
@@ -153,8 +162,7 @@ export const mapStore = {
       Vue.prototype.$axios
         .delete(`sub_cities/${payload}/interest/`)
         .then(result => {
-          context.dispatch("getLocationInterest");
-          // context.commit("setIsInterest", false);
+          context.commit("removeLocationInterest", payload)
         });
     },
     fetchLocationInterest: async context => {
