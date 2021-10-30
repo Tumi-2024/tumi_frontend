@@ -74,14 +74,14 @@ export default {
               transactionItem?.text_month.slice(0, 4) +
               "." +
               transactionItem?.text_month.slice(4, 6),
-            type: TYPE_HOUSE?.[item.categories[0]]
+            type: TYPE_HOUSE?.[item?.categories?.[0]]
           };
         } else {
           const d = new Date(item.created);
           const dd = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
           return {
             date: `${d.getFullYear()}.${dd}`,
-            type: item.group_building_house.type_house
+            type: item?.group_building_house?.type_house
           };
         }
       };

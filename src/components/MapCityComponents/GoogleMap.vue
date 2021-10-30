@@ -347,7 +347,6 @@ export default {
 
     getHouseInfo() {
       const zoomLevel = this.getMapZoom;
-      console.log(zoomLevel, this.getMapZoom);
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],

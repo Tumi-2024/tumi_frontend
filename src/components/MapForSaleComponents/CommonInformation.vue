@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="heading-title">
-      {{title}}
+      {{ title }}
     </q-card-section>
     <q-card-section class="bg-white q-pt-none">
       <div class="row table">
@@ -18,8 +18,9 @@
             class="information sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
-            >{{ item.value }}</a
           >
+            {{ item.value }}
+          </a>
           <span class="information sub flex items-center q-px-sm" v-else>{{
             item.value
           }}</span>
@@ -57,7 +58,7 @@ export default {
     }
     > .label {
       background-color: #f6f6f6;
-      width: 140px;
+      width: 160px;
     }
   }
 }
