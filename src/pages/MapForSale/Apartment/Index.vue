@@ -24,6 +24,12 @@
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
+    <!-- 위치 정보 -->
+    <common-information
+      class="q-mt-md"
+      title="위치 정보"
+      :getOptions="getLocationOptions"
+    />
     <!-- 토지/용도 정보 -->
     <common-information
       class="q-mt-md"
@@ -32,12 +38,7 @@
     />
     <common-information
       class="q-mt-md"
-      title="토지/용도 정보"
-      :getOptions="getAreaOptions"
-    />
-    <common-information
-      class="q-mt-md"
-      title="단지/건물 정보"
+      title="건물/주택(단지) 정보"
       :getOptions="getApartOptions"
     />
     <!-- 단지 건물 정보 -->
@@ -54,12 +55,17 @@
     <!-- 매물 거래 조건 정보 -->
     <common-information
       class="q-mt-md"
-      title="매물 거래조건(매수/매도 공통)"
+      title="공시지가 정보 <토지지가 / 주택가격>"
+      :getOptions="getStandardPriceOptions"
+    />
+    <common-information
+      class="q-mt-md"
+      title="희망 거래조건<매수/매도 공통>"
       :getOptions="getTradeOptions"
     />
     <common-information
       class="q-mt-md"
-      title="개발정비사업"
+      title="정비사업 주요 정보"
       :getOptions="getRedevOptions"
     />
     <!-- 재개발 정보 -->
@@ -113,7 +119,7 @@
 </template>
 
 <script>
-import { toKr, toMoneyString } from "src/utils";
+import { toKr, toMoneyString, toOriginMoneyString } from "src/utils";
 import Vue from "vue";
 import {
   GoogleMap,
@@ -232,7 +238,7 @@ export default {
           label: "전용 면적 (m2❘평형)",
           value: `${
             this.estate.group_individual_household.size_dedicated_area
-          }㎡ | 
+          }㎡ |
             ${Math.floor(
               this.estate.group_individual_household.size_dedicated_area / 3.3
             )}평`,
@@ -251,6 +257,29 @@ export default {
           value: this.estate.group_individual_household.price_maintenance,
           icon: ["right.svg"]
         }
+      ];
+    },
+    getLocationOptions() {
+      const {
+        group_building_house: houseInfo,
+        group_location: houseInfo2
+      } = this.estate;
+      return [
+        {
+          label: "시/도",
+          value: houseInfo2.city.title
+        },
+        {
+          label: "시군구명",
+          value: houseInfo2.subcity.title
+        },
+        {
+          label: "법정동",
+          value: houseInfo2.location.title
+        },
+        { label: "소재지(동 이하)", value: houseInfo.location_dong },
+        { label: "도로명 (로/길 이하)", value: houseInfo.location_road },
+        { label: "역세권", value: houseInfo.description_station_area }
       ];
     },
     getAreaOptions() {
@@ -287,20 +316,10 @@ export default {
     getApartOptions() {
       const {
         group_building_house: houseInfo,
-        group_location: houseInfo2,
         group_individual_household: houseInfo3,
         group_land_use: houseInfo4
       } = this.estate;
       return [
-        {
-          label: "주택 유형(분류)",
-          value: houseInfo.type_house
-        },
-        { label: "집합건물 여부", value: houseInfo.type_collective_building },
-        {
-          label: "사용승인일",
-          value: houseInfo.date_approval_use
-        },
         {
           label: "건물/주택(단지) 명",
           value: houseInfo.title_building
@@ -311,20 +330,14 @@ export default {
         },
         { label: "K-APT 기준 단지코드", value: houseInfo.code_complex_k_apt },
         {
-          label: "시/도",
-          value: houseInfo2.city.title
+          label: "주택 유형(분류)",
+          value: houseInfo.type_house
         },
+        { label: "집합건물 여부", value: houseInfo.type_collective_building },
         {
-          label: "시군구명",
-          value: houseInfo2.subcity.title
+          label: "사용승인일",
+          value: houseInfo.date_approval_use
         },
-        {
-          label: "법정동",
-          value: houseInfo2.location.title
-        },
-        { label: "소재지(동 이하)", value: houseInfo.location_dong },
-        { label: "도로명 (로/길 이하)", value: houseInfo.location_road },
-        { label: "역세권", value: houseInfo.description_station_area },
         // 최근 관리비 없음
         { label: "대지면적", value: houseInfo.size_land_area },
         { label: "연면적", value: `${houseInfo.size_gross_floor_area}㎡` },
@@ -361,20 +374,39 @@ export default {
           ),
           class: "col-sm-12 col-md-12"
         },
-        {
-          label: "표준지/표준주택 공시지가",
-          value: `${toMoneyString(
-            houseInfo.price_standard_land,
-            1 / 10000
-          )}/${toMoneyString(houseInfo.price_standard_housing, 1 / 10000)}`
-        },
+
         { label: "대지권 종류", value: houseInfo.type_land },
         { label: "대지권 비율", value: houseInfo.percentage_land }
       ];
     },
+    getStandardPriceOptions() {
+      const { group_building_house: houseInfo } = this.estate;
+      return [
+        {
+          label: "표준지 공시지가",
+          value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
+        },
+        {
+          label: "개별 공시지가",
+          value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
+        },
+        {
+          label: "표준주택 공시지가",
+          value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
+        },
+        {
+          label: "공동주택 공시지가",
+          value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
+        },
+        {
+          label: "개별주택 공시지가",
+          value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
+        }
+      ];
+    },
     getGenerationOptions() {
       const { group_individual_household: houseInfo } = this.estate;
-      console.log(this.estate);
+      console.log(houseInfo);
       return [
         {
           label: "(메모) 매물특징",
@@ -383,71 +415,86 @@ export default {
         },
         { label: "동 번호", value: houseInfo.num_ho },
         {
-          label: "호수 <저층/중층/고층>",
-          value: houseInfo.num_ho,
-          class: "col-sm-12 col-md-8"
-        },
-        {
-          label: "총 세대수",
+          label: "층수 (총 층수)",
           value: houseInfo.num_total_floor
         },
         {
-          label: "동일면적 세대수",
-          value: houseInfo.count_household_same_area
-        },
-        {
-          label: "층수(해당층/총층수)",
-          value: `${houseInfo.num_floor}/${houseInfo.num_total_floor}`
+          label: "층수 (해당 층)",
+          value: `${houseInfo.num_floor}`
         },
         { label: "공급면적", value: `${houseInfo.size_supply_area}㎡` },
         {
-          label: "전용면적 | 평수",
+          label: "전용면적 (㎡|평형)",
           value: `${houseInfo.size_dedicated_area}㎡ | ${(
             houseInfo.size_dedicated_area / 3.3
           ).toFixed(1)}평`
         },
+        // {
+        //   label: "총 세대수",
+        //   value: houseInfo.num_total_floor
+        // },
+        // {
+        //   label: "동일면적 세대수",
+        //   value: houseInfo.count_household_same_area
+        // },
         {
           label: "매매(전매) 관리",
           value: houseInfo.type_azimuth
         },
         {
-          label: "방수/욕실수",
-          value: `${houseInfo.count_room}/${houseInfo.count_bathroom}`
+          label: "방수|욕실수",
+          value: `${houseInfo.count_room}|${houseInfo.count_bathroom}`,
+          class: "col-sm-6 col-md-4"
         },
         {
           label: "방향",
           value: houseInfo.type_direction,
-          class: "col-sm-12 col-md-8"
+          class: "col-sm-6 col-md-8"
         },
+
         // 최근 관리비 없음
-        { label: "최근 관리비", value: houseInfo.price_maintenance },
-        { label: "연평균 관리비", value: houseInfo.price_maintenance },
+        {
+          label: "연평균 관리비",
+          value: toOriginMoneyString(houseInfo.price_maintenance)
+        },
         {
           label: "하절기 평균 관리비",
-          value: houseInfo.price_maintenance_summer
+          value: toOriginMoneyString(houseInfo.price_maintenance_summer),
+          class: "borderb"
         },
         {
           label: "동절기 평균 관리비",
-          value: houseInfo.price_maintenance_winter
+          value: toOriginMoneyString(houseInfo.price_maintenance_winter)
         },
-        { label: "공동주택 공시가격", value: houseInfo.price_public_housing },
         {
-          label: "공동주택 개별 공시지가",
-          value: houseInfo.price_individual_published
+          label: "최근 관리비",
+          value: toOriginMoneyString(houseInfo.price_maintenance)
         }
+        // { label: "공동주택 공시가격", value: houseInfo.price_public_housing },
+        // {
+        //   label: "공동주택 개별 공시지가",
+        //   value: houseInfo.price_individual_published
+        // }
       ];
     },
     getTradeOptions() {
       const { group_trading_terms: houseInfo } = this.estate;
       return [
-        { label: "희망 매매가", value: houseInfo.price_selling_hope },
+        {
+          label: "희망 매매가",
+          value: toMoneyString(houseInfo.price_selling_hope)
+        },
         {
           label: "희망 전월세 보증금",
-          value:
+          value: toMoneyString(
             houseInfo.price_charter_deposit_hope ||
-            houseInfo.price_monthly_rent_deposit_hope
+              houseInfo.price_monthly_rent_deposit_hope
+          )
         },
-        { label: "희망 월세액", value: houseInfo.price_monthly_rent_hope },
+        {
+          label: "희망 월세액",
+          value: toMoneyString(houseInfo.price_monthly_rent_hope)
+        },
         { label: "희망 계약일", value: houseInfo.date_due_hope },
         {
           label: "희망 입주 일자",
@@ -461,19 +508,29 @@ export default {
         { label: "[옵션] 인테리어", value: "" },
         { label: "[옵션] 보일러교체", value: "" },
         { label: "[옵션] 주택구조", value: "" },
-        { label: "[옵션] 애완동물", value: "" },
-        { label: "[옵션] 외국인", value: "" }
+        { label: "[제한] 애완동물", value: "" },
+        { label: "[제한] 외국인", value: "" }
       ];
     },
     getRedevOptions() {
       const {
         group_location: { redevelopment_area: houseInfo }
       } = this.estate;
+      console.log(houseInfo);
       return [
-        { label: "개발사업 유형", value: houseInfo.category },
+        // { label: "개발사업 유형", value: houseInfo.category },
         { label: "개발구역 명칭(단축)", value: houseInfo.title },
-        { label: "개발구역 명칭(조합)", value: houseInfo.title_area },
-        { label: "사업 추진 경과", value: houseInfo.redevelopment_step },
+        { label: "현재 사업추진단계", value: houseInfo.redevelopment_step },
+        { label: "시공사", value: houseInfo.title_construction_company },
+        {
+          label: "건폐율 (%)",
+          value: `${houseInfo.percentage_building_to_land} %`
+        },
+        { label: "용적률 (%)", value: `${houseInfo.percentage_floor_area} %` },
+        {
+          label: "비례율 (%)",
+          value: `${houseInfo.percentage_proportionality} %`
+        },
         { label: "사업 유형", value: houseInfo.business_type },
         { label: "사업 구분", value: houseInfo.business_classification },
         {
@@ -483,11 +540,19 @@ export default {
         { label: "공공지원 대상여부", value: houseInfo.status_public_support },
         { label: "건축 계획", value: houseInfo.status_architectural_plan },
         { label: "주택공급계획", value: houseInfo.status_sharing_plan },
-        { label: "정비구역 위치", value: houseInfo.price_selling_hope },
-        { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
-        { label: "조합원 수", value: houseInfo.count_member },
-        { label: "부동산 소유자 수", value: houseInfo.count_owner },
-        { label: "세입자 수", value: houseInfo.count_house }
+        // { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
+        {
+          label: "조합원 수",
+          value: toOriginMoneyString(houseInfo.count_member)
+        },
+        {
+          label: "부동산 소유자 수",
+          value: toOriginMoneyString(houseInfo.count_owner)
+        },
+        {
+          label: "세입자 수",
+          value: toOriginMoneyString(houseInfo.count_house)
+        }
       ];
     }
   },

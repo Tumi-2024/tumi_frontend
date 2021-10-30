@@ -305,6 +305,7 @@ export default {
       this.setViewRedevOnly();
     },
     getPriceFromText(obj) {
+      console.log(obj);
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
@@ -313,7 +314,7 @@ export default {
           return 0;
         }
       } else {
-        return obj.price_sale;
+        return obj.group_price.price_expected;
       }
     },
     calculatorMarker(markers) {

@@ -43,7 +43,12 @@
         도시계획 사항
       </div>
       <div class="row table">
-        <div class="col-sm-6 col-12 row" :class="[{'col-sm-12': i === 0}, {'col-sm-6': i < 3}]" v-for="(item, i) of getInfo1" :key="i">
+        <div
+          class="col-sm-6 col-12 row"
+          :class="[{ 'col-sm-12': i === 0 }, { 'col-sm-6': i < 3 }]"
+          v-for="(item, i) of getInfo1"
+          :key="i"
+        >
           <div class="q-pa-sm label">
             <span class="information">{{ item.label }}</span>
           </div>
@@ -168,10 +173,19 @@ export default {
     getInfo() {
       console.log(this.getMapSelectedArea);
       return [
-        { label: "개발사업 유형", value: this.getMapSelectedArea.business_type },
+        {
+          label: "개발사업 유형",
+          value: this.getMapSelectedArea.business_type
+        },
         { label: "개발구역 명칭(단축)", value: this.getMapSelectedArea.title },
-        { label: "개발구역 명칭(조합)", value: this.getMapSelectedArea.title_area },
-        { label: "사업 추진 경과", value: this.getMapSelectedArea.redevelopment_step },
+        {
+          label: "개발구역 명칭(조합)",
+          value: this.getMapSelectedArea.title_area
+        },
+        {
+          label: "사업 추진 경과",
+          value: this.getMapSelectedArea.redevelopment_step
+        },
         { label: "사업 유형", value: this.getMapSelectedArea.business_type },
         {
           label: "사업 구분",
@@ -379,9 +393,9 @@ export default {
   overflow-y: auto;
   height: 90vh;
   margin-bottom: 200px;
-  .table > .row:not(:nth-last-child(-n+1)) {
+  .table > .row:not(:nth-last-child(-n + 1)) {
     border-bottom: 1px solid #e9e9e9;
-}
+  }
 
   .address-section {
     padding: 24px 16px;

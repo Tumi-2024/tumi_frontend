@@ -47,7 +47,12 @@ export default {
 .table {
   border-top: 2px solid #555555;
   border-bottom: 1px solid #e9e9e9;
+  .borderb {
+    border-bottom: 1px solid #e9e9e9;
+  }
   > .row {
+    flex-wrap: nowrap;
+
     @media (max-width: 599px) {
       &:not(:nth-last-child(-n + 1)) {
         border-bottom: 1px solid #e9e9e9;
@@ -57,8 +62,10 @@ export default {
       border-bottom: 1px solid #e9e9e9;
     }
     > .label {
+      /* display:flex; */
+      flex-shrink: 0;
       background-color: #f6f6f6;
-      width: 160px;
+      width: 170px;
     }
   }
 }
@@ -69,6 +76,7 @@ export default {
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
+  word-break: break-all;
   &.sub {
     font-weight: 500;
   }

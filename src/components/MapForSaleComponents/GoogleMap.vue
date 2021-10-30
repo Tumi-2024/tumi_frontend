@@ -21,7 +21,7 @@
         <!-- INPUT DESIRED CONTENTS -->
         <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
-          :price="estate.group_price.price_expected"
+          :price="estate.group_price.price_expected || 123123"
           :item="estate"
           :badges="{
             type_sale: estate.type_sale,

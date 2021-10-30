@@ -25,7 +25,7 @@ export default {
       type: Object
     },
     price: {
-      type: Number,
+      type: [Number, String],
       default: 0
     },
     isDev: {
