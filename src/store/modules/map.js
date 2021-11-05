@@ -160,19 +160,14 @@ export const mapStore = {
     },
     removeLocationInterest: (context, payload) => {
       Vue.prototype.$axios
-        .delete(`sub_cities/${payload}/interest/`)
+        .delete(`redevelopment_areas/${payload}/interest/`)
         .then(result => {
           context.commit("removeLocationInterest", payload)
         });
     },
     fetchLocationInterest: async context => {
       try {
-        const response = await Vue.prototype.$axios.get(
-          `/sub_cities/interests/`,
-          { timeout: 10000 }
-        );
-        // console.log('vuex getLocationInterest');
-        // console.log(response.data.results);
+        const response = await Vue.prototype.$axios.get(`/redevelopment_areas/interests/`);
         context.commit("setInterest", response.data.results);
       } catch (error) {
         console.log(error);
