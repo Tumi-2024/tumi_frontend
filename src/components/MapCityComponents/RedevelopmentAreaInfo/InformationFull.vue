@@ -11,9 +11,17 @@
       <div style="background-color: #E8E8E8;">
         <div class="header-section notosanskr-medium">
           재개발 구역정보
-          <q-btn flat padding="8px" @click="$refs.dialog.hide()">
-            <q-icon name="close" size="24px" />
-          </q-btn>
+          <div>
+            <q-btn flat padding="0 8px" class="bg-white" @click="like()">
+              <q-icon size="44px">
+                <img v-if="is_interest" src="~assets/icons/hearted.svg" alt="" />
+                <img v-else src="~assets/icons/heart.svg" alt="" />
+              </q-icon>
+            </q-btn>
+            <q-btn flat padding="8px" @click="$refs.dialog.hide()">
+              <q-icon name="close" size="24px" />
+            </q-btn>
+          </div>
         </div>
 
         <q-card class="bg-transparent overflow-hidden" flat>
@@ -69,6 +77,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 import MoreInformation from "./MoreInformation";
 import Summary from "./Summary";
 import ImageMaterial from "./ImageMaterial";
@@ -81,13 +91,23 @@ export default {
   data() {
     return {
       tab: "summary",
-      dialog: false
+      dialog: false,
     };
   },
+  computed: {
+    ...mapGetters("area", ["getMapSelectedArea"]),
+    is_interest() {
+      return this.getMapSelectedArea.interest.redevelopment_area
+    }
+  },
   methods: {
+    ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),
     toggleDialog(value = true) {
       this.dialog = value;
       !this.dialog && this.$emit("hide");
+    },
+    like() {
+      this.interestSelectedArea()
     }
   }
 };

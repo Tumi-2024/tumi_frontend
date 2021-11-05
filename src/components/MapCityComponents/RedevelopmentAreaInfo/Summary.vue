@@ -427,7 +427,7 @@ export default {
   },
   async beforeMount() {
     const { data } = await Vue.prototype.$axios.post(
-      `redevelopment_areas/${this.getMapSelectedArea.id}/transactions?page_size=1000`
+      `redevelopment_areas/${this.getMapSelectedArea.id}/transactions/?page_size=1000`
     );
     this.transactions = data.results;
     this.getCtgrGraphData("ALLIANCE");
