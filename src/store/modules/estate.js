@@ -126,8 +126,7 @@ export const estateStore = {
       }
 
       const data = await Vue.prototype.$axios.get(
-        `/${context.state.requestUrl}/?${rangeQuery}`,
-        { timeout: 10000 }
+        `/${context.state.requestUrl}/?${rangeQuery}`
       );
       // if (payload.query) {
       //   data = await Vue.prototype.$axios.get(
