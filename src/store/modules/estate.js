@@ -60,14 +60,16 @@ export const estateStore = {
       state.interest_houses = payload;
     },
     addInterestHouse: function(state, payload) {
-      state.current_house.interest.house = true
+      state.current_house.interest.house = true;
     },
     removeInterestHouse: function(state, payload) {
       state.current_house.interest.house = null;
     },
     removeInterestHouses: function(state, payload) {
-      state.interest_houses = state.interest_houses.filter(house => !payload.some(id => id === house.id))
-      console.log('removeInterestHouses', payload)
+      state.interest_houses = state.interest_houses.filter(
+        house => !payload.some(id => id === house.id)
+      );
+      console.log("removeInterestHouses", payload);
     },
     setLatitude: function(state, payload) {
       state.latitude = payload;
@@ -84,6 +86,7 @@ export const estateStore = {
       context.commit("setViewRedevOnly");
     },
     getSimpleHouses: async function(context, payload) {
+      console.log(payload.type);
       const statusQuery = "redevelopment_area__status=운영";
       const redevelopQuery = context.getters["map/getIsCone"]
         ? statusQuery
@@ -240,8 +243,10 @@ export const estateStore = {
         });
     },
     deleteInterestHouses: async (context, parameter) => {
-      await Vue.prototype.$axios.post('interests/delete/', { houses: parameter })
-      context.commit('removeInterestHouses', parameter)
+      await Vue.prototype.$axios.post("interests/delete/", {
+        houses: parameter
+      });
+      context.commit("removeInterestHouses", parameter);
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const {

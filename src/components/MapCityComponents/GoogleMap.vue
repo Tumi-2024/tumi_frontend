@@ -35,7 +35,7 @@
       <gmap-cluster
         :zoomOnClick="true"
         :styles="clusterStyles"
-        :maxZoom="15"
+        :maxZoom="16"
         :calculator="calculatorMarker"
         :minimumClusterSize="1"
         @click="clusterClicked"
@@ -48,25 +48,24 @@
           :position="m.position"
           :clickable="true"
           :draggable="true"
-          :visible="!showInfoWindow"
         />
       </gmap-cluster>
       <!-- we generate badges for the Redevelopment Area -->
-      <gmap-custom-marker
-        v-for="(badge, i) in areaBadges"
-        :key="'area' + i"
-        :marker="badge.center"
-      >
-        <div
-          class="area-badge-info notosanskr-medium"
-          v-if="showAreaBadges && getMapZoom > 15"
+      <template v-if="!showInfoWindow && getMapZoom >= 14">
+        <gmap-custom-marker
+          v-for="(badge, i) in areaBadges"
+          :key="'area' + i"
+          :marker="badge.center"
         >
-          <q-icon size="20px" class="q-mr-xs">
-            <img src="~assets/icons/area-info.svg" alt="area-info" />
-          </q-icon>
-          {{ badge.title | truncate(15) }}
-        </div>
-      </gmap-custom-marker>
+          {{ getMapZoom }}
+          <div class="area-badge-info notosanskr-medium">
+            <q-icon size="20px" class="q-mr-xs">
+              <img src="~assets/icons/area-info.svg" alt="area-info" />
+            </q-icon>
+            {{ badge.title | truncate(15) }}
+          </div>
+        </gmap-custom-marker>
+      </template>
     </GmapMap>
   </div>
 </template>
@@ -119,7 +118,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 16,
           textSize: 18,
           url: "icons/map-red-60x60.png",
           height: 60,
@@ -132,7 +131,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 16,
           textSize: 20,
           url: "icons/map-red-84x84.png",
           height: 84,
@@ -145,7 +144,7 @@ export default {
           textColor: "white",
           fontWeight: 900,
           textAlign: "center",
-          maxZoom: 15,
+          maxZoom: 16,
           textSize: 24,
           url: "icons/map-red-96x96.png",
           height: 96,
@@ -306,6 +305,9 @@ export default {
     },
     getPriceFromText(obj) {
       console.log(obj);
+      if (!obj.recent_transactions || !obj.group_price) {
+        return;
+      }
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
@@ -355,7 +357,8 @@ export default {
       };
       let payload = { type: "subcity", ...location };
       this.showInfoWindow = false;
-      if (zoomLevel <= 15) {
+      console.log("zoolevel", zoomLevel);
+      if (zoomLevel <= 16) {
         payload = { type: "locations", ...location };
       } else {
         this.showInfoWindow = true;
@@ -368,7 +371,7 @@ export default {
         };
       }
       this.$store.dispatch("getSimpleHouses", payload);
-      this.disableHeart = zoomLevel <= 15;
+      this.disableHeart = zoomLevel <= 16;
       // setTimeout(() => {
       //   if (this.getMapAreas.length) {
       //     this.setMapAreas();
