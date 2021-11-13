@@ -255,29 +255,44 @@ export default {
     this.geojson && this.setMapGeojson(this.geojson);
 
     this.markers = this.$store.state.estate.simple_houses;
-    this.map.addListener("tilesloaded", async _ => {
-      this.setLocationLoading(false);
-    });
+    // this.map.addListener("tilesloaded", async _ => {
+    //   if (!this.isMount) {
+    //     this.getHouseInfo();
+    //   }
+    //   this.setLocationLoading(false);
+    // });
+    this.map.addListener("idle", async _ => {
+      const zoomLevel = this.map.getZoom();
+      const center = this.map.getCenter();
 
-    this.map.addListener("zoom_changed", _ => {
       this.setLocationLoading(false);
       this.getHouseInfo();
-      const zoomLevel = this.map.getZoom();
-      console.log(zoomLevel);
       this.changeMapZoom(zoomLevel);
-    });
-
-    this.map.addListener("dragend", _ => {
-      const center = this.map.getCenter();
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
       });
-      this.setLocationLoading(false);
-      this.getHouseInfo();
     });
 
-    this.isMount = true;
+    // this.map.addListener("zoom_changed", _ => {
+    //   this.setLocationLoading(false);
+    //   this.getHouseInfo();
+    //   const zoomLevel = this.map.getZoom();
+    //   console.log(zoomLevel);
+    //   this.changeMapZoom(zoomLevel);
+    // });
+
+    // this.map.addListener("dragend", _ => {
+    //   const center = this.map.getCenter();
+    //   this.changeMapCenter({
+    //     lat: center.lat(),
+    //     lng: center.lng()
+    //   });
+    //   this.setLocationLoading(false);
+    //   this.getHouseInfo();
+    // });
+
+    // this.isMount = true;
   },
 
   watch: {
