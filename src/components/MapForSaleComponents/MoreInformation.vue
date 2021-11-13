@@ -80,8 +80,11 @@ export default {
           label: "건폐율",
           value: `${houseInfo.percentage_building_cover ?? "-"}`
         },
-        { label: "시공사", value: `${houseInfo.title_contractor ?? "-"}` },
         { label: "시행사", value: `${houseInfo.title_executor ?? "-"}` },
+        {
+          label: "시공사 (건설사)",
+          value: `${houseInfo.title_contractor ?? "-"}`
+        },
         { label: "분양형태", value: `${houseInfo.description_sale ?? "-"}` },
         { label: "복도유형", value: `${houseInfo.type_corridor ?? "-"}` },
         {
@@ -135,7 +138,7 @@ export default {
     }
     > .label {
       background-color: #f6f6f6;
-      width: 130px;
+      width: 160px;
     }
   }
 }

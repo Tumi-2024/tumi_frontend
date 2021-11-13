@@ -456,7 +456,7 @@ export default {
     }
     > .label {
       background-color: #f6f6f6;
-      width: 130px;
+      width: 160px;
     }
   }
 }

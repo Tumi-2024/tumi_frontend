@@ -243,9 +243,7 @@ export default {
   },
   async mounted() {
     this.setGmapContainerSize();
-    console.log(this.map);
     this.map = await this.$refs.mapRef.$mapPromise;
-    console.log(this.map);
 
     this.map.panTo(this.getMapCenter);
     this.map.setOptions({
@@ -259,17 +257,11 @@ export default {
     this.map.addListener(
       "idle",
       debounce(async _ => {
-        console.log("debounced");
+        console.log("idle event");
         const zoomLevel = this.map.getZoom();
-        const center = this.map.getCenter();
-
         this.setLocationLoading(false);
         this.getHouseInfo();
         this.changeMapZoom(zoomLevel);
-        this.changeMapCenter({
-          lat: center.lat(),
-          lng: center.lng()
-        });
       }, 1000)
     );
   },
@@ -297,9 +289,6 @@ export default {
     },
     getPriceFromText(obj) {
       console.log(obj);
-      if (!obj.recent_transactions || !obj.group_price) {
-        return;
-      }
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         if (string) {
@@ -307,7 +296,7 @@ export default {
         } else {
           return 0;
         }
-      } else {
+      } else if (obj.group_price) {
         return obj.group_price.price_expected;
       }
     },
@@ -356,10 +345,9 @@ export default {
           }
         };
       });
-      console.log(this.areaBadges);
     },
     getHouseInfo() {
-      console.log("getHouseInfo");
+      this.$store.dispatch("initSimpleHouses");
       const zoomLevel = this.getMapZoom;
       const bounds = this.map.getBounds();
       const location = {

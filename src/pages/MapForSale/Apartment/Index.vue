@@ -60,7 +60,7 @@
     />
     <common-information
       class="q-mt-md"
-      title="희망 계약 조건 <소유자(매도자/임대인) 기준>"
+      title="희망 거래 조건 <소유자(매도자/임대인) 기준>"
       :getOptions="getTradeOptions"
     />
     <common-information
@@ -407,24 +407,24 @@ export default {
       const { group_building_house: houseInfo } = this.estate;
       return [
         {
-          label: "[토지] 표준지 공시지가",
+          label: "표준지 공시지가",
           value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
         },
         {
-          label: "[토지] 개별 공시지가",
+          label: "개별 공시지가",
           value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`,
           class: "col-sm-6 col-md-8"
         },
         {
-          label: "[주택] 표준주택 공시지가",
+          label: "표준주택 공시지가",
           value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
         },
         {
-          label: "[주택] 공동주택 공시지가",
+          label: "공동주택 공시지가",
           value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
         },
         {
-          label: "[주택] 개별주택 공시지가",
+          label: "개별주택 공시지가",
           value: `${toMoneyString(houseInfo.price_standard_land, 1 / 10000)}`
         }
       ];
@@ -503,6 +503,7 @@ export default {
     },
     getTradeOptions() {
       const { group_trading_terms: houseInfo } = this.estate;
+      console.log(houseInfo);
       return [
         {
           label: "희망 매매가",
@@ -522,9 +523,13 @@ export default {
         { label: "희망 계약일", value: houseInfo.date_due_hope },
         {
           label: "희망 입주(이사)일",
-          value: houseInfo.description_move_condition
+          value: houseInfo.date_due_move
         },
         { label: "융자금", value: houseInfo.price_loan },
+        {
+          label: "임대차 조건",
+          value: houseInfo.description_move_condition
+        },
         { label: "희망 임대차계약 만기일", value: houseInfo.date_due_move },
         { label: "희망 이사조건", value: houseInfo.type_move },
         { label: "[옵션] 세안고", value: "" },
