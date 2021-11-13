@@ -549,8 +549,11 @@ export default {
       return [
         // { label: "개발사업 유형", value: houseInfo.category },
         { label: "정비구역 명칭", value: houseInfo.title },
+        { label: "정비사업 종류", value: houseInfo.category },
         { label: "현재 사업추진단계", value: houseInfo.redevelopment_step },
-        { label: "시공사", value: houseInfo.title_construction_company },
+        { label: "시행사", value: houseInfo.title_construction_company },
+        { label: "시공사 (건설사)", value: houseInfo.title_build_company },
+        { label: "브랜드", value: houseInfo.title_brand },
         {
           label: "건폐율 (%)",
           value: `${houseInfo.percentage_building_to_land} %`
@@ -560,6 +563,18 @@ export default {
           label: "비례율 (%)",
           value: `${houseInfo.percentage_proportionality} %`
         },
+        {
+          label: "분양 세대 수",
+          value: toOriginMoneyString(houseInfo.count_sale)
+        },
+        {
+          label: "(임대) 세대수",
+          value: toOriginMoneyString(houseInfo.count_rent)
+        },
+        {
+          label: "입주 예정일",
+          value: "입주예정일"
+        },
         { label: "사업 유형", value: houseInfo.business_type },
         { label: "사업 구분", value: houseInfo.business_classification },
         {
@@ -568,20 +583,8 @@ export default {
         },
         { label: "공공지원 대상여부", value: houseInfo.status_public_support },
         { label: "건축 계획", value: houseInfo.status_architectural_plan },
-        { label: "주택공급계획", value: houseInfo.status_sharing_plan },
+        { label: "주택공급계획", value: houseInfo.status_sharing_plan }
         // { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
-        {
-          label: "조합원 수",
-          value: toOriginMoneyString(houseInfo.count_member)
-        },
-        {
-          label: "부동산 소유자 수",
-          value: toOriginMoneyString(houseInfo.count_owner)
-        },
-        {
-          label: "세입자 수",
-          value: toOriginMoneyString(houseInfo.count_house)
-        }
       ];
     }
   },
