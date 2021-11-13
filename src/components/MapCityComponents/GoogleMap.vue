@@ -269,7 +269,7 @@ export default {
           lat: center.lat(),
           lng: center.lng()
         });
-      })
+      }, 500)
     );
   },
 
