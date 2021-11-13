@@ -4,7 +4,7 @@ import Vue from "vue";
 const initState = {
   isMapLoaded: true,
   mode: "default",
-  mapZoom: 12,
+  mapZoom: 14,
   mapCenter: {
     lat: 37.5326,
     lng: 127.024612
@@ -18,7 +18,9 @@ const initState = {
     rotateControl: false,
     scrollwheel: true,
     fullscreenControl: false,
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    minZoom: 11,
+    maxZoom: 18
   },
   toolbarTitle: "서울시 종로구",
   interest: [],
@@ -56,8 +58,8 @@ export const mapStore = {
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
     setIsCone: (state, payload) => (state.isCone = payload),
     removeLocationInterest: (state, payload) => {
-      const index = state.interest.findIndex(area => area.id === payload)
-      state.interest.splice(index, 1)
+      const index = state.interest.findIndex(area => area.id === payload);
+      state.interest.splice(index, 1);
     }
   },
   actions: {
@@ -118,9 +120,10 @@ export const mapStore = {
           // console.log(context.state);
           // context.commit("");
           // data.lat, longitude: data.lng
-        }).catch((thrown) => {
+        })
+        .catch(thrown => {
           if (Vue.prototype.$axios.isCancel(thrown)) {
-            console.log('request canceled')
+            console.log("request canceled");
           }
         });
     },
@@ -162,12 +165,14 @@ export const mapStore = {
       Vue.prototype.$axios
         .delete(`redevelopment_areas/${payload}/interest/`)
         .then(result => {
-          context.commit("removeLocationInterest", payload)
+          context.commit("removeLocationInterest", payload);
         });
     },
     fetchLocationInterest: async context => {
       try {
-        const response = await Vue.prototype.$axios.get(`/redevelopment_areas/interests/`);
+        const response = await Vue.prototype.$axios.get(
+          `/redevelopment_areas/interests/`
+        );
         context.commit("setInterest", response.data.results);
       } catch (error) {
         console.log(error);

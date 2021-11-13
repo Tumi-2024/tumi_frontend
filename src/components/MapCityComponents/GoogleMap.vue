@@ -3,7 +3,7 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="disableHeart"
+      :disable-heart="showInfoWindow"
       @showArea="showHideArea"
     />
     <!-- Google Map Starts -->
@@ -40,7 +40,6 @@
         :minimumClusterSize="1"
         @click="clusterClicked"
         ref="clusterers"
-        v-if="showEstates"
       >
         <gmap-marker
           v-for="(m, mIndex) in getSimpleHouse"
@@ -51,21 +50,21 @@
         />
       </gmap-cluster>
       <!-- we generate badges for the Redevelopment Area -->
-      <template v-if="!showInfoWindow && getMapZoom >= 14">
-        <gmap-custom-marker
-          v-for="(badge, i) in areaBadges"
-          :key="'area' + i"
-          :marker="badge.center"
+      <gmap-custom-marker
+        v-for="(badge, i) in areaBadges"
+        :key="'area' + i"
+        :marker="badge.center"
+      >
+        <div
+          v-show="!showInfoWindow && getMapZoom >= 14"
+          class="area-badge-info notosanskr-medium"
         >
-          {{ getMapZoom }}
-          <div class="area-badge-info notosanskr-medium">
-            <q-icon size="20px" class="q-mr-xs">
-              <img src="~assets/icons/area-info.svg" alt="area-info" />
-            </q-icon>
-            {{ badge.title | truncate(15) }}
-          </div>
-        </gmap-custom-marker>
-      </template>
+          <q-icon size="20px" class="q-mr-xs">
+            <img src="~assets/icons/area-info.svg" alt="area-info" />
+          </q-icon>
+          {{ badge.title | truncate(15) }}
+        </div>
+      </gmap-custom-marker>
     </GmapMap>
   </div>
 </template>
@@ -94,7 +93,6 @@ export default {
   data() {
     return {
       map: null,
-      polygons: [],
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
@@ -110,7 +108,6 @@ export default {
         disableAutoPan: true
       },
       showInfoWindow: false,
-      disableHeart: false,
       /* CLUSTERS */
       clusterStyles: [
         // 1+
@@ -152,8 +149,7 @@ export default {
           anchorText: [30, 0],
           gridSize: 96
         }
-      ],
-      isMounted: false
+      ]
     };
   },
   props: {
@@ -239,7 +235,9 @@ export default {
   },
   async mounted() {
     this.setGmapContainerSize();
+    console.log(this.map);
     this.map = await this.$refs.mapRef.$mapPromise;
+    console.log(this.map);
 
     this.map.panTo(this.getMapCenter);
     this.map.setOptions({
@@ -252,23 +250,19 @@ export default {
     this.markers = this.$store.state.estate.simple_houses;
 
     this.map.addListener("tilesloaded", async _ => {
-      if (!this.isMounted) {
-        this.setLocationLoading(false);
-        this.getHouseInfo();
-        this.isMounted = true;
-        if (this.polygons.length === 0) {
-          await this.fetchMapAreas();
-          this.initializeRedevelopArea();
-        }
-      }
+      this.setLocationLoading(false);
+      this.getHouseInfo();
+      // if (!this.isMounted) {
+      // this.initializeRedevelopArea();
+      // }
     });
 
     this.map.addListener("zoom_changed", _ => {
       this.setLocationLoading(false);
       this.getHouseInfo();
       const zoomLevel = this.map.getZoom();
+      console.log(zoomLevel);
       this.changeMapZoom(zoomLevel);
-      this.isMounted = true;
     });
 
     this.map.addListener("dragend", _ => {
@@ -332,23 +326,67 @@ export default {
         );
       });
       let text;
-      if (this.getMapMode === "redevelop-area") {
-        if (this.getIsCone) {
-          text = groupRedev;
-        } else {
-          text = group;
-        }
+      const isRedev = this.getMapMode === "redevelop-area";
+      if (this.getIsCone) {
+        text = isRedev ? groupRedev : estateRedev;
       } else {
-        if (this.getIsCone) {
-          text = estateRedev;
-        } else {
-          text = estate;
-        }
+        text = isRedev ? group : estate;
       }
       return { text, index: 0, title: "count" };
     },
+    async getRedevInfo({ latitude: lat, longitude: lng }) {
+      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${lng[0]},${lng[1]}`;
+      await this.fetchMapAreas(rangeQuery);
 
+      this.areaBadges = this.getMapAreas.map(obj => {
+        const {
+          latitude,
+          longitude,
+          status,
+          redevelopment_area_locations: redevAreaLocation
+        } = obj;
+
+        const center = {
+          lat: Number(latitude),
+          lng: Number(longitude)
+        };
+
+        const isProgress = status === "운영";
+
+        const style = {
+          strokeColor: "#FF5100",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: isProgress ? "#0BCDC7" : "gray",
+          fillOpacity: isProgress ? 0.35 : 0.6
+        };
+        let item = null;
+
+        const paths = redevAreaLocation.map(obj => {
+          return { lat: Number(obj.lat), lng: Number(obj.lng) };
+        });
+
+        item = new this.google.maps.Polygon({
+          ...style,
+          paths,
+          map: this.map,
+          center,
+          visible: true
+        });
+
+        item.addListener("click", _ => {
+          this.changeMapSelectedArea(obj);
+          this.goToLocation({ lat: Number(latitude), lng: Number(longitude) });
+        });
+
+        return {
+          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+          title: obj.title
+        };
+      });
+    },
     getHouseInfo() {
+      console.log(this.map);
       const zoomLevel = this.getMapZoom;
       const bounds = this.map.getBounds();
       const location = {
@@ -356,9 +394,9 @@ export default {
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = { type: "subcity", ...location };
-      this.showInfoWindow = false;
-      console.log("zoolevel", zoomLevel);
+      this.getRedevInfo(location);
       if (zoomLevel <= 16) {
+        this.showInfoWindow = false;
         payload = { type: "locations", ...location };
       } else {
         this.showInfoWindow = true;
@@ -371,12 +409,6 @@ export default {
         };
       }
       this.$store.dispatch("getSimpleHouses", payload);
-      this.disableHeart = zoomLevel <= 16;
-      // setTimeout(() => {
-      //   if (this.getMapAreas.length) {
-      //     this.setMapAreas();
-      //   }
-      // }, 500);
     },
     setMapGeojson(geojson) {
       /**
@@ -395,64 +427,9 @@ export default {
         return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
       });
     },
-    async initializeRedevelopArea(visible = true) {
-      this.areaBadges = this.getMapAreas.map(obj => {
-        return {
-          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-          title: obj.title
-        };
-      });
-      this.polygons = this.getMapAreas.map(area => {
-        const center = {
-          lat: Number(area.latitude),
-          lng: Number(area.longitude)
-        };
-
-        const isProgress = area.status === "운영";
-
-        const style = {
-          strokeColor: isProgress ? "#FF5100" : "gray",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: isProgress ? "#0BCDC7" : "gray",
-          fillOpacity: isProgress ? 0.35 : 0.6
-        };
-        let item = null;
-
-        const paths = area.redevelopment_area_locations.map(obj => {
-          return { lat: Number(obj.lat), lng: Number(obj.lng) };
-        });
-
-        item = new this.google.maps.Polygon({
-          ...style,
-          paths: paths,
-          map: this.map,
-          center,
-          visible
-        });
-
-        item.addListener("click", _ => {
-          this.changeMapSelectedArea(area);
-          let { latitude: lat, longitude: lng } = area;
-          lat = Number(lat);
-          lng = Number(lng);
-          this.goToLocation({ lat, lng });
-        });
-        return item;
-      });
-      // this.setMapAreas();
-    },
-    // setMapAreas() {
-    //   this.areaBadges = this.getMapAreas.map(obj => {
-    //     return {
-    //       center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-    //       title: obj.title
-    //     };
-    //   });
-    // },
     setGmapContainerSize() {
-      const h = this.$refs.gmapContainer.clientHeight;
-      const w = this.$refs.gmapContainer.clientWidth;
+      const { clientHeight: h, clientWidth: w } = this.$refs.gmapContainer;
+
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
     },
@@ -461,15 +438,6 @@ export default {
         this.map.setZoom(18);
       }, 500);
     },
-    // setMapOnFocus() {
-    //   const query = this.$route.query;
-    //   if (query.onFocus) {
-    //     this.map.setZoom(query.zoom);
-    //     if (query.lat && query.lng) {
-    //       this.map.setCenter({ lat: query.lat, lng: query.lng });
-    //     }
-    //   }
-    // },
     viewArea(item) {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
@@ -491,7 +459,6 @@ export default {
     typeForHouse(type) {
       if (type === "land") return "for_sale_land";
       if (type === "apartment") return "map_list_sale";
-      // if (type === "apartment") return "for_sale_apartment";
       if (type === "redevelop") return "for_sale_redevelop_estate";
       if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },
