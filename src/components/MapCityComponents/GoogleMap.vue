@@ -14,6 +14,12 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
+      <gmap-polygon
+        v-for="(badge, i) in areaBadges"
+        :key="'area' + badge.title"
+        :paths="badge.path"
+        :options="badge.options"
+      ></gmap-polygon>
       <template v-if="showInfoWindow">
         <gmap-info-window
           v-for="(m, index) in getSimpleHouse"
@@ -93,6 +99,7 @@ export default {
   data() {
     return {
       map: null,
+      isMount: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
@@ -251,10 +258,9 @@ export default {
 
     this.map.addListener("tilesloaded", async _ => {
       this.setLocationLoading(false);
-      this.getHouseInfo();
-      // if (!this.isMounted) {
-      // this.initializeRedevelopArea();
-      // }
+      if (!this.isMounted) {
+        this.getHouseInfo();
+      }
     });
 
     this.map.addListener("zoom_changed", _ => {
@@ -274,6 +280,8 @@ export default {
       this.setLocationLoading(false);
       this.getHouseInfo();
     });
+
+    this.isMount = true;
   },
 
   watch: {
@@ -339,54 +347,29 @@ export default {
       await this.fetchMapAreas(rangeQuery);
 
       this.areaBadges = this.getMapAreas.map(obj => {
-        const {
-          latitude,
-          longitude,
-          status,
-          redevelopment_area_locations: redevAreaLocation
-        } = obj;
-
-        const center = {
-          lat: Number(latitude),
-          lng: Number(longitude)
-        };
+        const { status, redevelopment_area_locations: redevAreaLocation } = obj;
 
         const isProgress = status === "운영";
 
-        const style = {
-          strokeColor: "#FF5100",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: isProgress ? "#0BCDC7" : "gray",
-          fillOpacity: isProgress ? 0.35 : 0.6
-        };
-        let item = null;
-
-        const paths = redevAreaLocation.map(obj => {
-          return { lat: Number(obj.lat), lng: Number(obj.lng) };
-        });
-
-        item = new this.google.maps.Polygon({
-          ...style,
-          paths,
-          map: this.map,
-          center,
-          visible: true
-        });
-
-        item.addListener("click", _ => {
-          this.changeMapSelectedArea(obj);
-          this.goToLocation({ lat: Number(latitude), lng: Number(longitude) });
-        });
-
         return {
           center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-          title: obj.title
+          title: obj.title,
+          path: redevAreaLocation.map(obj => {
+            return { lat: Number(obj.lat), lng: Number(obj.lng) };
+          }),
+          options: {
+            strokeColor: "#FF5100",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: isProgress ? "#0BCDC7" : "gray",
+            fillOpacity: isProgress ? 0.35 : 0.6
+          }
         };
       });
+      console.log(this.areaBadges);
     },
     getHouseInfo() {
-      console.log(this.map);
+      console.log("getHouseInfo");
       const zoomLevel = this.getMapZoom;
       const bounds = this.map.getBounds();
       const location = {
