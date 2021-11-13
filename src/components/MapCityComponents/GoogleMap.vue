@@ -259,6 +259,7 @@ export default {
     this.map.addListener(
       "idle",
       debounce(async _ => {
+        console.log("debounced");
         const zoomLevel = this.map.getZoom();
         const center = this.map.getCenter();
 
@@ -269,7 +270,7 @@ export default {
           lat: center.lat(),
           lng: center.lng()
         });
-      }, 500)
+      }, 1000)
     );
   },
 
