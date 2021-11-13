@@ -33,12 +33,12 @@
 
       <!-- Map Markers -->
       <gmap-cluster
+        v-if="!isLoading"
         :zoomOnClick="true"
         :styles="clusterStyles"
         :maxZoom="16"
         :calculator="calculatorMarker"
         :minimumClusterSize="1"
-        @click="clusterClicked"
         ref="clusterers"
       >
         <gmap-marker
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       map: null,
+      isLoading: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
@@ -254,16 +255,16 @@ export default {
     this.geojson && this.setMapGeojson(this.geojson);
 
     this.markers = this.$store.state.estate.simple_houses;
-    this.map.addListener(
-      "idle",
-      debounce(async _ => {
-        console.log("idle event");
+    this.map.addListener("idle", async _ => {
+      this.isLoading = true;
+      debounce(() => {
+        this.isLoading = false;
         const zoomLevel = this.map.getZoom();
         this.setLocationLoading(false);
         this.getHouseInfo();
         this.changeMapZoom(zoomLevel);
-      }, 1000)
-    );
+      }, 500)();
+    });
   },
 
   watch: {
@@ -348,7 +349,6 @@ export default {
     },
     getHouseInfo() {
       this.$store.dispatch("initSimpleHouses");
-      const zoomLevel = this.getMapZoom;
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
@@ -356,7 +356,7 @@ export default {
       };
       let payload = { type: "subcity", ...location };
       this.getRedevInfo(location);
-      if (zoomLevel <= 16) {
+      if (this.getMapZoom <= 16) {
         this.showInfoWindow = false;
         payload = { type: "locations", ...location };
       } else {
@@ -393,11 +393,6 @@ export default {
 
       this.mapSize.height = h + "px";
       this.mapSize.width = w + "px";
-    },
-    clusterClicked() {
-      setTimeout(() => {
-        this.map.setZoom(18);
-      }, 500);
     },
     viewArea(item) {
       this.map.panTo(item.position);
