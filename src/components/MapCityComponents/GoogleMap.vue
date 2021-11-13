@@ -14,12 +14,6 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <gmap-polygon
-        v-for="(badge, i) in areaBadges"
-        :key="'area' + badge.title"
-        :paths="badge.path"
-        :options="badge.options"
-      ></gmap-polygon>
       <template v-if="showInfoWindow">
         <gmap-info-window
           v-for="(m, index) in getSimpleHouse"
@@ -56,21 +50,27 @@
         />
       </gmap-cluster>
       <!-- we generate badges for the Redevelopment Area -->
-      <gmap-custom-marker
-        v-for="(badge, i) in areaBadges"
-        :key="'area' + i"
-        :marker="badge.center"
-      >
-        <div
-          v-show="!showInfoWindow && getMapZoom >= 14"
-          class="area-badge-info notosanskr-medium"
+      <template v-for="(badge, i) in areaBadges">
+        <gmap-polygon
+          :key="`${badge.title}-${i}-polygon`"
+          :paths="badge.path"
+          :options="badge.options"
+        ></gmap-polygon>
+        <gmap-custom-marker
+          :key="`${badge.title}-${i}-marker`"
+          :marker="badge.center"
         >
-          <q-icon size="20px" class="q-mr-xs">
-            <img src="~assets/icons/area-info.svg" alt="area-info" />
-          </q-icon>
-          {{ badge.title | truncate(15) }}
-        </div>
-      </gmap-custom-marker>
+          <div
+            v-show="!showInfoWindow && getMapZoom >= 14"
+            class="area-badge-info notosanskr-medium"
+          >
+            <q-icon size="20px" class="q-mr-xs">
+              <img src="~assets/icons/area-info.svg" alt="area-info" />
+            </q-icon>
+            {{ badge.title | truncate(15) }}
+          </div>
+        </gmap-custom-marker>
+      </template>
     </GmapMap>
   </div>
 </template>
@@ -255,12 +255,8 @@ export default {
     this.geojson && this.setMapGeojson(this.geojson);
 
     this.markers = this.$store.state.estate.simple_houses;
-
     this.map.addListener("tilesloaded", async _ => {
       this.setLocationLoading(false);
-      if (!this.isMounted) {
-        this.getHouseInfo();
-      }
     });
 
     this.map.addListener("zoom_changed", _ => {
