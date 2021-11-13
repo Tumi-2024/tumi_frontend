@@ -87,6 +87,8 @@ import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
+import { debounce } from "debounce";
+
 const { Geolocation } = Plugins;
 
 export default {
@@ -99,7 +101,6 @@ export default {
   data() {
     return {
       map: null,
-      isMount: false,
       mapSize: { height: "", width: "" },
       /* MARKERS */
       detailMarkers: this.$store.state.estate.detail_houses,
@@ -255,44 +256,21 @@ export default {
     this.geojson && this.setMapGeojson(this.geojson);
 
     this.markers = this.$store.state.estate.simple_houses;
-    // this.map.addListener("tilesloaded", async _ => {
-    //   if (!this.isMount) {
-    //     this.getHouseInfo();
-    //   }
-    //   this.setLocationLoading(false);
-    // });
-    this.map.addListener("idle", async _ => {
-      const zoomLevel = this.map.getZoom();
-      const center = this.map.getCenter();
+    this.map.addListener(
+      "idle",
+      debounce(async _ => {
+        const zoomLevel = this.map.getZoom();
+        const center = this.map.getCenter();
 
-      this.setLocationLoading(false);
-      this.getHouseInfo();
-      this.changeMapZoom(zoomLevel);
-      this.changeMapCenter({
-        lat: center.lat(),
-        lng: center.lng()
-      });
-    });
-
-    // this.map.addListener("zoom_changed", _ => {
-    //   this.setLocationLoading(false);
-    //   this.getHouseInfo();
-    //   const zoomLevel = this.map.getZoom();
-    //   console.log(zoomLevel);
-    //   this.changeMapZoom(zoomLevel);
-    // });
-
-    // this.map.addListener("dragend", _ => {
-    //   const center = this.map.getCenter();
-    //   this.changeMapCenter({
-    //     lat: center.lat(),
-    //     lng: center.lng()
-    //   });
-    //   this.setLocationLoading(false);
-    //   this.getHouseInfo();
-    // });
-
-    // this.isMount = true;
+        this.setLocationLoading(false);
+        this.getHouseInfo();
+        this.changeMapZoom(zoomLevel);
+        this.changeMapCenter({
+          lat: center.lat(),
+          lng: center.lng()
+        });
+      })
+    );
   },
 
   watch: {

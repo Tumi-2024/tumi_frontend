@@ -86,7 +86,6 @@ export const estateStore = {
       context.commit("setViewRedevOnly");
     },
     getSimpleHouses: async function(context, payload) {
-      console.log(payload.type);
       const statusQuery = "redevelopment_area__status=운영";
       const redevelopQuery = context.getters["map/getIsCone"]
         ? statusQuery
@@ -97,6 +96,7 @@ export const estateStore = {
         getQueryString("categories", "type_house__in", "valueHouse") +
         "&" +
         redevelopQuery;
+      console.log(query);
       const encodedUrl = encodeURI(query);
       if (payload.latitude) {
         await context.commit("setLatitude", payload.latitude);

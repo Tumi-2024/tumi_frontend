@@ -1,16 +1,16 @@
 <template>
   <div style="display :flex; align-items: center;">
-      <div class="scrolling-wrapper-flexbox notosanskr-medium row items-center">
-        <q-btn
-          v-for="(filter, i) of filters"
-          :key="i"
-          unelevated
-          padding="0px"
-          class="q-mr-xs q-px-md"
-          :class="getColor(filter.type)"
-          :label="filter.label"
-        >
-          <q-menu>
+    <div class="scrolling-wrapper-flexbox notosanskr-medium row items-center">
+      <q-btn
+        v-for="(filter, i) of filters"
+        :key="i"
+        unelevated
+        padding="0px"
+        class="q-mr-xs q-px-md"
+        :class="getColor(filter.type)"
+        :label="filter.label"
+      >
+        <q-menu>
           <q-list style="min-width: 100px">
             <q-item clickable v-close-popup>
               <q-item-section>New tab</q-item-section>
@@ -27,9 +27,9 @@
             </q-item>
           </q-list>
         </q-menu>
-        </q-btn>
-      </div>
-      <!-- <toolbar-filter /> -->
+      </q-btn>
+    </div>
+    <!-- <toolbar-filter /> -->
   </div>
 </template>
 
@@ -38,36 +38,36 @@ export default {
   data() {
     return {
       filters: [
-        { label: "주택유형", type: 'houseType' },
-        { label: "면적종류", type: 'areaSize' },
+        { label: "주택유형", type: "houseType" },
+        { label: "면적종류", type: "areaSize" }
         // { label: "매매가", type: 'sale' },
         // { label: "전월세가", type: 'charter' },
-        { label: '매물등록일자', type: 'date' }
+        // { label: '매물등록일자', type: 'date' }
       ]
     };
   },
   computed: {
     getColor() {
-      return (type) => {
+      return type => {
         switch (type) {
-          case 'houseType':
-            return 'text-white bg-primary'
-          case 'areaSize':
-            return 'text-white bg-green'
-          case 'recommend':
-            return 'text-white  bg-white'
-          case 'redevelopment':
-            return 'text-white  bg-white'
-          case 'charter':
-            return 'text-white bg-blue-grey'
-          case 'sale':
-            return 'text-white bg-blue'
-          case 'date':
-            return 'date text-white bg-black'
+          case "houseType":
+            return "text-white bg-primary";
+          case "areaSize":
+            return "text-white bg-green";
+          case "recommend":
+            return "text-white  bg-white";
+          case "redevelopment":
+            return "text-white  bg-white";
+          case "charter":
+            return "text-white bg-blue-grey";
+          case "sale":
+            return "text-white bg-blue";
+          case "date":
+            return "date text-white bg-black";
           default:
-            return ''
+            return "";
         }
-      }
+      };
     }
   }
 };
@@ -101,6 +101,6 @@ export default {
   display: none;
 }
 button .without-icon i {
-  display: none
+  display: none;
 }
 </style>
