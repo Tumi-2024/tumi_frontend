@@ -39,8 +39,6 @@ export default {
   },
   created() {
     // we will set the desired settings view(lat&lng / zoom & etc...)
-    this.changeMapZoom(16);
-    this.changeMapCenter({ lat: 37.548695, lng: 126.9747022 });
     this.changeToolbarTitle("재개발 구역");
     this.changeMapMode(
       this.$route.path === "/map/city" ? "apartment" : "redevelop-area"
