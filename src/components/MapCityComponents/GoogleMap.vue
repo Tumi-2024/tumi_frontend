@@ -274,7 +274,6 @@ export default {
 
     this.markers = this.$store.state.estate.simple_houses;
     this.map.addListener("idle", async _ => {
-      this.isLoading = true;
       this.$store.dispatch("initSimpleHouses");
 
       debounce(() => {
@@ -347,18 +346,13 @@ export default {
       const bounds = this.map.getBounds();
       const zoomLevel = this.map.getZoom();
       const location = {
-        latitude: [
-          bounds.getSouthWest().lat() * 0.9,
-          bounds.getNorthEast().lat() * 1.1
-        ],
-        longitude: [
-          bounds.getSouthWest().lng() * 0.9,
-          bounds.getNorthEast().lng() * 1.1
-        ]
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
+
+      this.getRedevInfo(location);
       console.log(bounds.getSouthWest().lat());
       let payload = { type: "subcity", ...location };
-      this.getRedevInfo(location);
       if (zoomLevel <= 16) {
         this.showInfoWindow = false;
         payload = { type: "locations", ...location };
