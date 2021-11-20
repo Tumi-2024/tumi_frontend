@@ -1,5 +1,6 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
+    {{ showInfoWindow }}
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
@@ -50,7 +51,7 @@
         />
       </gmap-cluster>
       <!-- we generate badges for the Redevelopment Area -->
-      <template v-for="(badge, i) in areaBadges">
+      <template v-for="(badge, i) in getAreaBadges">
         <gmap-polygon
           :key="`${badge.title}-${i}-polygon`"
           :paths="badge.path"
@@ -107,7 +108,6 @@ export default {
       detailMarkers: this.$store.state.estate.detail_houses,
       markers: this.$store.state.estate.simple_houses,
       /** MARKERS SERVE AS AREA BADGE */
-      areaBadges: [],
       showAreaBadges: true,
       /* INFO WINDOW */
       infoOptions: {
@@ -240,12 +240,33 @@ export default {
             }
           })
       );
+    },
+    getAreaBadges() {
+      return this.getMapAreas.map(obj => {
+        const { status, redevelopment_area_locations: redevAreaLocation } = obj;
+
+        const isProgress = status === "운영";
+
+        return {
+          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+          title: obj.title,
+          path: redevAreaLocation.map(obj => {
+            return { lat: Number(obj.lat), lng: Number(obj.lng) };
+          }),
+          options: {
+            strokeColor: "#FF5100",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: isProgress ? "#0BCDC7" : "gray",
+            fillOpacity: isProgress ? 0.35 : 0.6
+          }
+        };
+      });
     }
   },
   async mounted() {
     this.setGmapContainerSize();
     this.map = await this.$refs.mapRef.$mapPromise;
-
     this.map.panTo(this.getMapCenter);
     this.map.setOptions({
       zoomControlOptions: {
@@ -257,6 +278,8 @@ export default {
     this.markers = this.$store.state.estate.simple_houses;
     this.map.addListener("idle", async _ => {
       this.isLoading = true;
+      this.$store.dispatch("initSimpleHouses");
+
       debounce(() => {
         this.isLoading = false;
         const zoomLevel = this.map.getZoom();
@@ -292,16 +315,16 @@ export default {
       console.log(obj);
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
-        if (string) {
-          return Number(string.replace(",", ""));
-        } else {
-          return 0;
-        }
+        return string ? Number(string.replace(",", "")) : 0;
       } else if (obj.group_price) {
         return obj.group_price.price_expected;
       }
     },
     calculatorMarker(markers) {
+      console.log(this.simple_houses);
+      if (this.simple_houses.length === 0) {
+        return { text: "", index: 0, title: "count" };
+      }
       const { lat, lng } = markers[0].position;
       const {
         count_transaction_groups: group,
@@ -325,38 +348,24 @@ export default {
     async getRedevInfo({ latitude: lat, longitude: lng }) {
       const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${lng[0]},${lng[1]}`;
       await this.fetchMapAreas(rangeQuery);
-
-      this.areaBadges = this.getMapAreas.map(obj => {
-        const { status, redevelopment_area_locations: redevAreaLocation } = obj;
-
-        const isProgress = status === "운영";
-
-        return {
-          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
-          title: obj.title,
-          path: redevAreaLocation.map(obj => {
-            return { lat: Number(obj.lat), lng: Number(obj.lng) };
-          }),
-          options: {
-            strokeColor: "#FF5100",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: isProgress ? "#0BCDC7" : "gray",
-            fillOpacity: isProgress ? 0.35 : 0.6
-          }
-        };
-      });
     },
     getHouseInfo() {
-      this.$store.dispatch("initSimpleHouses");
       const bounds = this.map.getBounds();
+      const zoomLevel = this.map.getZoom();
       const location = {
-        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
+        latitude: [
+          bounds.getSouthWest().lat() * 0.95,
+          bounds.getNorthEast().lat() * 1.05
+        ],
+        longitude: [
+          bounds.getSouthWest().lng() * 0.95,
+          bounds.getNorthEast().lng() * 1.05
+        ]
       };
+      console.log(bounds.getSouthWest().lat());
       let payload = { type: "subcity", ...location };
       this.getRedevInfo(location);
-      if (this.getMapZoom <= 16) {
+      if (zoomLevel <= 16) {
         this.showInfoWindow = false;
         payload = { type: "locations", ...location };
       } else {
