@@ -1,6 +1,5 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
-    {{ showInfoWindow }}
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
@@ -312,7 +311,6 @@ export default {
       this.setViewRedevOnly();
     },
     getPriceFromText(obj) {
-      console.log(obj);
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
         return string ? Number(string.replace(",", "")) : 0;
@@ -321,7 +319,6 @@ export default {
       }
     },
     calculatorMarker(markers) {
-      console.log(this.simple_houses);
       if (this.simple_houses.length === 0) {
         return { text: "", index: 0, title: "count" };
       }
@@ -354,12 +351,12 @@ export default {
       const zoomLevel = this.map.getZoom();
       const location = {
         latitude: [
-          bounds.getSouthWest().lat() * 0.95,
-          bounds.getNorthEast().lat() * 1.05
+          bounds.getSouthWest().lat() * 0.9,
+          bounds.getNorthEast().lat() * 1.1
         ],
         longitude: [
-          bounds.getSouthWest().lng() * 0.95,
-          bounds.getNorthEast().lng() * 1.05
+          bounds.getSouthWest().lng() * 0.9,
+          bounds.getNorthEast().lng() * 1.1
         ]
       };
       console.log(bounds.getSouthWest().lat());
