@@ -3,35 +3,15 @@
     <q-card-section class="row justify-between items-center q-pa-none">
       <!-- left section items -->
       <div class="row items-center">
-        <div class="column" style="width: 180px;">
-          <div class="helper text-left notosanskr-regular">
-            {{ getToolbarLabel }}
-          </div>
-          <div class="location-text text-left notosanskr-regular">
-            {{ getToolbarTitle }}
-          </div>
-        </div>
-        <div class="q-my-xs col-4 text-left notosanskr-medium">
-          <q-select
-            filled
-            label="검색"
-            :value="searchText"
-            @input="onSelect"
-            use-input
-            fill-input
-            hide-selected
-            :options="options"
-            @filter="filterFn"
-            style="width: 250px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">
-                  No results
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
+        <div
+          class="flex align-center location-text large text-left notosanskr-regular q-ml-sm"
+        >
+          <img
+            height="30"
+            :src="require('assets/tumi-logo.png')"
+            class="q-mr-sm"
+          />
+          {{ typeOfProduct }}
         </div>
       </div>
       <!-- right section-items -->
@@ -56,7 +36,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Vue from "vue";
 
 // import DialogPropertyInformation from "./DialogPropertyInformation";
 export default {
@@ -64,45 +43,14 @@ export default {
     // DialogPropertyInformation
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
-  },
-  data() {
-    return {
-      searchText: "",
-      options: []
-    };
+    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
+    typeOfProduct() {
+      return this.$route.name === "map_city_area" ? "실거래가" : "매물";
+    }
   },
   methods: {
     ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
-    onSelect(obj) {
-      console.log(obj, "onSelect");
-      this.searchText = obj;
-      this.changeMapCenter(obj.position);
-      this.changeMapZoom(16);
-    },
-    async filterFn(val, update, abort) {
-      if (val === "") {
-        update(() => {
-          this.options = [];
-        });
-      } else {
-        update(async () => {
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(
-            `redevelopment_areas/?search=${val}`
-          );
-          console.log(results);
-          this.options = results.map(({ title, latitude, longitude }) => {
-            return {
-              value: title,
-              label: title,
-              position: { lat: Number(latitude), lng: Number(longitude) }
-            };
-          });
-        });
-      }
-    },
+
     toggleHeaderTitle() {
       this.$router.push({ name: "map_view_search" });
     }
@@ -123,5 +71,9 @@ export default {
   line-height: 30px;
   letter-spacing: -1.575px;
   color: #1a1a1a;
+  &.large {
+    font-size: 24px;
+    line-height: 36px;
+  }
 }
 </style>

@@ -13,8 +13,7 @@
     <detail-summary
       :tags="{
         type: estate.group_building_house.type_house,
-        stageProgress: redevelopment.redevelopment_step,
-        transactionStatus: estate.group_etc.is_sold
+        stageProgress: redevelopment.redevelopment_step
       }"
       :building="estate.group_building_house.title_building"
       :areaName="estate.address"
