@@ -274,6 +274,7 @@ export default {
 
     this.markers = this.$store.state.estate.simple_houses;
     this.map.addListener("idle", async _ => {
+      this.isLoading = true;
       this.$store.dispatch("initSimpleHouses");
 
       debounce(() => {
