@@ -25,7 +25,7 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async (context, payload) => {
       try {
-        const url = `/redevelopment_areas?${payload}&page_size=100`;
+        const url = `/redevelopment_areas?${payload}&page_size=1000`;
         const { data } = await Vue.prototype.$axios.get(url);
         context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", data.results);

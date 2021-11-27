@@ -240,10 +240,23 @@ export default {
     },
     getAreaBadges() {
       return this.getMapAreas.map(obj => {
-        const { status, redevelopment_area_locations: redevAreaLocation } = obj;
-
+        const {
+          status,
+          category,
+          redevelopment_area_locations: redevAreaLocation
+        } = obj;
         const isProgress = status === "운영";
 
+        const getStrokeColor = category => {
+          switch (category) {
+            case "가로주택":
+              return "#52c41a";
+            case "재건축":
+              return "#0050b3";
+            default:
+              return "#FF5100";
+          }
+        };
         return {
           center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
           title: obj.title,
@@ -251,7 +264,7 @@ export default {
             return { lat: Number(obj.lat), lng: Number(obj.lng) };
           }),
           options: {
-            strokeColor: "#FF5100",
+            strokeColor: getStrokeColor(category),
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: isProgress ? "#0BCDC7" : "gray",
@@ -277,10 +290,8 @@ export default {
       this.$store.dispatch("initSimpleHouses");
 
       debounce(() => {
-        const zoomLevel = this.map.getZoom();
         this.setLocationLoading(false);
         this.getHouseInfo();
-        this.changeMapZoom(zoomLevel);
       }, 500)();
     });
   },
@@ -296,6 +307,7 @@ export default {
     // have access to vuex actions
     ...mapActions(["estate", "setViewRedevOnly"]),
     ...mapActions("map", [
+      "setMapZoom",
       "changeMapZoom",
       "changeMapCenter",
       "setLocationLoading",
@@ -350,8 +362,18 @@ export default {
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
 
-      this.getRedevInfo(location);
-      console.log(bounds.getSouthWest().lat());
+      const redevLocation = {
+        latitude: [
+          bounds.getSouthWest().lat() * 0.9999,
+          bounds.getNorthEast().lat() * 1.0001
+        ],
+        longitude: [
+          bounds.getSouthWest().lng() * 0.9999,
+          bounds.getNorthEast().lng() * 1.0001
+        ]
+      };
+
+      this.getRedevInfo(redevLocation);
       let payload = { type: "subcity", ...location };
       if (zoomLevel <= 16) {
         this.showInfoWindow = false;
@@ -393,21 +415,21 @@ export default {
     },
     viewArea(item) {
       this.map.panTo(item.position);
-      this.map.addListener("idle", () => {
-        // this.changeMapZoom(18);
-        this.changeMapCenter(item.position);
-        this.$router.push({
-          name:
-            this.$route.path === "/map/city/area"
-              ? "map_list_sale"
-              : "for_sale_apartment",
-          query: {
-            transactionid:
-              this.$route.path === "/map/city/area" ? item.id : undefined,
-            sellid: this.$route.path === "/map/city" ? item.id : undefined
-          }
-        });
-      });
+      // this.map.addListener("idle", () => {
+      //   // this.changeMapZoom(18);
+      //   this.changeMapCenter(item.position);
+      //   this.$router.push({
+      //     name:
+      //       this.$route.path === "/map/city/area"
+      //         ? "map_list_sale"
+      //         : "for_sale_apartment",
+      //     query: {
+      //       transactionid:
+      //         this.$route.path === "/map/city/area" ? item.id : undefined,
+      //       sellid: this.$route.path === "/map/city" ? item.id : undefined
+      //     }
+      //   });
+      // });
     },
     typeForHouse(type) {
       if (type === "land") return "for_sale_land";
