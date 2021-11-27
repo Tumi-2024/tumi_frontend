@@ -251,18 +251,26 @@ export default {
           category,
           redevelopment_area_locations: redevAreaLocation
         } = obj;
-        const isProgress = status === "운영";
-
-        const getStrokeColor = category => {
-          switch (category) {
+        let colors = {
+          stroke: "#FF5100",
+          fill: ""
+        };
+        const getStrokeColor = opt => {
+          switch (opt) {
             case "가로주택":
-              return "#52c41a";
+              colors = { stroke: "#52c41a", fill: "#52c41a" };
+              break;
             case "재건축":
-              return "#0050b3";
+              colors = { stroke: "#2196f3", fill: "#2196f3" };
+              break;
             default:
-              return "#FF5100";
+              colors = { stroke: "#ff9800", fill: "#ff9800" };
           }
         };
+        getStrokeColor(category);
+        if (status !== "운영") {
+          colors = { stroke: "#757575", fill: "#757575" };
+        }
         return {
           center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
           title: obj.title,
@@ -270,11 +278,11 @@ export default {
             return { lat: Number(obj.lat), lng: Number(obj.lng) };
           }),
           options: {
-            strokeColor: getStrokeColor(category),
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: isProgress ? "#0BCDC7" : "gray",
-            fillOpacity: isProgress ? 0.35 : 0.6
+            strokeColor: colors.stroke,
+            strokeOpacity: 1,
+            strokeWeight: 3,
+            fillColor: colors.fill,
+            fillOpacity: 0.1
           },
           ...obj
         };
