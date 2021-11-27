@@ -268,7 +268,8 @@ export default {
           }
         };
         getStrokeColor(category);
-        if (status !== "운영") {
+        const isStop = status !== "운영";
+        if (isStop) {
           colors = { stroke: "#757575", fill: "#757575" };
         }
         return {
@@ -282,7 +283,7 @@ export default {
             strokeOpacity: 1,
             strokeWeight: 3,
             fillColor: colors.fill,
-            fillOpacity: 0.1
+            fillOpacity: isStop ? 0.35 : 0.1
           },
           ...obj
         };
