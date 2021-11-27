@@ -375,8 +375,8 @@ export default {
           value: houseInfo.date_approval_use
         },
         //
-        { label: "시공사", value: houseInfo.title_contractor },
         { label: "시행사", value: houseInfo.title_executor },
+        { label: "시공사", value: houseInfo.title_contractor },
         {
           label: "입주년차",
           value: `${houseInfo.date_approval_use || ""}`
@@ -502,8 +502,13 @@ export default {
     },
     getTradeOptions() {
       const { group_trading_terms: houseInfo } = this.estate;
-      console.log(houseInfo);
       return [
+        {
+          label: "거래 종류",
+          value: houseInfo.types_sale,
+          class: "col-sm-8 col-md-8"
+        },
+        { label: "거래 유형", value: houseInfo.types_sale_detail },
         {
           label: "희망 매매가",
           value: toMoneyString(houseInfo.price_selling_hope)
@@ -527,17 +532,22 @@ export default {
         { label: "융자금", value: houseInfo.price_loan },
         {
           label: "임대차 조건",
-          value: houseInfo.description_move_condition
+          value: houseInfo.description_rent_condition
         },
-        { label: "희망 임대차계약 만기일", value: houseInfo.date_due_move },
-        { label: "희망 이사조건", value: houseInfo.type_move },
-        { label: "[옵션] 세안고", value: "" },
-        { label: "[옵션] 올수리", value: "" },
-        { label: "[옵션] 인테리어", value: "" },
-        { label: "[옵션] 보일러교체", value: "" },
-        { label: "[옵션] 주택구조", value: "" },
-        { label: "[제한] 애완동물", value: "" },
-        { label: "[제한] 외국인", value: "" }
+        { label: "희망 이사조건", value: houseInfo.description_move_condition },
+        { label: "[옵션] 세안고", value: houseInfo.description_option_wash },
+        { label: "[옵션] 주택구조", value: houseInfo.type_move },
+        { label: "[옵션] 올수리", value: houseInfo.date_option_repair },
+        { label: "[옵션] 인테리어", value: houseInfo.date_option_interior },
+        {
+          label: "[옵션] 보일러교체",
+          value: houseInfo.date_option_boiler_replacement
+        },
+        { label: "[제한] 애완동물", value: houseInfo.description_option_pets },
+        {
+          label: "[제한] 외국인",
+          value: houseInfo.description_option_foreigner
+        }
       ];
     },
     getRedevOptions() {
@@ -572,7 +582,19 @@ export default {
         },
         {
           label: "입주 예정일",
-          value: "입주예정일"
+          value: houseInfo.description_move_condition
+        },
+        {
+          label: "조합원 수",
+          value: houseInfo.count_member
+        },
+        {
+          label: "부동산 소유자 수",
+          value: houseInfo.count_owner
+        },
+        {
+          label: "세입자 수",
+          value: houseInfo.count_house
         },
         { label: "사업 유형", value: houseInfo.business_type },
         { label: "사업 구분", value: houseInfo.business_classification },

@@ -342,7 +342,7 @@ export default {
         const string = obj.recent_transactions[obj.types[0]].text_price;
         return string ? Number(string.replace(",", "")) : 0;
       } else if (obj.group_price) {
-        return obj.group_price.price_expected;
+        return Number(obj.group_price.price_expected);
       }
     },
     calculatorMarker(markers) {
