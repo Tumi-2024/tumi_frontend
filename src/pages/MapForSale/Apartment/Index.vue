@@ -157,7 +157,7 @@ export default {
       console.log(data, "estate");
 
       this.makePolygon(data.group_location.redevelopment_area);
-      console.log(this.estate.group_location);
+      console.log(data.group_location);
       this.redevelopment =
         this.estate.group_location?.redevelopment_area || false;
       console.log(this.redevelopment);

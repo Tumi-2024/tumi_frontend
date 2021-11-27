@@ -39,6 +39,7 @@
         :calculator="calculatorMarker"
         :minimumClusterSize="1"
         ref="clusterers"
+        @click="clusterClicked"
       >
         <gmap-marker
           v-for="(m, mIndex) in getSimpleHouse"
@@ -62,6 +63,11 @@
           <div
             v-show="!showInfoWindow && getMapZoom >= 14"
             class="area-badge-info notosanskr-medium"
+            @click="
+              () => {
+                test(badge);
+              }
+            "
           >
             <q-icon size="20px" class="q-mr-xs">
               <img src="~assets/icons/area-info.svg" alt="area-info" />
@@ -269,7 +275,8 @@ export default {
             strokeWeight: 2,
             fillColor: isProgress ? "#0BCDC7" : "gray",
             fillOpacity: isProgress ? 0.35 : 0.6
-          }
+          },
+          ...obj
         };
       });
     }
@@ -318,6 +325,10 @@ export default {
     onChangeRedev() {
       this.setViewRedevOnly();
     },
+    test(area) {
+      console.log("test");
+      this.changeMapSelectedArea(area);
+    },
     getPriceFromText(obj) {
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.categories[0]].text_price;
@@ -353,6 +364,12 @@ export default {
     async getRedevInfo({ latitude: lat, longitude: lng }) {
       const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${lng[0]},${lng[1]}`;
       await this.fetchMapAreas(rangeQuery);
+    },
+    clusterClicked() {
+      console.log("click");
+      setTimeout(() => {
+        this.map.setZoom(18);
+      }, 500);
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
@@ -415,21 +432,21 @@ export default {
     },
     viewArea(item) {
       this.map.panTo(item.position);
-      // this.map.addListener("idle", () => {
-      //   // this.changeMapZoom(18);
-      //   this.changeMapCenter(item.position);
-      //   this.$router.push({
-      //     name:
-      //       this.$route.path === "/map/city/area"
-      //         ? "map_list_sale"
-      //         : "for_sale_apartment",
-      //     query: {
-      //       transactionid:
-      //         this.$route.path === "/map/city/area" ? item.id : undefined,
-      //       sellid: this.$route.path === "/map/city" ? item.id : undefined
-      //     }
-      //   });
-      // });
+      this.map.addListener("idle", () => {
+        // this.changeMapZoom(18);
+        this.changeMapCenter(item.position);
+        this.$router.push({
+          name:
+            this.$route.path === "/map/city/area"
+              ? "map_list_sale"
+              : "for_sale_apartment",
+          query: {
+            transactionid:
+              this.$route.path === "/map/city/area" ? item.id : undefined,
+            sellid: this.$route.path === "/map/city" ? item.id : undefined
+          }
+        });
+      });
     },
     typeForHouse(type) {
       if (type === "land") return "for_sale_land";
@@ -492,11 +509,7 @@ export default {
   padding: 30px 3px 0 3px;
   .gm-style-iw-d {
     overflow: hidden !important;
-    background: white;
-    border-radius: 8px;
-    padding: 8px;
     box-shadow: 0;
-    border: 1px solid #d5d5d5;
     border-bottom: 0;
   }
 }

@@ -14,7 +14,6 @@
       <gmap-info-window
         :options="infoOptions"
         :position="{ lat: position.lat, lng: position.lng }"
-        opened
         class="q-pa-lg"
         v-if="estate"
       >
@@ -137,4 +136,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .gm-style-iw {
+  background: transparent;
+  box-shadow: none;
+  padding: 30px 3px 0 3px;
+  .gm-style-iw-d {
+    overflow: hidden !important;
+    box-shadow: 0;
+    border-bottom: 0;
+  }
+}
+// hide the close "x" icon on info window
+::v-deep .gm-ui-hover-effect {
+  display: none !important;
+}
+</style>

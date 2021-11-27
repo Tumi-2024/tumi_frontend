@@ -1,17 +1,24 @@
 <template>
   <div
-    style="min-width: 80px; overflow-y: hidden; flex-direction: column;"
+    style="min-width: 80px; overflow-y: hidden; flex-direction: column; border-radius: 8px; background-color: white;"
+    :style="{ borderColor: getColor(item) }"
     class="flex"
     @click="$emit('viewArea')"
   >
     <div class="col items-center">
-      <div class="info-heading notosanskr-medium text-center">
+      <div
+        class="info-heading notosanskr-medium text-center"
+        style="padding: 4px;"
+        :style="{ backgroundColor: getColor(item) }"
+      >
         {{ getItemInfo(item).type }}
       </div>
-      <div class="info-text  text-center">
+      <div class="info-text text-center" style="padding: 0 8px;">
         {{ toSimpleMoneyString(price) }}
       </div>
-      <div class="info-text text-center">{{ getItemInfo(item).date }}</div>
+      <div class="info-text text-center" style="padding: 0 8px 8px 8px;">
+        {{ getItemInfo(item).date }}
+      </div>
     </div>
   </div>
 </template>
@@ -56,17 +63,26 @@ export default {
       "getMapOptions",
       "getIsCone"
     ]),
+    getColor() {
+      return item => {
+        if (item.group_price) {
+          return "#FF5A00";
+        } else {
+          return "#4caf50";
+        }
+      };
+    },
     getItemInfo() {
       return item => {
-        const TYPE_HOUSE = {
-          "COMMERCIAL ": "상업업무용",
-          SINGLE: "단독다가구",
-          OFFICETEL: "오피스텔",
-          APARTMENT: "아파트",
-          LAND: "토지",
-          ALLIANCE: "연립/다세대"
-        };
         if (this.getMapMode === "redevelop-area") {
+          const TYPE_HOUSE = {
+            "COMMERCIAL ": "상업업무용",
+            SINGLE: "단독다가구",
+            OFFICETEL: "오피스텔",
+            APARTMENT: "아파트",
+            LAND: "토지",
+            ALLIANCE: "연립/다세대"
+          };
           const transactionItem =
             item.recent_transactions?.[item.categories[0]];
           return {
@@ -76,14 +92,13 @@ export default {
               transactionItem?.text_month.slice(4, 6),
             type: TYPE_HOUSE?.[item?.categories?.[0]]
           };
-        } else {
-          const d = new Date(item.created);
-          const dd = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
-          return {
-            date: `${d.getFullYear()}.${dd}`,
-            type: item?.group_building_house?.type_house
-          };
         }
+        const d = new Date(item.created);
+        const dd = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
+        return {
+          date: `${d.getFullYear()}.${dd}`,
+          type: item?.group_building_house?.type_house
+        };
       };
     }
   },
@@ -95,11 +110,10 @@ export default {
 
 <style lang="scss" scoped>
 .info-heading {
-  font-weight: bold;
   font-size: 15px;
   line-height: 22px;
   letter-spacing: -1.125px;
-  color: #1a1a1a;
+  color: white;
   &.small {
     font-weight: 500;
     font-size: 12px;
