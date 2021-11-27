@@ -326,12 +326,11 @@ export default {
       this.setViewRedevOnly();
     },
     test(area) {
-      console.log("test");
       this.changeMapSelectedArea(area);
     },
     getPriceFromText(obj) {
       if (obj.recent_transactions) {
-        const string = obj.recent_transactions[obj.categories[0]].text_price;
+        const string = obj.recent_transactions[obj.types[0]].text_price;
         return string ? Number(string.replace(",", "")) : 0;
       } else if (obj.group_price) {
         return obj.group_price.price_expected;
@@ -366,7 +365,6 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     clusterClicked() {
-      console.log("click");
       setTimeout(() => {
         this.map.setZoom(18);
       }, 500);

@@ -83,14 +83,13 @@ export default {
             LAND: "토지",
             ALLIANCE: "연립/다세대"
           };
-          const transactionItem =
-            item.recent_transactions?.[item.categories[0]];
+          const transactionItem = item.recent_transactions?.[item.types[0]];
           return {
             date:
               transactionItem?.text_month.slice(0, 4) +
               "." +
               transactionItem?.text_month.slice(4, 6),
-            type: TYPE_HOUSE?.[item?.categories?.[0]]
+            type: TYPE_HOUSE[transactionItem.category]
           };
         }
         const d = new Date(item.created);
@@ -102,9 +101,7 @@ export default {
       };
     }
   },
-  mounted() {
-    // console.log(this.item, 'item')
-  }
+  mounted() {}
 };
 </script>
 

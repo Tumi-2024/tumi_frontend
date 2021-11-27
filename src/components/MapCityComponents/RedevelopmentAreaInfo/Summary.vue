@@ -334,7 +334,6 @@ export default {
       for (const tr in currTr) {
         currTr[tr] = currTr[tr] / currTrArr.length;
       }
-      console.log(currTrArr);
       currTr.year = currTrArr[0]?.text_month.slice(0, 4);
       currTr.month = currTrArr[0]?.text_month.slice(4, 6);
       currTr.priceText = toMoneyString(currTr.price);

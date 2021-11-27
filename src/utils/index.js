@@ -260,9 +260,6 @@ export const toSimpleMoneyString = val => {
   val = parseInt(val);
   const uk = Math.floor(val / 1000);
   const price = `${uk / 10}억 `;
-  if (isNaN(price)) {
-    return "-";
-  }
   return price;
 };
 
