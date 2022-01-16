@@ -50,6 +50,10 @@ const initState = {
         valueTransaction: "noname02",
         valueHouse: "입주권"
       }
+    ],
+    prices: [
+      { label: "최저가", value: 0 },
+      { label: "최고가", value: 0 }
     ]
   }
 };
@@ -106,6 +110,10 @@ export const searchQueryStore = {
           valueTransaction: "noname02",
           valueHouse: "입주권"
         }
+      ],
+      prices: [
+        { label: "최저가", key: "min", value: 10000 },
+        { label: "최고가", key: "max", value: 999999 }
       ]
     }
   },
@@ -136,6 +144,7 @@ export const searchQueryStore = {
   mutations: {
     SET_QUERY: (state, { key, data }) => {
       const keyObj = state.query[key];
+      console.log(keyObj);
       if (keyObj) {
         state.query[key] = data;
       } else {

@@ -7,6 +7,8 @@ import ExclusiveArea from "./ExclusiveArea";
 import PropertyPremiumPrice from "./PropertyPremiumPrice";
 import PropertyConnoisseur from "./PropertyConnoisseur";
 import MaintenanceType from "./MaintenanceType";
+import PriceFilter from "./PriceFilter";
+import PersonFilter from "./PersonFilter";
 
 export {
   TransactionType,
@@ -17,5 +19,7 @@ export {
   ExclusiveArea,
   PropertyPremiumPrice,
   PropertyConnoisseur,
-  MaintenanceType
+  MaintenanceType,
+  PriceFilter,
+  PersonFilter
 };

@@ -39,7 +39,8 @@ export default {
     return {
       filters: [
         { label: "주택유형", type: "houseType" },
-        { label: "면적종류", type: "areaSize" }
+        { label: "면적종류", type: "areaSize" },
+        { label: "가격", type: "price" }
         // { label: "매매가", type: 'sale' },
         // { label: "전월세가", type: 'charter' },
         // { label: '매물등록일자', type: 'date' }
@@ -54,6 +55,8 @@ export default {
             return "text-white bg-primary";
           case "areaSize":
             return "text-white bg-green";
+          case "price":
+            return "text-white  bg-blue";
           case "recommend":
             return "text-white  bg-white";
           case "redevelopment":

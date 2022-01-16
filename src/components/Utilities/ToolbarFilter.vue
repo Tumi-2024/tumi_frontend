@@ -43,17 +43,11 @@
         >
           <slot>
             <div class="items" v-for="(filter, i) of filters" :key="i">
-              <!-- :transactionType="filter.type === 'transactionType'"
-              :maintenanceType="filter.type === 'maintenanceType'" -->
               <specific-filter
                 :propsClass="filter.class"
                 :label="filter.label"
-                :propertyType="filter.type === 'propertyType'"
-                :exclusiveArea="filter.type === 'exclusiveArea'"
-                :registrationDate="filter.type === 'registrationDate'"
+                :component="filter.type"
               />
-              <!-- :salePrice="filter.type === 'salePrice'" -->
-              <!-- :charterPriceDeposit="filter.type === 'charterPriceDeposit'" -->
             </div>
           </slot>
           <div class="q-px-xs"></div>
@@ -84,13 +78,23 @@ export default {
       filters: [
         {
           label: "주택유형",
-          type: "propertyType",
+          type: "property-type",
           class: "text-white bg-primary"
         },
         {
           label: "면적종류",
-          type: "exclusiveArea",
+          type: "exclusive-area",
           class: "text-white bg-green"
+        },
+        {
+          label: "가격",
+          type: "price",
+          class: "text-white bg-blue"
+        },
+        {
+          label: "담당자",
+          type: "person",
+          class: "text-white bg-black"
         }
         // {
         //   label: "매매가",

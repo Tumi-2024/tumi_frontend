@@ -69,7 +69,6 @@ export const estateStore = {
       state.interest_houses = state.interest_houses.filter(
         house => !payload.some(id => id === house.id)
       );
-      console.log("removeInterestHouses", payload);
     },
     setLatitude: function(state, payload) {
       state.latitude = payload;
@@ -86,7 +85,6 @@ export const estateStore = {
       context.commit("setViewRedevOnly");
     },
     initSimpleHouses: (context, parameter) => {
-      console.log("iniut");
       context.commit("setSimpleHouses", []);
     },
     getSimpleHouses: async function(context, payload) {
@@ -98,6 +96,8 @@ export const estateStore = {
       const getQueryString = context.getters["searchQuery/getQueryString"];
       const query =
         getQueryString("categories", "type_house__in", "valueHouse") +
+        "&" +
+        getQueryString("prices", "price_selling_hope__range", "value") +
         "&" +
         redevelopQuery;
       const encodedUrl = encodeURI(query);
@@ -129,7 +129,7 @@ export const estateStore = {
       }
 
       const data = await Vue.prototype.$axios.get(
-        `/${context.state.requestUrl}/?${rangeQuery}`
+        `/${context.state.requestUrl}/?${rangeQuery}&page_size=1000`
       );
       // if (payload.query) {
       //   data = await Vue.prototype.$axios.get(

@@ -16,9 +16,9 @@
     >
       <template v-if="showInfoWindow">
         <gmap-info-window
-          v-for="(m, index) in getSimpleHouse"
-          :key="index"
-          :options="infoOptions"
+          v-for="m in simple_houses"
+          :key="m.id"
+          :options="{ disableAutoPan: true }"
           :position="m.position"
           :opened="showInfoWindow"
         >
@@ -31,50 +31,40 @@
         </gmap-info-window>
       </template>
 
-      <!-- Map Markers -->
-      <gmap-cluster
-        :zoomOnClick="true"
-        :styles="clusterStyles"
-        :maxZoom="16"
-        :calculator="calculatorMarker"
-        :minimumClusterSize="1"
-        ref="clusterers"
-        @click="clusterClicked"
-      >
-        <gmap-marker
-          v-for="(m, mIndex) in getSimpleHouse"
-          :key="`marker-${mIndex}`"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-        />
-      </gmap-cluster>
       <!-- we generate badges for the Redevelopment Area -->
-      <template v-for="(badge, i) in getAreaBadges">
-        <gmap-polygon
-          :key="`${badge.title}-${i}-polygon`"
-          :paths="badge.path"
-          :options="badge.options"
-        ></gmap-polygon>
-        <gmap-custom-marker
-          :key="`${badge.title}-${i}-marker`"
-          :marker="badge.center"
-        >
-          <div
-            v-show="!showInfoWindow && getMapZoom >= 14"
-            class="area-badge-info notosanskr-medium"
-            @click="
-              () => {
-                test(badge);
-              }
-            "
-          >
-            <q-icon size="20px" class="q-mr-xs">
-              <img src="~assets/icons/area-info.svg" alt="area-info" />
-            </q-icon>
-            {{ badge.title | truncate(15) }}
-          </div>
-        </gmap-custom-marker>
+      <template v-for="badge in getAreaBadges">
+        <div :key="`${badge.id}-polygon`">
+          <gmap-polygon :paths="badge.path" :options="badge.options" />
+          <gmap-custom-marker :marker="badge.center">
+            <template
+              v-if="!showInfoWindow && getMapZoom >= 14 && getMapZoom != 12"
+            >
+              <div
+                class="area-badge-info notosanskr-medium"
+                @click="changeMapSelectedArea"
+              >
+                <q-icon
+                  v-if="$route.path === '/map/city/area'"
+                  size="20px"
+                  class="q-mr-xs"
+                >
+                  <img src="~assets/icons/area-info.svg" alt="area-info" />
+                </q-icon>
+                <div
+                  v-else
+                  style="border-radius: 2px; background-color: white; color: black; margin-right: 5px;"
+                  class="items-center justify-center flex"
+                >
+                  <span
+                    style="font-size: 13px; line-height: 13px; color: #333333; padding: 3px 5px;"
+                    >{{ badge.count_houses }}</span
+                  >
+                </div>
+                {{ badge.title | truncate(15) }}
+              </div>
+            </template>
+          </gmap-custom-marker>
+        </div>
       </template>
     </GmapMap>
   </div>
@@ -107,61 +97,7 @@ export default {
     return {
       map: null,
       mapSize: { height: "", width: "" },
-      /* MARKERS */
-      detailMarkers: this.$store.state.estate.detail_houses,
-      markers: this.$store.state.estate.simple_houses,
-      /** MARKERS SERVE AS AREA BADGE */
-      showAreaBadges: true,
-      /* INFO WINDOW */
-      infoOptions: {
-        // optional: offset infowindow so it visually sits nicely on top of our marker
-        // pixelOffset: { width: 0, height: -35 },
-        // prevent map from moving when showing infoWindow
-        disableAutoPan: true
-      },
-      showInfoWindow: false,
-      /* CLUSTERS */
-      clusterStyles: [
-        // 1+
-        {
-          textColor: "white",
-          fontWeight: 900,
-          textAlign: "center",
-          maxZoom: 16,
-          textSize: 18,
-          url: "icons/map-red-60x60.png",
-          height: 60,
-          width: 60,
-          anchorText: [20, 0],
-          gridSize: 60
-        },
-        // 10+
-        {
-          textColor: "white",
-          fontWeight: 900,
-          textAlign: "center",
-          maxZoom: 16,
-          textSize: 20,
-          url: "icons/map-red-84x84.png",
-          height: 84,
-          width: 84,
-          anchorText: [30, 0],
-          gridSize: 84
-        },
-        // 100+
-        {
-          textColor: "white",
-          fontWeight: 900,
-          textAlign: "center",
-          maxZoom: 16,
-          textSize: 24,
-          url: "icons/map-red-96x96.png",
-          height: 96,
-          width: 96,
-          anchorText: [30, 0],
-          gridSize: 96
-        }
-      ]
+      showInfoWindow: false
     };
   },
   props: {
@@ -221,35 +157,15 @@ export default {
         }
       };
     },
-    getSimpleHouse() {
-      return (
-        this.$store.state.estate.simple_houses
-          // .filter(h => {
-          //   return this.getIsCone ? h.redevelopment_area !== null : true;
-          // })
-          .filter(house => {
-            const isOnlyRedev = this.getIsCone;
-            if (this.getMapMode === "redevelop-area") {
-              if (isOnlyRedev) {
-                return house.count_transaction_groups_redevelopment_area !== 0;
-              } else {
-                return house.count_transaction_groups !== 0;
-              }
-            } else {
-              if (isOnlyRedev) {
-                return house.count_houses_redevelopment_area !== 0;
-              }
-              return house.count_houses !== 0;
-            }
-          })
-      );
-    },
     getAreaBadges() {
       return this.getMapAreas.map(obj => {
         const {
           status,
           category,
-          redevelopment_area_locations: redevAreaLocation
+          latitude,
+          longitude,
+          redevelopment_area_locations: redevAreaLocation,
+          count_houses
         } = obj;
         let colors = {
           stroke: "#FF5100",
@@ -273,7 +189,7 @@ export default {
           colors = { stroke: "#757575", fill: "#757575" };
         }
         return {
-          center: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
+          center: { lat: Number(latitude), lng: Number(longitude) },
           title: obj.title,
           path: redevAreaLocation.map(obj => {
             return { lat: Number(obj.lat), lng: Number(obj.lng) };
@@ -281,7 +197,7 @@ export default {
           options: {
             strokeColor: colors.stroke,
             strokeOpacity: 1,
-            strokeWeight: 3,
+            strokeWeight: 2,
             fillColor: colors.fill,
             fillOpacity: isStop ? 0.35 : 0.1
           },
@@ -299,15 +215,32 @@ export default {
         position: this.google.maps.ControlPosition.RIGHT_TOP
       }
     });
-    this.geojson && this.setMapGeojson(this.geojson);
-
-    this.markers = this.$store.state.estate.simple_houses;
+    this.changeMapCenter(this.getMapCenter);
+    this.map.addListener("dragend", async _ => {
+      this.changeMapCenter({
+        lat: this.map.getCenter().lat(),
+        lng: this.map.getCenter().lng()
+      });
+    });
     this.map.addListener("idle", async _ => {
-      this.$store.dispatch("initSimpleHouses");
-
-      debounce(() => {
+      debounce(async () => {
+        console.log("idle");
         this.setLocationLoading(false);
-        this.getHouseInfo();
+        // this.getHouseInfo();
+        const bounds = this.map.getBounds();
+        const redevLocation = {
+          latitude: [
+            bounds.getSouthWest().lat() * 0.9997,
+            bounds.getNorthEast().lat() * 1.0003
+          ],
+          longitude: [
+            bounds.getSouthWest().lng() * 0.9997,
+            bounds.getNorthEast().lng() * 1.0003
+          ]
+        };
+
+        const rangeQuery = `latitude__range=${redevLocation.latitude[0]},${redevLocation.latitude[1]}&longitude__range=${redevLocation.longitude[0]},${redevLocation.longitude[1]}`;
+        await this.fetchMapAreas(rangeQuery);
       }, 500)();
     });
   },
@@ -323,60 +256,24 @@ export default {
     // have access to vuex actions
     ...mapActions(["estate", "setViewRedevOnly"]),
     ...mapActions("map", [
-      "setMapZoom",
       "changeMapZoom",
       "changeMapCenter",
       "setLocationLoading",
-      "setMapMode"
+      "setMapMode",
+      "setMapZoom"
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
     onChangeRedev() {
       this.setViewRedevOnly();
     },
-    test(area) {
-      this.changeMapSelectedArea(area);
-    },
     getPriceFromText(obj) {
       if (obj.recent_transactions) {
         const string = obj.recent_transactions[obj.types[0]].text_price;
         return string ? Number(string.replace(",", "")) : 0;
-      } else if (obj.group_price) {
-        return Number(obj.group_price.price_expected);
+      } else if (obj.group_trading_terms) {
+        return Number(obj.group_trading_terms.price_selling_hope);
       }
-    },
-    calculatorMarker(markers) {
-      if (this.simple_houses.length === 0) {
-        return { text: "", index: 0, title: "count" };
-      }
-      const { lat, lng } = markers[0].position;
-      const {
-        count_transaction_groups: group,
-        count_transaction_groups_redevelopment_area: groupRedev,
-        count_estates: estate,
-        count_estates_redevelopment_area: estateRedev
-      } = this.simple_houses.find(obj => {
-        return (
-          Number(obj.latitude) === lat() && Number(obj.longitude) === lng()
-        );
-      });
-      let text;
-      const isRedev = this.getMapMode === "redevelop-area";
-      if (this.getIsCone) {
-        text = isRedev ? groupRedev : estateRedev;
-      } else {
-        text = isRedev ? group : estate;
-      }
-      return { text, index: 0, title: "count" };
-    },
-    async getRedevInfo({ latitude: lat, longitude: lng }) {
-      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${lng[0]},${lng[1]}`;
-      await this.fetchMapAreas(rangeQuery);
-    },
-    clusterClicked() {
-      setTimeout(() => {
-        this.map.setZoom(18);
-      }, 500);
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
@@ -385,23 +282,9 @@ export default {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
-
-      const redevLocation = {
-        latitude: [
-          bounds.getSouthWest().lat() * 0.9999,
-          bounds.getNorthEast().lat() * 1.0001
-        ],
-        longitude: [
-          bounds.getSouthWest().lng() * 0.9999,
-          bounds.getNorthEast().lng() * 1.0001
-        ]
-      };
-
-      this.getRedevInfo(redevLocation);
       let payload = { type: "subcity", ...location };
-      if (zoomLevel <= 16) {
+      if (zoomLevel <= 17) {
         this.showInfoWindow = false;
-        payload = { type: "locations", ...location };
       } else {
         this.showInfoWindow = true;
         payload = {
@@ -414,23 +297,6 @@ export default {
       }
       this.$store.dispatch("getSimpleHouses", payload);
     },
-    setMapGeojson(geojson) {
-      /**
-       *  we use loadGeoJson() for url
-       *  this.map.data.loadGeoJson("https:// url here /");
-       *
-       *  we use addGeoJson() for direct
-       *  this.map.data.addGeoJson({ object here })
-       */
-      this.map.data.addGeoJson(geojson);
-      // apply styles on geojson layers
-      this.map.data.setStyle(function(feature) {
-        const color = feature.getProperty("areaForSale")
-          ? "#0BCDC7"
-          : "#DF5103";
-        return { fillColor: color, strokeColor: "#FF5100", strokeWeight: 2 };
-      });
-    },
     setGmapContainerSize() {
       const { clientHeight: h, clientWidth: w } = this.$refs.gmapContainer;
 
@@ -441,6 +307,10 @@ export default {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
         // this.changeMapZoom(18);
+        console.log(item.position);
+        const zoomLevel = this.map.getZoom();
+        this.setMapZoom(zoomLevel);
+
         this.changeMapCenter(item.position);
         this.$router.push({
           name:
@@ -454,12 +324,6 @@ export default {
           }
         });
       });
-    },
-    typeForHouse(type) {
-      if (type === "land") return "for_sale_land";
-      if (type === "apartment") return "map_list_sale";
-      if (type === "redevelop") return "for_sale_redevelop_estate";
-      if (type === "no_redevelop") return "for_sale_no_redevelop_estate";
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);
@@ -475,7 +339,6 @@ export default {
     },
     async showHideArea() {
       this.getHouseInfo();
-      this.showAreaBadges = !this.showAreaBadges;
     },
     markUsersLocation(position = { lat: 0, lng: 0 }) {
       (() =>
@@ -494,7 +357,7 @@ export default {
         new this.google.maps.Marker({
           icon: {
             url: "/icons/marker.png",
-            size: this.google.maps.Size(30, 30),
+            size: this.google.maps.Size(5, 5),
             origin: this.google.maps.Point(0, 0),
             anchor: this.google.maps.Point(12, 15),
             scaledSize: this.google.maps.Size(25, 25)
@@ -532,7 +395,7 @@ export default {
 
   background: #68814e;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 28px;
   text-align: center;
   letter-spacing: -0.97px;

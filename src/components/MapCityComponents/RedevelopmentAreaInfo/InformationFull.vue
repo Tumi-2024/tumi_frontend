@@ -14,8 +14,8 @@
           <div>
             <q-btn flat padding="0 8px" class="bg-white" @click="like()">
               <q-icon size="44px">
-                <img v-if="is_interest" src="~assets/icons/hearted.svg" alt="" />
-                <img v-else src="~assets/icons/heart.svg" alt="" />
+                <!-- <img src="~assets/icons/hearted.svg" alt="" /> -->
+                <img src="~assets/icons/heart.svg" alt="" />
               </q-icon>
             </q-btn>
             <q-btn flat padding="8px" @click="$refs.dialog.hide()">
@@ -91,14 +91,15 @@ export default {
   data() {
     return {
       tab: "summary",
-      dialog: false,
+      dialog: false
     };
   },
   computed: {
-    ...mapGetters("area", ["getMapSelectedArea"]),
-    is_interest() {
-      return this.getMapSelectedArea.interest.redevelopment_area
-    }
+    ...mapGetters("area", ["getMapSelectedArea"])
+    // is_interest() {
+    //   console.log(this.getMapSelectedArea);
+    //   return this.getMapSelectedArea.interest.redevelopment_area;
+    // }
   },
   methods: {
     ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),
@@ -107,7 +108,7 @@ export default {
       !this.dialog && this.$emit("hide");
     },
     like() {
-      this.interestSelectedArea()
+      this.interestSelectedArea();
     }
   }
 };

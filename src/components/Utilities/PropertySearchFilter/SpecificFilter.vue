@@ -8,7 +8,7 @@
       @click="modal = true"
       :disable="disable"
     >
-      {{ label }}
+      <span style="min-width: 60px;">{{ label }}</span>
     </q-btn>
 
     <!-- Dialog Section -->
@@ -20,7 +20,7 @@
 
         <q-card-section class="q-pa-none bg-white notosanskr-medium">
           <component
-            :is="contentComponent"
+            :is="component"
             @select="select"
             @selectDetail="selectDetail"
           />
@@ -63,7 +63,9 @@ import {
   PropertySalePrice,
   CharterPriceDeposit,
   MaintenanceType,
-  ExclusiveArea
+  ExclusiveArea,
+  PriceFilter,
+  PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -73,7 +75,9 @@ export default {
     "property-type": PropertyType,
     "property-sale-price": PropertySalePrice,
     "charter-price-deposit": CharterPriceDeposit,
-    "exclusive-area": ExclusiveArea
+    "exclusive-area": ExclusiveArea,
+    price: PriceFilter,
+    person: PersonFilter
   },
   data() {
     return {
@@ -85,38 +89,13 @@ export default {
   },
   props: {
     label: { type: String, default: "" },
-    maintenanceType: { type: Boolean, default: false },
-    transactionType: { type: Boolean, default: false },
-    propertyType: { type: Boolean, default: false },
-    exclusiveArea: { type: Boolean, default: false },
+    component: { type: String, require: true },
     salePrice: { type: Boolean, default: false },
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
     propsClass: { type: String, default: "" }
   },
   computed: {
-    contentComponent() {
-      let component;
-      if (this.transactionType) {
-        component = "transaction-type";
-      }
-      if (this.exclusiveArea) {
-        component = "exclusive-area";
-      }
-      if (this.maintenanceType) {
-        component = "maintenance-type";
-      }
-      if (this.propertyType) {
-        component = "property-type";
-      }
-      if (this.salePrice) {
-        component = "property-sale-price";
-      }
-      if (this.charterPriceDeposit) {
-        component = "charter-price-deposit";
-      }
-      return component;
-    },
     ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
     ...mapGetters("map", ["getMapCenter"])
   },
@@ -132,6 +111,7 @@ export default {
     // ]),
     // COMPONENTS METHODS STARTS ***
     select(obj, key) {
+      console.log(obj, key);
       this.selected = obj;
       this.keyName = key;
     },
@@ -140,6 +120,7 @@ export default {
     },
     save() {
       // if (this.keyName )
+      console.log({ key: this.keyName, data: this.selected });
       this.setQuery({ key: this.keyName, data: this.selected });
       this.modal = false;
     },

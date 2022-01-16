@@ -19,7 +19,7 @@ const initState = {
     scrollwheel: true,
     fullscreenControl: false,
     disableDefaultUI: true,
-    minZoom: 11
+    minZoom: 13
   },
   toolbarTitle: "서울시 종로구",
   interest: [],
@@ -38,7 +38,7 @@ export const mapStore = {
     getToolbarLabel: state => {
       // you lookint at | information viewing
       return state.mode !== "default"
-        ? "지금 보고 있는 정보"
+        ? "지금 보고있는 정보"
         : "지금 보고있는 지역";
     },
     getToolbarTitle: state => state.toolbarTitle,
@@ -62,6 +62,7 @@ export const mapStore = {
     }
   },
   actions: {
+    setMapZoom: (context, payload) => context.commit("setMapZoom", payload),
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
     setIsCone: (context, payload) => context.commit("setIsCone", payload),
     setLocationLoading: (context, payload) =>
@@ -93,6 +94,7 @@ export const mapStore = {
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     changeMapCenter: async (context, data) => {
       context.commit("setMapCenter", data);
+      console.log(data);
       Vue.prototype.$axios
         .post(
           `/locations/find/`,
@@ -103,6 +105,7 @@ export const mapStore = {
         )
         .then(result => {
           const string = result.data.address.split(" ");
+          console.log(result.data, "result.data");
           context.commit("setMapAddress", `${string[1]} ${string[2]}`);
           context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
           // console.log('changeMapCenter', result.data)

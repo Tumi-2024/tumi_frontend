@@ -8,7 +8,18 @@
       }"
       :zoom="17"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="getMapOptions"
+      :options="{
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        mapTypeControl: false,
+        disableDoubleClickZoom: true,
+        streetViewControl: false,
+        fullscreenControl: false,
+        disableDefaultUI: true,
+        rotateControl: false,
+        scaleControl: false
+      }"
     >
       <!-- THIS IS INFO WINDOW -->
       <gmap-info-window
@@ -20,7 +31,7 @@
         <!-- INPUT DESIRED CONTENTS -->
         <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
-          :price="estate.group_price.price_expected || 123123"
+          :price="estate.group_trading_terms.price_selling_hope"
           :item="estate"
           :badges="{
             type_sale: estate.type_sale,

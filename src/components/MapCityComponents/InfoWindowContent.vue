@@ -4,6 +4,7 @@
     :style="{ borderColor: getColor(item) }"
     class="flex"
     @click="$emit('viewArea')"
+    v-if="getItemInfo(item).type"
   >
     <div class="col items-center">
       <div
@@ -84,6 +85,12 @@ export default {
             ALLIANCE: "연립/다세대"
           };
           const transactionItem = item.recent_transactions?.[item.types[0]];
+          if (!transactionItem) {
+            return {
+              date: null,
+              type: null
+            };
+          }
           return {
             date:
               transactionItem?.text_month.slice(0, 4) +

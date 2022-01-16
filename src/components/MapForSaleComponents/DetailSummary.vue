@@ -5,28 +5,159 @@
         :item="{ address: areaName, building }"
         :tags="getBadgeOptions"
       />
-      <div class="price-name">
-        {{ sales }}
-      </div>
-      <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-        <q-icon>
-          <img src="~assets/icons/coins.svg" alt="" />
-        </q-icon>
+      <div class="row">
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">초기투자금</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.initialInvestments) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">프리미엄</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">{{ toMoneyString(prices.price_premium) }}</div>
+          </div>
+        </div>
 
-        <div class="q-ml-md title">초기투자금</div>
-
-        <q-separator
-          class="q-ml-sm q-mr-sm"
-          vertical
-          inset
-          style="height: 16px"
-        />
-
-        <div class="price">{{ initialInvestments }}</div>
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">조합원 분양가</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">{{ toMoneyString(prices.price_member) }}</div>
+          </div>
+        </div>
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">추가분담금</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_additional) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">총매가</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">{{ toMoneyString(prices.price_total) }}</div>
+          </div>
+        </div>
+        <div class="col-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">안전마진</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_safety_margin) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">안전마진</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_safety_margin) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">안전마진</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_safety_margin) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">안전마진</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_safety_margin) }}
+            </div>
+          </div>
+        </div>
       </div>
     </q-card-section>
 
-    <q-separator color="grey-3" />
+    <q-separator color="self-center grey-3" />
 
     <q-card-section class="bottom-title q-py-none">
       {{ quote }}
@@ -36,6 +167,8 @@
 
 <script>
 import AddressWithBadges from "../Address/AddressWithBadges.vue";
+import { toMoneyString } from "src/utils";
+
 export default {
   name: "sale-title",
   components: {
@@ -62,13 +195,22 @@ export default {
       type: String,
       default: ""
     },
-    initialInvestments: {
-      type: String,
-      default: ""
+    prices: {
+      type: Object,
+      default() {
+        return {
+          initialInvestments: 0
+        };
+      }
     },
     quote: {
       type: String,
       default: ""
+    }
+  },
+  methods: {
+    toMoneyString(value, add) {
+      return toMoneyString(value, add);
     }
   },
   computed: {
@@ -122,6 +264,7 @@ export default {
     font-size: 17px;
     line-height: 36px;
     letter-spacing: -1.275px;
+    width: 100px;
     color: #707070;
   }
 

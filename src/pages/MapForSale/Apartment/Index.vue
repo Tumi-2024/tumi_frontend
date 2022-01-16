@@ -20,6 +20,7 @@
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"
+      :prices="estate.group_price"
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
@@ -151,15 +152,14 @@ export default {
     if (this.$route?.query?.sellid) {
       const { query } = this.$route;
       const { data } = await Vue.prototype.$axios.get(
-        `/houses/${query.sellid}`
+        `/houses/${query.sellid}/`
       );
       this.estate = data;
       console.log(data, "estate");
 
       this.makePolygon(data.group_location.redevelopment_area);
       console.log(data.group_location);
-      this.redevelopment =
-        this.estate.group_location?.redevelopment_area || false;
+      this.redevelopment = data.group_location?.redevelopment_area;
       console.log(this.redevelopment);
 
       this.$store.dispatch("addRecentlyViewedHouse", data);
@@ -174,6 +174,7 @@ export default {
     toKr,
     toMoneyString,
     makePolygon(area) {
+      console.log(area);
       this.redevelopmentArea = area.redevelopment_area_locations.map(obj => {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
       });
@@ -376,7 +377,7 @@ export default {
         },
         //
         { label: "시행사", value: houseInfo.title_executor },
-        { label: "시공사", value: houseInfo.title_contractor },
+        { label: "시공사 (건설사)", value: houseInfo.title_contractor },
         {
           label: "입주년차",
           value: `${houseInfo.date_approval_use || ""}`
@@ -448,8 +449,8 @@ export default {
         { label: "공급면적", value: `${houseInfo.size_supply_area}㎡` },
         {
           label: "전용면적 (㎡|평형)",
-          value: `${houseInfo.size_dedicated_area}㎡ | ${(
-            houseInfo.size_dedicated_area / 3.3
+          value: `${houseInfo.size_dedicated_area_m2 || "-"}㎡ | ${(
+            houseInfo.size_dedicated_area_pyeong || 0 / 3.3
           ).toFixed(1)}평`
         },
         // {
@@ -505,10 +506,10 @@ export default {
       return [
         {
           label: "거래 종류",
-          value: houseInfo.types_sale,
+          value: houseInfo.types_sale.join(", "),
           class: "col-sm-8 col-md-8"
         },
-        { label: "거래 유형", value: houseInfo.types_sale_detail },
+        { label: "거래유형", value: houseInfo.types_sale_detail.join(", ") },
         {
           label: "희망 매매가",
           value: toMoneyString(houseInfo.price_selling_hope)
@@ -543,9 +544,9 @@ export default {
           label: "[옵션] 보일러교체",
           value: houseInfo.date_option_boiler_replacement
         },
-        { label: "[제한] 애완동물", value: houseInfo.description_option_pets },
+        { label: "(제한) 애완동물", value: houseInfo.description_option_pets },
         {
-          label: "[제한] 외국인",
+          label: "(제한) 외국인",
           value: houseInfo.description_option_foreigner
         }
       ];
@@ -573,7 +574,7 @@ export default {
           value: `${houseInfo.percentage_proportionality} %`
         },
         {
-          label: "분양 세대 수",
+          label: "(분양) 세대 수",
           value: toOriginMoneyString(houseInfo.count_sale)
         },
         {
