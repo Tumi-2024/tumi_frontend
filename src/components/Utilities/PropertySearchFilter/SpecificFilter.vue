@@ -18,7 +18,7 @@
           <div class="indicator"></div>
         </q-card-section>
 
-        <q-card-section class="q-pa-none bg-white notosanskr-medium">
+        <q-card-section class="q-pa-none bg-white notosanskr-medium" style="min-height: 200px;">
           <component
             :is="component"
             @select="select"

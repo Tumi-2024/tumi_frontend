@@ -5,7 +5,7 @@
     <div class="selection row q-mt-lg items-center">
       <q-tree
         class="col-12 row wrap"
-        :nodes="simple"
+        :nodes="getTeamTree"
         node-key="label"
         tick-strategy="leaf"
         :ticked.sync="ticked"
@@ -18,16 +18,34 @@
 
 <script>
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
+import Vue from 'vue'
 import { mapGetters } from "vuex";
 export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"])
+    ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
+    getTeamTree () {
+      return this.teamsData.map(obj => {
+        return {
+          label: obj.title,
+          children: obj.users.map(obj => {
+            return { label: obj.username }
+          })
+        }
+      })
+    }
+  },
+  async created() {
+    const { data } = await Vue.prototype.$axios
+      .get(`/teams/`)
+    this.teamsData = data.results
+    console.log(this.teamsData, 'teams')
   },
   data() {
     return {
+      teamsData: [],
       ticked: [],
       expanded: [],
       selected: [],
@@ -116,9 +134,6 @@ export default {
         }
       ]
     };
-  },
-  created() {
-    // this.selected = JSON.parse(JSON.stringify(this.getQuery("prices")));
   },
   methods: {}
 };

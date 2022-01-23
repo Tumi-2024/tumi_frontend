@@ -37,7 +37,7 @@ export default {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"])
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
   },
   data() {
     return {
@@ -45,7 +45,8 @@ export default {
     };
   },
   created() {
-    this.selected = JSON.parse(JSON.stringify(this.getQuery("prices")));
+    this.selected = JSON.parse(JSON.stringify(this.getOption("prices")));
+    console.log(this.selected)
   },
   methods: {
     toMoneyString: toMoneyString,

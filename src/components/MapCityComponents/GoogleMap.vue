@@ -8,8 +8,13 @@
     />
     <!-- Google Map Starts -->
     <GmapMap
+      @idle="idle"
+      @zoom_changed="zoomChanged"
       ref="mapRef"
-      :center="getMapCenter"
+      :center="{
+        lat: 37.5326,
+        lng: 127.024612
+      }"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
@@ -76,9 +81,7 @@ import { gmapApi } from "gmap-vue";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
 /** custom components */
 import InfoWindowContent from "./InfoWindowContent";
-// import InfoTopContent from "./InfoTopContent";
 import ActionButtons from "./ActionButtons";
-// import { toQueryString } from 'src/utils';
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
@@ -157,6 +160,16 @@ export default {
         }
       };
     },
+    getPriceFromText() {
+      return obj => {
+        if (obj.recent_transactions) {
+          const string = obj.recent_transactions[obj.types[0]].text_price;
+          return string ? Number(string.replace(",", "")) : 0;
+        } else if (obj.group_trading_terms) {
+          return Number(obj.group_trading_terms.price_selling_hope);
+        }
+      };
+    },
     getAreaBadges() {
       return this.getMapAreas.map(obj => {
         const {
@@ -164,9 +177,9 @@ export default {
           category,
           latitude,
           longitude,
-          redevelopment_area_locations: redevAreaLocation,
-          count_houses
+          redevelopment_area_locations: redevAreaLocation
         } = obj;
+
         let colors = {
           stroke: "#FF5100",
           fill: ""
@@ -194,6 +207,7 @@ export default {
           path: redevAreaLocation.map(obj => {
             return { lat: Number(obj.lat), lng: Number(obj.lng) };
           }),
+          count_houses: obj.count_houses,
           options: {
             strokeColor: colors.stroke,
             strokeOpacity: 1,
@@ -214,34 +228,6 @@ export default {
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
       }
-    });
-    this.changeMapCenter(this.getMapCenter);
-    this.map.addListener("dragend", async _ => {
-      this.changeMapCenter({
-        lat: this.map.getCenter().lat(),
-        lng: this.map.getCenter().lng()
-      });
-    });
-    this.map.addListener("idle", async _ => {
-      debounce(async () => {
-        console.log("idle");
-        this.setLocationLoading(false);
-        // this.getHouseInfo();
-        const bounds = this.map.getBounds();
-        const redevLocation = {
-          latitude: [
-            bounds.getSouthWest().lat() * 0.9997,
-            bounds.getNorthEast().lat() * 1.0003
-          ],
-          longitude: [
-            bounds.getSouthWest().lng() * 0.9997,
-            bounds.getNorthEast().lng() * 1.0003
-          ]
-        };
-
-        const rangeQuery = `latitude__range=${redevLocation.latitude[0]},${redevLocation.latitude[1]}&longitude__range=${redevLocation.longitude[0]},${redevLocation.longitude[1]}`;
-        await this.fetchMapAreas(rangeQuery);
-      }, 500)();
     });
   },
 
@@ -264,16 +250,39 @@ export default {
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
+
     onChangeRedev() {
       this.setViewRedevOnly();
     },
-    getPriceFromText(obj) {
-      if (obj.recent_transactions) {
-        const string = obj.recent_transactions[obj.types[0]].text_price;
-        return string ? Number(string.replace(",", "")) : 0;
-      } else if (obj.group_trading_terms) {
-        return Number(obj.group_trading_terms.price_selling_hope);
-      }
+    zoomChanged() {
+      this.setLocationLoading(false);
+      this.getHouseInfo();
+    },
+    idle() {
+      this.changeMapCenter({
+        lat: this.map.getCenter().lat(),
+        lng: this.map.getCenter().lng()
+      });
+      this.setLocationLoading(false);
+      this.getHouseInfo();
+      this.getRedevInfo();
+    },
+
+    async getRedevInfo() {
+      const bounds = this.map.getBounds();
+      const boundLocation = {
+        latitude: [
+          bounds.getSouthWest().lat() * 0.9997,
+          bounds.getNorthEast().lat() * 1.0003
+        ],
+        longitude: [
+          bounds.getSouthWest().lng() * 0.9997,
+          bounds.getNorthEast().lng() * 1.0003
+        ]
+      };
+
+      const rangeQuery = `latitude__range=${boundLocation.latitude[0]},${boundLocation.latitude[1]}&longitude__range=${boundLocation.longitude[0]},${boundLocation.longitude[1]}`;
+      await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();

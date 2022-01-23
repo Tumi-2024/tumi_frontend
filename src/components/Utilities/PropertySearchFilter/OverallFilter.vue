@@ -115,7 +115,7 @@
                   flat
                   label="적용"
                   padding="12px"
-                  @click="applyFilters()"
+                  @click="applyFilters"
                 />
               </div>
             </div>
@@ -132,9 +132,6 @@
 import {
   TransactionType,
   PropertyType,
-  PropertySalePrice,
-  CharterPriceDeposit,
-  PropertyMonthly,
   ExclusiveArea,
   PropertyPremiumPrice,
   PropertyConnoisseur,
@@ -145,9 +142,6 @@ export default {
     "transaction-type": TransactionType,
     "maintenance-type": MaintenanceType,
     "property-type": PropertyType,
-    "property-sale-price": PropertySalePrice,
-    "charter-price-deposit": CharterPriceDeposit,
-    "property-monthly": PropertyMonthly,
     "exclusive-area": ExclusiveArea,
     "property-premium-price": PropertyPremiumPrice,
     "property-connoisseur": PropertyConnoisseur

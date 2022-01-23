@@ -10,7 +10,7 @@
         flat
         class="col notosanskr-medium q-mx-xs"
         :class="{
-          selected: getActive(property)
+          selected: property.label === selected.label
         }"
         @click="changeValue(property)"
       >
@@ -20,36 +20,28 @@
         </div>
       </q-btn>
     </div>
-
-    <property-detailed-type
-      :selectedCategory="selected"
-      v-on:select="select"
-    ></property-detailed-type>
   </q-card-section>
 </template>
 
 <script>
-import PropertyDetailedType from "./PropertyDetailedType";
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    "property-detailed-type": PropertyDetailedType,
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
-    getActive() {
-      return prop => {
-        return this.selected.some(obj => obj.label === prop.label);
-        // return true;
-      };
-    }
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
   },
   data() {
     return {
-      selected: [],
+      selected: {
+        icon: require("assets/iconsNew/11.png"),
+        label: "아파트",
+        valueTransaction: "APARTMENT",
+        valueHouse: "아파트"
+      },
       properties: [
         {
           icon: require("assets/iconsNew/11.png"),
@@ -103,21 +95,19 @@ export default {
     };
   },
   beforeMount() {
-    this.selected = [...this.getQuery("categories")];
-    console.log(this.getQuery("categories"));
+    this.selected = this.getOption("categories");
+    console.log(this.getOption("categories"));
+  },
+  mounted() {
+    this.$emit("select", this.selected, "categories");
+    console.log(this.getOption("areaType"), 'test')
   },
   methods: {
     select(val) {
       this.$emit("selectDetail", val);
     },
     changeValue(val) {
-      // this.selected = val;
-      const hasSelected = !!this.selected.find(s => val.label === s.label);
-      if (hasSelected) {
-        this.selected = this.selected.filter(s => val.label !== s.label);
-      } else {
-        this.selected.push(val);
-      }
+      this.selected = val;
 
       this.$emit("select", this.selected, "categories");
     }

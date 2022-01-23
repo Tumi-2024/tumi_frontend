@@ -47,7 +47,7 @@ export default {
       zoomControl: false,
       scrollwheel: false
     });
-    new this.google.maps.Marker({
+    this.google.maps.Marker({
       position: this.position,
       map: this.map,
       icon: icon

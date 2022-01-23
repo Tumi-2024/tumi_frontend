@@ -88,19 +88,25 @@ export const estateStore = {
       context.commit("setSimpleHouses", []);
     },
     getSimpleHouses: async function(context, payload) {
-      const statusQuery = "redevelopment_area__status=운영";
       const redevelopQuery = context.getters["map/getIsCone"]
-        ? statusQuery
-        : "" +
-          `redevelopment_area__isnull=${!context.getters["map/getIsCone"]}`;
-      const getQueryString = context.getters["searchQuery/getQueryString"];
-      const query =
-        getQueryString("categories", "type_house__in", "valueHouse") +
-        "&" +
-        getQueryString("prices", "price_selling_hope__range", "value") +
-        "&" +
-        redevelopQuery;
-      const encodedUrl = encodeURI(query);
+        ? "redevelopment_area__status=운영"
+        : `redevelopment_area__isnull=true`;
+
+      const getQueryString2 = context.getters["searchQuery/getQueryString2"];
+
+      const areaType = getQueryString2("areaType", "value")
+      const areas = getQueryString2("areas", "value")
+      console.log(areaType, areas)
+      const query = Vue.prototype.$qs.stringify(
+        {
+          type_house__in: getQueryString2("categories", "valueHouse"),
+          price_selling_hope__range: getQueryString2("prices", "value"),
+          [`${areaType}__range`]: areas
+        },
+        { arrayFormat: "comma" }
+      );
+
+      const encodedUrl = query + "&" + redevelopQuery;
       if (payload.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);
