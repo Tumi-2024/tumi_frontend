@@ -21,7 +21,8 @@
         :key="i"
         flat
         class="notosanskr-medium"
-        style="flex: 1;"
+        style="flex: 1; "
+        :style="{'background-color': property.disabled ? '#e9e9e9': ''}"
         :disable="property.disabled"
         :class="{ selected: selected.label === property.label }"
         :label="property.label"
