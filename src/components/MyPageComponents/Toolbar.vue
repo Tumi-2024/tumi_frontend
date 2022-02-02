@@ -3,7 +3,10 @@
     <q-btn flat padding="4px" ripple :to="{ path: '/' }">
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
-    <q-btn flat class="bg-primary text-white" @click="setModal" v-if="!$store.getters.user.id">로그인</q-btn>
+    <div>
+      <q-btn @click="goToSignUp">회원가입</q-btn>
+      <q-btn flat class="bg-primary text-white q-ml-sm" @click="setModal" v-if="!$store.getters.user.id">로그인</q-btn>
+    </div>
   </q-card-section>
 </template>
 
@@ -15,6 +18,9 @@ export default {
   methods: {
     setModal() {
       loginModalMutation.setModal();
+    },
+    goToSignUp() {
+      this.$router.push({ name: 'signUp' })
     }
   }
 };

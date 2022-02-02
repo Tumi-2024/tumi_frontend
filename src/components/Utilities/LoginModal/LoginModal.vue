@@ -60,12 +60,12 @@ export default {
         this.$store.commit('setUser', user)
 
         try {
-          let token = user.token;
+          const token = user.token;
           if (token) {
-            Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${token}`;
             this.getLocationInterest();
           }
-        } catch(e) {
+        } catch (e) {
           console.log(e);
         }
         loginModalMutation.closeModal()

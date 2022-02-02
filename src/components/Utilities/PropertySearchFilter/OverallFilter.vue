@@ -32,17 +32,6 @@
         </q-card-section>
         <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
-          <!-- Maintenance type | 정비구역 유형 -->
-          <maintenance-type
-            class="bg-white q-pb-xl q-pt-md"
-            @select="setSelected('maintenanceType', $event)"
-          ></maintenance-type>
-
-          <!-- Transaction type | 거래유형 -->
-          <transaction-type
-            class="bg-white q-pb-xl q-pt-md"
-            @select="setSelected('transactionType', $event)"
-          ></transaction-type>
 
           <!-- Property Type | 주택 유형 -->
           <property-type
@@ -79,22 +68,10 @@
             @select="setSelected('exclusiveArea', $event)"
           ></exclusive-area>
 
-          <!-- Premium price | 프리미엄가, 감정가 -->
-          <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
-            <!-- Dropdown Button -->
-            <q-expansion-item expand-separator label="프리미엄가, 감정가">
-              <div class="more-filters">
-                <property-premium-price
-                  class="q-pb-xl bg-white q-mt-sm"
-                  style="padding-top: 36px"
-                ></property-premium-price>
-                <property-connoisseur
-                  class="q-pb-xl bg-white q-mt-sm"
-                  style="padding-top: 36px"
-                ></property-connoisseur>
-              </div>
-            </q-expansion-item>
+          <price-filter class="q-pb-xl bg-white q-mt-sm" style="padding-top: 36px" />
+          <person-filter class="q-pb-xl bg-white q-mt-sm" style="padding-top: 36px" />
 
+          <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
             <!-- Action buttons -->
             <div class="row q-py-md justify-around notosanskr-medium">
               <div class="col q-mx-xs">
@@ -130,21 +107,18 @@
 
 <script>
 import {
-  TransactionType,
   PropertyType,
   ExclusiveArea,
-  PropertyPremiumPrice,
-  PropertyConnoisseur,
-  MaintenanceType
+  PriceFilter,
+  PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
+
 export default {
   components: {
-    "transaction-type": TransactionType,
-    "maintenance-type": MaintenanceType,
     "property-type": PropertyType,
     "exclusive-area": ExclusiveArea,
-    "property-premium-price": PropertyPremiumPrice,
-    "property-connoisseur": PropertyConnoisseur
+    "price-filter": PriceFilter,
+    "person-filter": PersonFilter
   },
   data() {
     return {
