@@ -61,9 +61,34 @@
         label="전화번호"
         lazy-rules
         mask="###-####-####"
+         :rules="[ val => val && val.length > 0 || '전화번호를 입력해주세요.']"
       >
         <template v-slot:before>
           <q-icon name="phone" />
+        </template>
+      </q-input>
+      <q-input
+        filled
+        v-model="password1"
+        label="비밀번호"
+        lazy-rules
+        type="password"
+        :rules="[ val => val && val.length > 0 || '비밀번호를 입력해주세요.']"
+      >
+        <template v-slot:before>
+          <q-icon name="lock" />
+        </template>
+      </q-input>
+      <q-input
+        filled
+        v-model="password2"
+        label="비밀번호 확인"
+        type="password"
+        lazy-rules
+        :rules="[ val => this.password1 === val || '비밀번호가 일치하지 않습니다.']"
+      >
+        <template v-slot:before>
+          <q-icon name="lock" />
         </template>
       </q-input>
       <div class="justify-end flex">
@@ -85,7 +110,9 @@ export default {
       id: '',
       email: '',
       username: '',
-      phone: ''
+      phone: '',
+      password1: '',
+      password2: ''
 
     }
   },
@@ -103,7 +130,8 @@ export default {
         id: this.id,
         email: this.email,
         username: this.username,
-        phone: this.phone
+        phone: this.phone,
+        password: this.password1
       })
       Vue.prototype.$axios.post('/users/',
         {
