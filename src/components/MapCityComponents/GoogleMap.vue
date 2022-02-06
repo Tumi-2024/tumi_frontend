@@ -46,7 +46,7 @@
             >
               <div
                 class="area-badge-info notosanskr-medium"
-                @click="changeMapSelectedArea"
+                @click="() => changeMapSelectedArea(badge)"
               >
                 <q-icon
                   v-if="$route.path === '/map/city/area'"
