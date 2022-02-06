@@ -92,11 +92,26 @@
         </template>
       </q-input>
       <div class="justify-end flex">
-        <q-btn label="초기화" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-btn label="초기화" type="reset" color="primary" flat class="q-ml-lg" />
         <q-btn label="가입 신청" type="submit" color="primary"/>
       </div>
     </q-form>
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="text-h5 text-bold" style="color: #222222">회원가입 완료</div>
+        </q-card-section>
 
+        <q-separator />
+        <q-card-section class="row items-center">
+          <span class="text-h6">회원가입이 정상적으로 처리되었습니다. 관리자의 승인 이후 이용가능합니다.</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="확인" color="primary" v-close-popup @click="$router.push({name: 'signIn'})" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card-section>
 </template>
 <script>
@@ -112,7 +127,8 @@ export default {
       username: '',
       phone: '',
       password1: '',
-      password2: ''
+      password2: '',
+      confirm: false
 
     }
   },
@@ -136,11 +152,8 @@ export default {
 
         }
       ).then(response => {
-        if (response.id === 201) {
-          this.$q.notify({
-            type: 'positive',
-            message: '가입 요청이 완료되었습니다.'
-          })
+        if (response.status === 201) {
+          this.confirm = true
         }
       }).catch(e => {
         const res = e.response.data

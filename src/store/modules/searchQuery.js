@@ -39,7 +39,7 @@ export const searchQueryStore = {
       areaType: { label: "전용면적", value: "size_dedicated_area_m2" },
       areas: [
         { label: '최소면적', value: 0 },
-        { label: '최대면적', value: 0 }
+        { label: '최대면적', value: 100000 }
       ]
     }
   },

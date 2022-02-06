@@ -85,7 +85,6 @@ import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
-import { debounce } from "debounce";
 
 const { Geolocation } = Plugins;
 
@@ -297,10 +296,7 @@ export default {
       } else {
         this.showInfoWindow = true;
         payload = {
-          type:
-            this.getMapMode === "redevelop-area"
-              ? "transaction_groups"
-              : "houses",
+          type: this.getMapMode === "redevelop-area" ? "transaction_groups" : "houses",
           ...location
         };
       }
