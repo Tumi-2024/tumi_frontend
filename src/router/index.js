@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import { Cookies } from 'quasar'
+import { Cookies } from 'quasar'
 
 import routes from './routes'
 
@@ -28,16 +28,15 @@ export default function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
-    // const value = Cookies.get('cookie_name')
+    const value = Cookies.get('tumi')
     console.log(to)
-    // if (to.name === 'signIn' || to.name === 'signUp') {
-    //   next()
-    // } else if (!value) {
-    //   next('/sign-in')
-    // } else {
-    //   next()
-    // }
-    next()
+    if (to.name === 'signIn' || to.name === 'signUp') {
+      next()
+    } else if (!value) {
+      next('/sign-in')
+    } else {
+      next()
+    }
     //  else if (!value && to.name === 'signIn') {
     //   next('/sign-in')
     // } else if (!value && to.name === 'signUp') {

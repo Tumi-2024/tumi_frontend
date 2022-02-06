@@ -45,6 +45,7 @@
 </template>
 <script>
 import Vue from 'vue'
+import { Cookies } from 'quasar'
 
 export default {
   data() {
@@ -65,16 +66,10 @@ export default {
           email: this.email,
           password: this.password
         }
-      ).then(response => {
-        console.log(response)
-        this.$q.dialog({
-          title: '회원가입 성공',
-          message: '회원가입이 완료되었습니다.',
-          cancel: true,
-          persistent: true
-        }).onOk(data => {
-        // console.log('>>>> OK, received', data)
-        })
+      ).then(({ data }) => {
+        this.$store.commit('setUser', data)
+        Cookies.set('tumi', data.token, { secure: true, expires: 8 })
+        this.$router.push('/')
       }).catch(e => {
         const res = e.response.data
         const messages = []

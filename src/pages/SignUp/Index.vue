@@ -141,10 +141,10 @@ export default {
   },
   methods: {
     async onSubmit() {
-      Vue.prototype.$axios.post('/users/',
+      Vue.prototype.$axios.post('/users/signup/',
         {
           team: this.team,
-          id: this.id,
+          name: this.id,
           email: this.email,
           username: this.username,
           phone: this.phone,
@@ -152,7 +152,7 @@ export default {
 
         }
       ).then(response => {
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           this.confirm = true
         }
       }).catch(e => {

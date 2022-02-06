@@ -4,7 +4,7 @@
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
     <div>
-      <q-btn @click="goToSignUp">회원가입</q-btn>
+      <q-btn @click="logOut">로그아웃</q-btn>
       <q-btn flat class="bg-primary text-white q-ml-sm" @click="setModal" v-if="!$store.getters.user.id">로그인</q-btn>
     </div>
   </q-card-section>
@@ -14,13 +14,17 @@
 import {
   loginModalMutation
 } from "src/components/Utilities/LoginModal/LoginModalState";
+
+import { Cookies } from 'quasar'
+
 export default {
   methods: {
     setModal() {
       loginModalMutation.setModal();
     },
-    goToSignUp() {
-      this.$router.push({ name: 'signUp' })
+    logOut() {
+      Cookies.set('tumi', null)
+      this.$router.push({ name: 'signIn' })
     }
   }
 };
