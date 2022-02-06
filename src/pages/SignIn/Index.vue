@@ -1,8 +1,7 @@
+
 <template>
-  <q-dialog v-model="modals" position="bottom">
-    <q-card class=" notosanskr-regular q-pa-lg">
-      <q-card-section class="column">
-        <q-form
+  <q-card-section class="q-pa-xl bg-white">
+    <q-form
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md"
@@ -31,44 +30,25 @@
         </template>
       </q-input>
       <div class="justify-end flex">
-        <q-btn label="회원가입" type="reset" color="primary" flat class="q-ml-sm" />
-        <q-btn label="로그인" type="submit" color="primary"/>
+        <q-btn label="초기화" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-btn label="가입 신청" type="submit" color="primary"/>
       </div>
     </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-</template>
 
+  </q-card-section>
+</template>
 <script>
-import { loginModalStore, loginModalMutation } from "./LoginModalState";
 import Vue from 'vue'
-import { mapActions } from "vuex"
 
 export default {
-  name: "LoginModal",
-  computed: {
-    modals: {
-      get() {
-        return loginModalStore.showModal;
-      },
-      set(val) {
-        loginModalMutation.setModal(val);
-      }
-    }
-  },
-  data () {
+  data() {
     return {
-      dataLogin: {}
+      id: '',
+      password: ''
+
     }
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapMode",
-      "changeMapZoom",
-      "changeMapCenter",
-      "getLocationInterest"
-    ]),
     async onSubmit() {
       console.log({
         id: this.id,
@@ -104,42 +84,7 @@ export default {
       this.id = null
       this.password = null
     }
-  }
-};
-</script>
 
-<style scoped>
-.q-card {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 16px;
+  }
 }
-.heading-text {
-  font-weight: 500;
-  font-size: 19px;
-  line-height: 30px;
-  letter-spacing: -1.575px;
-  color: #1a1a1a;
-  padding: 24px 16px;
-}
-.notice {
-  height: 28px;
-  background: #f6f6f6;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.9px;
-  color: #909090;
-  padding: 5px 16px;
-  margin-top: 20px;
-}
-.q-btn {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 28px;
-  text-align: center;
-  letter-spacing: -1.425px;
-  color: #1a1a1a;
-  padding: 12px;
-  border-radius: 8px;
-}
-</style>
+</script>

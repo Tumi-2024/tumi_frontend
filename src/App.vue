@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import LoginModal from "src/components/Utilities/LoginModal/LoginModal.vue";
+import LoginModal from "src/components/Utilities/LoginModal/LoginKaKaoModal.vue";
 import Vue from "vue";
 import { mapActions } from "vuex";
 

@@ -125,21 +125,15 @@ export default {
   },
   methods: {
     async onSubmit() {
-      console.log({
-        team: this.team,
-        id: this.id,
-        email: this.email,
-        username: this.username,
-        phone: this.phone,
-        password: this.password1
-      })
       Vue.prototype.$axios.post('/users/',
         {
           team: this.team,
           id: this.id,
           email: this.email,
           username: this.username,
-          phone: this.phone
+          phone: this.phone,
+          password: this.password1
+
         }
       ).then(response => {
         if (response.id === 201) {
@@ -152,7 +146,7 @@ export default {
         const res = e.response.data
         const messages = []
 
-        for (const [key, value] of Object.entries(res)) {
+        for (const [_key, value] of Object.entries(res)) {
           messages.push(value + '\n')
         }
 
@@ -163,10 +157,13 @@ export default {
       })
     },
     onReset() {
+      this.team = null
       this.id = null
       this.email = null
-      this.name = null
+      this.username = null
       this.phone = null
+      this.password1 = null
+      this.password2 = null
     }
 
   }
