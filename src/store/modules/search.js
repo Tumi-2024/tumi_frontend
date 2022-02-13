@@ -92,19 +92,16 @@ export const searchStore = {
     requestLocation: async context => {
       const response = await Vue.prototype.$axios.get(`/cities/all/`);
       const data = response.data.reduce((acc, cur) => {
-        // console.log('[curcur]', cur.title);
         acc[cur.title] = {
           ...cur,
           sub:
             cur.sub_cities &&
             cur.sub_cities.reduce((acc, cur) => {
-              // console.log('[cur]', cur.title);
               acc[cur.title] = {
                 ...cur,
                 sub:
                   cur.locations &&
                   cur.locations.reduce((acc, cur) => {
-                    // console.log(cur.title);
                     acc[cur.title] = cur;
                     return acc;
                   }, {})
@@ -114,7 +111,6 @@ export const searchStore = {
         };
         return acc;
       }, {});
-      // console.log(data);
       context.commit("SET_LOCATION", data);
     }
   }

@@ -96,10 +96,6 @@ export default {
   },
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"])
-    // is_interest() {
-    //   console.log(this.getMapSelectedArea);
-    //   return this.getMapSelectedArea.interest.redevelopment_area;
-    // }
   },
   methods: {
     ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),

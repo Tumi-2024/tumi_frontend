@@ -9,7 +9,6 @@
         node-key="label"
         tick-strategy="leaf"
         :ticked.sync="ticked"
-        :expanded.sync="expanded"
         default-expand-all
       />
     </div>
@@ -20,6 +19,9 @@
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
 import Vue from 'vue'
 import { mapGetters } from "vuex";
+
+import { Cookies } from 'quasar'
+
 export default {
   components: {
     "text-under-highlight": TextUnderHighlight
@@ -39,100 +41,18 @@ export default {
   },
   async created() {
     const { data } = await Vue.prototype.$axios
-      .get(`/teams/`)
-    this.teamsData = data.results
-    console.log(this.teamsData, 'teams')
+      .get(`/teams/users/`)
+    this.teamsData = data
+
+    const index = Cookies.get('tumi_i')
+    const { data: userData } = await Vue.prototype.$axios.get(`/users/${index}/`)
+    this.ticked = [userData.username]
   },
   data() {
     return {
       teamsData: [],
-      ticked: [],
-      expanded: [],
-      selected: [],
-      simple: [
-        {
-          label: "1팀",
-          children: [
-            {
-              label: "투미 1번"
-            },
-            {
-              label: "투미 2번"
-            },
-            {
-              label: "투미 3번"
-            }
-          ]
-        },
-        {
-          label: "2팀",
-          children: [
-            {
-              label: "투미 5번"
-            },
-            {
-              label: "투미 6번"
-            },
-            {
-              label: "투미 7번"
-            },
-            {
-              label: "투미 8번"
-            }
-          ]
-        },
-        {
-          label: "3팀",
-          children: [
-            {
-              label: "투미 35번"
-            },
-            {
-              label: "투미 36번"
-            },
-            {
-              label: "투미 37번"
-            },
-            {
-              label: "투미 38번"
-            }
-          ]
-        },
-        {
-          label: "4팀",
-          children: [
-            {
-              label: "투미 45번"
-            },
-            {
-              label: "투미 46번"
-            },
-            {
-              label: "투미 47번"
-            },
-            {
-              label: "투미 48번"
-            }
-          ]
-        },
-        {
-          label: "5팀",
-          children: [
-            {
-              label: "투미 55번"
-            },
-            {
-              label: "투미 56번"
-            },
-            {
-              label: "투미 57번"
-            },
-            {
-              label: "투미 58번"
-            }
-          ]
-        }
-      ]
+      ticked: ['테스트'],
+      expanded: []
     };
   },
   methods: {}

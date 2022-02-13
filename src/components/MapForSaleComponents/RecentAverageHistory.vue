@@ -148,9 +148,6 @@ export default {
     toMoneyString(value, add) {
       return toMoneyString(value, add)
     }
-  },
-  mounted() {
-    console.log(this.transactions)
   }
 };
 </script>

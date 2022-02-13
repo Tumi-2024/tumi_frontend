@@ -29,7 +29,6 @@ export default function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     const value = Cookies.get('tumi')
-    console.log(to)
     if (to.name === 'signIn' || to.name === 'signUp') {
       next()
     } else if (!value) {

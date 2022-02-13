@@ -70,10 +70,6 @@ export default {
       "getLocationInterest"
     ]),
     async onSubmit() {
-      console.log({
-        id: this.id,
-        password: this.password
-      })
       Vue.prototype.$axios.post('/users/',
         {
           id: this.id,
@@ -90,6 +86,7 @@ export default {
         const res = e.response.data
         const messages = []
 
+        // eslint-disable-next-line no-unused-vars
         for (const [_key, value] of Object.entries(res)) {
           messages.push(value + '\n')
         }

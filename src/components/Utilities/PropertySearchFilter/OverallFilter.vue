@@ -37,35 +37,15 @@
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
-            @select="setSelected('propertyType', $event)"
-            @selectDetail="setSelected('propertyTypeDetailed', $event)"
-          ></property-type>
-
-          <!-- property sale | 부동산 매매  -->
-          <!-- <property-sale-price
-            class="q-pb-xl bg-white q-mt-sm"
-            style="padding-top: 36px"
-            @select="setSelected('propertySalePrice', $event)"
-          ></property-sale-price> -->
-
-          <!--  Charter price deposit | 전세가 / 보증금 -->
-          <!-- <charter-price-deposit
-            class="q-pb-xl bg-white q-mt-sm"
-            style="padding-top: 36px"
-            @select="setSelected('charterPriceDeposit', $event)"
-          ></charter-price-deposit> -->
-          <!-- Property Monthly | 매월 부동산 -->
-          <!-- <property-monthly
-            class="q-pb-xl bg-white q-mt-sm"
-            style="padding-top: 36px"
-            @select="setSelected('propertyMonthly', $event)"
-          ></property-monthly> -->
-          <!-- Exclusive Area | 전용면적 -->
-
+            @select="setSelected('categories', $event)"
+            :isUnique="true"
+          />
           <exclusive-area
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
-            @select="setSelected('exclusiveArea', $event)"
+            @select="setSelected('areaType', $event)"
+            :isCondition="true"
+            :selectedProps="categories"
           ></exclusive-area>
 
           <price-filter class="q-pb-xl bg-white q-mt-sm" style="padding-top: 36px" />
@@ -120,13 +100,7 @@ export default {
     "price-filter": PriceFilter,
     "person-filter": PersonFilter
   },
-  data() {
-    return {
-      modal: false,
-      moreFilters: false,
-      overallFilter: {}
-    };
-  },
+
   props: {
     disable: {
       type: Boolean,
@@ -134,49 +108,41 @@ export default {
     }
   },
   created() {
-    this.overallFilter = this.setInitValue();
+    // this.overallFilter = this.setInitValue();
+  },
+  data() {
+    return {
+      modal: false,
+      moreFilters: false,
+      categories: [{
+        icon: require("assets/iconsNew/11.png"),
+        label: "아파트",
+        valueTransaction: "APARTMENT",
+        valueHouse: "아파트"
+      }],
+      prices: [
+        { label: "최저가", value: 0 },
+        { label: "최고가", key: "max", value: 999999 }
+
+      ],
+      areaType: [{
+        label: "전용면적",
+        value: "size_dedicated_area_m2",
+        type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
+      }],
+      areas: [
+        { label: '최소면적', value: 0 },
+        { label: '최대면적', value: 100000 }
+      ]
+    }
   },
   methods: {
-    setInitValue() {
-      return {
-        // 거래 유형
-        transactionType: "전체",
-        // 주택 유형
-        propertyType: "아파트",
-        // 재개발 or 가로주택 시 주택 세부 유형
-        propertyTypeDetailed: null,
-        // 매매가
-        propertySalePrice: {
-          max: null,
-          min: null,
-          text: "전체"
-        },
-        // 매매가
-        charterPriceDeposit: {
-          max: null,
-          min: null,
-          text: "전체"
-        },
-        // 월세
-        propertyMonthly: {
-          max: null,
-          min: null,
-          text: "전체"
-        },
-        // 전용 면적
-        exclusiveArea: "10평대",
-        // 프리미엄가
-        propertyPremiumPrice: null,
-        // 감정가
-        propertyConnoisseur: null
-      };
-    },
     resetFilters() {
-      this.overallFilter = this.setInitValue();
-      console.log(this.overallFilter, "reset");
+      // this.overallFilter = this.setInitValue();
+      // console.log(this.overallFilter, "reset");
     },
     setSelected(property, value) {
-      this.overallFilter[property] = value;
+      this[property] = value;
     },
     applyFilters() {
       console.log(this.overallFilter);

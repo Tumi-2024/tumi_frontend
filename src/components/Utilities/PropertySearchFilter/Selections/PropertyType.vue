@@ -10,7 +10,7 @@
         flat
         class="col notosanskr-medium q-mx-xs"
         :class="{
-          selected: property.label === selected.label
+          selected: getIsActive(property.label)
         }"
         @click="changeValue(property)"
       >
@@ -32,16 +32,30 @@ export default {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
+    getIsActive () {
+      return (dd) => {
+        return this.selected.some(obj => {
+          return obj.label === dd
+        })
+      }
+    }
+  },
+  props: {
+    isUnique: {
+      type: Boolean,
+      require: false,
+      default: false
+    }
   },
   data() {
     return {
-      selected: {
+      selected: [{
         icon: require("assets/iconsNew/11.png"),
         label: "아파트",
         valueTransaction: "APARTMENT",
         valueHouse: "아파트"
-      },
+      }],
       properties: [
         {
           icon: require("assets/iconsNew/11.png"),
@@ -95,19 +109,26 @@ export default {
     };
   },
   beforeMount() {
-    this.selected = this.getOption("categories");
-    console.log(this.getOption("categories"));
+    this.selected = [...this.getOption("categories")];
   },
   mounted() {
     this.$emit("select", this.selected, "categories");
-    console.log(this.getOption("areaType"), 'test')
   },
   methods: {
     select(val) {
       this.$emit("selectDetail", val);
     },
     changeValue(val) {
-      this.selected = val;
+      if (this.isUnique) {
+        this.selected = [val]
+      } else {
+        const test = this.selected.filter(obj => obj.label === val.label)
+        if (test.length === 0) {
+          this.selected.push(val)
+        } else {
+          this.selected = this.selected.filter(obj => obj.label !== val.label)
+        }
+      }
 
       this.$emit("select", this.selected, "categories");
     }

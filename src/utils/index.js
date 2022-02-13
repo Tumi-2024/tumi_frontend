@@ -102,7 +102,6 @@ export const toQueryString = params => {
       condition.push(`longitude=${params.longitude}`);
     }
   }
-  console.log(params);
   if (TYPE_SALE_ENG[params.typeSale]) {
     condition.push(`types=${TYPE_SALE_ENG[params.typeSale]}`);
   }

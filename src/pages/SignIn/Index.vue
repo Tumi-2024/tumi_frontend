@@ -14,7 +14,7 @@
       >
         <q-input
           filled
-          v-model="email"
+          v-model="username"
           label="아이디"
           lazy-rules
           :rules="[ val => val && val.length > 0 || '아이디를 입력해주세요.']"
@@ -50,7 +50,7 @@ import { Cookies } from 'quasar'
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: ''
 
     }
@@ -58,17 +58,18 @@ export default {
   methods: {
     async onSubmit() {
       console.log({
-        email: this.email,
+        username: this.username,
         password: this.password
       })
       Vue.prototype.$axios.post('/users/login/',
         {
-          email: this.email,
+          username: this.username,
           password: this.password
         }
       ).then(({ data }) => {
         this.$store.commit('setUser', data)
         Cookies.set('tumi', data.token, { secure: true, expires: 8 })
+        Cookies.set('tumi_i', data.id, { secure: true, expires: 8 })
         this.$router.push('/')
       }).catch(e => {
         const res = e.response.data
@@ -85,8 +86,8 @@ export default {
       })
     },
     onReset() {
-      this.email = null
       this.password = null
+      this.username = null
     }
 
   }

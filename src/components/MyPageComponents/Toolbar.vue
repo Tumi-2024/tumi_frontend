@@ -24,6 +24,7 @@ export default {
     },
     logOut() {
       Cookies.set('tumi', null)
+      Cookies.set('tumi_i', null)
       this.$router.push({ name: 'signIn' })
     }
   }

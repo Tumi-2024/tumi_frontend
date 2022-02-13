@@ -114,7 +114,6 @@ export default {
       const {
         data: { results: houses }
       } = await Vue.prototype.$axios.get("/houses/");
-      console.log("매물 가져옴", houses);
       this.saleList = houses;
       // this.saleList = data.results;
     }

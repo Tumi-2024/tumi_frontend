@@ -12,7 +12,6 @@ export const areaStore = {
       return state.areas;
     },
     getMapSelectedArea: state => {
-      console.log(state.selectedArea, 'getMapSelectedArea');
       return state.selectedArea;
     }
   },
@@ -27,14 +26,12 @@ export const areaStore = {
       try {
         const url = `/redevelopment_areas/?${payload}&page_size=1000`;
         const { data } = await Vue.prototype.$axios.get(url);
-        console.log(data.results);
         context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", markersArea);
       } catch (error) {
         // if CORS error we use dummy data
         // context.commit("setMapAreas", markersArea);
-        console.log(error, "error");
       }
       // context.commit("setMapAreas", data);
     },
@@ -54,7 +51,6 @@ export const areaStore = {
         );
         context.state.selectedArea.interest.redevelopment_area = true;
       } catch (error) {
-        console.log(error, "error");
       }
     },
     uninterestSelectedArea: async context => {
@@ -64,7 +60,6 @@ export const areaStore = {
           `/redevelopment_areas/${id}/interest/`
         );
       } catch (error) {
-        console.log(error, "error");
       }
     },
     changeMapSelectedArea: (context, area) =>
@@ -74,12 +69,10 @@ export const areaStore = {
         const result = await Vue.prototype.$axios.get(
           `/redevelopment_areas/${id}/steps/`
         );
-        // console.log(result.data);
         context.commit("setRedevelopmentSteps", result.data);
       } catch (error) {
         // if CORS error we use dummy data
         context.commit("setRedevelopmentSteps", []);
-        console.log(error, "error");
       }
     }
   }

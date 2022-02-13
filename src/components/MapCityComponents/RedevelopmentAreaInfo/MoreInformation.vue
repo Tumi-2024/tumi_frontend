@@ -171,7 +171,6 @@ export default {
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"]),
     getInfo() {
-      console.log(this.getMapSelectedArea);
       return [
         {
           label: "개발사업 유형",

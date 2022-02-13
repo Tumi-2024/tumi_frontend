@@ -63,6 +63,18 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
+  props: {
+    isCondition: {
+      type: Boolean,
+      require: false,
+      default: false
+    },
+    selectedProps: {
+      type: Array,
+      require: false,
+      default: undefined
+    }
+  },
   data() {
     return {
       areas: [],
@@ -98,10 +110,10 @@ export default {
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
     getProperties() {
-      const currentCtgr = this.getOption("categories");
+      const currentCtgr = this.selectedProps || this.getOption("categories");
 
       return this.properties.map(obj => {
-        return { ...obj, disabled: obj.type.indexOf(currentCtgr.label) < 0 };
+        return { ...obj, disabled: this.isCondition ? obj.type.indexOf(currentCtgr[0].label) < 0 : false };
       });
     }
   },

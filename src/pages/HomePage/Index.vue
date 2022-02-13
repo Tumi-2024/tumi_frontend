@@ -32,7 +32,6 @@ export default {
     Geolocation.getCurrentPosition({ enableHighAccuracy: true })
       .then(position => {
         const { latitude: lat, longitude: lng } = position.coords;
-        // console.log("Current", lat, lng);
         this.changeMapCenter({ lat, lng });
       })
       .catch(e => {

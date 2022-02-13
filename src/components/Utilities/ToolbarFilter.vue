@@ -44,6 +44,7 @@
           <slot>
             <div class="items" v-for="(filter, i) of filters" :key="i">
               <specific-filter
+                v-if="!filter.isHide"
                 :propsClass="filter.class"
                 :label="filter.label"
                 :component="filter.type"
@@ -92,6 +93,12 @@ export default {
           class: "text-white bg-blue"
         },
         {
+          label: "초기투자금",
+          type: "price",
+          class: "text-white bg-purple",
+          isHide: this.$route.path !== '/map/city'
+        },
+        {
           label: "담당자",
           type: "person",
           class: "text-white bg-black"
@@ -133,7 +140,6 @@ export default {
           } = await Vue.prototype.$axios.get(
             `redevelopment_areas/?search=${val}`
           );
-          console.log(results);
           this.options = results.map(({ title, latitude, longitude }) => {
             return {
               value: title,

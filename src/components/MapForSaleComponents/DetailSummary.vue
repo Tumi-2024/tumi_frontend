@@ -215,7 +215,6 @@ export default {
   },
   computed: {
     getBadgeOptions() {
-      console.log(this.tags);
       return [
         { type: "houseType", value: this.tags.type },
         { type: "redevelopment", value: this.tags.redevelopment },
@@ -229,7 +228,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.tags);
+
   }
 };
 </script>

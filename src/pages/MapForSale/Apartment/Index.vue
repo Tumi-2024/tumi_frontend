@@ -155,12 +155,9 @@ export default {
         `/houses/${query.sellid}/`
       );
       this.estate = data;
-      console.log(data, "estate");
 
       this.makePolygon(data.group_location.redevelopment_area);
-      console.log(data.group_location);
       this.redevelopment = data.group_location?.redevelopment_area;
-      console.log(this.redevelopment);
 
       this.$store.dispatch("addRecentlyViewedHouse", data);
       const { data: transactions } = await Vue.prototype.$axios.get(
@@ -174,7 +171,6 @@ export default {
     toKr,
     toMoneyString,
     makePolygon(area) {
-      console.log(area);
       this.redevelopmentArea = area.redevelopment_area_locations.map(obj => {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
       });
@@ -555,7 +551,6 @@ export default {
       const {
         group_location: { redevelopment_area: houseInfo }
       } = this.estate;
-      console.log(houseInfo);
       return [
         // { label: "개발사업 유형", value: houseInfo.category },
         { label: "정비구역 명칭", value: houseInfo.title },

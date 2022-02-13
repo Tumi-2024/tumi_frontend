@@ -53,7 +53,6 @@ export default {
         return this.infoProps;
       }
       const { group_building_house: houseInfo } = this.item;
-      console.log(houseInfo);
       return [
         { label: "정비사업 종류", value: "정비사업" },
         {

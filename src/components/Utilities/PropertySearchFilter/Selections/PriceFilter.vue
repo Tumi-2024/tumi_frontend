@@ -46,7 +46,6 @@ export default {
   },
   created() {
     this.selected = JSON.parse(JSON.stringify(this.getOption("prices")));
-    console.log(this.selected)
   },
   methods: {
     toMoneyString: toMoneyString,
@@ -54,7 +53,6 @@ export default {
       this.$emit("selectDetail", val);
     },
     onChangeMin(e) {
-      console.log(e.target.value);
       this.selected = [
         {
           label: "최저가",

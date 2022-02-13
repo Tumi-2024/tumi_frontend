@@ -78,14 +78,12 @@ export default {
   },
 
   async mounted() {
-    console.log(this.position.lat, this.position.lng, "position");
     // we access the map Object
     this.map = await this.$refs.mapRef.$mapPromise;
     this.setGmapContainerSize();
     this.map.setOptions({ zoomControl: true, scrollwheel: true });
     this.map.addListener("click", e => {
       /** * access click event */
-      console.log(e.latLng.lat(), e.latLng.lng());
     });
 
     this.setAreaPolygon();
@@ -100,7 +98,6 @@ export default {
     },
     setAreaPolygon() {
       let path;
-      console.log(this.estate);
       if (!this.polygon) {
         // IF THERES NO POLYGON WE CREATE OUR OWN
         const position = new this.google.maps.LatLng(

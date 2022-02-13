@@ -6,8 +6,8 @@ const initState = {
   mode: "default",
   mapZoom: 14,
   mapCenter: {
-    lat: 37.5326,
-    lng: 127.024612
+    lat: 37.547,
+    lng: 126.997
   },
   mapAddress: "",
   mapOptions: {
@@ -94,7 +94,6 @@ export const mapStore = {
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     changeMapCenter: async (context, data) => {
       context.commit("setMapCenter", data);
-      console.log(data);
       Vue.prototype.$axios
         .post(
           `/locations/find/`,
@@ -105,10 +104,8 @@ export const mapStore = {
         )
         .then(result => {
           const string = result.data.address.split(" ");
-          console.log(result.data, "result.data");
           context.commit("setMapAddress", `${string[1]} ${string[2]}`);
           context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
-          // console.log('changeMapCenter', result.data)
           if (
             result.data.location &&
             result.data.location.subcity &&
@@ -119,13 +116,11 @@ export const mapStore = {
           } else {
             context.commit("setIsInterest", false);
           }
-          // console.log(context.state);
           // context.commit("");
           // data.lat, longitude: data.lng
         })
         .catch(thrown => {
           if (Vue.prototype.$axios.isCancel(thrown)) {
-            console.log("request canceled");
           }
         });
     },
@@ -177,7 +172,6 @@ export const mapStore = {
         );
         context.commit("setInterest", response.data.results);
       } catch (error) {
-        console.log(error);
       }
     }
   }

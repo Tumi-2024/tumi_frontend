@@ -12,8 +12,8 @@
       @zoom_changed="zoomChanged"
       ref="mapRef"
       :center="{
-        lat: 37.5326,
-        lng: 127.024612
+        lat: 37.547,
+        lng: 126.997
       }"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
@@ -222,7 +222,6 @@ export default {
   async mounted() {
     this.setGmapContainerSize();
     this.map = await this.$refs.mapRef.$mapPromise;
-    this.map.panTo(this.getMapCenter);
     this.map.setOptions({
       zoomControlOptions: {
         position: this.google.maps.ControlPosition.RIGHT_TOP
@@ -244,7 +243,6 @@ export default {
       "changeMapZoom",
       "changeMapCenter",
       "setLocationLoading",
-      "setMapMode",
       "setMapZoom"
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
@@ -258,10 +256,10 @@ export default {
       this.getHouseInfo();
     },
     idle() {
-      this.changeMapCenter({
-        lat: this.map.getCenter().lat(),
-        lng: this.map.getCenter().lng()
-      });
+      // this.changeMapCenter({
+      //   lat: this.map.getCenter().lat(),
+      //   lng: this.map.getCenter().lng()
+      // });
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -316,7 +314,7 @@ export default {
         const zoomLevel = this.map.getZoom();
         this.setMapZoom(zoomLevel);
 
-        this.changeMapCenter(item.position);
+        // this.changeMapCenter(item.position);
         this.$router.push({
           name:
             this.$route.path === "/map/city/area"
@@ -360,16 +358,8 @@ export default {
 
       (() =>
         new this.google.maps.Marker({
-          icon: {
-            url: "/icons/marker.png",
-            size: this.google.maps.Size(5, 5),
-            origin: this.google.maps.Point(0, 0),
-            anchor: this.google.maps.Point(12, 15),
-            scaledSize: this.google.maps.Size(25, 25)
-          },
           position,
-          map: this.map,
-          title: "Hello World!"
+          map: this.map
         }))();
     }
   }

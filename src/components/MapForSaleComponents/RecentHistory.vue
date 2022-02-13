@@ -198,7 +198,6 @@ export default {
       ]
     },
     getTransactions() {
-      console.log('item', this.item)
       if (this.activeTab === "all") {
         return this.item;
       }

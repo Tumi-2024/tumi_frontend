@@ -66,7 +66,6 @@ export default {
             this.getLocationInterest();
           }
         } catch (e) {
-          console.log(e);
         }
         loginModalMutation.closeModal()
       }

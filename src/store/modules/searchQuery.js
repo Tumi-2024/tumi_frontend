@@ -1,15 +1,16 @@
 // Main Section
 const initState = {
   query: {
-    categories: {
+    categories: [{
       icon: require("assets/iconsNew/11.png"),
       label: "아파트",
       valueTransaction: "APARTMENT",
       valueHouse: "아파트"
-    },
+    }],
     prices: [
       { label: "최저가", value: 0 },
-      { label: "최고가", value: 0 }
+      { label: "최고가", key: "max", value: 999999 }
+
     ],
     areaType: [{
       label: "전용면적",
@@ -18,7 +19,7 @@ const initState = {
     }],
     areas: [
       { label: '최소면적', value: 0 },
-      { label: '최대면적', value: 0 }
+      { label: '최대면적', value: 100000 }
     ]
   }
 };
@@ -26,12 +27,12 @@ export const searchQueryStore = {
   namespaced: true,
   state: {
     query: {
-      categories: {
+      categories: [{
         icon: require("assets/iconsNew/11.png"),
         label: "아파트",
         valueTransaction: "APARTMENT",
         valueHouse: "아파트"
-      },
+      }],
       prices: [
         { label: "최저가", key: "min", value: 10000 },
         { label: "최고가", key: "max", value: 999999 }
@@ -54,7 +55,6 @@ export const searchQueryStore = {
         } else {
           query = state.query[key][contentKey];
         }
-        console.log(state.query[key], state.query[key][contentKey])
         return query;
       };
     },
@@ -66,7 +66,6 @@ export const searchQueryStore = {
             return obj[contentKey];
           })
           .join(",");
-        console.log(state.query[key]);
         if (state.query[key].length) {
           return `${altkey || key}=${query}`;
         }
@@ -87,9 +86,7 @@ export const searchQueryStore = {
       }
     },
     INIT_QUERY: (state, getters) => {
-      console.log(state.query);
       state.query[getters] = initState.query[getters];
-      console.log(state.query, getters);
     }
   },
   actions: {

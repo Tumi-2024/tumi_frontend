@@ -133,10 +133,8 @@ export default {
     }
   },
   async beforeMount() {
-    console.log('beforeMoount')
     const { data } = await Vue.prototype.$axios
-      .get(`/teams/`)
-    console.log(data)
+      .get(`/teams/users/`)
     this.teams = data.results
   },
   methods: {

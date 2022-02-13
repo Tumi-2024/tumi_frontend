@@ -111,7 +111,6 @@ export default {
     // ]),
     // COMPONENTS METHODS STARTS ***
     select(obj, key) {
-      console.log(obj, key);
       this.selected = obj;
       this.keyName = key;
     },
@@ -120,7 +119,6 @@ export default {
     },
     save() {
       // if (this.keyName )
-      console.log({ key: this.keyName, data: this.selected });
       this.setQuery({ key: this.keyName, data: this.selected });
       this.modal = false;
     },
@@ -128,7 +126,6 @@ export default {
       this.modal = false;
       const test = await this.initializeQuery("categories");
       this.selected = Array(test);
-      console.log(this.selected);
     }
   }
 };

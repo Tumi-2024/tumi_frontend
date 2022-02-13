@@ -24,7 +24,10 @@ export default {
     };
   },
   props: {
-    headerHeight: 0
+    headerHeight: {
+      type: Number,
+      default: 0
+    }
   },
   computed: {
     ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])

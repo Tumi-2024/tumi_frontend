@@ -96,7 +96,6 @@ export default {
           break;
       }
       const query = `subcity=${this.subcity.id}&page_size=30&ordering=${order}`;
-      // console.log(query);
       this.getDetailHouses(query);
     }
   }

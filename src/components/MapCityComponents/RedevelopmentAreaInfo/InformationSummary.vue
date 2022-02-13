@@ -60,7 +60,6 @@ export default {
     ...mapActions("area", ["fetchRedevelopmentSteps"]),
     async showInformationFull() {
       await this.fetchRedevelopmentSteps(this.getMapSelectedArea.id);
-      console.log(this.getMapSelectedArea);
       this.$emit("hideSummary");
     }
   }

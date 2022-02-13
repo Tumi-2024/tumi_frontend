@@ -108,7 +108,6 @@ export default {
   },
   methods: {
     changePriceText(text) {
-      console.log(text)
       this.selected = text;
       this.$emit('select', {
         text: this.selected,
