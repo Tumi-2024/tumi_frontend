@@ -7,6 +7,16 @@
     </q-card-section>
     <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
+      <div class="flex justify-end">
+        <q-select
+          style="width: 200px;"
+          v-model="filterValue"
+          emit-value
+          map-options
+          :options="getOptions"
+          label="주택유형"
+        />
+      </div>
       <q-tabs
         v-model="activeTab"
         dense
@@ -152,6 +162,7 @@ export default {
     return {
       areaSelected: "",
       activeTab: "all",
+      filterValue: "",
       tabs: [
         { level: "all", label: "전체" },
         { level: "SALE", label: "매매" },
@@ -165,6 +176,41 @@ export default {
     };
   },
   computed: {
+    getOptions() {
+      return [
+        { value: "", label: "전체" },
+        {
+          value: "COMMERCIAL ",
+          label: "상업업무용",
+          disable: !this.item.some(obj => obj.category === "COMMERCIAL ")
+        },
+        {
+          value: "SINGLE",
+          label: "단독다가구",
+          disable: !this.item.some(obj => obj.category === "SINGLE")
+        },
+        {
+          value: "OFFICETEL",
+          label: "오피스텔",
+          disable: !this.item.some(obj => obj.category === "OFFICETEL")
+        },
+        {
+          value: "APARTMENT",
+          label: "아파트",
+          disable: !this.item.some(obj => obj.category === "APARTMENT")
+        },
+        {
+          value: "LAND",
+          label: "토지",
+          disable: !this.item.some(obj => obj.category === "LAND")
+        },
+        {
+          value: "ALLIANCE",
+          label: "연립/다세대",
+          disable: !this.item.some(obj => obj.category === "ALLIANCE")
+        }
+      ];
+    },
     getItemSize() {
       return (item, select) => {
         if (item[select.value]) {
@@ -198,12 +244,17 @@ export default {
       ];
     },
     getTransactions() {
+      const results = this.item.filter(obj => {
+        if (this.filterValue === "") {
+          return true;
+        }
+        return obj.category === this.filterValue;
+      });
+
       if (this.activeTab === "all") {
-        return this.item;
+        return results;
       }
-      return this.item.filter(
-        transaction => transaction.type === this.activeTab
-      );
+      return results.filter(transaction => transaction.type === this.activeTab);
     },
     isRent() {
       return item => item.type === this.tabs[2].level;
