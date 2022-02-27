@@ -9,7 +9,8 @@
     <q-card-section class="bg-white notosanskr-regular">
       <div class="flex justify-end">
         <q-select
-          style="width: 200px;"
+          style="min-width: 120px;"
+          :dense="true"
           v-model="filterValue"
           emit-value
           map-options
@@ -20,7 +21,7 @@
       <q-tabs
         v-model="activeTab"
         dense
-        class="text-grey"
+        class="text-grey  q-mt-lg"
         active-color="primary"
         indicator-color="primary"
         align="justify"
@@ -58,23 +59,38 @@
           :name="tab.level"
         >
           <q-list separator style="border-top: 1px solid #1A1A1A;">
-            <q-item class="item header">
-              <div>계약일</div>
-              <div>거래유형</div>
-              <div>번지/건물단지명</div>
-              <div>
-                <q-select
-                  style="flex: 1"
-                  item-aligned
-                  v-model="select"
-                  :options="getSelectOptions"
-                  :option-value="item => (item === null ? null : item.label)"
-                  dense
-                />
+            <q-item class="item ">
+              <div class="flex justify-center" style="flex: 20 0;">
+                계약일
               </div>
-              <div>거래가격</div>
-              <div>면적당 가격</div>
-              <div>층수</div>
+              <div class="flex justify-center" style="flex: 15 0;">
+                주택유형
+              </div>
+              <div class="flex justify-center" style="flex: 15 0;">
+                거래유형
+              </div>
+
+              <div class="flex" style="flex: 25 0; margin-left: 10px;">
+                번지/건물단지명
+              </div>
+              <div class="flex justify-center" style="flex: 15 0;">
+                층수
+              </div>
+              <q-select
+                class="flex justify-center"
+                style="flex: 15 0;"
+                item-aligned
+                :dense="true"
+                v-model="select"
+                :options="getSelectOptions"
+                :option-value="item => (item === null ? null : item.label)"
+              />
+              <div class="flex justify-center" style="flex: 20 0;">
+                거래가격
+              </div>
+              <div class="flex justify-center" style="flex: 20 0;">
+                면적당 가격
+              </div>
             </q-item>
             <q-virtual-scroll
               style="min-height: 220px; max-height: 500px;"
@@ -93,7 +109,7 @@
                   :key="index"
                 >
                   <!-- 계약일 -->
-                  <div>
+                  <div class="flex justify-center" style="flex: 20 0;">
                     {{
                       item.text_month.slice(0, 4) +
                         "." +
@@ -104,9 +120,14 @@
                           : item.text_day)
                     }}
                   </div>
+                  <!-- 주택 유형 -->
+                  <div class="flex justify-center" style="flex: 15 0;">
+                    {{ getHouseType(item.category) }}
+                  </div>
                   <!-- 거래 유형 -->
                   <div
-                    class="text-weight-medium"
+                    style="flex: 15 0;"
+                    class="flex justify-center text-weight-medium"
                     :style="{
                       color: isSale(item)
                         ? 'rgba(255, 81, 0)'
@@ -115,29 +136,30 @@
                   >
                     {{ tabs.find(tab => tab.level === item.type).label }}
                   </div>
+
                   <!-- 번지/ 건물단지 명 -->
-                  <div class="column">
-                    <div style="display: flex;">
-                      {{ `${item.text_road} ` }}
-                    </div>
-                    <div style="display: flex;">
+                  <div class="flex" style="flex: 25 0;">
+                    <span style="display: inline-flex; margin-left: 10px;">
+                      {{ `${item.text_road || ""}` }}
+                    </span>
+                    <span style="display: inline-flex;">
                       {{ `${item.text_danji || ""}` }}
-                    </div>
+                    </span>
+                  </div>
+                  <div class="flex justify-center" style="flex: 15 0;">
+                    {{ (item.text_floor || "").replace(/null/i, "-") }}층
                   </div>
                   <!-- 면적 -->
-                  <div>
+                  <div class="flex justify-center" style="flex: 15 0;">
                     {{ getItemSize(item, select) }}
                   </div>
                   <!-- 거래가격 -->
-                  <div>
+                  <div class="flex justify-center" style="flex: 20 0;">
                     {{ toMoneyString(item.price || item.price_deposit) }}
                   </div>
-                  <div>
+                  <div class="flex justify-center" style="flex: 20 0;">
                     {{ toMoneyString(item.price) }}
                     {{ toMoneyString(item.price_deposit) }}
-                  </div>
-                  <div>
-                    {{ (item.text_floor || "").replace(/null/i, "-") }}층
                   </div>
                 </q-item>
               </template>
@@ -213,10 +235,24 @@ export default {
     },
     getItemSize() {
       return (item, select) => {
-        if (item[select.value]) {
-          return item[select.value];
+        let itemValue = item[select.value];
+        if (
+          item.category === "COMMERCIAL " &&
+          (select.value === "text_size_private" ||
+            select.value === "text_size_yean")
+        ) {
+          itemValue = item.text_size_total;
+          return itemValue;
+        } else if (select.value === "text_size_daeji") {
+          console.log(item);
+          itemValue =
+            item.text_size_daeji ||
+            item.text_size_land ||
+            item.text_size_contract;
+          return itemValue;
+        } else {
+          return itemValue;
         }
-        return "-";
       };
     },
     getSelectOptions() {
@@ -226,22 +262,38 @@ export default {
           value: "text_size_private"
         },
         {
-          label: "대지권면적",
-          value: "text_size_land"
+          label: "대지면적",
+          value: "text_size_daeji"
         },
         {
           label: "연면적",
           value: "text_size_yean"
-        },
-        {
-          label: "계약면적",
-          value: "text_size_contract"
-        },
-        {
-          label: "전용/연면적",
-          value: "text_size_total"
         }
+        // {
+        //   label: "계약면적",
+        //   value: "text_size_contract"
+        // },
+        // {
+        //   label: "전용/연면적",
+        //   value: "text_size_total"
+        // }
       ];
+    },
+    getHouseType() {
+      return value => {
+        const newVal = [
+          { label: "아파트", value: "APARTMENT" },
+          { label: "오피스텔", value: "OFFICETEL" },
+          { label: "상업업무용", value: "COMMERCIAL " },
+          { label: "분양/입주권", value: "LAND" },
+          { label: "연립/다세대", value: "ALLIANCE" },
+          { label: "단독/다가구", value: "SINGLE" },
+          { label: "토지", value: "LAND" }
+        ].filter(item => {
+          return item.value === value;
+        });
+        return newVal[0].label;
+      };
     },
     getTransactions() {
       const results = this.item.filter(obj => {
@@ -290,17 +342,16 @@ export default {
   color: #707070;
 }
 
+.q-field--item-aligned {
+  padding: 0;
+}
+
 .item {
   display: flex;
   align-items: center;
   &.header {
     background-color: #f7f7f7;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-  div {
-    display: flex;
-    flex: 1;
-    justify-content: center;
   }
 }
 </style>

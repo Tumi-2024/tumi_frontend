@@ -110,7 +110,7 @@
         style="margin: 0 20px"
       />
     </section> -->
-    <recent-history :item="getTransactions" />
+    <recent-history :item="transactions" />
     <section class="button-fixed-bottom">
       <q-btn
         color="primary"
@@ -126,12 +126,12 @@
 <script>
 import { mapGetters } from "vuex";
 import Vue from "vue";
-import LineChart from "src/utils/lineChart";
+// import LineChart from "src/utils/lineChart";
 import { toMoneyString, toSimpleMoneyString } from "src/utils";
 import { RecentHistory } from "components/MapForSaleComponents";
 export default {
   components: {
-    LineChart,
+    // LineChart,
     "recent-history": RecentHistory
   },
   data() {
@@ -182,7 +182,7 @@ export default {
           unit: "명"
         }
       ],
-      ctgr1: "ALLIANCE",
+      // ctgr1: "ALLIANCE",
       transactions: [],
 
       datacollection: {
@@ -245,39 +245,39 @@ export default {
     };
   },
   methods: {
-    getCtgrGraphData(value) {
-      this.ctgr1 = value;
-      const periods = [];
-      this.transactions
-        .filter(obj => obj.category === this.ctgr1)
-        .forEach(obj => {
-          const textYear = obj.text_month.slice(0, 4);
+    // getCtgrGraphData(value) {
+    //   this.ctgr1 = value;
+    //   const periods = [];
+    //   this.transactions
+    //     .filter(obj => obj.category === this.ctgr1)
+    //     .forEach(obj => {
+    //       const textYear = obj.text_month.slice(0, 4);
 
-          if (!periods.some(obj => obj.period === textYear)) {
-            periods.push({ period: textYear, price: [obj.price] });
-          } else {
-            periods.find(obj => obj.period === textYear).price.push(obj.price);
-          }
-        });
-      const startYear = 2016;
-      const defaultPeriods = [];
-      for (let i = 0; i < new Date().getFullYear() - startYear; i++) {
-        defaultPeriods[i] = String(startYear + i);
-      }
+    //       if (!periods.some(obj => obj.period === textYear)) {
+    //         periods.push({ period: textYear, price: [obj.price] });
+    //       } else {
+    //         periods.find(obj => obj.period === textYear).price.push(obj.price);
+    //       }
+    //     });
+    //   const startYear = 2016;
+    //   const defaultPeriods = [];
+    //   for (let i = 0; i < new Date().getFullYear() - startYear; i++) {
+    //     defaultPeriods[i] = String(startYear + i);
+    //   }
 
-      this.datacollection.labels = defaultPeriods;
-      this.datacollection.datasets[0].data = defaultPeriods.map(period => {
-        const prices = periods.find(pr => pr.period === period);
-        if (prices) {
-          const result = prices.price.reduce(function add(sum, currValue) {
-            return sum + currValue;
-          }, 0);
-          return result / prices.price.length;
-        }
-      });
+    //   this.datacollection.labels = defaultPeriods;
+    //   this.datacollection.datasets[0].data = defaultPeriods.map(period => {
+    //     const prices = periods.find(pr => pr.period === period);
+    //     if (prices) {
+    //       const result = prices.price.reduce(function add(sum, currValue) {
+    //         return sum + currValue;
+    //       }, 0);
+    //       return result / prices.price.length;
+    //     }
+    //   });
 
-      this.datacollection = Object.assign({}, this.datacollection);
-    },
+    //   this.datacollection = Object.assign({}, this.datacollection);
+    // },
     getStatValue(value) {
       switch (value) {
         case "size_area":
@@ -302,7 +302,7 @@ export default {
     getCurrTransactions() {
       // "202007"
       const _currTrArr = this.transactions
-        .filter(({ category }) => category === this.ctgr1)
+        // .filter(({ category }) => category === this.ctgr1)
         .filter(({ type }) => type === "SALE");
 
       const currTrArr = _currTrArr.filter(
@@ -398,11 +398,11 @@ export default {
         return options;
       };
     },
-    getTransactions() {
-      return this.transactions.filter(
-        ({ category }) => category === this.ctgr1
-      );
-    },
+    // getTransactions() {
+    //   return this.transactions.filter(
+    //     ({ category }) => category === this.ctgr1
+    //   );
+    // },
     getSelectOptions() {
       const options = [
         { label: "아파트", value: "APARTMENT" },
@@ -429,7 +429,8 @@ export default {
       `redevelopment_areas/${this.getMapSelectedArea.id}/transactions/?page_size=1000`
     );
     this.transactions = data.results;
-    this.getCtgrGraphData("ALLIANCE");
+    console.log(this.transactions);
+    // this.getCtgrGraphData("ALLIANCE");
   }
 };
 </script>
