@@ -57,7 +57,7 @@
               name="summary"
               class="bg-transparent q-pa-none q-ma-none"
             >
-              <Summary></Summary>
+              <Summary />
             </q-tab-panel>
             <q-tab-panel
               name="more_information"

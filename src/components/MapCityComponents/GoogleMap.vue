@@ -37,45 +37,44 @@
       </template>
 
       <!-- we generate badges for the Redevelopment Area -->
-      <template v-for="badge in getAreaBadges">
-        <div :key="`${badge.id}-polygon`">
-          <gmap-polygon :paths="badge.path" :options="badge.options" />
-          <gmap-custom-marker :marker="badge.center">
-            <template
-              v-if="!showInfoWindow && getMapZoom >= 14 && getMapZoom != 12"
+      <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
+        <gmap-polygon :paths="badge.path" :options="badge.options" />
+        <gmap-custom-marker :marker="badge.center">
+          <template
+            v-if="!showInfoWindow && getMapZoom >= 14 && getMapZoom != 12"
+          >
+            <div
+              class="area-badge-info notosanskr-medium"
+              @click="selectArea(badge)"
             >
-              <div
-                class="area-badge-info notosanskr-medium"
-                @click="() => changeMapSelectedArea(badge)"
+              <q-icon
+                v-if="$route.path === '/map/city/area'"
+                size="20px"
+                class="q-mr-xs"
               >
-                <q-icon
-                  v-if="$route.path === '/map/city/area'"
-                  size="20px"
-                  class="q-mr-xs"
+                <img src="~assets/icons/area-info.svg" alt="area-info" />
+              </q-icon>
+              <div
+                v-else
+                style="border-radius: 2px; background-color: white; color: black; margin-right: 5px;"
+                class="items-center justify-center flex"
+              >
+                <span
+                  style="font-size: 13px; line-height: 13px; color: #333333; padding: 3px 5px;"
+                  >{{ badge.count_houses }}</span
                 >
-                  <img src="~assets/icons/area-info.svg" alt="area-info" />
-                </q-icon>
-                <div
-                  v-else
-                  style="border-radius: 2px; background-color: white; color: black; margin-right: 5px;"
-                  class="items-center justify-center flex"
-                >
-                  <span
-                    style="font-size: 13px; line-height: 13px; color: #333333; padding: 3px 5px;"
-                    >{{ badge.count_houses }}</span
-                  >
-                </div>
-                {{ badge.title | truncate(15) }}
               </div>
-            </template>
-          </gmap-custom-marker>
-        </div>
-      </template>
+              {{ badge.title | truncate(15) }}
+            </div>
+          </template>
+        </gmap-custom-marker>
+      </div>
     </GmapMap>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
 /** google map components */
 import { gmapApi } from "gmap-vue";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
@@ -255,6 +254,13 @@ export default {
       this.setLocationLoading(false);
       this.getHouseInfo();
     },
+    async selectArea({ id }) {
+      const result = await Vue.prototype.$axios.get(
+        `/redevelopment_areas/${id}/`
+      );
+      console.log(result, "result");
+      this.changeMapSelectedArea(result.data);
+    },
     idle() {
       // this.changeMapCenter({
       //   lat: this.map.getCenter().lat(),
@@ -294,7 +300,10 @@ export default {
       } else {
         this.showInfoWindow = true;
         payload = {
-          type: this.getMapMode === "redevelop-area" ? "transaction_groups" : "houses",
+          type:
+            this.getMapMode === "redevelop-area"
+              ? "transaction_groups"
+              : "houses",
           ...location
         };
       }

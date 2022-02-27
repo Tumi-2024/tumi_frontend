@@ -50,8 +50,7 @@ export const areaStore = {
           `/redevelopment_areas/${area.id}/interest/`
         );
         context.state.selectedArea.interest.redevelopment_area = true;
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     uninterestSelectedArea: async context => {
       try {
@@ -59,17 +58,20 @@ export const areaStore = {
         await Vue.prototype.$axios.delete(
           `/redevelopment_areas/${id}/interest/`
         );
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     changeMapSelectedArea: (context, area) =>
       context.commit("setMapSelectedArea", area),
     fetchRedevelopmentSteps: async (context, id) => {
       try {
         const result = await Vue.prototype.$axios.get(
-          `/redevelopment_areas/${id}/steps/`
+          `/redevelopment_areas/${id}/`
         );
-        context.commit("setRedevelopmentSteps", result.data);
+
+        context.commit(
+          "setRedevelopmentSteps",
+          result.data.redevelopment_steps
+        );
       } catch (error) {
         // if CORS error we use dummy data
         context.commit("setRedevelopmentSteps", []);
