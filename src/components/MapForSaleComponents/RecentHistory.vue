@@ -54,12 +54,12 @@
               <div>번지/건물단지명</div>
               <div>
                 <q-select
-                style="flex: 1"
-                item-aligned
-                v-model="select"
-                :options="getSelectOptions"
-                :option-value="(item) => item === null ? null : item.label"
-                dense
+                  style="flex: 1"
+                  item-aligned
+                  v-model="select"
+                  :options="getSelectOptions"
+                  :option-value="item => (item === null ? null : item.label)"
+                  dense
                 />
               </div>
               <div>거래가격</div>
@@ -111,7 +111,7 @@
                       {{ `${item.text_road} ` }}
                     </div>
                     <div style="display: flex;">
-                      {{ `${item.text_danji}` }}
+                      {{ `${item.text_danji || ""}` }}
                     </div>
                   </div>
                   <!-- 면적 -->
@@ -120,7 +120,7 @@
                   </div>
                   <!-- 거래가격 -->
                   <div>
-                    {{toMoneyString(item.price || item.price_deposit)}}
+                    {{ toMoneyString(item.price || item.price_deposit) }}
                   </div>
                   <div>
                     {{ toMoneyString(item.price) }}
@@ -159,8 +159,8 @@ export default {
         // { level: "monthly", label: "월세" }
       ],
       select: {
-        label: '전용면적',
-        value: 'text_size_private'
+        label: "전용면적",
+        value: "text_size_private"
       }
     };
   },
@@ -168,34 +168,34 @@ export default {
     getItemSize() {
       return (item, select) => {
         if (item[select.value]) {
-          return item[select.value]
+          return item[select.value];
         }
-        return '-'
-      }
+        return "-";
+      };
     },
     getSelectOptions() {
       return [
         {
-          label: '전용면적',
-          value: 'text_size_private'
+          label: "전용면적",
+          value: "text_size_private"
         },
         {
-          label: '대지권면적',
-          value: 'text_size_land'
+          label: "대지권면적",
+          value: "text_size_land"
         },
         {
-          label: '연면적',
-          value: 'text_size_yean'
+          label: "연면적",
+          value: "text_size_yean"
         },
         {
-          label: '계약면적',
-          value: 'text_size_contract'
+          label: "계약면적",
+          value: "text_size_contract"
         },
         {
-          label: '전용/연면적',
-          value: 'text_size_total'
+          label: "전용/연면적",
+          value: "text_size_total"
         }
-      ]
+      ];
     },
     getTransactions() {
       if (this.activeTab === "all") {

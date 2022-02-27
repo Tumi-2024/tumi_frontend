@@ -41,7 +41,7 @@
         <q-separator inset v-if="stats.length - 1 !== i" />
       </div>
     </section>
-    <section class="investment-point bg-white">
+    <!-- <section class="investment-point bg-white">
       <div class="title-heading notosanskr-medium">
         실거래가
       </div>
@@ -109,7 +109,7 @@
         :options="options"
         style="margin: 0 20px"
       />
-    </section>
+    </section> -->
     <recent-history :item="getTransactions" />
     <section class="button-fixed-bottom">
       <q-btn
