@@ -17,10 +17,10 @@
 
 <script>
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
-import Vue from 'vue'
+import Vue from "vue";
 import { mapGetters } from "vuex";
 
-import { Cookies } from 'quasar'
+import { Cookies } from "quasar";
 
 export default {
   components: {
@@ -28,30 +28,31 @@ export default {
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
-    getTeamTree () {
+    getTeamTree() {
       return this.teamsData.map(obj => {
         return {
           label: obj.title,
           children: obj.users.map(obj => {
-            return { label: obj.username }
+            return { label: obj.name };
           })
-        }
-      })
+        };
+      });
     }
   },
   async created() {
-    const { data } = await Vue.prototype.$axios
-      .get(`/teams/users/`)
-    this.teamsData = data
+    const { data } = await Vue.prototype.$axios.get(`/teams/users/`);
+    this.teamsData = data;
 
-    const index = Cookies.get('tumi_i')
-    const { data: userData } = await Vue.prototype.$axios.get(`/users/${index}/`)
-    this.ticked = [userData.username]
+    const index = Cookies.get("tumi_i");
+    const { data: userData } = await Vue.prototype.$axios.get(
+      `/users/${index}/`
+    );
+    this.ticked = [userData.name];
   },
   data() {
     return {
       teamsData: [],
-      ticked: ['테스트'],
+      ticked: ["테스트"],
       expanded: []
     };
   },

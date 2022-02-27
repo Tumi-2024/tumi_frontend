@@ -11,10 +11,7 @@
       @idle="idle"
       @zoom_changed="zoomChanged"
       ref="mapRef"
-      :center="{
-        lat: 37.547,
-        lng: 126.997
-      }"
+      :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"

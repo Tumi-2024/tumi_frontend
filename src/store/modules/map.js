@@ -171,8 +171,7 @@ export const mapStore = {
           `/redevelopment_areas/interests/`
         );
         context.commit("setInterest", response.data.results);
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   }
 };

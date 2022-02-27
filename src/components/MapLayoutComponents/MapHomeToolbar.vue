@@ -45,7 +45,8 @@ export default {
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
     typeOfProduct() {
-      return this.$route.name === "map_city_area" ? "실거래가" : "매물";
+      console.log(this.$route);
+      return this.$route.query.transactionid ? "실거래가" : "매물";
     }
   },
   methods: {
