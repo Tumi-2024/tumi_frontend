@@ -22,7 +22,7 @@
         flat
         class="notosanskr-medium"
         style="flex: 1; "
-        :style="{'background-color': property.disabled ? '#e9e9e9': ''}"
+        :style="{ 'background-color': property.disabled ? '#e9e9e9' : '' }"
         :disable="property.disabled"
         :class="{ selected: selected.label === property.label }"
         :label="property.label"
@@ -80,13 +80,20 @@ export default {
       areas: [],
       selected: {
         label: "전용면적",
-        value: "size_dedicated_area_m2"
+        value: "size_dedicated_area_m2",
+        type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
       },
       properties: [
         {
           label: "전용면적",
           value: "size_dedicated_area_m2",
-          type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
+          type: [
+            "아파트",
+            "연립/다세대",
+            "원룸/오피스텔",
+            "상업업무용",
+            "입주권"
+          ]
         },
         {
           label: "연면적",
@@ -107,13 +114,28 @@ export default {
     };
   },
 
+  watch: {
+    selectedProps: {
+      immediate: true,
+      handler() {
+        this.selected = this.getProperties.filter(obj => !obj.disabled)[0];
+        this.$emit("select", this.selected, "areaType");
+      }
+    }
+  },
+
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
     getProperties() {
       const currentCtgr = this.selectedProps || this.getOption("categories");
 
       return this.properties.map(obj => {
-        return { ...obj, disabled: this.isCondition ? obj.type.indexOf(currentCtgr[0].label) < 0 : false };
+        return {
+          ...obj,
+          disabled: this.isCondition
+            ? obj.type.indexOf(currentCtgr[0].label) < 0
+            : false
+        };
       });
     }
   },
@@ -151,10 +173,10 @@ export default {
     }
   },
   beforeMount() {
-    const init = this.getProperties.find(({ disabled }) => !disabled)
+    const init = this.getProperties.find(({ disabled }) => !disabled);
 
     this.areas = this.getOption("areas");
-    this.setQuery({ key: 'areaType', data: init });
+    this.setQuery({ key: "areaType", data: init });
   },
   mounted() {
     this.selected = this.getOption("areaType");

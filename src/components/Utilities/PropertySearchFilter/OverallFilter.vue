@@ -21,8 +21,8 @@
           class="head-section bg-white notosanskr-medium row justify-between items-center"
         >
           <div>검색 필터</div>
-          <q-btn flat padding="0px"
-            ><q-icon
+          <q-btn flat padding="0px">
+            <q-icon
               name="close"
               class="cursor-pointer"
               size="24px"
@@ -30,14 +30,13 @@
             />
           </q-btn>
         </q-card-section>
-        <!-- contents starts here -->
         <div class="full-height relative-position overflow-auto">
-
           <!-- Property Type | 주택 유형 -->
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
-            style="padding-top: 36px"
+            style="padding-top:36px"
             @select="setSelected('categories', $event)"
+            :value="categories"
             :isUnique="true"
           />
           <exclusive-area
@@ -46,10 +45,28 @@
             @select="setSelected('areaType', $event)"
             :isCondition="true"
             :selectedProps="categories"
-          ></exclusive-area>
+          />
 
-          <price-filter class="q-pb-xl bg-white q-mt-sm" style="padding-top: 36px" />
-          <person-filter class="q-pb-xl bg-white q-mt-sm" style="padding-top: 36px" />
+          <price-filter
+            label="주택 가격"
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+            @select="setSelected('prices', $event)"
+          />
+
+          <price-filter
+            label="초기투자금"
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+            @select="setSelected('initPrices', $event)"
+            keyName="initPrices"
+          />
+
+          <person-filter
+            class="q-pb-xl bg-white q-mt-sm"
+            style="padding-top: 36px"
+            @select="setSelected('persons', $event)"
+          />
 
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
             <!-- Action buttons -->
@@ -78,7 +95,7 @@
             </div>
           </q-card-section>
 
-          <q-card-section class="empty-bottom-space"></q-card-section>
+          <q-card-section class="empty-bottom-space" />
         </div>
       </q-card>
     </q-dialog>
@@ -92,6 +109,7 @@ import {
   PriceFilter,
   PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -110,42 +128,97 @@ export default {
   created() {
     // this.overallFilter = this.setInitValue();
   },
+  computed: {
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
+  },
   data() {
     return {
       modal: false,
       moreFilters: false,
-      categories: [{
-        icon: require("assets/iconsNew/11.png"),
-        label: "아파트",
-        valueTransaction: "APARTMENT",
-        valueHouse: "아파트"
-      }],
+      categories: [
+        {
+          icon: require("assets/iconsNew/11.png"),
+          label: "아파트",
+          valueTransaction: "APARTMENT",
+          valueHouse: "아파트"
+        }
+      ],
       prices: [
         { label: "최저가", value: 0 },
         { label: "최고가", key: "max", value: 999999 }
-
       ],
-      areaType: [{
-        label: "전용면적",
-        value: "size_dedicated_area_m2",
-        type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
-      }],
+      initPrices: [
+        { label: "최저가", value: 0 },
+        { label: "최고가", key: "max", value: 999999 }
+      ],
+      areaType: [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          type: [
+            "아파트",
+            "연립/다세대",
+            "원룸/오피스텔",
+            "상업업무용",
+            "입주권"
+          ]
+        }
+      ],
       areas: [
-        { label: '최소면적', value: 0 },
-        { label: '최대면적', value: 100000 }
+        { label: "최소면적", value: 0 },
+        { label: "최대면적", value: 100000 }
       ]
-    }
+    };
   },
   methods: {
     resetFilters() {
+      this.categories = [
+        {
+          icon: require("assets/iconsNew/11.png"),
+          label: "아파트",
+          valueTransaction: "APARTMENT",
+          valueHouse: "아파트"
+        }
+      ];
+      this.prices = [
+        { label: "최저가", value: 0 },
+        { label: "최고가", key: "max", value: 999999 }
+      ];
+      this.initPrices = [
+        { label: "최저가", value: 0 },
+        { label: "최고가", key: "max", value: 999999 }
+      ];
+      this.areaType = [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          type: [
+            "아파트",
+            "연립/다세대",
+            "원룸/오피스텔",
+            "상업업무용",
+            "입주권"
+          ]
+        }
+      ];
+      this.areas = [
+        { label: "최소면적", value: 0 },
+        { label: "최대면적", value: 100000 }
+      ];
+
+      console.log("reset");
       // this.overallFilter = this.setInitValue();
       // console.log(this.overallFilter, "reset");
     },
     setSelected(property, value) {
       this[property] = value;
+      console.log(property, value);
     },
     applyFilters() {
-      console.log(this.overallFilter);
+      console.log(this.categories);
+      console.log(this.prices);
+      console.log(this.areaType);
+      console.log(this.areas);
     }
   }
 };

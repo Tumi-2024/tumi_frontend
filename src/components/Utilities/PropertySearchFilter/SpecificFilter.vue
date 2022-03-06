@@ -18,11 +18,16 @@
           <div class="indicator"></div>
         </q-card-section>
 
-        <q-card-section class="q-pa-none bg-white notosanskr-medium" style="min-height: 200px;">
+        <q-card-section
+          class="q-pa-none bg-white notosanskr-medium"
+          style="min-height: 200px;"
+        >
           <component
             :is="component"
             @select="select"
             @selectDetail="selectDetail"
+            :value="value"
+            :label="label"
           />
         </q-card-section>
 
@@ -93,7 +98,8 @@ export default {
     salePrice: { type: Boolean, default: false },
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
-    propsClass: { type: String, default: "" }
+    propsClass: { type: String, default: "" },
+    value: { type: [Array, Object], require: false }
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
@@ -111,6 +117,7 @@ export default {
     // ]),
     // COMPONENTS METHODS STARTS ***
     select(obj, key) {
+      console.log("select", obj, key);
       this.selected = obj;
       this.keyName = key;
     },

@@ -58,8 +58,9 @@
               >
                 <span
                   style="font-size: 13px; line-height: 13px; color: #333333; padding: 3px 5px;"
-                  >{{ badge.count_houses }}</span
                 >
+                  {{ badge.count_estates_filtered }}
+                </span>
               </div>
               {{ badge.title | truncate(15) }}
             </div>
@@ -239,7 +240,8 @@ export default {
       "changeMapZoom",
       "changeMapCenter",
       "setLocationLoading",
-      "setMapZoom"
+      "setMapZoom",
+      "setMapCenter"
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
@@ -250,6 +252,7 @@ export default {
     zoomChanged() {
       this.setLocationLoading(false);
       this.getHouseInfo();
+      this.getRedevInfo();
     },
     async selectArea({ id }) {
       const result = await Vue.prototype.$axios.get(
@@ -319,6 +322,7 @@ export default {
         console.log(item.position);
         const zoomLevel = this.map.getZoom();
         this.setMapZoom(zoomLevel);
+        this.setMapCenter(item.position);
 
         // this.changeMapCenter(item.position);
         this.$router.push({

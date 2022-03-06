@@ -32,13 +32,13 @@ export default {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
-    getIsActive () {
-      return (dd) => {
+    ...mapGetters("searchQuery", ["getQueryString"]),
+    getIsActive() {
+      return dd => {
         return this.selected.some(obj => {
-          return obj.label === dd
-        })
-      }
+          return obj.label === dd;
+        });
+      };
     }
   },
   props: {
@@ -46,16 +46,39 @@ export default {
       type: Boolean,
       require: false,
       default: false
+    },
+    value: {
+      type: Array,
+      require: false,
+      default: () => [
+        {
+          icon: require("assets/iconsNew/11.png"),
+          label: "아파트",
+          valueTransaction: "APARTMENT",
+          valueHouse: "아파트"
+        }
+      ]
+    }
+  },
+
+  watch: {
+    value: {
+      immediate: true,
+      handler(newVal, oldVal) {
+        this.selected = newVal;
+      }
     }
   },
   data() {
     return {
-      selected: [{
-        icon: require("assets/iconsNew/11.png"),
-        label: "아파트",
-        valueTransaction: "APARTMENT",
-        valueHouse: "아파트"
-      }],
+      selected: [
+        {
+          icon: require("assets/iconsNew/11.png"),
+          label: "아파트",
+          valueTransaction: "APARTMENT",
+          valueHouse: "아파트"
+        }
+      ],
       properties: [
         {
           icon: require("assets/iconsNew/11.png"),
@@ -109,7 +132,7 @@ export default {
     };
   },
   beforeMount() {
-    this.selected = [...this.getOption("categories")];
+    this.selected = this.value;
   },
   mounted() {
     this.$emit("select", this.selected, "categories");
@@ -120,13 +143,13 @@ export default {
     },
     changeValue(val) {
       if (this.isUnique) {
-        this.selected = [val]
+        this.selected = [val];
       } else {
-        const test = this.selected.filter(obj => obj.label === val.label)
+        const test = this.selected.filter(obj => obj.label === val.label);
         if (test.length === 0) {
-          this.selected.push(val)
+          this.selected.push(val);
         } else {
-          this.selected = this.selected.filter(obj => obj.label !== val.label)
+          this.selected = this.selected.filter(obj => obj.label !== val.label);
         }
       }
 

@@ -86,10 +86,10 @@ export default {
         case "mapActualTransaction":
           this.changeMapMode("transaction");
           this.changeMapZoom(16);
-          this.changeMapCenter({
-            lat: 37.53718802127926,
-            lng: 127.09262711456654
-          });
+          // this.changeMapCenter({
+          //   lat: 37.53718802127926,
+          //   lng: 127.09262711456654
+          // });
           this.changeToolbarTitle("실거래가 조회");
           this.$router.push({ name: "map_city" });
           break;
@@ -97,10 +97,10 @@ export default {
         case "mapApartment":
           this.changeMapMode("apartment");
           this.changeMapZoom(16);
-          this.changeMapCenter({
-            lat: 37.55931046167917,
-            lng: 127.06229167224119
-          });
+          // this.changeMapCenter({
+          //   lat: 37.55931046167917,
+          //   lng: 127.06229167224119
+          // });
           this.changeToolbarTitle("아파트 매물");
           this.$router.push({ name: "map_city" });
           break;

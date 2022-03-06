@@ -48,6 +48,7 @@
                 :propsClass="filter.class"
                 :label="filter.label"
                 :component="filter.type"
+                :value="[...getOption(filter.keyName)]"
               />
             </div>
           </slot>
@@ -70,7 +71,8 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"])
+    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
   },
   data() {
     return {
@@ -80,7 +82,8 @@ export default {
         {
           label: "주택유형",
           type: "property-type",
-          class: "text-white bg-primary"
+          class: "text-white bg-primary",
+          keyName: "categories"
         },
         {
           label: "면적종류",
@@ -96,7 +99,7 @@ export default {
           label: "초기투자금",
           type: "price",
           class: "text-white bg-purple",
-          isHide: this.$route.path !== '/map/city'
+          isHide: this.$route.path !== "/map/city"
         },
         {
           label: "담당자",

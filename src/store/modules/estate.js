@@ -94,14 +94,16 @@ export const estateStore = {
 
       const getQueryString2 = context.getters["searchQuery/getQueryString2"];
 
-      const areaType = getQueryString2("areaType", "value")
-      const areas = getQueryString2("areas", "value")
-      console.log(areaType, areas)
+      const areaType = getQueryString2("areaType", "value");
+      const areas = getQueryString2("areas", "value");
+      const users = getQueryString2("users", "");
+
       const query = Vue.prototype.$qs.stringify(
         {
           type_house__in: getQueryString2("categories", "valueHouse"),
           price_selling_hope__range: getQueryString2("prices", "value"),
-          [`${areaType}__range`]: areas
+          [`${areaType}__range`]: areas,
+          user__in: users.length === 0 ? undefined : users
         },
         { arrayFormat: "comma" }
       );

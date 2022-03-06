@@ -62,6 +62,7 @@ export const mapStore = {
     }
   },
   actions: {
+    setMapCenter: (context, payload) => context.commit("setMapCenter", payload),
     setMapZoom: (context, payload) => context.commit("setMapZoom", payload),
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
     setIsCone: (context, payload) => context.commit("setIsCone", payload),

@@ -6,10 +6,12 @@
       <q-tree
         class="col-12 row wrap"
         :nodes="getTeamTree"
-        node-key="label"
+        node-key="id"
+        label-key="label"
         tick-strategy="leaf"
         :ticked.sync="ticked"
         default-expand-all
+        @update:ticked="onTicked"
       />
     </div>
   </q-card-section>
@@ -20,20 +22,19 @@ import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
 import Vue from "vue";
 import { mapGetters } from "vuex";
 
-import { Cookies } from "quasar";
-
 export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
+    ...mapGetters("searchQuery", ["getQueryString", "getQuery", "getOption"]),
     getTeamTree() {
       return this.teamsData.map(obj => {
         return {
           label: obj.title,
-          children: obj.users.map(obj => {
-            return { label: obj.name };
+          id: `team-${obj.id}`,
+          children: obj.users.map(obj2 => {
+            return { label: obj2.name, id: obj2.id };
           })
         };
       });
@@ -43,20 +44,25 @@ export default {
     const { data } = await Vue.prototype.$axios.get(`/teams/users/`);
     this.teamsData = data;
 
-    const index = Cookies.get("tumi_i");
-    const { data: userData } = await Vue.prototype.$axios.get(
-      `/users/${index}/`
-    );
-    this.ticked = [userData.name];
+    // const index = Cookies.get("tumi_i");
+    // const { data: userData } = await Vue.prototype.$axios.get(
+    //   `/users/${index}/`
+    // );
+    console.log(this.getOption("users"));
+    this.ticked = this.getOption("users");
   },
   data() {
     return {
       teamsData: [],
-      ticked: ["테스트"],
+      ticked: [],
       expanded: []
     };
   },
-  methods: {}
+  methods: {
+    onTicked(values) {
+      this.$emit("select", values, "users");
+    }
+  }
 };
 </script>
 

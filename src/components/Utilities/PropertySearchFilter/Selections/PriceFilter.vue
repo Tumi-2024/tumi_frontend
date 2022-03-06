@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <text-under-highlight text="주택 가격" />
+    <text-under-highlight :text="label" />
     <!-- selection of choices | 선택의 선택 -->
     <div class="selection row q-mt-lg items-center">
       <q-input
@@ -36,6 +36,17 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
+  props: {
+    label: {
+      type: String,
+      require: true
+    },
+    keyName: {
+      type: String,
+      require: false,
+      default: "prices"
+    }
+  },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getOption"])
   },
@@ -45,7 +56,7 @@ export default {
     };
   },
   created() {
-    this.selected = JSON.parse(JSON.stringify(this.getOption("prices")));
+    this.selected = JSON.parse(JSON.stringify(this.getOption(this.keyName)));
   },
   methods: {
     toMoneyString: toMoneyString,
@@ -61,7 +72,7 @@ export default {
         },
         this.selected[1]
       ];
-      this.$emit("select", this.selected, "prices");
+      this.$emit("select", this.selected, this.keyName);
     },
     onChangeMax(e) {
       this.selected = [
@@ -72,7 +83,7 @@ export default {
           value: e.target.value
         }
       ];
-      this.$emit("select", this.selected, "prices");
+      this.$emit("select", this.selected, this.keyName);
     }
   }
 };

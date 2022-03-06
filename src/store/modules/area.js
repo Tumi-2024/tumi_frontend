@@ -24,8 +24,38 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async (context, payload) => {
       try {
-        const url = `/redevelopment_areas/?${payload}&page_size=1000`;
+        const getQueryString2 =
+          context.rootGetters["searchQuery/getQueryString2"];
+
+        const areaType = getQueryString2("areaType", "value");
+        const areas = getQueryString2("areas", "value");
+        const users = getQueryString2("users", "");
+
+        console.log(areaType, areas);
+
+        const getInitPrices = () => {
+          const arrInitPrice = getQueryString2("initPrices", "value");
+          console.log(arrInitPrice, arrInitPrice[1] === 999999);
+          if (arrInitPrice[0] === 0 && arrInitPrice[1] === 999999) {
+            return undefined;
+          } else {
+            return arrInitPrice;
+          }
+        };
+        const query = Vue.prototype.$qs.stringify(
+          {
+            type_house__in: getQueryString2("categories", "valueHouse"),
+            price_initial_investment__range: getInitPrices(),
+            price_selling_hope__range: getQueryString2("prices", "value"),
+            [`${areaType}__range`]: areas,
+            user__in: users
+          },
+          { arrayFormat: "comma" }
+        );
+        console.log(query);
+        const url = `/redevelopment_areas/?${payload}&${query}&page_size=1000`;
         const { data } = await Vue.prototype.$axios.get(url);
+        console.log(data);
         context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", markersArea);
