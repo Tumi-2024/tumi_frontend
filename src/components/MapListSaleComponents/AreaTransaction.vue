@@ -107,7 +107,7 @@ export default {
               },
               { label: "거래금액(만원)", value: item.text_price },
               { label: "용도지역", value: item.text_type_area },
-              { label: "전용/연면적(㎡)", value: item.text_size_total },
+              { label: "전용/연면적(㎡)", value: item.text_size_total + "㎡" },
               { label: "도로조건", value: item.text_type_road },
               { label: "건축물주용도", value: item.text_type_yongdo },
               {

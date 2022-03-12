@@ -232,7 +232,7 @@ export default {
         {
           // exclusive Area
           label: "공용 면적 (m2)",
-          value: `${this.estate.group_individual_household.size_supply_area_m2_m2}㎡`,
+          value: `${this.estate.group_individual_household.size_supply_area_m2}㎡`,
           icon: ["land-area.svg"]
         },
         {
@@ -259,7 +259,7 @@ export default {
           label: "관리비",
           value:
             this.estate.group_individual_household.price_maintenance.toLocaleString() +
-            "원",
+            " 원",
           icon: ["right.svg"]
         }
       ];
@@ -377,22 +377,22 @@ export default {
           value: houseInfo.description_sale
         },
         // 최근 관리비 없음
-        { label: "대지면적", value: houseInfo.size_land_area },
-        { label: "연면적", value: `${houseInfo.size_gross_floor_area}㎡` },
-        { label: "건축면적", value: `${houseInfo.size_building_area}㎡` },
+        { label: "대지면적", value: `${houseInfo.size_land_area} ㎡` },
+        { label: "연면적", value: `${houseInfo.size_gross_floor_area} ㎡` },
+        { label: "건축면적", value: `${houseInfo.size_building_area} ㎡` },
         //
-        { label: "건폐율", value: `${houseInfo.percentage_building_cover}%` },
-        { label: "용적률", value: `${houseInfo.percentage_floor_area}%` },
+        { label: "건폐율", value: `${houseInfo.percentage_building_cover} %` },
+        { label: "용적률", value: `${houseInfo.percentage_floor_area} %` },
         { label: "복도 유형", value: houseInfo.type_corridor },
         //
-        { label: "건물 동 (개)수", value: houseInfo.count_building },
-        { label: "총 세대수", value: houseInfo.count_household },
+        { label: "건물 동 (개)수", value: houseInfo.count_building + " 개동" },
+        { label: "총 세대수", value: houseInfo.count_household + " 세대" },
         { label: "난방방식", value: houseInfo.type_heating },
         //
-        { label: "엘리베이터 수", value: houseInfo.count_elevator },
+        { label: "엘리베이터 수", value: houseInfo.count_elevator + " 개" },
         {
           label: "주차대수 (지상/지하)",
-          value: `${houseInfo.count_parking_up}/${houseInfo.count_parking_down}`
+          value: `${houseInfo.count_parking_up} 대 / ${houseInfo.count_parking_down} 대`
         },
         {
           label: "사용승인일",
@@ -411,7 +411,7 @@ export default {
         //   value: houseInfo3.count_household_same_area
         // },
         { label: "대지권 종류", value: houseInfo.type_land },
-        { label: "대지권 비율", value: houseInfo.percentage_land },
+        { label: "대지권 비율", value: houseInfo.percentage_land + " %" },
         { label: "관리사무소 연락처", value: houseInfo.call_management_office },
         //
         // { label: "건물 총 층수", value: houseInfo3.num_total_floor },
@@ -462,7 +462,7 @@ export default {
           value: houseInfo.description_estate,
           class: "col-sm-12 col-md-12"
         },
-        { label: "동 번호", value: houseInfo.num_ho },
+        { label: "동 번호", value: houseInfo.num_ho + " 동" },
         {
           label: "층수 (총 층수)",
           value: `${houseInfo.count_floor_total} 층`
@@ -471,12 +471,12 @@ export default {
           label: "층수 (해당 층)",
           value: `${houseInfo.num_floor} 층`
         },
-        { label: "공급면적", value: `${houseInfo.size_supply_area_m2}㎡` },
+        { label: "공급면적(㎡)", value: `${houseInfo.size_supply_area_m2} ㎡` },
         {
           label: "전용면적 (㎡|평형)",
-          value: `${houseInfo.size_dedicated_area_m2 || "-"}㎡ | ${(
-            houseInfo.size_dedicated_area_pyeong || 0 / 3.3
-          ).toFixed(1)}평`
+          value: `${houseInfo.size_dedicated_area_m2 || "-"} ㎡ | ${(
+            (houseInfo.size_dedicated_area_pyeong || 0) / 3.3
+          ).toFixed(1)} 평`
         },
         {
           label: "매매(전매) 관리",
@@ -487,8 +487,8 @@ export default {
         //   value: houseInfo.num_total_floor
         // },
         {
-          label: "방수|욕실수",
-          value: `${houseInfo.count_room}|${houseInfo.count_bathroom}`,
+          label: "방수 | 욕실수",
+          value: `${houseInfo.count_room} 개 | ${houseInfo.count_bathroom} 개`,
           class: "col-sm-6 col-md-4"
         },
         {
@@ -497,21 +497,21 @@ export default {
         },
         {
           label: "최근 관리비",
-          value: houseInfo.price_maintenance.toLocaleString() + "원"
+          value: houseInfo.price_maintenance.toLocaleString() + " 원"
         },
         // 최근 관리비 없음
         {
           label: "연평균 관리비",
-          value: houseInfo.price_maintenance.toLocaleString() + "원"
+          value: houseInfo.price_maintenance.toLocaleString() + " 원"
         },
         {
           label: "하절기 평균 관리비",
-          value: houseInfo.price_maintenance_summer.toLocaleString() + "원",
+          value: houseInfo.price_maintenance_summer.toLocaleString() + " 원",
           class: "borderb"
         },
         {
           label: "동절기 평균 관리비",
-          value: houseInfo.price_maintenance_winter.toLocaleString() + "원",
+          value: houseInfo.price_maintenance_winter.toLocaleString() + " 원",
           class: "borderb"
         }
 
