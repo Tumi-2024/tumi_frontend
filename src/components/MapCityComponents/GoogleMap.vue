@@ -6,7 +6,6 @@
       :disable-heart="getMapZoom > 17"
       @showArea="showHideArea"
     />
-    {{ getMapZoom }}
     <!-- Google Map Starts -->
     <GmapMap
       @idle="idle"
@@ -272,7 +271,6 @@ export default {
       const zoom = this.map.getZoom();
 
       this.setMapZoom(zoom);
-      console.log("tilesloaded");
     },
     onChangeRedev() {
       this.setViewRedevOnly();

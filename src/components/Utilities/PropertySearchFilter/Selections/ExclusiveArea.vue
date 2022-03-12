@@ -33,7 +33,6 @@
       <div class="selection row q-mt-lg items-center">
         <q-input
           :value="areas[0].value"
-          @focus="areas[0].value = 0"
           @change="onChangeMin"
           filled
           label="최소 ㎡"
@@ -43,7 +42,6 @@
         <span style="font-size: 30px;" class="q-mx-lg">~</span>
         <q-input
           :value="areas[1].value"
-          @focus="areas[1].value = 0"
           @change="onChangeMax"
           filled
           label="최대 ㎡"

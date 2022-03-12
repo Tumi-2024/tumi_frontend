@@ -4,7 +4,7 @@ import Vue from "vue";
 const initState = {
   isMapLoaded: true,
   mode: "default",
-  mapZoom: 14,
+  mapZoom: 13,
   mapCenter: {
     lat: 37.547,
     lng: 126.997

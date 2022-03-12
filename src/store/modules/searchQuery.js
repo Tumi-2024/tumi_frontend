@@ -17,13 +17,11 @@ const initState = {
       { label: "최저가", value: 0 },
       { label: "최고가", key: "max", value: 999999 }
     ],
-    areaType: [
-      {
-        label: "전용면적",
-        value: "size_dedicated_area_m2",
-        type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
-      }
-    ],
+    areaType: {
+      label: "전용면적",
+      value: "size_dedicated_area_m2",
+      type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
+    },
     areas: [
       { label: "최소면적", value: 0 },
       { label: "최대면적", value: 100000 }
@@ -79,6 +77,7 @@ export const searchQueryStore = {
     getQueryString: (state, getters) => {
       return (key, altkey, contentKey) => {
         // https://admin.tumi.sunwook.com/api/houses/?type_house__in=아파트,연립ￜ다세대
+
         const query = state.query[key]
           .map(obj => {
             return obj[contentKey];
@@ -112,10 +111,15 @@ export const searchQueryStore = {
       const lat = context.rootState.estate.latitude;
       const long = context.rootState.estate.longitude;
       const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}`;
-      context.commit("SET_QUERY", data);
+      if (Array.isArray(data)) {
+        data.forEach(obj => {
+          context.commit("SET_QUERY", obj);
+        });
+      } else {
+        context.commit("SET_QUERY", data);
+      }
       context.dispatch("getSimpleHouses", {}, { root: true });
       context.dispatch("area/fetchMapAreas", rangeQuery, { root: true });
-      console.log(context);
     },
     initializeQuery: (context, data) => {
       context.commit("INIT_QUERY", data);

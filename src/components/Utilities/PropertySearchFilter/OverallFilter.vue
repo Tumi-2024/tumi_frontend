@@ -42,7 +42,8 @@
           <exclusive-area
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
-            @select="setSelected('areaType', $event)"
+            @select="setSelected('areas', $event)"
+            @selectDetail="setSelected('areaType', $event)"
             :isCondition="true"
             :selectedProps="categories"
           />
@@ -109,8 +110,7 @@ import {
   PriceFilter,
   PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
-import { mapGetters } from "vuex";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "property-type": PropertyType,
@@ -171,6 +171,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
     resetFilters() {
       this.categories = [
         {
@@ -212,13 +213,17 @@ export default {
     },
     setSelected(property, value) {
       this[property] = value;
-      console.log(property, value);
     },
     applyFilters() {
-      console.log(this.categories);
-      console.log(this.prices);
-      console.log(this.areaType);
-      console.log(this.areas);
+      console.log("this.areas", this.areas);
+      console.log("this.areaType", this.areaType);
+      this.setQuery([
+        { key: "categories", data: this.categories },
+        { key: "prices", data: this.prices },
+        // { key: "areas", data: this.areas },
+        { key: "areaType", data: this.areaType }
+      ]);
+      this.modal = false;
     }
   }
 };
