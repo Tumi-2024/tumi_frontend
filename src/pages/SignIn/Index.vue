@@ -3,7 +3,7 @@
     class="q-pa-xl bg-white justify-center flex column items-center"
   >
     <img
-      height="500"
+      height="250"
       :src="require('assets/tumi-icon-high.jpeg')"
       class="q-mr-sm"
     />

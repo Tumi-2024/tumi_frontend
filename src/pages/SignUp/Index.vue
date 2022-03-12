@@ -18,29 +18,6 @@
       </q-select>
       <q-input
         filled
-        v-model="id"
-        label="아이디"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || '아이디를 입력해주세요.']"
-      >
-        <template v-slot:before>
-          <q-icon name="person" />
-        </template>
-      </q-input>
-      <q-input
-        filled
-        v-model="email"
-        label="email"
-        type="email"
-        lazy-rules
-        :rules="[val => (val && val.length > 0) || '이메일을 입력해주세요.']"
-      >
-        <template v-slot:before>
-          <q-icon name="mail" />
-        </template>
-      </q-input>
-      <q-input
-        filled
         v-model="username"
         label="사용자 이름"
         lazy-rules
@@ -52,44 +29,122 @@
           <q-icon name="label" />
         </template>
       </q-input>
+      <div class="flex row justify-between">
+        <q-input
+          filled
+          v-model="phone"
+          label="업무용 휴대폰번호"
+          style="width: 400px;"
+          lazy-rules
+          mask="###-####-####"
+          :rules="[
+            val => (val && val.length > 0) || '업무용 전화번호를 입력해주세요.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+
+        <q-input
+          filled
+          v-model="email"
+          label="업무용 이메일"
+          style="width: 400px;"
+          type="email"
+          lazy-rules
+          :rules="[
+            val => (val && val.length > 0) || '업무용 이메일을 입력해주세요.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="mail" />
+          </template>
+        </q-input>
+      </div>
+
+      <div class="flex row justify-between">
+        <q-input
+          filled
+          v-model="phonePrivate"
+          label="개인 휴대폰번호"
+          style="width: 400px;"
+          lazy-rules
+          mask="###-####-####"
+          :rules="[
+            val => (val && val.length > 0) || '개인 전화번호를 입력해주세요.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+
+        <q-input
+          filled
+          v-model="emailPrivate"
+          label="개인 이메일"
+          style="width: 400px;"
+          type="email"
+          lazy-rules
+          :rules="[
+            val => (val && val.length > 0) || '개인 이메일을 입력해주세요.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="mail" />
+          </template>
+        </q-input>
+      </div>
+
       <q-input
         filled
-        v-model="phone"
-        label="전화번호"
+        v-model="id"
+        label="아이디"
         lazy-rules
-        mask="###-####-####"
-        :rules="[val => (val && val.length > 0) || '전화번호를 입력해주세요.']"
+        :rules="[val => (val && val.length > 0) || '아이디를 입력해주세요.']"
       >
         <template v-slot:before>
-          <q-icon name="phone" />
+          <q-icon name="person" />
         </template>
       </q-input>
-      <q-input
-        filled
-        v-model="password1"
-        label="비밀번호"
-        lazy-rules
-        type="password"
-        :rules="[val => (val && val.length > 0) || '비밀번호를 입력해주세요.']"
-      >
-        <template v-slot:before>
-          <q-icon name="lock" />
-        </template>
-      </q-input>
-      <q-input
-        filled
-        v-model="password2"
-        label="비밀번호 확인"
-        type="password"
-        lazy-rules
-        :rules="[
-          val => this.password1 === val || '비밀번호가 일치하지 않습니다.'
-        ]"
-      >
-        <template v-slot:before>
-          <q-icon name="lock" />
-        </template>
-      </q-input>
+      <div class="flex row justify-between">
+        <q-input
+          filled
+          v-model="password1"
+          style="width: 400px;"
+          label="비밀번호"
+          lazy-rules
+          type="password"
+          :rules="[
+            val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+            val => val.length < 8 || '비밀번호는 최소 8자 입니다.',
+            val => val.length > 20 || '비밀번호는 최대 20자 입니다.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="lock" />
+          </template>
+        </q-input>
+        <q-input
+          filled
+          v-model="password2"
+          style="width: 400px;"
+          label="비밀번호 확인"
+          type="password"
+          lazy-rules
+          :rules="[
+            val =>
+              (this.password1 && this.password1.length > 0) ||
+              '비밀번호를 입력해주세요',
+            val => this.password1 === val || '비밀번호가 일치하지 않습니다.'
+          ]"
+        >
+          <template v-slot:before>
+            <q-icon name="lock" />
+          </template>
+        </q-input>
+      </div>
       <div class="justify-end flex">
         <q-btn
           label="초기화"
@@ -111,10 +166,10 @@
 
         <q-separator />
         <q-card-section class="row items-center">
-          <span class="text-h6"
-            >회원가입이 정상적으로 처리되었습니다. 관리자의 승인 이후
-            이용가능합니다.</span
-          >
+          <span class="text-h6">
+            회원가입이 정상적으로 처리되었습니다. 관리자의 승인
+            이후이용가능합니다.
+          </span>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -139,9 +194,11 @@ export default {
       teams: [],
       team: "",
       id: "",
-      email: "",
       username: "",
+      email: "",
       phone: "",
+      emailPrivate: "",
+      phonePrivate: "",
       password1: "",
       password2: "",
       confirm: false
@@ -156,11 +213,14 @@ export default {
       Vue.prototype.$axios
         .post("/users/signup/", {
           team: this.team,
-          name: this.id,
+          name: this.username,
+          username: this.id,
           email: this.email,
-          username: this.username,
           phone: this.phone,
-          password: this.password1
+          emailPrivate: this.emailPrivate,
+          phonePrivate: this.phonePrivate,
+          password1: this.password1,
+          password2: this.password2
         })
         .then(response => {
           if (response.status === 201 || response.status === 200) {
@@ -170,7 +230,6 @@ export default {
         .catch(e => {
           const res = e.response.data;
           const messages = res.message;
-
           this.$q.notify({
             type: "negative",
             message: messages

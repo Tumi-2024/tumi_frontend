@@ -3,26 +3,27 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="showInfoWindow"
+      :disable-heart="getMapZoom > 17"
       @showArea="showHideArea"
     />
+    {{ getMapZoom }}
     <!-- Google Map Starts -->
     <GmapMap
       @idle="idle"
-      @zoom_changed="zoomChanged"
+      @tilesloaded="tilesloaded"
       ref="mapRef"
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <template v-if="showInfoWindow">
+      <template v-if="getMapZoom > 13">
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
           :options="{ disableAutoPan: true }"
           :position="m.position"
-          :opened="showInfoWindow"
+          :opened="17 < getMapZoom"
         >
           <info-window-content
             @viewArea="viewArea(m)"
@@ -32,14 +33,36 @@
           />
         </gmap-info-window>
       </template>
+      <div :key="'d' + m.title" v-for="m in simple_houses">
+        <gmap-custom-marker
+          :marker="{ latitude: m.latitude, longitude: m.longitude }"
+        >
+          <div
+            v-if="getMapZoom <= 13"
+            class="bg-primary q-pa-md flex column justify-center items-center"
+            style="height: 120px; width: 120px; border-radius: 100%; opacity: 0.72;"
+          >
+            <span
+              class="flex text-white justify-center"
+              style="font-weight: 900; font-size: 18px;"
+            >
+              {{ m.title }}
+            </span>
+            <span
+              class="flex text-white justify-center q-mt-sm"
+              style="font-weight: 700; font-size: 15px;"
+            >
+              {{ m.count_redevelopment_area }}
+            </span>
+          </div>
+        </gmap-custom-marker>
+      </div>
 
       <!-- we generate badges for the Redevelopment Area -->
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template
-            v-if="!showInfoWindow && getMapZoom >= 14 && getMapZoom != 12"
-          >
+          <template v-if="14 <= getMapZoom && getMapZoom <= 17">
             <div
               class="area-badge-info notosanskr-medium"
               @click="selectArea(badge)"
@@ -96,7 +119,7 @@ export default {
     return {
       map: null,
       mapSize: { height: "", width: "" },
-      showInfoWindow: false
+      isShowCluster: true
     };
   },
   props: {
@@ -245,14 +268,14 @@ export default {
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
+    tilesloaded() {
+      const zoom = this.map.getZoom();
 
+      this.setMapZoom(zoom);
+      console.log("tilesloaded");
+    },
     onChangeRedev() {
       this.setViewRedevOnly();
-    },
-    zoomChanged() {
-      this.setLocationLoading(false);
-      this.getHouseInfo();
-      this.getRedevInfo();
     },
     async selectArea({ id }) {
       const result = await Vue.prototype.$axios.get(
@@ -262,10 +285,6 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
-      // this.changeMapCenter({
-      //   lat: this.map.getCenter().lat(),
-      //   lng: this.map.getCenter().lng()
-      // });
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -289,16 +308,12 @@ export default {
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
-      const zoomLevel = this.map.getZoom();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = { type: "subcity", ...location };
-      if (zoomLevel <= 17) {
-        this.showInfoWindow = false;
-      } else {
-        this.showInfoWindow = true;
+      if (this.getMapZoom > 17) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"
@@ -318,13 +333,11 @@ export default {
     viewArea(item) {
       this.map.panTo(item.position);
       this.map.addListener("idle", () => {
-        // this.changeMapZoom(18);
         console.log(item.position);
         const zoomLevel = this.map.getZoom();
         this.setMapZoom(zoomLevel);
         this.setMapCenter(item.position);
 
-        // this.changeMapCenter(item.position);
         this.$router.push({
           name:
             this.$route.path === "/map/city/area"
