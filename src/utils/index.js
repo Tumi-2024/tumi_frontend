@@ -237,22 +237,27 @@ export const toQueryString = params => {
 };
 
 export const toMoneyString = (val, add = 1) => {
-  val = parseInt(val);
+  if (val === null || val === undefined) {
+    return val;
+  }
+  const isNegative = val < 0;
+
+  val = parseInt(isNegative ? val * -1 : val);
   const uk = Math.floor((val * add) / 10000);
   const man = Math.floor(val * add - uk * 10000);
-  const price = `${uk > 0 ? `${uk.toLocaleString()}억 ` : ""}${
-    man > 0 ? ` ${man.toLocaleString()}만` : ""
+  const price = `${uk > 0 ? `${uk.toLocaleString()} 억` : ""}${
+    man > 0 ? ` ${man.toLocaleString()} 만` : ""
   }`;
-  return price;
+  return (isNegative ? "-" + price : price) + "원";
 };
 
 export const toOriginMoneyString = val => {
   const man = Math.floor(val / 10000);
   const chun = Math.floor(val - man * 10000);
-  const price = `${man > 0 ? `${man.toLocaleString()}만 ` : ""}${
+  const price = `${man > 0 ? `${man.toLocaleString()} 만 ` : ""}${
     chun > 0 ? ` ${chun.toLocaleString()}` : ""
   }`;
-  return price;
+  return price + "원";
 };
 
 export const toSimpleMoneyString = val => {

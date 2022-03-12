@@ -6,7 +6,7 @@
         :tags="getBadgeOptions"
       />
       <div class="row">
-        <div class="col-6 q-px-sm">
+        <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -19,11 +19,11 @@
               style="height: 16px"
             />
             <div class="price">
-              {{ toMoneyString(prices.initialInvestments) }}
+              {{ toMoneyString(prices.price_initial_investment) }}
             </div>
           </div>
         </div>
-        <div class="col-6 q-px-sm">
+        <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="col-6 q-px-sm">
+        <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -54,7 +54,7 @@
             <div class="price">{{ toMoneyString(prices.price_member) }}</div>
           </div>
         </div>
-        <div class="col-6 q-px-sm">
+        <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6 q-px-sm">
+        <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -86,23 +86,6 @@
             <div class="price">{{ toMoneyString(prices.price_total) }}</div>
           </div>
         </div>
-        <div class="col-6 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/coins.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md title">안전마진</div>
-            <q-separator
-              class="self-center q-mx-sm"
-              vertical
-              inset
-              style="height: 16px"
-            />
-            <div class="price">
-              {{ toMoneyString(prices.price_safety_margin) }}
-            </div>
-          </div>
-        </div>
         <div class="col-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
@@ -125,7 +108,7 @@
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
             </q-icon>
-            <div class="q-ml-md title">안전마진</div>
+            <div class="q-ml-md title">감정가</div>
             <q-separator
               class="self-center q-mx-sm"
               vertical
@@ -133,7 +116,7 @@
               style="height: 16px"
             />
             <div class="price">
-              {{ toMoneyString(prices.price_safety_margin) }}
+              {{ toMoneyString(prices.price_appraised) }}
             </div>
           </div>
         </div>
@@ -142,7 +125,22 @@
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
             </q-icon>
-            <div class="q-ml-md title">안전마진</div>
+            <div class="q-ml-md title">비례율</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">{{ prices.percentage_ratio }}%</div>
+          </div>
+        </div>
+        <div class="col-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">권리가</div>
             <q-separator
               class="self-center q-mx-sm"
               vertical
@@ -150,7 +148,7 @@
               style="height: 16px"
             />
             <div class="price">
-              {{ toMoneyString(prices.price_safety_margin) }}
+              {{ toMoneyString(prices.price_rights) }}
             </div>
           </div>
         </div>
@@ -227,9 +225,7 @@ export default {
       ];
     }
   },
-  mounted() {
-
-  }
+  mounted() {}
 };
 </script>
 

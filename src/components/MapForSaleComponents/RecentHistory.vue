@@ -178,7 +178,10 @@ export default {
     // TextUnderHighlight
   },
   props: {
-    item: Array
+    item: {
+      type: Array,
+      require: true
+    }
   },
   data() {
     return {
@@ -204,32 +207,32 @@ export default {
         {
           value: "COMMERCIAL ",
           label: "상업업무용",
-          disable: !this.item.some(obj => obj.category === "COMMERCIAL ")
+          disable: !this.item?.some(obj => obj.category === "COMMERCIAL ")
         },
         {
           value: "SINGLE",
           label: "단독다가구",
-          disable: !this.item.some(obj => obj.category === "SINGLE")
+          disable: this.item?.some(obj => obj.category === "SINGLE")
         },
         {
           value: "OFFICETEL",
           label: "오피스텔",
-          disable: !this.item.some(obj => obj.category === "OFFICETEL")
+          disable: this.item?.some(obj => obj.category === "OFFICETEL")
         },
         {
           value: "APARTMENT",
           label: "아파트",
-          disable: !this.item.some(obj => obj.category === "APARTMENT")
+          disable: this.item?.some(obj => obj.category === "APARTMENT")
         },
         {
           value: "LAND",
           label: "토지",
-          disable: !this.item.some(obj => obj.category === "LAND")
+          disable: this.item?.some(obj => obj.category === "LAND")
         },
         {
           value: "ALLIANCE",
           label: "연립/다세대",
-          disable: !this.item.some(obj => obj.category === "ALLIANCE")
+          disable: this.item?.some(obj => obj.category === "ALLIANCE")
         }
       ];
     },
@@ -296,7 +299,7 @@ export default {
       };
     },
     getTransactions() {
-      const results = this.item.filter(obj => {
+      const results = this.item?.filter(obj => {
         if (this.filterValue === "") {
           return true;
         }

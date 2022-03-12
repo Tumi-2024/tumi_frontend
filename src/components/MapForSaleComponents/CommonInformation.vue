@@ -21,9 +21,9 @@
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>{{
-            item.value
-          }}</span>
+          <span class="information sub flex items-center q-px-sm" v-else>
+            {{ item.value }}
+          </span>
         </div>
       </div>
     </q-card-section>
@@ -79,6 +79,7 @@ export default {
   word-break: break-all;
   &.sub {
     font-weight: 500;
+    word-break: keep-all;
   }
 }
 .heading-title {
