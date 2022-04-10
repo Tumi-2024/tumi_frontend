@@ -10,7 +10,7 @@
         option-value="id"
         map-options
         emit-value
-        :rules="[val => (val && val > 0) || '소속을 선택해주세요.']"
+        :rules="[(val) => (val && val > 0) || '소속을 선택해주세요.']"
       >
         <template v-slot:before>
           <q-icon name="groups" />
@@ -22,7 +22,7 @@
         label="사용자 이름"
         lazy-rules
         :rules="[
-          val => (val && val.length > 0) || '사용자 이름을 입력해주세요.'
+          (val) => (val && val.length > 0) || '사용자 이름을 입력해주세요.'
         ]"
       >
         <template v-slot:before>
@@ -34,11 +34,12 @@
           filled
           v-model="phone"
           label="업무용 휴대폰번호"
-          style="width: 400px;"
+          style="width: 400px"
           lazy-rules
           mask="###-####-####"
           :rules="[
-            val => (val && val.length > 0) || '업무용 전화번호를 입력해주세요.'
+            (val) =>
+              (val && val.length > 0) || '업무용 전화번호를 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -50,11 +51,11 @@
           filled
           v-model="email"
           label="업무용 이메일"
-          style="width: 400px;"
+          style="width: 400px"
           type="email"
           lazy-rules
           :rules="[
-            val => (val && val.length > 0) || '업무용 이메일을 입력해주세요.'
+            (val) => (val && val.length > 0) || '업무용 이메일을 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -68,11 +69,11 @@
           filled
           v-model="phonePrivate"
           label="개인 휴대폰번호"
-          style="width: 400px;"
+          style="width: 400px"
           lazy-rules
           mask="###-####-####"
           :rules="[
-            val => (val && val.length > 0) || '개인 전화번호를 입력해주세요.'
+            (val) => (val && val.length > 0) || '개인 전화번호를 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -84,11 +85,11 @@
           filled
           v-model="emailPrivate"
           label="개인 이메일"
-          style="width: 400px;"
+          style="width: 400px"
           type="email"
           lazy-rules
           :rules="[
-            val => (val && val.length > 0) || '개인 이메일을 입력해주세요.'
+            (val) => (val && val.length > 0) || '개인 이메일을 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -102,7 +103,7 @@
         v-model="id"
         label="아이디"
         lazy-rules
-        :rules="[val => (val && val.length > 0) || '아이디를 입력해주세요.']"
+        :rules="[(val) => (val && val.length > 0) || '아이디를 입력해주세요.']"
       >
         <template v-slot:before>
           <q-icon name="person" />
@@ -111,15 +112,15 @@
       <div class="flex row justify-between">
         <q-input
           filled
-          v-model="password1"
-          style="width: 400px;"
+          v-model="password"
+          style="width: 400px"
           label="비밀번호"
           lazy-rules
           type="password"
           :rules="[
-            val => (val && val.length > 0) || '비밀번호를 입력해주세요.',
-            val => val.length < 8 || '비밀번호는 최소 8자 입니다.',
-            val => val.length > 20 || '비밀번호는 최대 20자 입니다.'
+            (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
+            (val) => val.length > 8 || '비밀번호는 최소 8자 입니다.',
+            (val) => val.length < 20 || '비밀번호는 최대 20자 입니다.'
           ]"
         >
           <template v-slot:before>
@@ -129,15 +130,15 @@
         <q-input
           filled
           v-model="password2"
-          style="width: 400px;"
+          style="width: 400px"
           label="비밀번호 확인"
           type="password"
           lazy-rules
           :rules="[
-            val =>
-              (this.password1 && this.password1.length > 0) ||
+            (val) =>
+              (this.password && this.password.length > 0) ||
               '비밀번호를 입력해주세요',
-            val => this.password1 === val || '비밀번호가 일치하지 않습니다.'
+            (val) => this.password === val || '비밀번호가 일치하지 않습니다.'
           ]"
         >
           <template v-slot:before>
@@ -199,7 +200,7 @@ export default {
       phone: "",
       emailPrivate: "",
       phonePrivate: "",
-      password1: "",
+      password: "",
       password2: "",
       confirm: false
     };
@@ -219,15 +220,15 @@ export default {
           phone: this.phone,
           emailPrivate: this.emailPrivate,
           phonePrivate: this.phonePrivate,
-          password1: this.password1,
+          password: this.password,
           password2: this.password2
         })
-        .then(response => {
+        .then((response) => {
           if (response.status === 201 || response.status === 200) {
             this.confirm = true;
           }
         })
-        .catch(e => {
+        .catch((e) => {
           const res = e.response.data;
           const messages = res.message;
           this.$q.notify({
@@ -242,7 +243,7 @@ export default {
       this.email = null;
       this.username = null;
       this.phone = null;
-      this.password1 = null;
+      this.password = null;
       this.password2 = null;
     }
   }

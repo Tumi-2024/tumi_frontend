@@ -14,22 +14,23 @@
         </div>
         <div class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg">
           <q-select
+            ref="keywordRef"
             filled
             label="검색"
-            :value="searchText"
+            v-model="searchText"
             @input="onSelect"
+            :input-debounce="100"
             use-input
             fill-input
             hide-selected
+            clearable
             :options="options"
             @filter="filterFn"
             style="width: 250px"
           >
             <template v-slot:no-option>
               <q-item>
-                <q-item-section class="text-grey">
-                  No results
-                </q-item-section>
+                <q-item-section class="text-grey"> No results </q-item-section>
               </q-item>
             </template>
           </q-select>
@@ -63,7 +64,7 @@
 import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -77,7 +78,7 @@ export default {
   data() {
     return {
       searchText: "",
-      options: [],
+      options: null,
       filters: [
         {
           label: "주택유형",
@@ -126,12 +127,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeMapCenter",
+      "changeToolbarTitle"
+    ]),
     onSelect(obj) {
-      this.searchText = obj;
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
     },
     async filterFn(val, update, abort) {
+      console.log(val);
       if (val === "") {
         update(() => {
           this.options = [];

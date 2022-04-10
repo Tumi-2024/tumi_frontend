@@ -4,7 +4,7 @@ import Vue from "vue";
 const initState = {
   isMapLoaded: true,
   mode: "default",
-  mapZoom: 13,
+  mapZoom: 12,
   mapCenter: {
     lat: 37.547,
     lng: 126.997
@@ -25,25 +25,27 @@ const initState = {
   interest: [],
   isInterest: false,
   locationLoading: false,
+  areaType: null,
   isCone: true
 };
 export const mapStore = {
   namespaced: true,
   state: { ...initState },
   getters: {
-    getMapMode: state => state.mode,
-    getMapZoom: state => state.mapZoom,
-    getMapCenter: state => state.mapCenter,
-    getMapOptions: state => state.mapOptions,
-    getToolbarLabel: state => {
+    getMapMode: (state) => state.mode,
+    getMapZoom: (state) => state.mapZoom,
+    getMapCenter: (state) => state.mapCenter,
+    getMapOptions: (state) => state.mapOptions,
+    getToolbarLabel: (state) => {
       // you lookint at | information viewing
       return state.mode !== "default"
         ? "지금 보고있는 정보"
         : "지금 보고있는 지역";
     },
-    getToolbarTitle: state => state.toolbarTitle,
-    getIsCone: state => state.isCone,
-    myInterestArea: state => state.interest
+    getToolbarTitle: (state) => state.toolbarTitle,
+    getIsCone: (state) => state.isCone,
+    getAreaType: (state) => state.areaType,
+    myInterestArea: (state) => state.interest
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
@@ -55,20 +57,22 @@ export const mapStore = {
     setInterest: (state, payload) => (state.interest = payload),
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
-    setIsCone: (state, payload) => (state.isCone = payload),
+    setAreaType: (state, payload) => (state.areaType = payload),
+    // setIsCone: (state, payload) => (state.isCone = payload),
     removeLocationInterest: (state, payload) => {
-      const index = state.interest.findIndex(area => area.id === payload);
+      const index = state.interest.findIndex((area) => area.id === payload);
       state.interest.splice(index, 1);
     }
   },
   actions: {
+    setAreaType: (context, payload) => context.commit("setAreaType", payload),
     setMapCenter: (context, payload) => context.commit("setMapCenter", payload),
     setMapZoom: (context, payload) => context.commit("setMapZoom", payload),
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
     setIsCone: (context, payload) => context.commit("setIsCone", payload),
     setLocationLoading: (context, payload) =>
       context.commit("setLocationLoading", payload),
-    resetMap: context => {
+    resetMap: (context) => {
       context.commit("setMapMode", initState.mode);
       context.commit("setMapZoom", initState.mapZoom);
       context.commit("setMapCenter", initState.mapCenter);
@@ -103,7 +107,7 @@ export const mapStore = {
             longitude: data.lng
           })
         )
-        .then(result => {
+        .then((result) => {
           const string = result.data.address.split(" ");
           context.commit("setMapAddress", `${string[1]} ${string[2]}`);
           context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
@@ -120,7 +124,7 @@ export const mapStore = {
           // context.commit("");
           // data.lat, longitude: data.lng
         })
-        .catch(thrown => {
+        .catch((thrown) => {
           if (Vue.prototype.$axios.isCancel(thrown)) {
           }
         });
@@ -128,7 +132,7 @@ export const mapStore = {
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
     changeToolbarTitle: (context, data) =>
       context.commit("setToolbarTitle", data),
-    addInterestLocation: context => {
+    addInterestLocation: (context) => {
       if (!context.state.isInterest) {
         Vue.prototype.$axios
           .post(
@@ -138,7 +142,7 @@ export const mapStore = {
               longitude: context.state.mapCenter.lng
             })
           )
-          .then(result => {
+          .then((result) => {
             context.commit(
               "setInterest",
               context.state.interest.concat(result.data.subcity)
@@ -154,7 +158,7 @@ export const mapStore = {
               longitude: context.state.mapCenter.lng
             })
           )
-          .then(result => {
+          .then((result) => {
             context.commit("setIsInterest", false);
           });
       }
@@ -162,11 +166,11 @@ export const mapStore = {
     removeLocationInterest: (context, payload) => {
       Vue.prototype.$axios
         .delete(`redevelopment_areas/${payload}/interest/`)
-        .then(result => {
+        .then((result) => {
           context.commit("removeLocationInterest", payload);
         });
     },
-    fetchLocationInterest: async context => {
+    fetchLocationInterest: async (context) => {
       try {
         const response = await Vue.prototype.$axios.get(
           `/redevelopment_areas/interests/`

@@ -1,9 +1,23 @@
 <template>
   <div>
     <div class="row q-mt-md q-col-gutter-sm">
-      <div class="col">
+      <div class="items-center">
         <p class="title1">"주택유형별" 매물 찾기</p>
       </div>
+      <q-radio
+        style="margin-left: 10px; margin-bottom: 12px"
+        dense
+        v-model="shape"
+        val="house"
+        label="매물"
+      />
+      <q-radio
+        style="margin-bottom: 12px"
+        dense
+        v-model="shape"
+        val="transaction"
+        label="실거래가"
+      />
     </div>
 
     <div class="row q-mt-sm q-col-gutter-sm">
@@ -15,14 +29,10 @@
         <q-btn
           flat
           class="investment-btn full-width"
-          :to="{ name: 'map_city', query: { category: item.category } }"
+          @click="() => onClick(item)"
         >
           <q-icon class="investment-btn-icon">
-            <img
-              :src="require(`assets/iconsNew/${item.icon}`)"
-              width="24px"
-              alt=""
-            />
+            <img :src="item.icon" width="24px" alt="" />
           </q-icon>
           <p class="investment-btn-label">{{ item.label }}</p>
         </q-btn>
@@ -32,53 +42,74 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
+      shape: "house",
       investments_btn: [
         {
-          category: "apartment",
+          icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          icon: "11.png"
+          valueTransaction: "APARTMENT",
+          valueHouse: "아파트"
         },
         {
-          category: "alliance",
+          icon: require("assets/iconsNew/12.png"),
           label: "연립/다세대",
-          icon: "12.png"
+          valueTransaction: "ALLIANCE",
+          valueHouse: "연립ￜ다세대"
         },
         {
-          category: "single",
+          icon: require("assets/iconsNew/13.png"),
           label: "단독/다가구",
-          icon: "13.png"
+          valueTransaction: "SINGLE",
+          valueHouse: "단독ￜ다가구"
         },
         {
-          category: "officetel",
-          label: "원룸/ 오피스텔",
-          icon: "14.png"
+          icon: require("assets/iconsNew/14.png"),
+          label: "원룸/오피스텔",
+          valueTransaction: "OFFICETEL",
+          valueHouse: "오피스텔"
         },
-
         {
-          category: "commercial",
+          icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
-          icon: "16.png"
+          valueTransaction: "COMMERCIAL",
+          valueHouse: "상업ￜ업무용"
         },
         {
-          category: "land",
+          icon: require("assets/iconsNew/15.png"),
           label: "토지",
-          icon: "15.png"
+          valueTransaction: "LAND",
+          valueHouse: "토지"
         },
         {
-          category: "",
+          icon: require("assets/iconsNew/17.png"),
           label: "무허가 건축물",
-          icon: "17.png"
+          valueTransaction: "noname01",
+          valueHouse: "무허가 건축물"
         },
         {
-          category: "",
+          icon: require("assets/iconsNew/18.png"),
           label: "입주권",
-          icon: "18.png"
+          valueTransaction: "noname02",
+          valueHouse: "입주권"
         }
       ]
     };
+  },
+  methods: {
+    ...mapActions("searchQuery", ["setState"]),
+    onClick(item) {
+      this.setState({ key: "categories", data: [item] });
+
+      // :to="{
+      //       name: shape === 'house' ? 'map_city' : 'map_city_area',
+      //       query: { category: item.category }
+      //     }"
+    }
   }
 };
 </script>

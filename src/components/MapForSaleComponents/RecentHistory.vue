@@ -1,15 +1,13 @@
 <template>
   <q-card class="bg-white notosanskr-medium">
     <q-card-section class="row q-pb-none justify-between">
-      <div class="title-heading col-6">
-        실거래가 히스토리
-      </div>
+      <div class="title-heading col-6">실거래가 히스토리</div>
     </q-card-section>
     <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
       <div class="flex justify-end">
         <q-select
-          style="min-width: 120px;"
+          style="min-width: 120px"
           :dense="true"
           v-model="filterValue"
           emit-value
@@ -21,7 +19,7 @@
       <q-tabs
         v-model="activeTab"
         dense
-        class="text-grey  q-mt-lg"
+        class="text-grey q-mt-lg"
         active-color="primary"
         indicator-color="primary"
         align="justify"
@@ -36,20 +34,39 @@
       <q-separator />
       <div
         class="flex justify-end items-center"
-        style="margin-top: 20px; margin-bottom: 8px;"
+        style="margin-top: 20px; margin-bottom: 8px"
       >
         <div
-          style="background-color: #FF5100; width: 12px; height: 8px; opacity: 0.2; border-radius: 2px;"
+          style="
+            background-color: #ff5100;
+            width: 12px;
+            height: 8px;
+            opacity: 0.2;
+            border-radius: 2px;
+          "
         />
-        <div style="margin-left:5px">매매</div>
+        <div style="margin-left: 5px">매매</div>
         <div
-          style="background-color: #00A4AA; width: 12px; height: 8px; margin-left:7px; opacity: 0.2; border-radius: 2px;"
+          style="
+            background-color: #00a4aa;
+            width: 12px;
+            height: 8px;
+            margin-left: 7px;
+            opacity: 0.2;
+            border-radius: 2px;
+          "
         />
-        <div style="margin-left:5px">전세</div>
+        <div style="margin-left: 5px">전세</div>
         <div
-          style="border: 1px solid #D5D5D5; width: 12px; height: 8px; margin-left:7px; border-radius: 2px;"
+          style="
+            border: 1px solid #d5d5d5;
+            width: 12px;
+            height: 8px;
+            margin-left: 7px;
+            border-radius: 2px;
+          "
         />
-        <div style="margin-left:5px">월세</div>
+        <div style="margin-left: 5px">월세</div>
       </div>
       <q-tab-panels v-model="activeTab" animated>
         <q-tab-panel
@@ -58,42 +75,33 @@
           :key="tab.level"
           :name="tab.level"
         >
-          <q-list separator style="border-top: 1px solid #1A1A1A;">
-            <q-item class="item ">
-              <div class="flex justify-center" style="flex: 20 0;">
-                계약일
-              </div>
-              <div class="flex justify-center" style="flex: 15 0;">
-                주택유형
-              </div>
-              <div class="flex justify-center" style="flex: 15 0;">
-                거래유형
-              </div>
+          <q-list separator style="border-top: 1px solid #1a1a1a">
+            <q-item class="item">
+              <div class="flex justify-center" style="flex: 20 0">계약일</div>
+              <div class="flex justify-center" style="flex: 15 0">주택유형</div>
+              <div class="flex justify-center" style="flex: 15 0">거래유형</div>
 
-              <div class="flex" style="flex: 25 0; margin-left: 10px;">
+              <div class="flex" style="flex: 25 0; margin-left: 10px">
                 번지/건물단지명
               </div>
-              <div class="flex justify-center" style="flex: 15 0;">
-                층수
+              <div class="flex justify-center" style="flex: 15 0">층수</div>
+              <div style="flex: 15 0" class="justify-center flex">
+                <q-select
+                  style="width: 90%"
+                  item-aligned
+                  dense
+                  v-model="select"
+                  :options="getSelectOptions"
+                  :option-value="(item) => (item === null ? null : item.label)"
+                />
               </div>
-              <q-select
-                class="flex justify-center"
-                style="flex: 15 0;"
-                item-aligned
-                :dense="true"
-                v-model="select"
-                :options="getSelectOptions"
-                :option-value="item => (item === null ? null : item.label)"
-              />
-              <div class="flex justify-center" style="flex: 20 0;">
-                거래가격
-              </div>
-              <div class="flex justify-center" style="flex: 20 0;">
+              <div class="flex justify-center" style="flex: 20 0">거래가격</div>
+              <div class="flex justify-center" style="flex: 20 0">
                 면적당 가격
               </div>
             </q-item>
             <q-virtual-scroll
-              style="min-height: 220px; max-height: 500px;"
+              style="min-height: 220px; max-height: 500px"
               :items="getTransactions"
               :virtual-scroll-slice-size="100"
               separator
@@ -109,24 +117,24 @@
                   :key="index"
                 >
                   <!-- 계약일 -->
-                  <div class="flex justify-center" style="flex: 20 0;">
+                  <div class="flex justify-center" style="flex: 20 0">
                     {{
                       item.text_month.slice(0, 4) +
-                        "." +
-                        item.text_month.slice(4, 6) +
-                        "." +
-                        (item.text_day.length === 1
-                          ? "0" + item.text_day
-                          : item.text_day)
+                      "." +
+                      item.text_month.slice(4, 6) +
+                      "." +
+                      (item.text_day.length === 1
+                        ? "0" + item.text_day
+                        : item.text_day)
                     }}
                   </div>
                   <!-- 주택 유형 -->
-                  <div class="flex justify-center" style="flex: 15 0;">
+                  <div class="flex justify-center" style="flex: 15 0">
                     {{ getHouseType(item.category) }}
                   </div>
                   <!-- 거래 유형 -->
                   <div
-                    style="flex: 15 0;"
+                    style="flex: 15 0"
                     class="flex justify-center text-weight-medium"
                     :style="{
                       color: isSale(item)
@@ -134,32 +142,31 @@
                         : 'rgba(0, 164, 170)'
                     }"
                   >
-                    {{ tabs.find(tab => tab.level === item.type).label }}
+                    {{ tabs.find((tab) => tab.level === item.type).label }}
                   </div>
 
                   <!-- 번지/ 건물단지 명 -->
-                  <div class="flex" style="flex: 25 0;">
-                    <span style="display: inline-flex; margin-left: 10px;">
+                  <div class="flex" style="flex: 25 0">
+                    <span style="display: inline-flex; margin-left: 10px">
                       {{ `${item.text_road || ""}` }}
                     </span>
-                    <span style="display: inline-flex;">
+                    <span style="display: inline-flex">
                       {{ `${item.text_danji || ""}` }}
                     </span>
                   </div>
-                  <div class="flex justify-center" style="flex: 15 0;">
+                  <div class="flex justify-center" style="flex: 15 0">
                     {{ (item.text_floor || "").replace(/null/i, "-") }}층
                   </div>
                   <!-- 면적 -->
-                  <div class="flex justify-center" style="flex: 15 0;">
+                  <div class="flex justify-center" style="flex: 15 0">
                     {{ getItemSize(item, select) }}
                   </div>
                   <!-- 거래가격 -->
-                  <div class="flex justify-center" style="flex: 20 0;">
+                  <div class="flex justify-center" style="flex: 20 0">
                     {{ toMoneyString(item.price || item.price_deposit) }}
                   </div>
-                  <div class="flex justify-center" style="flex: 20 0;">
-                    {{ toMoneyString(item.price) }}
-                    {{ toMoneyString(item.price_deposit) }}
+                  <div class="flex justify-center" style="flex: 20 0">
+                    {{ toMoneyString(item.price / getItemSize(item, select)) }}
                   </div>
                 </q-item>
               </template>
@@ -207,32 +214,32 @@ export default {
         {
           value: "COMMERCIAL ",
           label: "상업업무용",
-          disable: !this.item?.some(obj => obj.category === "COMMERCIAL ")
+          disable: !this.item?.some((obj) => obj.category === "COMMERCIAL ")
         },
         {
           value: "SINGLE",
           label: "단독다가구",
-          disable: this.item?.some(obj => obj.category === "SINGLE")
+          disable: this.item?.some((obj) => obj.category === "SINGLE")
         },
         {
           value: "OFFICETEL",
           label: "오피스텔",
-          disable: this.item?.some(obj => obj.category === "OFFICETEL")
+          disable: this.item?.some((obj) => obj.category === "OFFICETEL")
         },
         {
           value: "APARTMENT",
           label: "아파트",
-          disable: this.item?.some(obj => obj.category === "APARTMENT")
+          disable: this.item?.some((obj) => obj.category === "APARTMENT")
         },
         {
           value: "LAND",
           label: "토지",
-          disable: this.item?.some(obj => obj.category === "LAND")
+          disable: this.item?.some((obj) => obj.category === "LAND")
         },
         {
           value: "ALLIANCE",
           label: "연립/다세대",
-          disable: this.item?.some(obj => obj.category === "ALLIANCE")
+          disable: this.item?.some((obj) => obj.category === "ALLIANCE")
         }
       ];
     },
@@ -283,7 +290,7 @@ export default {
       ];
     },
     getHouseType() {
-      return value => {
+      return (value) => {
         const newVal = [
           { label: "아파트", value: "APARTMENT" },
           { label: "오피스텔", value: "OFFICETEL" },
@@ -292,14 +299,14 @@ export default {
           { label: "연립/다세대", value: "ALLIANCE" },
           { label: "단독/다가구", value: "SINGLE" },
           { label: "토지", value: "LAND" }
-        ].filter(item => {
+        ].filter((item) => {
           return item.value === value;
         });
         return newVal[0].label;
       };
     },
     getTransactions() {
-      const results = this.item?.filter(obj => {
+      const results = this.item?.filter((obj) => {
         if (this.filterValue === "") {
           return true;
         }
@@ -309,13 +316,15 @@ export default {
       if (this.activeTab === "all") {
         return results;
       }
-      return results.filter(transaction => transaction.type === this.activeTab);
+      return results.filter(
+        (transaction) => transaction.type === this.activeTab
+      );
     },
     isRent() {
-      return item => item.type === this.tabs[2].level;
+      return (item) => item.type === this.tabs[2].level;
     },
     isSale() {
-      return item => item.type === this.tabs[1].level;
+      return (item) => item.type === this.tabs[1].level;
     }
   },
   methods: {

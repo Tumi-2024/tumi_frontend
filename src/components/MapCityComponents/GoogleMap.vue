@@ -32,24 +32,29 @@
           />
         </gmap-info-window>
       </template>
-      <div :key="'d' + m.title" v-for="m in simple_houses">
+      <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
         <gmap-custom-marker
           :marker="{ latitude: m.latitude, longitude: m.longitude }"
         >
           <div
             v-if="getMapZoom <= 13"
             class="bg-primary q-pa-md flex column justify-center items-center"
-            style="height: 120px; width: 120px; border-radius: 100%; opacity: 0.72;"
+            style="
+              height: 120px;
+              width: 120px;
+              border-radius: 100%;
+              opacity: 0.72;
+            "
           >
             <span
               class="flex text-white justify-center"
-              style="font-weight: 900; font-size: 18px;"
+              style="font-weight: 900; font-size: 18px"
             >
               {{ m.title }}
             </span>
             <span
               class="flex text-white justify-center q-mt-sm"
-              style="font-weight: 700; font-size: 15px;"
+              style="font-weight: 700; font-size: 15px"
             >
               {{ m.count_redevelopment_area }}
             </span>
@@ -75,11 +80,21 @@
               </q-icon>
               <div
                 v-else
-                style="border-radius: 2px; background-color: white; color: black; margin-right: 5px;"
+                style="
+                  border-radius: 2px;
+                  background-color: white;
+                  color: black;
+                  margin-right: 5px;
+                "
                 class="items-center justify-center flex"
               >
                 <span
-                  style="font-size: 13px; line-height: 13px; color: #333333; padding: 3px 5px;"
+                  style="
+                    font-size: 13px;
+                    line-height: 13px;
+                    color: #333333;
+                    padding: 3px 5px;
+                  "
                 >
                   {{ badge.count_estates_filtered }}
                 </span>
@@ -137,14 +152,14 @@ export default {
       "getMapZoom",
       "getMapCenter",
       "getMapOptions",
-      "getIsCone"
+      "getAreaType"
     ]),
     ...mapGetters("area", ["getMapAreas"]),
     ...mapGetters(["getUserLocation"]),
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
     getType() {
-      return m => {
+      return (m) => {
         const value = m.types || m?.group_building_house?.type_house;
         if (!Array.isArray(value)) {
           return value;
@@ -161,7 +176,7 @@ export default {
       };
     },
     getCategoryLabel() {
-      return value => {
+      return (value) => {
         if (!Array.isArray(value)) {
           return value;
         }
@@ -179,7 +194,7 @@ export default {
       };
     },
     getPriceFromText() {
-      return obj => {
+      return (obj) => {
         if (obj.recent_transactions) {
           const string = obj.recent_transactions[obj.types[0]].text_price;
           return string ? Number(string.replace(",", "")) : 0;
@@ -189,7 +204,7 @@ export default {
       };
     },
     getAreaBadges() {
-      return this.getMapAreas.map(obj => {
+      return this.getMapAreas.map((obj) => {
         const {
           status,
           category,
@@ -202,27 +217,27 @@ export default {
           stroke: "#FF5100",
           fill: ""
         };
-        const getStrokeColor = opt => {
+        const getStrokeColor = (opt) => {
           switch (opt) {
             case "가로주택":
-              colors = { stroke: "#52c41a", fill: "#52c41a" };
+              colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
               break;
             case "재건축":
-              colors = { stroke: "#2196f3", fill: "#2196f3" };
+              colors = { ...colors, stroke: "#2196f3", fill: "#2196f3" };
               break;
             default:
-              colors = { stroke: "#ff9800", fill: "#ff9800" };
+              colors = { ...colors, stroke: "#ff9800", fill: "#ff9800" };
           }
         };
         getStrokeColor(category);
         const isStop = status !== "운영";
         if (isStop) {
-          colors = { stroke: "#757575", fill: "#757575" };
+          colors = { ...colors, fill: "#757575" };
         }
         return {
           center: { lat: Number(latitude), lng: Number(longitude) },
           title: obj.title,
-          path: redevAreaLocation.map(obj => {
+          path: redevAreaLocation.map((obj) => {
             return { lat: Number(obj.lat), lng: Number(obj.lng) };
           }),
           count_houses: obj.count_houses,
@@ -301,7 +316,28 @@ export default {
         ]
       };
 
-      const rangeQuery = `latitude__range=${boundLocation.latitude[0]},${boundLocation.latitude[1]}&longitude__range=${boundLocation.longitude[0]},${boundLocation.longitude[1]}`;
+      const getAreaTypeString = () => {
+        switch (this.getAreaType) {
+          case "off":
+            return "";
+          case null:
+            return "";
+          case "재개발":
+            return "category=재개발";
+          case "재건축":
+            return "category=재건축";
+          case "가로주택":
+            return "category=가로주택";
+          default:
+            return null;
+        }
+      };
+
+      const rangeQuery = `${getAreaTypeString()}&latitude__range=${
+        boundLocation.latitude[0]
+      },${boundLocation.latitude[1]}&longitude__range=${
+        boundLocation.longitude[0]
+      },${boundLocation.longitude[1]}`;
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
@@ -355,14 +391,15 @@ export default {
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })
-        .then(position => {
+        .then((position) => {
           const { latitude: lat, longitude: lng } = position.coords;
           this.changeUserLocation({ lat, lng });
         })
-        .catch(e => {});
+        .catch((e) => {});
     },
     async showHideArea() {
       this.getHouseInfo();
+      this.getRedevInfo();
     },
     markUsersLocation(position = { lat: 0, lng: 0 }) {
       (() =>

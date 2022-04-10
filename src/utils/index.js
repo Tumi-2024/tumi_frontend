@@ -76,11 +76,11 @@ const KR_DICTIONARY = {
   "north-east": "북동"
 };
 
-export const toKr = val => {
+export const toKr = (val) => {
   return KR_DICTIONARY[val];
 };
 
-export const toQueryString = params => {
+export const toQueryString = (params) => {
   const condition = [];
 
   if (params.latitude) {
@@ -237,21 +237,24 @@ export const toQueryString = params => {
 };
 
 export const toMoneyString = (val, add = 1) => {
-  if (val === null || val === undefined) {
-    return val;
+  if (val === 0 || val === Infinity || Number.isNaN(val)) {
+    return "";
   }
+  // if (val === null || val === undefined) {
+  //   return val;
+  // }
   const isNegative = val < 0;
 
   val = parseInt(isNegative ? val * -1 : val);
   const uk = Math.floor((val * add) / 10000);
   const man = Math.floor(val * add - uk * 10000);
   const price = `${uk > 0 ? `${uk.toLocaleString()} 억` : ""}${
-    man > 0 ? ` ${man.toLocaleString()} 만` : ""
+    man > 0 ? `${man.toLocaleString()} 만` : ""
   }`;
   return (isNegative ? "-" + price : price) + "원";
 };
 
-export const toOriginMoneyString = val => {
+export const toOriginMoneyString = (val) => {
   const man = Math.floor(val / 10000);
   const chun = Math.floor(val - man * 10000);
   const price = `${man > 0 ? `${man.toLocaleString()} 만 ` : ""}${
@@ -260,23 +263,20 @@ export const toOriginMoneyString = val => {
   return price + "원";
 };
 
-export const toSimpleMoneyString = val => {
+export const toSimpleMoneyString = (val) => {
   val = parseInt(val);
   const uk = Math.floor(val / 1000);
   const price = `${uk / 10}억 `;
   return price;
 };
 
-const pad = val => {
+const pad = (val) => {
   return val < 10 ? "0" + val : val;
 };
 
-export const toDateFormat = val => {
+export const toDateFormat = (val) => {
   val = new Date(val);
-  const year = val
-    .getFullYear()
-    .toString()
-    .slice(-2);
+  const year = val.getFullYear().toString().slice(-2);
   const month = pad(val.getMonth() + 1);
   const day = pad(val.getDate());
   return `${year}.${month}.${day}`;

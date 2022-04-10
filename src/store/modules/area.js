@@ -8,10 +8,10 @@ export const areaStore = {
   namespaced: true,
   state: { ...initState },
   getters: {
-    getMapAreas: state => {
+    getMapAreas: (state) => {
       return state.areas;
     },
-    getMapSelectedArea: state => {
+    getMapSelectedArea: (state) => {
       return state.selectedArea;
     }
   },
@@ -26,22 +26,19 @@ export const areaStore = {
       try {
         const getQueryString2 =
           context.rootGetters["searchQuery/getQueryString2"];
-
         const areaType = getQueryString2("areaType", "value");
         const areas = getQueryString2("areas", "value");
         const users = getQueryString2("users", "");
 
-        console.log(areaType, areas);
-
         const getInitPrices = () => {
           const arrInitPrice = getQueryString2("initPrices", "value");
-          console.log(arrInitPrice, arrInitPrice[1] === 999999);
           if (arrInitPrice[0] === 0 && arrInitPrice[1] === 999999) {
             return undefined;
           } else {
             return arrInitPrice;
           }
         };
+        console.log(getQueryString2("categories", "valueHouse"));
         const query = Vue.prototype.$qs.stringify(
           {
             type_house__in: getQueryString2("categories", "valueHouse"),
@@ -52,10 +49,8 @@ export const areaStore = {
           },
           { arrayFormat: "comma" }
         );
-        console.log(query);
         const url = `/redevelopment_areas/?${payload}&${query}&page_size=1000`;
         const { data } = await Vue.prototype.$axios.get(url);
-        console.log(data);
         context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", markersArea);
@@ -65,7 +60,7 @@ export const areaStore = {
       }
       // context.commit("setMapAreas", data);
     },
-    interestSelectedArea: async context => {
+    interestSelectedArea: async (context) => {
       try {
         const area = context.state.selectedArea;
 
@@ -82,7 +77,7 @@ export const areaStore = {
         context.state.selectedArea.interest.redevelopment_area = true;
       } catch (error) {}
     },
-    uninterestSelectedArea: async context => {
+    uninterestSelectedArea: async (context) => {
       try {
         const id = context.state.selectedArea.id;
         await Vue.prototype.$axios.delete(

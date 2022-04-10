@@ -12,47 +12,53 @@ export const insightsStore = {
   },
   getters: {
     estateInsights: (state, getters) => {
-      return state.estateResults
+      return state.estateResults;
     },
     policyInsights: (state, getters) => {
-      return state.policyResults
+      return state.policyResults;
     },
     marketInsights: (state, getters) => {
-      return state.marketResults
+      return state.marketResults;
     },
     allInsights: (state) => {
       return state.estateResults.concat(
         state.policyResults,
         state.marketResults
-      )
+      );
     }
   },
   mutations: {
     setEstateResponse: function (state, payload) {
-      state.estateResponse = payload
-      state.estateResults = state.estateResults.concat(payload.results)
+      state.estateResponse = payload;
+      state.estateResults = state.estateResults.concat(payload.results);
     },
     setPolicyResponse: function (state, payload) {
-      state.policyResponse = payload
-      state.policyResults = state.policyResults.concat(payload.results)
+      state.policyResponse = payload;
+      state.policyResults = state.policyResults.concat(payload.results);
     },
     setMarketResponse: function (state, payload) {
-      state.marketResponse = payload
-      state.marketResults = state.marketResults.concat(payload.results)
+      state.marketResponse = payload;
+      state.marketResults = state.marketResults.concat(payload.results);
     }
   },
   actions: {
     getEstate: async function (context) {
-      const { data } = await Vue.prototype.$axios.get('/insights?category=부동산팁')
-      context.commit('setEstateResponse', data)
+      const { data } = await Vue.prototype.$axios.get(
+        "/insights?category=부동산팁"
+      );
+      context.commit("setEstateResponse", data);
     },
     getPolicy: async function (context) {
-      const { data } = await Vue.prototype.$axios.get('/insights?category=정책분석')
-      context.commit('setPolicyResponse', data)
+      const { data } = await Vue.prototype.$axios.get(
+        "/insights?category=정책분석"
+      );
+      context.commit("setPolicyResponse", data);
     },
     getMarket: async function (context) {
-      const { data } = await Vue.prototype.$axios.get('/insights?category=시장전망')
-      context.commit('setMarketResponse', data)
+      const { data } = await Vue.prototype.$axios.get(
+        "/insights?category=시장전망"
+      );
+      context.commit("setMarketResponse", data);
     }
   }
-}
+};

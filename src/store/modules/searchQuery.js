@@ -62,7 +62,7 @@ export const searchQueryStore = {
       return (key, contentKey) => {
         let query = "";
         if (Array.isArray(state.query[key])) {
-          query = state.query[key].map(obj => {
+          query = state.query[key].map((obj) => {
             if (typeof obj === "number") {
               return obj;
             }
@@ -77,9 +77,9 @@ export const searchQueryStore = {
     getQueryString: (state, getters) => {
       return (key, altkey, contentKey) => {
         // https://admin.tumi.sunwook.com/api/houses/?type_house__in=아파트,연립ￜ다세대
-
+        console.log(state.query[key]);
         const query = state.query[key]
-          .map(obj => {
+          .map((obj) => {
             return obj[contentKey];
           })
           .join(",");
@@ -89,7 +89,7 @@ export const searchQueryStore = {
         return "";
       };
     },
-    getOption: (state, getters) => key => {
+    getOption: (state, getters) => (key) => {
       return state.query[key];
     }
   },
@@ -97,6 +97,7 @@ export const searchQueryStore = {
     SET_QUERY: (state, { key, data }) => {
       const keyObj = state.query[key];
       if (keyObj) {
+        console.log(data);
         state.query[key] = data;
       } else {
         state.query[key].push(data);
@@ -107,12 +108,15 @@ export const searchQueryStore = {
     }
   },
   actions: {
+    setState: (context, data) => {
+      context.commit("SET_QUERY", data);
+    },
     setQuery: (context, data) => {
       const lat = context.rootState.estate.latitude;
       const long = context.rootState.estate.longitude;
       const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}`;
       if (Array.isArray(data)) {
-        data.forEach(obj => {
+        data.forEach((obj) => {
           context.commit("SET_QUERY", obj);
         });
       } else {

@@ -89,7 +89,7 @@
       :active="activeSchoolTab"
     />
 
-    <recent-pricing
+    <!-- <recent-pricing
       class="q-mt-md"
       :salePrice="salePrice"
       :charter="charter"
@@ -97,10 +97,10 @@
       :areaOptions="areaOptions"
       show-units
       :unit="unit"
-    />
+    /> -->
     <recent-history class="q-mt-md" :item="transactions" />
     <recent-average-history
-      class="q-mt-md"
+      class="q-my-md"
       v-if="graphData.length > 0"
       :areaOptions="areaOptions"
       :graph="graphData"
@@ -129,7 +129,7 @@ import {
   RedevelopmentInformation,
   AdministrationCost,
   SchoolSection,
-  RecentPricing,
+  // RecentPricing,
   RecentHistory,
   RecentAverageHistory,
   CommonInformation
@@ -143,7 +143,7 @@ export default {
     RedevelopmentInformation,
     AdministrationCost,
     SchoolSection,
-    RecentPricing,
+    // RecentPricing,
     RecentHistory,
     RecentAverageHistory,
     "google-map": GoogleMap
@@ -171,21 +171,21 @@ export default {
     toKr,
     toMoneyString,
     makePolygon(area) {
-      this.redevelopmentArea = area.redevelopment_area_locations.map(obj => {
+      this.redevelopmentArea = area.redevelopment_area_locations.map((obj) => {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
       });
     },
     getGraphData() {
       const graphData = (type, yyyyMM) =>
         this.transactions
-          .filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
+          .filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
           .reduce((acc, curr) => {
             if (type) {
               return acc + curr.price;
             }
             return acc;
           }, 0) /
-        this.transactions.filter(obj => obj.text_month.indexOf(yyyyMM) === 0)
+        this.transactions.filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
           .length;
       this.graphData = [
         { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
@@ -250,8 +250,8 @@ export default {
         {
           // Right
           label: "해당면적 세대수",
-          value: this.estate.group_individual_household
-            .count_household_same_area,
+          value:
+            this.estate.group_individual_household.count_household_same_area,
           icon: ["building-area.svg"]
         },
         {
@@ -265,10 +265,8 @@ export default {
       ];
     },
     getLocationOptions() {
-      const {
-        group_building_house: houseInfo,
-        group_location: houseInfo2
-      } = this.estate;
+      const { group_building_house: houseInfo, group_location: houseInfo2 } =
+        this.estate;
       return [
         {
           label: "시/도",

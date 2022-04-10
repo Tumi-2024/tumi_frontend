@@ -1,5 +1,5 @@
 <template>
-  <div class="row flex justify-between" style="padding-bottom: 24px;">
+  <div class="row flex justify-between" style="padding-bottom: 24px">
     <q-btn
       flat
       :key="btnIndex"
@@ -7,7 +7,7 @@
       class="btn-dash-board full-width"
       :style="{ backgroundColor: btn.backgroundColor }"
       :class="{ 'q-mb-sm': btnIndex < 2 }"
-      style="flex: 0 0 calc(50% - 4px);"
+      style="flex: 0 0 calc(50% - 4px)"
       @click="btn.func"
     >
       <!-- @click="btn.func()" -->
@@ -39,7 +39,7 @@ export default {
           backgroundColor: "#3ECCB2",
           text: "실거래가 검색",
           subText1: `지도에서 쉽게`,
-          subText2: `실거래가 찾기`,
+          subText2: `정비사업/실거래가 찾기`,
           img: require("assets/iconsNew/20Redev.png"),
           func: this.toRedevelopmentArea
         },
@@ -75,11 +75,11 @@ export default {
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })
-        .then(position => {
+        .then((position) => {
           const { latitude: lat, longitude: lng } = position.coords;
           this.changeUserLocation({ lat, lng });
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e, "error");
         });
     }
@@ -122,7 +122,7 @@ export default {
   left: 0;
   margin-top: 72px;
   margin-left: 16px;
-  font-size: 11px;
+  font-size: 14px;
   font-family: "notosanskr-regular";
   text-align: left;
 }

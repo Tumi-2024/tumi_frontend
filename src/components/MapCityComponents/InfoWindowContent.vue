@@ -1,6 +1,12 @@
 <template>
   <div
-    style="min-width: 80px; overflow-y: hidden; flex-direction: column; border-radius: 8px; background-color: white;"
+    style="
+      min-width: 80px;
+      overflow-y: hidden;
+      flex-direction: column;
+      border-radius: 8px;
+      background-color: white;
+    "
     :style="{ borderColor: getColor(item) }"
     class="flex"
     @click="$emit('viewArea')"
@@ -9,15 +15,15 @@
     <div class="col items-center">
       <div
         class="info-heading notosanskr-medium text-center"
-        style="padding: 4px;"
+        style="padding: 4px"
         :style="{ backgroundColor: getColor(item) }"
       >
         {{ getItemInfo(item).type }}
       </div>
-      <div class="info-text text-center" style="padding: 0 8px;">
+      <div class="info-text text-center" style="padding: 0 8px">
         {{ toSimpleMoneyString(price) }}
       </div>
-      <div class="info-text text-center" style="padding: 0 8px 8px 8px;">
+      <div class="info-text text-center" style="padding: 0 8px 8px 8px">
         {{ getItemInfo(item).date }}
       </div>
     </div>
@@ -61,11 +67,10 @@ export default {
       "getMapMode",
       "getMapZoom",
       "getMapCenter",
-      "getMapOptions",
-      "getIsCone"
+      "getMapOptions"
     ]),
     getColor() {
-      return item => {
+      return (item) => {
         if (item.group_price) {
           return "#FF5A00";
         } else {
@@ -74,7 +79,7 @@ export default {
       };
     },
     getItemInfo() {
-      return item => {
+      return (item) => {
         if (this.getMapMode === "redevelop-area") {
           const TYPE_HOUSE = {
             "COMMERCIAL ": "상업업무용",
