@@ -8,8 +8,9 @@
       }"
       :zoom="17"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="{
-        draggable: false,
+      :options="{}"
+    >
+      <!-- draggable: false,
         zoomControl: false,
         scrollwheel: false,
         mapTypeControl: false,
@@ -18,9 +19,7 @@
         fullscreenControl: false,
         disableDefaultUI: true,
         rotateControl: false,
-        scaleControl: false
-      }"
-    >
+        scaleControl: false -->
       <!-- THIS IS INFO WINDOW -->
       <gmap-info-window
         :options="infoOptions"
@@ -31,6 +30,7 @@
         <!-- INPUT DESIRED CONTENTS -->
         <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
+          @viewArea="test"
           :price="estate.group_trading_terms.price_selling_hope"
           :item="estate"
           :badges="{
@@ -46,8 +46,7 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { mapGetters } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
 import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
 export default {
   components: {
@@ -82,7 +81,7 @@ export default {
     this.map = await this.$refs.mapRef.$mapPromise;
     this.setGmapContainerSize();
     this.map.setOptions({ zoomControl: true, scrollwheel: true });
-    this.map.addListener("click", e => {
+    this.map.addListener("click", (e) => {
       /** * access click event */
     });
 
@@ -90,6 +89,17 @@ export default {
   },
 
   methods: {
+    ...mapActions("map", ["setMapCenter"]),
+
+    test() {
+      const map = this.map;
+      // this.setMapCenter({
+      //   lat: map.center.lat(),
+      //   lng: map.center.lng()
+      // });
+      this.$router.back();
+      console.log("test", map);
+    },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;

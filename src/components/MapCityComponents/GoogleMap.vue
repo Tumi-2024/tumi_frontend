@@ -383,17 +383,15 @@ export default {
         this.setMapZoom(zoomLevel);
         this.setMapCenter(item.position);
 
-        this.$router.push({
-          name:
-            this.$route.path === "/map/city/area"
-              ? "map_list_sale"
-              : "for_sale_apartment",
-          query: {
-            transactionid:
-              this.$route.path === "/map/city/area" ? item.id : undefined,
-            sellid: this.$route.path === "/map/city" ? item.id : undefined
+        const getRouterParams = () => {
+          if (this.$route.path === "/map/city/area") {
+            return { name: "map_list_sale", query: { transactionid: item.id } };
+          } else {
+            return { name: "for_sale_apartment", query: { sellid: item.id } };
           }
-        });
+        };
+
+        this.$router.push(getRouterParams());
       });
     },
     goToLocation(center = { lat: 0, lng: 0 }) {

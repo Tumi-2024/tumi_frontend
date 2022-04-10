@@ -2,8 +2,10 @@
   <q-card>
     <q-card-section>
       <address-with-badges
+        redirect
         :item="{ address: areaName, building }"
         :tags="getBadgeOptions"
+        :houseId="houseId"
       />
       <div class="row">
         <div class="col-4 q-px-sm">
@@ -192,6 +194,11 @@ export default {
     sales: {
       type: String,
       default: ""
+    },
+    houseId: {
+      type: Number,
+      required: false,
+      default: 0
     },
     prices: {
       type: Object,

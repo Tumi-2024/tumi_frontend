@@ -21,6 +21,7 @@
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"
       :prices="estate.group_price"
+      :houseId="estate.id"
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />

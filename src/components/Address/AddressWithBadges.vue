@@ -6,6 +6,8 @@
       :isRedevelop="item.isRedevelop"
       :address="item.address"
       :building="item.building"
+      :houseId="houseId"
+      :redirect="redirect"
     />
   </div>
 </template>
@@ -19,8 +21,10 @@ export default {
   },
   props: {
     item: Object,
+    houseId: Number,
     tags: Array,
-    isRedevelop: Boolean
+    isRedevelop: Boolean,
+    redirect: Boolean
   }
 };
 </script>
