@@ -10,6 +10,8 @@
     <GmapMap
       @idle="idle"
       @tilesloaded="tilesloaded"
+      @dragend="dragEnd"
+      @dragstart="dragStart"
       ref="mapRef"
       :center="getMapCenter"
       :zoom="getMapZoom"
@@ -56,7 +58,7 @@
               class="flex text-white justify-center q-mt-sm"
               style="font-weight: 700; font-size: 15px"
             >
-              {{ m.count_redevelopment_area }}
+              매물 {{ m.count_redevelopment_area }} 개
             </span>
           </div>
         </gmap-custom-marker>
@@ -284,8 +286,18 @@ export default {
     ...mapActions(["changeUserLocation"]),
     tilesloaded() {
       const zoom = this.map.getZoom();
-
       this.setMapZoom(zoom);
+    },
+    dragStart() {
+      this.changeMapSelectedArea(null);
+    },
+    dragEnd() {
+      const { center } = this.map;
+      console.log();
+      this.changeMapCenter({
+        lat: center.lat(),
+        lng: center.lng()
+      });
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -318,8 +330,6 @@ export default {
 
       const getAreaTypeString = () => {
         switch (this.getAreaType) {
-          case "off":
-            return "";
           case null:
             return "";
           case "재개발":
@@ -338,6 +348,7 @@ export default {
       },${boundLocation.latitude[1]}&longitude__range=${
         boundLocation.longitude[0]
       },${boundLocation.longitude[1]}`;
+
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {

@@ -7,10 +7,14 @@
 
 <script>
 import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
+import { mapGetters } from "vuex";
 export default {
   components: {
     "bottom-drawer": BottomDrawer,
     "google-map": GoogleMap
+  },
+  computed: {
+    ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
   }
 };
 </script>

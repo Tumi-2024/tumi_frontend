@@ -4,6 +4,7 @@
     class="full-width"
     flat
     @click="showInformationFull()"
+    v-if="getMapSelectedArea"
   >
     <div class="col-12 column text-left">
       <div>
@@ -14,7 +15,7 @@
           :label="getMapSelectedArea.category"
         />
       </div>
-      <div class="info q-mt-sm notosanskr-medium" v-if="getMapSelectedArea">
+      <div class="info q-mt-sm notosanskr-medium">
         <div class="head">
           <q-badge outline class="q-mr-xs" color="grey-6">
             <q-icon size="14px">

@@ -12,6 +12,7 @@ export const areaStore = {
       return state.areas;
     },
     getMapSelectedArea: (state) => {
+      console.log("getMapSelectedArea", state.selectedArea);
       return state.selectedArea;
     }
   },

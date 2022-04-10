@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       type: [
-        { color: "grey", label: "Off", key: "off" },
         { color: "white", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
@@ -88,8 +87,8 @@ export default {
     },
     changeRedev() {
       const index = this.type.findIndex(({ key }) => key === this.getAreaType);
-      this.setAreaType(this.type[(index + 1) % 5].key);
-      this.$emit("showArea", this.type[(index + 1) % 5].key);
+      this.setAreaType(this.type[(index + 1) % this.type.length].key);
+      this.$emit("showArea", this.type[(index + 1) % this.type.length].key);
     },
     interestLocation() {
       try {

@@ -1,29 +1,24 @@
 <template>
-  <q-dialog
-    v-model="dialog"
-    :seamless="getMapMode !== 'redevelop-area'"
-    position="bottom"
-    @hide="dialogReset"
-  >
+  <q-dialog :value="true" seamless position="bottom" @hide="dialogReset">
     <q-card flat class="overflow-hidden">
-      <q-card-section class="q-pa-none" v-if="getMapMode !== 'redevelop-area'">
+      <q-card-section
+        class="q-pa-none"
+        v-if="!getMapSelectedArea && getMapMode !== 'redevelop-area'"
+      >
         <q-btn
           flat
           class="btn-view-properties full-width notosanskr-medium"
           :to="{ name: 'map_list_sale' }"
         >
           {{ $store.state.map.toolbarTitle.split(" ")[1] }} 매물보기
-          <span style="color: #FF5A00">{{
-            ` ${$store.state.estate.count_estate}개`
+          <span style="color: #ff5a00; margin-left: 10px">{{
+            ` ${$store.state.estate.count_estate} 개`
           }}</span>
         </q-btn>
       </q-card-section>
 
       <!-- Redevelopment Area Information | 재개발 구역정보 -->
-      <redevelopment-area-info
-        @hide="dialogReset"
-        v-else
-      ></redevelopment-area-info>
+      <redevelopment-area-info v-if="getMapSelectedArea" @hide="dialogReset" />
     </q-card>
   </q-dialog>
 </template>
@@ -41,7 +36,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["getMapMode"])
+    ...mapGetters("map", ["getMapMode"]),
+    ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
   },
   methods: {
     ...mapActions("area", ["changeMapSelectedArea"]),
