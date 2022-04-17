@@ -6,7 +6,7 @@
     transition-show="visible"
     transition-hide="visible"
   >
-    <q-card class="bg-white text-primary" style="max-width: 1000px;">
+    <q-card class="bg-white" style="max-width: 1000px">
       <q-bar class="bg-white">
         <q-btn
           class="back-btn flex justify-center content-center"
@@ -21,29 +21,40 @@
 
       <q-card-section>
         <div class="row">
-          <div class="col">
-            <q-input
-              v-model="text"
-              color="white"
-              style="caret-color: #FF5A00;"
-              class="search-bar-field"
-              placeholder="지역명, 단지명,  지하철역, 주소 검색"
-            >
-              <template v-slot:after>
-                <q-btn
-                  flat
-                  class="notosanskr-medium text-black"
-                  dense
-                  label="취소"
-                />
-              </template>
-            </q-input>
-          </div>
+          <q-radio v-model="shape" val="house" label="매물" />
+          <q-radio v-model="shape" val="transaction" label="실거래가" />
+          <q-input
+            v-model="text"
+            color="white"
+            style="caret-color: #ff5a00; flex: 1; margin-left: 20px"
+            class="search-bar-field"
+            placeholder="지역명, 단지명, 지하철역, 주소 검색"
+          >
+            <template v-slot:after>
+              <q-btn
+                flat
+                class="notosanskr-medium text-black"
+                dense
+                label="취소"
+              />
+            </template>
+          </q-input>
         </div>
       </q-card-section>
 
       <q-card-section>
         <recent-search />
+      </q-card-section>
+      <q-separator
+        color="positive"
+        inset
+        spaced
+        size="12px"
+        class="full-width"
+      />
+
+      <q-card-section>
+        <list-result :list="['반포동 재개발', '반포동 재개발2']" />
       </q-card-section>
 
       <q-separator
@@ -55,7 +66,7 @@
       />
 
       <q-card-section>
-        <list-result />
+        <list-result :list="['반포동 재개발', '반포동 재개발2']" />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -69,6 +80,7 @@ export default {
   data() {
     return {
       dialog: false,
+      shape: "house",
       text: ""
     };
   },

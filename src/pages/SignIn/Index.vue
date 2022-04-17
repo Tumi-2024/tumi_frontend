@@ -10,7 +10,7 @@
     <q-form
       @submit="onSubmit"
       @reset="onReset"
-      style="width: 500px; "
+      style="width: 500px"
       class="q-gutter-md q-mt-lg"
     >
       <q-input
@@ -18,7 +18,7 @@
         v-model="username"
         label="아이디"
         lazy-rules
-        :rules="[val => (val && val.length > 0) || '아이디를 입력해주세요.']"
+        :rules="[(val) => (val && val.length > 0) || '아이디를 입력해주세요.']"
       >
         <template v-slot:before>
           <q-icon name="person" />
@@ -30,7 +30,9 @@
         label="비밀번호"
         lazy-rules
         type="password"
-        :rules="[val => (val && val.length > 0) || '비밀번호를 입력해주세요.']"
+        :rules="[
+          (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.'
+        ]"
       >
         <template v-slot:before>
           <q-icon name="lock" />
@@ -77,9 +79,9 @@ export default {
           Cookies.set("tumi_i", data.id, { secure: true, expires: 8 });
           this.$router.push("/");
         })
-        .catch(e => {
+        .catch((e) => {
           const res = e.response.data;
-          const messages = res.message;
+          const messages = res.message || res.detail;
 
           this.$q.notify({
             type: "negative",

@@ -58,7 +58,7 @@
               class="flex text-white justify-center q-mt-sm"
               style="font-weight: 700; font-size: 15px"
             >
-              매물 {{ m.count_redevelopment_area }} 개
+              매물 {{ m.count_estates_filtered }} 개
             </span>
           </div>
         </gmap-custom-marker>

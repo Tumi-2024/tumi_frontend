@@ -128,7 +128,6 @@ import {
   AreaInformation,
   // MoreInformation,
   RedevelopmentInformation,
-  AdministrationCost,
   // SchoolSection,
   // RecentPricing,
   RecentHistory,
@@ -142,7 +141,6 @@ export default {
     CommonInformation,
     // MoreInformation,
     RedevelopmentInformation,
-    AdministrationCost,
     // SchoolSection,
     // RecentPricing,
     RecentHistory,
@@ -259,7 +257,7 @@ export default {
           // Premium price
           label: "관리비",
           value:
-            this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         },
@@ -267,7 +265,7 @@ export default {
           // Premium price
           label: "최근 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         },
@@ -275,7 +273,7 @@ export default {
           // Premium price
           label: "연평균 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         },
@@ -283,7 +281,7 @@ export default {
           // Premium price
           label: "하절기 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance_summer.toLocaleString() +
+            this.estate.group_individual_household.price_maintenance_summer?.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         },
@@ -291,7 +289,7 @@ export default {
           // Premium price
           label: "동절기 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance_winter.toLocaleString() +
+            this.estate.group_individual_household.price_maintenance_winter?.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         }

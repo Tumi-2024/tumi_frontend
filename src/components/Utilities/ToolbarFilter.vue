@@ -141,6 +141,7 @@ export default {
       console.log(val);
       if (val === "") {
         update(() => {
+          console.log('value is ""');
           this.options = [];
         });
       } else {
@@ -150,6 +151,7 @@ export default {
           } = await Vue.prototype.$axios.get(
             `redevelopment_areas/?search=${val}`
           );
+          console.log("response");
           this.options = results.map(({ title, latitude, longitude }) => {
             return {
               value: title,

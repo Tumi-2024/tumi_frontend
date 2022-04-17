@@ -1,7 +1,5 @@
 <template>
   <div class="row q-gutter-lg">
-    <q-radio v-model="shape" val="house" label="매물" />
-    <q-radio v-model="shape" val="transaction" label="실거래가" />
     <q-input
       borderless
       dense
@@ -26,7 +24,6 @@ import SearchDialog from "./dialog/SearchDialog";
 export default {
   data() {
     return {
-      shape: "house",
       text: null,
       dialog: false
     };

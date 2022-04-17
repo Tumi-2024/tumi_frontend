@@ -37,7 +37,7 @@ export default {
         },
         {
           backgroundColor: "#3ECCB2",
-          text: "실거래가 검색",
+          text: "정비사업/실거래가 지도",
           subText1: `지도에서 쉽게`,
           subText2: `정비사업/실거래가 찾기`,
           img: require("assets/iconsNew/20Redev.png"),
@@ -45,8 +45,8 @@ export default {
         },
         {
           backgroundColor: "#FF7D36",
-          text: "매물 검색",
-          subText1: "매물<br/>상세 검색하기",
+          text: "매물/실거래가 검색",
+          subText1: "매물/실거래가<br/>상세 검색하기",
           img: require("assets/iconsNew/search.png"),
           func: () => this.$router.push({ name: "map_list_sale" })
         },

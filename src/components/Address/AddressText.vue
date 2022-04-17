@@ -1,10 +1,37 @@
 <template>
   <q-item-section>
-    <div class="area-name" :class="this.textClass" @click="goToAdmin">
-      <q-badge outline color="primary" v-show="isRedevelop">재개발</q-badge>
-      {{ address.replace(/대한민국/gi, "") }}
+    <div
+      class="title"
+      @mouseover="
+        () => {
+          isHover = true;
+        }
+      "
+      @mouseout="
+        () => {
+          isHover = false;
+        }
+      "
+    >
+      <div
+        class="area-name"
+        :class="[this.textClass, { hover: isHover }]"
+        @click="goToAdmin"
+      >
+        <q-badge outline color="primary" v-show="isRedevelop">재개발</q-badge>
+        {{ address.replace(/대한민국/gi, "") }}
+      </div>
+      <div
+        class="area-name sub"
+        :class="[{ hover: isHover }]"
+        @click="goToAdmin"
+      >
+        {{ building }}
+        <span style="margin-left: 20px" v-show="isHover">
+          >> 매물관리 화면
+        </span>
+      </div>
     </div>
-    <div class="area-name sub" @click="goToAdmin">{{ building }}</div>
   </q-item-section>
 </template>
 <script>
@@ -36,6 +63,11 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      isHover: false
+    };
+  },
   methods: {
     goToAdmin() {
       if (!this.redirect) {
@@ -47,15 +79,26 @@ export default {
 };
 </script>
 <style lang="scss">
-.area-name {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
-  letter-spacing: -1.05px;
-  color: #707070;
-  margin-left: 0px;
-  &.sub {
-    font-size: 13px;
+.title {
+  .area-name {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -1.05px;
+    color: #707070;
+    margin-left: 0px;
+    cursor: pointer;
+
+    &.hover {
+      font-weight: bold;
+    }
+    &.sub {
+      font-size: 13px;
+      &.hover {
+        font-weight: bold;
+      }
+    }
   }
 }
 </style>
+@
