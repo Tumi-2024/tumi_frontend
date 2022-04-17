@@ -35,48 +35,48 @@ export const estateStore = {
     }
   },
   mutations: {
-    setSimpleHousesType: function(state, payload) {
+    setSimpleHousesType: function (state, payload) {
       state.simple_houses_type = payload;
     },
-    setSimpleHouses: function(state, payload) {
+    setSimpleHouses: function (state, payload) {
       state.simple_houses = payload;
     },
-    setDetailHouses: function(state, payload) {
+    setDetailHouses: function (state, payload) {
       state.detail_houses = payload;
     },
-    setDistinctHouses: function(state, payload) {
+    setDistinctHouses: function (state, payload) {
       state.distinct_houses = payload;
     },
-    setCountEstate: function(state, payload) {
+    setCountEstate: function (state, payload) {
       state.count_estate = payload;
     },
-    setSelectedHouse: function(state, payload) {
+    setSelectedHouse: function (state, payload) {
       state.current_house = payload;
     },
-    setRecentlyViewedHouses: function(state, payload) {
+    setRecentlyViewedHouses: function (state, payload) {
       state.recently_viewed_houses = payload;
     },
-    setInterestHouses: function(state, payload) {
+    setInterestHouses: function (state, payload) {
       state.interest_houses = payload;
     },
-    addInterestHouse: function(state, payload) {
+    addInterestHouse: function (state, payload) {
       state.current_house.interest.house = true;
     },
-    removeInterestHouse: function(state, payload) {
+    removeInterestHouse: function (state, payload) {
       state.current_house.interest.house = null;
     },
-    removeInterestHouses: function(state, payload) {
+    removeInterestHouses: function (state, payload) {
       state.interest_houses = state.interest_houses.filter(
-        house => !payload.some(id => id === house.id)
+        (house) => !payload.some((id) => id === house.id)
       );
     },
-    setLatitude: function(state, payload) {
+    setLatitude: function (state, payload) {
       state.latitude = payload;
     },
-    setLongitude: function(state, payload) {
+    setLongitude: function (state, payload) {
       state.longitude = payload;
     },
-    setRequestUrl: function(state, payload) {
+    setRequestUrl: function (state, payload) {
       state.requestUrl = payload;
     }
   },
@@ -87,7 +87,7 @@ export const estateStore = {
     initSimpleHouses: (context, parameter) => {
       context.commit("setSimpleHouses", []);
     },
-    getSimpleHouses: async function(context, payload) {
+    getSimpleHouses: async function (context, payload) {
       const redevelopQuery = context.getters["map/getIsCone"]
         ? "redevelopment_area__status=운영"
         : `redevelopment_area__isnull=true`;
@@ -150,7 +150,7 @@ export const estateStore = {
       context.dispatch("map/setLocationLoading", true);
       context.commit(
         "setSimpleHouses",
-        data.data.results.map(item => ({
+        data.data.results.map((item) => ({
           ...item,
           position: {
             lat: Number(item.latitude),
@@ -160,14 +160,14 @@ export const estateStore = {
       );
       context.commit("setSimpleHousesType", payload.type);
     },
-    getDistinctHouses: async function(context, paramter) {
+    getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
         `/houses/distinct${paramter ? `?${paramter}` : ""}`,
         {
           timeout: 100000
         }
       );
-      const results = response.data.apartments.map(item => ({
+      const results = response.data.apartments.map((item) => ({
         ...item,
         position: {
           lat: Number(item.latitude),
@@ -177,14 +177,14 @@ export const estateStore = {
       context.commit("setDistinctHouses", results);
       context.commit("setCountEstate", response.data.houses_count);
     },
-    getDetailHouses: async function(context, paramter) {
+    getDetailHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
         `/houses/${paramter ? `?${paramter}` : ""}`,
         {
           timeout: 10000
         }
       );
-      const results = response.data.results.map(item => ({
+      const results = response.data.results.map((item) => ({
         ...item,
         position: {
           lat: Number(item.latitude),
@@ -194,9 +194,9 @@ export const estateStore = {
       context.commit("setCountEstate", response.data.count);
       context.commit("setDetailHouses", results);
     },
-    getInterestHouses: async function(context, paramter) {
+    getInterestHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(`/houses/interests/`);
-      const results = response.data.results.map(item => ({
+      const results = response.data.results.map((item) => ({
         ...item,
         position: {
           lat: Number(item.latitude),
@@ -205,11 +205,11 @@ export const estateStore = {
       }));
       context.commit("setInterestHouses", results);
     },
-    getContactHouses: async function(context, paramter) {
+    getContactHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(`/houses/contacts/`, {
         timeout: 10000
       });
-      const results = response.data.results.map(item => ({
+      const results = response.data.results.map((item) => ({
         ...item,
         position: {
           lat: Number(item.latitude),
@@ -222,14 +222,14 @@ export const estateStore = {
       context.commit("setSelectedHouse", parameter);
       if (
         context.state.recently_viewed_houses.some(
-          house => house.id === parameter.id
+          (house) => house.id === parameter.id
         )
       ) {
         return;
       }
       Vue.prototype.$axios
         .post(`/houses/${parameter.id}/recent/`)
-        .then(result => {
+        .then((result) => {
           context.commit(
             "setRecentlyViewedHouses",
             context.state.recently_viewed_houses.concat(result.data.house)
@@ -248,7 +248,7 @@ export const estateStore = {
       }
       Vue.prototype.$axios
         .post(`/houses/${house.id}/interest/`)
-        .then(result => {
+        .then((result) => {
           context.commit("addInterestHouse", result.data.house);
         });
     },
@@ -259,10 +259,7 @@ export const estateStore = {
       context.commit("removeInterestHouses", parameter);
     },
     getRecentlyViewedHouses: async (context, parameter) => {
-      const {
-        data,
-        status
-      } = await Vue.prototype.$axios.get(
+      const { data, status } = await Vue.prototype.$axios.get(
         `houses/recents/?ordering=${parameter}`,
         { timeout: 60000 }
       );

@@ -1,8 +1,6 @@
 <template>
   <q-card>
-    <q-card-section class="heading-title">
-      매물정보
-    </q-card-section>
+    <q-card-section class="heading-title"> 주요매물 정보 </q-card-section>
 
     <q-card-section class="q-pa-none">
       <div class="row">
@@ -11,15 +9,20 @@
           :key="i"
           :label="item.label"
           :value="item.value"
-          :borderBottom="i < 4 && informations.length > 4"
+          :borderBottom="i < 8 && informations.length > 4"
         >
           <template v-slot:icon>
             <!-- <img src="assets/iconsNew/아파트.jpeg" -->
             <template v-for="(text, i) of item.text">
-            <span :key="i" v-if="text">{{text}}</span>
+              <span :key="i" v-if="text">{{ text }}</span>
             </template>
             <div v-show="!item.text">
-              <img :key="i" :src="getImage(icon, item.new)" style="width: 30px; height: auto;" v-for="(icon, i) of item.icon" />
+              <img
+                :key="i"
+                :src="getImage(icon, item.new)"
+                style="width: 30px; height: auto"
+                v-for="(icon, i) of item.icon"
+              />
             </div>
             <!-- <img style="width: 40px; height: auto;" :src="getImage(icon, item.new)" /> -->
           </template>

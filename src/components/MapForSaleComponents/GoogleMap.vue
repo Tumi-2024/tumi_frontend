@@ -8,18 +8,7 @@
       }"
       :zoom="17"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="{}"
     >
-      <!-- draggable: false,
-        zoomControl: false,
-        scrollwheel: false,
-        mapTypeControl: false,
-        disableDoubleClickZoom: true,
-        streetViewControl: false,
-        fullscreenControl: false,
-        disableDefaultUI: true,
-        rotateControl: false,
-        scaleControl: false -->
       <!-- THIS IS INFO WINDOW -->
       <gmap-info-window
         :options="infoOptions"

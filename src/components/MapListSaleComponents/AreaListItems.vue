@@ -1,6 +1,6 @@
 <template>
   <q-card flat class="q-mt-sm">
-    <q-card-section class=" notosanskr-medium">
+    <q-card-section class="notosanskr-medium">
       전체 {{ this.type === "transaction" ? "실거래가" : "매물" }}
       <span class="text-primary"> {{ saleList.length }} </span>개
     </q-card-section>
@@ -9,14 +9,16 @@
     >
       <toolbar-filter class="q-pt-xs q-px-sm" />
       <div class="flex row justify-between">
-        <template v-for="(btn, btnIndex) of sortButtons">
-          <div class="flex items-center" :key="btnIndex">
-            <q-btn flat :class="btn.class">
-              {{ btn.text }}
-            </q-btn>
-            <q-separator v-if="btnIndex !== sortButtons.length - 1" vertical />
-          </div>
-        </template>
+        <div
+          class="flex items-center"
+          v-for="(btn, btnIndex) of sortButtons"
+          :key="btnIndex"
+        >
+          <q-btn flat :class="btn.class">
+            {{ btn.text }}
+          </q-btn>
+          <q-separator v-if="btnIndex !== sortButtons.length - 1" vertical />
+        </div>
       </div>
     </q-card-section>
 

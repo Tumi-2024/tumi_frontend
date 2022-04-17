@@ -311,6 +311,7 @@ export default {
     },
     idle() {
       this.setLocationLoading(false);
+      console.log("idle");
       this.getHouseInfo();
       this.getRedevInfo();
     },
@@ -352,6 +353,7 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
+      console.log("getHouseInfo");
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],

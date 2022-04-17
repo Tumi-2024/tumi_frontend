@@ -83,12 +83,12 @@
       completion="2005.05.19"
       class="q-mt-md"
     />
-    <administration-cost :cost="adminCost" class="q-mt-md" />
-    <school-section
+    <!-- <administration-cost :cost="adminCost" class="q-mt-md" /> -->
+    <!-- <school-section
       class="q-mt-md"
       :tabs="schoolTabs"
       :active="activeSchoolTab"
-    />
+    /> -->
 
     <!-- <recent-pricing
       class="q-mt-md"
@@ -129,7 +129,7 @@ import {
   // MoreInformation,
   RedevelopmentInformation,
   AdministrationCost,
-  SchoolSection,
+  // SchoolSection,
   // RecentPricing,
   RecentHistory,
   RecentAverageHistory,
@@ -143,7 +143,7 @@ export default {
     // MoreInformation,
     RedevelopmentInformation,
     AdministrationCost,
-    SchoolSection,
+    // SchoolSection,
     // RecentPricing,
     RecentHistory,
     RecentAverageHistory,
@@ -260,6 +260,38 @@ export default {
           label: "관리비",
           value:
             this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            " 원",
+          icon: ["right.svg"]
+        },
+        {
+          // Premium price
+          label: "최근 관리비",
+          value:
+            this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            " 원",
+          icon: ["right.svg"]
+        },
+        {
+          // Premium price
+          label: "연평균 관리비",
+          value:
+            this.estate.group_individual_household.price_maintenance.toLocaleString() +
+            " 원",
+          icon: ["right.svg"]
+        },
+        {
+          // Premium price
+          label: "하절기 관리비",
+          value:
+            this.estate.group_individual_household.price_maintenance_summer.toLocaleString() +
+            " 원",
+          icon: ["right.svg"]
+        },
+        {
+          // Premium price
+          label: "동절기 관리비",
+          value:
+            this.estate.group_individual_household.price_maintenance_winter.toLocaleString() +
             " 원",
           icon: ["right.svg"]
         }
@@ -411,7 +443,11 @@ export default {
         // },
         { label: "대지권 종류", value: houseInfo.type_land },
         { label: "대지권 비율", value: houseInfo.percentage_land + " %" },
-        { label: "관리사무소 연락처", value: houseInfo.call_management_office },
+        {
+          label: "관리사무소 연락처",
+          value: houseInfo.call_management_office,
+          class: "borderb"
+        },
         //
         // { label: "건물 총 층수", value: houseInfo3.num_total_floor },
         // { label: "주건물구조", value: houseInfo4.type_structure_building },
@@ -493,26 +529,30 @@ export default {
         {
           label: "방향",
           value: houseInfo.type_direction
-        },
-        {
-          label: "최근 관리비",
-          value: houseInfo.price_maintenance.toLocaleString() + " 원"
-        },
-        // 최근 관리비 없음
-        {
-          label: "연평균 관리비",
-          value: houseInfo.price_maintenance.toLocaleString() + " 원"
-        },
-        {
-          label: "하절기 평균 관리비",
-          value: houseInfo.price_maintenance_summer.toLocaleString() + " 원",
-          class: "borderb"
-        },
-        {
-          label: "동절기 평균 관리비",
-          value: houseInfo.price_maintenance_winter.toLocaleString() + " 원",
-          class: "borderb"
         }
+        // {
+        //   label: "최근 관리비",
+        //   value: "-"
+        //   // value: houseInfo.price_maintenance.toLocaleString() + " 원"
+        // },
+        // // 최근 관리비 없음
+        // {
+        //   label: "연평균 관리비",
+        //   value: "-"
+        //   // value: houseInfo.price_maintenance.toLocaleString() + " 원"
+        // },
+        // {
+        //   label: "하절기 평균 관리비",
+        //   value: "-",
+        //   // value: houseInfo.price_maintenance_summer.toLocaleString() + " 원",
+        //   class: "borderb"
+        // },
+        // {
+        //   label: "동절기 평균 관리비",
+        //   value: "-",
+        //   // value: houseInfo.price_maintenance_winter.toLocaleString() + " 원",
+        //   class: "borderb"
+        // }
 
         // { label: "공동주택 공시가격", value: houseInfo.price_public_housing },
         // {

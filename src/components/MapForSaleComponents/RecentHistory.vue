@@ -81,7 +81,10 @@
               <div class="flex justify-center" style="flex: 15 0">주택유형</div>
               <div class="flex justify-center" style="flex: 15 0">거래유형</div>
 
-              <div class="flex" style="flex: 25 0; margin-left: 10px">
+              <div
+                class="flex"
+                style="flex: 25 0; margin-left: 10px; justify-content: center"
+              >
                 번지/건물단지명
               </div>
               <div class="flex justify-center" style="flex: 15 0">층수</div>
@@ -146,11 +149,11 @@
                   </div>
 
                   <!-- 번지/ 건물단지 명 -->
-                  <div class="flex" style="flex: 25 0">
-                    <span style="display: inline-flex; margin-left: 10px">
+                  <div style="flex: 27 0">
+                    <span style="display: flex; justify-content: center">
                       {{ `${item.text_road || ""}` }}
                     </span>
-                    <span style="display: inline-flex">
+                    <span>
                       {{ `${item.text_danji || ""}` }}
                     </span>
                   </div>

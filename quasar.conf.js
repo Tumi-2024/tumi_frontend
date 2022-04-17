@@ -68,10 +68,10 @@ module.exports = function (ctx) {
       },
       // Environment
       env: {
-        API: "https://dev.admin.tumi.sunwook.com/api/",
-        ADMIN: "https://dev.admin.tumi.sunwook.com/admin/",
-        // API: "https://admin.tumi.sunwook.com/api/",
-        // ADMIN: "https://admin.tumi.sunwook.com/admin/",
+        // API: "https://dev.admin.tumi.sunwook.com/api/",
+        // ADMIN: "https://dev.admin.tumi.sunwook.com/admin/",
+        API: "https://admin.tumi.sunwook.com/api/",
+        ADMIN: "https://admin.tumi.sunwook.com/admin/",
         // API: 'http://127.0.0.1:9013/api/',
         KAKAO: "7a1ac6a5d515aa253ff2ab9e9d56e21a",
         API_URL: "localhost",
