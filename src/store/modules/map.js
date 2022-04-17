@@ -19,7 +19,7 @@ const initState = {
     scrollwheel: true,
     fullscreenControl: false,
     disableDefaultUI: true,
-    minZoom: 13
+    minZoom: 12
   },
   toolbarTitle: "서울시 종로구",
   interest: [],
