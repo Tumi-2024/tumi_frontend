@@ -237,7 +237,8 @@ export const toQueryString = (params) => {
 };
 
 export const toMoneyString = (val, add = 1) => {
-  if (val === 0 || val === Infinity || Number.isNaN(val)) {
+  console.log(val);
+  if (!val || val === 0 || val === Infinity || Number.isNaN(val)) {
     return "";
   }
   // if (val === null || val === undefined) {

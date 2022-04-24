@@ -1,10 +1,10 @@
 <template>
   <q-card-section>
-    <text-under-highlight text="주택 유형"></text-under-highlight>
+    <text-under-highlight text="주택 유형" />
     <!-- selection of choices | 선택의 선택 -->
     <div class="selection row q-mt-lg">
       <q-btn
-        style="flex-basis: 20%; margin-bottom: 10px;"
+        style="flex-basis: 20%; margin-bottom: 10px"
         v-for="(property, i) of properties"
         :key="i"
         flat
@@ -34,8 +34,8 @@ export default {
   computed: {
     ...mapGetters("searchQuery", ["getQueryString"]),
     getIsActive() {
-      return dd => {
-        return this.selected.some(obj => {
+      return (dd) => {
+        return this.selected.some((obj) => {
           return obj.label === dd;
         });
       };
@@ -145,11 +145,13 @@ export default {
       if (this.isUnique) {
         this.selected = [val];
       } else {
-        const test = this.selected.filter(obj => obj.label === val.label);
+        const test = this.selected.filter((obj) => obj.label === val.label);
         if (test.length === 0) {
           this.selected.push(val);
         } else {
-          this.selected = this.selected.filter(obj => obj.label !== val.label);
+          this.selected = this.selected.filter(
+            (obj) => obj.label !== val.label
+          );
         }
       }
 
