@@ -12,9 +12,15 @@
         <q-item-section>
           <address-with-badges
             :item="{
-              address: item.address,
-              building: `${item.transaction_group ? item.transaction_group.building ||
-                item.transaction_group.text_road : ''}
+              address: item.address || '',
+              building:
+                item.group_building_house.title_building ||
+                `${
+                  item.transaction_group
+                    ? item.transaction_group.building ||
+                      item.transaction_group.text_road
+                    : ''
+                }
               ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item)"
@@ -30,7 +36,12 @@
 </template>
 
 <script>
-import { toMoneyString, toKr, toDateFormat } from "src/utils";
+import {
+  toMoneyString,
+  toSimpleMoneyString,
+  toKr,
+  toDateFormat
+} from "src/utils";
 import areaItemInfo from "./AreaItemInfo";
 import AddressWithBadges from "../Address/AddressWithBadges";
 
@@ -61,6 +72,7 @@ export default {
   methods: {
     toKr,
     toMoneyString,
+    toSimpleMoneyString,
     toDateFormat,
     getdate(string1, string2) {
       const str1 = string1;
@@ -71,22 +83,26 @@ export default {
       return str1.slice(0, 4) + "." + str1.slice(4, 6) + "." + str2;
     },
     reshape(item) {
-      if(!item.group_building_house) {
-        item['group_building_house'] = {'type_house': item.type_house}
+      if (!item.group_building_house) {
+        item.group_building_house = { type_house: item.type_house };
       }
-      if(!item.group_individual_household) {
-        item['group_individual_household'] = {'size_dedicated_area': item.size_dedicated_area}
+      if (!item.group_individual_household) {
+        item.group_individual_household = {
+          size_dedicated_area: item.size_dedicated_area
+        };
       }
-      if(!item.group_land_use) {
-        item['group_land_use'] = {'type_structure_building': item.type_structure_building}
+      if (!item.group_land_use) {
+        item.group_land_use = {
+          type_structure_building: item.type_structure_building
+        };
       }
-      if(!item.group_trading_terms) {
-        item['group_trading_terms'] = { 
-          'price_selling_hope': item.price_selling_hope,
-          'price_charter_deposit_hope': item.price_charter_deposit_hope,
-        }
+      if (!item.group_trading_terms) {
+        item.group_trading_terms = {
+          price_selling_hope: item.price_selling_hope,
+          price_charter_deposit_hope: item.price_charter_deposit_hope
+        };
       }
-      return item
+      return item;
     }
   },
   data() {
@@ -103,16 +119,17 @@ export default {
     };
   },
   computed: {
-    isSelected() { return this.is_selected },
+    isSelected() {
+      return this.is_selected;
+    },
     getBadges() {
       return (item, ctgr) => {
-        item = this.reshape(item)
+        item = this.reshape(item);
         const getDate = (date) => {
-          const d = new Date(date)
-          const y = String(d.getFullYear()).split(0, 2)[1]
-          return y + String('.' + d.getMonth() + '.' + d.getDate())
-        }
-
+          const d = new Date(date);
+          const y = String(d.getFullYear()).split(0, 2)[1];
+          return y + String("." + d.getMonth());
+        };
         return [
           {
             type: "transactionStatus",
@@ -122,10 +139,18 @@ export default {
           { type: "houseType", value: item.group_building_house.type_house },
           { type: "redevelopment", value: item.redevelopment },
           { type: "stageProgress", value: item.stageProgress },
-          { type: 'pyeong', value: (item.group_individual_household.size_dedicated_area / 3.3).toFixed(0) + '평' },
           {
-            type: 'price',
-            value: `${toMoneyString(item.group_trading_terms.price_selling_hope || item.group_trading_terms.price_charter_deposit_hope)}`
+            type: "pyeong",
+            value:
+              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
+              "평"
+          },
+          {
+            type: "price",
+            value: `${toSimpleMoneyString(
+              item.group_trading_terms.price_selling_hope ||
+                item.group_trading_terms.price_charter_deposit_hope
+            )}`
           },
           { type: "date", value: getDate(item.created) }
         ];

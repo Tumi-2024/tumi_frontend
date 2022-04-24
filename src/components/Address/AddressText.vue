@@ -40,7 +40,8 @@ export default {
     textClass: String,
     address: {
       type: String,
-      required: true
+      required: false,
+      default: ""
     },
     building: {
       type: String,

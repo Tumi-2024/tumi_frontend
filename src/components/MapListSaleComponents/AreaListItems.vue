@@ -7,7 +7,7 @@
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <toolbar-filter class="q-pt-xs q-px-sm" />
+      <toolbar-filter class="q-pt-xs q-px-sm" @search="onSearch" />
       <div class="flex row justify-between">
         <div
           class="flex items-center"
@@ -30,9 +30,9 @@
         <area-item
           v-for="(item, i) of saleList"
           :key="i"
-          :item="item"
           :query="{ sellid: item.id }"
           v-bind="{
+            item,
             ctgr: item.category,
             type: item.type,
             isRedevelop,
@@ -65,7 +65,7 @@
 import Vue from "vue";
 import AreaTransaction from "./AreaTransaction.vue";
 import AreaItem from "./AreaItem.vue";
-import ToolbarFilter from "components/Utilities/ToolbarFilter";
+import ToolbarFilter from "./ToolbarFilter.vue";
 
 import { mapGetters } from "vuex";
 
@@ -93,6 +93,18 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
+  },
+  methods: {
+    onSearch(e) {
+      console.log(e);
+      this.getHouseData(e);
+    },
+    async getHouseData(searchText) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/houses/?search=${searchText}`
+      );
+      console.log(data);
+    }
   },
   async beforeMount() {
     this.type = this.$route?.query?.transactionid ? "transaction" : "sell";

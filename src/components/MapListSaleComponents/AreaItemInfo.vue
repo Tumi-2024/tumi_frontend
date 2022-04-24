@@ -4,7 +4,7 @@
       <template v-for="(row, rIndex) of getMainInfo">
         <span
           class="q-pa-xs justify-start align-start"
-          style="flex: 1 1 auto;"
+          style="flex: 1 1 auto"
           :key="`col-${rIndex}`"
         >
           <span class="col-text main title"
@@ -57,8 +57,9 @@ export default {
         { label: "정비사업 종류", value: "정비사업" },
         {
           label: "층수 (지상/지하)",
-          value: `지상 ${houseInfo.count_floor_up ??
-            ""}층 / 지하 ${houseInfo.count_floor_down ?? "-"}층`
+          value: `지상 ${houseInfo.count_floor_up ?? ""}층 / 지하 ${
+            houseInfo.count_floor_down ?? "-"
+          }층`
         },
         {
           label: "방향",
@@ -75,7 +76,13 @@ export default {
       const { group_building_house: houseInfo } = this.item;
       return [
         { label: "세대 수", value: `${houseInfo.count_household ?? "-"} 세대` },
-        { label: "세대당 주차대수", value: ((houseInfo.count_parking_down + houseInfo.count_parking_up) / houseInfo.count_household).toFixed(2) },
+        {
+          label: "세대당 주차대수",
+          value: (
+            (houseInfo.count_parking_down + houseInfo.count_parking_up) /
+            houseInfo.count_household
+          ).toFixed(2)
+        },
         { label: "난방방식", value: `${houseInfo.type_heating ?? "-"}` },
         { label: "사용승인일", value: houseInfo.date_approval_use ?? "-" },
         {

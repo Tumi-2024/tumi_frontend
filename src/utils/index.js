@@ -264,6 +264,9 @@ export const toOriginMoneyString = (val) => {
 };
 
 export const toSimpleMoneyString = (val) => {
+  if (!val || val === 0 || val === Infinity || Number.isNaN(val)) {
+    return "-";
+  }
   val = parseInt(val);
   const uk = Math.floor(val / 1000);
   const price = `${uk / 10}억 `;

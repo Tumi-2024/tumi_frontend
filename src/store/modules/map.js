@@ -22,6 +22,7 @@ const initState = {
     minZoom: 12
   },
   toolbarTitle: "서울시 종로구",
+  toolbarLabel: "지금 보고있는 정비사업",
   interest: [],
   isInterest: false,
   locationLoading: false,
@@ -36,12 +37,12 @@ export const mapStore = {
     getMapZoom: (state) => state.mapZoom,
     getMapCenter: (state) => state.mapCenter,
     getMapOptions: (state) => state.mapOptions,
-    getToolbarLabel: (state) => {
-      // you lookint at | information viewing
-      return state.mode !== "default"
-        ? "지금 보고있는 정보"
-        : "지금 보고있는 지역";
-    },
+    getToolbarLabel: (state) => state.toolbarLabel,
+    // you lookint at | information viewing
+    //   return state.mode !== "default"
+    //     ? "지금 보고있는 정보"
+    //     : "지금 보고있는 지역";
+    // },
     getToolbarTitle: (state) => state.toolbarTitle,
     getIsCone: (state) => state.isCone,
     getAreaType: (state) => state.areaType,
@@ -54,6 +55,7 @@ export const mapStore = {
     setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
+    setToolbarLabel: (state, payload) => (state.toolbarLabel = payload),
     setInterest: (state, payload) => (state.interest = payload),
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
@@ -109,14 +111,24 @@ export const mapStore = {
         )
         .then((result) => {
           const string = result.data.address.split(" ");
+          const redevTitle = result.data.redevelopment_area.title;
+
           context.commit("setMapAddress", `${string[1]} ${string[2]}`);
-          context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
-          if (
-            result.data.location &&
-            result.data.location.subcity &&
-            result.data.location.subcity.interest &&
-            result.data.location.subcity.interest.subcity
-          ) {
+          context.commit(
+            "setToolbarTitle",
+            redevTitle || `${string[1]} ${string[2]}`
+          );
+
+          if (redevTitle) {
+            context.commit(
+              "setToolbarLabel",
+              "지금 보고있는 정비사업" || "지금 보고있는 지역"
+            );
+          }
+
+          // context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
+
+          if (result?.data?.location?.subcity?.interest?.subcity) {
             context.commit("setIsInterest", true);
           } else {
             context.commit("setIsInterest", false);
