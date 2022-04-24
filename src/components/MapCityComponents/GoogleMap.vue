@@ -50,7 +50,7 @@
           >
             <span
               class="flex text-white justify-center"
-              style="font-weight: 900; font-size: 18px"
+              style="font-weight: 700; font-size: 16px"
             >
               {{ m.title }}
             </span>
@@ -58,7 +58,11 @@
               class="flex text-white justify-center q-mt-sm"
               style="font-weight: 700; font-size: 15px"
             >
-              매물 {{ m.count_estates_filtered }} 개
+              {{
+                $route.path === "/map/city"
+                  ? `매물 ${m.count_estates_filtered}`
+                  : `정비사업 ${m.count_redevelopment_area}`
+              }}개
             </span>
           </div>
         </gmap-custom-marker>

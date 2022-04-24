@@ -22,7 +22,7 @@ const initState = {
     minZoom: 12
   },
   toolbarTitle: "서울시 종로구",
-  toolbarLabel: "지금 보고있는 정비사업",
+  toolbarLabel: "지금 보고있는 지역",
   interest: [],
   isInterest: false,
   locationLoading: false,
@@ -118,13 +118,10 @@ export const mapStore = {
             "setToolbarTitle",
             redevTitle || `${string[1]} ${string[2]}`
           );
-
-          if (redevTitle) {
-            context.commit(
-              "setToolbarLabel",
-              "지금 보고있는 정비사업" || "지금 보고있는 지역"
-            );
-          }
+          context.commit(
+            "setToolbarLabel",
+            redevTitle ? "지금 보고있는 정비사업" : "지금 보고있는 지역"
+          );
 
           // context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
 
