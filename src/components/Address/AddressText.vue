@@ -1,5 +1,5 @@
 <template>
-  <q-item-section>
+  <q-item-section style="display: inline-flex">
     <div
       class="title"
       @mouseover="
@@ -76,7 +76,10 @@ export default {
       if (!this.redirect) {
         return;
       }
-      window.location = `${process.env.ADMIN}realestates/house/${this.houseId}/change/`;
+      window.open(
+        `${process.env.ADMIN}realestates/house/${this.houseId}/change/`,
+        "_blank"
+      );
     }
   }
 };
@@ -93,7 +96,9 @@ export default {
     cursor: pointer;
 
     &.hover {
+      text-decoration: underline;
       font-weight: bold;
+      color: rgb(255, 90, 0);
     }
     &.sub {
       font-size: 13px;

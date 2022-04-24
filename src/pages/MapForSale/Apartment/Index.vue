@@ -247,51 +247,51 @@ export default {
             )}평`,
           icon: ["land-area.svg"]
         },
-        {
-          // Right
-          label: "해당면적 세대수",
-          value:
-            this.estate.group_individual_household.count_household_same_area,
-          icon: ["building-area.svg"]
-        },
-        {
-          // Premium price
-          label: "관리비",
-          value:
-            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
-            " 원",
-          icon: ["right.svg"]
-        },
-        {
-          // Premium price
-          label: "최근 관리비",
-          value:
-            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
-            " 원",
-          icon: ["right.svg"]
-        },
-        {
-          // Premium price
-          label: "연평균 관리비",
-          value:
-            this.estate.group_individual_household.price_maintenance?.toLocaleString() +
-            " 원",
-          icon: ["right.svg"]
-        },
+        // {
+        //   // Right
+        //   label: "해당면적 세대수",
+        //   value:
+        //     this.estate.group_individual_household.count_household_same_area,
+        //   icon: ["building-area.svg"]
+        // },
+        // {
+        //   // Premium price
+        //   label: "관리비",
+        //   value:
+        //     this.estate.group_individual_household.price_maintenance?.toLocaleString() +
+        //     " 원",
+        //   icon: ["right.svg"]
+        // },
+        // {
+        //   // Premium price
+        //   label: "최근 관리비",
+        //   value:
+        //     this.estate.group_individual_household.price_maintenance?.toLocaleString() +
+        //     " 원",
+        //   icon: ["right.svg"]
+        // },
+        // {
+        //   // Premium price
+        //   label: "연평균 관리비",
+        //   value:
+        //     this.estate.group_individual_household.price_maintenance?.toLocaleString() +
+        //     " 원",
+        //   icon: ["right.svg"]
+        // },
         {
           // Premium price
           label: "하절기 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance_summer?.toLocaleString() +
-            " 원",
+            (this.estate.group_individual_household.price_maintenance_summer?.toLocaleString() ||
+              "-") + " 원",
           icon: ["right.svg"]
         },
         {
           // Premium price
           label: "동절기 관리비",
           value:
-            this.estate.group_individual_household.price_maintenance_winter?.toLocaleString() +
-            " 원",
+            (this.estate.group_individual_household.price_maintenance_winter?.toLocaleString() ||
+              "-") + " 원",
           icon: ["right.svg"]
         }
       ];

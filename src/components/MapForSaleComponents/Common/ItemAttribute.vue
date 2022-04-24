@@ -1,7 +1,7 @@
 <template>
-  <q-btn
+  <div
     flat
-    class="col-3 information-btn q-py-md"
+    class="col-3 information-btn q-py-lg"
     :class="{ 'border-bottom-dashed': borderBottom }"
   >
     <div class="column justify-center content-center items-center">
@@ -16,7 +16,7 @@
       <div class="title q-mt-sm" v-else>{{ value }}</div>
       <div class="sub-title q-mt-xs">{{ label }}</div>
     </div>
-  </q-btn>
+  </div>
 </template>
 
 <script>
