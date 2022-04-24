@@ -19,7 +19,7 @@
     <section class="area-stats-section bg-white">
       <div v-for="(stat, i) of stats" :key="i">
         <div class="row q-pa-md">
-          <div style="margin-right: 12px; align-items:center; display: flex;">
+          <div style="margin-right: 12px; align-items: center; display: flex">
             <img
               :width="30"
               :src="require(`assets/icons/${stat.icon}`)"
@@ -115,12 +115,12 @@
       <q-btn
         color="primary"
         text-color="white"
-        class=" notosanskr-medium "
+        class="notosanskr-medium"
         label="이지역 투자매물 보러가기"
       />
     </section>
 
-    <section style="min-height: 200px;"></section>
+    <section style="min-height: 200px"></section>
   </div>
 </template>
 <script>
@@ -210,7 +210,7 @@ export default {
         maintainAspectRatio: false,
         plugins: {
           datalabels: {
-            formatter: d => toMoneyString(d)
+            formatter: (d) => toMoneyString(d)
           }
         },
         scales: {
@@ -222,7 +222,7 @@ export default {
               },
               ticks: {
                 min: 20000,
-                callback: function(val, index) {
+                callback: function (val, index) {
                   // Hide the label of every 2nd dataset
                   return index % 2 === 0 ? toSimpleMoneyString(val) : "";
                 }
@@ -414,12 +414,12 @@ export default {
         { label: "토지", value: "LAND" }
       ];
 
-      const getDisable = value =>
-        !this.transactions.some(transaction => {
+      const getDisable = (value) =>
+        !this.transactions.some((transaction) => {
           return transaction.category === value;
         });
 
-      return options.map(option => {
+      return options.map((option) => {
         return { ...option, disable: getDisable(option.value) };
       });
     }

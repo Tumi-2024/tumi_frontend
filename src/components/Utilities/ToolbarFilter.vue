@@ -44,6 +44,10 @@
         >
           <slot>
             <div class="items" v-for="(filter, i) of filters" :key="i">
+              <!-- <span class="text-black">{{ getOption(filter.keyName) }}</span> -->
+              <!-- <span class="text-black">{{ getOption(filter.label) }}</span> -->
+              <!-- <span class="text-black">{{ filter.keyName }}</span> -->
+
               <specific-filter
                 v-if="!filter.isHide"
                 :propsClass="filter.class"
@@ -89,23 +93,27 @@ export default {
         {
           label: "면적종류",
           type: "exclusive-area",
-          class: "text-white bg-green"
+          class: "text-white bg-green",
+          keyName: "areaType"
         },
         {
           label: "가격",
           type: "price",
-          class: "text-white bg-blue"
+          class: "text-white bg-blue",
+          keyName: "prices"
         },
         {
           label: "초기투자금",
           type: "price",
           class: "text-white bg-purple",
-          isHide: this.$route.path !== "/map/city"
+          isHide: this.$route.path !== "/map/city",
+          keyName: "initPrices"
         },
         {
           label: "담당자",
           type: "person",
-          class: "text-white bg-black"
+          class: "text-white bg-black",
+          keyName: "users"
         }
         // {
         //   label: "매매가",

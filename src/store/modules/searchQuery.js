@@ -61,6 +61,7 @@ export const searchQueryStore = {
     getQueryString2: (state, getters) => {
       return (key, contentKey) => {
         let query = "";
+        // console.log(state.query);
         if (Array.isArray(state.query[key])) {
           query = state.query[key].map((obj) => {
             if (typeof obj === "number") {
@@ -96,8 +97,9 @@ export const searchQueryStore = {
   mutations: {
     SET_QUERY: (state, { key, data }) => {
       const keyObj = state.query[key];
+      // console.log(`key=${key}`, "keyObj", keyObj);
+      console.log(state.query[key], data, "data");
       if (keyObj) {
-        console.log(data);
         state.query[key] = data;
       } else {
         state.query[key].push(data);

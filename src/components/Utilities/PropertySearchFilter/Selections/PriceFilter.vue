@@ -12,7 +12,7 @@
         maxlength="7"
         style="max-width: 200px"
       />
-      <span style="font-size: 30px;" class="q-mx-lg">~</span>
+      <span style="font-size: 30px" class="q-mx-lg">~</span>
       <q-input
         :value="toMoneyString(selected[1].value)"
         @focus="selected[1].value = 0"

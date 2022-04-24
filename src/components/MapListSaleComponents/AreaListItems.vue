@@ -108,7 +108,7 @@ export default {
       this.saleList = data.results;
     }
   },
-  async beforeMount() {
+  async mounted() {
     this.type = this.$route?.query?.transactionid ? "transaction" : "sell";
     if (this.$route?.query?.transactionid) {
       const { data } = await Vue.prototype.$axios.get(
@@ -119,7 +119,7 @@ export default {
     } else if (this.$route?.query?.sellid) {
       this.type = "sell";
       const { data } = await Vue.prototype.$axios.get(
-        `/houses/${this.$route.query.sellid}/transactions`
+        `/houses/${this.$route.query.sellid}/transactions/`
       );
 
       this.saleList = data.results;

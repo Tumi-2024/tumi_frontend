@@ -8,7 +8,7 @@
       @click="modal = true"
       :disable="disable"
     >
-      <span style="min-width: 60px;">{{ label }}</span>
+      <span style="min-width: 60px">{{ label }}</span>
     </q-btn>
 
     <!-- Dialog Section -->
@@ -20,9 +20,10 @@
 
         <q-card-section
           class="q-pa-none bg-white notosanskr-medium"
-          style="min-height: 200px;"
+          style="min-height: 200px"
         >
           <component
+            ref="component"
             :is="component"
             @select="select"
             @selectDetail="selectDetail"
@@ -125,15 +126,23 @@ export default {
       this.selectedDetail = val;
     },
     save() {
-      // if (this.keyName )
-      this.setQuery({ key: this.keyName, data: this.selected });
+      console.log(this.$refs, "sabe");
+      console.log(this.$refs.component.keyName, "sabe");
+      this.setQuery({
+        key: this.$refs.component.keyName || this.keyName,
+        data: this.selected
+      });
       this.modal = false;
     },
+
     async init() {
       this.modal = false;
       const test = await this.initializeQuery("categories");
       this.selected = Array(test);
     }
+  },
+  mounted() {
+    this.selected = this.value;
   }
 };
 </script>

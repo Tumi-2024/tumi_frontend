@@ -100,12 +100,12 @@
       :unit="unit"
     /> -->
     <recent-history class="q-mt-md" :item="transactions" />
-    <recent-average-history
+    <!-- <recent-average-history
       class="q-my-md"
       v-if="graphData.length > 0"
       :areaOptions="areaOptions"
       :graph="graphData"
-    />
+    /> -->
     <!-- <recent-pricing
       class="q-mt-md"
       :salePrice="salePrice"
@@ -131,7 +131,7 @@ import {
   // SchoolSection,
   // RecentPricing,
   RecentHistory,
-  RecentAverageHistory,
+  // RecentAverageHistory,
   CommonInformation
 } from "components/MapForSaleComponents";
 export default {
@@ -144,7 +144,6 @@ export default {
     // SchoolSection,
     // RecentPricing,
     RecentHistory,
-    RecentAverageHistory,
     "google-map": GoogleMap
   },
   async beforeMount() {
@@ -159,11 +158,13 @@ export default {
       this.redevelopment = data.group_location?.redevelopment_area;
 
       this.$store.dispatch("addRecentlyViewedHouse", data);
-      const { data: transactions } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.estate.transaction_group.id}/transactions`
+      const {
+        data: { results }
+      } = await Vue.prototype.$axios.get(
+        `/houses/${this.estate.id}/transactions/`
       );
-      this.transactions = transactions;
-      this.getGraphData();
+      this.transactions = results;
+      // this.getGraphData();
     }
   },
   methods: {
@@ -174,24 +175,24 @@ export default {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
       });
     },
-    getGraphData() {
-      const graphData = (type, yyyyMM) =>
-        this.transactions
-          .filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
-          .reduce((acc, curr) => {
-            if (type) {
-              return acc + curr.price;
-            }
-            return acc;
-          }, 0) /
-        this.transactions.filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
-          .length;
-      this.graphData = [
-        { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
-        { sale: graphData("SALE", "2019"), rent: graphData("RENT", "2019") },
-        { sale: graphData("SALE", "202006"), rent: graphData("RENT", "202006") }
-      ];
-    },
+    // getGraphData() {
+    //   const graphData = (type, yyyyMM) =>
+    //     this.transactions
+    //       .filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
+    //       .reduce((acc, curr) => {
+    //         if (type) {
+    //           return acc + curr.price;
+    //         }
+    //         return acc;
+    //       }, 0) /
+    //     this.transactions.filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
+    //       .length;
+    //   this.graphData = [
+    //     { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
+    //     { sale: graphData("SALE", "2019"), rent: graphData("RENT", "2019") },
+    //     { sale: graphData("SALE", "202006"), rent: graphData("RENT", "202006") }
+    //   ];
+    // },
     getArrayOrString(data) {
       if (Array.isArray(data)) {
         return data.join(", ");
