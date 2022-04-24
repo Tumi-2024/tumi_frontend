@@ -16,7 +16,7 @@
         stageProgress: redevelopment.redevelopment_step
       }"
       :building="estate.group_building_house.title_building"
-      :areaName="estate.address"
+      :areaName="`${estate.address} (${estate.group_location.location_road})`"
       :sales="toMoneyString(estate.price)"
       :initialInvestments="toMoneyString(estate.initial_investment)"
       :quote="estate.description"

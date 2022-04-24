@@ -12,8 +12,21 @@
             {{ getToolbarTitle }}
           </div>
         </div>
-        <div class="q-my-xs col-4 text-left notosanskr-medium">
-          <q-select
+        <div class="q-my-xs col-4 text-left notosanskr-medium" style="flex: 1">
+          <q-input
+            v-model="searchText"
+            filled
+            class="q-mr-sm"
+            type="search"
+            placeholder="검색"
+            @keydown.enter.prevent="onSearch"
+          >
+            <template v-slot:append>
+              <q-icon @click="onSearch" name="search" />
+            </template>
+          </q-input>
+
+          <!-- <q-select
             ref="keywordRef"
             filled
             label="검색"
@@ -32,7 +45,7 @@
                 <q-item-section class="text-grey"> No results </q-item-section>
               </q-item>
             </template>
-          </q-select>
+          </q-select> -->
         </div>
       </div>
       <div class="flex">
@@ -132,34 +145,8 @@ export default {
       "changeMapCenter",
       "changeToolbarTitle"
     ]),
-    onSelect(obj) {
-      this.changeMapCenter(obj.position);
-      this.changeMapZoom(16);
-    },
-    async filterFn(val, update, abort) {
-      if (val === "") {
-        update(() => {
-          console.log('value is ""');
-          this.options = [];
-        });
-      } else {
-        update(async () => {
-          this.$emit("search", val);
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(
-            `redevelopment_areas/?search=${val}`
-          );
-          console.log("response");
-          this.options = results.map(({ title, latitude, longitude }) => {
-            return {
-              value: title,
-              label: title,
-              position: { lat: Number(latitude), lng: Number(longitude) }
-            };
-          });
-        });
-      }
+    onSearch() {
+      this.$emit("search", this.searchText);
     }
   }
 };
