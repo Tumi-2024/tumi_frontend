@@ -4,11 +4,13 @@
       class="title"
       @mouseover="
         () => {
+          if (!redirect) return;
           isHover = true;
         }
       "
       @mouseout="
         () => {
+          if (!redirect) return;
           isHover = false;
         }
       "

@@ -1,12 +1,11 @@
 <template>
   <div>
-    <area-list-items :params="$route.params" :isRedevelop="isRedevelop" />
+    <area-list-items :params="$route.query" :isRedevelop="isRedevelop" />
     <floating-button />
   </div>
 </template>
 
 <script>
-import Vue from "vue";
 import {
   AreaListItems,
   FloatingButton
@@ -24,20 +23,19 @@ export default {
   },
   async beforeMount() {
     if (!this.$route.query?.transactionid) {
-      return;
     }
-    if (this.$route.query?.sellid) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.$route.query.transactionid}`
-      );
-      this.isRedevelop = !!data.redevelopment_area;
-    }
-    if (this.$route.query?.transactionid) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.$route.query.transactionid}`
-      );
-      this.isRedevelop = !!data.redevelopment_area;
-    }
+    // if (this.$route.query?.sellid) {
+    //   const { data } = await Vue.prototype.$axios.get(
+    //     `/transaction_groups/${this.$route.query.transactionid}`
+    //   );
+    //   this.isRedevelop = !!data.redevelopment_area;
+    // }
+    // if (this.$route.query?.transactionid) {
+    //   const { data } = await Vue.prototype.$axios.get(
+    //     `/transaction_groups/${this.$route.query.transactionid}`
+    //   );
+    //   this.isRedevelop = !!data.redevelopment_area;
+    // }
   }
 };
 </script>

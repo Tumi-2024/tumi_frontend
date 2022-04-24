@@ -13,8 +13,9 @@
           class="flex items-center"
           v-for="(btn, btnIndex) of sortButtons"
           :key="btnIndex"
+          @click="() => sortData(btnIndex)"
         >
-          <q-btn flat :class="btn.class">
+          <q-btn flat :class="[{ 'text-primary': selectedIndex === btnIndex }]">
             {{ btn.text }}
           </q-btn>
           <q-separator v-if="btnIndex !== sortButtons.length - 1" vertical />
@@ -78,11 +79,23 @@ export default {
   data() {
     return {
       sortButtons: [
-        { text: "최신순", class: "text-primary" },
-        { text: "추천순" },
-        { text: "면적순" },
-        { text: "가격순" }
+        {
+          text: "최신순",
+          class: "text-primary",
+          query: { ordering: "-created" }
+        },
+        {
+          text: "추천순",
+          class: "text-primary",
+          query: { ordering: "-index_recommend" }
+        },
+        {
+          text: "가격순",
+          class: "text-primary",
+          query: { ordering: "-price_selling_hope" }
+        }
       ],
+      selectedIndex: 0,
       type: "transaction" /** sell  */,
       saleList: [],
       currentItem: {}
@@ -106,32 +119,40 @@ export default {
         `/houses/?search=${searchText}`
       );
       this.saleList = data.results;
+    },
+    sortData(index) {
+      this.selectedIndex = index;
+      const { query } = this.sortButtons[index];
+      if (this.type === "sell") {
+        this.getApiHousesData(query);
+      } else {
+      }
+    },
+    async getApiHousesData(query) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params: query
+      });
+
+      this.saleList = data.results;
+    },
+    async getApiTransactionsData(query) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${this.$route.query.transactionid}/transactions/`,
+        {
+          params: query
+        }
+      );
+      console.log(data);
+
+      this.saleList = data;
     }
   },
   async mounted() {
     this.type = this.$route?.query?.transactionid ? "transaction" : "sell";
     if (this.$route?.query?.transactionid) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.$route.query.transactionid}/transactions`
-      );
-
-      this.saleList = data;
-    } else if (this.$route?.query?.sellid) {
-      this.type = "sell";
-      const { data } = await Vue.prototype.$axios.get(
-        `/houses/${this.$route.query.sellid}/transactions/`
-      );
-
-      this.saleList = data.results;
+      this.getApiTransactionsData({ ordering: "-created" });
     } else {
-      // const { data } = await Vue.prototype.$axios.get(
-      //   `/houses`
-      // );
-      const {
-        data: { results: houses }
-      } = await Vue.prototype.$axios.get("/houses/");
-      this.saleList = houses;
-      // this.saleList = data.results;
+      this.getApiHousesData({ ordering: "-created" });
     }
   }
 };
