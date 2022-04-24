@@ -97,13 +97,15 @@ export default {
   methods: {
     onSearch(e) {
       console.log(e);
-      this.getHouseData(e);
+      if (e.length !== 0) {
+        this.getHouseData(e);
+      }
     },
     async getHouseData(searchText) {
       const { data } = await Vue.prototype.$axios.get(
         `/houses/?search=${searchText}`
       );
-      console.log(data);
+      this.saleList = data.results;
     }
   },
   async beforeMount() {

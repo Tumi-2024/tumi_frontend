@@ -19,7 +19,6 @@
             label="검색"
             v-model="searchText"
             @input="onSelect"
-            :input-debounce="100"
             use-input
             fill-input
             hide-selected
@@ -78,7 +77,7 @@ export default {
   data() {
     return {
       searchText: "",
-      options: null,
+      options: [],
       filters: [
         {
           label: "주택유형",
@@ -138,8 +137,6 @@ export default {
       this.changeMapZoom(16);
     },
     async filterFn(val, update, abort) {
-      console.log(val);
-      this.$emit("search", val);
       if (val === "") {
         update(() => {
           console.log('value is ""');
@@ -147,6 +144,7 @@ export default {
         });
       } else {
         update(async () => {
+          this.$emit("search", val);
           const {
             data: { results }
           } = await Vue.prototype.$axios.get(
