@@ -19,11 +19,10 @@
             label="검색"
             v-model="searchText"
             @input="onSelect"
-            :input-debounce="100"
+            :input-debounce="0"
             use-input
             fill-input
             hide-selected
-            clearable
             :options="options"
             @filter="filterFn"
             style="width: 250px"
@@ -82,7 +81,7 @@ export default {
   data() {
     return {
       searchText: "",
-      options: null,
+      options: [],
       filters: [
         {
           label: "주택유형",
@@ -146,20 +145,13 @@ export default {
       this.changeMapZoom(16);
     },
     async filterFn(val, update, abort) {
-      console.log(val);
-      if (val === "") {
-        update(() => {
-          console.log('value is ""');
-          this.options = [];
-        });
-      } else {
+      if (val !== "") {
+        const {
+          data: { results }
+        } = await Vue.prototype.$axios.get(
+          `redevelopment_areas/?search=${val}`
+        );
         update(async () => {
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(
-            `redevelopment_areas/?search=${val}`
-          );
-          console.log("response");
           this.options = results.map(({ title, latitude, longitude }) => {
             return {
               value: title,
@@ -168,6 +160,8 @@ export default {
             };
           });
         });
+      } else {
+        update();
       }
     }
   }

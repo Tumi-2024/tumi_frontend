@@ -9,7 +9,7 @@
       @focus="onHandleFocus"
       class="search-field"
       style="flex: 1"
-      placeholder="지역명, 단지명, 지하철역, 주소 검색"
+      placeholder="지역명, 단지명, 주소 검색"
     />
     <div class="col-2 flex items-center">
       <q-btn icon="search" class="search-btn full-width" color="primary" />

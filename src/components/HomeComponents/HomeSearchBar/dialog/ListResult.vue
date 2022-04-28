@@ -9,7 +9,13 @@
       </slot>
     </q-item-label>
 
-    <q-item clickable v-ripple v-for="(item, index) in list" :key="index">
+    <q-item
+      clickable
+      v-ripple
+      v-for="(item, index) in list"
+      :key="index"
+      @click="() => goToHouse(item.value)"
+    >
       <q-item-section class="item-result">
         <q-icon
           size="20px"
@@ -17,7 +23,7 @@
           name="img:icons/home-page-icon/search-result-icon/location-mark.svg"
         ></q-icon>
         <q-item-label lines="1" class="text-black notosanskr-regular">
-          {{ item }}
+          {{ item.label }}
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -32,6 +38,17 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    }
+  },
+  methods: {
+    goToHouse(sellid) {
+      // for-sale/apartment?sellid=16888
+      this.$router.push({
+        name: "for_sale_apartment",
+        query: {
+          sellid
+        }
+      });
     }
   }
 };
