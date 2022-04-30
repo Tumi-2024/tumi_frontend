@@ -61,7 +61,7 @@
               {{
                 $route.path === "/map/city"
                   ? `매물 ${m.count_estates_filtered}`
-                  : `정비사업 ${m.count_redevelopment_area}`
+                  : `정비사업 ${m.count_redevelopment_area_filtered}`
               }}개
             </span>
           </div>

@@ -74,6 +74,7 @@ export default {
           password: this.password
         })
         .then(({ data }) => {
+          console.log(data);
           this.$store.commit("setUser", data);
           Cookies.set("tumi", data.token, { secure: true, expires: 8 });
           Cookies.set("tumi_i", data.id, { secure: true, expires: 8 });
@@ -81,6 +82,7 @@ export default {
         })
         .catch((e) => {
           const res = e.response.data;
+          console.log(res);
           const messages = res.message || res.detail;
 
           this.$q.notify({
