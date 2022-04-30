@@ -71,6 +71,7 @@
           style="width: 400px"
           type="email"
           lazy-rules
+          autoComplete="none"
           :rules="[
             (val) => (val && val.length > 0) || '업무용 이메일을 입력해주세요.'
           ]"
@@ -133,6 +134,7 @@
           style="width: 400px"
           label="비밀번호"
           lazy-rules
+          autoComplete="none"
           type="password"
           :rules="[
             (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
