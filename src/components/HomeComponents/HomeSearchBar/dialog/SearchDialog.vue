@@ -155,12 +155,15 @@ export default {
     },
     async onSelect(obj) {
       this.options = [];
-      console.log(`/houses/?search=${obj.value}`, obj);
       let data;
       if (!obj.isRedev) {
+        console.log(`/houses/?search=${obj.value}`, obj);
         data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
       } else {
-        data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
+        console.log(`/houses/?redevelopment_area=${obj.value}`, obj);
+        data = await Vue.prototype.$axios.get(
+          `/houses/?redevelopment_area=${obj.value}`
+        );
       }
       this.houses = data.data.results
         .map((obj) => {
@@ -192,10 +195,10 @@ export default {
           });
 
           const redevResults = [];
-          redev.forEach(({ title, latitude, longitude }) => {
+          redev.forEach(({ id, title }) => {
             if (!redevResults.some((obj) => obj.label === title)) {
               redevResults.push({
-                value: title,
+                value: id,
                 label: title,
                 isRedev: true
               });
