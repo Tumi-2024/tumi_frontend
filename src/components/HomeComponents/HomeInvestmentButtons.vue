@@ -101,14 +101,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions("searchQuery", ["setState"]),
+    ...mapActions("searchQuery", ["setQuery"]),
     onClick(item) {
-      this.setState({ key: "categories", data: [item] });
-
-      // :to="{
-      //       name: shape === 'house' ? 'map_city' : 'map_city_area',
-      //       query: { category: item.category }
-      //     }"
+      console.log(item);
+      // this.categories = [
+      //   {
+      //     icon: require("assets/iconsNew/11.png"),
+      //     label: "아파트",
+      //     valueTransaction: "APARTMENT",
+      //     valueHouse: "아파트"
+      //   }
+      // ];
+      this.setQuery([{ key: "categories", data: item }]);
+      console.log(item);
+      if (this.shape === "house") {
+        this.$router.push({ name: "map_city" });
+      } else {
+        this.$router.push({ name: "map_city_area" });
+      }
     }
   }
 };
