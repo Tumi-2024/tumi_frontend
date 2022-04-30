@@ -211,10 +211,9 @@ export default {
     return {
       teams: [],
       types: [
-        { label: "투미팀", value: "TEAM" },
+        { label: "직원", value: "TEAM" },
         { label: "고객", value: "CUSTOMER" },
-        { label: "외부", value: "BRANCH" },
-        { label: "영업점", value: "STORE" }
+        { label: "중개업체", value: "BRANCH" }
       ],
       team: "",
       id: "",
