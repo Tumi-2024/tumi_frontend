@@ -156,10 +156,13 @@ export default {
     async onSelect(obj) {
       this.options = [];
       console.log(`/houses/?search=${obj.value}`, obj);
-      const { data } = await Vue.prototype.$axios.get(
-        `/houses/?search=${obj.value}`
-      );
-      this.houses = data.results
+      let data;
+      if (!obj.isRedev) {
+        data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
+      } else {
+        data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
+      }
+      this.houses = data.data.results
         .map((obj) => {
           return { value: obj?.id, label: obj?.address };
         })
@@ -193,7 +196,8 @@ export default {
             if (!redevResults.some((obj) => obj.label === title)) {
               redevResults.push({
                 value: title,
-                label: title
+                label: title,
+                isRedev: true
               });
             }
           });

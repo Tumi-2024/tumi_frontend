@@ -1,21 +1,38 @@
 <template>
   <q-card-section class="q-pa-xl bg-white">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-select
-        v-model="team"
-        :options="teams"
-        filled
-        label="소속"
-        option-label="title"
-        option-value="id"
-        map-options
-        emit-value
-        :rules="[(val) => (val && val > 0) || '소속을 선택해주세요.']"
-      >
-        <template v-slot:before>
-          <q-icon name="groups" />
-        </template>
-      </q-select>
+      <div class="flex row justify-between">
+        <q-select
+          v-model="type"
+          :options="types"
+          filled
+          label="유형"
+          style="width: 400px"
+          :rules="[(val) => val.length || '타입을 선택해주세요.']"
+          emit-value
+        >
+          <template v-slot:before>
+            <q-icon name="groups" />
+          </template>
+        </q-select>
+        <q-select
+          v-if="type === 'TEAM'"
+          v-model="team"
+          :options="teams"
+          filled
+          label="소속"
+          option-label="title"
+          style="width: 400px"
+          option-value="id"
+          map-options
+          emit-value
+        >
+          <template v-slot:before>
+            <q-icon name="groups" />
+          </template>
+        </q-select>
+      </div>
+
       <q-input
         filled
         v-model="username"
@@ -193,8 +210,15 @@ export default {
   data() {
     return {
       teams: [],
+      types: [
+        { label: "투미팀", value: "TEAM" },
+        { label: "고객", value: "CUSTOMER" },
+        { label: "외부", value: "BRANCH" },
+        { label: "영업점", value: "STORE" }
+      ],
       team: "",
       id: "",
+      type: "",
       username: "",
       email: "",
       phone: "",
@@ -211,8 +235,12 @@ export default {
   },
   methods: {
     async onSubmit() {
+      if (this.type !== "TEAM") {
+        this.team = "";
+      }
       Vue.prototype.$axios
         .post("/users/signup/", {
+          type: this.type,
           team: this.team,
           name: this.username,
           username: this.id,
