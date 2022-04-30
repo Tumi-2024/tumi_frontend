@@ -136,7 +136,7 @@
           type="password"
           :rules="[
             (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
-            (val) => val.length > 8 || '비밀번호는 최소 8자 입니다.',
+            (val) => val.length > 7 || '비밀번호는 최소 8자 입니다.',
             (val) => val.length < 20 || '비밀번호는 최대 20자 입니다.'
           ]"
         >
