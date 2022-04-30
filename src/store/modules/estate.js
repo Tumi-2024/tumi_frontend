@@ -88,6 +88,7 @@ export const estateStore = {
       context.commit("setSimpleHouses", []);
     },
     getSimpleHouses: async function (context, payload) {
+      context.commit("setSimpleHouses", []);
       const redevelopQuery = context.getters["map/getIsCone"]
         ? "redevelopment_area__status=운영"
         : `redevelopment_area__isnull=true`;
