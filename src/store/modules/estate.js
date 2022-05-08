@@ -261,7 +261,7 @@ export const estateStore = {
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const { data, status } = await Vue.prototype.$axios.get(
-        `houses/recents/?ordering=${parameter}`,
+        `houses/recents`,
         { timeout: 60000 }
       );
       if (status !== 200) return;

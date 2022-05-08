@@ -23,13 +23,13 @@
 
       <div class="flex-row">
         <q-btn flat padding="0 8px" class="bg-white" @click="like()">
-          <q-icon size="44px">
+          <q-icon size="32px">
             <img v-if="is_interest" src="~assets/icons/hearted.svg" alt="" />
             <img v-else src="~assets/icons/heart.svg" alt="" />
           </q-icon>
         </q-btn>
         <q-btn flat padding="0 8px" class="bg-white">
-          <q-icon size="44px">
+          <q-icon size="32px">
             <img src="~assets/icons/share.svg" alt="" />
           </q-icon>
         </q-btn>

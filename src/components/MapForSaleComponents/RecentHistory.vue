@@ -212,6 +212,7 @@ export default {
   },
   computed: {
     getOptions() {
+      console.log(this.item);
       return [
         { value: "", label: "전체" },
         {
@@ -222,27 +223,27 @@ export default {
         {
           value: "SINGLE",
           label: "단독다가구",
-          disable: this.item?.some((obj) => obj.category === "SINGLE")
+          disable: !this.item?.some((obj) => obj.category === "SINGLE")
         },
         {
           value: "OFFICETEL",
           label: "오피스텔",
-          disable: this.item?.some((obj) => obj.category === "OFFICETEL")
+          disable: !this.item?.some((obj) => obj.category === "OFFICETEL")
         },
         {
           value: "APARTMENT",
           label: "아파트",
-          disable: this.item?.some((obj) => obj.category === "APARTMENT")
+          disable: !this.item?.some((obj) => obj.category === "APARTMENT")
         },
         {
           value: "LAND",
           label: "토지",
-          disable: this.item?.some((obj) => obj.category === "LAND")
+          disable: !this.item?.some((obj) => obj.category === "LAND")
         },
         {
           value: "ALLIANCE",
           label: "연립/다세대",
-          disable: this.item?.some((obj) => obj.category === "ALLIANCE")
+          disable: !this.item?.some((obj) => obj.category === "ALLIANCE")
         }
       ];
     },
