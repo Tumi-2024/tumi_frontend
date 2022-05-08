@@ -1,14 +1,14 @@
 <template>
   <q-item
     class="column notosanskr-regular"
-    :to="{ name: !disabled ? to : '', query }"
+    :to="{ name: !disabled ? to : '', query: !disabled ? query : '' }"
     :manual-focus="disabled"
     @mouseenter="onHover = true"
     @mouseleave="onHover = false"
     :focused="isSelected || onHover"
   >
     <div class="row">
-      <div class="column" style="flex: 1 0 300px; margin-right: 20px">
+      <div class="column" style="flex-basis: 300px; margin-right: 20px">
         <q-item-section>
           <address-with-badges
             :item="{
@@ -27,7 +27,7 @@
           />
         </q-item-section>
       </div>
-      <div class="flex items-center q-py-sm" style="flex: 1 1 600px">
+      <div class="flex items-center q-py-sm" style="flex: 1">
         <area-item-info :item="item" />
       </div>
     </div>

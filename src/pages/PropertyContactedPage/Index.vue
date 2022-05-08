@@ -1,13 +1,13 @@
 <template>
-  <div class="q-mt-sm" style="max-width: 1000px;">
+  <div class="q-mt-sm" style="max-width: 1000px">
     <property-menu-sort
-      @edit="e => (isEdit = e)"
+      @edit="(e) => (isEdit = e)"
       :isEdit="isEdit"
     ></property-menu-sort>
-    <property-filter
-      :apartment="getCountApartment()"
+    <!-- <property-filter
+      :apartment="()"
       :office="getCountOfficetels()"
-    ></property-filter>
+    ></property-filter> -->
     <property-list-items
       :items="propertyItems"
       @deleteItems="deleteItems"
@@ -19,7 +19,7 @@
 <script>
 import {
   PropertyMenuSort,
-  PropertyFilter,
+  // PropertyFilter,
   PropertyListItems,
   PropertyMixin
 } from "src/components/PropertyPageComponents";
@@ -27,7 +27,7 @@ export default {
   name: "Property-Contacted",
   components: {
     "property-menu-sort": PropertyMenuSort,
-    "property-filter": PropertyFilter,
+    // "property-filter": PropertyFilter,
     "property-list-items": PropertyListItems
   },
   mixins: [PropertyMixin],
@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getContactHouses');
+    this.$store.dispatch("getContactHouses");
   }
 };
 </script>

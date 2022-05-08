@@ -2,33 +2,26 @@
   <q-card flat class="q-mt-sm">
     <q-card-section
       class="sort-header row bg-white q-pa-none notosanskr-medium"
-      style="height: 48px;"
+      style="height: 48px"
     >
-      <p style="line-height: 48px; padding-left: 16px;">
-        관심매물 <span style="color: #ff5a00;">{{ houseCount }}</span>개
+      <p style="line-height: 48px; padding-left: 16px">
+        관심매물
+        <span style="color: #ff5a00"> {{ houseCount }} </span>
+        개
       </p>
     </q-card-section>
 
     <q-card-section
-      class="sort-section row bg-positive q-pa-none notosanskr-regular"
+      class="sort-section row bg-positive q-pa-none notosanskr-regular justify-end"
       align="center"
     >
-      <q-btn flat :class="{'text-primary': order==='created'}" @click="sort('created')">최신순</q-btn>
-      <q-separator vertical />
-      <q-btn flat :class="{'text-primary': order==='recommend'}" @click="sort('recommend')">추천순</q-btn>
-      <q-separator vertical />
-      <q-btn flat :class="{'text-primary': order==='area_exclusive'}" @click="sort('area_exclusive')">면적순</q-btn>
-      <q-separator vertical />
-      <q-btn flat :class="{'text-primary': order==='price_string'}" @click="sort('price_string')">가격순</q-btn>
-
       <q-btn
         flat
-        class="absolute-right"
         :text-color="isEdit ? 'primary' : 'dark'"
         @click="edit()"
         v-if="!hideEdit"
       >
-        <q-icon size="24px" style="margin-right: 3px;">
+        <q-icon size="24px" style="margin-right: 3px">
           <svg
             width="20"
             height="20"
@@ -70,25 +63,25 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
-      order: 'created',
-    }
+      order: "created"
+    };
   },
   computed: {
     houseCount() {
-      if(this.$route.name === 'recently_seen') {
-        return this.$store.getters.recently_viewed_houses.length
+      if (this.$route.name === "recently_seen") {
+        return this.$store.getters.recently_viewed_houses.length;
       }
-      return this.$store.getters.interest_houses.length
+      return this.$store.getters.interest_houses.length;
     }
   },
   methods: {
-    sort(order) {
-      if(this.order === order) return
-      this.order = order
-      this.$emit("sort", this.order)
-    },
+    // sort(order) {
+    //   if (this.order === order) return;
+    //   this.order = order;
+    //   this.$emit("sort", this.order);
+    // },
     edit() {
       this.$emit("edit", !this.isEdit);
     }

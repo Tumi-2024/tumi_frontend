@@ -369,7 +369,7 @@ export default {
         {
           label: "주위환경(2)",
           value: this.getArrayOrString(houseInfo.type_environment_surrounding2),
-          class: "col-sm-12 col-md-12"
+          class: "col-sm-12 col-md-12 borderb"
         },
 
         {

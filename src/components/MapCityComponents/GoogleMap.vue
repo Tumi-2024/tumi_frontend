@@ -383,22 +383,17 @@ export default {
     },
     viewArea(item) {
       this.map.panTo(item.position);
-      this.map.addListener("idle", () => {
-        console.log(item.position);
-        const zoomLevel = this.map.getZoom();
-        this.setMapZoom(zoomLevel);
-        this.setMapCenter(item.position);
-
-        const getRouterParams = () => {
-          if (this.$route.path === "/map/city/area") {
-            return { name: "map_list_sale", query: { transactionid: item.id } };
-          } else {
-            return { name: "for_sale_apartment", query: { sellid: item.id } };
-          }
-        };
-
-        this.$router.push(getRouterParams());
-      });
+      const zoomLevel = this.map.getZoom();
+      this.setMapZoom(zoomLevel);
+      this.setMapCenter(item.position);
+      const getRouterParams = () => {
+        if (this.$route.path === "/map/city/area") {
+          return { name: "map_list_sale", query: { transactionid: item.id } };
+        } else {
+          return { name: "for_sale_apartment", query: { sellid: item.id } };
+        }
+      };
+      this.$router.push(getRouterParams());
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);

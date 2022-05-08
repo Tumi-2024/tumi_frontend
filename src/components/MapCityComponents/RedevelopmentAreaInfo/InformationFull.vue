@@ -8,12 +8,12 @@
     @hide="toggleDialog(false)"
   >
     <q-card flat class="dialog overflow-hidden">
-      <div style="background-color: #E8E8E8;">
+      <div style="background-color: #e8e8e8">
         <div class="header-section notosanskr-medium">
           재개발 구역정보
           <div>
             <q-btn flat padding="0 8px" class="bg-white" @click="like()">
-              <q-icon size="44px">
+              <q-icon size="32px">
                 <!-- <img src="~assets/icons/hearted.svg" alt="" /> -->
                 <img src="~assets/icons/heart.svg" alt="" />
               </q-icon>
