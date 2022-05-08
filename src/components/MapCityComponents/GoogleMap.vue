@@ -297,7 +297,6 @@ export default {
     },
     dragEnd() {
       const { center } = this.map;
-      console.log();
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
@@ -310,12 +309,10 @@ export default {
       const result = await Vue.prototype.$axios.get(
         `/redevelopment_areas/${id}/`
       );
-      console.log(result, "result");
       this.changeMapSelectedArea(result.data);
     },
     idle() {
       this.setLocationLoading(false);
-      console.log("idle");
       this.getHouseInfo();
       this.getRedevInfo();
     },
@@ -357,7 +354,6 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
-      console.log("getHouseInfo");
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],

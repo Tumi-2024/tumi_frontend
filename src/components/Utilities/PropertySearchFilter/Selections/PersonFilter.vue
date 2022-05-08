@@ -29,11 +29,11 @@ export default {
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery", "getOption"]),
     getTeamTree() {
-      return this.teamsData.map(obj => {
+      return this.teamsData.map((obj) => {
         return {
           label: obj.title,
           id: `team-${obj.id}`,
-          children: obj.users.map(obj2 => {
+          children: obj.users.map((obj2) => {
             return { label: obj2.name, id: obj2.id };
           })
         };
@@ -48,7 +48,6 @@ export default {
     // const { data: userData } = await Vue.prototype.$axios.get(
     //   `/users/${index}/`
     // );
-    console.log(this.getOption("users"));
     this.ticked = this.getOption("users");
   },
   data() {

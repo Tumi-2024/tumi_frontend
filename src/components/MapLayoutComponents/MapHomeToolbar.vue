@@ -45,7 +45,6 @@ export default {
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
     typeOfProduct() {
-      console.log(this.$route);
       let text = "매물";
       if (this.$route.path === "/map/city/area") {
         text = "실거래가";

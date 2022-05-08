@@ -109,8 +109,6 @@ export default {
     ...mapGetters(["estate", "getViewRedevOnly"]),
     ...mapGetters("map", ["getIsCone", "getAreaType"]),
     getLabel() {
-      console.log(this.type.find((obj) => obj.key === this.getAreaType));
-      console.log(this.getAreaType);
       return this.type.find(({ key }) => key === this.getAreaType)?.label;
     },
     getColor() {

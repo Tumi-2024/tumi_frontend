@@ -103,7 +103,6 @@ export default {
   methods: {
     ...mapActions("searchQuery", ["setQuery"]),
     onClick(item) {
-      console.log(item);
       // this.categories = [
       //   {
       //     icon: require("assets/iconsNew/11.png"),
@@ -113,7 +112,6 @@ export default {
       //   }
       // ];
       this.setQuery([{ key: "categories", data: item }]);
-      console.log(item);
       if (this.shape === "house") {
         this.$router.push({ name: "map_city" });
       } else {

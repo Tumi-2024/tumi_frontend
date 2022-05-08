@@ -96,15 +96,12 @@ export default {
           ok: "확인",
           cancel: "취소"
         })
-        .onOk(() => {
-          console.log("OK");
-        })
+        .onOk(() => {})
         .onCancel(() => {
           // this.$emit(
           //   "deleteItems",
           //   this.items.map((x) => x.id)
           // );
-          console.log("Cancel");
         });
     }
   },

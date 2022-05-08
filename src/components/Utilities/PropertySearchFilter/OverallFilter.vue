@@ -5,7 +5,7 @@
       outline
       :color="!disable ? 'primary' : 'orange-3'"
       padding="8px"
-      style="border-radius: 8px; height: 36px;"
+      style="border-radius: 8px; height: 36px"
       class="q-mx-xs"
       @click="modal = true"
       :disable="disable"
@@ -34,7 +34,7 @@
           <!-- Property Type | 주택 유형 -->
           <property-type
             class="q-pb-xl bg-white q-mt-sm"
-            style="padding-top:36px"
+            style="padding-top: 36px"
             @select="setSelected('categories', $event)"
             :value="categories"
             :isUnique="true"
@@ -207,16 +207,12 @@ export default {
         { label: "최대면적", value: 100000 }
       ];
 
-      console.log("reset");
       // this.overallFilter = this.setInitValue();
-      // console.log(this.overallFilter, "reset");
     },
     setSelected(property, value) {
       this[property] = value;
     },
     applyFilters() {
-      console.log("this.areas", this.areas);
-      console.log("this.areaType", this.areaType);
       this.setQuery([
         { key: "categories", data: this.categories },
         { key: "prices", data: this.prices },

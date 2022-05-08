@@ -145,7 +145,6 @@ export default {
       const { data } = await Vue.prototype.$axios.get(
         "/houses/?is_recommend=true"
       );
-      console.log(data);
       this.recommends = data.results
         .map((obj) => {
           return { value: obj?.id, label: obj?.address };
@@ -157,10 +156,8 @@ export default {
       this.options = [];
       let data;
       if (!obj.isRedev) {
-        console.log(`/houses/?search=${obj.value}`, obj);
         data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
       } else {
-        console.log(`/houses/?redevelopment_area=${obj.value}`, obj);
         data = await Vue.prototype.$axios.get(
           `/houses/?redevelopment_area=${obj.value}`
         );

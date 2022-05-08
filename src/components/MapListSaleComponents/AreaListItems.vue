@@ -109,7 +109,6 @@ export default {
   },
   methods: {
     onSearch(e) {
-      console.log(e);
       if (e.length !== 0) {
         this.getHouseData(e);
       }
@@ -142,7 +141,6 @@ export default {
           params: query
         }
       );
-      console.log(data);
 
       this.saleList = data;
     }

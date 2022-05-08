@@ -212,7 +212,6 @@ export default {
   },
   computed: {
     getOptions() {
-      console.log(this.item);
       return [
         { value: "", label: "전체" },
         {
@@ -258,7 +257,6 @@ export default {
           itemValue = item.text_size_total;
           return itemValue;
         } else if (select.value === "text_size_daeji") {
-          console.log(item);
           itemValue =
             item.text_size_daeji ||
             item.text_size_land ||

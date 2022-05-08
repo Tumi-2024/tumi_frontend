@@ -12,7 +12,6 @@ export const areaStore = {
       return state.areas;
     },
     getMapSelectedArea: (state) => {
-      console.log("getMapSelectedArea", state.selectedArea);
       return state.selectedArea;
     }
   },
@@ -39,7 +38,6 @@ export const areaStore = {
             return arrInitPrice;
           }
         };
-        console.log(getQueryString2("categories", "valueHouse"));
         const query = Vue.prototype.$qs.stringify(
           {
             type_house__in: getQueryString2("categories", "valueHouse"),

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-sm" style="max-width: 1000px;">
+  <div class="q-mt-sm" style="max-width: 1000px">
     <real-estate-post :item="firstInsight"></real-estate-post>
     <real-estate-list-items :items="otherInsights"></real-estate-list-items>
     <real-estate-footer></real-estate-footer>
@@ -24,43 +24,38 @@ export default {
       tab: null
     };
   },
-  async created () {
+  async created() {
     if (this.$route.params && this.$route.params.tab) {
-      this.tab = this.$route.params.tab
+      this.tab = this.$route.params.tab;
     }
-    console.log(`
-    zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-    CREATE CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE  CREATE 
-    zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-    `)
-    this.$store.dispatch('getEstate')
-    this.$store.dispatch('getPolicy')
-    this.$store.dispatch('getMarket')
+    this.$store.dispatch("getEstate");
+    this.$store.dispatch("getPolicy");
+    this.$store.dispatch("getMarket");
   },
   computed: {
-    insightsResults () {
-      if (this.$route.query.tab === 'estate') {
-        return this.$store.getters.estateInsights
-      } else if (this.$route.query.tab === 'policy') {
-        return this.$store.getters.policyInsights
-      } else if (this.$route.query.tab === 'market') {
-        return this.$store.getters.marketInsights
+    insightsResults() {
+      if (this.$route.query.tab === "estate") {
+        return this.$store.getters.estateInsights;
+      } else if (this.$route.query.tab === "policy") {
+        return this.$store.getters.policyInsights;
+      } else if (this.$route.query.tab === "market") {
+        return this.$store.getters.marketInsights;
       } else {
-        return this.$store.getters.estateInsights
+        return this.$store.getters.estateInsights;
       }
     },
-    firstInsight () {
+    firstInsight() {
       if (this.insightsResults && this.insightsResults.length >= 1) {
-        return this.insightsResults[0]
+        return this.insightsResults[0];
       } else {
-        return null
+        return null;
       }
     },
-    otherInsights () {
-      return this.insightsResults.slice(1)
+    otherInsights() {
+      return this.insightsResults.slice(1);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

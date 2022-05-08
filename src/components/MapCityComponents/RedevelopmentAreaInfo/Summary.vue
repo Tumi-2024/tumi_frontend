@@ -429,8 +429,6 @@ export default {
       `redevelopment_areas/${this.getMapSelectedArea.id}/transactions/?page_size=1000`
     );
     this.transactions = data.results;
-    console.log(this.transactions);
-    // this.getCtgrGraphData("ALLIANCE");
   }
 };
 </script>

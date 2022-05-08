@@ -118,7 +118,6 @@ export default {
     // ]),
     // COMPONENTS METHODS STARTS ***
     select(obj, key) {
-      console.log("select", obj, key);
       this.selected = obj;
       this.keyName = key;
     },
@@ -126,8 +125,6 @@ export default {
       this.selectedDetail = val;
     },
     save() {
-      console.log(this.$refs, "sabe");
-      console.log(this.$refs.component.keyName, "sabe");
       this.setQuery({
         key: this.$refs.component.keyName || this.keyName,
         data: this.selected

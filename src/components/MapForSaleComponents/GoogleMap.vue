@@ -87,7 +87,6 @@ export default {
       //   lng: map.center.lng()
       // });
       this.$router.back();
-      console.log("test", map);
     },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;

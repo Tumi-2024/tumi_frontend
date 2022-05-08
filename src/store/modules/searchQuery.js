@@ -109,7 +109,6 @@ export const searchQueryStore = {
     getQueryString2: (state, getters) => {
       return (key, contentKey) => {
         let query = "";
-        // console.log(state.query);
         if (Array.isArray(state.query[key])) {
           query = state.query[key].map((obj) => {
             if (typeof obj === "number") {
@@ -126,7 +125,6 @@ export const searchQueryStore = {
     getQueryString: (state, getters) => {
       return (key, altkey, contentKey) => {
         // https://admin.tumi.sunwook.com/api/houses/?type_house__in=아파트,연립ￜ다세대
-        console.log(state.query[key]);
         const query = state.query[key]
           .map((obj) => {
             return obj[contentKey];
@@ -145,8 +143,6 @@ export const searchQueryStore = {
   mutations: {
     SET_QUERY: (state, { key, data }) => {
       const keyObj = state.query[key];
-      // console.log(`key=${key}`, "keyObj", keyObj);
-      console.log(state.query[key], data, "data");
       if (keyObj) {
         state.query[key] = data;
       } else {
