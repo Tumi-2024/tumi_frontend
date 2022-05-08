@@ -7,8 +7,9 @@
           :options="types"
           filled
           label="유형"
-          style="width: 400px"
+          style="flex-basis: 400px"
           :rules="[(val) => val.length || '타입을 선택해주세요.']"
+          map-options
           emit-value
         >
           <template v-slot:before>
@@ -22,7 +23,7 @@
           filled
           label="소속"
           option-label="title"
-          style="width: 400px"
+          style="flex-basis: 400px"
           option-value="id"
           map-options
           emit-value
@@ -51,7 +52,7 @@
           filled
           v-model="phone"
           label="업무용 휴대폰번호"
-          style="width: 400px"
+          style="flex-basis: 400px"
           lazy-rules
           mask="###-####-####"
           :rules="[
@@ -68,7 +69,7 @@
           filled
           v-model="email"
           label="업무용 이메일"
-          style="width: 400px"
+          style="flex-basis: 400px"
           type="email"
           lazy-rules
           autocomplete="none"
@@ -87,7 +88,7 @@
           filled
           v-model="phonePrivate"
           label="개인 휴대폰번호"
-          style="width: 400px"
+          style="flex-basis: 400px"
           lazy-rules
           mask="###-####-####"
           :rules="[
@@ -103,7 +104,7 @@
           filled
           v-model="emailPrivate"
           label="개인 이메일"
-          style="width: 400px"
+          style="flex-basis: 400px"
           type="email"
           lazy-rules
           :rules="[
@@ -131,7 +132,7 @@
         <q-input
           filled
           v-model="password"
-          style="width: 400px"
+          style="flex-basis: 400px"
           label="비밀번호"
           lazy-rules
           autocomplete="none"
@@ -149,7 +150,7 @@
         <q-input
           filled
           v-model="password2"
-          style="width: 400px"
+          style="flex-basis: 400px"
           label="비밀번호 확인"
           type="password"
           lazy-rules

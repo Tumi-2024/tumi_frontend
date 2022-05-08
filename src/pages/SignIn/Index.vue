@@ -1,18 +1,11 @@
 <template>
-  <q-card-section
-    class="q-pa-xl bg-white justify-center flex column items-center"
-  >
+  <q-card-section class="q-pa-xl bg-white justify-center flex column">
     <img
-      height="250"
+      style="width: 100%; max-width: 400px; align-self: center"
       :src="require('assets/tumi-icon-high.jpeg')"
       class="q-mr-sm"
     />
-    <q-form
-      @submit="onSubmit"
-      @reset="onReset"
-      style="width: 500px"
-      class="q-gutter-md q-mt-lg"
-    >
+    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md q-mt-lg">
       <q-input
         filled
         v-model="username"
