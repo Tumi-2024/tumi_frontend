@@ -9,16 +9,16 @@
     <!-- Google Map Starts -->
     <GmapMap
       @idle="idle"
-      @tilesloaded="tilesloaded"
       @dragend="dragEnd"
       @dragstart="dragStart"
+      @zoom_changed="zoomChanged"
       ref="mapRef"
-      :center="getMapCenter"
+      :center="initCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <template v-if="getMapZoom > 13">
+      <template v-if="getMapZoom > redevZoom">
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
@@ -39,7 +39,7 @@
           :marker="{ latitude: m.latitude, longitude: m.longitude }"
         >
           <div
-            v-if="getMapZoom <= 13"
+            v-if="getMapZoom <= redevZoom"
             class="bg-primary q-pa-md flex column justify-center items-center"
             style="
               height: 120px;
@@ -72,7 +72,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="14 <= getMapZoom && getMapZoom <= 17">
+          <template v-if="redevZoom < getMapZoom && getMapZoom <= 17">
             <div
               class="area-badge-info notosanskr-medium"
               @click="selectArea(badge)"
@@ -137,7 +137,9 @@ export default {
   },
   data() {
     return {
+      redevZoom: 13,
       map: null,
+      initCenter: null,
       mapSize: { height: "", width: "" },
       isShowCluster: true
     };
@@ -268,6 +270,9 @@ export default {
       }
     });
   },
+  beforeMount() {
+    this.initCenter = this.getMapCenter;
+  },
 
   watch: {
     getUserLocation(newVal) {
@@ -288,19 +293,24 @@ export default {
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
-    tilesloaded() {
-      const zoom = this.map.getZoom();
-      this.setMapZoom(zoom);
-    },
+    // tilesloaded() {
+    //   const zoom = this.map.getZoom();
+    //   this.setMapZoom(zoom);
+    // },
     dragStart() {
       this.changeMapSelectedArea(null);
     },
     dragEnd() {
+      console.log("dragEnd");
       const { center } = this.map;
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
       });
+    },
+    zoomChanged() {
+      const zoom = this.map.getZoom();
+      this.setMapZoom(zoom);
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -312,6 +322,11 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
+      // const { center } = this.map;
+      // this.changeMapCenter({
+      //   lat: center.lat(),
+      //   lng: center.lng()
+      // });
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -319,14 +334,15 @@ export default {
 
     async getRedevInfo() {
       const bounds = this.map.getBounds();
+      const ratio = 0;
       const boundLocation = {
         latitude: [
-          bounds.getSouthWest().lat() * 0.9997,
-          bounds.getNorthEast().lat() * 1.0003
+          bounds.getSouthWest().lat() * (1 - ratio),
+          bounds.getNorthEast().lat() * (1 + ratio)
         ],
         longitude: [
-          bounds.getSouthWest().lng() * 0.9997,
-          bounds.getNorthEast().lng() * 1.0003
+          bounds.getSouthWest().lng() * (1 - ratio),
+          bounds.getNorthEast().lng() * (1 + ratio)
         ]
       };
 
@@ -354,6 +370,7 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
+      if (this.getMapZoom > this.redevZoom) return;
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
