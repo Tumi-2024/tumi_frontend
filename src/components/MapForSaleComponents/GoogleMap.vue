@@ -19,7 +19,7 @@
         <!-- INPUT DESIRED CONTENTS -->
         <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
-          @viewArea="test"
+          @viewArea="$router.back()"
           :price="estate.group_trading_terms.price_selling_hope"
           :item="estate"
           :badges="{
@@ -80,14 +80,6 @@ export default {
   methods: {
     ...mapActions("map", ["setMapCenter"]),
 
-    test() {
-      const map = this.map;
-      // this.setMapCenter({
-      //   lat: map.center.lat(),
-      //   lng: map.center.lng()
-      // });
-      this.$router.back();
-    },
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;
