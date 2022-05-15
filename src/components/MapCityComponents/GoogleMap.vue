@@ -13,7 +13,7 @@
       @dragstart="dragStart"
       @zoom_changed="zoomChanged"
       ref="mapRef"
-      :center="initCenter"
+      :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
@@ -50,13 +50,13 @@
           >
             <span
               class="flex text-white justify-center"
-              style="font-weight: 700; font-size: 16px"
+              style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
             >
               {{ m.title }}
             </span>
             <span
               class="flex text-white justify-center q-mt-sm"
-              style="font-weight: 700; font-size: 15px"
+              style="font-weight: 700; font-size: calc((14 / 1312) * 100vh)"
             >
               {{
                 $route.path === "/map/city"
