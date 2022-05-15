@@ -1,8 +1,9 @@
 <template>
   <div>
-    <toolbar-nav class="bg-white" style="margin-bottom: 12px"></toolbar-nav>
-    <property-menu-sort hide-edit @sort="getProperties"></property-menu-sort>
-    <property-filter @filter="filter"
+    <toolbar-nav class="bg-white" style="margin-bottom: 12px" />
+    <property-menu-sort hide-edit @sort="getProperties" />
+    <property-filter
+      @filter="filter"
       :apartment="getCountType('아파트')"
       :office="getCountType('오피스텔')"
       :land="getCountType('토지')"
@@ -14,10 +15,13 @@
       class="bg-white"
     ></property-filter>
     <div class="bg-white">
-      <div  style="border-bottom: 1px solid #e8e8e8; margin: 0 16px"></div>
+      <div style="border-bottom: 1px solid #e8e8e8; margin: 0 16px" />
     </div>
     <q-card-section class="bg-white list-items q-pa-none notosanskr-regular">
-      <q-list class="bg-white q-pt-md" v-if="properties && properties.length > 0" >
+      <q-list
+        class="bg-white q-pt-md"
+        v-if="properties && properties.length > 0"
+      >
         <area-item
           v-for="(item, i) of properties"
           :key="i"
@@ -25,7 +29,7 @@
           :query="{ sellid: item.id }"
           v-bind="{
             ctgr: item.category,
-            type: item.type,
+            type: item.type
           }"
         ></area-item>
       </q-list>
@@ -39,7 +43,6 @@ import { AreaItem } from "src/components/MapListSaleComponents";
 import {
   PropertyMenuSort,
   PropertyFilter,
-  PropertyListItems,
   PropertyMixin
 } from "src/components/PropertyPageComponents";
 export default {
@@ -48,10 +51,9 @@ export default {
     "toolbar-nav": ToolbarNav,
     PropertyMenuSort,
     PropertyFilter,
-    PropertyListItems,
     "area-item": AreaItem
   },
-  mixins: [PropertyMixin],
+  mixins: [PropertyMixin]
 };
 </script>
 

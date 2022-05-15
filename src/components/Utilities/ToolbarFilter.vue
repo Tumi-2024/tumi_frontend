@@ -17,7 +17,8 @@
             ref="keywordRef"
             filled
             label="검색"
-            v-model="searchText"
+            :value="searchText"
+            @input-value="onChangeSearchText"
             @input="onSelect"
             :input-debounce="0"
             use-input
@@ -141,8 +142,13 @@ export default {
       "changeToolbarTitle"
     ]),
     onSelect(obj) {
+      console.log(obj);
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
+    },
+    onChangeSearchText(e) {
+      this.searchText = e;
+      this.options = [];
     },
     async filterFn(val, update, abort) {
       if (val !== "") {
