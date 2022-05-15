@@ -40,10 +40,11 @@
         >
           <div
             v-if="getMapZoom <= redevZoom"
-            class="bg-primary q-pa-md flex column justify-center items-center"
+            class="bg-primary flex column justify-center items-center"
             style="
-              height: calc((110 / 1312) * 100vh);
-              width: calc((110 / 1312) * 100vh);
+              height: calc((120 / 1312) * 100vh);
+              width: calc((120 / 1312) * 100vh);
+              padding: calc((10 / 1312) * 100vh);
               border-radius: 100%;
               opacity: 0.72;
             "
