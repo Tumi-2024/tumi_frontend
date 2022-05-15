@@ -1,9 +1,7 @@
 <template>
-  <q-card flat class="bg-white ">
+  <q-card flat class="bg-white">
     <q-card-section class="q-pb-none justify-between">
-      <div class="title-heading notosanskr-medium">
-        실거래가 히스토리
-      </div>
+      <div class="title-heading notosanskr-medium">실거래가 히스토리</div>
       <q-tabs
         v-model="tab"
         align="justify"

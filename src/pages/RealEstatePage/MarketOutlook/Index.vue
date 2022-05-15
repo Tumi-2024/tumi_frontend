@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-sm" style="max-width: 1000px;">
+  <div class="q-mt-sm" style="max-width: 1000px">
     <real-estate-post></real-estate-post>
     <real-estate-list-items></real-estate-list-items>
     <real-estate-footer></real-estate-footer>
@@ -15,9 +15,9 @@ import {
 export default {
   name: "Recently-Seen",
   components: {
-    "real-estate-post":RealEstatePost,
-    "real-estate-list-items":RealEstateListItems,
-    "real-estate-footer":RealEstateFooter,
+    "real-estate-post": RealEstatePost,
+    "real-estate-list-items": RealEstateListItems,
+    "real-estate-footer": RealEstateFooter
   },
   data() {
     return {};

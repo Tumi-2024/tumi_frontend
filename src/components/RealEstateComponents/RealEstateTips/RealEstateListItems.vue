@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="q-mt-sm" style="margin-top: 0px;">
+  <q-card flat class="q-mt-sm" style="margin-top: 0px">
     <q-card-section class="list-items q-pa-none">
       <q-list class="q-pt-md">
         <real-estate-item
@@ -26,13 +26,15 @@ export default {
         {
           title: "신축빌라 분양투자, 주의하셔야 합니다",
           date: "20.11.01",
-          description: "코로나 19 확산으로 정비사업 조합원 총회 연기가 속출하면서 오는 11월 28일로 예정된 민간택지 분양가상한제 유예기간을 연장해달라는 지방...",
+          description:
+            "코로나 19 확산으로 정비사업 조합원 총회 연기가 속출하면서 오는 11월 28일로 예정된 민간택지 분양가상한제 유예기간을 연장해달라는 지방..."
         },
         {
           title: "신축빌라 분양투자, 주의하셔야 합니다",
           date: "20.11.01",
-          description: "코로나 19 확산으로 정비사업 조합원 총회 연기가 속출하면서 오는 11월 28일로 예정된 민간택지 분양가상한제 유예기간을 연장해달라는 지방...",
-        },
+          description:
+            "코로나 19 확산으로 정비사업 조합원 총회 연기가 속출하면서 오는 11월 28일로 예정된 민간택지 분양가상한제 유예기간을 연장해달라는 지방..."
+        }
         // {
         //   title: "신축빌라 분양투자, 주의하셔야 합니다",
         //   date: "20.11.01",

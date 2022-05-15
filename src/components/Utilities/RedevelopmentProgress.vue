@@ -29,7 +29,10 @@
 <script>
 export default {
   props: {
-    title: "",
+    title: {
+      type: String,
+      default: ""
+    },
     items: {
       type: Array,
       default: () => [{ title: "", date: "" }]

@@ -31,7 +31,7 @@ export default {
   props: {
     cost: {
       type: Array,
-      default: [{ label: "", value: "", icon: "" }]
+      default: () => [{ label: "", value: "", icon: "" }]
     }
   },
   methods: {
