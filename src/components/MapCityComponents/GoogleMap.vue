@@ -42,8 +42,8 @@
             v-if="getMapZoom <= redevZoom"
             class="bg-primary q-pa-md flex column justify-center items-center"
             style="
-              height: 120px;
-              width: 120px;
+              height: calc((110 / 1312) * 100vh);
+              width: calc((110 / 1312) * 100vh);
               border-radius: 100%;
               opacity: 0.72;
             "

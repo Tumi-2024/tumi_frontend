@@ -1,6 +1,6 @@
 <template>
   <q-card flat square>
-    <q-card-section class="row justify-between items-center q-pa-none">
+    <q-card-section class="row justify-between items-center q-py-sm q-px-none">
       <!-- left section items -->
       <div class="row items-center">
         <div
