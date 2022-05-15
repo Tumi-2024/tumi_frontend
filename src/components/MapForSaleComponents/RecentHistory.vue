@@ -145,7 +145,7 @@
                         : 'rgba(0, 164, 170)'
                     }"
                   >
-                    {{ tabs.find((tab) => tab.level === item.type).label }}
+                    {{ getTabLabel(item) }}
                   </div>
 
                   <!-- 번지/ 건물단지 명 -->
@@ -201,8 +201,8 @@ export default {
       tabs: [
         { level: "all", label: "전체" },
         { level: "SALE", label: "매매" },
-        { level: "RENT", label: "전세" }
-        // { level: "monthly", label: "월세" }
+        { level: "RENT", label: "전세" },
+        { level: "monthly", label: "월세" }
       ],
       select: {
         label: "전용면적",
@@ -211,6 +211,14 @@ export default {
     };
   },
   computed: {
+    getTabLabel() {
+      return ({ text_price_monthly: priceMonthly, type }) => {
+        if (!!priceMonthly && Number(priceMonthly) > 0) {
+          return "월세";
+        }
+        return this.tabs.find((tab) => tab.level === type).label;
+      };
+    },
     getOptions() {
       return [
         { value: "", label: "전체" },
@@ -318,6 +326,25 @@ export default {
       if (this.activeTab === "all") {
         return results;
       }
+
+      if (this.activeTab === "monthly") {
+        return results
+          .filter(({ type }) => type === "RENT")
+          .filter(
+            ({ text_price_monthly: priceMonthly }) =>
+              !!priceMonthly && Number(priceMonthly) > 0
+          );
+      }
+
+      if (this.activeTab === "RENT") {
+        return results
+          .filter(({ type }) => type === "RENT")
+          .filter(
+            ({ text_price_monthly: priceMonthly }) =>
+              !priceMonthly || Number(priceMonthly) === 0
+          );
+      }
+
       return results.filter(
         (transaction) => transaction.type === this.activeTab
       );

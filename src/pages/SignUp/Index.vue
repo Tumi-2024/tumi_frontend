@@ -248,8 +248,8 @@ export default {
           username: this.id,
           email: this.email,
           phone: this.phone,
-          emailPrivate: this.emailPrivate,
-          phonePrivate: this.phonePrivate,
+          email_private: this.emailPrivate,
+          phone_private: this.phonePrivate,
           password: this.password,
           password2: this.password2
         })
