@@ -25,27 +25,6 @@
               <q-icon @click="onSearch" name="search" />
             </template>
           </q-input>
-
-          <!-- <q-select
-            ref="keywordRef"
-            filled
-            label="검색"
-            v-model="searchText"
-            @input="onSelect"
-            use-input
-            fill-input
-            hide-selected
-            clearable
-            :options="options"
-            @filter="filterFn"
-            style="width: 250px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey"> No results </q-item-section>
-              </q-item>
-            </template>
-          </q-select> -->
         </div>
       </div>
       <div class="flex">
@@ -73,7 +52,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
@@ -146,6 +124,7 @@ export default {
       "changeToolbarTitle"
     ]),
     onSearch() {
+      console.log("test");
       this.$emit("search", this.searchText);
     }
   }
