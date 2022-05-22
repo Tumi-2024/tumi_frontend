@@ -8,7 +8,7 @@
       @click="modal = true"
       :disable="disable"
     >
-      <span style="min-width: 5vw">{{ label }}</span>
+      <span style="min-width: 5vh">{{ label }}</span>
     </q-btn>
 
     <!-- Dialog Section -->
@@ -149,10 +149,10 @@ export default {
   background: #ffffff;
   border: 1px solid #dbdbdb;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 500;
   line-height: calc((36 / 1312) * 100vh);
-  font-size: calc((14 / 1312) * 100vh);
+  font-size: calc((16 / 1312) * 100vh);
   text-align: center;
   letter-spacing: -1.05px;
   color: #1a1a1a;

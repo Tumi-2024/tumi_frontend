@@ -9,6 +9,7 @@
       :houseId="houseId"
       :redirect="redirect"
       :created="created"
+      :redevName="redevName"
     />
   </div>
 </template>
@@ -26,7 +27,14 @@ export default {
     tags: Array,
     isRedevelop: Boolean,
     redirect: Boolean,
-    created: String
+    created: {
+      type: String,
+      required: false
+    },
+    redevName: {
+      type: String,
+      required: false
+    }
   }
 };
 </script>

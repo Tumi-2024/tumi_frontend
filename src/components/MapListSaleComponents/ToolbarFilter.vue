@@ -16,6 +16,7 @@
           <q-input
             v-model="searchText"
             filled
+            dense
             class="q-mr-sm"
             type="search"
             placeholder="검색"

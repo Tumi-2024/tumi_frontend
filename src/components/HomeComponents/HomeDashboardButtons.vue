@@ -54,7 +54,7 @@ export default {
         },
         {
           backgroundColor: "#5893F7",
-          text: "부동산<br />인사이트",
+          text: "부동산 인사이트",
           img: require("assets/iconsNew/20InSight.png"),
           func: () => this.$router.push("/insights/부동산팁")
         }
@@ -89,7 +89,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .btn-dash-board {
   min-height: 180px;
   color: #fff;
@@ -102,8 +102,12 @@ export default {
   left: 0;
   margin-top: calc((16 / 1312) * 100vh);
   margin-left: calc((16 / 1312) * 100vh);
-
-  font-size: calc((21 / 1312) * 100vh);
+  @media (max-width: 599px) {
+    font-size: 13px;
+  }
+  @media (min-width: 600px) {
+    font-size: 18px;
+  }
   text-align: left;
   font-family: "notosanskr-medium";
 }
@@ -114,7 +118,13 @@ export default {
   left: 0;
   margin-top: calc((50 / 1312) * 100vh);
   margin-left: calc((16 / 1312) * 100vh);
-  font-size: calc((14 / 1312) * 100vh);
+  @media (max-width: 599px) {
+    font-size: 12px;
+  }
+  @media (min-width: 600px) {
+    font-size: 15px;
+  }
+
   font-family: "notosanskr-regular";
   text-align: left;
 }
@@ -123,9 +133,14 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: calc((72 / 1312) * 100vh);
+  margin-top: calc((80 / 1312) * 100vh);
   margin-left: calc((16 / 1312) * 100vh);
-  font-size: calc((14 / 1312) * 100vh);
+  @media (max-width: 599px) {
+    font-size: 10px;
+  }
+  @media (min-width: 600px) {
+    font-size: 12px;
+  }
   font-family: "notosanskr-regular";
   text-align: left;
 }

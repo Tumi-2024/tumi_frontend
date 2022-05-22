@@ -9,7 +9,7 @@
     >
       <toolbar-filter class="q-pt-xs q-px-sm" @search="onSearch" />
       <div class="flex row justify-between">
-        <div
+        <!-- <div
           class="flex items-center"
           v-for="(btn, btnIndex) of sortButtons"
           :key="btnIndex"
@@ -19,7 +19,7 @@
             {{ btn.text }}
           </q-btn>
           <q-separator v-if="btnIndex !== sortButtons.length - 1" vertical />
-        </div>
+        </div> -->
       </div>
     </q-card-section>
 
@@ -78,23 +78,23 @@ export default {
   },
   data() {
     return {
-      sortButtons: [
-        {
-          text: "최신순",
-          class: "text-primary",
-          query: { ordering: "-created" }
-        },
-        {
-          text: "추천순",
-          class: "text-primary",
-          query: { ordering: "-index_recommend" }
-        },
-        {
-          text: "가격순",
-          class: "text-primary",
-          query: { ordering: "-price_selling_hope" }
-        }
-      ],
+      // sortButtons: [
+      //   {
+      //     text: "최신순",
+      //     class: "text-primary",
+      //     query: { ordering: "-created" }
+      //   },
+      //   {
+      //     text: "추천순",
+      //     class: "text-primary",
+      //     query: { ordering: "-index_recommend" }
+      //   },
+      //   {
+      //     text: "가격순",
+      //     class: "text-primary",
+      //     query: { ordering: "-price_selling_hope" }
+      //   }
+      // ],
       selectedIndex: 0,
       type: "transaction" /** sell  */,
       saleList: [],

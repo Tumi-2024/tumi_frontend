@@ -24,6 +24,7 @@
               ${item.text_building || item.text_danji || ''}`
             }"
             :tags="getBadges(item)"
+            :redevName="item.group_location.redevelopment_area.title_area"
           />
         </q-item-section>
       </div>
@@ -74,14 +75,6 @@ export default {
     toMoneyString,
     toSimpleMoneyString,
     toDateFormat,
-    getdate(string1, string2) {
-      const str1 = string1;
-      let str2 = string2;
-      if (str2.length === 1) {
-        str2 = 0 + str2;
-      }
-      return str1.slice(0, 4) + "." + str1.slice(4, 6) + "." + str2;
-    },
     reshape(item) {
       if (!item.group_building_house) {
         item.group_building_house = { type_house: item.type_house };
@@ -126,15 +119,29 @@ export default {
       return (item, ctgr) => {
         item = this.reshape(item);
         const getDate = (date) => {
-          const d = new Date(date);
-          const y = String(d.getFullYear()).split(0, 2)[1];
-          return y + String("." + d.getMonth());
+          const _d = new Date(date);
+          const d = _d.getMonth() > 10 ? _d.getMonth() : "0" + _d.getMonth();
+          const y = String(_d.getFullYear()).split(0, 2)[1];
+          return y + String("." + d);
         };
+
+        // const getIcon = () => {
+        //   switch (item.group_location.redevelopment_area.category) {
+        //     case "재개발":
+        //       return require("src/assets/icons/redevelop.svg");
+        //     default:
+        //       return require("src/assets/icons/redevelop.svg");
+        //   }
+        // };
+
+        console.log(item);
         return [
           {
             type: "transactionStatus",
-            value: item.transactionStatus ? false : "재개발",
-            icon: require("src/assets/icons/redevelop.svg")
+            value: item.transactionStatus
+              ? false
+              : item.group_location.redevelopment_area.category
+            // icon: getIcon()
           },
           { type: "houseType", value: item.group_building_house.type_house },
           { type: "redevelopment", value: item.redevelopment },

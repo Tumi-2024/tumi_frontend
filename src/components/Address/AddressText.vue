@@ -35,10 +35,13 @@
           </span>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="created">
         <div class="area-name q-mr-sm">매물 등록 일자</div>
         <div class="area-name bold">{{ getDate(created) }}</div>
       </div>
+    </div>
+    <div class="area-name q-mt-sm text-weight-bold" v-if="redevName">
+      {{ redevName }}
     </div>
   </q-item-section>
 </template>
@@ -73,7 +76,11 @@ export default {
     },
     created: {
       type: String,
-      required: true
+      required: false
+    },
+    redevName: {
+      type: String,
+      required: false
     }
   },
   data() {
@@ -132,30 +139,29 @@ export default {
 .title {
   display: flex;
   justify-content: space-between;
-  .area-name {
-    font-weight: 500;
-    font-size: calc((16 / 1312) * 100vh);
-    line-height: calc((22 / 1312) * 100vh);
-    letter-spacing: -1.05px;
-    color: #707070;
-    margin-left: 0px;
-    cursor: pointer;
+}
+.area-name {
+  font-weight: 500;
+  font-size: calc((16 / 1312) * 100vh);
+  line-height: calc((22 / 1312) * 100vh);
+  letter-spacing: -1.05px;
+  color: #707070;
+  margin-left: 0px;
+  cursor: pointer;
 
+  &.hover {
+    text-decoration: underline;
+    font-weight: bold;
+    color: rgb(255, 90, 0);
+  }
+  &.sub {
+    font-size: 13px;
     &.hover {
-      text-decoration: underline;
       font-weight: bold;
-      color: rgb(255, 90, 0);
     }
-    &.sub {
-      font-size: 13px;
-      &.hover {
-        font-weight: bold;
-      }
-    }
-    &.bold {
-      font-weight: 800;
-    }
+  }
+  &.bold {
+    font-weight: 800;
   }
 }
 </style>
-@
