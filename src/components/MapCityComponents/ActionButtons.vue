@@ -1,17 +1,17 @@
 <template>
   <div class="action-container q-px-sm">
     <q-btn color="white" padding="8px" @click="interestLocation()">
-      <q-icon size="45px">
+      <q-icon size="calc((30 / 1312) * 100vh)">
         <img
           v-if="!$store.state.map.isInterest"
           src="~assets/icons/heart.svg"
-          style="width: 30px"
+          style="width: calc((30 / 1312) * 100vh)"
           alt=""
           srcset=""
         />
         <img
           v-else
-          style="width: 30px"
+          style="width: calc((30 / 1312) * 100vh)"
           src="~assets/icons/hearted.svg"
           alt=""
           srcset=""
@@ -21,7 +21,7 @@
 
     <q-btn :color="getColor" @click="changeRedev" padding="8px">
       <div>
-        <q-icon size="45px">
+        <q-icon size="calc((30 / 1312) * 100vh)">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div class="off text-dark notosanskr-bold">
@@ -37,13 +37,8 @@
       @click="$emit('accessUserLocation')"
       v-if="!hideGps"
     >
-      <q-icon size="45px">
-        <img
-          style="width: 30px"
-          src="~assets/icons/target.svg"
-          alt=""
-          srcset=""
-        />
+      <q-icon size="calc((30 / 1312) * 100vh)">
+        <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
   </div>
@@ -133,10 +128,11 @@ export default {
   margin: 4px 0px;
   .off {
     font-weight: bold;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: calc((13 / 1312) * 100vh);
+    line-height: calc((16 / 1312) * 100vh);
     text-align: center;
     letter-spacing: -0.825px;
+
     color: #1a1a1a;
   }
 }

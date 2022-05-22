@@ -3,7 +3,7 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="getMapZoom > houseMapZoom"
+      :disable-heart="getMapZoom > 17"
       @showArea="showHideArea"
     />
     <!-- Google Map Starts -->
@@ -24,7 +24,7 @@
           :key="m.id"
           :options="{ disableAutoPan: true }"
           :position="m.position"
-          :opened="houseMapZoom < getMapZoom"
+          :opened="17 < getMapZoom"
         >
           <info-window-content
             @viewArea="viewArea(m)"
@@ -73,7 +73,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="redevZoom < getMapZoom && getMapZoom <= houseMapZoom">
+          <template v-if="redevZoom < getMapZoom && getMapZoom <= 17">
             <div
               class="area-badge-info notosanskr-medium"
               @click="selectArea(badge)"
@@ -98,7 +98,8 @@
                 <span
                   style="
                     font-size: calc((13 / 1312) * 100vh);
-                    line-height: calc((13 / 1312) * 100vh);
+                    line-height: calc((15 / 1312) * 100vh);
+
                     color: #333333;
                     padding: 3px 5px;
                   "
@@ -139,7 +140,6 @@ export default {
   data() {
     return {
       redevZoom: 13,
-      houseMapZoom: 17,
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },
@@ -372,14 +372,13 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
-      if (this.getMapZoom <= this.houseMapZoom) return;
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = { type: "subcity", ...location };
-      if (this.getMapZoom > this.houseMapZoom) {
+      if (this.getMapZoom > 17) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"
@@ -474,11 +473,11 @@ export default {
   background: #68814e;
   font-weight: 500;
   font-size: calc((16 / 1312) * 100vh);
-  line-height: calc((22 / 1312) * 100vh);
-  padding: calc((6 / 1312) * 100vh) calc((8 / 1312) * 100vh);
+  line-height: calc((20 / 1312) * 100vh);
   text-align: center;
   letter-spacing: -0.97px;
   color: #ffffff;
   border-radius: 8px;
+  padding: calc((4 / 1312) * 100vh) calc((8 / 1312) * 100vh);
 }
 </style>
