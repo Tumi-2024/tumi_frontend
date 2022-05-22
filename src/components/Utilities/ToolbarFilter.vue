@@ -2,7 +2,7 @@
   <q-card-section class="row items-center flex justify-end q-pa-none q-ma-none">
     <!-- Dialog containing all filters-->
 
-    <div class="col flex items-center justify-between">
+    <div class="col flex items-end justify-between">
       <div class="row items-center" style="margin-bottom: 12px; display: flex">
         <div class="column">
           <div class="helper text-left notosanskr-regular">
