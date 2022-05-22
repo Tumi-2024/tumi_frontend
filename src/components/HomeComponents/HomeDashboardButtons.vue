@@ -31,7 +31,8 @@ export default {
         {
           backgroundColor: "#4B62DE",
           text: "매물 지도",
-          subText1: "지도에서 쉽게<br/>매물 찾기",
+          subText1: "지도에서 쉽게",
+          subText2: `매물 찾기`,
           img: require("assets/iconsNew/20map.png"),
           func: this.toMapCity
         },
@@ -46,7 +47,8 @@ export default {
         {
           backgroundColor: "#FF7D36",
           text: "매물/실거래가 검색",
-          subText1: "매물/실거래가<br/>상세 검색하기",
+          subText1: "매물/실거래가",
+          subText2: `상세 검색하기`,
           img: require("assets/iconsNew/search.png"),
           func: () => this.$router.push({ name: "map_list_sale" })
         },
@@ -98,9 +100,10 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 16px;
-  margin-left: 16px;
-  font-size: 21px;
+  margin-top: calc((16 / 1312) * 100vh);
+  margin-left: calc((16 / 1312) * 100vh);
+
+  font-size: calc((21 / 1312) * 100vh);
   text-align: left;
   font-family: "notosanskr-medium";
 }
@@ -109,9 +112,9 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 50px;
-  margin-left: 16px;
-  font-size: 14px;
+  margin-top: calc((50 / 1312) * 100vh);
+  margin-left: calc((16 / 1312) * 100vh);
+  font-size: calc((14 / 1312) * 100vh);
   font-family: "notosanskr-regular";
   text-align: left;
 }
@@ -120,9 +123,9 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 72px;
-  margin-left: 16px;
-  font-size: 14px;
+  margin-top: calc((72 / 1312) * 100vh);
+  margin-left: calc((16 / 1312) * 100vh);
+  font-size: calc((14 / 1312) * 100vh);
   font-family: "notosanskr-regular";
   text-align: left;
 }
@@ -132,6 +135,6 @@ export default {
   right: 0;
   margin-top: 108px;
   margin-right: 20px;
-  width: 40px;
+  width: calc((40 / 1312) * 100vh);
 }
 </style>

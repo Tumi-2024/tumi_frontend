@@ -164,7 +164,7 @@ export default {
   height: 55px;
 }
 .helper {
-  font-size: 12px;
+  font-size: calc((60 / 1312) * 100vh);
   line-height: 16px;
   letter-spacing: -0.9px;
   color: #707070;

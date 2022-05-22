@@ -3,7 +3,7 @@
     <!-- Dialog containing all filters-->
 
     <div class="col flex items-center justify-between">
-      <div class="row items-center">
+      <div class="row items-center" style="margin-bottom: 12px; display: flex">
         <div class="column">
           <div class="helper text-left notosanskr-regular">
             {{ getToolbarLabel }}
@@ -12,11 +12,12 @@
             {{ getToolbarTitle }}
           </div>
         </div>
-        <div class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg">
+        <div class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg flex">
           <q-select
             ref="keywordRef"
             filled
             label="검색"
+            dense
             :value="searchText"
             @input-value="onChangeSearchText"
             @input="onSelect"
@@ -26,7 +27,7 @@
             hide-selected
             :options="options"
             @filter="filterFn"
-            style="width: 250px"
+            style="flex: 1"
           >
             <template v-slot:no-option>
               <q-item>
@@ -36,7 +37,7 @@
           </q-select>
         </div>
       </div>
-      <div class="flex">
+      <div class="flex" style="margin-bottom: 12px">
         <overall-filter :disable="disable" />
         <div
           class="scrolling-wrapper-flexbox notosanskr-medium row float-right"
@@ -44,10 +45,6 @@
         >
           <slot>
             <div class="items" v-for="(filter, i) of filters" :key="i">
-              <!-- <span class="text-black">{{ getOption(filter.keyName) }}</span> -->
-              <!-- <span class="text-black">{{ getOption(filter.label) }}</span> -->
-              <!-- <span class="text-black">{{ filter.keyName }}</span> -->
-
               <specific-filter
                 v-if="!filter.isHide"
                 :propsClass="filter.class"
@@ -207,15 +204,15 @@ export default {
   height: 55px;
 }
 .helper {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: calc((12 / 1312) * 100vh);
+  line-height: calc((16 / 1312) * 100vh);
   letter-spacing: -0.9px;
   color: #707070;
 }
 .location-text {
   font-weight: 500;
-  font-size: 21px;
-  line-height: 30px;
+  font-size: calc((21 / 1312) * 100vh);
+  line-height: calc((30 / 1312) * 100vh);
   letter-spacing: -1.575px;
   color: #1a1a1a;
 }

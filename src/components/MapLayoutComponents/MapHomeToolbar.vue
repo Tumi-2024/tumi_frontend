@@ -5,13 +5,16 @@
       <div class="row items-center">
         <div
           class="flex align-center location-text large text-left notosanskr-regular q-ml-sm"
+          style="height: calc((40 / 1312) * 100vh)"
         >
           <img
-            height="30"
             :src="require('assets/tumi-logo.png')"
             class="q-mr-sm"
+            style="height: 100%"
           />
-          {{ typeOfProduct }}
+          <span style="font-size: calc((30 / 1312) * 100vh)">
+            {{ typeOfProduct }}
+          </span>
         </div>
       </div>
       <!-- right section-items -->
@@ -73,14 +76,7 @@ export default {
   color: #707070;
 }
 .location-text {
-  font-weight: 500;
-  font-size: 21px;
-  line-height: 30px;
   letter-spacing: -1.575px;
   color: #1a1a1a;
-  &.large {
-    font-size: 24px;
-    line-height: 36px;
-  }
 }
 </style>

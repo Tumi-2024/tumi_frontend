@@ -3,7 +3,7 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="getMapZoom > 17"
+      :disable-heart="getMapZoom > houseMapZoom"
       @showArea="showHideArea"
     />
     <!-- Google Map Starts -->
@@ -24,7 +24,7 @@
           :key="m.id"
           :options="{ disableAutoPan: true }"
           :position="m.position"
-          :opened="17 < getMapZoom"
+          :opened="houseMapZoom < getMapZoom"
         >
           <info-window-content
             @viewArea="viewArea(m)"
@@ -42,8 +42,8 @@
             v-if="getMapZoom <= redevZoom"
             class="bg-primary flex column justify-center items-center"
             style="
-              height: calc((120 / 1312) * 100vh);
-              width: calc((120 / 1312) * 100vh);
+              height: calc((110 / 1312) * 100vh);
+              width: calc((110 / 1312) * 100vh);
               padding: calc((10 / 1312) * 100vh);
               border-radius: 100%;
               opacity: 0.72;
@@ -73,7 +73,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="redevZoom < getMapZoom && getMapZoom <= 17">
+          <template v-if="redevZoom < getMapZoom && getMapZoom <= houseMapZoom">
             <div
               class="area-badge-info notosanskr-medium"
               @click="selectArea(badge)"
@@ -139,6 +139,7 @@ export default {
   data() {
     return {
       redevZoom: 13,
+      houseMapZoom: 17,
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },
@@ -371,14 +372,14 @@ export default {
       await this.fetchMapAreas(rangeQuery);
     },
     getHouseInfo() {
-      if (this.getMapZoom > this.redevZoom) return;
+      if (this.getMapZoom <= this.houseMapZoom) return;
       const bounds = this.map.getBounds();
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = { type: "subcity", ...location };
-      if (this.getMapZoom > 17) {
+      if (this.getMapZoom > this.houseMapZoom) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"

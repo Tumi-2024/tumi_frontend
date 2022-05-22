@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "list-result",
   props: {
@@ -38,17 +40,38 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    type: {
+      type: String,
+      required: false,
+      default: "location"
     }
   },
   methods: {
-    goToHouse(sellid) {
-      // for-sale/apartment?sellid=16888
-      this.$router.push({
-        name: "for_sale_apartment",
-        query: {
-          sellid
-        }
-      });
+    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+
+    goToHouse(value) {
+      if (this.type === "location") {
+        this.$router.push({
+          name: "map_city"
+        });
+        this.changeMapZoom(16);
+        this.changeMapCenter(value);
+      } else if (this.type === "redevelopment") {
+        this.$router.push({
+          name: "map_city"
+        });
+        this.changeMapZoom(16);
+        this.changeMapCenter(value);
+      } else {
+        // for-sale/apartment?sellid=16888
+        this.$router.push({
+          name: "for_sale_apartment",
+          query: {
+            value
+          }
+        });
+      }
     }
   }
 };

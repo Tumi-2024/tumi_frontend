@@ -4,13 +4,16 @@
       unelevated
       outline
       :color="!disable ? 'primary' : 'orange-3'"
-      padding="8px"
-      style="border-radius: 8px; height: 36px"
-      class="q-mx-xs"
+      style="
+        border-radius: 8px;
+        width: calc((36 / 1312) * 100vh);
+        height: calc((36 / 1312) * 100vh);
+      "
+      class="q-mx-xs justify-center items-center"
       @click="modal = true"
       :disable="disable"
     >
-      <q-icon size="20px">
+      <q-icon size="calc((20 / 1312) * 100vh)">
         <img src="~assets/icons/Filter.svg" alt="filter" />
       </q-icon>
     </q-btn>

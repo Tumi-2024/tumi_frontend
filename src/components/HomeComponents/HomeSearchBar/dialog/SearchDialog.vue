@@ -23,38 +23,20 @@
         <div class="row">
           <q-radio v-model="shape" val="house" label="매물" />
           <q-radio v-model="shape" val="transaction" label="실거래가" />
-          <q-select
-            ref="keywordRef"
+          <q-input
             filled
-            label="검색"
-            v-model="text"
-            @input="onSelect"
-            :input-debounce="0"
             use-input
             fill-input
-            hide-selected
-            :options="options"
-            @filter="filterFn"
-            style="flex: 1"
+            wide
             class="q-ml-lg"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey"> No results </q-item-section>
-              </q-item>
-            </template>
-            <template v-slot:after>
-              <q-btn
-                flat
-                class="notosanskr-medium text-black"
-                dense
-                label="취소"
-              />
-            </template>
-          </q-select>
+            style="flex: 1"
+            @keydown.enter.prevent="onSearch"
+            v-model="text"
+          />
         </div>
       </q-card-section>
-      <template v-if="!houses.length">
+      <!-- {{ locations }} -->
+      <template v-if="!locations.length">
         <q-card-section>
           <list-result :list="this.recents">
             <template #title>
@@ -78,12 +60,47 @@
           <list-result :list="this.recents" />
         </q-card-section>
       </template>
+
       <q-card-section v-else>
+        <list-result :list="this.redevlopments" type="redevelopment">
+          <template #title>
+            <q-item-label class="no-margin no-padding" header>
+              <p style="font-size: 14px" class="text-black notosanskr-medium">
+                개발정비사업
+              </p>
+            </q-item-label>
+          </template>
+        </list-result>
+        <q-separator
+          color="positive"
+          inset
+          spaced
+          size="12px"
+          class="full-width"
+        />
+
+        <list-result :list="this.locations" type="location">
+          <template #title>
+            <q-item-label class="no-margin no-padding" header>
+              <p style="font-size: 14px" class="text-black notosanskr-medium">
+                지역
+              </p>
+            </q-item-label>
+          </template>
+        </list-result>
+        <q-separator
+          color="positive"
+          inset
+          spaced
+          size="12px"
+          class="full-width"
+        />
+
         <list-result :list="this.houses">
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
-                검색 결과
+                건물/단지
               </p>
             </q-item-label>
           </template>
@@ -116,11 +133,12 @@ export default {
       dialog: false,
       shape: "house",
       text: "",
-      options: [],
       recents: [],
       recommends: [],
 
-      houses: []
+      locations: [],
+      buildings: [],
+      redevlopments: []
     };
   },
   components: {
@@ -152,60 +170,50 @@ export default {
         .filter((obj) => obj.value)
         .slice(0, 4);
     },
-    async onSelect(obj) {
-      this.options = [];
-      let data;
-      if (!obj.isRedev) {
-        data = await Vue.prototype.$axios.get(`/houses/?search=${obj.value}`);
-      } else {
-        data = await Vue.prototype.$axios.get(
-          `/houses/?redevelopment_area=${obj.value}`
-        );
-      }
-      this.houses = data.data.results
-        .map((obj) => {
-          return { value: obj?.id, label: obj?.address };
+
+    async getRedevelopment() {
+      const { data } = await Vue.prototype.$axios.get(
+        `/redevelopment_areas/?search=${this.text}`
+      );
+      this.redevlopments = data.results
+        .map(({ latitude, longitude, title }) => {
+          return { value: { latitude, longitude }, label: title };
         })
         .filter((obj) => obj.value)
-        .slice(0, 20);
+        .slice(0, 4);
     },
-    async filterFn(val, update, abort) {
-      if (val !== "") {
-        const {
-          data: { results: subCities }
-        } = await Vue.prototype.$axios.get(`/sub_cities/?search=${val}`);
-        const {
-          data: { results: redev }
-        } = await Vue.prototype.$axios.get(
-          `/redevelopment_areas/?search=${val}`
-        );
-
-        update(async () => {
-          const _results = [];
-          subCities.forEach(({ title, latitude, longitude }) => {
-            if (!_results.some((obj) => obj.label === title)) {
-              _results.push({
-                value: title,
-                label: title
-              });
-            }
-          });
-
-          const redevResults = [];
-          redev.forEach(({ id, title }) => {
-            if (!redevResults.some((obj) => obj.label === title)) {
-              redevResults.push({
-                value: id,
-                label: title,
-                isRedev: true
-              });
-            }
-          });
-          this.options = [..._results, ...redevResults];
-        });
-      } else {
-        update();
+    async getLocations() {
+      const { data } = await Vue.prototype.$axios.get(
+        `/locations/?search=${this.text}`
+      );
+      this.locations = data.results
+        .map(({ latitude, longitude, title }) => {
+          return { value: { latitude, longitude }, label: title };
+        })
+        .filter((obj) => obj.value)
+        .slice(0, 4);
+    },
+    async getHouses() {
+      const { data } = await Vue.prototype.$axios.get(
+        `/houses/?search=${this.text}`
+      );
+      this.houses = data.results
+        .map((obj) => {
+          return {
+            value: obj?.id,
+            label: obj?.group_building_house?.title_building
+          };
+        })
+        .filter((obj) => obj.value)
+        .slice(0, 4);
+    },
+    async onSearch(event) {
+      if (event.isComposing || event.keyCode === 229) {
+        return;
       }
+      this.getRedevelopment();
+      this.getLocations();
+      this.getHouses();
     }
   },
   beforeMount() {
