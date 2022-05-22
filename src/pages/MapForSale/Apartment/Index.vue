@@ -11,17 +11,20 @@
       setMapAreaView
     />
     <detail-summary
-      :tags="{
-        type: estate.group_building_house.type_house,
-        stageProgress: redevelopment.redevelopment_step
+      v-bind="{
+        building: estate.group_building_house.title_building,
+        areaName: `${estate.address} (${estate.group_location.location_road})`,
+        sales: toMoneyString(estate.price),
+        initialInvestments: toMoneyString(estate.initial_investment),
+        quote: estate.description,
+        prices: estate.group_price,
+        houseId: estate.id,
+        tags: {
+          type: estate.group_building_house.type_house,
+          stageProgress: redevelopment.redevelopment_step
+        },
+        created: estate.created
       }"
-      :building="estate.group_building_house.title_building"
-      :areaName="`${estate.address} (${estate.group_location.location_road})`"
-      :sales="toMoneyString(estate.price)"
-      :initialInvestments="toMoneyString(estate.initial_investment)"
-      :quote="estate.description"
-      :prices="estate.group_price"
-      :houseId="estate.id"
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />

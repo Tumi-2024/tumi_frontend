@@ -97,8 +97,8 @@
               >
                 <span
                   style="
-                    font-size: 13px;
-                    line-height: 13px;
+                    font-size: calc((13 / 1312) * 100vh);
+                    line-height: calc((13 / 1312) * 100vh);
                     color: #333333;
                     padding: 3px 5px;
                   "
@@ -473,12 +473,12 @@ export default {
 
   background: #68814e;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 28px;
+  font-size: calc((16 / 1312) * 100vh);
+  line-height: calc((22 / 1312) * 100vh);
+  padding: calc((6 / 1312) * 100vh) calc((8 / 1312) * 100vh);
   text-align: center;
   letter-spacing: -0.97px;
   color: #ffffff;
   border-radius: 8px;
-  padding: 0 8px;
 }
 </style>

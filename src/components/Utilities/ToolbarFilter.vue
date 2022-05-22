@@ -211,8 +211,8 @@ export default {
 }
 .location-text {
   font-weight: 500;
-  font-size: calc((21 / 1312) * 100vh);
-  line-height: calc((30 / 1312) * 100vh);
+  font-size: calc((18 / 1312) * 100vh);
+  line-height: calc((24 / 1312) * 100vh);
   letter-spacing: -1.575px;
   color: #1a1a1a;
 }

@@ -8,6 +8,7 @@
       :building="item.building"
       :houseId="houseId"
       :redirect="redirect"
+      :created="created"
     />
   </div>
 </template>
@@ -24,7 +25,8 @@ export default {
     houseId: Number,
     tags: Array,
     isRedevelop: Boolean,
-    redirect: Boolean
+    redirect: Boolean,
+    created: String
   }
 };
 </script>

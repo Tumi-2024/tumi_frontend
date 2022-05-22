@@ -6,6 +6,7 @@
         :item="{ address: areaName, building }"
         :tags="getBadgeOptions"
         :houseId="houseId"
+        :created="created"
       />
       <div class="row">
         <div class="col-4 q-px-sm">
@@ -209,6 +210,10 @@ export default {
       }
     },
     quote: {
+      type: String,
+      default: ""
+    },
+    created: {
       type: String,
       default: ""
     }
