@@ -8,7 +8,18 @@
       @click="modal = true"
       :disable="disable"
     >
-      <span style="min-width: 5vh">{{ label }}</span>
+      <span
+        style="
+          min-width: 5vh;
+          min-height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: calc((12 / 984) * 100vh);
+        "
+      >
+        {{ label }}
+      </span>
     </q-btn>
 
     <!-- Dialog Section -->

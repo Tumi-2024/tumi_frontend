@@ -10,7 +10,7 @@
         flat
         class="col notosanskr-medium q-mx-xs"
         :class="{
-          selected: getIsActive(property.label)
+          selected: getIsActive(property.value)
         }"
         @click="changeValue(property)"
       >
@@ -25,18 +25,18 @@
 
 <script>
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString"]),
+    ...mapGetters("searchOption", ["categories"]),
     getIsActive() {
       return (dd) => {
-        return this.selected.some((obj) => {
-          return obj.label === dd;
+        return this.categories.some((obj) => {
+          return obj === dd;
         });
       };
     }
@@ -54,7 +54,7 @@ export default {
         {
           icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          valueTransaction: "APARTMENT",
+          value: "APARTMENT",
           valueHouse: "아파트"
         }
       ]
@@ -75,7 +75,7 @@ export default {
         {
           icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          valueTransaction: "APARTMENT",
+          value: "APARTMENT",
           valueHouse: "아파트"
         }
       ],
@@ -83,49 +83,49 @@ export default {
         {
           icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          valueTransaction: "APARTMENT",
+          value: "APARTMENT",
           valueHouse: "아파트"
         },
         {
           icon: require("assets/iconsNew/12.png"),
           label: "연립/다세대",
-          valueTransaction: "ALLIANCE",
+          value: "ALLIANCE",
           valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/13.png"),
           label: "단독/다가구",
-          valueTransaction: "SINGLE",
+          value: "SINGLE",
           valueHouse: "단독ￜ다가구"
         },
         {
           icon: require("assets/iconsNew/14.png"),
           label: "원룸/오피스텔",
-          valueTransaction: "OFFICETEL",
+          value: "OFFICETEL",
           valueHouse: "오피스텔"
         },
         {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
-          valueTransaction: "COMMERCIAL",
+          value: "COMMERCIAL",
           valueHouse: "상업ￜ업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),
           label: "토지",
-          valueTransaction: "LAND",
+          value: "LAND",
           valueHouse: "토지"
         },
         {
           icon: require("assets/iconsNew/17.png"),
           label: "무허가 건축물",
-          valueTransaction: "noname01",
+          value: "noname01",
           valueHouse: "무허가 건축물"
         },
         {
           icon: require("assets/iconsNew/18.png"),
           label: "입주권",
-          valueTransaction: "noname02",
+          value: "noname02",
           valueHouse: "입주권"
         }
       ]
@@ -138,24 +138,31 @@ export default {
     this.$emit("select", this.selected, "categories");
   },
   methods: {
+    ...mapActions("searchOption", ["addCategories", "removeCategories"]),
     select(val) {
       this.$emit("selectDetail", val);
     },
-    changeValue(val) {
-      if (this.isUnique) {
-        this.selected = [val];
+    changeValue({ value }) {
+      const hasValue = this.categories.some((obj) => obj === value);
+      if (hasValue) {
+        this.removeCategories(value);
       } else {
-        const test = this.selected.filter((obj) => obj.label === val.label);
-        if (test.length === 0) {
-          this.selected.push(val);
-        } else {
-          this.selected = this.selected.filter(
-            (obj) => obj.label !== val.label
-          );
-        }
+        this.addCategories(value);
       }
+      // if (this.isUnique) {
+      //   this.selected = [val];
+      // } else {
+      //   const test = this.selected.filter((obj) => obj.label === val.label);
+      //   if (test.length === 0) {
+      //     this.selected.push(val);
+      //   } else {
+      //     this.selected = this.selected.filter(
+      //       (obj) => obj.label !== val.label
+      //     );
+      //   }
+      // }
 
-      this.$emit("select", this.selected, "categories");
+      // this.$emit("select", this.selected, "categories");
     }
   }
 };

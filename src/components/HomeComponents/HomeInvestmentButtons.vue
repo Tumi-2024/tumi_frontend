@@ -2,7 +2,7 @@
   <div>
     <div class="row q-mt-md q-col-gutter-sm">
       <div class="items-center">
-        <p class="title1">"주택유형별" 매물 찾기</p>
+        <p class="title1">"주택유형별" 지도로 찾기</p>
       </div>
       <q-radio
         style="margin-left: 10px; margin-bottom: 12px"

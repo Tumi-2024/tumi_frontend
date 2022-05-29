@@ -1,50 +1,35 @@
 <template>
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
-      전체 {{ this.type === "transaction" ? "실거래가" : "매물" }}
-      <span class="text-primary"> {{ saleList.length }} </span>개
+      전체 매물
+      <span class="text-primary"> {{ list.length }} </span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
-      <toolbar-filter class="q-pt-xs q-px-sm" @search="onSearch" />
-      <div class="flex row justify-between">
-        <!-- <div
-          class="flex items-center"
-          v-for="(btn, btnIndex) of sortButtons"
-          :key="btnIndex"
-          @click="() => sortData(btnIndex)"
-        >
-          <q-btn flat :class="[{ 'text-primary': selectedIndex === btnIndex }]">
-            {{ btn.text }}
-          </q-btn>
-          <q-separator v-if="btnIndex !== sortButtons.length - 1" vertical />
-        </div> -->
-      </div>
+      <toolbar-filter
+        class="q-pt-xs q-px-sm"
+        :text="text"
+        @input="onChangeText"
+        @search="onSearch"
+      />
     </q-card-section>
 
-    <q-card-section
-      class="list-items q-pa-none notosanskr-regular"
-      v-if="type !== 'transaction'"
-    >
+    <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
-        <area-item
-          v-for="(item, i) of saleList"
-          :key="i"
-          :query="{ sellid: item.id }"
-          v-bind="{
-            item,
-            ctgr: item.category,
-            type: item.type,
-            isRedevelop,
-            address: item.address
-          }"
-        />
+        <div v-for="(item, i) of list" :key="i">
+          <area-item
+            class="q-py-sm"
+            :query="{ sellid: item.id }"
+            v-bind="item"
+          />
+          <q-separator />
+        </div>
       </q-list>
     </q-card-section>
 
     <!-- Transactions -->
-    <q-card-section class="list-items q-pa-none notosanskr-regular" v-else>
+    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-else>
       <q-list class="q-pt-md">
         <area-transaction
           v-for="(item, i) of saleList"
@@ -58,13 +43,13 @@
         >
         </area-transaction>
       </q-list>
-    </q-card-section>
+    </q-card-section> -->
   </q-card>
 </template>
 
 <script>
 import Vue from "vue";
-import AreaTransaction from "./AreaTransaction.vue";
+// import AreaTransaction from "./AreaTransaction.vue";
 import AreaItem from "./AreaItem.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 
@@ -72,29 +57,14 @@ import { mapGetters } from "vuex";
 
 export default {
   components: {
-    "area-transaction": AreaTransaction,
+    // "area-transaction": AreaTransaction,
     "area-item": AreaItem,
     "toolbar-filter": ToolbarFilter
   },
   data() {
     return {
-      // sortButtons: [
-      //   {
-      //     text: "최신순",
-      //     class: "text-primary",
-      //     query: { ordering: "-created" }
-      //   },
-      //   {
-      //     text: "추천순",
-      //     class: "text-primary",
-      //     query: { ordering: "-index_recommend" }
-      //   },
-      //   {
-      //     text: "가격순",
-      //     class: "text-primary",
-      //     query: { ordering: "-price_selling_hope" }
-      //   }
-      // ],
+      tab: "지역",
+      text: "",
       selectedIndex: 0,
       type: "transaction" /** sell  */,
       saleList: [],
@@ -102,39 +72,52 @@ export default {
     };
   },
   props: {
-    isRedevelop: { type: Boolean, default: false }
+    list: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
   methods: {
+    onChangeText(e) {
+      console.log(e);
+      this.text = e;
+    },
     onSearch(e) {
-      if (e.length !== 0) {
-        this.getHouseData(e);
+      if (e.length === 0) {
+        return;
+      }
+      switch (this.tab) {
+        case "지역":
+          this.getLocations(e);
+          break;
+        case "정비사업":
+          this.getRedevelopment(e);
+          break;
+        case "건물/단지":
+          this.searchHouse(e);
+          break;
+        default:
+          this.searchHouse(e);
       }
     },
-    async getHouseData(searchText) {
+    async searchHouse(searchText) {
       const { data } = await Vue.prototype.$axios.get(
         `/houses/?search=${searchText}`
       );
       this.saleList = data.results;
     },
-    sortData(index) {
-      this.selectedIndex = index;
-      const { query } = this.sortButtons[index];
-      if (this.type === "sell") {
-        this.getApiHousesData(query);
-      } else {
-      }
-    },
-    async getApiHousesData(query) {
+    async getApiHouses(query) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: query
       });
 
       this.saleList = data.results;
     },
-    async getApiTransactionsData(query) {
+    async getApiTransactions(query) {
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/${this.$route.query.transactionid}/transactions/`,
         {
@@ -143,14 +126,28 @@ export default {
       );
 
       this.saleList = data;
-    }
-  },
-  async mounted() {
-    this.type = this.$route?.query?.transactionid ? "transaction" : "sell";
-    if (this.$route?.query?.transactionid) {
-      this.getApiTransactionsData({ ordering: "-created" });
-    } else {
-      this.getApiHousesData({ ordering: "-created" });
+    },
+    async getRedevelopment(e) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/redevelopment_areas/?search=${e}`
+      );
+      this.saleList = data.results
+        .map(({ latitude, longitude, title }) => {
+          return { value: { latitude, longitude }, label: title };
+        })
+        .filter((obj) => obj.value)
+        .slice(0, 4);
+    },
+    async getLocations(e) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/locations/?search=${e}`
+      );
+      this.saleList = data.results
+        .map(({ latitude, longitude, title }) => {
+          return { value: { latitude, longitude }, label: title };
+        })
+        .filter((obj) => obj.value)
+        .slice(0, 4);
     }
   }
 };

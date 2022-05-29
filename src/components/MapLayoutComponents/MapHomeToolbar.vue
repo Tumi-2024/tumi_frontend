@@ -13,7 +13,7 @@
             style="height: 100%"
           />
           <span style="font-size: calc((30 / 1312) * 100vh)">
-            {{ typeOfProduct }}
+            {{ getToolbarTitle }}
           </span>
         </div>
       </div>
@@ -46,21 +46,9 @@ export default {
     // DialogPropertyInformation
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
-    typeOfProduct() {
-      let text = "매물";
-      if (this.$route.path === "/map/city/area") {
-        text = "실거래가";
-      }
-      if (this.$route.query.transactionid) {
-        text = "실거래가";
-      }
-      return text;
-    }
+    ...mapGetters("map", ["getToolbarTitle"])
   },
   methods: {
-    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
-
     toggleHeaderTitle() {
       this.$router.push({ name: "map_view_search" });
     }

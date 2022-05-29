@@ -1,5 +1,5 @@
 <template>
-  <q-item class="column  notosanskr-regular">
+  <q-item class="column notosanskr-regular">
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>
@@ -65,17 +65,16 @@ export default {
     toKr,
     toMoneyString,
     getdate(string1, string2) {
-      const str1 = string1;
-      let str2 = string2;
-      if (str2.length === 1) {
-        str2 = 0 + str2;
+      if (!string1 || !string2) {
+        return "";
       }
-      return str1.slice(0, 4) + "." + str1.slice(4, 6) + "." + str2;
+      const str2 = string2?.length === 1 ? `0 + ${string2}` : string2;
+      return string1?.slice(0, 4) + "." + string1?.slice(4, 6) + "." + str2;
     }
   },
   computed: {
     getReleaseDate() {
-      return dateString => {
+      return (dateString) => {
         if (!dateString) {
           return "-";
         }
@@ -89,7 +88,7 @@ export default {
       };
     },
     getSubInfoProps() {
-      return item => {
+      return (item) => {
         switch (this.ctgr) {
           case "COMMERCIAL ":
             return [
@@ -286,12 +285,14 @@ export default {
           {
             type: "houseType",
             value: (
-              this.category.find(obj => obj.key === this.ctgr) || { label: "" }
+              this.category.find((obj) => obj.key === this.ctgr) || {
+                label: ""
+              }
             ).label
           },
           // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
           {
-            type: this.type[0].toLowerCase(),
+            type: this.types?.[0]?.toLowerCase(),
             value: `${toMoneyString(item.price)}`
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }

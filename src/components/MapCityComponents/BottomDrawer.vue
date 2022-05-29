@@ -8,7 +8,7 @@
         <q-btn
           flat
           class="btn-view-properties full-width notosanskr-medium"
-          :to="{ name: 'map_list_sale' }"
+          :to="{ name: 'listHouses' }"
         >
           {{ $store.state.map.toolbarTitle.split(" ")[1] }} 매물보기
           <span style="color: #ff5a00; margin-left: 10px">{{

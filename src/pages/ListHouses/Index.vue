@@ -1,6 +1,6 @@
 <template>
   <div>
-    <area-list-items :params="$route.query" :isRedevelop="isRedevelop" />
+    <area-list-items :params="$route.query" :isRedevelop="false" :list="list" />
     <floating-button />
   </div>
 </template>
@@ -11,6 +11,9 @@ import {
   FloatingButton
 } from "components/MapListSaleComponents";
 
+import Vue from "vue";
+import { mapActions } from "vuex";
+
 export default {
   components: {
     "area-list-items": AreaListItems,
@@ -18,16 +21,29 @@ export default {
   },
   data() {
     return {
-      isRedevelop: false
+      list: []
     };
   },
+  methods: {
+    ...mapActions("map", ["changeToolbarTitle"])
+  },
   async beforeMount() {
-    if (!this.$route.query?.transactionid) {
+    this.changeToolbarTitle("매물");
+    if (this.$route.query?.sellid) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/houses/${this.$route.query.sellid}`
+      );
+      this.list = data.results;
+    } else {
+      const { data } = await Vue.prototype.$axios.get(`/houses`);
+      this.list = data.results.map((item) => {
+        return {
+          item
+        };
+      });
     }
+
     // if (this.$route.query?.sellid) {
-    //   const { data } = await Vue.prototype.$axios.get(
-    //     `/transaction_groups/${this.$route.query.transactionid}`
-    //   );
     //   this.isRedevelop = !!data.redevelopment_area;
     // }
     // if (this.$route.query?.transactionid) {

@@ -11,6 +11,7 @@ import { estateStore } from "./modules/estate";
 import { searchStore } from "./modules/search";
 import { areaStore } from "./modules/area";
 import { searchQueryStore } from "./modules/searchQuery";
+import { queryBuilderStore } from "./modules/queryBuilder";
 
 // Main Section
 Vue.use(Vuex);
@@ -24,7 +25,7 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function(/* { ssrContext } */) {
+export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user: userStore,
@@ -33,7 +34,8 @@ export default function(/* { ssrContext } */) {
       estate: estateStore,
       search: searchStore,
       area: areaStore,
-      searchQuery: searchQueryStore
+      searchQuery: searchQueryStore,
+      searchOption: queryBuilderStore
     },
 
     plugins: [

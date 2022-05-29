@@ -373,6 +373,7 @@ export default {
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
+      console.log(this.map);
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
@@ -400,9 +401,10 @@ export default {
       const zoomLevel = this.map.getZoom();
       this.setMapZoom(zoomLevel);
       this.setMapCenter(item.position);
+      console.log(item.position);
       const getRouterParams = () => {
         if (this.$route.path === "/map/city/area") {
-          return { name: "map_list_sale", query: { transactionid: item.id } };
+          return { name: "listHouses", query: { transactionid: item.id } };
         } else {
           return { name: "for_sale_apartment", query: { sellid: item.id } };
         }

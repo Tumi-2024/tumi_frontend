@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex items-center">
     <q-btn
       unelevated
       outline
@@ -8,6 +8,8 @@
         border-radius: 8px;
         width: calc((36 / 1312) * 100vh);
         height: calc((36 / 1312) * 100vh);
+        min-width: 30px;
+        min-height: 30px;
       "
       class="q-mx-xs justify-center items-center"
       @click="modal = true"
@@ -173,8 +175,13 @@ export default {
       ]
     };
   },
+  beforeMount() {
+    console.log("setIsMultiSelect");
+    this.setIsMultiSelect(true);
+  },
   methods: {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
+    ...mapActions("searchOption", ["setIsMultiSelect"]),
     resetFilters() {
       this.categories = [
         {

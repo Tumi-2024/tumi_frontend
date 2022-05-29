@@ -1,6 +1,6 @@
 <template>
   <q-item
-    class="column notosanskr-regular"
+    class="column notosanskr-regular q-py-none"
     :to="{ name: !disabled ? to : '', query: !disabled ? query : '' }"
     :manual-focus="disabled"
     @mouseenter="onHover = true"
@@ -32,7 +32,6 @@
         <area-item-info :item="item" />
       </div>
     </div>
-    <q-separator style="margin-top: 20px" />
   </q-item>
 </template>
 
@@ -134,7 +133,6 @@ export default {
         //   }
         // };
 
-        console.log(item);
         return [
           {
             type: "transactionStatus",

@@ -4,7 +4,7 @@
       <div ref="navHeader">
         <toolbar-nav />
         <toolbar-filter
-          v-show="$route.path !== '/map/list-sale'"
+          v-if="$route.path.indexOf('list') === -1"
           class="q-pt-xs q-px-sm"
         />
         <!-- :disable="getMapMode === 'redevelop-area'" -->

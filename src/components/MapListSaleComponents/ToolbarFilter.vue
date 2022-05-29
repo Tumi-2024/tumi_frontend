@@ -1,25 +1,36 @@
 <template>
-  <q-card-section class="row items-center flex justify-end q-pa-none q-ma-none">
+  <q-card-section
+    class="row items-center flex justify-end q-pa-none q-ma-none"
+    style="flex: 1"
+  >
     <!-- Dialog containing all filters-->
 
     <div class="col flex items-center justify-between">
       <div class="row items-center">
-        <div class="column" v-if="$router.name === 'map_list_sale'">
-          <div class="helper text-left notosanskr-regular">
-            {{ getToolbarLabel }}
-          </div>
-          <div class="location-text text-left notosanskr-regular">
-            {{ getToolbarTitle }}
-          </div>
-        </div>
-        <div class="q-my-xs col-4 text-left notosanskr-medium" style="flex: 1">
+        <div
+          class="q-my-xs col-4 text-left notosanskr-medium row"
+          style="flex: 1"
+        >
+          <q-select
+            class="q-mr-md"
+            dense
+            emit-value
+            map-options
+            v-model="option"
+            :options="[
+              { label: '개발정비사업', value: 'redev' },
+              { label: '지역', value: 'location' },
+              { label: '건물/단지', value: 'building' }
+            ]"
+          ></q-select>
           <q-input
-            v-model="searchText"
             filled
             dense
             class="q-mr-sm"
             type="search"
             placeholder="검색"
+            :value="text"
+            @input="(e) => $emit('input', e)"
             @keydown.enter.prevent="onSearch"
           >
             <template v-slot:append>
@@ -68,8 +79,7 @@ export default {
   },
   data() {
     return {
-      searchText: "",
-      options: [],
+      option: "redev",
       filters: [
         {
           label: "주택유형",
@@ -115,20 +125,17 @@ export default {
     disable: {
       type: Boolean,
       default: false
+    },
+    text: {
+      type: String,
+      required: true
     }
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapMode",
-      "changeMapZoom",
-      "changeMapCenter",
-      "changeToolbarTitle"
-    ]),
-    onSearch() {
-      console.log("test");
-      this.$emit("search", this.searchText);
-    }
-  }
+    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    onSearch() {}
+  },
+  mounted() {}
 };
 </script>
 

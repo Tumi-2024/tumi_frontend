@@ -1,13 +1,12 @@
 <template>
-  <div class="row flex justify-between" style="padding-bottom: 24px">
+  <div class="row flex justify-between" style="padding-bottom: 24px; gap: 8px">
     <q-btn
       flat
       :key="btnIndex"
       v-for="(btn, btnIndex) of btnGroup"
       class="btn-dash-board full-width"
       :style="{ backgroundColor: btn.backgroundColor }"
-      :class="{ 'q-mb-sm': btnIndex < 2 }"
-      style="flex: 0 0 calc(50% - 4px)"
+      style="flex: 1 0 calc(50% - 4px)"
       @click="btn.func"
     >
       <!-- @click="btn.func()" -->
@@ -46,16 +45,24 @@ export default {
         },
         {
           backgroundColor: "#FF7D36",
-          text: "매물/실거래가 검색",
-          subText1: "매물/실거래가",
+          text: "매물 검색",
+          subText1: "매물",
           subText2: `상세 검색하기`,
           img: require("assets/iconsNew/search.png"),
-          func: () => this.$router.push({ name: "map_list_sale" })
+          func: () => this.$router.push({ name: "listHouses" })
         },
         {
-          backgroundColor: "#5893F7",
-          text: "부동산 인사이트",
+          backgroundColor: "#1976d2",
+          text: "실거래가 검색",
+          subText1: "실거래가",
+          subText2: `상세 검색하기`,
           img: require("assets/iconsNew/20InSight.png"),
+
+          func: () => this.redirectListTransaction()
+        },
+        {
+          backgroundColor: "#ce93d8",
+          text: "부동산 인사이트",
           func: () => this.$router.push("/insights/부동산팁")
         }
       ]
@@ -74,6 +81,9 @@ export default {
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
+    },
+    redirectListTransaction() {
+      this.$router.push({ name: "listTransactions" });
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })

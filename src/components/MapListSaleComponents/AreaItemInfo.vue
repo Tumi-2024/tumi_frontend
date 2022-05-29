@@ -17,10 +17,7 @@
         </span>
       </template>
     </div>
-    <q-separator
-      v-if="(infoProps && infoProps.length > 0) || this.$q.screen.lt.md"
-    />
-    <div class="row q-mt-sm">
+    <div class="row q-mt-md q-mt-lg-lg">
       <template v-for="(row, rIndex) of getSubInfo">
         <span
           class="flex col-sm-3 col-xs-6 q-px-sm"

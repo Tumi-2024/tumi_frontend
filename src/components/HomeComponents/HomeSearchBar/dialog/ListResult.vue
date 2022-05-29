@@ -14,9 +14,10 @@
       v-ripple
       v-for="(item, index) in list"
       :key="index"
-      @click="() => goToHouse(item.value)"
+      @click="() => goToHouse(item)"
     >
       <q-item-section class="item-result">
+        {{ item.latitude }}
         <q-icon
           size="20px"
           class="item-result-icon"
@@ -48,23 +49,32 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", ["changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
 
-    goToHouse(value) {
+    goToHouse({ value }) {
+      const _value = {
+        lat: Number(value.latitude),
+        lng: Number(value.longitude)
+      };
+
       if (this.type === "location") {
+        console.log("location", _value);
         this.$router.push({
           name: "map_city"
         });
-        this.changeMapZoom(16);
-        this.changeMapCenter(value);
+        this.setMapZoom(18);
+        this.changeMapCenter(_value);
       } else if (this.type === "redevelopment") {
         this.$router.push({
           name: "map_city"
         });
-        this.changeMapZoom(16);
-        this.changeMapCenter(value);
+        console.log(value);
+        this.changeMapCenter(_value);
+        this.setMapZoom(16);
       } else {
         // for-sale/apartment?sellid=16888
+        // lat: 37.5229905
+        // lng: 126.9959299
         this.$router.push({
           name: "for_sale_apartment",
           query: {

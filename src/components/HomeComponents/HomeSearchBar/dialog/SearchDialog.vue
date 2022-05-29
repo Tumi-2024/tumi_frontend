@@ -31,12 +31,15 @@
             class="q-ml-lg"
             style="flex: 1"
             @keydown.enter.prevent="onSearch"
+            autofocus
             v-model="text"
           />
         </div>
       </q-card-section>
       <!-- {{ locations }} -->
-      <template v-if="!locations.length">
+      <template
+        v-if="!locations.length && !buildings.length && !redevlopments.length"
+      >
         <q-card-section>
           <list-result :list="this.recents">
             <template #title>
@@ -138,7 +141,8 @@ export default {
 
       locations: [],
       buildings: [],
-      redevlopments: []
+      redevlopments: [],
+      houses: []
     };
   },
   components: {
@@ -198,10 +202,10 @@ export default {
         `/houses/?search=${this.text}`
       );
       this.houses = data.results
-        .map((obj) => {
+        .map(({ latitude, longitude, group_building_house: building }) => {
           return {
-            value: obj?.id,
-            label: obj?.group_building_house?.title_building
+            value: { latitude, longitude },
+            label: building?.title_building
           };
         })
         .filter((obj) => obj.value)
