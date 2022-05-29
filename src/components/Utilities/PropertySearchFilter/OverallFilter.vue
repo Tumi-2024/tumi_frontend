@@ -84,6 +84,7 @@
                   flat
                   text-color="black"
                   label="초기화"
+                  style="font-size: calc((18 / 1000) * 100vh)"
                   padding="12px"
                   @click="resetFilters()"
                 />
@@ -94,6 +95,7 @@
                   class="apply-btn bg-primary text-white"
                   flat
                   label="적용"
+                  style="font-size: calc((18 / 1000) * 100vh)"
                   padding="12px"
                   @click="applyFilters"
                 />

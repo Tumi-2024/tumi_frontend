@@ -14,8 +14,15 @@
         }"
         @click="changeValue(property)"
       >
-        <div class="full-width column q-py-lg items-center">
-          <img :width="30" :src="property.icon" :alt="property.icon" />
+        <div
+          class="full-width column q-py-lg items-center"
+          style="font-size: calc((13 / 1000) * 100vw)"
+        >
+          <img
+            style="width: calc((30 / 1000) * 100vw)"
+            :src="property.icon"
+            :alt="property.icon"
+          />
           {{ property.label }}
         </div>
       </q-btn>

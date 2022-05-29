@@ -53,6 +53,7 @@
                 text-color="black"
                 label="초기화"
                 padding="12px"
+                style="font-size: calc((18 / 1000) * 100vh)"
                 @click="init"
               />
             </div>
@@ -63,6 +64,7 @@
                 flat
                 label="적용"
                 padding="12px"
+                style="font-size: calc((18 / 1000) * 100vh)"
                 @click="save"
               />
             </div>
