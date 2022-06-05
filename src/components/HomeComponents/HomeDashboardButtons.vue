@@ -10,9 +10,11 @@
       @click="btn.func"
     >
       <!-- @click="btn.func()" -->
-      <p class="btn-title1" v-html="btn.text" />
-      <p class="btn-title2" v-html="btn.subText1" />
-      <p class="btn-title3" v-html="btn.subText2" />
+      <div class="absolute" style="top: 0; left: 0">
+        <p class="btn-title1" v-html="btn.text" />
+        <p class="btn-title2" v-html="btn.subText1" />
+        <p class="btn-title3" v-html="btn.subText2" />
+      </div>
       <img class="btn-icon" :src="btn.img" />
     </q-btn>
   </div>
@@ -101,38 +103,46 @@ export default {
 
 <style lang="scss">
 .btn-dash-board {
-  min-height: 180px;
+  @media (max-width: 599px) {
+    min-height: 90px;
+  }
+  @media (min-width: 600px) {
+    min-height: 140px;
+  }
+
   color: #fff;
   border-radius: 12px;
+  &:not(:last-child) {
+    @media (max-width: 599px) {
+      min-height: 150px;
+    }
+    @media (min-width: 600px) {
+      min-height: 180px;
+    }
+  }
 }
 
 .btn-title1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: calc((16 / 1312) * 100vh);
-  margin-left: calc((16 / 1312) * 100vh);
   @media (max-width: 599px) {
     font-size: 13px;
+    margin: 10px 0 10px 10px;
   }
   @media (min-width: 600px) {
     font-size: 18px;
+    margin: 20px 0 15px 20px;
   }
   text-align: left;
   font-family: "notosanskr-medium";
 }
 
 .btn-title2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: calc((50 / 1312) * 100vh);
-  margin-left: calc((16 / 1312) * 100vh);
   @media (max-width: 599px) {
     font-size: 12px;
+    margin: 0 0 0 10px;
   }
   @media (min-width: 600px) {
     font-size: 15px;
+    margin: 0 0 0 20px;
   }
 
   font-family: "notosanskr-regular";
@@ -140,26 +150,21 @@ export default {
 }
 
 .btn-title3 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: calc((80 / 1312) * 100vh);
-  margin-left: calc((16 / 1312) * 100vh);
   @media (max-width: 599px) {
-    font-size: 10px;
+    font-size: 12px;
+    margin: -5px 0 0 10px;
   }
   @media (min-width: 600px) {
-    font-size: 12px;
+    font-size: 15px;
+    margin: -5px 0 0 20px;
   }
   font-family: "notosanskr-regular";
   text-align: left;
 }
 .btn-icon {
   position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 108px;
-  margin-right: 20px;
+  bottom: 20px;
+  right: 20px;
   width: calc((40 / 1312) * 100vh);
 }
 </style>
