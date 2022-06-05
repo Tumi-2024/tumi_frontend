@@ -57,7 +57,7 @@
           mask="###-####-####"
           :rules="[
             (val) =>
-              (val && val.length > 0) || '업무용 전화번호를 입력해주세요.'
+              (val && val.length === 13) || '업무용 전화번호를 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -74,7 +74,7 @@
           lazy-rules
           autocomplete="none"
           :rules="[
-            (val) => (val && val.length > 0) || '업무용 이메일을 입력해주세요.'
+            (val) => isValidEmail(val) || '업무용 이메일을 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -92,7 +92,8 @@
           lazy-rules
           mask="###-####-####"
           :rules="[
-            (val) => (val && val.length > 0) || '개인 전화번호를 입력해주세요.'
+            (val) =>
+              (val && val.length === 13) || '개인 전화번호를 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -107,9 +108,7 @@
           style="flex-basis: 400px"
           type="email"
           lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || '개인 이메일을 입력해주세요.'
-          ]"
+          :rules="[(val) => isValidEmail(val) || '개인 이메일을 입력해주세요.']"
         >
           <template v-slot:before>
             <q-icon name="mail" />
@@ -122,7 +121,11 @@
         v-model="id"
         label="아이디"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '아이디를 입력해주세요.']"
+        :rules="[
+          (val) => (val && val.length > 0) || '아이디를 입력해주세요.',
+          (val) => !isCapital(val) || '소문자만 가능합니다.',
+          (val) => !hasSpace(val) || '공백은 사용할 수 없습니다.'
+        ]"
       >
         <template v-slot:before>
           <q-icon name="person" />
@@ -140,7 +143,10 @@
           :rules="[
             (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
             (val) => val.length > 7 || '비밀번호는 최소 8자 입니다.',
-            (val) => val.length < 20 || '비밀번호는 최대 20자 입니다.'
+            (val) => val.length < 20 || '비밀번호는 최대 20자 입니다.',
+            (val) =>
+              isComplicatedPassword(val) ||
+              '비밀번호는 최소 하나의 문자와 숫자를 포함해야 합니다.'
           ]"
         >
           <template v-slot:before>
@@ -155,9 +161,7 @@
           type="password"
           lazy-rules
           :rules="[
-            (val) =>
-              (this.password && this.password.length > 0) ||
-              '비밀번호를 입력해주세요',
+            (val) => (val && val.length > 0) || '비밀번호를 입력해주세요',
             (val) => this.password === val || '비밀번호가 일치하지 않습니다.'
           ]"
         >
@@ -236,6 +240,24 @@ export default {
     this.teams = data;
   },
   methods: {
+    isValidEmail(email) {
+      var re =
+        /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
+    },
+    isCapital(str) {
+      return str.charAt(0).toUpperCase() === str.charAt(0);
+    },
+
+    hasSpace(str) {
+      return str.indexOf(" ") > -1;
+    },
+
+    isComplicatedPassword(password) {
+      var re = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+      return re.test(String(password));
+    },
+
     async onSubmit() {
       if (this.type !== "TEAM") {
         this.team = "";
