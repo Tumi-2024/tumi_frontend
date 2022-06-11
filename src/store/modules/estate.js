@@ -10,11 +10,11 @@ export const estateStore = {
     current_house: {},
     recently_viewed_houses: [],
     count_estate: 0,
-    simple_houses_type: "",
+    // simple_houses_type: "",
     viewRedevOnly: true,
     latitude: [],
     longitude: [],
-    requestUrl: ""
+    requestUrl: "sub_cities"
   },
   getters: {
     simple_houses: (state, getters) => {
@@ -35,9 +35,9 @@ export const estateStore = {
     }
   },
   mutations: {
-    setSimpleHousesType: function (state, payload) {
-      state.simple_houses_type = payload;
-    },
+    // setSimpleHousesType: function (state, payload) {
+    //   state.simple_houses_type = payload;
+    // },
     setSimpleHouses: function (state, payload) {
       state.simple_houses = payload;
     },
@@ -124,30 +124,35 @@ export const estateStore = {
       // );
 
       // const encodedUrl = query + "&" + redevelopQuery;
-      if (payload.latitude) {
+      if (payload?.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);
       }
       const lat = context.state.latitude;
       const long = context.state.longitude;
-      switch (payload.type) {
-        case "city":
-          await context.commit("setRequestUrl", "cities");
-          break;
-        case "subcity":
-          await context.commit("setRequestUrl", "sub_cities");
-          break;
-        case "locations":
-          await context.commit("setRequestUrl", "locations");
-          break;
-        case "transaction_groups":
-          await context.commit("setRequestUrl", "transaction_groups");
-          break;
-        case "houses":
-          await context.commit("setRequestUrl", "houses");
-          break;
-        // default:
-        //   await context.commit("setRequestUrl", context.state.requestUrl)
+
+      if (payload?.type) {
+        switch (payload.type) {
+          case "city":
+            await context.commit("setRequestUrl", "cities");
+            break;
+          case "subcity":
+            await context.commit("setRequestUrl", "sub_cities");
+            break;
+          case "locations":
+            await context.commit("setRequestUrl", "locations");
+            break;
+          case "transaction_groups":
+            await context.commit("setRequestUrl", "transaction_groups");
+            break;
+          case "houses":
+            await context.commit("setRequestUrl", "houses");
+            break;
+          default:
+            await context.commit("setRequestUrl", "houses");
+        }
+      } else {
+        await context.commit("setRequestUrl", context.state.requestUrl);
       }
 
       const getRedevQuery = () => {
@@ -198,7 +203,7 @@ export const estateStore = {
           }
         }))
       );
-      context.commit("setSimpleHousesType", payload.type);
+      // context.commit("setSimpleHousesType", payload?.type);
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(

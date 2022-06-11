@@ -12,7 +12,7 @@ const TYPE_HOUSE_ENG = {
   오피스텔: "OFFICETEL",
   아파트: "APARTMENT",
   토지: "LAND",
-  "연립/다세대": "ALLIANCE"
+  연립ￜ다세대: "ALLIANCE"
 };
 
 const TYPE_HOUSE_DETAIL_ENG = {

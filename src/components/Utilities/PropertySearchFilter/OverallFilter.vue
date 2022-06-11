@@ -168,7 +168,7 @@ export default {
           value: "size_dedicated_area_m2",
           type: [
             "아파트",
-            "연립/다세대",
+            "연립ￜ다세대",
             "원룸/오피스텔",
             "상업업무용",
             "입주권"
@@ -190,7 +190,6 @@ export default {
     },
     resetFilters() {
       this.initialize();
-      console.log(this.$refs);
       for (const ref in this.$refs) {
         this.$refs[ref].initialize();
       }
@@ -199,11 +198,6 @@ export default {
       this[property] = value;
     },
     applyFilters() {
-      this.setQuery([
-        { key: "categories", data: this.categories },
-        { key: "prices", data: this.prices },
-        { key: "areaType", data: this.areaType }
-      ]);
       this.modal = false;
     }
   }

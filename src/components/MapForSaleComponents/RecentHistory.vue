@@ -249,7 +249,7 @@ export default {
         },
         {
           value: "ALLIANCE",
-          label: "연립/다세대",
+          label: "연립ￜ다세대",
           disable: !this.item?.some((obj) => obj.category === "ALLIANCE")
         }
       ];
@@ -306,8 +306,8 @@ export default {
           { label: "오피스텔", value: "OFFICETEL" },
           { label: "상업업무용", value: "COMMERCIAL " },
           { label: "분양/입주권", value: "LAND" },
-          { label: "연립/다세대", value: "ALLIANCE" },
-          { label: "단독/다가구", value: "SINGLE" },
+          { label: "연립ￜ다세대", value: "ALLIANCE" },
+          { label: "단독|다가구", value: "SINGLE" },
           { label: "토지", value: "LAND" }
         ].filter((item) => {
           return item.value === value;

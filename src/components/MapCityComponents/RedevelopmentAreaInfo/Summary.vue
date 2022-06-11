@@ -3,9 +3,9 @@
     <section class="address-section bg-white">
       <q-badge
         outline
-        color="primary"
-        class="badge-type notosanskr-medium"
-        label="재개발 구역"
+        :color="getColor(getMapSelectedArea.category)"
+        class="bmedium"
+        :label="getMapSelectedArea.category"
       />
       <div class="title-heading notosanskr-medium">
         <!-- 서울영등포 공공주택지구 -->
@@ -17,10 +17,11 @@
       </div>
     </section>
     <section class="area-stats-section bg-white">
-      <div v-for="(stat, i) of stats" :key="i">
+      <div v-for="(stat, i) of getStats" :key="i">
         <div class="row q-pa-md">
           <div style="margin-right: 12px; align-items: center; display: flex">
             <img
+              v-if="stat.icon"
               :width="30"
               :src="require(`assets/icons/${stat.icon}`)"
               alt=""
@@ -31,14 +32,14 @@
               {{ stat.title }}
             </div>
             <div class="stat-value notosanskr-medium" v-if="stat.default == 0">
-              {{ getStatValue(stat.value) | number("0,0") }} {{ stat.unit }}
+              {{ stat.value | number("0,0") }} {{ stat.unit }}
             </div>
             <div class="stat-value notosanskr-medium" v-else>
-              {{ getStatValue(stat.value) }}
+              {{ stat.value }}
             </div>
           </section>
         </div>
-        <q-separator inset v-if="stats.length - 1 !== i" />
+        <q-separator inset v-if="getStats.length - 1 !== i" />
       </div>
     </section>
     <!-- <section class="investment-point bg-white">
@@ -136,52 +137,6 @@ export default {
   },
   data() {
     return {
-      stats: [
-        {
-          // icon: "AreaStats/area.svg",
-          icon: "AreaStats/정비구역명칭.png",
-          title: "정비구역 명칭",
-          value: "title"
-          // default: 0
-          // unit: "m²"
-        },
-        {
-          icon: "AreaStats/추진위원회.png",
-          // icon: "AreaStats/number-household.svg",
-          title: "추진위원회 (조합명)",
-          value: "title_union"
-          // default: 0,
-          // unit: "명"
-        },
-        {
-          icon: "AreaStats/현재사업추진단계.png",
-          // icon: "AreaStats/number-household.svg",
-          title: "현재 사업추진단계",
-          value: "redevelopment_step"
-        },
-        {
-          icon: "AreaStats/부동산소유자수.png",
-          // icon: "AreaStats/number-household.svg",
-          title: "부동산 소유자 수",
-          value: "count_owner",
-          default: 0,
-          unit: "명"
-        },
-        {
-          icon: "AreaStats/세입자수.png",
-          // icon: "AreaStats/progress.svg",
-          title: "세입자 수",
-          value: "count_house"
-        },
-        {
-          icon: "AreaStats/조합원수.png",
-          // icon: "AreaStats/number-members.svg",
-          title: "조합원 수",
-          value: "count_member",
-          default: 0,
-          unit: "명"
-        }
-      ],
       // ctgr1: "ALLIANCE",
       transactions: [],
 
@@ -245,39 +200,6 @@ export default {
     };
   },
   methods: {
-    // getCtgrGraphData(value) {
-    //   this.ctgr1 = value;
-    //   const periods = [];
-    //   this.transactions
-    //     .filter(obj => obj.category === this.ctgr1)
-    //     .forEach(obj => {
-    //       const textYear = obj.text_month.slice(0, 4);
-
-    //       if (!periods.some(obj => obj.period === textYear)) {
-    //         periods.push({ period: textYear, price: [obj.price] });
-    //       } else {
-    //         periods.find(obj => obj.period === textYear).price.push(obj.price);
-    //       }
-    //     });
-    //   const startYear = 2016;
-    //   const defaultPeriods = [];
-    //   for (let i = 0; i < new Date().getFullYear() - startYear; i++) {
-    //     defaultPeriods[i] = String(startYear + i);
-    //   }
-
-    //   this.datacollection.labels = defaultPeriods;
-    //   this.datacollection.datasets[0].data = defaultPeriods.map(period => {
-    //     const prices = periods.find(pr => pr.period === period);
-    //     if (prices) {
-    //       const result = prices.price.reduce(function add(sum, currValue) {
-    //         return sum + currValue;
-    //       }, 0);
-    //       return result / prices.price.length;
-    //     }
-    //   });
-
-    //   this.datacollection = Object.assign({}, this.datacollection);
-    // },
     getStatValue(value) {
       switch (value) {
         case "size_area":
@@ -299,6 +221,88 @@ export default {
   },
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"]),
+    getStats() {
+      return [
+        {
+          icon: "AreaStats/현재사업추진단계.png",
+          // icon: "AreaStats/number-household.svg",
+          title: "현재 사업추진단계",
+          value: this.getMapSelectedArea.redevelopment_step
+        },
+        {
+          // icon: "AreaStats/현재사업추진단계.png",
+          // icon: "AreaStats/number-household.svg",
+          title: "건립 세대 수 (예상 수치)",
+          value:
+            this.getMapSelectedArea.count_sale +
+            this.getMapSelectedArea.count_rent
+        },
+        {
+          icon: "AreaStats/현재사업추진단계.png",
+          // icon: "AreaStats/number-household.svg",
+          title: "조합원 수",
+          value: this.getMapSelectedArea.count_member
+        },
+        {
+          // icon: "AreaStats/area.svg",
+          icon: "AreaStats/정비구역명칭.png",
+          title: "일반 분양 수 (예상 수치)",
+          value:
+            this.getMapSelectedArea.count_member -
+            this.getMapSelectedArea.count_sale
+          // default: 0
+          // unit: "m²"
+        },
+        {
+          icon: "AreaStats/추진위원회.png",
+          // icon: "AreaStats/number-household.svg",
+          title: "전매 관리",
+          value: this.getMapSelectedArea.category_resale
+          // default: 0,
+          // unit: "명"
+        },
+
+        {
+          // icon: "AreaStats/number-household.svg",
+          title: "권리산정 기준일",
+          value: this.getMapSelectedArea.category_date_rights
+        },
+        {
+          // icon: "AreaStats/세입자수.png",
+          // icon: "AreaStats/progress.svg",
+          title: "이주비/중도금 대출 조건",
+          value: "관리자 페이지에 추가 요망"
+        },
+        {
+          // icon: "AreaStats/조합원수.png",
+          // icon: "AreaStats/number-members.svg",
+          title: "추가부담금 납입시기 (입주일자)",
+          value: this.getMapSelectedArea.date_move_in
+        },
+        {
+          // icon: "AreaStats/조합원수.png",
+          // icon: "AreaStats/number-members.svg",
+          title: "기타 특이사항",
+          value: "관리자 페이지에 추가 요망"
+        }
+      ];
+    },
+    getColor() {
+      return (type) => {
+        switch (type) {
+          case "재개발":
+            return "primary";
+          case "재건축":
+            return "blue";
+          case "가로주택":
+            return "green";
+          case "일반":
+            return "purple";
+          default:
+            return "black";
+        }
+      };
+    },
     getCurrTransactions() {
       // "202007"
       const _currTrArr = this.transactions
@@ -409,8 +413,8 @@ export default {
         { label: "오피스텔", value: "OFFICETEL" },
         { label: "상업업무용", value: "COMMERCIAL " },
         { label: "분양/입주권", value: "LAND" },
-        { label: "연립/다세대", value: "ALLIANCE" },
-        { label: "단독/다가구", value: "SINGLE" },
+        { label: "연립ￜ다세대", value: "ALLIANCE" },
+        { label: "단독|다가구", value: "SINGLE" },
         { label: "토지", value: "LAND" }
       ];
 
@@ -492,7 +496,6 @@ export default {
       line-height: 24px;
       letter-spacing: -0.9px;
       color: #ff5100;
-      border: #ff5100 1px solid;
       padding: 0 4px;
     }
     .title-heading {

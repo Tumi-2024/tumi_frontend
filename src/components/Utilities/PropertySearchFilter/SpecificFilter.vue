@@ -124,28 +124,25 @@ export default {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
     ...mapActions("searchOption", ["setIsMultiSelect"]),
     ...mapActions("area", ["fetchMapAreas"]),
+    ...mapActions(["getSimpleHouses"]),
 
     select(obj, key) {
-      console.log(obj);
       this.selected = obj;
     },
     openModal() {
       this.modal = true;
       this.setIsMultiSelect(false);
-      console.log("setIsMultiSelect = false");
     },
     selectDetail(val) {
-      console.log(val);
       this.selectedDetail = val;
     },
     save() {
       this.$refs.component.save();
       this.modal = false;
+      this.$store.dispatch("getSimpleHouses");
     },
     initialize() {
-      console.log(this.$refs.component);
       this.$refs.component.initialize();
-      // this.modal = false;
     }
   },
   mounted() {

@@ -43,19 +43,19 @@ export const queryBuilderStore = {
           value: "APARTMENT"
         },
         {
-          label: "연립/다세대",
+          label: "연립ￜ다세대",
           value: "ALLIANCE"
         },
         {
-          label: "단독/다가구",
+          label: "단독ￜ다가구",
           value: "SINGLE"
         },
         {
-          label: "원룸/오피스텔",
+          label: "오피스텔",
           value: "OFFICETEL"
         },
         {
-          label: "상업업무용",
+          label: "상업ￜ업무용",
           value: "COMMERCIAL"
         },
         {
@@ -63,7 +63,7 @@ export const queryBuilderStore = {
           value: "LAND"
         },
         {
-          label: "무허가 건축물",
+          label: "무허가건축물",
           value: "noname01"
         },
         {

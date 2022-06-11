@@ -58,7 +58,7 @@ export default {
         { key: "OFFICETEL", label: "오피스텔" },
         { key: "APARTMENT", label: "아파트" },
         { key: "LAND", label: "토지" },
-        { key: "ALLIANCE", label: "연립/다세대" }
+        { key: "ALLIANCE", label: "연립ￜ다세대" }
       ]
     };
   },
@@ -87,7 +87,7 @@ export default {
             OFFICETEL: "오피스텔",
             APARTMENT: "아파트",
             LAND: "토지",
-            ALLIANCE: "연립/다세대"
+            ALLIANCE: "연립ￜ다세대"
           };
           const transactionItem = item.recent_transactions?.[item.types[0]];
           if (!transactionItem) {

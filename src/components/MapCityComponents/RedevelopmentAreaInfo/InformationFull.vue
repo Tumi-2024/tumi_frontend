@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 import MoreInformation from "./MoreInformation";
 import Summary from "./Summary";
@@ -94,9 +94,7 @@ export default {
       dialog: false
     };
   },
-  computed: {
-    ...mapGetters("area", ["getMapSelectedArea"])
-  },
+  computed: {},
   methods: {
     ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),
     toggleDialog(value = true) {

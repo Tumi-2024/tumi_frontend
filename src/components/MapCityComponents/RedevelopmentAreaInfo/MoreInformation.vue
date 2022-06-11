@@ -17,9 +17,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">
-        정비사업 개요
-      </div>
+      <div class="title-heading notosanskr-medium">정비사업 개요</div>
       <div class="row table">
         <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo" :key="i">
           <div class="q-pa-sm label">
@@ -39,9 +37,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">
-        도시계획 사항
-      </div>
+      <div class="title-heading notosanskr-medium">도시계획 사항</div>
       <div class="row table">
         <div
           class="col-sm-6 col-12 row"
@@ -65,9 +61,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">
-        건축 계획
-      </div>
+      <div class="title-heading notosanskr-medium">건축 계획</div>
       <div class="row table">
         <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo2" :key="i">
           <div class="q-pa-sm label">
@@ -86,11 +80,9 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">
-        주택 공급 계획
-      </div>
+      <div class="title-heading notosanskr-medium">주택 공급 계획</div>
       <span style="font-weight: 500">분양 계획</span>
-      <div class="row table" style="margin-bottom: 20px; ">
+      <div class="row table" style="margin-bottom: 20px">
         <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
           <div class="q-pa-sm label">
             <span class="information">{{ item.label }}</span>
@@ -106,7 +98,7 @@
           }}</span>
         </div>
       </div>
-      <span style="font-weight: 500;">임대 계획</span>
+      <span style="font-weight: 500">임대 계획</span>
       <div class="row table">
         <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
           <div class="q-pa-sm label">
@@ -135,9 +127,7 @@
       class="investment-point notosanskr-regular"
       v-if="getMapSelectedArea.description_investment"
     >
-      <div class="title-heading notosanskr-medium">
-        투자포인트
-      </div>
+      <div class="title-heading notosanskr-medium">투자포인트</div>
       <div
         class="item summernote"
         v-html="getMapSelectedArea.description_investment"
@@ -148,12 +138,12 @@
       <q-btn
         color="primary"
         text-color="white"
-        class=" notosanskr-medium "
+        class="notosanskr-medium"
         label="이지역 투자매물 보러가기"
       />
     </section>
 
-    <section style="min-height: 200px;"></section>
+    <section style="min-height: 200px"></section>
   </div>
 </template>
 
@@ -327,22 +317,22 @@ export default {
         { label: "오피스텔", value: "OFFICETEL" },
         { label: "상업업무용", value: "COMMERCIAL " },
         { label: "분양/입주권", value: "LAND" },
-        { label: "연립/다세대", value: "ALLIANCE" },
-        { label: "단독/다가구", value: "SINGLE" },
+        { label: "연립ￜ다세대", value: "ALLIANCE" },
+        { label: "단독|다가구", value: "SINGLE" },
         { label: "토지", value: "LAND" }
       ];
 
-      const getDisable = value =>
-        this.transactions.every(transaction => {
+      const getDisable = (value) =>
+        this.transactions.every((transaction) => {
           return !transaction.recent_transactions[value];
         });
 
-      return options.map(option => {
+      return options.map((option) => {
         return { ...option, disable: getDisable(option.value) };
       });
     },
     toNumberString() {
-      return value => {
+      return (value) => {
         if (!value) {
           return "-";
         }
@@ -376,7 +366,7 @@ export default {
     getRedevelopmentSteps() {
       let steps = [];
       if (this.getMapSelectedArea.steps) {
-        steps = this.getMapSelectedArea.steps.map(item => ({
+        steps = this.getMapSelectedArea.steps.map((item) => ({
           title: item.title,
           date: item.date
         }));

@@ -26,7 +26,7 @@ const initState = {
     areaType: {
       label: "전용면적",
       value: "size_dedicated_area_m2",
-      type: ["아파트", "연립/다세대", "원룸/오피스텔", "상업업무용", "입주권"]
+      type: ["아파트", "연립ￜ다세대", "원룸/오피스텔", "상업업무용", "입주권"]
     },
     areas: [
       { label: "최소면적", value: 0 },
@@ -48,13 +48,13 @@ export const searchQueryStore = {
         },
         {
           icon: require("assets/iconsNew/12.png"),
-          label: "연립/다세대",
+          label: "연립ￜ다세대",
           valueTransaction: "ALLIANCE",
           valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/13.png"),
-          label: "단독/다가구",
+          label: "단독|다가구",
           valueTransaction: "SINGLE",
           valueHouse: "단독ￜ다가구"
         },

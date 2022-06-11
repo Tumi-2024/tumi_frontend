@@ -93,13 +93,13 @@ export default {
         },
         {
           icon: require("assets/iconsNew/12.png"),
-          label: "연립/다세대",
+          label: "연립ￜ다세대",
           value: "ALLIANCE",
           valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/13.png"),
-          label: "단독/다가구",
+          label: "단독|다가구",
           value: "SINGLE",
           valueHouse: "단독ￜ다가구"
         },

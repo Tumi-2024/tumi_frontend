@@ -105,7 +105,7 @@ export default {
         { key: "OFFICETEL", label: "오피스텔" },
         { key: "APARTMENT", label: "아파트" },
         { key: "LAND", label: "토지" },
-        { key: "ALLIANCE", label: "연립/다세대" }
+        { key: "ALLIANCE", label: "연립ￜ다세대" }
       ],
       onHover: false
     };

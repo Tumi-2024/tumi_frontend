@@ -1,23 +1,23 @@
 <template>
   <q-item-section>
-    <div
-      class="title"
-      @mouseover="
-        () => {
-          if (!redirect) return;
-          isHover = true;
-        }
-      "
-      @mouseout="
-        () => {
-          if (!redirect) return;
-          isHover = false;
-        }
-      "
-    >
-      <div class="column">
+    <div class="title">
+      <div
+        class="column"
+        @mouseover="
+          () => {
+            if (!redirect) return;
+            isHover = true;
+          }
+        "
+        @mouseout="
+          () => {
+            if (!redirect) return;
+            isHover = false;
+          }
+        "
+      >
         <div
-          class="area-name"
+          class="area-name cursor-pointer"
           :class="[this.textClass, { hover: isHover }]"
           @click="goToAdmin"
         >
@@ -108,7 +108,7 @@ export default {
           return _date.getFullYear();
         };
         const getMonth = () => {
-          const m = _date.getMonth();
+          const m = _date.getMonth() + 1;
           if (m < 10) {
             return "0" + m;
           }
@@ -147,7 +147,6 @@ export default {
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
-  cursor: pointer;
 
   &.hover {
     text-decoration: underline;
