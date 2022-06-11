@@ -4,7 +4,7 @@
     <div
       v-for="(tab, i) in tabs"
       :key="i"
-      class="items col-3 row items-center justify-center"
+      class="items col-4 row items-center justify-center"
     >
       <q-btn
         flat
@@ -25,9 +25,7 @@
 </template>
 
 <script>
-import {
-  loginModalMutation
-} from "src/components/Utilities/LoginModal/LoginModalState";
+import { loginModalMutation } from "src/components/Utilities/LoginModal/LoginModalState";
 
 export default {
   data() {
@@ -39,20 +37,20 @@ export default {
           pathName: "recently_seen"
         },
         {
-          label: "관심지역",
-          icon: "area-interest.svg",
-          pathName: "area"
-        },
-        {
           label: "관심매물",
           icon: "home-interest.svg",
           pathName: "property_interest"
         },
         {
-          label: "연락한 매물",
-          icon: "contacted-property.svg",
-          pathName: "property_contacted"
+          label: "관심지역",
+          icon: "area-interest.svg",
+          pathName: "area"
         }
+        // {
+        //   label: "연락한 매물",
+        //   icon: "contacted-property.svg",
+        //   pathName: "property_contacted"
+        // }
       ]
     };
   },

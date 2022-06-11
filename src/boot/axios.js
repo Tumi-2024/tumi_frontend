@@ -2,7 +2,7 @@
 import Vue from "vue";
 import axios from "axios";
 import qs from "qs";
-import { Cookies } from "quasar";
+import { SessionStorage } from "quasar";
 // Main Section
 const instance = axios.create({});
 
@@ -26,8 +26,8 @@ instance.interceptors.response.use(
 
     const { status } = error.response;
     if (status === 403) {
-      Cookies.remove("tumi");
-      Cookies.remove("tumi_i");
+      SessionStorage.remove("tumi");
+      SessionStorage.remove("tumi_i");
     }
     // 오류 응답을 처리
     // ...

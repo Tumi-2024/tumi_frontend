@@ -160,7 +160,6 @@ export const searchQueryStore = {
     setQuery: (context, data) => {
       const lat = context.rootState.estate.latitude;
       const long = context.rootState.estate.longitude;
-      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}`;
       if (Array.isArray(data)) {
         data.forEach((obj) => {
           context.commit("SET_QUERY", obj);
@@ -169,7 +168,14 @@ export const searchQueryStore = {
         context.commit("SET_QUERY", data);
       }
       context.dispatch("getSimpleHouses", {}, { root: true });
-      context.dispatch("area/fetchMapAreas", rangeQuery, { root: true });
+      context.dispatch(
+        "area/fetchMapAreas",
+        {
+          latitude__range: `${lat[0]},${lat[1]}`,
+          longitude__range: `${long[0]},${long[1]}`
+        },
+        { root: true }
+      );
     },
     initializeQuery: (context, data) => {
       context.commit("INIT_QUERY", data);

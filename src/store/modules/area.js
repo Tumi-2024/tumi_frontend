@@ -26,30 +26,59 @@ export const areaStore = {
       try {
         const getQueryString2 =
           context.rootGetters["searchQuery/getQueryString2"];
-        const areaType = getQueryString2("areaType", "value");
-        const areas = getQueryString2("areas", "value");
         const users = getQueryString2("users", "");
 
-        const getInitPrices = () => {
-          const arrInitPrice = getQueryString2("initPrices", "value");
-          if (arrInitPrice[0] === 0 && arrInitPrice[1] === 999999) {
-            return undefined;
+        const area = context.rootGetters["searchOption/area"];
+        const price = context.rootGetters["searchOption/price"];
+        const ctgr = context.rootGetters["searchOption/getCategoriesByKorean"];
+
+        // if (payload?.latitude) {
+        //   await context.commit("estate/setLatitude", payload.latitude, {
+        //     root: true
+        //   });
+        //   await context.commit("estate/setLongitude", payload.longitude, {
+        //     root: true
+        //   });
+        // }
+        const lat = context.rootState.estate.latitude;
+        const long = context.rootState.estate.longitude;
+        const getQueryArray = (keyname, params) => {
+          const hasValue = params.every((value) => !!value);
+          if (hasValue) {
+            return { [keyname]: params };
           } else {
-            return arrInitPrice;
+            return {};
           }
         };
-        const query = Vue.prototype.$qs.stringify(
+
+        const getRedevQuery = () => {
+          if (context.getters["map/getIsCone"]) {
+            return { redevelopment_area__status: "운영" };
+          } else {
+            return { redevelopment_area__isnull: true };
+          }
+        };
+
+        const { data } = await Vue.prototype.$axios.get(
+          "redevelopment_areas/",
           {
-            type_house__in: getQueryString2("categories", "valueHouse"),
-            price_initial_investment__range: getInitPrices(),
-            price_selling_hope__range: getQueryString2("prices", "value"),
-            [`${areaType}__range`]: areas,
-            user__in: users
-          },
-          { arrayFormat: "comma" }
+            params: {
+              latitude__range: `${lat[0]},${lat[1]}`,
+              longitude__range: `${long[0]},${long[1]}`,
+              page_size: 1000,
+              type_house__in: ctgr.join(","),
+              ...getQueryArray("price_selling_hope__range", [
+                price.min,
+                price.max
+              ]),
+              ...getQueryArray([`${area.value}__range`], [area.min, area.max]),
+              user__in: users.length === 0 ? undefined : users,
+              ...getRedevQuery(),
+              ...payload
+            }
+          }
         );
-        const url = `/redevelopment_areas/?${payload}&${query}&page_size=1000`;
-        const { data } = await Vue.prototype.$axios.get(url);
+
         context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", data.results);
         // context.commit("setMapAreas", markersArea);

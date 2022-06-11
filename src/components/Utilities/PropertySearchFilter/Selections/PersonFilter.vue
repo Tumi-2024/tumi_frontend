@@ -9,7 +9,7 @@
         node-key="id"
         label-key="label"
         tick-strategy="leaf"
-        :ticked.sync="ticked"
+        :ticked.sync="selectValue"
         default-expand-all
         @update:ticked="onTicked"
       />
@@ -20,7 +20,8 @@
 <script>
 import TextUnderHighlight from "components/Utilities/TextUnderHighlight";
 import Vue from "vue";
-import { mapGetters } from "vuex";
+
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -28,6 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery", "getOption"]),
+    ...mapGetters("searchOption", ["person", "isMultiSelect"]),
     getTeamTree() {
       return this.teamsData.map((obj) => {
         return {
@@ -48,18 +50,29 @@ export default {
     // const { data: userData } = await Vue.prototype.$axios.get(
     //   `/users/${index}/`
     // );
-    this.ticked = this.getOption("users");
+  },
+  beforeMount() {
+    this.selectValue = [...this.person];
   },
   data() {
     return {
       teamsData: [],
-      ticked: [],
-      expanded: []
+      expanded: [],
+      selectValue: []
     };
   },
   methods: {
+    ...mapActions("searchOption", ["setPerson"]),
     onTicked(values) {
       this.$emit("select", values, "users");
+      this.selectValue = values;
+    },
+    save() {
+      this.setPerson(this.selectValue);
+    },
+    initialize() {
+      this.setPerson([]);
+      this.selectValue = [];
     }
   }
 };

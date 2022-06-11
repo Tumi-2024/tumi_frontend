@@ -86,7 +86,7 @@
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
-                지역
+                지역 (동, 도로명)
               </p>
             </q-item-label>
           </template>

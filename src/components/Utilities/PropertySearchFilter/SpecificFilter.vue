@@ -5,7 +5,7 @@
       padding="0px"
       class="modal-btn q-ma-none no-wrap"
       :class="[disable, propsClass]"
-      @click="modal = true"
+      @click="openModal"
       :disable="disable"
     >
       <span
@@ -40,6 +40,7 @@
             @selectDetail="selectDetail"
             :value="value"
             :label="label"
+            :keyName="keyName"
           />
         </q-card-section>
 
@@ -54,7 +55,7 @@
                 label="초기화"
                 padding="12px"
                 style="font-size: calc((18 / 1000) * 100vh)"
-                @click="init"
+                @click="initialize"
               />
             </div>
             <div class="col q-mx-xs">
@@ -89,19 +90,18 @@ import {
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    "transaction-type": TransactionType,
-    "maintenance-type": MaintenanceType,
-    "property-type": PropertyType,
-    "property-sale-price": PropertySalePrice,
-    "charter-price-deposit": CharterPriceDeposit,
-    "exclusive-area": ExclusiveArea,
+    transactionType: TransactionType,
+    maintenanceType: MaintenanceType,
+    propertyType: PropertyType,
+    PropertySalePrice: PropertySalePrice,
+    CharterPriceDeposit: CharterPriceDeposit,
+    ExclusiveArea: ExclusiveArea,
     price: PriceFilter,
     person: PersonFilter
   },
   data() {
     return {
       modal: false,
-      keyName: "",
       selected: [],
       selectedDetail: ""
     };
@@ -113,7 +113,8 @@ export default {
     charterPriceDeposit: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
     propsClass: { type: String, default: "" },
-    value: { type: [Array, Object], require: false }
+    value: { type: [Array, Object], require: false },
+    keyName: { type: String, required: false, default: "" }
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
@@ -121,34 +122,30 @@ export default {
   },
   methods: {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    // STORE MODULE ACTIONS ***
-    // ...mapActions("searchQuery", [
-    //   "setTypeSale",
-    //   "setTypeHouse",
-    //   "setTypeHouseDetail",
-    //   "setSalePrice",
-    //   "setDepositPrice"
-    // ]),
-    // COMPONENTS METHODS STARTS ***
+    ...mapActions("searchOption", ["setIsMultiSelect"]),
+    ...mapActions("area", ["fetchMapAreas"]),
+
     select(obj, key) {
+      console.log(obj);
       this.selected = obj;
-      this.keyName = key;
+    },
+    openModal() {
+      this.modal = true;
+      this.setIsMultiSelect(false);
+      console.log("setIsMultiSelect = false");
     },
     selectDetail(val) {
+      console.log(val);
       this.selectedDetail = val;
     },
     save() {
-      this.setQuery({
-        key: this.$refs.component.keyName || this.keyName,
-        data: this.selected
-      });
+      this.$refs.component.save();
       this.modal = false;
     },
-
-    async init() {
-      this.modal = false;
-      const test = await this.initializeQuery("categories");
-      this.selected = Array(test);
+    initialize() {
+      console.log(this.$refs.component);
+      this.$refs.component.initialize();
+      // this.modal = false;
     }
   },
   mounted() {

@@ -303,12 +303,12 @@ export default {
       this.changeMapSelectedArea(null);
     },
     dragEnd() {
-      console.log("dragEnd");
-      const { center } = this.map;
-      this.changeMapCenter({
-        lat: center.lat(),
-        lng: center.lng()
-      });
+      // console.log("dragEnd");
+      // const { center } = this.map;
+      // this.changeMapCenter({
+      //   lat: center.lat(),
+      //   lng: center.lng()
+      // });
     },
     zoomChanged() {
       const zoom = this.map.getZoom();
@@ -324,11 +324,6 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
-      // const { center } = this.map;
-      // this.changeMapCenter({
-      //   lat: center.lat(),
-      //   lng: center.lng()
-      // });
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -351,25 +346,23 @@ export default {
       const getAreaTypeString = () => {
         switch (this.getAreaType) {
           case null:
-            return "";
+            return {};
           case "재개발":
-            return "category=재개발";
+            return { category: "재개발" };
           case "재건축":
-            return "category=재건축";
+            return { category: "재건축" };
           case "가로주택":
-            return "category=가로주택";
+            return { category: "가로주택" };
           default:
             return null;
         }
       };
 
-      const rangeQuery = `${getAreaTypeString()}&latitude__range=${
-        boundLocation.latitude[0]
-      },${boundLocation.latitude[1]}&longitude__range=${
-        boundLocation.longitude[0]
-      },${boundLocation.longitude[1]}`;
-
-      await this.fetchMapAreas(rangeQuery);
+      await this.fetchMapAreas({
+        ...getAreaTypeString(),
+        latitude__range: `${boundLocation.latitude[0]},${boundLocation.latitude[1]}`,
+        longitude__range: `${boundLocation.longitude[0]},${boundLocation.longitude[1]}`
+      });
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();

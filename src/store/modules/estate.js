@@ -89,34 +89,47 @@ export const estateStore = {
     },
     getSimpleHouses: async function (context, payload) {
       context.commit("setSimpleHouses", []);
-      const redevelopQuery = context.getters["map/getIsCone"]
-        ? "redevelopment_area__status=운영"
-        : `redevelopment_area__isnull=true`;
 
       const getQueryString2 = context.getters["searchQuery/getQueryString2"];
 
-      const areaType = getQueryString2("areaType", "value");
-      const areas = getQueryString2("areas", "value");
       const users = getQueryString2("users", "");
 
-      const query = Vue.prototype.$qs.stringify(
-        {
-          type_house__in: getQueryString2("categories", "valueHouse"),
-          price_selling_hope__range: getQueryString2("prices", "value"),
-          [`${areaType}__range`]: areas,
-          user__in: users.length === 0 ? undefined : users
-        },
-        { arrayFormat: "comma" }
-      );
+      const areaNew = context.getters["searchOption/area"];
+      const priceNew = context.getters["searchOption/price"];
+      const ctgrNew = context.getters["searchOption/getCategoriesByKorean"];
 
-      const encodedUrl = query + "&" + redevelopQuery;
+      const getQueryArray = (keyname, params) => {
+        const hasValue = params.every((value) => !!value);
+        if (hasValue) {
+          return { [keyname]: params };
+        } else {
+          return {};
+        }
+      };
+
+      // const query = Vue.prototype.$qs.stringify(
+      //   {
+      //     type_house__in: ctgrNew,
+      //     ...getQueryArray("price_selling_hope__range", [
+      //       priceNew.min,
+      //       priceNew.max
+      //     ]),
+      //     ...getQueryArray(
+      //       [`${areaNew.value}__range`],
+      //       [areaNew.min, areaNew.max]
+      //     ),
+      //     user__in: users.length === 0 ? undefined : users
+      //   },
+      //   { arrayFormat: "comma" }
+      // );
+
+      // const encodedUrl = query + "&" + redevelopQuery;
       if (payload.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);
       }
       const lat = context.state.latitude;
       const long = context.state.longitude;
-      const rangeQuery = `latitude__range=${lat[0]},${lat[1]}&longitude__range=${long[0]},${long[1]}&${encodedUrl}`;
       switch (payload.type) {
         case "city":
           await context.commit("setRequestUrl", "cities");
@@ -137,8 +150,34 @@ export const estateStore = {
         //   await context.commit("setRequestUrl", context.state.requestUrl)
       }
 
+      const getRedevQuery = () => {
+        if (context.getters["map/getIsCone"]) {
+          return { redevelopment_area__status: "운영" };
+        } else {
+          return { redevelopment_area__isnull: true };
+        }
+      };
+
       const data = await Vue.prototype.$axios.get(
-        `/${context.state.requestUrl}/?${rangeQuery}&page_size=1000`
+        `/${context.state.requestUrl}/`,
+        {
+          params: {
+            latitude__range: `${lat[0]},${lat[1]}`,
+            longitude__range: `${long[0]},${long[1]}`,
+            page_size: 1000,
+            type_house__in: ctgrNew.join(","),
+            ...getQueryArray("price_selling_hope__range", [
+              priceNew.min,
+              priceNew.max
+            ]),
+            ...getQueryArray(
+              [`${areaNew.value}__range`],
+              [areaNew.min, areaNew.max]
+            ),
+            user__in: users.length === 0 ? undefined : users,
+            ...getRedevQuery()
+          }
+        }
       );
       // if (payload.query) {
       //   data = await Vue.prototype.$axios.get(

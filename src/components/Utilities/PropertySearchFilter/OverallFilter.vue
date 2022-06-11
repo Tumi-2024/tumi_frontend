@@ -12,7 +12,7 @@
         min-height: 30px;
       "
       class="q-mx-xs justify-center items-center"
-      @click="modal = true"
+      @click="openModal"
       :disable="disable"
     >
       <q-icon size="calc((20 / 1312) * 100vh)">
@@ -42,7 +42,7 @@
             style="padding-top: 36px"
             @select="setSelected('categories', $event)"
             :value="categories"
-            :isUnique="true"
+            ref="option1"
           />
           <exclusive-area
             class="q-pb-xl bg-white q-mt-sm"
@@ -51,6 +51,7 @@
             @selectDetail="setSelected('areaType', $event)"
             :isCondition="true"
             :selectedProps="categories"
+            ref="option2"
           />
 
           <price-filter
@@ -58,6 +59,7 @@
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('prices', $event)"
+            ref="option3"
           />
 
           <price-filter
@@ -66,12 +68,14 @@
             style="padding-top: 36px"
             @select="setSelected('initPrices', $event)"
             keyName="initPrices"
+            ref="option4"
           />
 
           <person-filter
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('persons', $event)"
+            ref="option5"
           />
 
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
@@ -86,7 +90,7 @@
                   label="초기화"
                   style="font-size: calc((18 / 1000) * 100vh)"
                   padding="12px"
-                  @click="resetFilters()"
+                  @click="resetFilters"
                 />
               </div>
               <div class="col q-mx-xs">
@@ -177,49 +181,19 @@ export default {
       ]
     };
   },
-  beforeMount() {
-    console.log("setIsMultiSelect");
-    this.setIsMultiSelect(true);
-  },
   methods: {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("searchOption", ["setIsMultiSelect"]),
+    ...mapActions("searchOption", ["setIsMultiSelect", "initialize"]),
+    openModal() {
+      this.modal = true;
+      this.setIsMultiSelect(true);
+    },
     resetFilters() {
-      this.categories = [
-        {
-          icon: require("assets/iconsNew/11.png"),
-          label: "아파트",
-          valueTransaction: "APARTMENT",
-          valueHouse: "아파트"
-        }
-      ];
-      this.prices = [
-        { label: "최저가", value: 0 },
-        { label: "최고가", key: "max", value: 999999 }
-      ];
-      this.initPrices = [
-        { label: "최저가", value: 0 },
-        { label: "최고가", key: "max", value: 999999 }
-      ];
-      this.areaType = [
-        {
-          label: "전용면적",
-          value: "size_dedicated_area_m2",
-          type: [
-            "아파트",
-            "연립/다세대",
-            "원룸/오피스텔",
-            "상업업무용",
-            "입주권"
-          ]
-        }
-      ];
-      this.areas = [
-        { label: "최소면적", value: 0 },
-        { label: "최대면적", value: 100000 }
-      ];
-
-      // this.overallFilter = this.setInitValue();
+      this.initialize();
+      console.log(this.$refs);
+      for (const ref in this.$refs) {
+        this.$refs[ref].initialize();
+      }
     },
     setSelected(property, value) {
       this[property] = value;
@@ -228,7 +202,6 @@ export default {
       this.setQuery([
         { key: "categories", data: this.categories },
         { key: "prices", data: this.prices },
-        // { key: "areas", data: this.areas },
         { key: "areaType", data: this.areaType }
       ]);
       this.modal = false;

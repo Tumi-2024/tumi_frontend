@@ -65,7 +65,7 @@ export default {
         {
           backgroundColor: "#ce93d8",
           text: "부동산 인사이트",
-          func: () => this.$router.push("/insights/부동산팁")
+          func: () => this.$router.push("/insights/?tab=estate")
         }
       ]
     };

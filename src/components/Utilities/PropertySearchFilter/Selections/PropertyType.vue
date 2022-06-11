@@ -2,24 +2,25 @@
   <q-card-section>
     <text-under-highlight text="주택 유형" />
     <!-- selection of choices | 선택의 선택 -->
-    <div class="selection row q-mt-lg">
+    <div class="selection row q-mt-lg" style="gap: calc((10 / 1000) * 100vw)">
       <q-btn
-        style="flex-basis: 20%; margin-bottom: 10px"
         v-for="(property, i) of properties"
         :key="i"
+        style="flex-basis: 20%"
         flat
-        class="col notosanskr-medium q-mx-xs"
+        class="col notosanskr-medium"
         :class="{
           selected: getIsActive(property.value)
         }"
         @click="changeValue(property)"
       >
         <div
-          class="full-width column q-py-lg items-center"
-          style="font-size: calc((13 / 1000) * 100vw)"
+          class="full-width column q-py-md items-center"
+          style="font-size: calc((16 / 1000) * 100vh)"
         >
           <img
-            style="width: calc((30 / 1000) * 100vw)"
+            style="width: calc((25 / 1000) * 100vh)"
+            class="q-mb-sm"
             :src="property.icon"
             :alt="property.icon"
           />
@@ -38,22 +39,8 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
-  computed: {
-    ...mapGetters("searchOption", ["categories"]),
-    getIsActive() {
-      return (dd) => {
-        return this.categories.some((obj) => {
-          return obj === dd;
-        });
-      };
-    }
-  },
+
   props: {
-    isUnique: {
-      type: Boolean,
-      require: false,
-      default: false
-    },
     value: {
       type: Array,
       require: false,
@@ -76,6 +63,17 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters("searchOption", ["categories", "isMultiSelect"]),
+    getIsActive() {
+      return (dd) => {
+        return this.selected.some((obj) => {
+          return obj === dd;
+        });
+      };
+    }
+  },
+
   data() {
     return {
       selected: [
@@ -139,43 +137,40 @@ export default {
     };
   },
   beforeMount() {
-    this.selected = this.value;
-  },
-  mounted() {
-    this.$emit("select", this.selected, "categories");
+    this.selected = [...this.categories];
   },
   methods: {
-    ...mapActions("searchOption", ["addCategories", "removeCategories"]),
+    ...mapActions("searchOption", ["setCategories", "removeCategories"]),
     select(val) {
       this.$emit("selectDetail", val);
     },
     changeValue({ value }) {
-      const hasValue = this.categories.some((obj) => obj === value);
+      const hasValue = this.selected.some((obj) => obj === value);
       if (hasValue) {
-        this.removeCategories(value);
+        if (this.selected.length === 1) {
+          return;
+        }
+        this.selected = this.selected.filter((obj) => obj !== value);
+        console.log(this.selected);
       } else {
-        this.addCategories(value);
+        if (this.isMultiSelect) {
+          this.selected.push(value);
+        } else {
+          this.selected = [value];
+        }
       }
-      // if (this.isUnique) {
-      //   this.selected = [val];
-      // } else {
-      //   const test = this.selected.filter((obj) => obj.label === val.label);
-      //   if (test.length === 0) {
-      //     this.selected.push(val);
-      //   } else {
-      //     this.selected = this.selected.filter(
-      //       (obj) => obj.label !== val.label
-      //     );
-      //   }
-      // }
-
-      // this.$emit("select", this.selected, "categories");
+    },
+    save() {
+      this.setCategories(this.selected);
+    },
+    initialize() {
+      this.selected = ["APARTMENT"];
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .selection {
   font-size: 15px;
   line-height: 24px; /* identical
@@ -185,17 +180,16 @@ to box height, or 160% */
 Font/50 */
   color: #1a1a1a;
   .q-btn {
-    border: 1px solid rgba(128, 128, 128, 0.274);
+    border: 2px solid rgba(128, 128, 128, 0.274);
+    border-radius: 8px;
     &.selected {
       border: 2px solid #fc5b2e;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 24px;
       text-align: center;
-      letter-spacing: -1.125px;
       color: #ff5100;
     }
+  }
+  .q-btn__wrapper {
+    padding: 0 !important;
   }
 }
 </style>

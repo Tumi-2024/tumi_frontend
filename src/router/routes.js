@@ -57,16 +57,6 @@ const routes = [
     component: () => import("pages/RecentlySeenPage/Index.vue"),
     name: "recently_seen"
   },
-  // {
-  //   path: '/real-estate/',
-  //   component: () => import('layouts/MyPageLayout.vue'),
-  //   children: [
-  //     { path: '부동산팁', component: () => import('pages/RealEstatePage/RealEstateTips/Index.vue'), name: 'real_estate_tips' },
-  //     { path: '정책분석', component: () => import('pages/RealEstatePage/PolicyAnalysis/Index.vue'), name: 'real_estate_policy_analysis' },
-  //     { path: '시장전망', component: () => import('pages/RealEstatePage/MarketOutlook/Index.vue'), name: 'real_estate_market_outlook' }
-  //   ],
-  //   name: 'real_estate'
-  // },
   {
     path: "/insights/",
     component: () => import("layouts/MyPageLayout.vue"),

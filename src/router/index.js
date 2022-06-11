@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { Cookies } from 'quasar'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import { SessionStorage } from "quasar";
 
-import routes from './routes'
+import routes from "./routes";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 /*
  * If not building with SSR mode, you can
@@ -25,16 +25,16 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
-  })
+  });
 
   Router.beforeEach((to, from, next) => {
-    const value = Cookies.get('tumi')
-    if (to.name === 'signIn' || to.name === 'signUp') {
-      next()
+    const value = SessionStorage.getItem("tumi");
+    if (to.name === "signIn" || to.name === "signUp") {
+      next();
     } else if (!value) {
-      next('/sign-in')
+      next("/sign-in");
     } else {
-      next()
+      next();
     }
     //  else if (!value && to.name === 'signIn') {
     //   next('/sign-in')
@@ -43,7 +43,7 @@ export default function (/* { store, ssrContext } */) {
     // } else {
     //   next()
     // }
-  })
+  });
 
-  return Router
+  return Router;
 }

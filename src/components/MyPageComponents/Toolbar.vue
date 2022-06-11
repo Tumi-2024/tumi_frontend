@@ -3,19 +3,24 @@
     <q-btn flat padding="4px" ripple :to="{ path: '/' }">
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
-    <div>
+    <div class="column">
       <q-btn @click="logOut">로그아웃</q-btn>
-      <q-btn flat class="bg-primary text-white q-ml-sm" @click="setModal" v-if="!$store.getters.user.id">로그인</q-btn>
+      <q-btn
+        flat
+        class="bg-primary text-white q-ml-sm"
+        @click="setModal"
+        v-if="!$store.getters.user.id"
+      >
+        로그인
+      </q-btn>
     </div>
   </q-card-section>
 </template>
 
 <script>
-import {
-  loginModalMutation
-} from "src/components/Utilities/LoginModal/LoginModalState";
+import { loginModalMutation } from "src/components/Utilities/LoginModal/LoginModalState";
 
-import { Cookies } from 'quasar'
+import { SessionStorage } from "quasar";
 
 export default {
   methods: {
@@ -23,9 +28,9 @@ export default {
       loginModalMutation.setModal();
     },
     logOut() {
-      Cookies.set('tumi', null)
-      Cookies.set('tumi_i', null)
-      this.$router.push({ name: 'signIn' })
+      SessionStorage.remove("tumi");
+      SessionStorage.remove("tumi_i");
+      this.$router.push({ name: "signIn" });
     }
   }
 };

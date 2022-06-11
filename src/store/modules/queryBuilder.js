@@ -2,7 +2,6 @@ export const queryBuilderStore = {
   namespaced: true,
   state: {
     // 주택 유형
-    // 다중선택 가능
     categories: ["APARTMENT"],
 
     // 전용면적
@@ -30,12 +29,56 @@ export const queryBuilderStore = {
      * 담당자 ID
      */
     person: [],
+    // 다중선택 Param
     isMultiSelect: false
   },
   getters: {
     categories: (_state) => {
       return _state.categories;
     },
+    getCategoriesByKorean: (_state) => {
+      const _kr = [
+        {
+          label: "아파트",
+          value: "APARTMENT"
+        },
+        {
+          label: "연립/다세대",
+          value: "ALLIANCE"
+        },
+        {
+          label: "단독/다가구",
+          value: "SINGLE"
+        },
+        {
+          label: "원룸/오피스텔",
+          value: "OFFICETEL"
+        },
+        {
+          label: "상업업무용",
+          value: "COMMERCIAL"
+        },
+        {
+          label: "토지",
+          value: "LAND"
+        },
+        {
+          label: "무허가 건축물",
+          value: "noname01"
+        },
+        {
+          label: "입주권",
+          value: "noname02"
+        }
+      ];
+      return _state.categories
+        .map((item) => {
+          const data = _kr.filter(({ value }) => value === item);
+          return data.length > 0 ? data[0].label : null;
+        })
+        .filter((item) => item !== null);
+    },
+
     area: (_state) => {
       return _state.area;
     },
@@ -54,6 +97,7 @@ export const queryBuilderStore = {
   },
   mutations: {
     initialize: (_state) => {
+      console.log("initialize");
       _state = {
         // 주택 유형
         // 다중선택 가능
@@ -71,44 +115,53 @@ export const queryBuilderStore = {
           min: undefined,
           max: undefined
         },
-        person: [],
-        isMultiSelect: false
+        person: []
       };
     },
-    addCategories: (_state, payload) => {
-      if (_state.isMultiSelect) {
-        _state.categories.push(payload);
-      } else {
-        _state.categories = [payload];
-      }
+    // addCategories: (_state, payload) => {
+    //   if (_state.isMultiSelect) {
+    //     _state.categories.push(payload);
+    //   } else {
+    //     _state.categories = [payload];
+    //   }
+    // },
+    setCategories: (_state, payload) => {
+      _state.categories = payload;
     },
     removeCategories: (_state, payload) => {
       _state.categories = _state.categories.filter((obj) => obj !== payload);
     },
-    setAreaType: (_state, payload) => {
+    setArea: (_state, payload) => {
       _state.area = payload;
     },
-    setAreaPrice: (_state, payload) => {
-      _state.area.min = payload.min;
-      _state.area.max = payload.max;
-    },
+    // setAreaType: (_state, payload) => {
+    //   _state.area = payload;
+    // },
+    // setAreaPrice: (_state, payload) => {
+    //   _state.area.min = payload.min;
+    //   _state.area.max = payload.max;
+    // },
     setPrice: (_state, payload) => (_state.price = payload),
     setInitPrice: (_state, payload) => (_state.initPrice = payload),
     setIsMultiSelect: (_state, payload) => {
       _state.isMultiSelect = payload;
-    }
+    },
+    setPerson: (_state, payload) => (_state.person = payload)
   },
   actions: {
     initialize: (context) => context.commit("initialize"),
-    addCategories: (context, data) => context.commit("addCategories", data),
+    // addCategories: (context, data) => context.commit("addCategories", data),
+    setCategories: (context, data) => context.commit("setCategories", data),
     removeCategories: (context, data) =>
       context.commit("removeCategories", data),
-    setAreaType: (context, data) => context.commit("setAreaType", data),
-    setAreaPrice: (context, data) => context.commit("setAreaPrice", data),
+
+    setArea: (context, data) => context.commit("setArea", data),
+    // setAreaType: (context, data) => context.commit("setAreaType", data),
+    // setAreaPrice: (context, data) => context.commit("setAreaPrice", data),
     setPrice: (context, data) => context.commit("setPrice", data),
     setInitPrice: (context, data) => context.commit("setInitPrice", data),
+    setPerson: (context, data) => context.commit("setPerson", data),
     setIsMultiSelect: (context, data) => {
-      console.log(data);
       context.commit("setIsMultiSelect", data);
     }
   }

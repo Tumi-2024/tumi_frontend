@@ -44,13 +44,13 @@
           :class="{ hideScrollbar: $q.platform.is.mobile }"
         >
           <slot>
-            <div class="items" v-for="(filter, i) of filters" :key="i">
+            <div class="items" v-for="(filter, i) of getFilters" :key="i">
               <specific-filter
                 v-if="!filter.isHide"
                 :propsClass="filter.class"
                 :label="filter.label"
                 :component="filter.type"
-                :value="[...getOption(filter.keyName)]"
+                :keyName="filter.keyName"
               />
             </div>
           </slot>
@@ -74,13 +74,16 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
-    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
-  },
-  data() {
-    return {
-      searchText: "",
-      options: [],
-      filters: [
+    ...mapGetters("searchOption", [
+      "categories",
+      "area",
+      "price",
+      "initPrice",
+      "person",
+      "isMultiSelect"
+    ]),
+    getFilters() {
+      return [
         {
           label: "주택유형",
           type: "property-type",
@@ -90,39 +93,41 @@ export default {
         {
           label: "면적종류",
           type: "exclusive-area",
-          class: "text-white bg-green",
+          class: this.area.value ? "text-white bg-green" : "text-grey",
           keyName: "areaType"
         },
         {
           label: "가격",
           type: "price",
-          class: "text-white bg-blue",
+          class:
+            this.price.min || this.price.max
+              ? "text-white bg-blue"
+              : "text-grey",
           keyName: "prices"
         },
         {
           label: "초기투자금",
           type: "price",
-          class: "text-white bg-purple",
+          class:
+            this.initPrice.min || this.initPrice.max
+              ? "text-white bg-purple"
+              : "text-grey",
           isHide: this.$route.path !== "/map/city",
           keyName: "initPrices"
         },
         {
           label: "담당자",
           type: "person",
-          class: "text-white bg-black",
+          class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
           keyName: "users"
         }
-        // {
-        //   label: "매매가",
-        //   type: "salePrice",
-        //   class: "text-white bg-blue"
-        // },
-        // {
-        //   label: "매물등록일자",
-        //   type: "registrationDate",
-        //   class: "text-white bg-black"
-        // }
-      ]
+      ];
+    }
+  },
+  data() {
+    return {
+      searchText: "",
+      options: []
     };
   },
   props: {
@@ -139,7 +144,6 @@ export default {
       "changeToolbarTitle"
     ]),
     onSelect(obj) {
-      console.log(obj);
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
     },
