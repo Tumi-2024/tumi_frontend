@@ -224,64 +224,50 @@ export default {
     getStats() {
       return [
         {
-          // icon: "AreaStats/현재사업추진단계.png",
-          // icon: "AreaStats/number-household.svg",
+          title: "개발 세부유형",
+          value: this.getMapSelectedArea.subcategory
+        },
+        {
           title: "현재 사업추진단계",
           value: this.getMapSelectedArea.redevelopment_step
         },
         {
-          // icon: "AreaStats/현재사업추진단계.png",
-          // icon: "AreaStats/number-household.svg",
           title: "건립 세대 수 (예상 수치)",
           value:
             this.getMapSelectedArea.count_sale +
             this.getMapSelectedArea.count_rent
         },
         {
-          // icon: "AreaStats/현재사업추진단계.png",
-          // icon: "AreaStats/number-household.svg",
           title: "조합원 수",
           value: this.getMapSelectedArea.count_member
         },
         {
-          // icon: "AreaStats/area.svg",
-          // icon: "AreaStats/정비구역명칭.png",
           title: "일반 분양 수 (예상 수치)",
           value:
             this.getMapSelectedArea.count_sale -
             this.getMapSelectedArea.count_member
-          // default: 0
-          // unit: "m²"
         },
         {
-          // icon: "AreaStats/추진위원회.png",
-          // icon: "AreaStats/number-household.svg",
           title: "전매 관리",
           value: this.getMapSelectedArea.category_resale
-          // default: 0,
-          // unit: "명"
         },
-
         {
-          // icon: "AreaStats/number-household.svg",
-          title: "권리산정 기준일",
+          title: "부동산 대책",
+          value: this.getMapSelectedArea.category_policy
+        },
+        {
+          title: "근거법",
+          value: this.getMapSelectedArea.category_ground_law
+        },
+        {
+          title: "권리산정기준일",
           value: this.getMapSelectedArea.category_date_rights
         },
         {
-          // icon: "AreaStats/세입자수.png",
-          // icon: "AreaStats/progress.svg",
           title: "이주비/중도금 대출 조건",
           value: this.getMapSelectedArea.description_loan_condition
         },
-        // {
-        //   icon: "AreaStats/조합원수.png",
-        //   icon: "AreaStats/number-members.svg",
-        //   title: "추가부담금 납입시기 (입주일자)",
-        //   value: this.getMapSelectedArea.date_move_in
-        // },
         {
-          // icon: "AreaStats/조합원수.png",
-          // icon: "AreaStats/number-members.svg",
           title: "기타 특이사항",
           value: this.getMapSelectedArea.description_etc
         }

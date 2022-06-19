@@ -1,8 +1,6 @@
 <template>
   <q-card>
-    <q-card-section class="heading-title">
-      단지/건물 정보
-    </q-card-section>
+    <q-card-section class="heading-title"> 단지/건물 정보 </q-card-section>
     <q-card-section class="bg-white">
       <div class="row q-pb-md">
         <div class="col-sm-6 col-12 q-px-sm">
@@ -33,7 +31,7 @@
             v-if="item.phone"
             >{{ item.value }}</a
           >
-          <span class="information sub flex items-center q-px-sm" v-else>{{
+          <span class="information flex items-center q-px-sm" v-else>{{
             item.value
           }}</span>
         </div>
@@ -55,13 +53,15 @@ export default {
         { label: "세대 수", value: `${houseInfo.count_household ?? "-"} 세대` },
         {
           label: "층수 (지상/지하)",
-          value: `지상 ${houseInfo.count_floor_up ??
-            ""}층 / 지하 ${houseInfo.count_floor_down ?? "-"}층`
+          value: `지상 ${houseInfo.count_floor_up ?? ""}층 / 지하 ${
+            houseInfo.count_floor_down ?? "-"
+          }층`
         },
         {
           label: "주차대수 (지상/지하)",
-          value: `지상 ${houseInfo.count_parking_up ??
-            ""}개 / 지하 ${houseInfo.count_parking_down ?? "-"}개`
+          value: `지상 ${houseInfo.count_parking_up ?? ""}개 / 지하 ${
+            houseInfo.count_parking_down ?? "-"
+          }개`
         },
         { label: "엘리베이터 수", value: `${houseInfo.count_elevator ?? "-"}` },
         { label: "사용승인일", value: houseInfo.date_approval_use },
@@ -143,14 +143,12 @@ export default {
   }
 }
 .information {
-  font-weight: 700;
   font-size: 14px;
   line-height: 22px;
   letter-spacing: -1.05px;
-  color: #707070;
+  color: #1a1a1a;
   margin-left: 0px;
   &.sub {
-    font-weight: 500;
   }
 }
 .heading-title {

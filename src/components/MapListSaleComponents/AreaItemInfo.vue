@@ -1,9 +1,9 @@
 <template>
-  <div class="column">
+  <div class="column" style="flex: 1">
     <div class="row items-center">
       <template v-for="(row, rIndex) of getMainInfo">
-        <span
-          class="q-pa-xs justify-start align-start"
+        <div
+          class="justify-start align-start col-4 flex"
           style="flex: 1 1 auto"
           :key="`col-${rIndex}`"
         >
@@ -14,13 +14,13 @@
             <img src="~assets/icons/sun.svg" />
           </q-icon>
           <span class="col-text main desc">{{ row.value }}</span>
-        </span>
+        </div>
       </template>
     </div>
     <div class="row q-mt-md q-mt-lg-lg">
       <template v-for="(row, rIndex) of getSubInfo">
         <span
-          class="flex col-sm-3 col-xs-6 q-px-sm"
+          class="flex col-sm-4 col-xs-6"
           :class="`col-sm-${col}`"
           :key="`col-${rIndex}`"
         >
@@ -49,55 +49,77 @@ export default {
       if (this.infoProps) {
         return this.infoProps;
       }
-      const { group_building_house: houseInfo } = this.item;
+      const { group_building_house: houseInfo, group_location: location } =
+        this.item;
+
       return [
-        { label: "정비사업 종류", value: "정비사업" },
         {
-          label: "층수 (지상/지하)",
-          value: `지상 ${houseInfo.count_floor_up ?? ""}층 / 지하 ${
-            houseInfo.count_floor_down ?? "-"
-          }층`
+          label: "재개발 세부유형",
+          value: location.redevelopment_area.subcategory
         },
         {
-          label: "방향",
-          value: `\n ${this.item.group_individual_household.type_direction}`,
-          isDirection: true
+          label: "현재 추진 단계",
+          value: location.redevelopment_area.redevelopment_step
         },
-        { label: "방수/욕실수", value: "3/2" }
+        { label: "해당 층수", value: houseInfo.count_floor_up }
       ];
     },
     getSubInfo() {
       if (this.subInfoProps) {
         return this.subInfoProps;
       }
-      const { group_building_house: houseInfo } = this.item;
-      return [
-        { label: "세대 수", value: `${houseInfo.count_household ?? "-"} 세대` },
-        {
-          label: "세대당 주차대수",
-          value: (
-            (houseInfo.count_parking_down + houseInfo.count_parking_up) /
-            houseInfo.count_household
-          ).toFixed(2)
-        },
-        { label: "난방방식", value: `${houseInfo.type_heating ?? "-"}` },
-        { label: "사용승인일", value: houseInfo.date_approval_use ?? "-" },
-        {
-          label: "대지면적 (㎡)",
-          value: `${houseInfo.size_land_area ?? "-"}㎡`
-        },
-        {
-          label: "연면적 (㎡)",
-          value: `${houseInfo.size_gross_floor_area ?? "-"}㎡`
-        },
-        {
-          label: "건축면적 (㎡)",
-          value: `${houseInfo.size_building_area ?? "-"}㎡`
-        },
-        {
-          label: "주건물구조",
-          value: `${this.item.group_land_use.type_structure_building ?? "-"}`
+      const getLabel = (value, unit) => {
+        if (!value || Number.isNaN(value) || value === "NaN") {
+          return "-";
+        } else if (typeof value === "string" && value.indexOf("비공개") > -1) {
+          return value;
+        } else {
+          return value.toLocaleString() + unit;
         }
+      };
+      // 총 세대수 [임대세대]
+      // 부동산 소유자 수 없음
+      // 분양 신청 평수 없음
+
+      // 초기투자금
+      // 감정평가액
+      // 권리산정기준일
+
+      // 토지/건물 면적 (m2)
+      // 건축년도 (준공일)
+      // 시공사
+      const { group_building_house: houseInfo, group_price: priceInfo } =
+        this.item;
+      return [
+        {
+          label: "총 세대수",
+          value: getLabel(houseInfo.count_household, "세대")
+        },
+        {
+          label: "부동산 소유자 수",
+          value: getLabel(houseInfo.count_owner, "명")
+        },
+        {
+          label: "난방방식",
+          value: `${getLabel(priceInfo.price_initial_investment, "만원")}`
+        },
+        { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) }
+        // {
+        //   label: "대지면적 (㎡)",
+        //   value: `${houseInfo.size_land_area ?? "-"}㎡`
+        // },
+        // {
+        //   label: "연면적 (㎡)",
+        //   value: `${houseInfo.size_gross_floor_area ?? "-"}㎡`
+        // },
+        // {
+        //   label: "건축면적 (㎡)",
+        //   value: `${houseInfo.size_building_area ?? "-"}㎡`
+        // },
+        // {
+        //   label: "주건물구조",
+        //   value: `${this.item.group_land_use.type_structure_building ?? "-"}`
+        // }
       ];
     }
   }

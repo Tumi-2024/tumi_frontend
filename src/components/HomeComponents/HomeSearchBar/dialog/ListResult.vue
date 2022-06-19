@@ -58,7 +58,6 @@ export default {
       };
 
       if (this.type === "location") {
-        console.log("location", _value);
         this.$router.push({
           name: "map_city"
         });
@@ -68,7 +67,6 @@ export default {
         this.$router.push({
           name: "map_city"
         });
-        console.log(value);
         this.changeMapCenter(_value);
         this.setMapZoom(16);
       } else {

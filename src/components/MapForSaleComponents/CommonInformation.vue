@@ -21,7 +21,13 @@
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>
+          <span
+            class="information sub flex items-center q-px-sm"
+            :class="{
+              'text-grey text-bold': getDisabledLabel(item.value)
+            }"
+            v-else
+          >
             {{ item.value }}
           </span>
         </div>
@@ -39,11 +45,18 @@ export default {
     getOptions: {
       type: Array
     }
+  },
+  computed: {
+    getDisabledLabel() {
+      return (value) => {
+        return value === "비공개";
+      };
+    }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table {
   border-top: 2px solid #555555;
   border-bottom: 1px solid #e9e9e9;
@@ -78,7 +91,6 @@ export default {
   margin-left: 0px;
   word-break: break-all;
   &.sub {
-    font-weight: 500;
     word-break: keep-all;
   }
 }

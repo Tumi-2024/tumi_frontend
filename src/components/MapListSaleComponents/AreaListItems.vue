@@ -20,7 +20,7 @@
         <div v-for="(item, i) of list" :key="i">
           <area-item
             class="q-py-sm"
-            :query="{ sellid: item.id }"
+            :query="{ sellid: item.item.id }"
             v-bind="item"
           />
           <q-separator />

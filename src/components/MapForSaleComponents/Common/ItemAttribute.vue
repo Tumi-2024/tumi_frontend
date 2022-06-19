@@ -13,7 +13,13 @@
           <img src="~/assets/icons/empty.svg" />
         </q-icon>
       </div>
-      <div class="title q-mt-sm" v-else>{{ value }}</div>
+      <div
+        class="title q-mt-sm"
+        v-else
+        :class="{ 'text-grey text-bold': getDisabledLabel(value) }"
+      >
+        {{ value }}
+      </div>
       <div class="sub-title q-mt-xs">{{ label }}</div>
     </div>
   </div>
@@ -36,6 +42,13 @@ export default {
     label: {
       type: String,
       default: ""
+    }
+  },
+  computed: {
+    getDisabledLabel() {
+      return (value) => {
+        return value === "비공개";
+      };
     }
   }
 };
