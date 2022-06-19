@@ -248,7 +248,7 @@ export default {
           // icon: "AreaStats/정비구역명칭.png",
           title: "일반 분양 수 (예상 수치)",
           value:
-            this.getMapSelectedArea.count_rent -
+            this.getMapSelectedArea.count_sale -
             this.getMapSelectedArea.count_member
           // default: 0
           // unit: "m²"
