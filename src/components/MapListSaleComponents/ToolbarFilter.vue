@@ -189,11 +189,11 @@ export default {
       this.options = [];
     },
     onSelect(obj) {
-      // const type = [
-      //   { label: "개발정비사업", value: "redev" },
-      //   { label: "지역", value: "location" },
-      //   { label: "건물/단지", value: "building" }
-      // ].find((obj) => obj.value === this.option);
+      const type = [
+        { label: "개발정비사업", value: "redev" },
+        { label: "지역", value: "location" },
+        { label: "건물/단지", value: "building" }
+      ].find((obj) => obj.value === this.option);
 
       // if (type.value === "redev") {
       //   console.log("redev");
@@ -202,8 +202,7 @@ export default {
       // } else {
       //   console.log("building");
       // }
-      console.log("select", obj.id);
-      this.$emit("search", obj.label);
+      this.$emit("search", type.label, obj.id);
     },
     async filterFn(val, update, abort) {
       const type = [
@@ -246,11 +245,11 @@ export default {
             data: { results }
           } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
           update(async () => {
-            this.options = results.map(({ title, id }) => {
+            this.options = results.map(({ group_building_house: building }) => {
               return {
-                value: title,
-                label: title,
-                id: id
+                value: building.title_building,
+                label: building.title_building,
+                id: building.title_building
               };
             });
           });

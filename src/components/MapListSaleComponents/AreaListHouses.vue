@@ -27,23 +27,6 @@
         </div>
       </q-list>
     </q-card-section>
-
-    <!-- Transactions -->
-    <!-- <q-card-section class="list-items q-pa-none notosanskr-regular" v-else>
-      <q-list class="q-pt-md">
-        <area-transaction
-          v-for="(item, i) of saleList"
-          :key="i"
-          :item="item"
-          v-bind="{
-            ctgr: item.category,
-            type: item.type,
-            isRedevelop
-          }"
-        >
-        </area-transaction>
-      </q-list>
-    </q-card-section> -->
   </q-card>
 </template>
 
@@ -81,37 +64,37 @@ export default {
     onChangeText(e) {
       this.text = e;
     },
-    onSearch(e) {
-      console.log("onSearch", e);
-      if (e.length === 0) {
+    onSearch(type, id) {
+      console.log("onSearch", type, id);
+      console.log(type, id);
+      if (id.length === 0) {
         return;
       }
-      switch (this.tab) {
+      switch (type) {
         case "지역":
-          this.getLocations(e);
+          this.getHouseFromLocation(id);
           break;
-        case "정비사업":
-          this.getRedevelopment(e);
+        case "개발정비사업":
+          this.getHouseFromRedev(id);
           break;
         case "건물/단지":
-          this.searchHouse(e);
+          this.getHouseFromSearch(id);
           break;
         default:
-          this.searchHouse(e);
+          this.getApiHouses(id);
       }
     },
 
-    async searchHouse(searchText) {
-      console.log("searchHouse");
+    async getHouseFromSearch(search) {
+      console.log("getHouseFromSearch");
       const { data } = await Vue.prototype.$axios.get(
-        `/houses/?redevelopment_area=${searchText}`
+        `/houses/?search=${search}`
       );
+      console.log(data);
       this.saleList = data.results;
     },
-    async getApiHouses(query) {
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: query
-      });
+    async getApiHouses() {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`);
 
       this.saleList = data.results;
     },
@@ -125,27 +108,21 @@ export default {
 
       this.saleList = data;
     },
-    async getRedevelopment(e) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/redevelopment_areas/?search=${e}`
-      );
-      this.saleList = data.results
-        .map(({ latitude, longitude, title }) => {
-          return { value: { latitude, longitude }, label: title };
-        })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+    async getHouseFromRedev(id) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params: {
+          redevelopment_area: id
+        }
+      });
+      this.saleList = data.results;
     },
-    async getLocations(e) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/locations/?search=${e}`
-      );
-      this.saleList = data.results
-        .map(({ latitude, longitude, title }) => {
-          return { value: { latitude, longitude }, label: title };
-        })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+    async getHouseFromLocation(location) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params: {
+          location
+        }
+      });
+      this.saleList = data.results;
     }
   }
 };

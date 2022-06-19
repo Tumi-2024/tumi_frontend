@@ -2,7 +2,7 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 실거래가
-      <span class="text-primary"> {{ list.length }} </span>개
+      <span class="text-primary"> {{ saleList.length }} </span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
@@ -18,7 +18,7 @@
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
         <area-transaction
-          v-for="(item, i) of list"
+          v-for="(item, i) of saleList"
           :key="i"
           :item="item"
           v-bind="{
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import AreaTransaction from "./AreaTransaction.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 
@@ -50,26 +51,82 @@ export default {
       text: "",
       selectedIndex: 0,
       type: "transaction" /** sell  */,
+      saleList: [],
       currentItem: {}
     };
-  },
-  props: {
-    list: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
+  created() {
+    this.getAllTransactions();
+  },
   methods: {
     onChangeText(e) {
-      console.log(e);
       this.text = e;
     },
-    onSearch() {
-      this.$emit("search");
+    onSearch(type, id) {
+      console.log("onSearch", type, id);
+      console.log(type, id);
+      if (id.length === 0) {
+        return;
+      }
+      switch (type) {
+        case "지역":
+          this.getTransactionsFromLocation(id);
+          break;
+        case "개발정비사업":
+          this.getTransactionsFromRedev(id);
+          break;
+        case "건물/단지":
+          this.getTransactionsFromSearch(id);
+          break;
+        default:
+          this.getAllTransactions(id);
+      }
+    },
+    async getAllTransactions() {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`);
+      this.saleList = data.results.map((item) => {
+        return {
+          ...item,
+          ...item.recent_transactions?.[item.types[0]]
+        };
+      });
+    },
+
+    async getTransactionsFromSearch(query) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/?search=${query}`
+      );
+      this.saleList = data.results.map((item) => {
+        return {
+          ...item,
+          ...item.recent_transactions?.[item.types[0]]
+        };
+      });
+    },
+    async getTransactionsFromRedev(id) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/redevelopment_areas/${id}/transaction_groups/`
+      );
+      this.saleList = data.results.map((item) => {
+        return {
+          ...item,
+          ...item.recent_transactions?.[item.types[0]]
+        };
+      });
+    },
+    async getTransactionsFromLocation(query) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/?subcity=${query}`
+      );
+      this.saleList = data.results.map((item) => {
+        return {
+          ...item,
+          ...item.recent_transactions?.[item.types[0]]
+        };
+      });
     }
   }
 };
