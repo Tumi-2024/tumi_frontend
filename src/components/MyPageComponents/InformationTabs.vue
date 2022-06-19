@@ -1,11 +1,12 @@
 <template>
-  <q-card-section class="q-pa-none full-width" style="padding: 30px 16px;">
+  <q-card-section class="q-pa-none full-width" style="padding: 30px 16px">
     <q-btn
       padding="0px"
       align="left"
       flat
       class="item row full-width"
-      @click="toMapActualTransaction">
+      @click="toMapActualTransaction"
+    >
       <text-under-highlight text="실거래가 조회"></text-under-highlight>
     </q-btn>
 
@@ -27,7 +28,7 @@
       </template>
       <q-card class="investment-sale">
         <q-card-section
-          style="padding: 14px; background: #F6F6F6"
+          style="padding: 14px; background: #f6f6f6"
           class="row notosanskr-regular"
         >
           <q-btn
@@ -66,7 +67,7 @@
       </q-card>
     </q-expansion-item>
 
-    <q-btn
+    <!-- <q-btn
       padding="0px"
       align="left"
       flat
@@ -74,7 +75,7 @@
       :to="{ path: '/insights/?tab=estate' }"
     >
       <text-under-highlight text="부동산 인사이트"></text-under-highlight>
-    </q-btn>
+    </q-btn> -->
   </q-card-section>
 </template>
 

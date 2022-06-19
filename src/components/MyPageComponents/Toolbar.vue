@@ -1,9 +1,12 @@
 <template>
-  <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md">
+  <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md q-mt-md">
     <q-btn flat padding="4px" ripple :to="{ path: '/' }">
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
-    <div class="column">
+    <div>
+      <q-btn @click="redirectToAdmin" color="primary" class="q-mr-sm">
+        관리자 페이지
+      </q-btn>
       <q-btn @click="logOut">로그아웃</q-btn>
       <q-btn
         flat
@@ -31,6 +34,9 @@ export default {
       SessionStorage.remove("tumi");
       SessionStorage.remove("tumi_i");
       this.$router.push({ name: "signIn" });
+    },
+    redirectToAdmin() {
+      window.open("https://admin.tumi.sunwook.com/admin/", "_blank");
     }
   }
 };

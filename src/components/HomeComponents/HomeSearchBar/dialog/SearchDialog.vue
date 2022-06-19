@@ -58,12 +58,7 @@
           size="12px"
           class="full-width"
         />
-
-        <!-- <q-card-section>
-          <list-result :list="this.recents" />
-        </q-card-section> -->
       </template>
-
       <q-card-section v-else>
         <list-result :list="this.redevlopments" type="redevelopment">
           <template #title>

@@ -5,27 +5,12 @@
         <div>고객님</div>
         <div>안녕하세요 !</div>
       </div>
-      <div>
-        <q-btn
-          @click="redirectToAdmin"
-          color="primary"
-          style="margin-top: -50px"
-        >
-          관리자 페이지
-        </q-btn>
-      </div>
     </div>
   </q-card-section>
 </template>
 
 <script>
-export default {
-  methods: {
-    redirectToAdmin() {
-      window.open("https://admin.tumi.sunwook.com/admin/", "_blank");
-    }
-  }
-};
+export default {};
 </script>
 
 <style scoped>
