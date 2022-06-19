@@ -91,18 +91,18 @@ export const areaStore = {
     interestSelectedArea: async (context) => {
       try {
         const area = context.state.selectedArea;
-
-        if (area.interest.redevelopment_area) {
+        console.log(area);
+        if (area.interest?.redevelopment_area) {
           await Vue.prototype.$axios.delete(
             `/redevelopment_areas/${area.id}/interest/`
           );
-          context.state.selectedArea.interest.redevelopment_area = false;
+          context.state.selectedArea.interest = { redevelopment_area: false };
           return;
         }
         await Vue.prototype.$axios.post(
           `/redevelopment_areas/${area.id}/interest/`
         );
-        context.state.selectedArea.interest.redevelopment_area = true;
+        context.state.selectedArea.interest = { redevelopment_area: true };
       } catch (error) {}
     },
     uninterestSelectedArea: async (context) => {

@@ -59,9 +59,9 @@
           class="full-width"
         />
 
-        <q-card-section>
+        <!-- <q-card-section>
           <list-result :list="this.recents" />
-        </q-card-section>
+        </q-card-section> -->
       </template>
 
       <q-card-section v-else>
@@ -155,12 +155,9 @@ export default {
     },
     async getRecentHistory() {
       const { data } = await Vue.prototype.$axios.get("/recents/");
-      this.recents = data.results
-        .map((obj) => {
-          return { value: obj.house?.id, label: obj.house?.address };
-        })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+      this.recents = data.results.map((obj) => {
+        return { value: obj.house?.id, label: obj.house?.address };
+      });
     },
 
     async getRecommend() {

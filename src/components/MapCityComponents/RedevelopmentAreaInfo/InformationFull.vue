@@ -13,7 +13,7 @@
           정비사업 정보
           <div>
             <q-btn flat padding="0 8px" class="bg-white" @click="like()">
-              <q-icon size="32px">
+              <q-icon size="24px">
                 <!-- <img src="~assets/icons/hearted.svg" alt="" /> -->
                 <img src="~assets/icons/heart.svg" alt="" />
               </q-icon>

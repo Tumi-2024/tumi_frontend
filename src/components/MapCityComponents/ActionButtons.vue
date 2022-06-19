@@ -1,21 +1,17 @@
 <template>
-  <div class="action-container q-px-sm">
+  <div
+    class="action-container q-px-sm"
+    style="min-width: calc((90 / 1312) * 100vh)"
+  >
     <q-btn color="white" padding="8px" @click="interestLocation()">
-      <q-icon size="calc((30 / 1312) * 100vh)">
+      <q-icon>
         <img
           v-if="!$store.state.map.isInterest"
           src="~assets/icons/heart.svg"
-          style="width: calc((30 / 1312) * 100vh)"
           alt=""
           srcset=""
         />
-        <img
-          v-else
-          style="width: calc((30 / 1312) * 100vh)"
-          src="~assets/icons/hearted.svg"
-          alt=""
-          srcset=""
-        />
+        <img v-else src="~assets/icons/hearted.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
 

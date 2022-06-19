@@ -8,7 +8,7 @@
           filled
           label="유형"
           style="flex-basis: 400px"
-          :rules="[(val) => val.length || '타입을 선택해주세요.']"
+          :rules="[(val) => val.length || '사용자 유형을 선택해주세요.']"
           map-options
           emit-value
         >

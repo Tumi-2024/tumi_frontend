@@ -157,7 +157,7 @@ export default {
         return {
           ...obj,
           disabled: !this.isMultiSelect
-            ? hasValue(obj.type, this.categories)
+            ? !hasValue(obj.type, this.categories)
             : false
         };
       });

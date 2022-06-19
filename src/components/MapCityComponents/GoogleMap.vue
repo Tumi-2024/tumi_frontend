@@ -42,8 +42,8 @@
             v-if="getMapZoom <= redevZoom"
             class="bg-primary flex column justify-center items-center"
             style="
-              height: calc((110 / 1312) * 100vh);
-              width: calc((110 / 1312) * 100vh);
+              min-height: calc((110 / 1312) * 100vh);
+              min-width: calc((110 / 1312) * 100vh);
               padding: calc((10 / 1312) * 100vh);
               border-radius: 100%;
               opacity: 0.72;
@@ -57,12 +57,18 @@
             </span>
             <span
               class="flex text-white justify-center q-mt-sm"
-              style="font-weight: 700; font-size: calc((8 / 1000) * 100vw)"
+              style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
+            >
+              {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
+            </span>
+            <span
+              class="flex text-white justify-center"
+              style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
             >
               {{
                 $route.path === "/map/city"
-                  ? `매물 ${m.count_estates_filtered}`
-                  : `정비사업 ${
+                  ? `${m.count_estates_filtered}`
+                  : `${
                       getAreaType === "재개발"
                         ? m.count_redevelopment_area_1
                         : getAreaType === "재건축"
@@ -70,8 +76,7 @@
                         : getAreaType === "가로주택"
                         ? m.count_redevelopment_area_3
                         : m.count_redevelopment_area
-                    }
-                    `
+                    }`
               }}개
             </span>
           </div>
