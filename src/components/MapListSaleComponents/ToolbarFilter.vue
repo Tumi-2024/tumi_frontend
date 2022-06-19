@@ -13,6 +13,7 @@
         >
           <q-select
             class="q-mr-md"
+            style="width: 120px"
             dense
             emit-value
             map-options
@@ -22,21 +23,29 @@
               { label: '지역', value: 'location' },
               { label: '건물/단지', value: 'building' }
             ]"
-          ></q-select>
-          <q-input
+          />
+          <q-select
+            ref="keywordRef"
             filled
+            label="검색"
             dense
-            class="q-mr-sm"
-            type="search"
-            placeholder="검색"
-            :value="text"
-            @input="(e) => $emit('input', e)"
-            @keydown.enter.prevent="onSearch"
+            :value="searchText"
+            @input-value="onChangeSearchText"
+            @input="onSelect"
+            :input-debounce="0"
+            use-input
+            fill-input
+            hide-selected
+            :options="options"
+            @filter="filterFn"
+            style="flex: 1"
           >
-            <template v-slot:append>
-              <q-icon @click="onSearch" name="search" />
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey"> No results </q-item-section>
+              </q-item>
             </template>
-          </q-input>
+          </q-select>
         </div>
       </div>
       <div class="flex">
@@ -64,6 +73,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
@@ -123,21 +133,12 @@ export default {
           class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
           keyName: "users"
         }
-        // {
-        //   label: "매매가",
-        //   type: "salePrice",
-        //   class: "text-white bg-blue"
-        // },
-        // {
-        //   label: "매물등록일자",
-        //   type: "registrationDate",
-        //   class: "text-white bg-black"
-        // }
       ];
     }
   },
   data() {
     return {
+      options: [],
       option: "redev",
       filters: [
         {
@@ -167,7 +168,8 @@ export default {
           type: "person",
           class: "text-white bg-black"
         }
-      ]
+      ],
+      searchText: ""
     };
   },
   props: {
@@ -182,7 +184,81 @@ export default {
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
-    onSearch() {}
+    onChangeSearchText(e) {
+      this.searchText = e;
+      this.options = [];
+    },
+    onSelect(obj) {
+      // const type = [
+      //   { label: "개발정비사업", value: "redev" },
+      //   { label: "지역", value: "location" },
+      //   { label: "건물/단지", value: "building" }
+      // ].find((obj) => obj.value === this.option);
+
+      // if (type.value === "redev") {
+      //   console.log("redev");
+      // } else if (type.value === "location") {
+      //   console.log("location");
+      // } else {
+      //   console.log("building");
+      // }
+      console.log("select", obj.id);
+      this.$emit("search", obj.label);
+    },
+    async filterFn(val, update, abort) {
+      const type = [
+        { label: "개발정비사업", value: "redev" },
+        { label: "지역", value: "location" },
+        { label: "건물/단지", value: "building" }
+      ].find((obj) => obj.value === this.option);
+
+      if (val !== "") {
+        if (type.value === "redev") {
+          const {
+            data: { results }
+          } = await Vue.prototype.$axios.get(
+            `redevelopment_areas/?search=${val}`
+          );
+          update(async () => {
+            this.options = results.map(({ title, id }) => {
+              return {
+                value: title,
+                label: title,
+                id: id
+              };
+            });
+          });
+        } else if (type.value === "location") {
+          const {
+            data: { results }
+          } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
+          update(async () => {
+            this.options = results.map(({ title, id }) => {
+              return {
+                value: title,
+                label: title,
+                id: id
+              };
+            });
+          });
+        } else {
+          const {
+            data: { results }
+          } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
+          update(async () => {
+            this.options = results.map(({ title, id }) => {
+              return {
+                value: title,
+                label: title,
+                id: id
+              };
+            });
+          });
+        }
+      } else {
+        update();
+      }
+    }
   },
   mounted() {}
 };

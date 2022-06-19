@@ -1,7 +1,7 @@
 <template>
   <div class="q-mt-sm">
     <section v-if="myInterestArea.length">
-      <area-carousel @setSubcity="e => (subcity = e)"></area-carousel>
+      <area-carousel @setSubcity="(e) => (subcity = e)"></area-carousel>
       <area-filter-btns></area-filter-btns>
       <area-list-items :subcity="subcity" v-if="subcity"></area-list-items>
     </section>

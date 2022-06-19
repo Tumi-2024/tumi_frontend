@@ -1,6 +1,6 @@
 <template>
   <div>
-    <area-list-items :list="list" />
+    <AreaListTransactions :list="list" />
     <floating-button />
   </div>
 </template>
@@ -16,7 +16,7 @@ import { mapActions } from "vuex";
 
 export default {
   components: {
-    "area-list-items": AreaListTransactions,
+    AreaListTransactions,
     "floating-button": FloatingButton
   },
   data() {

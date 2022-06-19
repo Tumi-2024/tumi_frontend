@@ -95,7 +95,8 @@
           mask="###-####-####"
           :rules="[
             (val) =>
-              (val && val.length === 13) || '개인 전화번호를 입력해주세요.'
+              (val && val.length === 13) ||
+              '개인용 휴대폰번호 11자리를 입력해주세요.'
           ]"
         >
           <template v-slot:before>

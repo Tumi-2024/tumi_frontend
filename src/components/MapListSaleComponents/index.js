@@ -1,5 +1,5 @@
 import ToolbarFilter from "./ToolbarFilter";
-import AreaListItems from "./AreaListItems";
+import AreaListHouses from "./AreaListHouses";
 import AreaListTransactions from "./AreaListTransactions";
 import FloatingButton from "./FloatingButton";
 
@@ -7,7 +7,7 @@ import AreaItem from "./AreaItem";
 
 export {
   ToolbarFilter,
-  AreaListItems,
+  AreaListHouses,
   AreaListTransactions,
   FloatingButton,
   AreaItem

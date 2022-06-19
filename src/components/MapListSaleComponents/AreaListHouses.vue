@@ -2,7 +2,7 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 매물
-      <span class="text-primary"> {{ list.length }} </span>개
+      <span class="text-primary"> {{ saleList.length }} </span>개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
@@ -17,11 +17,11 @@
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
-        <div v-for="(item, i) of list" :key="i">
+        <div v-for="(item, i) of saleList" :key="i">
           <area-item
             class="q-py-sm"
-            :query="{ sellid: item.item.id }"
-            v-bind="item"
+            :query="{ sellid: item.id }"
+            v-bind="{ item: item }"
           />
           <q-separator />
         </div>
@@ -71,22 +71,18 @@ export default {
       currentItem: {}
     };
   },
-  props: {
-    list: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
+  created() {
+    this.getApiHouses();
+  },
   methods: {
     onChangeText(e) {
-      console.log(e);
       this.text = e;
     },
     onSearch(e) {
+      console.log("onSearch", e);
       if (e.length === 0) {
         return;
       }
@@ -104,9 +100,11 @@ export default {
           this.searchHouse(e);
       }
     },
+
     async searchHouse(searchText) {
+      console.log("searchHouse");
       const { data } = await Vue.prototype.$axios.get(
-        `/houses/?search=${searchText}`
+        `/houses/?redevelopment_area=${searchText}`
       );
       this.saleList = data.results;
     },

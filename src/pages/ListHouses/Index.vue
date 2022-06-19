@@ -1,22 +1,25 @@
 <template>
   <div>
-    <area-list-items :params="$route.query" :isRedevelop="false" :list="list" />
+    <AreaListHouses
+      :params="$route.query"
+      :isRedevelop="false"
+      @search="onSearch"
+    />
     <floating-button />
   </div>
 </template>
 
 <script>
 import {
-  AreaListItems,
+  AreaListHouses,
   FloatingButton
 } from "components/MapListSaleComponents";
 
-import Vue from "vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
-    "area-list-items": AreaListItems,
+    AreaListHouses,
     "floating-button": FloatingButton
   },
   data() {
@@ -25,32 +28,21 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeToolbarTitle"])
+    ...mapActions("map", ["changeToolbarTitle"]),
+    onSearch(type, text) {
+      console.log(type, text, "search");
+    }
   },
   async beforeMount() {
     this.changeToolbarTitle("매물");
-    if (this.$route.query?.sellid) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/houses/${this.$route.query.sellid}`
-      );
-      this.list = data.results;
-    } else {
-      const { data } = await Vue.prototype.$axios.get(`/houses`);
-      this.list = data.results.map((item) => {
-        return {
-          item
-        };
-      });
-    }
-
     // if (this.$route.query?.sellid) {
-    //   this.isRedevelop = !!data.redevelopment_area;
-    // }
-    // if (this.$route.query?.transactionid) {
     //   const { data } = await Vue.prototype.$axios.get(
-    //     `/transaction_groups/${this.$route.query.transactionid}`
+    //     `/houses/${this.$route.query.sellid}`
     //   );
-    //   this.isRedevelop = !!data.redevelopment_area;
+    //   this.list = data.results;
+    // } else {
+    //   const { data } = await Vue.prototype.$axios.get(`/houses`);
+    //   this.list = data.results;
     // }
   }
 };

@@ -52,7 +52,7 @@ export default {
     "address-with-badges": AddressWithBadges
   },
   props: {
-    item: Object,
+    item: { type: Object, required: true },
     ctgr: String,
     type: String,
     query: Object,
