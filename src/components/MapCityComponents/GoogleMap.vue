@@ -62,7 +62,16 @@
               {{
                 $route.path === "/map/city"
                   ? `매물 ${m.count_estates_filtered}`
-                  : `정비사업 ${m.count_redevelopment_area_filtered}`
+                  : `정비사업 ${
+                      getAreaType === "재개발"
+                        ? m.count_redevelopment_area_1
+                        : getAreaType === "재건축"
+                        ? m.count_redevelopment_area_2
+                        : getAreaType === "가로주택"
+                        ? m.count_redevelopment_area_3
+                        : m.count_redevelopment_area
+                    }
+                    `
               }}개
             </span>
           </div>

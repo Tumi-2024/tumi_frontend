@@ -38,7 +38,7 @@ export default {
       this.returnBtn.pathName = "my_page";
     }
     if (path === "insights") {
-      this.returnBtn.label = "부동산 인사이드";
+      this.returnBtn.label = "부동산 인사이트";
       this.returnBtn.pathName = "home";
     }
   }

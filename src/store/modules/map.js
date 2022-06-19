@@ -182,7 +182,7 @@ export const mapStore = {
     fetchLocationInterest: async (context) => {
       try {
         const response = await Vue.prototype.$axios.get(
-          `/redevelopment_areas/interests/`
+          `/sub_cities/interests/`
         );
         context.commit("setInterest", response.data.results);
       } catch (error) {}

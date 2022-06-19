@@ -1,8 +1,8 @@
 {
-  "name": "tumi",
+  "name": "tumiapp",
   "version": "0.0.1",
   "description": "Toomi Korea",
-  "productName": "Toomi App",
+  "productName": "투미맵 (TUMI MAP)",
   "author": "Adem Reichard <reichardcris@gmail.com>",
   "private": true,
   "scripts": {
