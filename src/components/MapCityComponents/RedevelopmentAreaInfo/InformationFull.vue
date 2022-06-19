@@ -10,7 +10,7 @@
     <q-card flat class="dialog overflow-hidden">
       <div style="background-color: #e8e8e8">
         <div class="header-section notosanskr-medium">
-          재개발 구역정보
+          정비사업 정보
           <div>
             <q-btn flat padding="0 8px" class="bg-white" @click="like()">
               <q-icon size="32px">

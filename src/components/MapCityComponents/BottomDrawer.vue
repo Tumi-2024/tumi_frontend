@@ -11,9 +11,9 @@
           :to="{ name: 'listHouses' }"
         >
           {{ $store.state.map.toolbarTitle.split(" ")[1] }} 매물보기
-          <span style="color: #ff5a00; margin-left: 10px">{{
-            ` ${$store.state.estate.count_estate} 개`
-          }}</span>
+          <span style="color: #ff5a00; margin-left: 10px">
+            {{ `${$store.state.estate.count_estate} 개` }}
+          </span>
         </q-btn>
       </q-card-section>
 

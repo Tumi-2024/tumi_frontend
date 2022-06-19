@@ -57,7 +57,8 @@
           mask="###-####-####"
           :rules="[
             (val) =>
-              (val && val.length === 13) || '업무용 전화번호를 입력해주세요.'
+              (val && val.length === 13) ||
+              '업무용 휴대폰번호 11자리를 입력해주세요.'
           ]"
         >
           <template v-slot:before>
@@ -74,7 +75,8 @@
           lazy-rules
           autocomplete="none"
           :rules="[
-            (val) => isValidEmail(val) || '업무용 이메일을 입력해주세요.'
+            (val) =>
+              isValidEmail(val) || '투미 직원은 업무폰 내 구글 이메일 주소 입력'
           ]"
         >
           <template v-slot:before>
@@ -138,7 +140,7 @@
           style="flex-basis: 400px"
           label="비밀번호"
           lazy-rules
-          autocomplete="none"
+          autocomplete="new-password"
           type="password"
           :rules="[
             (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
@@ -227,9 +229,9 @@ export default {
       type: "",
       username: "",
       email: "",
-      phone: "",
+      phone: "010",
       emailPrivate: "",
-      phonePrivate: "",
+      phonePrivate: "010",
       password: "",
       password2: "",
       confirm: false

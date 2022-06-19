@@ -3,10 +3,16 @@
     <section class="address-section bg-white">
       <q-badge
         outline
+        :color="getColor(getMapSelectedArea.category)"
+        :label="getMapSelectedArea.category"
+      />
+
+      <!-- <q-badge
+        outline
         color="primary"
         class="badge-type notosanskr-medium"
         label="재개발 구역"
-      />
+      /> -->
       <div class="title-heading notosanskr-medium">
         <!-- 서울영등포 공공주택지구 -->
         {{ getMapSelectedArea.title }}
@@ -160,6 +166,22 @@ export default {
 
   computed: {
     ...mapGetters("area", ["getMapSelectedArea"]),
+    getColor() {
+      return (type) => {
+        switch (type) {
+          case "재개발":
+            return "primary";
+          case "재건축":
+            return "blue";
+          case "가로주택":
+            return "green";
+          case "일반":
+            return "purple";
+          default:
+            return "black";
+        }
+      };
+    },
     getInfo() {
       return [
         {
@@ -394,7 +416,6 @@ export default {
       line-height: 24px;
       letter-spacing: -0.9px;
       color: #ff5100;
-      border: #ff5100 1px solid;
       padding: 0 4px;
     }
     .title-heading {

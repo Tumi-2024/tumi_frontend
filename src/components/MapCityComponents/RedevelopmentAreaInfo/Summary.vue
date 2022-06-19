@@ -29,7 +29,7 @@
           </div>
           <section class="column">
             <div class="stat-title notosanskr-medium">
-              {{ stat.title }}
+              {{ i + 1 }}. {{ stat.title }}
             </div>
             <div class="stat-value notosanskr-medium" v-if="stat.default == 0">
               {{ stat.value | number("0,0") }} {{ stat.unit }}
@@ -224,7 +224,7 @@ export default {
     getStats() {
       return [
         {
-          icon: "AreaStats/현재사업추진단계.png",
+          // icon: "AreaStats/현재사업추진단계.png",
           // icon: "AreaStats/number-household.svg",
           title: "현재 사업추진단계",
           value: this.getMapSelectedArea.redevelopment_step
@@ -238,23 +238,23 @@ export default {
             this.getMapSelectedArea.count_rent
         },
         {
-          icon: "AreaStats/현재사업추진단계.png",
+          // icon: "AreaStats/현재사업추진단계.png",
           // icon: "AreaStats/number-household.svg",
           title: "조합원 수",
           value: this.getMapSelectedArea.count_member
         },
         {
           // icon: "AreaStats/area.svg",
-          icon: "AreaStats/정비구역명칭.png",
+          // icon: "AreaStats/정비구역명칭.png",
           title: "일반 분양 수 (예상 수치)",
           value:
-            this.getMapSelectedArea.count_member -
-            this.getMapSelectedArea.count_sale
+            this.getMapSelectedArea.count_rent -
+            this.getMapSelectedArea.count_member
           // default: 0
           // unit: "m²"
         },
         {
-          icon: "AreaStats/추진위원회.png",
+          // icon: "AreaStats/추진위원회.png",
           // icon: "AreaStats/number-household.svg",
           title: "전매 관리",
           value: this.getMapSelectedArea.category_resale
@@ -271,19 +271,19 @@ export default {
           // icon: "AreaStats/세입자수.png",
           // icon: "AreaStats/progress.svg",
           title: "이주비/중도금 대출 조건",
-          value: "관리자 페이지에 추가 요망"
+          value: this.getMapSelectedArea.description_loan_condition
         },
-        {
-          // icon: "AreaStats/조합원수.png",
-          // icon: "AreaStats/number-members.svg",
-          title: "추가부담금 납입시기 (입주일자)",
-          value: this.getMapSelectedArea.date_move_in
-        },
+        // {
+        //   icon: "AreaStats/조합원수.png",
+        //   icon: "AreaStats/number-members.svg",
+        //   title: "추가부담금 납입시기 (입주일자)",
+        //   value: this.getMapSelectedArea.date_move_in
+        // },
         {
           // icon: "AreaStats/조합원수.png",
           // icon: "AreaStats/number-members.svg",
           title: "기타 특이사항",
-          value: "관리자 페이지에 추가 요망"
+          value: this.getMapSelectedArea.description_etc
         }
       ];
     },
