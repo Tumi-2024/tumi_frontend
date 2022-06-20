@@ -209,7 +209,7 @@ export default {
         if (value.toString().indexOf("비공개") > -1) {
           return "비공개";
         } else {
-          return value + unit;
+          return value + `${unit || ""}`;
         }
       };
       return [
@@ -619,14 +619,16 @@ export default {
     },
     getTradeOptions() {
       const { group_trading_terms: houseInfo } = this.estate;
+      console.log(houseInfo.types_sale);
+
       return [
         {
           label: "거래 종류",
-          value: houseInfo.types_sale.join(", ")
+          value: this.getArrayOrString(houseInfo.types_sale)
         },
         {
           label: "거래유형",
-          value: houseInfo.types_sale_detail.join(", "),
+          value: this.getArrayOrString(houseInfo.types_sale_detail),
           class: "col-sm-8 col-md-8"
         },
         {
