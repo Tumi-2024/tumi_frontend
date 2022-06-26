@@ -70,8 +70,10 @@
     <common-information
       class="q-mt-md"
       title="정비사업 주요 정보"
+      v-if="this.estate.group_location"
       :getOptions="getRedevOptions"
     />
+    <!-- v-if="" -->
     <!-- 재개발 정보 -->
     <redevelopment-information
       v-if="!!redevelopment"
@@ -647,6 +649,7 @@ export default {
       const {
         group_location: { redevelopment_area: houseInfo }
       } = this.estate;
+
       return [
         // { label: "개발사업 유형", value: houseInfo.category },
         { label: "정비구역 명칭", value: houseInfo.title },
