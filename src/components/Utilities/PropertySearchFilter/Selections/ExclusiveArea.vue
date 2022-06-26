@@ -35,7 +35,6 @@
         <q-radio v-model="isM2" label="㎡" :val="true" />
       </div>
       <div class="row q-mt-md">
-        {{ categories }}
         <q-input
           :value="getUnit(selectValue.min)"
           @change="onChangeMin"

@@ -10,7 +10,7 @@
       <div>
         <q-badge
           outline
-          color="primary"
+          :color="getColor(getMapSelectedArea.category)"
           class="badge-type notosanskr-medium"
           :label="getMapSelectedArea.category"
         />
@@ -55,7 +55,23 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters("area", ["getMapSelectedArea"])
+    ...mapGetters("area", ["getMapSelectedArea"]),
+    getColor() {
+      return (type) => {
+        switch (type) {
+          case "재개발":
+            return "primary";
+          case "재건축":
+            return "blue";
+          case "가로주택":
+            return "green";
+          case "일반":
+            return "purple";
+          default:
+            return "black";
+        }
+      };
+    }
   },
   methods: {
     ...mapActions("area", ["fetchRedevelopmentSteps"]),
@@ -73,8 +89,6 @@ export default {
   font-size: 12px;
   line-height: 24px;
   letter-spacing: -0.9px;
-  color: #ff5100;
-  border: #ff5100 1px solid;
   padding: 0 4px;
 }
 .info {

@@ -178,24 +178,20 @@ export default {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
       });
     },
-    // getGraphData() {
-    //   const graphData = (type, yyyyMM) =>
-    //     this.transactions
-    //       .filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
-    //       .reduce((acc, curr) => {
-    //         if (type) {
-    //           return acc + curr.price;
-    //         }
-    //         return acc;
-    //       }, 0) /
-    //     this.transactions.filter((obj) => obj.text_month.indexOf(yyyyMM) === 0)
-    //       .length;
-    //   this.graphData = [
-    //     { sale: graphData("SALE", "2018"), rent: graphData("RENT", "2018") },
-    //     { sale: graphData("SALE", "2019"), rent: graphData("RENT", "2019") },
-    //     { sale: graphData("SALE", "202006"), rent: graphData("RENT", "202006") }
-    //   ];
-    // },
+    getValue(value, unit) {
+      if (value === null || value === undefined) return "";
+      if (
+        typeof value === "string" &&
+        (value.indexOf("null") > -1 || value.indexOf("undefined") > -1)
+      ) {
+        return "";
+      }
+
+      if (typeof value === "string" && value.indexOf("비공개") > -1) {
+        return "비공개";
+      }
+      return `${value}${unit ? ` ${unit}` : ""}`;
+    },
     getArrayOrString(data) {
       if (Array.isArray(data)) {
         return data.join(", ");
@@ -205,18 +201,11 @@ export default {
   },
   computed: {
     getInformation() {
-      const getValue = (value, unit) => {
-        if (value.toString().indexOf("비공개") > -1) {
-          return "비공개";
-        } else {
-          return value + `${unit || ""}`;
-        }
-      };
       return [
         {
           // number of floors
           label: "해당 동수",
-          value: getValue(
+          value: this.getValue(
             this.estate.group_individual_household.num_dong,
             "동"
           ),
@@ -226,7 +215,7 @@ export default {
         {
           // number of floors
           label: "해당 층수",
-          value: getValue(
+          value: this.getValue(
             this.estate.group_individual_household.num_floor,
             "층"
           ),
@@ -235,7 +224,7 @@ export default {
         {
           // direction
           label: "방향",
-          value: getValue(
+          value: this.getValue(
             this.estate.group_individual_household.type_direction
           ),
           icon: ["direction.svg"]
@@ -243,7 +232,7 @@ export default {
         {
           // station-area
           label: "방수/욕실수",
-          value: getValue(
+          value: this.getValue(
             `${this.estate.group_individual_household.count_room}/${this.estate.group_individual_household.count_bathroom}`
           ),
           icon: ["31A.png", "31B.png"],
@@ -252,7 +241,7 @@ export default {
         {
           // exclusive Area
           label: "공용 면적 (m2)",
-          value: getValue(
+          value: this.getValue(
             `${this.estate.group_individual_household.size_supply_area_m2}㎡`
           ),
           icon: ["land-area.svg"]
@@ -260,7 +249,7 @@ export default {
         {
           // exclusive Area
           label: "전용 면적 (m2❘평형)",
-          value: getValue(`${
+          value: this.getValue(`${
             this.estate.group_individual_household.size_dedicated_area_m2
           }㎡ |
             ${Math.floor(
@@ -274,7 +263,7 @@ export default {
         {
           // Premium price
           label: "하절기 관리비",
-          value: getValue(
+          value: this.getValue(
             this.estate.group_individual_household.price_maintenance_summer?.toLocaleString(),
             " 원"
           ),
@@ -283,7 +272,7 @@ export default {
         {
           // Premium price
           label: "동절기 관리비",
-          value: getValue(
+          value: this.getValue(
             this.estate.group_individual_household.price_maintenance_winter?.toLocaleString(),
             " 원"
           ),
@@ -383,25 +372,18 @@ export default {
         // group_land_use: houseInfo4
       } = this.estate;
 
-      const getValue = (value, unit) => {
-        if (value === null) return "";
-        if (typeof value === "string" && value.indexOf("null") > -1) {
-          return "";
-        }
-        return `${value}${unit ? ` ${unit}` : ""}`;
-      };
       return [
         {
           label: "건물/주택(단지) 명",
-          value: getValue(houseInfo.title_building)
+          value: this.getValue(houseInfo.title_building)
         },
         {
           label: "K-APT 기준 아파트명",
-          value: getValue(houseInfo.title_apartment_k_apt)
+          value: this.getValue(houseInfo.title_apartment_k_apt)
         },
         {
           label: "K-APT 기준 단지코드",
-          value: getValue(houseInfo.code_complex_k_apt)
+          value: this.getValue(houseInfo.code_complex_k_apt)
         },
         {
           label: "주택유형 (분류)",
@@ -409,50 +391,53 @@ export default {
         },
         {
           label: "집합건물 여부",
-          value: getValue(houseInfo.type_collective_building)
+          value: this.getValue(houseInfo.type_collective_building)
         },
         {
           label: "분양 형태",
-          value: getValue(houseInfo.description_sale)
+          value: this.getValue(houseInfo.description_sale)
         },
         // 최근 관리비 없음
-        { label: "대지면적", value: getValue(houseInfo.size_land_area, " ㎡") },
+        {
+          label: "대지면적",
+          value: this.getValue(houseInfo.size_land_area, " ㎡")
+        },
         {
           label: "연면적",
-          value: getValue(houseInfo.size_gross_floor_area, " ㎡")
+          value: this.getValue(houseInfo.size_gross_floor_area, " ㎡")
         },
         {
           label: "건축면적",
-          value: getValue(houseInfo.size_building_area, " ㎡")
+          value: this.getValue(houseInfo.size_building_area, " ㎡")
         },
         //
         {
           label: "건폐율",
-          value: getValue(houseInfo.percentage_building_cover, " %")
+          value: this.getValue(houseInfo.percentage_building_cover, " %")
         },
         {
           label: "용적률",
-          value: getValue(houseInfo.percentage_floor_area, " %")
+          value: this.getValue(houseInfo.percentage_floor_area, " %")
         },
         { label: "복도 유형", value: houseInfo.type_corridor },
         //
         {
           label: "건물 동 (개)수",
-          value: getValue(houseInfo.count_building, " 개동")
+          value: this.getValue(houseInfo.count_building, " 개동")
         },
         {
           label: "총 세대수",
-          value: getValue(houseInfo.count_household, " 세대")
+          value: this.getValue(houseInfo.count_household, " 세대")
         },
-        { label: "난방방식", value: getValue(houseInfo.type_heating) },
+        { label: "난방방식", value: this.getValue(houseInfo.type_heating) },
         //
         {
           label: "엘리베이터 수",
-          value: getValue(houseInfo.count_elevator, " 개")
+          value: this.getValue(houseInfo.count_elevator, " 개")
         },
         {
           label: "주차대수 (지상/지하)",
-          value: getValue(
+          value: this.getValue(
             `${houseInfo.count_parking_up} 대 / ${houseInfo.count_parking_down} 대`
           )
         },
@@ -475,7 +460,7 @@ export default {
         { label: "대지권 종류", value: houseInfo.type_land },
         {
           label: "대지권 비율",
-          value: getValue(houseInfo.percentage_land, " %")
+          value: this.getValue(houseInfo.percentage_land, " %")
         },
         {
           label: "관리사무소 연락처",
@@ -525,43 +510,29 @@ export default {
     },
     getGenerationOptions() {
       const { group_individual_household: houseInfo } = this.estate;
-      const getValue = (value, unit) => {
-        if (value === null || value === undefined) return "";
-        if (
-          typeof value === "string" &&
-          (value.indexOf("null") > -1 || value.indexOf("undefined") > -1)
-        ) {
-          return "";
-        }
-
-        if (typeof value === "string" && value.indexOf("비공개") > -1) {
-          return "비공개";
-        }
-        return `${value}${unit ? ` ${unit}` : ""}`;
-      };
 
       return [
         {
           label: "(메모) 매물특징",
-          value: getValue(houseInfo.description_estate),
+          value: this.getValue(houseInfo.description_estate),
           class: "col-sm-12 col-md-12"
         },
-        { label: "동 번호", value: getValue(houseInfo.num_ho, " 동") },
+        { label: "동 번호", value: this.getValue(houseInfo.num_ho, " 동") },
         {
           label: "층수 (총 층수)",
-          value: getValue(houseInfo.count_floor_total, " 층")
+          value: this.getValue(houseInfo.count_floor_total, " 층")
         },
         {
           label: "층수 (해당 층)",
-          value: getValue(houseInfo.num_floor, " 층")
+          value: this.getValue(houseInfo.num_floor, " 층")
         },
         {
           label: "공급면적(㎡)",
-          value: getValue(houseInfo.size_supply_area_m2, " ㎡")
+          value: this.getValue(houseInfo.size_supply_area_m2, " ㎡")
         },
         {
           label: "전용면적 (㎡|평형)",
-          value: getValue(
+          value: this.getValue(
             `${houseInfo.size_dedicated_area_m2 || "-"} ㎡ | ${(
               (houseInfo.size_dedicated_area_pyeong || 0) / 3.3
             ).toFixed(1)} 평`
@@ -577,14 +548,14 @@ export default {
         // },
         {
           label: "방수 | 욕실수",
-          value: getValue(
+          value: this.getValue(
             `${houseInfo.count_room} 개 | ${houseInfo.count_bathroom} 개`
           ),
           class: "col-sm-6 col-md-4"
         },
         {
           label: "방향",
-          value: getValue(houseInfo.type_direction)
+          value: this.getValue(houseInfo.type_direction)
         }
         // {
         //   label: "최근 관리비",

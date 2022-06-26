@@ -32,18 +32,6 @@ export default {
     onSearch(type, text) {
       console.log(type, text, "search");
     }
-  },
-  async beforeMount() {
-    this.changeToolbarTitle("매물");
-    // if (this.$route.query?.sellid) {
-    //   const { data } = await Vue.prototype.$axios.get(
-    //     `/houses/${this.$route.query.sellid}`
-    //   );
-    //   this.list = data.results;
-    // } else {
-    //   const { data } = await Vue.prototype.$axios.get(`/houses`);
-    //   this.list = data.results;
-    // }
   }
 };
 </script>
