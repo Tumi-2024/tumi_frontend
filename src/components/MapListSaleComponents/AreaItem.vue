@@ -134,13 +134,13 @@ export default {
         // };
 
         return [
-          // {
-          //   type: "transactionStatus",
-          //   value: item.transactionStatus
-          //     ? false
-          //     : item.group_location.redevelopment_area.category
-          //   // icon: getIcon()
-          // },
+          {
+            type: "transactionStatus",
+            value: item.transactionStatus
+              ? false
+              : item.group_location.redevelopment_area.category
+            // icon: getIcon()
+          },
           { type: "houseType", value: item.group_building_house.type_house },
           { type: "redevelopment", value: item.redevelopment },
           { type: "stageProgress", value: item.stageProgress },
