@@ -30,7 +30,7 @@
         v-for="(preset, index) of presets"
         :key="index"
         dense
-        :style="[{ width: `calc(100% / ${presets.length})` }]"
+        :style="[{ width: `calc(100% / ${presets.length / 2} )` }]"
         @click="onClickPreset(preset)"
         :class="{
           'selected bg-primary text-white':
@@ -81,11 +81,18 @@ export default {
       isSelectMin: false,
       selectValue: {},
       presets: [
-        { label: "5천 이하", value: 5000 },
-        { label: "1억", value: 10000 },
-        { label: "3억", value: 30000 },
-        { label: "5억", value: 50000 },
-        { label: "10억", value: 100000 }
+        { label: "5천만원 이하", value: 5 * 1000 },
+        { label: "1억원", value: 10 * 1000 },
+        { label: "2억원", value: 20 * 1000 },
+        { label: "3억원", value: 30 * 1000 },
+        { label: "5억원", value: 50 * 1000 },
+        { label: "10억원", value: 100 * 1000 },
+        { label: "15억원", value: 150 * 1000 },
+        { label: "20억원", value: 200 * 1000 },
+        { label: "25억원", value: 250 * 1000 },
+        { label: "30억원", value: 300 * 1000 },
+        { label: "40억원", value: 400 * 1000 },
+        { label: "40억원 이상", value: 1000 * 1000 }
       ]
     };
   },

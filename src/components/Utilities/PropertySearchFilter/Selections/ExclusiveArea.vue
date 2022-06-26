@@ -64,7 +64,7 @@
         v-for="(preset, index) of presets"
         :key="index"
         dense
-        :style="[{ width: `calc(100% / ${presets.length})` }]"
+        :style="[{ width: `calc(100% / ${presets.length / 2})` }]"
         @click="onClickPreset(preset)"
         :class="{
           'selected bg-primary text-white':
@@ -120,16 +120,21 @@ export default {
         }
       ],
       presets: [
-        { label: "10평 이하", labelM2: 10 * 3.3 + "㎡ 이하", value: 10 * 3.3 },
-        { label: "10평대", labelM2: 20 * 3.3 + "㎡", value: 20 * 3.3 },
-        { label: "20평대", labelM2: 30 * 3.3 + "㎡", value: 30 * 3.3 },
-        { label: "30평대", labelM2: 40 * 3.3 + "㎡", value: 40 * 3.3 },
-        { label: "40평대", labelM2: 50 * 3.3 + "㎡", value: 50 * 3.3 },
-        { label: "50평 이상", labelM2: "330㎡ 이상", value: 100 * 3.3 }
+        { label: "~10평", labelM2: "~" + 10 * 3.3 + "㎡", value: 10 * 3.3 },
+        { label: "20평", labelM2: 20 * 3.3 + "㎡", value: 20 * 3.3 },
+        { label: "30평", labelM2: 30 * 3.3 + "㎡", value: 30 * 3.3 },
+        { label: "40평", labelM2: 40 * 3.3 + "㎡", value: 40 * 3.3 },
+        { label: "50평", labelM2: 50 * 3.3 + "㎡", value: 50 * 3.3 },
+        { label: "60평", labelM2: 60 * 3.3 + "㎡", value: 60 * 3.3 },
+        { label: "70평", labelM2: 70 * 3.3 + "㎡", value: 70 * 3.3 },
+        { label: "80평", labelM2: 80 * 3.3 + "㎡", value: 80 * 3.3 },
+        { label: "90평", labelM2: 90 * 3.3 + "㎡", value: 90 * 3.3 },
+        { label: "100평", labelM2: 100 * 3.3 + "㎡", value: 100 * 3.3 },
+        { label: "150평", labelM2: 150 * 3.3 + "㎡", value: 110 * 3.3 },
+        { label: "150평대 ~", labelM2: 1000 * 3.3 + "㎡~", value: 1000 * 3.3 }
       ]
     };
   },
-
   computed: {
     ...mapGetters("queryBuilder", ["area", "categories", "isMultiSelect"]),
     getUnit() {
@@ -215,7 +220,7 @@ export default {
     onChangeMin(e) {
       let _value = Number(e.target.value);
       if (!this.isM2) {
-        _value = _value / 3.3;
+        _value = _value * 3.3;
       }
       this.selectValue = {
         ...this.selectValue,
@@ -225,7 +230,7 @@ export default {
     onChangeMax(e) {
       let _value = Number(e.target.value);
       if (!this.isM2) {
-        _value = _value / 3.3;
+        _value = _value * 3.3;
       }
       this.selectValue = {
         ...this.selectValue,

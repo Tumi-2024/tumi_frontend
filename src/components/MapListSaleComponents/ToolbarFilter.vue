@@ -110,7 +110,7 @@ export default {
         },
         {
           label: "가격",
-          type: "price",
+          type: "PriceFilter",
           class:
             this.price.min || this.price.max
               ? "text-white bg-blue"
@@ -119,7 +119,7 @@ export default {
         },
         {
           label: "초기투자금",
-          type: "price",
+          type: "PriceFilter",
           class:
             this.initPrice.min || this.initPrice.max
               ? "text-white bg-purple"
@@ -129,7 +129,7 @@ export default {
         },
         {
           label: "담당자",
-          type: "person",
+          type: "PersonFilter",
           class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
           keyName: "users"
         }
