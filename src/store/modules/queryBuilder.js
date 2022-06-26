@@ -2,7 +2,7 @@ export const queryBuilderStore = {
   namespaced: true,
   state: {
     // 주택 유형
-    categories: ["APARTMENT"],
+    categories: [],
 
     // 전용면적
     // 무조건 1종류와 min, max

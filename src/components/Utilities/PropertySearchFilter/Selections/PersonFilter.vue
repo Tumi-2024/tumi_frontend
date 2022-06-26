@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getQuery", "getOption"]),
-    ...mapGetters("searchOption", ["person", "isMultiSelect"]),
+    ...mapGetters("queryBuilder", ["person", "isMultiSelect"]),
     getTeamTree() {
       return this.teamsData.map((obj) => {
         return {
@@ -62,7 +62,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("searchOption", ["setPerson"]),
+    ...mapActions("queryBuilder", ["setPerson"]),
     onTicked(values) {
       this.$emit("select", values, "users");
       this.selectValue = values;

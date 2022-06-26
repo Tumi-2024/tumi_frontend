@@ -35,7 +35,7 @@ export default function (/* { ssrContext } */) {
       search: searchStore,
       area: areaStore,
       searchQuery: searchQueryStore,
-      searchOption: queryBuilderStore
+      queryBuilder: queryBuilderStore
     },
 
     plugins: [

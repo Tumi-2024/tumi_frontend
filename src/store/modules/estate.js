@@ -94,9 +94,9 @@ export const estateStore = {
 
       const users = getQueryString2("users", "");
 
-      const areaNew = context.getters["searchOption/area"];
-      const priceNew = context.getters["searchOption/price"];
-      const ctgrNew = context.getters["searchOption/getCategoriesByKorean"];
+      const areaNew = context.getters["queryBuilder/area"];
+      const priceNew = context.getters["queryBuilder/price"];
+      const ctgrNew = context.getters["queryBuilder/getCategoriesByKorean"];
 
       const getQueryArray = (keyname, params) => {
         const hasValue = params.every((value) => !!value);

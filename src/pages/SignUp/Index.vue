@@ -126,8 +126,9 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || '아이디를 입력해주세요.',
-          (val) => !isCapital(val) || '소문자만 가능합니다.',
-          (val) => !hasSpace(val) || '공백은 사용할 수 없습니다.'
+          (val) =>
+            (val && val.length > 5 && !isCapital(val) && !hasSpace(val)) ||
+            '아이디는 6자리 이상 소문자와 공백없이 입력해주세요.'
         ]"
       >
         <template v-slot:before>
@@ -145,11 +146,11 @@
           type="password"
           :rules="[
             (val) => (val && val.length > 0) || '비밀번호를 입력해주세요.',
-            (val) => val.length > 7 || '비밀번호는 최소 8자 입니다.',
-            (val) => val.length < 20 || '비밀번호는 최대 20자 입니다.',
             (val) =>
-              isComplicatedPassword(val) ||
-              '비밀번호는 최소 하나의 문자와 숫자를 포함해야 합니다.'
+              (val.length < 20 &&
+                val.length > 7 &&
+                isComplicatedPassword(val)) ||
+              '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.'
           ]"
         >
           <template v-slot:before>

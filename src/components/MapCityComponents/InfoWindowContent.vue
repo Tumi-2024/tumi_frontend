@@ -63,12 +63,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", [
-      "getMapMode",
-      "getMapZoom",
-      "getMapCenter",
-      "getMapOptions"
-    ]),
+    ...mapGetters("map", ["getMapMode", "getMapZoom", "getMapOptions"]),
     getColor() {
       return (item) => {
         if (item.group_price) {

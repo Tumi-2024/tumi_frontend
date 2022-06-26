@@ -64,26 +64,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("searchOption", ["categories", "isMultiSelect"]),
+    ...mapGetters("queryBuilder", ["categories", "isMultiSelect"]),
     getIsActive() {
       return (dd) => {
-        return this.selected.some((obj) => {
-          return obj === dd;
-        });
+        return this.selected.some((obj) => obj === dd);
       };
     }
   },
 
   data() {
     return {
-      selected: [
-        {
-          icon: require("assets/iconsNew/11.png"),
-          label: "아파트",
-          value: "APARTMENT",
-          valueHouse: "아파트"
-        }
-      ],
+      selected: [],
       properties: [
         {
           icon: require("assets/iconsNew/11.png"),
@@ -140,7 +131,7 @@ export default {
     this.selected = [...this.categories];
   },
   methods: {
-    ...mapActions("searchOption", ["setCategories", "removeCategories"]),
+    ...mapActions("queryBuilder", ["setCategories", "removeCategories"]),
     select(val) {
       this.$emit("selectDetail", val);
     },

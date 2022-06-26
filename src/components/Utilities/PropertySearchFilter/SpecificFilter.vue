@@ -117,12 +117,11 @@ export default {
     keyName: { type: String, required: false, default: "" }
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"]),
-    ...mapGetters("map", ["getMapCenter"])
+    ...mapGetters("searchQuery", ["getQueryString", "getQuery"])
   },
   methods: {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("searchOption", ["setIsMultiSelect"]),
+    ...mapActions("queryBuilder", ["setIsMultiSelect"]),
     ...mapActions("area", ["fetchMapAreas"]),
     ...mapActions(["getSimpleHouses"]),
 
@@ -131,7 +130,7 @@ export default {
     },
     openModal() {
       this.modal = true;
-      this.setIsMultiSelect(false);
+      this.setIsMultiSelect(true);
     },
     selectDetail(val) {
       this.selectedDetail = val;

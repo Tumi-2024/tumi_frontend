@@ -130,7 +130,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("searchOption", ["area", "categories", "isMultiSelect"]),
+    ...mapGetters("queryBuilder", ["area", "categories", "isMultiSelect"]),
     ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
     getUnit() {
       return (value) => {
@@ -166,7 +166,7 @@ export default {
   methods: {
     toMoneyString,
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("searchOption", ["setArea"]),
+    ...mapActions("queryBuilder", ["setArea"]),
 
     select(val) {
       this.$emit("selectDetail", val);

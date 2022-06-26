@@ -28,9 +28,9 @@ export const areaStore = {
           context.rootGetters["searchQuery/getQueryString2"];
         const users = getQueryString2("users", "");
 
-        const area = context.rootGetters["searchOption/area"];
-        const price = context.rootGetters["searchOption/price"];
-        const ctgr = context.rootGetters["searchOption/getCategoriesByKorean"];
+        const area = context.rootGetters["queryBuilder/area"];
+        const price = context.rootGetters["queryBuilder/price"];
+        const ctgr = context.rootGetters["queryBuilder/getCategoriesByKorean"];
 
         // if (payload?.latitude) {
         //   await context.commit("estate/setLatitude", payload.latitude, {

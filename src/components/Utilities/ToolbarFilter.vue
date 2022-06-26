@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
-    ...mapGetters("searchOption", [
+    ...mapGetters("queryBuilder", [
       "categories",
       "area",
       "price",
@@ -87,7 +87,7 @@ export default {
         {
           label: "주택유형",
           type: "property-type",
-          class: "text-white bg-primary",
+          class: this.categories.length ? "text-white bg-primary" : "text-grey",
           keyName: "categories"
         },
         {

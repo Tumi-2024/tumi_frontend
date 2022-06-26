@@ -27,7 +27,8 @@ const initState = {
   isInterest: false,
   locationLoading: false,
   areaType: null,
-  isCone: true
+  isCone: true,
+  count: 0
 };
 export const mapStore = {
   namespaced: true,
@@ -56,6 +57,7 @@ export const mapStore = {
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
     setToolbarLabel: (state, payload) => (state.toolbarLabel = payload),
+    setCount: (state, payload) => (state.count = payload),
     setInterest: (state, payload) => (state.interest = payload),
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
@@ -121,6 +123,11 @@ export const mapStore = {
           context.commit(
             "setToolbarLabel",
             redevTitle ? "지금 보고있는 정비사업" : "지금 보고있는 지역"
+          );
+
+          context.commit(
+            "setCount",
+            result.data.subcity.count_estates_redevelopment_area
           );
 
           // context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);

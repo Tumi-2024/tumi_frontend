@@ -186,7 +186,7 @@ export default {
     ...mapActions("searchOption", ["setIsMultiSelect", "initialize"]),
     openModal() {
       this.modal = true;
-      this.setIsMultiSelect(true);
+      this.setIsMultiSelect(false);
     },
     resetFilters() {
       this.initialize();

@@ -318,11 +318,11 @@ export default {
     },
     dragEnd() {
       // console.log("dragEnd");
-      // const { center } = this.map;
-      // this.changeMapCenter({
-      //   lat: center.lat(),
-      //   lng: center.lng()
-      // });
+      const { center } = this.map;
+      this.changeMapCenter({
+        lat: center.lat(),
+        lng: center.lng()
+      });
     },
     zoomChanged() {
       const zoom = this.map.getZoom();
