@@ -49,8 +49,6 @@
             style="padding-top: 36px"
             @select="setSelected('areas', $event)"
             @selectDetail="setSelected('areaType', $event)"
-            :isCondition="true"
-            :selectedProps="categories"
             ref="option2"
           />
 
@@ -124,10 +122,10 @@ import {
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    "property-type": PropertyType,
-    "exclusive-area": ExclusiveArea,
-    "price-filter": PriceFilter,
-    "person-filter": PersonFilter
+    PropertyType,
+    ExclusiveArea,
+    PriceFilter,
+    PersonFilter
   },
 
   props: {
@@ -183,10 +181,10 @@ export default {
   },
   methods: {
     ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("searchOption", ["setIsMultiSelect", "initialize"]),
+    ...mapActions("queryBuilder", ["setIsMultiSelect", "initialize"]),
     openModal() {
-      this.modal = true;
       this.setIsMultiSelect(false);
+      this.modal = true;
     },
     resetFilters() {
       this.initialize();
@@ -196,6 +194,7 @@ export default {
     },
     setSelected(property, value) {
       this[property] = value;
+      console.log(this[property]);
     },
     applyFilters() {
       this.modal = false;

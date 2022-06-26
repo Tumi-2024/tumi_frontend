@@ -35,6 +35,7 @@
         <q-radio v-model="isM2" label="㎡" :val="true" />
       </div>
       <div class="row q-mt-md">
+        {{ categories }}
         <q-input
           :value="getUnit(selectValue.min)"
           @change="onChangeMin"
@@ -120,10 +121,11 @@ export default {
         }
       ],
       presets: [
-        { label: "10평 이하", labelM2: "33㎡ 이하", value: 10 * 3.3 },
-        { label: "10평대", labelM2: "66㎡ 이하", value: 20 * 3.3 },
-        { label: "20평대", labelM2: "99㎡ 이하", value: 30 * 3.3 },
-        { label: "30평대", labelM2: "132㎡ 이하", value: 40 * 3.3 },
+        { label: "10평 이하", labelM2: 10 * 3.3 + "㎡ 이하", value: 10 * 3.3 },
+        { label: "10평대", labelM2: 20 * 3.3 + "㎡", value: 20 * 3.3 },
+        { label: "20평대", labelM2: 30 * 3.3 + "㎡", value: 30 * 3.3 },
+        { label: "30평대", labelM2: 40 * 3.3 + "㎡", value: 40 * 3.3 },
+        { label: "40평대", labelM2: 50 * 3.3 + "㎡", value: 50 * 3.3 },
         { label: "50평 이상", labelM2: "330㎡ 이상", value: 100 * 3.3 }
       ]
     };
@@ -131,7 +133,6 @@ export default {
 
   computed: {
     ...mapGetters("queryBuilder", ["area", "categories", "isMultiSelect"]),
-    ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
     getUnit() {
       return (value) => {
         if (value === undefined) {
@@ -145,6 +146,7 @@ export default {
       };
     },
     getProperties() {
+      console.log(this.categories);
       const hasValue = (parentArray, childArray) => {
         return parentArray.some((parent) => {
           return childArray.some((child) => {
@@ -154,6 +156,7 @@ export default {
       };
 
       return this.properties.map((obj) => {
+        console.log(obj.type, this.categories);
         return {
           ...obj,
           disabled: !this.isMultiSelect
@@ -231,7 +234,6 @@ export default {
       };
     },
     save() {
-      console.log(this.selectValue);
       this.setArea(this.selectValue);
     },
     initialize() {

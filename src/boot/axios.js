@@ -8,9 +8,10 @@ const instance = axios.create({});
 
 instance.defaults.baseURL = process.env.API;
 
+// tumimap.com;
 // instance.defaults.baseURL = "http://172.20.10.2:9000/api";
 // instance.defaults.baseURL = 'http://127.0.0.1:9013/api/';
-// instance.defaults.baseURL = 'http://admin.tumi.sunwook.com/api/';
+// instance.defaults.baseURL = 'http://admin.tumimap.com/api/';
 instance.defaults.timeout = 10000;
 instance.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";

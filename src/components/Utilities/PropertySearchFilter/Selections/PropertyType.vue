@@ -142,7 +142,6 @@ export default {
           return;
         }
         this.selected = this.selected.filter((obj) => obj !== value);
-        console.log(this.selected);
       } else {
         if (this.isMultiSelect) {
           this.selected.push(value);

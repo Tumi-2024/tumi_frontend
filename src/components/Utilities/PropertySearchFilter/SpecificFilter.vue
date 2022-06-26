@@ -36,8 +36,6 @@
           <component
             ref="component"
             :is="component"
-            @select="select"
-            @selectDetail="selectDetail"
             :value="value"
             :label="label"
             :keyName="keyName"
@@ -78,32 +76,22 @@
 
 <script>
 import {
-  TransactionType,
   PropertyType,
-  PropertySalePrice,
-  CharterPriceDeposit,
-  MaintenanceType,
   ExclusiveArea,
   PriceFilter,
   PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   components: {
-    transactionType: TransactionType,
-    maintenanceType: MaintenanceType,
-    propertyType: PropertyType,
-    PropertySalePrice: PropertySalePrice,
-    CharterPriceDeposit: CharterPriceDeposit,
-    ExclusiveArea: ExclusiveArea,
-    price: PriceFilter,
-    person: PersonFilter
+    PropertyType,
+    ExclusiveArea,
+    PriceFilter,
+    PersonFilter
   },
   data() {
     return {
-      modal: false,
-      selected: [],
-      selectedDetail: ""
+      modal: false
     };
   },
   props: {
@@ -116,24 +104,14 @@ export default {
     value: { type: [Array, Object], require: false },
     keyName: { type: String, required: false, default: "" }
   },
-  computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getQuery"])
-  },
   methods: {
-    ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
     ...mapActions("queryBuilder", ["setIsMultiSelect"]),
     ...mapActions("area", ["fetchMapAreas"]),
     ...mapActions(["getSimpleHouses"]),
 
-    select(obj, key) {
-      this.selected = obj;
-    },
     openModal() {
       this.modal = true;
       this.setIsMultiSelect(true);
-    },
-    selectDetail(val) {
-      this.selectedDetail = val;
     },
     save() {
       this.$refs.component.save();
@@ -143,9 +121,6 @@ export default {
     initialize() {
       this.$refs.component.initialize();
     }
-  },
-  mounted() {
-    this.selected = this.value;
   }
 };
 </script>

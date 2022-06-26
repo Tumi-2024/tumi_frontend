@@ -36,7 +36,7 @@ export default {
       this.$router.push({ name: "signIn" });
     },
     redirectToAdmin() {
-      window.open("https://admin.tumi.sunwook.com/admin/", "_blank");
+      window.open("https://admin.tumimap.com/admin/", "_blank");
     }
   }
 };

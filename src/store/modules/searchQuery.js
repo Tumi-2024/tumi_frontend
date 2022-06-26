@@ -124,7 +124,7 @@ export const searchQueryStore = {
     },
     getQueryString: (state, getters) => {
       return (key, altkey, contentKey) => {
-        // https://admin.tumi.sunwook.com/api/houses/?type_house__in=아파트,연립ￜ다세대
+        // https://admin.tumimap.com/api/houses/?type_house__in=아파트,연립ￜ다세대
         const query = state.query[key]
           .map((obj) => {
             return obj[contentKey];
