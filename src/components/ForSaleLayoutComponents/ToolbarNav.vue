@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
+    ...mapGetters("map", ["getMapMode", "getToolbarTitle"]),
     is_interest() {
       return (
         this.$store.getters.current_house &&

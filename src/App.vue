@@ -29,7 +29,7 @@ export default {
       if (token) {
         Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${token}`;
         // this.$store.dispatch("getDetailHouses", "page_size=5");
-        this.fetchLocationInterest();
+        // this.fetchLocationInterest();
       }
     } catch (e) {
       console.log(e);

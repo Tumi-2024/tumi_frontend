@@ -281,7 +281,26 @@ export default {
 
     getBadges() {
       return (item, ctgr) => {
+        const getColor = (type) => {
+          switch (type) {
+            case "재개발":
+              return "primary";
+            case "재건축":
+              return "blue";
+            case "가로주택":
+              return "green";
+            case "일반":
+              return "purple";
+            default:
+              return "black";
+          }
+        };
         return [
+          {
+            type: "redevType",
+            value: item.redevelopment_area?.title,
+            color: getColor(item.redevelopment_area)
+          },
           {
             type: "houseType",
             value: (

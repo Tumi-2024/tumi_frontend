@@ -10,7 +10,7 @@
       <toolbar-filter
         class="q-pt-xs q-px-sm"
         :text="text"
-        @input="onChangeText"
+        @focus="onFocus"
         @search="onSearch"
       />
     </q-card-section>
@@ -54,75 +54,97 @@ export default {
       currentItem: {}
     };
   },
+  watch: {
+    $route: {
+      handler({ query }) {
+        const _key = Object.keys(query)[0];
+        switch (_key) {
+          case "search":
+            this.getSearchData(query);
+            break;
+          case "redevelopment_area":
+            this.getRedevData(query);
+            break;
+          case "location":
+            this.getLocationData(query);
+            break;
+          default:
+            this.getApiHouses(query);
+        }
+      },
+      immediate: true
+    }
+  },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
-  created() {
-    this.getApiHouses();
-  },
   methods: {
-    onChangeText(e) {
-      this.text = e;
+    onFocus(e) {
+      this.getApiHouses();
     },
     onSearch(type, id) {
-      console.log("onSearch", type, id);
-      console.log(type, id);
       if (id.length === 0) {
         return;
       }
       switch (type) {
         case "지역":
-          this.getHouseFromLocation(id);
+          this.setLocationQuery(id);
           break;
         case "개발정비사업":
-          this.getHouseFromRedev(id);
+          this.setRedevQuery(id);
           break;
         case "건물/단지":
-          this.getHouseFromSearch(id);
+          this.setSearchQuery(id);
           break;
         default:
           this.getApiHouses(id);
       }
     },
 
-    async getHouseFromSearch(search) {
-      console.log("getHouseFromSearch");
-      const { data } = await Vue.prototype.$axios.get(
-        `/houses/?search=${search}`
-      );
-      console.log(data);
+    async getSearchData(params) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
+      this.saleList = data.results;
+    },
+
+    async getRedevData(params) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params
+      });
+      this.saleList = data.results;
+    },
+
+    async getLocationData(params) {
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params
+      });
       this.saleList = data.results;
     },
     async getApiHouses() {
       const { data } = await Vue.prototype.$axios.get(`/houses/`);
+      const _query = this.$route.query;
 
+      if (Object.keys(_query).length > 0) {
+        this.$router.push({
+          query: {}
+        });
+      }
       this.saleList = data.results;
     },
-    async getApiTransactions(query) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${this.$route.query.transactionid}/transactions/`,
-        {
-          params: query
-        }
-      );
 
-      this.saleList = data;
-    },
-    async getHouseFromRedev(id) {
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: {
-          redevelopment_area: id
-        }
+    setSearchQuery(search) {
+      this.$router.push({
+        query: { search }
       });
-      this.saleList = data.results;
     },
-    async getHouseFromLocation(location) {
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: {
-          location
-        }
+    setRedevQuery(redevelopmentArea) {
+      this.$router.push({
+        query: { redevelopment_area: redevelopmentArea }
       });
-      this.saleList = data.results;
+    },
+    setLocationQuery(location) {
+      this.$router.push({
+        query: { location }
+      });
     }
   }
 };

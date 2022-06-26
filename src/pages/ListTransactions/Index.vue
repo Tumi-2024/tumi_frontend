@@ -11,7 +11,6 @@ import {
   FloatingButton
 } from "components/MapListSaleComponents";
 
-import Vue from "vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -25,8 +24,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeToolbarTitle"]),
-    
+    ...mapActions("map", ["changeToolbarTitle"])
   },
   async beforeMount() {
     this.changeToolbarTitle("실거래가");

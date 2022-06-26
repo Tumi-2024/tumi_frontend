@@ -3,7 +3,6 @@
     <badge-list :tags="tags" />
     <address-text
       class="q-mt-sm"
-      :isRedevelop="item.isRedevelop"
       :address="item.address"
       :building="item.building"
       :houseId="houseId"

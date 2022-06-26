@@ -15,8 +15,6 @@ import {
   FloatingButton
 } from "components/MapListSaleComponents";
 
-import { mapActions } from "vuex";
-
 export default {
   components: {
     AreaListHouses,
@@ -28,7 +26,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeToolbarTitle"]),
     onSearch(type, text) {
       console.log(type, text, "search");
     }

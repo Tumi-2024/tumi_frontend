@@ -74,7 +74,7 @@ export default {
         } else if (typeof value === "string" && value.indexOf("비공개") > -1) {
           return value;
         } else {
-          return value.toLocaleString() + unit;
+          return value.toLocaleString() + (unit || "");
         }
       };
       // 총 세대수 [임대세대]

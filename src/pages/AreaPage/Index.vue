@@ -43,7 +43,7 @@ export default {
   },
   mounted() {
     if (!this.myInterestArea.length) {
-      this.fetchLocationInterest();
+      // this.fetchLocationInterest();
     }
   }
 };

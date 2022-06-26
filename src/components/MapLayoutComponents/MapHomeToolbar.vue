@@ -12,9 +12,6 @@
             class="q-mr-sm"
             style="height: 100%"
           />
-          <span style="font-size: calc((30 / 1312) * 100vh)">
-            {{ getToolbarTitle }}
-          </span>
         </div>
       </div>
       <!-- right section-items -->
@@ -38,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 // import DialogPropertyInformation from "./DialogPropertyInformation";
 export default {

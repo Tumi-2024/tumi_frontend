@@ -3,8 +3,6 @@
     class="row items-center flex justify-end q-pa-none q-ma-none"
     style="flex: 1"
   >
-    <!-- Dialog containing all filters-->
-
     <div class="col flex items-center justify-between">
       <div class="row items-center">
         <div
@@ -33,6 +31,7 @@
             @input-value="onChangeSearchText"
             @input="onSelect"
             :input-debounce="0"
+            @focus="onFocus"
             use-input
             fill-input
             hide-selected
@@ -85,7 +84,6 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
     ...mapGetters("queryBuilder", [
       "categories",
       "area",
@@ -183,10 +181,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "changeToolbarTitle"
+    ]),
     onChangeSearchText(e) {
       this.searchText = e;
       this.options = [];
+    },
+    onFocus() {
+      this.changeToolbarTitle("");
+      this.$emit("focus");
     },
     onSelect(obj) {
       const type = [
@@ -194,6 +200,7 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
+      this.changeToolbarTitle(obj.label);
 
       // if (type.value === "redev") {
       //   console.log("redev");
@@ -258,8 +265,7 @@ export default {
         update();
       }
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 

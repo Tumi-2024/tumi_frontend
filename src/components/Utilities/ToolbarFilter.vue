@@ -4,7 +4,7 @@
 
     <div class="col flex items-end justify-between">
       <div class="row items-center" style="margin-bottom: 12px; display: flex">
-        <div class="column">
+        <div class="column" style="min-width: 150px">
           <div class="helper text-left notosanskr-regular">
             {{ getToolbarLabel }}
           </div>
@@ -137,12 +137,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapMode",
-      "changeMapZoom",
-      "changeMapCenter",
-      "changeToolbarTitle"
-    ]),
+    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
     onSelect(obj) {
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);

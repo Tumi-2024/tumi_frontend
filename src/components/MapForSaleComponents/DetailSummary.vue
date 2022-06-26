@@ -4,7 +4,6 @@
       <address-with-badges
         redirect
         :item="{ address: areaName, building }"
-        :tags="getBadgeOptions"
         :houseId="houseId"
         :created="created"
       />
@@ -236,8 +235,7 @@ export default {
         }
       ];
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 

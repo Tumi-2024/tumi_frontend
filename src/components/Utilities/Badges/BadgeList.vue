@@ -1,11 +1,12 @@
 <template>
   <div class="row">
-    <template v-for="(badge, index) of getTagsOptions">
+    <template v-for="(badge, index) of tags">
       <badge
         :key="index"
         v-if="badge.value"
         v-bind="{ icon: badge.icon, value: badge.value, [badge.type]: true }"
         :class="{ 'q-mr-sm': index !== tags.length - 1 }"
+        :color="badge.color"
       />
     </template>
   </div>
@@ -34,14 +35,6 @@ export default {
     /**
      * @desc ordering
      */
-    getTagsOptions() {
-      // const orderedTags = tagsOrder.reduce((acc, curr) => {
-      //   const tag = this.tags.find(t => t.type === curr);
-      //   return tag ? [...acc, tag] : acc;
-      // }, []);
-      return this.tags;
-      // return [...orderedTags, ...this.tags];
-    }
   }
 };
 </script>
