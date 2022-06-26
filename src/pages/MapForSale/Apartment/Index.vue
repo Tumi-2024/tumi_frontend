@@ -666,23 +666,23 @@ export default {
         },
         {
           label: "조합원 수",
-          value: `${houseInfo.count_member.toLocaleString()} 명`
+          value: `${houseInfo.count_member?.toLocaleString()} 명`
         },
         {
           label: "부동산 소유자 수",
-          value: `${houseInfo.count_owner.toLocaleString()} 명`
+          value: `${houseInfo.count_owner?.toLocaleString()} 명`
         },
         {
           label: "세입자 수",
-          value: `${houseInfo.count_house.toLocaleString()} 명`
+          value: `${houseInfo.count_house?.toLocaleString()} 명`
         },
         {
           label: "(분양) 세대 수",
-          value: `${houseInfo.count_sale.toLocaleString()} 세대`
+          value: `${houseInfo.count_sale?.toLocaleString()} 세대`
         },
         {
           label: "(임대) 세대 수",
-          value: `${houseInfo.count_rent.toLocaleString()} 세대`
+          value: `${houseInfo.count_rent?.toLocaleString()} 세대`
         },
         {
           label: "입주 예정일",
