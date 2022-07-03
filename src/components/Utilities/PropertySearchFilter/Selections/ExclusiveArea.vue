@@ -130,8 +130,8 @@ export default {
         { label: "80평", labelM2: 80 * 3.3 + "㎡", value: 80 * 3.3 },
         { label: "90평", labelM2: 90 * 3.3 + "㎡", value: 90 * 3.3 },
         { label: "100평", labelM2: 100 * 3.3 + "㎡", value: 100 * 3.3 },
-        { label: "150평", labelM2: 150 * 3.3 + "㎡", value: 110 * 3.3 },
-        { label: "150평대 ~", labelM2: 1000 * 3.3 + "㎡~", value: 1000 * 3.3 }
+        { label: "150평", labelM2: 150 * 3.3 + "㎡", value: 150 * 3.3 },
+        { label: "150평대 ~", labelM2: 1000 * 3.3 + "㎡~", value: 9999 * 3.3 }
       ]
     };
   },
