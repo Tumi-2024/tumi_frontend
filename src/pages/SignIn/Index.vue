@@ -64,8 +64,8 @@ export default {
         })
         .then(({ data }) => {
           this.$store.commit("setUser", data);
-          Cookies.set("tumi", data.token);
-          Cookies.set("tumi_i", data.id);
+          Cookies.set("tumi", data.token, { expires: "1d" });
+          Cookies.set("tumi_i", data.id, { expires: "1d" });
           this.$router.push("/");
         })
         .catch((e) => {
