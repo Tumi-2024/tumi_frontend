@@ -28,7 +28,9 @@ const initState = {
   locationLoading: false,
   areaType: null,
   isCone: true,
-  count: 0
+  count: 0,
+  redevId: 0,
+  redevTitle: ""
 };
 export const mapStore = {
   namespaced: true,
@@ -51,6 +53,8 @@ export const mapStore = {
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
+    setRedevId: (state, payload) => (state.redevId = payload),
+    setRedevTitle: (state, payload) => (state.redevTitle = payload),
     setMapZoom: (state, payload) => (state.mapZoom = payload),
     setMapCenter: (state, payload) => (state.mapCenter = payload),
     setMapAddress: (state, payload) => (state.mapAddress = payload),
@@ -70,6 +74,9 @@ export const mapStore = {
   },
   actions: {
     setAreaType: (context, payload) => context.commit("setAreaType", payload),
+    setRedevId: (context, payload) => context.commit("setRedevId", payload),
+    setRedevTitle: (context, payload) =>
+      context.commit("setRedevTitle", payload),
     setMapCenter: (context, payload) => context.commit("setMapCenter", payload),
     setMapZoom: (context, payload) => context.commit("setMapZoom", payload),
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
@@ -114,6 +121,9 @@ export const mapStore = {
         .then((result) => {
           const string = result.data.address.split(" ");
           const redevTitle = result.data.redevelopment_area.title;
+
+          context.commit("setRedevId", result.data.redevelopment_area.id);
+          context.commit("setRedevTitle", result.data.redevelopment_area.title);
 
           context.commit("setMapAddress", `${string[1]} ${string[2]}`);
           context.commit(

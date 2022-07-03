@@ -8,7 +8,13 @@
         <q-btn
           flat
           class="btn-view-properties full-width notosanskr-medium"
-          :to="{ name: 'listHouses' }"
+          :to="{
+            name: 'listHouses',
+            query: {
+              redevelopment_area: $store.state.map.redevId,
+              title: $store.state.map.redevTitle
+            }
+          }"
         >
           {{ $store.state.map.toolbarTitle }} 매물보기
           <span style="color: #ff5a00; margin-left: 10px">

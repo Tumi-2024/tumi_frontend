@@ -59,6 +59,7 @@ export default {
     $route: {
       handler({ query }) {
         const _key = Object.keys(query)[0];
+        console.log(query, _key);
         this.text = this.$route.query.title || "";
         switch (_key) {
           case "search":
@@ -123,13 +124,13 @@ export default {
     },
     async getApiHouses() {
       const { data } = await Vue.prototype.$axios.get(`/houses/`);
-      const _query = this.$route.query;
+      // const _query = this.$route.query;
 
-      if (Object.keys(_query).length > 0) {
-        this.$router.push({
-          query: {}
-        });
-      }
+      // if (Object.keys(_query).length > 0) {
+      //   this.$router.push({
+      //     query: {}
+      //   });
+      // }
       this.saleList = data.results;
     },
 
