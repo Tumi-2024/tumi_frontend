@@ -122,6 +122,7 @@ export default {
           label: "담당자",
           type: "PersonFilter",
           class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
+          isHide: this.$route.path !== "/map/city",
           keyName: "users"
         }
       ];

@@ -40,7 +40,7 @@
         >
           <div
             v-if="getMapZoom <= redevZoom"
-            class="bg-primary flex column justify-center items-center"
+            class="flex column justify-center items-center"
             style="
               min-height: calc((110 / 1312) * 100vh);
               min-width: calc((110 / 1312) * 100vh);
@@ -48,6 +48,7 @@
               border-radius: 100%;
               opacity: 0.72;
             "
+            :style="{ backgroundColor: getColor() }"
           >
             <span
               class="flex text-white justify-center"
@@ -183,6 +184,21 @@ export default {
     ...mapGetters(["getUserLocation"]),
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
+    getColor() {
+      return (type) => {
+        switch (this.getAreaType) {
+          case "재개발":
+            return "rgb(255, 90, 0)";
+          case "재건축":
+            return "rgba(0, 0, 255, 0.85)";
+          case "가로주택":
+            return "rgba(0, 128, 0, 0.85)";
+
+          default:
+            return "#2C3639";
+        }
+      };
+    },
     getType() {
       return (m) => {
         const value = m.types || m?.group_building_house?.type_house;

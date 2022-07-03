@@ -129,7 +129,8 @@ export default {
           label: "담당자",
           type: "PersonFilter",
           class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
-          keyName: "users"
+          keyName: "users",
+          isHide: this.$route.path !== "/map/city"
         }
       ];
     }
@@ -137,36 +138,7 @@ export default {
   data() {
     return {
       options: [],
-      option: "redev",
-      filters: [
-        {
-          label: "주택유형",
-          type: "property-type",
-          class: "text-white bg-primary",
-          keyName: "categories"
-        },
-        {
-          label: "면적종류",
-          type: "exclusive-area",
-          class: "text-white bg-green"
-        },
-        {
-          label: "가격",
-          type: "price",
-          class: "text-white bg-blue"
-        },
-        {
-          label: "초기투자금",
-          type: "price",
-          class: "text-white bg-purple",
-          isHide: this.$route.path !== "/map/city"
-        },
-        {
-          label: "담당자",
-          type: "person",
-          class: "text-white bg-black"
-        }
-      ]
+      option: "redev"
     };
   },
   model: {

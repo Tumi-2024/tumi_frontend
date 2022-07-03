@@ -154,7 +154,12 @@ export default {
       this.setCategories(this.selected);
     },
     initialize() {
-      this.selected = ["APARTMENT"];
+      //  if 멀티면
+      if (this.isMultiSelect) {
+        this.selected = [];
+      } else {
+        this.selected = ["APARTMENT"];
+      }
     }
   }
 };
