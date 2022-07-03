@@ -46,7 +46,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { SessionStorage } from "quasar";
+import { Cookies } from "quasar";
 
 export default {
   data() {
@@ -64,8 +64,8 @@ export default {
         })
         .then(({ data }) => {
           this.$store.commit("setUser", data);
-          SessionStorage.set("tumi", data.token);
-          SessionStorage.set("tumi_i", data.id);
+          Cookies.set("tumi", data.token);
+          Cookies.set("tumi_i", data.id);
           this.$router.push("/");
         })
         .catch((e) => {

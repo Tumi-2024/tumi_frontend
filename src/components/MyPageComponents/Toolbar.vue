@@ -23,7 +23,7 @@
 <script>
 import { loginModalMutation } from "src/components/Utilities/LoginModal/LoginModalState";
 
-import { SessionStorage } from "quasar";
+import { Cookies } from "quasar";
 
 export default {
   methods: {
@@ -31,8 +31,8 @@ export default {
       loginModalMutation.setModal();
     },
     logOut() {
-      SessionStorage.remove("tumi");
-      SessionStorage.remove("tumi_i");
+      Cookies.remove("tumi");
+      Cookies.remove("tumi_i");
       this.$router.push({ name: "signIn" });
     },
     redirectToAdmin() {

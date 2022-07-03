@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { SessionStorage } from "quasar";
+import { Cookies } from "quasar";
 
 import routes from "./routes";
 
@@ -28,7 +28,7 @@ export default function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    const value = SessionStorage.getItem("tumi");
+    const value = Cookies.get("tumi");
     if (to.name === "signIn" || to.name === "signUp") {
       next();
     } else if (!value) {
