@@ -1,6 +1,6 @@
 <template>
   <div class="action-container q-px-sm" style="min-width: 70px">
-    <q-btn color="white" padding="8px" @click="interestLocation()">
+    <!-- <q-btn color="white" padding="8px" @click="interestLocation()">
       <q-icon>
         <img
           v-if="!$store.state.map.isInterest"
@@ -10,7 +10,7 @@
         />
         <img v-else src="~assets/icons/hearted.svg" alt="" srcset="" />
       </q-icon>
-    </q-btn>
+    </q-btn> -->
 
     <q-btn :color="getColor" @click="changeRedev" padding="6px">
       <div>
@@ -26,11 +26,11 @@
 
     <q-btn
       color="white"
-      padding="8px"
+      padding="12px"
       @click="$emit('accessUserLocation')"
       v-if="!hideGps"
     >
-      <q-icon size="calc((30 / 1312) * 100vh)">
+      <q-icon size="24px">
         <img src="~assets/icons/target.svg" alt="" srcset="" />
       </q-icon>
     </q-btn>
