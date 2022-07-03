@@ -12,10 +12,7 @@
             {{ getToolbarTitle }}
           </div>
         </div>
-        <div
-          class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg flex"
-          v-if="$route.name !== 'map_city'"
-        >
+        <div class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg flex">
           <q-select
             ref="keywordRef"
             filled

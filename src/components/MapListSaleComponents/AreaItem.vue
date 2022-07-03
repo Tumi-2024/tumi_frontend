@@ -8,7 +8,7 @@
     :focused="isSelected || onHover"
   >
     <div class="row">
-      <div class="column" style="flex-basis: 300px; margin-right: 20px">
+      <div class="column" style="flex: 1 0 60px; margin-right: 20px">
         <q-item-section>
           <address-with-badges
             :item="{
@@ -28,7 +28,7 @@
           />
         </q-item-section>
       </div>
-      <div class="flex items-center q-py-sm" style="flex: 1">
+      <div class="flex items-center q-py-sm" style="flex: 3 0 0">
         <area-item-info :item="item" />
       </div>
     </div>

@@ -1,10 +1,9 @@
 <template>
-  <div class="column" style="flex: 1">
+  <div class="column">
     <div class="row items-center">
       <template v-for="(row, rIndex) of getMainInfo">
         <div
-          class="justify-start align-start col-4 flex"
-          style="flex: 1 1 auto"
+          class="justify-start align-start col-md-6 col-12 flex"
           :key="`col-${rIndex}`"
         >
           <span class="col-text main title"
@@ -13,14 +12,14 @@
           <q-icon size="16px" v-if="row.isDirection">
             <img src="~assets/icons/sun.svg" />
           </q-icon>
-          <span class="col-text main desc">{{ row.value }}</span>
+          <span class="col-text main">{{ row.value }}</span>
         </div>
       </template>
     </div>
     <div class="row q-mt-md q-mt-lg-lg">
       <template v-for="(row, rIndex) of getSubInfo">
         <span
-          class="flex col-sm-4 col-xs-6"
+          class="flex col-sm-3 col-lg-3 col-12"
           :class="`col-sm-${col}`"
           :key="`col-${rIndex}`"
         >
@@ -32,7 +31,7 @@
   </div>
 </template>
 <script>
-import { toKr } from "src/utils";
+import { toKr, toMoneyString } from "src/utils";
 
 export default {
   props: {
@@ -49,19 +48,17 @@ export default {
       if (this.infoProps) {
         return this.infoProps;
       }
-      const { group_building_house: houseInfo, group_location: location } =
-        this.item;
+      const { group_location: location } = this.item;
 
       return [
         {
-          label: "재개발 세부유형",
+          label: "세부유형",
           value: location.redevelopment_area.subcategory
         },
         {
           label: "현재 추진 단계",
           value: location.redevelopment_area.redevelopment_step
-        },
-        { label: "해당 층수", value: houseInfo.count_floor_up }
+        }
       ];
     },
     getSubInfo() {
@@ -77,20 +74,29 @@ export default {
           return value.toLocaleString() + (unit || "");
         }
       };
-      // 총 세대수 [임대세대]
-      // 부동산 소유자 수 없음
-      // 분양 신청 평수 없음
 
-      // 초기투자금
-      // 감정평가액
-      // 권리산정기준일
+      const {
+        group_building_house: houseInfo,
+        group_price: priceInfo,
+        group_location: locationInfo
+      } = this.item;
+      console.log(this.item);
 
-      // 토지/건물 면적 (m2)
-      // 건축년도 (준공일)
-      // 시공사
-      const { group_building_house: houseInfo, group_price: priceInfo } =
-        this.item;
+      const dateRights = locationInfo.redevelopment_area.category_date_rights
+        ?.replace("권리산정기준일 : ", "")
+        .replace("년 ", "-")
+        .replace("월 ", "-")
+        .replace("일", "");
       return [
+        {
+          label: "토지/건축 면적",
+          value: `${getLabel(
+            `${Math.ceil(houseInfo.size_land_area)} / ${Math.ceil(
+              houseInfo.size_building_area
+            )}`,
+            "㎡"
+          )}`
+        },
         {
           label: "총 세대수",
           value: getLabel(houseInfo.count_household, "세대")
@@ -100,10 +106,19 @@ export default {
           value: getLabel(houseInfo.count_owner, "명")
         },
         {
-          label: "난방방식",
-          value: `${getLabel(priceInfo.price_initial_investment, "만원")}`
+          label: "해당 층수",
+          value: getLabel(houseInfo.floor_count, "층")
         },
-        { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) }
+        { label: "권리산정기준일", value: dateRights },
+        { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
+        {
+          label: "감정평가액",
+          value: getLabel(toMoneyString(priceInfo.price_appraised), "")
+        },
+        {
+          label: "초기투자금",
+          value: getLabel(toMoneyString(priceInfo.price_initial_investment), "")
+        }
         // {
         //   label: "대지면적 (㎡)",
         //   value: `${houseInfo.size_land_area ?? "-"}㎡`
@@ -130,13 +145,15 @@ export default {
   color: #444444;
   align-self: center;
   font-size: 12px;
+  font-weight: bold;
   &.value {
     font-weight: 500;
   }
   &.main {
-    font-size: 13px;
+    font-size: 14px;
     &.title {
       font-weight: bold;
+      font-size: 15px;
     }
   }
 }
