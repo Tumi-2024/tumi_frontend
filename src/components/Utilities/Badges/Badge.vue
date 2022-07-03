@@ -1,5 +1,5 @@
 <template>
-  <q-badge :class="badgeClass" outline>
+  <q-badge :class="badgeClass" outline :color="color">
     <q-icon v-if="icon">
       <img :src="icon" alt="" srcset="" />
     </q-icon>
@@ -14,6 +14,9 @@ export default {
     value: {
       type: String,
       required: true
+    },
+    color: {
+      type: String
     },
     icon: {
       type: String
@@ -48,7 +51,11 @@ export default {
       badgeClass: ""
     };
   },
-  mounted() {
+  created() {
+    if (this.color) {
+      this.badgeClass = "";
+      return;
+    }
     switch (true) {
       case this.houseType:
         this.badgeClass = "text-white bg-primary";
