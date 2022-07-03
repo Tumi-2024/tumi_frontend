@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="action-container q-px-sm"
-    style="min-width: calc((90 / 1312) * 100vh)"
-  >
+  <div class="action-container q-px-sm" style="min-width: 70px">
     <q-btn color="white" padding="8px" @click="interestLocation()">
       <q-icon>
         <img
@@ -15,9 +12,9 @@
       </q-icon>
     </q-btn>
 
-    <q-btn :color="getColor" @click="changeRedev" padding="8px">
+    <q-btn :color="getColor" @click="changeRedev" padding="6px">
       <div>
-        <q-icon size="calc((30 / 1312) * 100vh)">
+        <q-icon size="30px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div class="off text-dark notosanskr-bold">
