@@ -6,9 +6,10 @@
         :item="{ address: areaName, building }"
         :houseId="houseId"
         :created="created"
+        :redevName="redevName"
       />
       <div class="row">
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -25,7 +26,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -41,7 +42,7 @@
           </div>
         </div>
 
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -56,7 +57,7 @@
             <div class="price">{{ toMoneyString(prices.price_member) }}</div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -73,7 +74,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -88,7 +89,7 @@
             <div class="price">{{ toMoneyString(prices.price_total) }}</div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -105,7 +106,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -122,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -137,7 +138,7 @@
             <div class="price">{{ prices.percentage_ratio }}%</div>
           </div>
         </div>
-        <div class="col-4 q-px-sm">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -215,6 +216,9 @@ export default {
     created: {
       type: String,
       default: ""
+    },
+    redevName: {
+      type: String
     }
   },
   methods: {

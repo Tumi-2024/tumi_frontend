@@ -23,7 +23,8 @@
           type: estate.group_building_house.type_house,
           stageProgress: redevelopment.redevelopment_step
         },
-        created: estate.created
+        created: estate.created,
+        redevName: estate.group_location.redevelopment_area.title_area
       }"
     />
     <!--  매물정보  -->

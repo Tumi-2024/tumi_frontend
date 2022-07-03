@@ -35,13 +35,18 @@
           </span>
         </div>
       </div>
-      <div class="row" v-if="created">
-        <div class="area-name q-mr-sm">매물 등록 일자</div>
-        <div class="area-name bold">{{ getDate(created) }}</div>
+      <div class="column justify-end flex" v-if="created">
+        <div class="flex">
+          <div class="area-name q-mr-sm">매물 등록 일자</div>
+          <div class="area-name bold">{{ getDate(created) }}</div>
+        </div>
+        <div
+          class="area-name q-mt-xs text-weight-bold text-right redev"
+          v-if="redevName"
+        >
+          {{ redevName }}
+        </div>
       </div>
-    </div>
-    <div class="area-name q-mt-sm text-weight-bold" v-if="redevName">
-      {{ redevName }}
     </div>
   </q-item-section>
 </template>
@@ -147,6 +152,10 @@ export default {
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
+
+  &.redev {
+    font-size: calc((18 / 1312) * 100vh);
+  }
 
   &.hover {
     text-decoration: underline;
