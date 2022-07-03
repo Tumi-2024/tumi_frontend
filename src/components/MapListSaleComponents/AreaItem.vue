@@ -132,13 +132,32 @@ export default {
         //       return require("src/assets/icons/redevelop.svg");
         //   }
         // };
+        const getColor = (label) => {
+          switch (label) {
+            case "재개발":
+              return "primary";
+            case "재건축":
+              return "blue";
+            case "가로주택":
+              return "green";
+            default:
+              return "";
+          }
+          //     type: [
+          //   { color: "white", label: "All", key: null },
+          //   { color: "primary", label: "재개발", key: "재개발" },
+          //   { color: "blue", label: "재건축", key: "재건축" },
+          //   { color: "green", label: "가로주택", key: "가로주택" }
+          // ]
+        };
 
         return [
           {
             type: "transactionStatus",
             value: item.transactionStatus
               ? false
-              : item.group_location.redevelopment_area.category
+              : item.group_location.redevelopment_area.category,
+            color: getColor(item.group_location.redevelopment_area.category)
             // icon: getIcon()
           },
           { type: "houseType", value: item.group_building_house.type_house },

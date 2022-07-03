@@ -27,7 +27,7 @@
             filled
             label="검색"
             dense
-            :value="searchText"
+            :value="text"
             @input-value="onChangeSearchText"
             @input="onSelect"
             :input-debounce="0"
@@ -166,9 +166,12 @@ export default {
           type: "person",
           class: "text-white bg-black"
         }
-      ],
-      searchText: ""
+      ]
     };
+  },
+  model: {
+    prop: "text",
+    event: "change"
   },
   props: {
     disable: {
@@ -187,7 +190,8 @@ export default {
       "changeToolbarTitle"
     ]),
     onChangeSearchText(e) {
-      this.searchText = e;
+      this.$emit("change", e);
+      // this.searchText = e;
       this.options = [];
     },
     onFocus() {

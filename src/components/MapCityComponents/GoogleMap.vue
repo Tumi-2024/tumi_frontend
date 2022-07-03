@@ -90,7 +90,7 @@
           <template v-if="redevZoom < getMapZoom && getMapZoom <= 17">
             <div
               class="area-badge-info notosanskr-medium"
-              @click="selectArea(badge)"
+              @click.self="selectArea(badge)"
             >
               <q-icon
                 v-if="$route.path === '/map/city/area'"
@@ -100,6 +100,7 @@
                 <img src="~assets/icons/area-info.svg" alt="area-info" />
               </q-icon>
               <div
+                @click.prevent="() => redirectList(badge)"
                 v-else
                 style="
                   border-radius: 2px;
@@ -301,7 +302,6 @@ export default {
     // have access to vuex actions
     ...mapActions(["estate", "setViewRedevOnly"]),
     ...mapActions("map", [
-      "changeMapZoom",
       "changeMapCenter",
       "setLocationLoading",
       "setMapZoom",
@@ -309,10 +309,18 @@ export default {
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
-    // tilesloaded() {
-    //   const zoom = this.map.getZoom();
-    //   this.setMapZoom(zoom);
-    // },
+    redirectList(item) {
+      // list/houses?redevelopment_area=208
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          redevelopment_area: item.id,
+          title: item.title
+        }
+      });
+
+      console.log(item);
+    },
     dragStart() {
       this.changeMapSelectedArea(null);
     },

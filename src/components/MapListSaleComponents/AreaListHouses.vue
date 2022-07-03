@@ -2,14 +2,15 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 매물
-      <span class="text-primary"> {{ saleList.length }} </span>개
+      <span class="text-primary">{{ saleList.length }} </span>개
     </q-card-section>
+
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
       <toolbar-filter
         class="q-pt-xs q-px-sm"
-        :text="text"
+        v-model="text"
         @focus="onFocus"
         @search="onSearch"
       />
@@ -58,6 +59,7 @@ export default {
     $route: {
       handler({ query }) {
         const _key = Object.keys(query)[0];
+        this.text = this.$route.query.title || "";
         switch (_key) {
           case "search":
             this.getSearchData(query);
