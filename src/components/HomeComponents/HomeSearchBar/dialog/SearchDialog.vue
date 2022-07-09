@@ -38,7 +38,12 @@
       </q-card-section>
       <!-- {{ locations }} -->
       <template
-        v-if="!locations.length && !buildings.length && !redevlopments.length"
+        v-if="
+          !locations.length &&
+          !buildings.length &&
+          !redevlopments.length &&
+          !houses.length
+        "
       >
         <q-card-section>
           <list-result :list="this.recents">
@@ -149,9 +154,10 @@ export default {
       this.dialog = true;
     },
     async getRecentHistory() {
-      const { data } = await Vue.prototype.$axios.get("/recents/");
-      this.recents = data.results.map((obj) => {
-        return { value: obj.house?.id, label: obj.house?.address };
+      const { data } = await Vue.prototype.$axios.get("/houses/recents/");
+      console.log(data);
+      this.recents = data.results.map(({ latitude, longitude, address }) => {
+        return { value: { latitude, longitude }, label: address };
       });
     },
 
@@ -194,10 +200,11 @@ export default {
         `/houses/?search=${this.text}`
       );
       this.houses = data.results
-        .map(({ latitude, longitude, group_building_house: building }) => {
+        .map(({ latitude, longitude, group_building_house: building, id }) => {
           return {
             value: { latitude, longitude },
-            label: building?.title_building
+            label: building?.title_building,
+            id
           };
         })
         .filter((obj) => obj.value)

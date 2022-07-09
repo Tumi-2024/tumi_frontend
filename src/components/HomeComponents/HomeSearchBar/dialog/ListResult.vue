@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -51,11 +52,17 @@ export default {
   methods: {
     ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
 
-    goToHouse({ value }) {
+    async goToHouse({ value, id }) {
+      const data = await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {
+        id
+      });
+      console.log(data);
       const _value = {
         lat: Number(value.latitude),
         lng: Number(value.longitude)
       };
+
+      console.log(value, this.type);
 
       if (this.type === "location") {
         this.$router.push({
