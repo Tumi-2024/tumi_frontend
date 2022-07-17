@@ -12,7 +12,7 @@
         <div class="header-section notosanskr-medium">
           정비사업 정보
           <div>
-            <q-btn flat padding="0 8px" class="bg-white" @click="like()">
+            <q-btn flat padding="0 8px" class="bg-white" @click="like">
               <q-icon size="24px">
                 <!-- <img src="~assets/icons/hearted.svg" alt="" /> -->
                 <img src="~assets/icons/heart.svg" alt="" />
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 import MoreInformation from "./MoreInformation";
 import Summary from "./Summary";
@@ -94,15 +94,18 @@ export default {
       dialog: false
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters("area", ["getMapSelectedArea"])
+  },
   methods: {
     ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),
     toggleDialog(value = true) {
       this.dialog = value;
       !this.dialog && this.$emit("hide");
     },
-    like() {
-      this.interestSelectedArea();
+    async like() {
+      const data = await this.interestSelectedArea();
+      console.log(data);
     }
   }
 };

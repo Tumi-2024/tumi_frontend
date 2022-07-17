@@ -91,7 +91,6 @@ export const areaStore = {
     interestSelectedArea: async (context) => {
       try {
         const area = context.state.selectedArea;
-        console.log(area);
         if (area.interest?.redevelopment_area) {
           await Vue.prototype.$axios.delete(
             `/redevelopment_areas/${area.id}/interest/`

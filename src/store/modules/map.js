@@ -62,15 +62,19 @@ export const mapStore = {
     setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
     setToolbarLabel: (state, payload) => (state.toolbarLabel = payload),
     setCount: (state, payload) => (state.count = payload),
-    setInterest: (state, payload) => (state.interest = payload),
+    setInterest: (state, payload) => {
+      console.log(payload);
+      state.interest = payload;
+    },
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
-    setAreaType: (state, payload) => (state.areaType = payload),
+    setAreaType: (state, payload) => (state.areaType = payload)
     // setIsCone: (state, payload) => (state.isCone = payload),
-    removeLocationInterest: (state, payload) => {
-      const index = state.interest.findIndex((area) => area.id === payload);
-      state.interest.splice(index, 1);
-    }
+    // removeLocationInterest: (state, payload) => {
+    //   console.log(state.interest, payload);
+    //   const _state = state.interest.filter((obj) => obj.id !== payload);
+    //   state.interest = _state;
+    // }
   },
   actions: {
     setAreaType: (context, payload) => context.commit("setAreaType", payload),
@@ -189,12 +193,16 @@ export const mapStore = {
           });
       }
     },
-    removeLocationInterest: (context, payload) => {
-      Vue.prototype.$axios
-        .delete(`redevelopment_areas/${payload}/interest/`)
-        .then((result) => {
-          context.commit("removeLocationInterest", payload);
-        });
+    removeLocationInterest: async (context, payload) => {
+      try {
+        await Vue.prototype.$axios.delete(
+          `redevelopment_areas/${payload}/interest/`
+        );
+        context.commit(
+          "setInterest",
+          context.state.interest.filter((obj) => obj.id !== payload)
+        );
+      } catch (error) {}
     },
     fetchLocationInterest: async (context) => {
       try {

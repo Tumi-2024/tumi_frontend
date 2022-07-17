@@ -1,52 +1,90 @@
 <template>
-  <div class="q-mt-sm">
-    <section v-if="myInterestArea.length">
-      <area-carousel @setSubcity="(e) => (subcity = e)"></area-carousel>
-      <area-filter-btns></area-filter-btns>
-      <area-list-items :subcity="subcity" v-if="subcity"></area-list-items>
-    </section>
-    <!-- IF USER DONT HAVE ANY INTEREST -->
-    <section
-      class="row justify-center items-center"
-      style="min-height: 50vh"
-      v-else
-    >
-      <div>You dont have any Area of Interest.</div>
-    </section>
+  <div class="q-mt-sm" style="max-width: 1000px">
+    <property-menu-sort
+      @edit="(e) => (isEdit = e)"
+      :isEdit="isEdit"
+    ></property-menu-sort>
+    <div class="bg-white">
+      <div style="border-bottom: 1px solid #e8e8e8; margin: 0 16px"></div>
+    </div>
+    <q-card-section class="bg-white list-items q-pa-none notosanskr-regular">
+      <PropertyRedevList
+        :items="myInterestArea"
+        @deleteItems="deleteItems"
+        :isEdit="isEdit"
+      ></PropertyRedevList>
+    </q-card-section>
   </div>
 </template>
 
 <script>
-import {
-  AreaCarousel,
-  AreaFilterBtns,
-  AreaListItems
-} from "src/components/AreaPageComponents";
 import { mapGetters, mapActions } from "vuex";
+import {
+  PropertyMenuSort,
+  // PropertyFilter,
+  PropertyRedevList
+} from "src/components/PropertyPageComponents";
+
 export default {
   name: "Area",
   components: {
-    "area-carousel": AreaCarousel,
-    "area-filter-btns": AreaFilterBtns,
-    "area-list-items": AreaListItems
+    "property-menu-sort": PropertyMenuSort,
+    PropertyRedevList: PropertyRedevList
   },
   data() {
     return {
-      subcity: null
+      subcity: null,
+      isEdit: false
     };
   },
   computed: {
     ...mapGetters("map", ["myInterestArea"])
   },
   methods: {
-    ...mapActions("map", ["fetchLocationInterest"])
-  },
-  mounted() {
-    if (!this.myInterestArea.length) {
-      // this.fetchLocationInterest();
+    ...mapActions("map", ["fetchLocationInterest"]),
+    async deleteItems(items) {
+      items.forEach((item) => {
+        this.$store.dispatch("map/removeLocationInterest", item);
+      });
+      this.isEdit = false;
     }
+    // getCountType(type) {
+    //   return this.$store.getters.interest_houses.filter(
+    //     (item) => item.group_building_house.type_house === type
+    //   ).length;
+    // },
+    // async getProperties(order) {
+    //   await this.$store.dispatch("getInterestHouses");
+    //   return this.$store.getters.interest_houses;
+    // },
+    // filter(keyword) {
+    //   if (keyword === "all") {
+    //     this.properties = this.$store.getters.interest_houses;
+    //     return;
+    //   }
+    //   this.properties = this.$store.getters.interest_houses.filter(
+    //     (house) => house.group_building_house.type_house === keyword
+    //   );
+    // }
+  },
+  beforeMount() {
+    this.fetchLocationInterest();
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.sort-section {
+  .q-btn {
+    font-size: 14px;
+    line-height: 44px;
+    text-align: center;
+    letter-spacing: -1.05px;
+    color: #707070;
+  }
+  .q-separator {
+    // margin-top: 20px;
+    height: 14px;
+  }
+}
+</style>
