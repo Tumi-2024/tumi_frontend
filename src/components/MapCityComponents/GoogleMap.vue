@@ -369,7 +369,7 @@ export default {
 
     async getRedevInfo() {
       const bounds = this.map.getBounds();
-      const ratio = 0;
+      const ratio = 0.0001;
       const boundLocation = {
         latitude: [
           bounds.getSouthWest().lat() * (1 - ratio),
