@@ -4,7 +4,7 @@
     <div
       v-for="(tab, i) in tabs"
       :key="i"
-      class="items col-4 row items-center justify-center"
+      class="items col-6 row items-center justify-center"
     >
       <q-btn
         flat
@@ -31,20 +31,20 @@ export default {
   data() {
     return {
       tabs: [
+        // {
+        //   label: "최근 본 매물",
+        //   icon: "home-recently-viewed.svg",
+        //   pathName: "recently_seen"
+        // },
         {
-          label: "최근 본 매물",
-          icon: "home-recently-viewed.svg",
-          pathName: "recently_seen"
+          label: "관심지역",
+          icon: "area-interest.svg",
+          pathName: "area"
         },
         {
           label: "관심매물",
           icon: "home-interest.svg",
           pathName: "property_interest"
-        },
-        {
-          label: "관심지역",
-          icon: "area-interest.svg",
-          pathName: "area"
         }
         // {
         //   label: "연락한 매물",
