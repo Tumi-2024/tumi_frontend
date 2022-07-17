@@ -5,7 +5,7 @@
       style="height: 48px"
     >
       <p style="line-height: 48px; padding-left: 16px">
-        관심 매물
+        관심 {{ this.$route.name === "area" ? "지역" : "매물" }}
         <span style="color: #ff5a00"> {{ houseCount }} </span>
         개
       </p>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     isEdit: {
@@ -69,9 +70,12 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("map", ["myInterestArea"]),
+
     houseCount() {
-      if (this.$route.name === "recently_seen") {
-        return this.$store.getters.recently_viewed_houses.length;
+      console.log(this.$route.name);
+      if (this.$route.name === "area") {
+        return this.myInterestArea.length;
       }
       return this.$store.getters.interest_houses.length;
     }
