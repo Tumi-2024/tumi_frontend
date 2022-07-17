@@ -404,7 +404,6 @@ export default {
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
-      console.log(this.map);
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
