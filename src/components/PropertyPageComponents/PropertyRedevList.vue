@@ -11,14 +11,14 @@
           @click.stop="setSelected(item)"
         >
           <q-checkbox v-show="isEdit" v-model="selectedItems" :val="item.id" />
-          <span style="font-size: 18px; flex-basis: 200px" class="q-tex">
+          <span style="font-size: 16px; flex-basis: 200px" class="q-tex">
             {{ item.title }}
           </span>
           <div class="q-pa-sm row">
             <div class="col-md-6 col-12">
               <span
                 style="
-                  font-size: 16px;
+                  font-size: 14px;
                   color: #1a1a1a;
                   margin-right: 8px;
                   font-weight: 700;
@@ -31,7 +31,7 @@
             <div class="col-md-6 col-12">
               <span
                 style="
-                  font-size: 16px;
+                  font-size: 14px;
                   color: #1a1a1a;
                   margin-right: 8px;
                   font-weight: 700;
@@ -44,7 +44,7 @@
             <div class="col-6">
               <span
                 style="
-                  font-size: 16px;
+                  font-size: 14px;
                   color: #1a1a1a;
                   margin-right: 8px;
                   font-weight: 700;
@@ -57,7 +57,7 @@
             <div class="col-6">
               <span
                 style="
-                  font-size: 16px;
+                  font-size: 14px;
                   color: #1a1a1a;
                   margin-right: 8px;
                   font-weight: 700;
@@ -70,7 +70,7 @@
             <div style="flex-basis: 100%" class="q-mt-md">
               <span
                 style="
-                  font-size: 16px;
+                  font-size: 14px;
                   color: #1a1a1a;
                   margin-right: 8px;
                   font-weight: 700;
@@ -78,7 +78,7 @@
               >
                 주소
               </span>
-              <span class="text-body1">
+              <span class="text-body2">
                 {{ item.address }}
               </span>
             </div>
@@ -145,12 +145,6 @@ export default {
         this.setMapZoom(17);
         this.$router.push({ name: "map_city" });
       }
-      // const checkSelected = this.selectedItems.find((item) => item === id);
-      // if (checkSelected) {
-      //   this.selectedItems = this.selectedItems.filter((x) => x !== id);
-      // } else {
-      //   this.selectedItems.push(id);
-      // }
     },
     isSelected(id) {
       return this.selectedItems.some((item) => item === id);

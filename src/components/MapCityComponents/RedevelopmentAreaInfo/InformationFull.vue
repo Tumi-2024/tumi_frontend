@@ -14,8 +14,12 @@
           <div>
             <q-btn flat padding="0 8px" class="bg-white" @click="like">
               <q-icon size="24px">
-                <!-- <img src="~assets/icons/hearted.svg" alt="" /> -->
-                <img src="~assets/icons/heart.svg" alt="" />
+                <img
+                  v-if="getMapSelectedArea.interest"
+                  src="~assets/icons/hearted.svg"
+                  alt=""
+                />
+                <img v-else src="~assets/icons/heart.svg" alt="" />
               </q-icon>
             </q-btn>
             <q-btn flat padding="8px" @click="$refs.dialog.hide()">
@@ -104,8 +108,14 @@ export default {
       !this.dialog && this.$emit("hide");
     },
     async like() {
-      const data = await this.interestSelectedArea();
-      console.log(data);
+      if (!this.getMapSelectedArea.interest) {
+        this.interestSelectedArea();
+      } else {
+        this.uninterestSelectedArea();
+      }
+    },
+    async unLike() {
+      // getMapSelectedArea
     }
   }
 };

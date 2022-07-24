@@ -18,6 +18,7 @@ export const areaStore = {
   mutations: {
     setMapAreas: (state, payload) => (state.areas = payload),
     setMapSelectedArea: (state, payload) => (state.selectedArea = payload),
+    setMapInterest: (state, payload) => (state.selectedArea.interest = payload),
     setRedevelopmentSteps: (state, payload) =>
       (state.selectedArea.steps = payload)
   },
@@ -91,17 +92,17 @@ export const areaStore = {
     interestSelectedArea: async (context) => {
       try {
         const area = context.state.selectedArea;
-        if (area.interest?.redevelopment_area) {
-          await Vue.prototype.$axios.delete(
-            `/redevelopment_areas/${area.id}/interest/`
-          );
-          context.state.selectedArea.interest = { redevelopment_area: false };
-          return;
-        }
-        await Vue.prototype.$axios.post(
+        // if (area.interest?.redevelopment_area) {
+        //   await Vue.prototype.$axios.delete(
+        //     `/redevelopment_areas/${area.id}/interest/`
+        //   );
+        //   // context.state.selectedArea.interest = { redevelopment_area: false };
+        //   return;
+        // }
+        const { data } = await Vue.prototype.$axios.post(
           `/redevelopment_areas/${area.id}/interest/`
         );
-        context.state.selectedArea.interest = { redevelopment_area: true };
+        context.commit("setMapInterest", data);
       } catch (error) {}
     },
     uninterestSelectedArea: async (context) => {
@@ -110,6 +111,7 @@ export const areaStore = {
         await Vue.prototype.$axios.delete(
           `/redevelopment_areas/${id}/interest/`
         );
+        context.commit("setMapInterest", null);
       } catch (error) {}
     },
     changeMapSelectedArea: (context, area) =>
