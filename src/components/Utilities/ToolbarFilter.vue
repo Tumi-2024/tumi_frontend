@@ -1,9 +1,7 @@
 <template>
   <q-card-section class="row items-center flex justify-end q-pa-none q-ma-none">
-    <!-- Dialog containing all filters-->
-
-    <div class="col flex items-end justify-between">
-      <div class="row items-center" style="margin-bottom: 12px; display: flex">
+    <div class="col flex items-end justify-between q-mb-xs">
+      <div class="row items-center justify-between q-mr-xs" style="flex: 1">
         <div class="column" style="min-width: 150px">
           <div class="helper text-left notosanskr-regular">
             {{ getToolbarLabel }}
@@ -12,7 +10,19 @@
             {{ getToolbarTitle }}
           </div>
         </div>
-        <div class="q-my-xs col-4 text-left notosanskr-medium q-ml-lg flex">
+        <div class="q-my-xs text-left notosanskr-medium q-ml-lg flex no-wrap">
+          <q-select
+            style="margin-right: 4px"
+            outlined
+            v-model="searchType"
+            map-options
+            dense
+            :options="[
+              { label: '정비사업', value: 'redev' },
+              { label: '지역/주소', value: 'location' }
+            ]"
+          >
+          </q-select>
           <q-select
             ref="keywordRef"
             filled
@@ -37,7 +47,7 @@
           </q-select>
         </div>
       </div>
-      <div class="flex" style="margin-bottom: 12px">
+      <div class="flex" style="margin: 6px 0">
         <overall-filter :disable="disable" />
         <div
           class="scrolling-wrapper-flexbox notosanskr-medium row float-right"
@@ -128,6 +138,7 @@ export default {
   data() {
     return {
       searchText: "",
+      searchType: "redev",
       options: []
     };
   },
@@ -147,7 +158,7 @@ export default {
       this.searchText = e;
       this.options = [];
     },
-    async filterFn(val, update, abort) {
+    async filterRedev(val, update, abort) {
       if (val !== "") {
         const {
           data: { results }
@@ -165,6 +176,33 @@ export default {
         });
       } else {
         update();
+      }
+    },
+
+    async filterLocation(val, update, abort) {
+      if (val !== "") {
+        const {
+          data: { results }
+        } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
+        update(async () => {
+          this.options = results.map(({ title, latitude, longitude }) => {
+            return {
+              value: title,
+              label: title,
+              position: { lat: Number(latitude), lng: Number(longitude) }
+            };
+          });
+        });
+      } else {
+        update();
+      }
+    },
+
+    async filterFn(val, update, abort) {
+      if (this.searchType === "redev") {
+        this.filterRedev(val, update, abort);
+      } else {
+        this.filterLocation(val, update, abort);
       }
     }
   }

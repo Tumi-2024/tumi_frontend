@@ -53,10 +53,9 @@ export default {
     ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
 
     async goToHouse({ value, id }) {
-      const data = await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {
-        id
-      });
-      console.log(data);
+      console.log("recent Post1", value, id);
+      const data = await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {});
+      console.log("recent Post", data);
       const _value = {
         lat: Number(value.latitude),
         lng: Number(value.longitude)

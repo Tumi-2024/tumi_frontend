@@ -12,7 +12,7 @@
         <q-item-section>
           <address-with-badges
             :item="{
-              address: item.address || '',
+              address: this.lastWordToAstar(item.address) || '',
               building:
                 item.group_building_house.title_building ||
                 `${
@@ -111,6 +111,19 @@ export default {
     };
   },
   computed: {
+    lastWordToAstar() {
+      return (address) => {
+        const _addArr = address.split(" ");
+        const _lastWord = _addArr[_addArr.length - 1];
+        const restAddress = _addArr.slice(0, _addArr.length - 1).join(" ");
+
+        const getAstar = (addr) => {
+          return addr.replaceAll(/[0-9]/g, "*").substring(1, addr.length);
+        };
+
+        return `${restAddress} ${_lastWord[0]}${getAstar(_lastWord)}`;
+      };
+    },
     isSelected() {
       return this.is_selected;
     },

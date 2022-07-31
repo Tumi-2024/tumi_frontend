@@ -12,8 +12,10 @@
     />
     <detail-summary
       v-bind="{
-        building: estate.group_building_house.title_building,
-        areaName: `${estate.address} (${estate.group_location.location_road})`,
+        building: this.estate.group_building_house.title_building,
+        areaName: `${this.lastWordToAstar(estate.address)} (${
+          estate.group_location.location_road
+        })`,
         sales: toMoneyString(estate.price),
         initialInvestments: toMoneyString(estate.initial_investment),
         quote: estate.description,
@@ -24,7 +26,8 @@
           stageProgress: redevelopment.redevelopment_step
         },
         created: estate.created,
-        redevName: estate.group_location.redevelopment_area.title_area
+        redevName: estate.group_location.redevelopment_area.title_area,
+        persons: []
       }"
     />
     <!--  매물정보  -->
@@ -203,6 +206,24 @@ export default {
     }
   },
   computed: {
+    lastWordToAstar() {
+      return (address) => {
+        const _addArr = address.split(" ");
+        const _lastWord = _addArr[_addArr.length - 1];
+        const restAddress = _addArr.slice(0, _addArr.length - 1).join(" ");
+
+        const getAstar = (addr) => {
+          return addr.substring(1, addr.length).replaceAll(/[0-9]/g, "*");
+        };
+
+        console.log(
+          _lastWord,
+          "/",
+          `${restAddress} ${_lastWord[0]} ${getAstar(_lastWord)}`
+        );
+        return `${restAddress} ${_lastWord[0]}${getAstar(_lastWord)}`;
+      };
+    },
     getInformation() {
       return [
         {
@@ -284,6 +305,8 @@ export default {
       ];
     },
     getLocationOptions() {
+      // 신당동 212-32
+
       const { group_building_house: houseInfo, group_location: houseInfo2 } =
         this.estate;
       return [
@@ -299,7 +322,10 @@ export default {
           label: "읍면동리",
           value: houseInfo2.location.title
         },
-        { label: "소재지(동 이하)", value: houseInfo2.location_dong },
+        {
+          label: "소재지(동 이하)",
+          value: this.lastWordToAstar(houseInfo2.location_dong)
+        },
         { label: "도로명 (로/길 이하)", value: houseInfo2.location_road },
         { label: "역세권", value: houseInfo.description_station_area }
       ];

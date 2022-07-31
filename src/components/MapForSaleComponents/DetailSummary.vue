@@ -8,7 +8,60 @@
         :created="created"
         :redevName="redevName"
       />
+      <!-- <div class="items-center flex">
+        <img class="q-mr-md" src="~assets/icons/phone.svg" alt="" />담당자
+      </div> -->
+
       <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">감정가</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_appraised) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">비례율</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">{{ prices.percentage_ratio }}%</div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/coins.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md title">권리가</div>
+            <q-separator
+              class="self-center q-mx-sm"
+              vertical
+              inset
+              style="height: 16px"
+            />
+            <div class="price">
+              {{ toMoneyString(prices.price_rights) }}
+            </div>
+          </div>
+        </div>
         <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
@@ -106,55 +159,6 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/coins.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md title">감정가</div>
-            <q-separator
-              class="self-center q-mx-sm"
-              vertical
-              inset
-              style="height: 16px"
-            />
-            <div class="price">
-              {{ toMoneyString(prices.price_appraised) }}
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/coins.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md title">비례율</div>
-            <q-separator
-              class="self-center q-mx-sm"
-              vertical
-              inset
-              style="height: 16px"
-            />
-            <div class="price">{{ prices.percentage_ratio }}%</div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/coins.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md title">권리가</div>
-            <q-separator
-              class="self-center q-mx-sm"
-              vertical
-              inset
-              style="height: 16px"
-            />
-            <div class="price">
-              {{ toMoneyString(prices.price_rights) }}
-            </div>
-          </div>
-        </div>
       </div>
     </q-card-section>
 
@@ -219,6 +223,10 @@ export default {
     },
     redevName: {
       type: String
+    },
+    persons: {
+      type: Array,
+      required: false
     }
   },
   methods: {

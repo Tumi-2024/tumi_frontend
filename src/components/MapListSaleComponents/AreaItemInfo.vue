@@ -80,7 +80,6 @@ export default {
         group_price: priceInfo,
         group_location: locationInfo
       } = this.item;
-      console.log(this.item);
 
       const dateRights = locationInfo.redevelopment_area.category_date_rights
         ?.replace("권리산정기준일 : ", "")

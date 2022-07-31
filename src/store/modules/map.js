@@ -139,9 +139,11 @@ export const mapStore = {
             redevTitle ? "지금 보고있는 정비사업" : "지금 보고있는 지역"
           );
 
+          console.log(result.data.redevelopment_area.count_estates_filtered);
+
           context.commit(
             "setCount",
-            result.data.subcity.count_estates_redevelopment_area
+            result.data.redevelopment_area.count_estates_filtered
           );
 
           // context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);

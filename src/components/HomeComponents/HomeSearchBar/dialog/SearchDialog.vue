@@ -154,11 +154,13 @@ export default {
       this.dialog = true;
     },
     async getRecentHistory() {
-      const { data } = await Vue.prototype.$axios.get("/houses/recents/");
+      const { data } = await Vue.prototype.$axios.get("/recents/");
       console.log(data);
-      this.recents = data.results.map(({ latitude, longitude, address }) => {
-        return { value: { latitude, longitude }, label: address };
-      });
+      this.recents = data.results.map(
+        ({ house: { latitude, longitude, address, id } }) => {
+          return { value: { latitude, longitude }, label: address, id: id };
+        }
+      );
     },
 
     async getRecommend() {

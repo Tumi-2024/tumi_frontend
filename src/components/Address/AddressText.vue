@@ -147,7 +147,7 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((16 / 1312) * 100vh);
+  font-size: calc((18 / 1312) * 100vh);
   line-height: calc((22 / 1312) * 100vh);
   letter-spacing: -1.05px;
   color: #707070;
