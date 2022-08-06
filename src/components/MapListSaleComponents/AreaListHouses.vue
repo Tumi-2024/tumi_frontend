@@ -59,7 +59,6 @@ export default {
     $route: {
       handler({ query }) {
         const _key = Object.keys(query)[0];
-        console.log(query, _key);
         this.text = this.$route.query.title || "";
         switch (_key) {
           case "search":
@@ -83,24 +82,25 @@ export default {
   },
   methods: {
     onFocus(e) {
-      this.getApiHouses();
+      // this.getApiHouses();
     },
-    onSearch(type, id) {
+    onSearch(type, id, label) {
+      console.log("onSearch");
       if (id.length === 0) {
         return;
       }
       switch (type) {
         case "지역":
-          this.setLocationQuery(id);
+          this.setLocationQuery(id, label);
           break;
         case "개발정비사업":
-          this.setRedevQuery(id);
+          this.setRedevQuery(id, label);
           break;
         case "건물/단지":
-          this.setSearchQuery(id);
+          this.setSearchQuery(id, label);
           break;
         default:
-          this.getApiHouses(id);
+          this.getApiHouses(id, label);
       }
     },
 
@@ -122,7 +122,7 @@ export default {
       });
       this.saleList = data.results;
     },
-    async getApiHouses() {
+    async getApiHouses(search, label) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`);
       // const _query = this.$route.query;
 
@@ -134,17 +134,17 @@ export default {
       this.saleList = data.results;
     },
 
-    setSearchQuery(search) {
+    setSearchQuery(search, label) {
       this.$router.push({
         query: { search }
       });
     },
-    setRedevQuery(redevelopmentArea) {
+    setRedevQuery(redevelopmentArea, title) {
       this.$router.push({
-        query: { redevelopment_area: redevelopmentArea }
+        query: { redevelopment_area: redevelopmentArea, title }
       });
     },
-    setLocationQuery(location) {
+    setLocationQuery(location, label) {
       this.$router.push({
         query: { location }
       });

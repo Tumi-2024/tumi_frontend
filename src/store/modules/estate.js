@@ -30,8 +30,8 @@ export const estateStore = {
       return state.recently_viewed_houses;
     },
     interest_houses: (state, getters) => state.interest_houses,
-    current_house: (state, getters) => {
-      return state.current_house;
+    currentHouse: (state, getters) => {
+      return state.current_house.interest;
     }
   },
   mutations: {
@@ -60,10 +60,10 @@ export const estateStore = {
       state.interest_houses = payload;
     },
     addInterestHouse: function (state, payload) {
-      state.current_house.interest.house = true;
+      state.current_house.interest = payload;
     },
     removeInterestHouse: function (state, payload) {
-      state.current_house.interest.house = null;
+      state.current_house.interest = null;
     },
     removeInterestHouses: function (state, payload) {
       state.interest_houses = state.interest_houses.filter(
@@ -157,10 +157,19 @@ export const estateStore = {
 
       const getRedevQuery = () => {
         if (context.getters["map/getIsCone"]) {
-          return { redevelopment_area__status: "운영" };
+          // return { redevelopment_area__status: "운영" };
+          return {};
         } else {
           return { redevelopment_area__isnull: true };
         }
+      };
+
+      const getTypeHouseIn = () => {
+        const _ctgr = ctgrNew.join(",");
+        if (_ctgr.length === 0) {
+          return null;
+        }
+        return { type_house__in: _ctgr };
       };
 
       const data = await Vue.prototype.$axios.get(
@@ -170,7 +179,7 @@ export const estateStore = {
             latitude__range: `${lat[0]},${lat[1]}`,
             longitude__range: `${long[0]},${long[1]}`,
             page_size: 1000,
-            type_house__in: ctgrNew.join(","),
+            ...getTypeHouseIn(),
             ...getQueryArray("price_selling_hope__range", [
               priceNew.min,
               priceNew.max
@@ -195,13 +204,26 @@ export const estateStore = {
       context.dispatch("map/setLocationLoading", true);
       context.commit(
         "setSimpleHouses",
-        data.data.results.map((item) => ({
-          ...item,
-          position: {
-            lat: Number(item.latitude),
-            lng: Number(item.longitude)
-          }
-        }))
+        data.data.results
+          .reduce((acc, cur) => {
+            const hasValue = acc.some(() => {
+              return (
+                cur.latitude === acc.latitude && cur.longitude === acc.longitude
+              );
+            });
+            if (!hasValue) {
+              return [...acc, cur];
+            } else {
+              return acc;
+            }
+          }, [])
+          .map((item) => ({
+            ...item,
+            position: {
+              lat: Number(item.latitude),
+              lng: Number(item.longitude)
+            }
+          }))
       );
       // context.commit("setSimpleHousesType", payload?.type);
     },
@@ -283,19 +305,19 @@ export const estateStore = {
     },
     toggleInterestHouse: (context, parameter) => {
       const house = context.state.current_house;
-      if (house.interest.house) {
+      if (house.interest) {
         Vue.prototype.$axios
           .delete(`/houses/${house.id}/interest/`)
           .then(() => {
             context.commit("removeInterestHouse", house);
           });
-        return;
+      } else {
+        Vue.prototype.$axios
+          .post(`/houses/${house.id}/interest/`)
+          .then((result) => {
+            context.commit("addInterestHouse", result.data.house);
+          });
       }
-      Vue.prototype.$axios
-        .post(`/houses/${house.id}/interest/`)
-        .then((result) => {
-          context.commit("addInterestHouse", result.data.house);
-        });
     },
     deleteInterestHouses: async (context, parameter) => {
       await Vue.prototype.$axios.post("interests/delete/", {
@@ -305,7 +327,7 @@ export const estateStore = {
     },
     getRecentlyViewedHouses: async (context, parameter) => {
       const { data, status } = await Vue.prototype.$axios.get(
-        `houses/recents`,
+        `houses/recents/`,
         { timeout: 60000 }
       );
       if (status !== 200) return;

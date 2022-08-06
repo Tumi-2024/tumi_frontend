@@ -14,10 +14,12 @@
       v-ripple
       v-for="(item, index) in list"
       :key="index"
-      @click="() => goToHouse(item)"
+      @click="() => select(item)"
     >
       <q-item-section class="item-result">
-        {{ item.latitude }}
+        <template v-if="item.latitude">
+          {{ item.latitude }}
+        </template>
         <q-icon
           size="20px"
           class="item-result-icon"
@@ -32,9 +34,6 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { mapActions } from "vuex";
-
 export default {
   name: "list-result",
   props: {
@@ -50,42 +49,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
-
-    async goToHouse({ value, id }) {
-      console.log("recent Post1", value, id);
-      const data = await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {});
-      console.log("recent Post", data);
-      const _value = {
-        lat: Number(value.latitude),
-        lng: Number(value.longitude)
-      };
-
-      console.log(value, this.type);
-
-      if (this.type === "location") {
-        this.$router.push({
-          name: "map_city"
-        });
-        this.setMapZoom(18);
-        this.changeMapCenter(_value);
-      } else if (this.type === "redevelopment") {
-        this.$router.push({
-          name: "map_city"
-        });
-        this.changeMapCenter(_value);
-        this.setMapZoom(16);
-      } else {
-        // for-sale/apartment?sellid=16888
-        // lat: 37.5229905
-        // lng: 126.9959299
-        this.$router.push({
-          name: "for_sale_apartment",
-          query: {
-            value
-          }
-        });
-      }
+    async select(item) {
+      this.$emit("select", item, this.type);
     }
   }
 };

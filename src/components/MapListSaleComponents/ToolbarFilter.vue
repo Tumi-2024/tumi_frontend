@@ -156,18 +156,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapMode",
-      "changeMapZoom",
-      "changeToolbarTitle"
-    ]),
+    ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
     onChangeSearchText(e) {
       this.$emit("change", e);
       // this.searchText = e;
       this.options = [];
     },
     onFocus() {
-      this.changeToolbarTitle("");
       this.$emit("focus");
     },
     onSelect(obj) {
@@ -176,16 +171,11 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
-      this.changeToolbarTitle(obj.label);
+      console.log(this.$router);
+      console.log(this.$router.options.history);
+      // this.$router.options.history.state.back
 
-      // if (type.value === "redev") {
-      //   console.log("redev");
-      // } else if (type.value === "location") {
-      //   console.log("location");
-      // } else {
-      //   console.log("building");
-      // }
-      this.$emit("search", type.label, obj.id);
+      this.$emit("search", type.label, obj.id, obj.label);
     },
     async filterFn(val, update, abort) {
       const type = [
@@ -194,7 +184,7 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
 
-      if (val !== "") {
+      if (val) {
         if (type.value === "redev") {
           const {
             data: { results }
@@ -237,8 +227,6 @@ export default {
             });
           });
         }
-      } else {
-        update();
       }
     }
   }

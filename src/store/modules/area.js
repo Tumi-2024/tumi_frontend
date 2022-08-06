@@ -54,10 +54,19 @@ export const areaStore = {
 
         const getRedevQuery = () => {
           if (context.getters["map/getIsCone"]) {
-            return { redevelopment_area__status: "운영" };
+            // return { redevelopment_area__status: "운영" };
+            return {};
           } else {
             return { redevelopment_area__isnull: true };
           }
+        };
+
+        const getTypeHouseIn = () => {
+          const _ctgr = ctgr.join(",");
+          if (_ctgr.length === 0) {
+            return null;
+          }
+          return { type_house__in: _ctgr };
         };
 
         const { data } = await Vue.prototype.$axios.get(
@@ -67,7 +76,7 @@ export const areaStore = {
               latitude__range: `${lat[0]},${lat[1]}`,
               longitude__range: `${long[0]},${long[1]}`,
               page_size: 1000,
-              type_house__in: ctgr.join(","),
+              ...getTypeHouseIn(),
               ...getQueryArray("price_selling_hope__range", [
                 price.min,
                 price.max

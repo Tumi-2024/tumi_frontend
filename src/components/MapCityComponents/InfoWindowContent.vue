@@ -10,7 +10,6 @@
     :style="{ borderColor: getColor(item) }"
     class="flex"
     @click="$emit('viewArea')"
-    v-if="getItemInfo(item).type"
   >
     <div class="col items-center">
       <div

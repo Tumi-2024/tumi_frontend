@@ -38,15 +38,10 @@
       </q-card-section>
       <!-- {{ locations }} -->
       <template
-        v-if="
-          !locations.length &&
-          !buildings.length &&
-          !redevlopments.length &&
-          !houses.length
-        "
+        v-if="!locations.length && !redevlopments.length && !houses.length"
       >
         <q-card-section>
-          <list-result :list="this.recents">
+          <list-result :list="recents" @select="onSelectList">
             <template #title>
               <q-item-label class="no-margin no-padding" header>
                 <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -65,7 +60,11 @@
         />
       </template>
       <q-card-section v-else>
-        <list-result :list="this.redevlopments" type="redevelopment">
+        <list-result
+          :list="redevlopments"
+          type="redevelopment"
+          @select="onSelectList"
+        >
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -82,7 +81,7 @@
           class="full-width"
         />
 
-        <list-result :list="this.locations" type="location">
+        <list-result :list="locations" type="location" @select="onSelectList">
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -99,7 +98,7 @@
           class="full-width"
         />
 
-        <list-result :list="this.houses">
+        <list-result :list="houses" @select="onSelectList">
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -129,6 +128,7 @@
 import Vue from "vue";
 // import lazyValues from "vue2-google-maps/dist/utils/lazyValue";
 import ListResult from "./ListResult";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -140,7 +140,6 @@ export default {
       recommends: [],
 
       locations: [],
-      buildings: [],
       redevlopments: [],
       houses: []
     };
@@ -150,17 +149,15 @@ export default {
     // RecentSearch
   },
   methods: {
+    ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
     showDialog() {
       this.dialog = true;
     },
     async getRecentHistory() {
-      const { data } = await Vue.prototype.$axios.get("/recents/");
-      console.log(data);
-      this.recents = data.results.map(
-        ({ house: { latitude, longitude, address, id } }) => {
-          return { value: { latitude, longitude }, label: address, id: id };
-        }
-      );
+      const { data } = await Vue.prototype.$axios.get("/search/");
+      this.recents = data.results.map(({ title }) => {
+        return { label: title };
+      });
     },
 
     async getRecommend() {
@@ -171,8 +168,7 @@ export default {
         .map((obj) => {
           return { value: obj?.id, label: obj?.address };
         })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+        .filter((obj) => obj.value);
     },
 
     async getRedevelopment() {
@@ -183,19 +179,17 @@ export default {
         .map(({ latitude, longitude, title }) => {
           return { value: { latitude, longitude }, label: title };
         })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+        .filter((obj) => obj.value);
     },
     async getLocations() {
       const { data } = await Vue.prototype.$axios.get(
         `/locations/?search=${this.text}`
       );
       this.locations = data.results
-        .map(({ latitude, longitude, title }) => {
-          return { value: { latitude, longitude }, label: title };
+        .map(({ latitude, longitude, address }) => {
+          return { value: { latitude, longitude }, label: address };
         })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+        .filter((obj) => obj.value);
     },
     async getHouses() {
       const { data } = await Vue.prototype.$axios.get(
@@ -209,16 +203,63 @@ export default {
             id
           };
         })
-        .filter((obj) => obj.value)
-        .slice(0, 4);
+        .filter((obj) => obj.value);
     },
     async onSearch(event) {
-      if (event.isComposing || event.keyCode === 229) {
+      if (event?.isComposing || event?.keyCode === 229) {
         return;
       }
-      this.getRedevelopment();
-      this.getLocations();
-      this.getHouses();
+
+      if (this.text === "") {
+        this.recommends = [];
+        this.locations = [];
+        this.redevlopments = [];
+        this.houses = [];
+        this.getRecentHistory();
+      } else {
+        await Vue.prototype.$axios.post("/search/", { search: this.text });
+        this.getRedevelopment();
+        this.getLocations();
+        this.getHouses();
+      }
+    },
+    async onSelectList({ value, id, label }, type) {
+      if (!value && label) {
+        this.text = label;
+        this.onSearch();
+      } else {
+        const _value = {
+          lat: Number(value.latitude),
+          lng: Number(value.longitude)
+        };
+
+        console.log(value, type);
+
+        if (type === "location") {
+          this.$router.push({
+            name: "map_city"
+          });
+          this.setMapZoom(18);
+          this.changeMapCenter(_value);
+        } else if (type === "redevelopment") {
+          this.$router.push({
+            name: "map_city"
+          });
+          this.changeMapCenter(_value);
+          this.setMapZoom(16);
+        } else {
+          // for-sale/apartment?sellid=16888
+          // lat: 37.5229905
+          // lng: 126.9959299
+          await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {});
+          this.$router.push({
+            name: "for_sale_apartment",
+            query: {
+              value
+            }
+          });
+        }
+      }
     }
   },
   beforeMount() {

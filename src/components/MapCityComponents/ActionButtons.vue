@@ -17,8 +17,10 @@
         <q-icon size="30px">
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
-        <div class="off text-dark notosanskr-bold">
-          <!-- {{ getIsCone ? "ON" : "OFF" }} -->
+        <div
+          :class="{ 'text-white': getColor === 'black' }"
+          class="off text-dark notosanskr-bold"
+        >
           {{ getLabel }}
         </div>
       </div>
@@ -63,7 +65,8 @@ export default {
         { color: "white", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
-        { color: "green", label: "가로주택", key: "가로주택" }
+        { color: "green", label: "가로주택", key: "가로주택" },
+        { color: "black", label: "일반", key: "일반" }
       ]
     };
   },

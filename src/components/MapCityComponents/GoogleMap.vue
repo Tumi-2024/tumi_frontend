@@ -3,7 +3,7 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="getMapZoom > 17"
+      :disable-heart="getMapZoom > 15"
       @showArea="showHideArea"
     />
     <!-- Google Map Starts -->
@@ -24,7 +24,7 @@
           :key="m.id"
           :options="{ disableAutoPan: true }"
           :position="m.position"
-          :opened="17 < getMapZoom"
+          :opened="15 < getMapZoom"
         >
           <info-window-content
             @viewArea="viewArea(m)"
@@ -78,7 +78,7 @@
                         ? m.count_redevelopment_area_3
                         : m.count_redevelopment_area
                     }`
-              }}개
+              }}개 ({{ m.count_estates_filtered_implicit }})
             </span>
           </div>
         </gmap-custom-marker>
@@ -88,7 +88,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="redevZoom < getMapZoom && getMapZoom <= 17">
+          <template v-if="redevZoom < getMapZoom && getMapZoom <= 15">
             <div
               class="area-badge-info notosanskr-medium"
               @click.self="selectArea(badge)"
@@ -302,6 +302,11 @@ export default {
         position: this.google.maps.ControlPosition.RIGHT_TOP
       }
     });
+    const { center } = this.map;
+    this.changeMapCenter({
+      lat: center.lat(),
+      lng: center.lng()
+    });
   },
   beforeMount() {
     this.initCenter = this.getMapCenter;
@@ -362,6 +367,7 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
+      console.log("idle");
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -391,6 +397,8 @@ export default {
             return { category: "재건축" };
           case "가로주택":
             return { category: "가로주택" };
+          case "일반":
+            return { category: "일반" };
           default:
             return null;
         }
@@ -409,7 +417,7 @@ export default {
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = { type: "subcity", ...location };
-      if (this.getMapZoom > 17) {
+      if (this.getMapZoom > 15) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"

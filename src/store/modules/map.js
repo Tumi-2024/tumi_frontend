@@ -21,7 +21,7 @@ const initState = {
     disableDefaultUI: true,
     minZoom: 12
   },
-  toolbarTitle: "서울시 종로구",
+  toolbarTitle: "",
   toolbarLabel: "지금 보고있는 지역",
   interest: [],
   isInterest: false,
@@ -59,7 +59,10 @@ export const mapStore = {
     setMapCenter: (state, payload) => (state.mapCenter = payload),
     setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
-    setToolbarTitle: (state, payload) => (state.toolbarTitle = payload),
+    setToolbarTitle: (state, payload) => {
+      console.log("setToolbarTitle", payload);
+      state.toolbarTitle = payload;
+    },
     setToolbarLabel: (state, payload) => (state.toolbarLabel = payload),
     setCount: (state, payload) => (state.count = payload),
     setInterest: (state, payload) => {

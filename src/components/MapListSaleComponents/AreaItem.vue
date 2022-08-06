@@ -113,6 +113,9 @@ export default {
   computed: {
     lastWordToAstar() {
       return (address) => {
+        if (address === "" || !address) {
+          return "";
+        }
         const _addArr = address.split(" ");
         const _lastWord = _addArr[_addArr.length - 1];
         const restAddress = _addArr.slice(0, _addArr.length - 1).join(" ");
