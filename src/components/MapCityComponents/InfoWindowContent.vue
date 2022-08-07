@@ -1,29 +1,54 @@
 <template>
   <div
-    style="
-      min-width: 80px;
-      overflow-y: hidden;
-      flex-direction: column;
-      border-radius: 8px;
-      background-color: white;
-    "
-    :style="{ borderColor: getColor(item) }"
-    class="flex"
-    @click="$emit('viewArea')"
+    style="position: relative; width: 120px; height: 85px"
+    class="flex justify-center"
   >
-    <div class="col items-center">
-      <div
-        class="info-heading notosanskr-medium text-center"
-        style="padding: 4px"
-        :style="{ backgroundColor: getColor(item) }"
-      >
-        {{ getItemInfo(item).type }}
-      </div>
-      <div class="info-text text-center" style="padding: 0 8px">
-        {{ toSimpleMoneyString(price) }}
-      </div>
-      <div class="info-text text-center" style="padding: 0 8px 8px 8px">
-        {{ getItemInfo(item).date }}
+    <div
+      v-if="item.count"
+      class="absolute text-primary bg-white"
+      style="
+        right: 0px;
+        top: 3px;
+        border-radius: 100%;
+        border: 1px solid rgb(255, 90, 0);
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        font-weight: 400;
+      "
+    >
+      +{{ item.count }}
+    </div>
+    <div
+      style="
+        position: absolute;
+        width: 100px;
+        flex-direction: column;
+        bottom: 0;
+        border-radius: 8px;
+        overflow: hidden;
+      "
+      :style="{ borderColor: getColor(item) }"
+      class="flex bg-white"
+      @click="$emit('viewArea')"
+    >
+      <div class="col items-center">
+        <div
+          class="info-heading notosanskr-medium text-center"
+          style="padding: 4px"
+          :style="{ backgroundColor: getColor(item) }"
+        >
+          {{ getItemInfo(item).type }}
+        </div>
+        <div class="info-text text-center" style="padding: 0 8px">
+          {{ toSimpleMoneyString(price) }}
+        </div>
+        <div class="info-text text-center" style="padding: 0 8px 8px 8px">
+          {{ getItemInfo(item).date }}
+        </div>
       </div>
     </div>
   </div>

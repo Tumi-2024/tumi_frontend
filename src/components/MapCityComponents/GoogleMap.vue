@@ -22,7 +22,6 @@
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
-          :options="{ disableAutoPan: true }"
           :position="m.position"
           :opened="15 < getMapZoom"
         >
@@ -343,6 +342,16 @@ export default {
 
       console.log(item);
     },
+    redirectXY({ latitude, longitude, title }) {
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          latitude,
+          longitude,
+          title
+        }
+      });
+    },
     dragStart() {
       this.changeMapSelectedArea(null);
     },
@@ -439,6 +448,11 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
+      console.log(item);
+      if (item.count) {
+        this.redirectXY(item);
+        return;
+      }
       this.map.panTo(item.position);
       const zoomLevel = this.map.getZoom();
 

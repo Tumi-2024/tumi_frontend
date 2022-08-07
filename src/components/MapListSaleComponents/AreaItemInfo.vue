@@ -53,7 +53,12 @@ export default {
       return [
         {
           label: "세부유형",
-          value: location.redevelopment_area.subcategory
+          value: [
+            location.redevelopment_area.category,
+            location.redevelopment_area.subcategory
+          ]
+            .filter((o) => !!o)
+            .join("/")
         },
         {
           label: "현재 추진 단계",

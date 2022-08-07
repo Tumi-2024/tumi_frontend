@@ -60,13 +60,11 @@ export const mapStore = {
     setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => {
-      console.log("setToolbarTitle", payload);
       state.toolbarTitle = payload;
     },
     setToolbarLabel: (state, payload) => (state.toolbarLabel = payload),
     setCount: (state, payload) => (state.count = payload),
     setInterest: (state, payload) => {
-      console.log(payload);
       state.interest = payload;
     },
     setIsInterest: (state, payload) => (state.isInterest = payload),
@@ -74,7 +72,6 @@ export const mapStore = {
     setAreaType: (state, payload) => (state.areaType = payload)
     // setIsCone: (state, payload) => (state.isCone = payload),
     // removeLocationInterest: (state, payload) => {
-    //   console.log(state.interest, payload);
     //   const _state = state.interest.filter((obj) => obj.id !== payload);
     //   state.interest = _state;
     // }
@@ -141,8 +138,6 @@ export const mapStore = {
             "setToolbarLabel",
             redevTitle ? "지금 보고있는 정비사업" : "지금 보고있는 지역"
           );
-
-          console.log(result.data.redevelopment_area.count_estates_filtered);
 
           context.commit(
             "setCount",

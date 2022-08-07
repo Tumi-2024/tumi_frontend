@@ -39,7 +39,6 @@ export const estateStore = {
     //   state.simple_houses_type = payload;
     // },
     setSimpleHouses: function (state, payload) {
-      console.log(payload);
       state.simple_houses = payload;
     },
     setDetailHouses: function (state, payload) {
@@ -174,8 +173,6 @@ export const estateStore = {
         return { type_house__in: _ctgr };
       };
 
-      console.log();
-
       const getAreaTypeString = () => {
         switch (context.rootState.map.areaType) {
           case null:
@@ -225,26 +222,48 @@ export const estateStore = {
           return results;
         } else {
           return results
-            .reduce((acc, cur, index) => {
+            .reduce((acc, cur, index, src) => {
               const hasValue = acc.some(() => {
                 const _lat = acc.some((obj) => obj.latitude === cur.latitude);
                 const _lng = acc.some((obj) => obj.longitude === cur.longitude);
                 return _lat && _lng;
               });
-              if (hasValue) {
-                return acc;
-              } else {
-                console.log(cur.group_building_house.type_house);
-                let newCur;
-                if (cur.group_building_house.type_house) {
-                  newCur = {
-                    ...cur,
-                    group_building_house: cur.group_building_house.type_house
-                  };
-                } else {
-                  newCur = cur;
+              if (!hasValue) return [...acc, cur];
+              // 중복 되는 것들
+              const _acc = acc.filter(() => {
+                const _lat = acc.some((obj) => obj.latitude !== cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude !== cur.longitude);
+                return _lat || _lng;
+              });
+              const _acc2 = acc.find(() => {
+                const _lat = acc.some((obj) => obj.latitude === cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude === cur.longitude);
+                return _lat && _lng;
+              });
+              const defaultCur = { ...cur, count: (_acc2.count || 0) + 1 };
+
+              if (!cur.group_building_house.type_house) {
+                if (index === src.length - 1) {
+                  return [
+                    ..._acc,
+                    {
+                      ...defaultCur,
+                      group_building_house: {
+                        ...cur.group_building_house.type_house,
+                        type_house: "주택유형 없음"
+                      }
+                    }
+                  ];
                 }
-                return [...acc, newCur];
+                return [
+                  ..._acc,
+                  {
+                    ...defaultCur,
+                    group_building_house: cur.group_building_house.type_house
+                  }
+                ];
+              } else {
+                return [..._acc, defaultCur];
               }
             }, [])
             .map((item) => ({
