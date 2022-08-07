@@ -29,7 +29,6 @@
       </q-list>
     </q-card-section>
     <div
-      v-if="!busy"
       v-infinite-scroll="infiniteHandler"
       infinite-scroll-disabled="busy"
       infinite-scroll-distance="10"
