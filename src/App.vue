@@ -13,6 +13,7 @@
 import LoginModal from "src/components/Utilities/LoginModal/LoginKaKaoModal.vue";
 import Vue from "vue";
 import { mapActions } from "vuex";
+import { Cookies } from "quasar";
 
 export default {
   name: "App",
@@ -22,9 +23,11 @@ export default {
   methods: {
     ...mapActions("map", ["fetchLocationInterest"])
   },
-  mounted() {
+  beforeMount() {
     this.$store.dispatch("requestLocation");
     try {
+      const tumi = Cookies.get("tumi");
+      console.log(tumi);
       const token = this.$store.state.user.data.token;
       if (token) {
         Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${token}`;

@@ -66,7 +66,18 @@ export default {
           this.$store.commit("setUser", data);
           Cookies.set("tumi", data.token, { expires: "1d" });
           Cookies.set("tumi_i", data.id, { expires: "1d" });
-          this.$router.push("/");
+
+          try {
+            if (data.token) {
+              Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${data.token}`;
+              // this.$store.dispatch("getDetailHouses", "page_size=5");
+              // this.fetchLocationInterest();
+            }
+          } catch (e) {
+            console.log(e);
+          } finally {
+            this.$router.push("/");
+          }
         })
         .catch((e) => {
           const res = e?.response?.data;
