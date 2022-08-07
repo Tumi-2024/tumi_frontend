@@ -1,9 +1,6 @@
 <template>
-  <div class="fixed-bottom row justify-center q-mb-xl">
-    <div
-      style="width: 100%; max-width: 1000px;"
-      class="row justify-end q-pr-lg"
-    >
+  <div style="position: fixed; bottom: 30px; right: 10px">
+    <div style="right: 0">
       <q-btn fab color="primary" @click="goToMap()">
         <svg
           width="28"

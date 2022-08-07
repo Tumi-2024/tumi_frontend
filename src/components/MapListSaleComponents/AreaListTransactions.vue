@@ -17,17 +17,18 @@
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
-        <area-transaction
-          v-for="(item, i) of saleList"
-          :key="i"
-          :item="item"
-          v-bind="{
-            ctgr: item.category,
-            type: item.type,
-            isRedevelop: true
-          }"
-        >
-        </area-transaction>
+        <template v-for="(item, i) of saleList">
+          <area-transaction
+            v-if="item.latitude"
+            :key="i"
+            :item="item"
+            v-bind="{
+              ctgr: item.category,
+              type: item.type,
+              isRedevelop: true
+            }"
+          ></area-transaction>
+        </template>
       </q-list>
     </q-card-section>
   </q-card>

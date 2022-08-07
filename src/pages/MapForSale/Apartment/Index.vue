@@ -74,22 +74,14 @@
     <common-information
       class="q-mt-md"
       title="정비사업 주요 정보"
-      v-if="this.estate.group_location"
+      v-if="this.estate.group_location.redevelopment_area.id"
       :getOptions="getRedevOptions"
     />
     <!-- v-if="" -->
     <!-- 재개발 정보 -->
     <redevelopment-information
-      v-if="!!redevelopment"
-      approvalPromotionCommittee="2004.07.20"
-      designationMaintenanceArea="2005.05.19"
-      associationEstablishment="2005.05.19"
-      constructorDate=""
-      projectImplementationAuthorization="2005.05.19"
-      managementDispositionAuthorization="2005.05.19"
-      startConstruction="2005.05.19"
-      generalSales=""
-      completion="2005.05.19"
+      v-if="this.estate.group_location.redevelopment_area.id"
+      :list="estate.group_location.redevelopment_area.redevelopment_steps"
       class="q-mt-md"
     />
     <!-- <administration-cost :cost="adminCost" class="q-mt-md" /> -->
@@ -185,7 +177,7 @@ export default {
       });
     },
     getValue(value, unit) {
-      if (value === null || value === undefined) return "";
+      if (!value || value === "null") return "";
       if (
         typeof value === "string" &&
         (value.indexOf("null") > -1 || value.indexOf("undefined") > -1)
@@ -206,6 +198,18 @@ export default {
     }
   },
   computed: {
+    // getRedevInfo() {
+    //   const {
+    //     group_location: {
+    //       redevelopment_area: { redevelopment_steps: redevStep }
+    //     }
+    //   } = this.estate;
+
+    //   const getDate = (label) => {
+    //     return redevStep.find((step) => step.title === label)?.date.replaceAll('-', '.');
+    //   }
+    //   // redevStep
+    // },
     lastWordToAstar() {
       return (address) => {
         const _addArr = address.split(" ");
@@ -619,7 +623,6 @@ export default {
     },
     getTradeOptions() {
       const { group_trading_terms: houseInfo } = this.estate;
-      console.log(houseInfo.types_sale);
 
       return [
         {
@@ -658,7 +661,10 @@ export default {
         },
         { label: "희망 이사조건", value: houseInfo.description_move_condition },
         { label: "[옵션] 세안고", value: houseInfo.description_option_wash },
-        { label: "[옵션] 주택구조", value: houseInfo.type_move },
+        {
+          label: "[옵션] 주택구조",
+          value: houseInfo.description_option_duplex
+        },
         { label: "[옵션] 올수리", value: houseInfo.date_option_repair },
         { label: "[옵션] 인테리어", value: houseInfo.date_option_interior },
         {
@@ -679,55 +685,79 @@ export default {
 
       return [
         // { label: "개발사업 유형", value: houseInfo.category },
-        { label: "정비구역 명칭", value: houseInfo.title },
-        { label: "정비사업 종류", value: houseInfo.category },
-        { label: "현재 사업추진단계", value: houseInfo.redevelopment_step },
-        { label: "시행사", value: houseInfo.title_construction_company },
-        { label: "시공사 (건설사)", value: houseInfo.title_build_company },
-        { label: "브랜드", value: houseInfo.title_brand },
+        { label: "정비구역 명칭", value: this.getValue(houseInfo.title) },
+        { label: "정비사업 종류", value: this.getValue(houseInfo.category) },
+        {
+          label: "현재 사업추진단계",
+          value: this.getValue(houseInfo.redevelopment_step)
+        },
+        {
+          label: "시행사",
+          value: this.getValue(houseInfo.title_construction_company)
+        },
+        {
+          label: "시공사 (건설사)",
+          value: this.getValue(houseInfo.title_build_company)
+        },
+        { label: "브랜드", value: this.getValue(houseInfo.title_brand) },
         {
           label: "건폐율 (%)",
-          value: `${houseInfo.percentage_building_to_land} %`
+          value: this.getValue(houseInfo.percentage_building_to_land, "%")
         },
-        { label: "용적률 (%)", value: `${houseInfo.percentage_floor_area} %` },
+        {
+          label: "용적률 (%)",
+          value: this.getValue(houseInfo.percentage_floor_area, "%")
+        },
         {
           label: "비례율 (%)",
-          value: `${houseInfo.percentage_proportionality} %`
+          value: this.getValue(houseInfo.percentage_proportionality, "%")
         },
         {
           label: "조합원 수",
-          value: `${houseInfo.count_member?.toLocaleString()} 명`
+          value: this.getValue(houseInfo.count_member?.toLocaleString(), "명")
         },
         {
           label: "부동산 소유자 수",
-          value: `${houseInfo.count_owner?.toLocaleString()} 명`
+          value: this.getValue(houseInfo.count_owner?.toLocaleString(), "명")
         },
         {
           label: "세입자 수",
-          value: `${houseInfo.count_house?.toLocaleString()} 명`
+          value: this.getValue(houseInfo.count_house?.toLocaleString(), "명")
         },
         {
           label: "(분양) 세대 수",
-          value: `${houseInfo.count_sale?.toLocaleString()} 세대`
+          value: this.getValue(houseInfo.count_sale?.toLocaleString(), "세대")
         },
         {
           label: "(임대) 세대 수",
-          value: `${houseInfo.count_rent?.toLocaleString()} 세대`
+          value: this.getValue(houseInfo.count_rent?.toLocaleString(), "세대")
         },
         {
           label: "입주 예정일",
-          value: houseInfo.description_move_condition
+          value: this.getValue(houseInfo.description_move_condition)
         },
 
-        { label: "사업 유형", value: houseInfo.business_type },
-        { label: "사업 구분", value: houseInfo.business_classification },
+        { label: "사업 유형", value: this.getValue(houseInfo.business_type) },
+        {
+          label: "사업 구분",
+          value: this.getValue(houseInfo.business_classification)
+        },
         {
           label: "추진위 수행여부",
-          value: houseInfo.status_promotion_committee
+          value: this.getValue(houseInfo.status_promotion_committee)
         },
-        { label: "공공지원 대상여부", value: houseInfo.status_public_support },
-        { label: "건축 계획", value: houseInfo.status_architectural_plan },
-        { label: "주택공급계획", value: houseInfo.status_sharing_plan }
+        {
+          label: "공공지원 대상여부",
+          value: this.getValue(houseInfo.status_public_support)
+        },
+        {
+          label: "건축 계획",
+          value: this.getValue(houseInfo.status_architectural_plan)
+        },
+        {
+          label: "주택공급계획",
+          value: this.getValue(houseInfo.status_sharing_plan)
+        }
         // { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
       ];
     }

@@ -104,7 +104,10 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
               { label: "용도지역", value: item.text_type_area },
               { label: "전용/연면적(㎡)", value: item.text_size_total + "㎡" },
               { label: "도로조건", value: item.text_type_road },
@@ -113,7 +116,10 @@ export default {
                 label: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
-              { label: "건축년도", value: item.text_year },
+              {
+                label: "건축년도",
+                value: `${item.text_year ? item.text_year + "년" : "-"}`
+              },
               {
                 label: "해제사유발생일",
                 value: this.getReleaseDate(item.text_date_release)
@@ -133,11 +139,23 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
-              { label: "대지면적(㎡)", value: item.text_size_daeji },
-              { label: "연면적(㎡)", value: item.text_size_yean },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
+              {
+                label: "대지면적(㎡)",
+                value: item.text_size_daeji ? item.text_size_daeji + "㎡" : "-"
+              },
+              {
+                label: "연면적(㎡)",
+                value: item.text_size_yean ? item.text_size_yean + "㎡" : "-"
+              },
               { label: "도로조건", value: item.text_type_road },
-              { label: "건축년도", value: item.text_year },
+              {
+                label: "건축년도",
+                value: `${item.text_year ? item.text_year + "년" : "-"}`
+              },
               {
                 label: "해제사유발생일",
                 value: this.getReleaseDate(item.text_date_release)
@@ -157,13 +175,24 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
-              { label: "전용면적(㎡)", value: item.text_size_private },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
+              {
+                label: "전용면적(㎡)",
+                value: item.text_size_private
+                  ? item.text_size_private + "㎡"
+                  : "-"
+              },
               {
                 label: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
-              { label: "건축년도", value: item.text_year },
+              {
+                label: "건축년도",
+                value: `${item.text_year ? item.text_year + "년" : "-"}`
+              },
               {
                 label: "해제사유발생일",
                 value: this.getReleaseDate(item.text_date_release)
@@ -183,13 +212,24 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
-              { label: "전용면적(㎡)", value: item.text_size_private },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
+              {
+                label: "전용면적(㎡)",
+                value: item.text_size_private
+                  ? item.text_size_private + "㎡"
+                  : "-"
+              },
               {
                 label: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
-              { label: "건축년도", value: item.text_year },
+              {
+                label: "건축년도",
+                value: `${item.text_year ? item.text_year + "년" : "-"}`
+              },
               {
                 label: "해제사유발생일",
                 value: this.getReleaseDate(item.text_date_release)
@@ -209,7 +249,10 @@ export default {
                 }`
               },
               { label: "용도지역", value: item.text_type_area },
-              { label: "거래금액(만원)", value: item.text_price },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
               { label: "계약면적(㎡)", value: item.text_size_contract },
               { label: "도로조건", value: item.text_type_road },
               { label: "지목", value: item.text_jimog },
@@ -233,14 +276,28 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
-              { label: "대지권면적(㎡)", value: item.text_size_land },
-              { label: "전용면적(㎡)", value: item.text_size_private },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
+              {
+                label: "대지권면적(㎡)",
+                value: item.text_size_land ? item.text_size_land + "㎡" : "-"
+              },
+              {
+                label: "전용면적(㎡)",
+                value: item.text_size_private
+                  ? item.text_size_private + "㎡"
+                  : "-"
+              },
               {
                 label: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
               },
-              { label: "건축년도", value: item.text_year },
+              {
+                label: "건축년도",
+                value: `${item.text_year ? item.text_year + "년" : "-"}`
+              },
               {
                 label: "해제사유발생일",
                 value: this.getReleaseDate(item.text_date_release)
@@ -251,7 +308,12 @@ export default {
             return [
               { label: "분양/입주", value: "분양/입주" },
               { label: "단지명", value: item.text_danji },
-              { label: "전용면적(㎡)", value: item.text_size_private },
+              {
+                label: "전용면적(㎡)",
+                value: item.text_size_private
+                  ? item.text_size_private + "㎡"
+                  : "-"
+              },
               {
                 label: "계약일자",
                 value: `${item.text_month.slice(0, 4)}.${item.text_month.slice(
@@ -263,7 +325,10 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "거래금액(만원)", value: item.text_price },
+              {
+                label: "거래금액(만원)",
+                value: item.text_price ? item.text_price + "만원" : "-"
+              },
               {
                 label: "층",
                 value: `${item.text_floor === "null" ? "-" : item.text_floor}층`
