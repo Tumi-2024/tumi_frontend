@@ -252,18 +252,17 @@ export default {
           this.$router.push({
             name: "map_city"
           });
-          this.setMapZoom(18);
+          this.setMapZoom(15);
           this.changeMapCenter(_value);
         } else if (type === "redevelopment") {
           this.$router.push({
             name: "map_city"
           });
+          this.setMapZoom(15);
           this.changeMapCenter(_value);
-          this.setMapZoom(16);
         } else {
-          // for-sale/apartment?sellid=16888
-          // lat: 37.5229905
-          // lng: 126.9959299
+          this.setMapZoom(16);
+          this.changeMapCenter(_value);
           await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {});
           this.$router.push({
             name: "for_sale_apartment",

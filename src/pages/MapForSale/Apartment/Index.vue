@@ -13,9 +13,11 @@
     <detail-summary
       v-bind="{
         building: this.estate.group_building_house.title_building,
-        areaName: `${this.lastWordToAstar(estate.address)} (${
-          estate.group_location.location_road
-        })`,
+        areaName: `${estate.group_location.address} ${
+          (estate.group_location.location_road || '').length > 0
+            ? '/' + estate.group_location.location_road
+            : ''
+        }`,
         sales: toMoneyString(estate.price),
         initialInvestments: toMoneyString(estate.initial_investment),
         quote: estate.description,
