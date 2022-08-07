@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       shape: "house",
+
       investments_btn: [
         {
           icon: require("assets/iconsNew/11.png"),
@@ -101,7 +102,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("searchQuery", ["setQuery"]),
+    ...mapActions("queryBuilder", ["setCategories"]),
     onClick(item) {
       // this.categories = [
       //   {
@@ -111,7 +112,7 @@ export default {
       //     valueHouse: "아파트"
       //   }
       // ];
-      this.setQuery([{ key: "categories", data: item }]);
+      this.setCategories([item.valueTransaction]);
       if (this.shape === "house") {
         this.$router.push({ name: "map_city" });
       } else {
