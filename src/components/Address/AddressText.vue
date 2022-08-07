@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="column justify-end flex" v-if="created">
-        <div class="flex">
+        <div class="flex justify-end">
           <div class="area-name q-mr-sm">매물 등록 일자</div>
           <div class="area-name bold">{{ getDate(created) }}</div>
         </div>

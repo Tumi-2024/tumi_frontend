@@ -28,7 +28,7 @@
           stageProgress: redevelopment.redevelopment_step
         },
         created: estate.created,
-        redevName: estate.group_location.redevelopment_area.title_area,
+        redevName: estate.group_location.redevelopment_area.title,
         persons: getPersons
       }"
     />
