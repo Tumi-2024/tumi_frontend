@@ -29,7 +29,7 @@
         },
         created: estate.created,
         redevName: estate.group_location.redevelopment_area.title_area,
-        persons: []
+        persons: getPersons
       }"
     />
     <!--  매물정보  -->
@@ -544,7 +544,7 @@ export default {
       return [
         {
           label: "(메모) 매물특징",
-          value: this.getValue(houseInfo.description_estate),
+          value: houseInfo.description_estate,
           class: "col-sm-12 col-md-12"
         },
         { label: "동 번호", value: this.getValue(houseInfo.num_ho, " 동") },
@@ -731,7 +731,7 @@ export default {
         },
         {
           label: "입주 예정일",
-          value: this.getValue(houseInfo.description_move_condition)
+          value: houseInfo.description_move_condition
         },
 
         { label: "사업 유형", value: this.getValue(houseInfo.business_type) },
@@ -756,6 +756,20 @@ export default {
           value: this.getValue(houseInfo.status_sharing_plan)
         }
         // { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
+      ];
+    },
+    getPersons() {
+      return [
+        {
+          text: `${this.estate.group_location.redevelopment_area.title_area} 전문 컨설턴트: ${this.estate.group_location.redevelopment_area.user.name} ${this.estate.group_location.redevelopment_area.user.type_rank}`,
+          phone: this.estate.group_location.redevelopment_area.user.phone
+        },
+        {
+          text: `${this.estate.group_user.user.store?.title ?? ""} ${
+            this.estate.group_user.user.name
+          } ${this.estate.group_user.user.type_rank}`,
+          phone: this.estate.group_user.user.phone
+        }
       ];
     }
   },

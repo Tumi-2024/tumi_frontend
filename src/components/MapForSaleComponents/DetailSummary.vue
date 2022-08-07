@@ -13,7 +13,7 @@
       </div> -->
 
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -45,7 +45,7 @@
             <div class="price">{{ prices.percentage_ratio }}%</div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -79,7 +79,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -95,7 +95,7 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -110,7 +110,7 @@
             <div class="price">{{ toMoneyString(prices.price_member) }}</div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -127,7 +127,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -142,7 +142,7 @@
             <div class="price">{{ toMoneyString(prices.price_total) }}</div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -157,6 +157,36 @@
             <div class="price">
               {{ toMoneyString(prices.price_safety_margin) }}
             </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/phone.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md text-subtitle2">
+              {{ persons[0].text }}
+            </div>
+            <template v-if="persons[0].phone">
+              (연락처:
+              <div class="q-ml-md">{{ persons[0].phone }}</div>
+              )
+            </template>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 q-px-sm">
+          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+            <q-icon>
+              <img src="~assets/icons/phone.svg" alt="" />
+            </q-icon>
+            <div class="q-ml-md text-subtitle2">
+              {{ persons[1].text }}
+            </div>
+            <template v-if="persons[1].phone">
+              (연락처:
+              <div class="q-ml-md">{{ persons[1].phone }}</div>
+              )
+            </template>
           </div>
         </div>
       </div>

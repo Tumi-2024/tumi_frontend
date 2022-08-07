@@ -345,23 +345,13 @@ export default {
         if (!latitude || !longitude) {
           return;
         }
-        const _lat = Number(latitude).toFixed(7).toString();
-        const _lng = Number(longitude).toFixed(7).toString();
+        const _acc = 10000 * 1000;
 
-        const _latO = Number(_lat[_lat.length - 1]) - 1;
-        const _lat1 = Number(_lat[_lat.length - 1]) + 1;
+        const _lat = Number(Number(latitude * _acc).toFixed(0));
+        const _lng = Number(Number(longitude * _acc).toFixed(0));
 
-        const _lngO = Number(_lng[_lng.length - 1]) - 1;
-        const _lng1 = Number(_lng[_lng.length - 1]) + 1;
-
-        const latitude__range = `${_lat.slice(
-          0,
-          _lat.length - 1
-        )}${_latO},${_lat.slice(0, _lat.length - 1)}${_lat1}`;
-        const longitude__range = `${_lng.slice(
-          0,
-          _lng.length - 1
-        )}${_lngO},${_lng.slice(0, _lng.length - 1)}${_lng1}`;
+        const latitude__range = `${(_lat - 1) / _acc},${(_lat + 1) / _acc}`;
+        const longitude__range = `${(_lng - 1) / _acc},${(_lng + 1) / _acc}`;
         return {
           latitude__range,
           longitude__range
@@ -472,6 +462,7 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
+      console.log(item.count);
       if (item.count) {
         this.redirectXY(item);
         return;
