@@ -264,23 +264,14 @@ export const estateStore = {
               const defaultCur = { ...cur, count: (_acc2.count || 0) + 1 };
 
               if (!cur.group_building_house.type_house) {
-                if (index === src.length - 1) {
-                  return [
-                    ..._acc,
-                    {
-                      ...defaultCur,
-                      group_building_house: {
-                        ...cur.group_building_house.type_house,
-                        type_house: "주택유형 없음"
-                      }
-                    }
-                  ];
-                }
                 return [
                   ..._acc,
                   {
                     ...defaultCur,
-                    group_building_house: cur.group_building_house.type_house
+                    group_building_house: {
+                      ...cur.group_building_house,
+                      type_house: "주택유형 없음"
+                    }
                   }
                 ];
               } else {
