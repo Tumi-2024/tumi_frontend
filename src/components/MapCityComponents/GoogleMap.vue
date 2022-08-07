@@ -278,9 +278,10 @@ export default {
         return {
           center: { lat: Number(latitude), lng: Number(longitude) },
           title: obj.title,
-          path: redevAreaLocation.map((obj) => {
-            return { lat: Number(obj.lat), lng: Number(obj.lng) };
-          }),
+          path: redevAreaLocation.map((obj) => ({
+            lat: Number(obj.lat),
+            lng: Number(obj.lng)
+          })),
           count_houses: obj.count_houses,
           options: {
             strokeColor: colors.stroke,
@@ -392,13 +393,13 @@ export default {
           case null:
             return {};
           case "재개발":
-            return { category: "재개발" };
+            return { category__in: "재개발" };
           case "재건축":
-            return { category: "재건축" };
+            return { category__in: "재건축" };
           case "가로주택":
-            return { category: "가로주택" };
+            return { category__in: "가로주택" };
           case "일반":
-            return { category: "일반" };
+            return { "category__in!": "재개발,재건축,가로주택" };
           default:
             return null;
         }
@@ -412,6 +413,7 @@ export default {
     },
     getHouseInfo() {
       const bounds = this.map.getBounds();
+
       const location = {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
@@ -439,9 +441,10 @@ export default {
     viewArea(item) {
       this.map.panTo(item.position);
       const zoomLevel = this.map.getZoom();
+
       this.setMapZoom(zoomLevel);
       this.setMapCenter(item.position);
-      console.log(item.position);
+
       const getRouterParams = () => {
         if (this.$route.path === "/map/city/area") {
           return { name: "listHouses", query: { transactionid: item.id } };

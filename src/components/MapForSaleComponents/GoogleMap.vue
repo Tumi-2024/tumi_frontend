@@ -16,8 +16,6 @@
         class="q-pa-lg"
         v-if="estate"
       >
-        <!-- INPUT DESIRED CONTENTS -->
-        <!-- <info-top-content :marker="{}" /> -->
         <info-window-content
           @viewArea="$router.back()"
           :price="estate.group_trading_terms.price_selling_hope"

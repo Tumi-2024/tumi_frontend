@@ -57,7 +57,8 @@ export const areaStore = {
             // return { redevelopment_area__status: "운영" };
             return {};
           } else {
-            return { redevelopment_area__isnull: true };
+            // return { redevelopment_area__isnull: true };
+            return {};
           }
         };
 

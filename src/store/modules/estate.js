@@ -39,6 +39,7 @@ export const estateStore = {
     //   state.simple_houses_type = payload;
     // },
     setSimpleHouses: function (state, payload) {
+      console.log(payload);
       state.simple_houses = payload;
     },
     setDetailHouses: function (state, payload) {
@@ -160,7 +161,8 @@ export const estateStore = {
           // return { redevelopment_area__status: "운영" };
           return {};
         } else {
-          return { redevelopment_area__isnull: true };
+          // return { redevelopment_area__isnull: true };
+          return {};
         }
       };
 
@@ -170,6 +172,27 @@ export const estateStore = {
           return null;
         }
         return { type_house__in: _ctgr };
+      };
+
+      console.log();
+
+      const getAreaTypeString = () => {
+        switch (context.rootState.map.areaType) {
+          case null:
+            return {};
+          case "재개발":
+            return { redevelopment_area__category__in: "재개발" };
+          case "재건축":
+            return { redevelopment_area__category__in: "재건축" };
+          case "가로주택":
+            return { redevelopment_area__category__in: "가로주택" };
+          case "일반":
+            return {
+              "redevelopment_area__category__in!": "재개발,재건축,가로주택"
+            };
+          default:
+            return null;
+        }
       };
 
       const data = await Vue.prototype.$axios.get(
@@ -189,49 +212,57 @@ export const estateStore = {
               [areaNew.min, areaNew.max]
             ),
             user__in: users.length === 0 ? undefined : users,
-            ...getRedevQuery()
+            ...getRedevQuery(),
+            ...getAreaTypeString()
           }
         }
       );
-      // if (payload.query) {
-      //   data = await Vue.prototype.$axios.get(
-      //     `/${requestUrl}/?page_size=1000&${payload.query}`,
-      //     { timeout: 10000 }
-      //   );
-      // } else {
 
-      // }
       context.dispatch("map/setLocationLoading", true);
-      context.commit(
-        "setSimpleHouses",
-        data.data.results
-          .reduce((acc, cur) => {
-            const hasValue = acc.some(() => {
-              return (
-                cur.latitude === acc.latitude && cur.longitude === acc.longitude
-              );
-            });
-            if (!hasValue) {
-              return [...acc, cur];
-            } else {
-              return acc;
-            }
-          }, [])
-          .map((item) => ({
-            ...item,
-            position: {
-              lat: Number(item.latitude),
-              lng: Number(item.longitude)
-            }
-          }))
-      );
-      // context.commit("setSimpleHousesType", payload?.type);
+
+      const estateData = (results) => {
+        if (results.length > 0 && results[0].count_estates > -1) {
+          return results;
+        } else {
+          return results
+            .reduce((acc, cur, index) => {
+              const hasValue = acc.some(() => {
+                const _lat = acc.some((obj) => obj.latitude === cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude === cur.longitude);
+                return _lat && _lng;
+              });
+              if (hasValue) {
+                return acc;
+              } else {
+                console.log(cur.group_building_house.type_house);
+                let newCur;
+                if (cur.group_building_house.type_house) {
+                  newCur = {
+                    ...cur,
+                    group_building_house: cur.group_building_house.type_house
+                  };
+                } else {
+                  newCur = cur;
+                }
+                return [...acc, newCur];
+              }
+            }, [])
+            .map((item) => ({
+              ...item,
+              position: {
+                lat: Number(item.latitude),
+                lng: Number(item.longitude)
+              }
+            }));
+        }
+      };
+      context.commit("setSimpleHouses", estateData(data.data.results));
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(
         `/houses/distinct${paramter ? `?${paramter}` : ""}`,
         {
-          timeout: 100000
+          timeout: 100 * 1000
         }
       );
       const results = response.data.apartments.map((item) => ({
