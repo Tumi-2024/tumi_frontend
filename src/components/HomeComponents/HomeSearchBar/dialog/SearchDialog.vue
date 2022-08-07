@@ -214,6 +214,7 @@ export default {
       if (event?.isComposing || event?.keyCode === 229) {
         return;
       }
+      console.log(event);
 
       if (this.text === "") {
         this.recommends = [];
@@ -235,6 +236,7 @@ export default {
       }
     },
     async onSelectList({ value, id, label }, type) {
+      console.log(value, label);
       if (!value && label) {
         this.text = label;
         this.onSearch();

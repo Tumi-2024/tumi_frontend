@@ -82,6 +82,10 @@ export default {
       this.password = null;
       this.username = null;
     }
+  },
+  beforeMount() {
+    Cookies.remove("tumi");
+    Cookies.remove("tumi_i");
   }
 };
 </script>

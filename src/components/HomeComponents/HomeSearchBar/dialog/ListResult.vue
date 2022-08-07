@@ -15,7 +15,7 @@
       v-for="(item, index) in list"
       :key="index"
       class="items-center"
-      @click.self="() => select(item)"
+      @click.prevent="() => select(item)"
     >
       <q-icon
         size="20px"
@@ -31,9 +31,10 @@
         </q-item-label>
       </q-item-section>
       <q-item-section
+        v-if="hasDelete"
         avatar
         class="justify-center"
-        @click="() => onDelete(item)"
+        @click.self="() => onDelete(item)"
       >
         <q-icon color="primary" name="close" />
       </q-item-section>
