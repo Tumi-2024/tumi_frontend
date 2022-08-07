@@ -14,11 +14,14 @@ export const estateStore = {
     viewRedevOnly: true,
     latitude: [],
     longitude: [],
-    requestUrl: "sub_cities"
+    requestUrl: "houses"
   },
   getters: {
     simple_houses: (state, getters) => {
       return state.simple_houses;
+    },
+    estateCount: (state, getters) => {
+      return state.count_estate;
     },
     detail_houses: (state, getters) => {
       return state.detail_houses;
@@ -81,6 +84,15 @@ export const estateStore = {
     }
   },
   actions: {
+    setRequestUrl: (context, parameter) => {
+      context.commit("setRequestUrl", parameter);
+    },
+    setSimpleHouses: (context, parameter) => {
+      context.commit("setSimpleHouses", parameter);
+    },
+    setCountEstate: (context, parameter) => {
+      context.commit("setCountEstate", parameter);
+    },
     setViewRedevOnly: (context, parameter) => {
       context.commit("setViewRedevOnly");
     },
@@ -192,13 +204,23 @@ export const estateStore = {
         }
       };
 
+      const getXY = () => {
+        if (!lat[0] || !long[0]) {
+          return {};
+        } else {
+          return {
+            latitude__range: `${lat[0]},${lat[1]}`,
+            longitude__range: `${long[0]},${long[1]}`
+          };
+        }
+      };
+      console.log(context.state.requestUrl);
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
           params: {
-            latitude__range: `${lat[0]},${lat[1]}`,
-            longitude__range: `${long[0]},${long[1]}`,
             page_size: 1000,
+            ...getXY(),
             ...getTypeHouseIn(),
             ...getQueryArray("price_selling_hope__range", [
               priceNew.min,

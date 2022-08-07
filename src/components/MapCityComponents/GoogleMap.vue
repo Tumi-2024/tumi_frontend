@@ -343,29 +343,36 @@ export default {
       console.log(item);
     },
     redirectXY({ latitude, longitude, title }) {
-      const _lat = Number(latitude).toFixed(7).toString();
-      const _lng = Number(longitude).toFixed(7).toString();
+      const getXYQuery = (latitude, longitude) => {
+        if (!latitude || !longitude) {
+          return;
+        }
+        const _lat = Number(latitude).toFixed(7).toString();
+        const _lng = Number(longitude).toFixed(7).toString();
 
-      const _latO = Number(_lat[_lat.length - 1]) - 1;
-      const _lat1 = Number(_lat[_lat.length - 1]) + 1;
+        const _latO = Number(_lat[_lat.length - 1]) - 1;
+        const _lat1 = Number(_lat[_lat.length - 1]) + 1;
 
-      const _lngO = Number(_lng[_lng.length - 1]) - 1;
-      const _lng1 = Number(_lng[_lng.length - 1]) + 1;
+        const _lngO = Number(_lng[_lng.length - 1]) - 1;
+        const _lng1 = Number(_lng[_lng.length - 1]) + 1;
 
-      const latitude__range = `${_lat.slice(
-        0,
-        _lat.length - 1
-      )}${_latO},${_lat.slice(0, _lat.length - 1)}${_lat1}`;
-      const longitude__range = `${_lng.slice(
-        0,
-        _lng.length - 1
-      )}${_lngO},${_lng.slice(0, _lng.length - 1)}${_lng1}`;
-      console.log(latitude__range, longitude__range);
+        const latitude__range = `${_lat.slice(
+          0,
+          _lat.length - 1
+        )}${_latO},${_lat.slice(0, _lat.length - 1)}${_lat1}`;
+        const longitude__range = `${_lng.slice(
+          0,
+          _lng.length - 1
+        )}${_lngO},${_lng.slice(0, _lng.length - 1)}${_lng1}`;
+        return {
+          latitude__range,
+          longitude__range
+        };
+      };
       this.$router.push({
         name: "listHouses",
         query: {
-          latitude__range,
-          longitude__range,
+          ...getXYQuery(),
           title
         }
       });
@@ -454,6 +461,7 @@ export default {
               : "houses",
           ...location
         };
+      } else {
       }
 
       console.log(payload, "payload", this.getMapZoom);

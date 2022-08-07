@@ -2,7 +2,7 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 매물
-      <span class="text-primary">{{ saleList.length }} </span>개
+      <span class="text-primary">{{ estateCount }} </span>개
     </q-card-section>
 
     <q-card-section
@@ -18,7 +18,7 @@
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
-        <div v-for="(item, i) of saleList" :key="i">
+        <div v-for="(item, i) of simple_houses" :key="i">
           <area-item
             class="q-py-sm"
             :query="{ sellid: item.id }"
@@ -43,7 +43,7 @@ import AreaItem from "./AreaItem.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   directives: {
@@ -91,9 +91,11 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters("map", ["getMapMode"])
+    ...mapGetters("map", ["getMapMode"]),
+    ...mapGetters(["simple_houses", "estateCount"])
   },
   methods: {
+    ...mapActions(["setSimpleHouses", "setCountEstate", "setRequestUrl"]),
     onFocus(e) {
       // this.getApiHouses();
     },
@@ -137,29 +139,36 @@ export default {
     },
 
     async getSearchData(params, page) {
-      console.log(page);
+      console.log("getSearchData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
       this.saleList = [...this.saleList, ...data.results];
+      this.setSimpleHouses(this.saleList);
+      this.setCountEstate(data.count);
+      // context.commit("setSimpleHouses", estateData(data.data.results));
       this.page += 1;
       this.busy = false;
     },
 
     async getRedevData(params, page) {
-      console.log(page);
+      console.log("getRedevData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
       this.saleList = [...this.saleList, ...data.results];
+      this.setSimpleHouses(this.saleList);
+      this.setCountEstate(data.count);
       this.page += 1;
       this.busy = false;
     },
 
     async getLocationData(params, page) {
-      console.log(page);
+      console.log("getLocationData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
       this.saleList = [...this.saleList, ...data.results];
+      this.setSimpleHouses(this.saleList);
+      this.setCountEstate(data.count);
       this.page += 1;
       this.busy = false;
     },
@@ -176,6 +185,8 @@ export default {
       //   });
       // }
       this.saleList = [...this.saleList, ...data.results];
+      this.setSimpleHouses(this.saleList);
+      this.setCountEstate(data.count);
       this.page += 1;
       this.busy = false;
     },
@@ -195,6 +206,9 @@ export default {
         query: { location }
       });
     }
+  },
+  beforeMount() {
+    this.setRequestUrl("houses");
   }
 };
 </script>
