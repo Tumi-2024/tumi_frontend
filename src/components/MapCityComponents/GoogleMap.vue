@@ -339,8 +339,6 @@ export default {
           title: item.title
         }
       });
-
-      console.log(item);
     },
     redirectXY({ latitude, longitude, title }) {
       const getXYQuery = (latitude, longitude) => {
@@ -372,7 +370,7 @@ export default {
       this.$router.push({
         name: "listHouses",
         query: {
-          ...getXYQuery(),
+          ...getXYQuery(latitude, longitude),
           title
         }
       });
@@ -381,7 +379,6 @@ export default {
       this.changeMapSelectedArea(null);
     },
     dragEnd() {
-      // console.log("dragEnd");
       const { center } = this.map;
       this.changeMapCenter({
         lat: center.lat(),
@@ -402,7 +399,6 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
-      console.log("idle");
       this.setLocationLoading(false);
       this.getHouseInfo();
       this.getRedevInfo();
@@ -467,7 +463,6 @@ export default {
       } else {
       }
 
-      console.log(payload, "payload", this.getMapZoom);
       this.$store.dispatch("getSimpleHouses", payload);
     },
     setGmapContainerSize() {
@@ -477,7 +472,6 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
-      console.log(item);
       if (item.count) {
         this.redirectXY(item);
         return;

@@ -97,7 +97,6 @@ export const queryBuilderStore = {
   },
   mutations: {
     initialize: (_state) => {
-      console.log("initialize");
       _state = {
         // 주택 유형
         // 다중선택 가능
@@ -144,7 +143,6 @@ export const queryBuilderStore = {
     setPrice: (_state, payload) => (_state.price = payload),
     setInitPrice: (_state, payload) => (_state.initPrice = payload),
     setIsMultiSelect: (_state, payload) => {
-      console.log(payload, "payload");
       _state.isMultiSelect = payload;
     },
     setPerson: (_state, payload) => (_state.person = payload)

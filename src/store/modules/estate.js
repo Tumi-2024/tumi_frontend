@@ -214,7 +214,6 @@ export const estateStore = {
           };
         }
       };
-      console.log(context.state.requestUrl);
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {

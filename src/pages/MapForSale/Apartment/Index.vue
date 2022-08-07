@@ -220,11 +220,6 @@ export default {
           return addr.substring(1, addr.length).replaceAll(/[0-9]/g, "*");
         };
 
-        console.log(
-          _lastWord,
-          "/",
-          `${restAddress} ${_lastWord[0]} ${getAstar(_lastWord)}`
-        );
         return `${restAddress} ${_lastWord[0]}${getAstar(_lastWord)}`;
       };
     },

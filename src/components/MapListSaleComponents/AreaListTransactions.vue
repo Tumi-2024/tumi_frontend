@@ -67,8 +67,6 @@ export default {
       this.text = e;
     },
     onSearch(type, id) {
-      console.log("onSearch", type, id);
-      console.log(type, id);
       if (id.length === 0) {
         return;
       }

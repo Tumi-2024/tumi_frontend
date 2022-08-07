@@ -70,7 +70,6 @@ export default {
   // watch: {
   //   $route: {
   //     handler({ query }) {
-  //       console.log(query, "query");
   //       const _key = Object.keys(query)[0];
   //       this.text = this.$route.query.title || "";
   //       switch (_key) {
@@ -119,7 +118,6 @@ export default {
       }
     },
     onSearch(type, id, label) {
-      console.log("onSearch");
       if (id.length === 0) {
         return;
       }
@@ -139,7 +137,6 @@ export default {
     },
 
     async getSearchData(params, page) {
-      console.log("getSearchData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
       this.saleList = [...this.saleList, ...data.results];
       this.setSimpleHouses(this.saleList);
@@ -150,7 +147,6 @@ export default {
     },
 
     async getRedevData(params, page) {
-      console.log("getRedevData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
@@ -162,7 +158,6 @@ export default {
     },
 
     async getLocationData(params, page) {
-      console.log("getLocationData");
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
@@ -173,7 +168,6 @@ export default {
       this.busy = false;
     },
     async getApiHouses(params, label, page) {
-      console.log("getApiHouses", params);
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });

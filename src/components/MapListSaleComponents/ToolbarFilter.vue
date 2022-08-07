@@ -171,8 +171,6 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
-      console.log(this.$router);
-      console.log(this.$router.options.history);
       // this.$router.options.history.state.back
 
       this.$emit("search", type.label, obj.id, obj.label);
