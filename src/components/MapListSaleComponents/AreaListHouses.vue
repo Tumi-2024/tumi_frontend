@@ -28,6 +28,12 @@
         </div>
       </q-list>
     </q-card-section>
+    <div
+      v-if="!busy"
+      v-infinite-scroll="infiniteHandler"
+      infinite-scroll-disabled="busy"
+      infinite-scroll-distance="10"
+    ></div>
   </q-card>
 </template>
 
@@ -36,14 +42,19 @@ import Vue from "vue";
 // import AreaTransaction from "./AreaTransaction.vue";
 import AreaItem from "./AreaItem.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
+import infiniteScroll from "vue-infinite-scroll";
 
 import { mapGetters } from "vuex";
 
 export default {
+  directives: {
+    infiniteScroll
+  },
   components: {
     // "area-transaction": AreaTransaction,
     "area-item": AreaItem,
     "toolbar-filter": ToolbarFilter
+    // InfiniteLoading
   },
   data() {
     return {
@@ -52,37 +63,59 @@ export default {
       selectedIndex: 0,
       type: "transaction" /** sell  */,
       saleList: [],
-      currentItem: {}
+      currentItem: {},
+      page: 1,
+      busy: false
     };
   },
-  watch: {
-    $route: {
-      handler({ query }) {
-        const _key = Object.keys(query)[0];
-        this.text = this.$route.query.title || "";
-        switch (_key) {
-          case "search":
-            this.getSearchData(query);
-            break;
-          case "redevelopment_area":
-            this.getRedevData(query);
-            break;
-          case "location":
-            this.getLocationData(query);
-            break;
-          default:
-            this.getApiHouses(query);
-        }
-      },
-      immediate: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler({ query }) {
+  //       console.log(query, "query");
+  //       const _key = Object.keys(query)[0];
+  //       this.text = this.$route.query.title || "";
+  //       switch (_key) {
+  //         case "search":
+  //           this.getSearchData(query, undefined, this.page);
+  //           break;
+  //         case "redevelopment_area":
+  //           this.getRedevData(query, undefined, this.page);
+  //           break;
+  //         case "location":
+  //           this.getLocationData(query, undefined, this.page);
+  //           break;
+  //         default:
+  //           this.getApiHouses(query, undefined, this.page);
+  //       }
+  //     },
+  //     immediate: true
+  //   }
+  // },
   computed: {
     ...mapGetters("map", ["getMapMode"])
   },
   methods: {
     onFocus(e) {
       // this.getApiHouses();
+    },
+    infiniteHandler() {
+      const { query } = this.$route;
+      const _key = Object.keys(query)[0];
+      this.text = this.$route.query.title || "";
+      this.busy = true;
+      switch (_key) {
+        case "search":
+          this.getSearchData(query, this.page);
+          break;
+        case "redevelopment_area":
+          this.getRedevData(query, this.page);
+          break;
+        case "location":
+          this.getLocationData(query, this.page);
+          break;
+        default:
+          this.getApiHouses(query, undefined, this.page);
+      }
     },
     onSearch(type, id, label) {
       console.log("onSearch");
@@ -91,39 +124,51 @@ export default {
       }
       switch (type) {
         case "지역":
-          this.setLocationQuery(id, label);
+          this.setLocationQuery(id, label, this.page);
           break;
         case "개발정비사업":
-          this.setRedevQuery(id, label);
+          this.setRedevQuery(id, label, this.page);
           break;
         case "건물/단지":
-          this.setSearchQuery(id, label);
+          this.setSearchQuery(id, label, this.page);
           break;
         default:
-          this.getApiHouses(id, label);
+          this.getApiHouses(id, label, this.page);
       }
     },
 
-    async getSearchData(params) {
+    async getSearchData(params, page) {
+      console.log(page);
       const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
-      this.saleList = data.results;
+      this.saleList = [...this.saleList, ...data.results];
+      this.page += 1;
+      this.busy = false;
     },
 
-    async getRedevData(params) {
+    async getRedevData(params, page) {
+      console.log(page);
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params
+        params: { ...params, page, page_size: 10 }
       });
-      this.saleList = data.results;
+      this.saleList = [...this.saleList, ...data.results];
+      this.page += 1;
+      this.busy = false;
     },
 
-    async getLocationData(params) {
+    async getLocationData(params, page) {
+      console.log(page);
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params
+        params: { ...params, page, page_size: 10 }
       });
-      this.saleList = data.results;
+      this.saleList = [...this.saleList, ...data.results];
+      this.page += 1;
+      this.busy = false;
     },
-    async getApiHouses(search, label) {
-      const { data } = await Vue.prototype.$axios.get(`/houses/`);
+    async getApiHouses(params, label, page) {
+      console.log("getApiHouses", params);
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params: { ...params, page, page_size: 10 }
+      });
       // const _query = this.$route.query;
 
       // if (Object.keys(_query).length > 0) {
@@ -131,10 +176,12 @@ export default {
       //     query: {}
       //   });
       // }
-      this.saleList = data.results;
+      this.saleList = [...this.saleList, ...data.results];
+      this.page += 1;
+      this.busy = false;
     },
 
-    setSearchQuery(search, label) {
+    setSearchQuery(search, label, page) {
       this.$router.push({
         query: { search }
       });
@@ -144,7 +191,7 @@ export default {
         query: { redevelopment_area: redevelopmentArea, title }
       });
     },
-    setLocationQuery(location, label) {
+    setLocationQuery(location, label, page) {
       this.$router.push({
         query: { location }
       });
