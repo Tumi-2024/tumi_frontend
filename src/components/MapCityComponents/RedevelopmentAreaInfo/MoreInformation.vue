@@ -219,7 +219,12 @@ export default {
           value: this.getMapSelectedArea.status_sharing_plan
         },
         { label: "정비구역 위치", value: this.getMapSelectedArea.area },
-        { label: "구역면적 (m²)", value: this.getMapSelectedArea.size_area },
+        {
+          label: "구역면적 (m²)",
+          value: this.getMapSelectedArea.size_area
+            ? this.getMapSelectedArea.size_area.toLocaleString() + "m²"
+            : ""
+        },
         { label: "조합원 수", value: this.getMapSelectedArea.count_member },
         {
           label: "부동산 소유자 수",

@@ -14,20 +14,28 @@
       v-ripple
       v-for="(item, index) in list"
       :key="index"
-      @click="() => select(item)"
+      class="items-center"
+      @click.self="() => select(item)"
     >
-      <q-item-section class="item-result">
+      <q-icon
+        size="20px"
+        class="item-result-icon"
+        name="img:icons/home-page-icon/search-result-icon/location-mark.svg"
+      ></q-icon>
+      <q-item-section class="item-result row">
         <template v-if="item.latitude">
           {{ item.latitude }}
         </template>
-        <q-icon
-          size="20px"
-          class="item-result-icon"
-          name="img:icons/home-page-icon/search-result-icon/location-mark.svg"
-        ></q-icon>
         <q-item-label lines="1" class="text-black notosanskr-regular">
           {{ item.label }}
         </q-item-label>
+      </q-item-section>
+      <q-item-section
+        avatar
+        class="justify-center"
+        @click="() => onDelete(item)"
+      >
+        <q-icon color="primary" name="close" />
       </q-item-section>
     </q-item>
   </q-list>
@@ -46,26 +54,25 @@ export default {
       type: String,
       required: false,
       default: "location"
+    },
+    hasDelete: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   methods: {
-    async select(item) {
+    select(item) {
       this.$emit("select", item, this.type);
+    },
+    onDelete(item) {
+      this.$emit("delete", item);
     }
   }
 };
 </script>
 
 <style>
-.item-result {
-  position: absolute;
-  display: flexbox;
-  flex-direction: row;
-  left: 0;
-  margin-top: 10px;
-  max-height: 48px;
-}
-
 .item-result-icon {
   margin-right: 20px;
 }

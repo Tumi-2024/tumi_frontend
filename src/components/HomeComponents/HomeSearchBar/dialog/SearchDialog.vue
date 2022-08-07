@@ -41,7 +41,12 @@
         v-if="!locations.length && !redevlopments.length && !houses.length"
       >
         <q-card-section>
-          <list-result :list="recents" @select="onSelectList">
+          <list-result
+            :list="recents"
+            @select="onSelectList"
+            @delete="onDeleteItem"
+            hasDelete
+          >
             <template #title>
               <q-item-label class="no-margin no-padding" header>
                 <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -155,8 +160,8 @@ export default {
     },
     async getRecentHistory() {
       const { data } = await Vue.prototype.$axios.get("/search/");
-      this.recents = data.results.map(({ title }) => {
-        return { label: title };
+      this.recents = data.results.map(({ title, id }) => {
+        return { label: title, id };
       });
     },
 
@@ -221,6 +226,12 @@ export default {
         this.getRedevelopment();
         this.getLocations();
         this.getHouses();
+      }
+    },
+    async onDeleteItem({ id }) {
+      const data = await Vue.prototype.$axios.delete(`/search/${id}/`);
+      if (data.status === 204) {
+        this.recents = this.recents.filter((rec) => rec.id !== id);
       }
     },
     async onSelectList({ value, id, label }, type) {

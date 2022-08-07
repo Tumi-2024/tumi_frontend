@@ -433,7 +433,10 @@ export default {
           case "가로주택":
             return { category__in: "가로주택" };
           case "일반":
-            return { "category__in!": "재개발,재건축,가로주택" };
+            return {
+              "category__in!": "재개발,재건축,가로주택",
+              redevelopment_area__category: "일반"
+            };
           default:
             return null;
         }
