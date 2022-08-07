@@ -325,7 +325,7 @@ export default {
         },
         {
           label: "소재지(동 이하)",
-          value: this.lastWordToAstar(houseInfo2.location_dong)
+          value: houseInfo2.location_dong
         },
         { label: "도로명 (로/길 이하)", value: houseInfo2.location_road },
         { label: "역세권", value: houseInfo.description_station_area }
