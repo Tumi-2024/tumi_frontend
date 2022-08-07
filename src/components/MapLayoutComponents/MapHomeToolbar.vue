@@ -12,6 +12,9 @@
             class="q-mr-sm"
             style="height: 100%"
           />
+          <span class="text-h6 text-bold" style="color: #222222"
+            >{{ getHeaderLabel }}
+          </span>
         </div>
       </div>
       <!-- right section-items -->
@@ -35,19 +38,43 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 // import DialogPropertyInformation from "./DialogPropertyInformation";
 export default {
   components: {
     // DialogPropertyInformation
   },
-  computed: {
-    ...mapGetters("map", ["getToolbarTitle"])
-  },
   methods: {
     toggleHeaderTitle() {
       this.$router.push({ name: "map_view_search" });
+    }
+  },
+  computed: {
+    getHeaderLabel() {
+      console.log(this.$route);
+      const _routename = this.$route.name;
+      const _routeArr = [
+        {
+          text: "매물 지도",
+          route: "map_city"
+        },
+        {
+          text: "정비사업/실거래가 지도",
+          route: "map_city_area"
+        },
+        {
+          text: "매물 검색",
+          route: "listHouses"
+        },
+        {
+          text: "실거래가 검색",
+          route: "listTransactions"
+        },
+        {
+          text: "부동산 인사이트",
+          route: "insights"
+        }
+      ];
+      return _routeArr.find((item) => item.route === _routename)?.text;
     }
   }
 };

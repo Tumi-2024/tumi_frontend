@@ -1,7 +1,14 @@
 <template>
   <q-toolbar class="bg-white text-dark">
-    <q-toolbar-title class="q-mt-md">
-      <p class="notosanskr-bold text-heading-title">{{title}}</p>
+    <q-toolbar-title class="q-mt-md flex items-center">
+      <img
+        :src="require('assets/tumi-logo.png')"
+        class="q-mr-sm"
+        style="height: 100%"
+      />
+      <span class="notosanskr-bold text-h4 q-ml-md" style="color: #222222">
+        {{ title }}
+      </span>
     </q-toolbar-title>
 
     <q-btn
@@ -25,16 +32,16 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-  .text-heading-title {
-    font-size: 24px;
-  }
+.text-heading-title {
+  font-size: 24px;
+}
 
-  .btn-burger{
-    width: 24px;
-    height: 24px;
-  }
+.btn-burger {
+  width: 24px;
+  height: 24px;
+}
 </style>
