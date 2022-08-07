@@ -34,7 +34,7 @@
         v-if="hasDelete"
         avatar
         class="justify-center"
-        @click.self="() => onDelete(item)"
+        @click.stop="() => onDelete(item)"
       >
         <q-icon color="primary" name="close" />
       </q-item-section>
