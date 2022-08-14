@@ -225,14 +225,26 @@ export default {
             ? this.getMapSelectedArea.size_area.toLocaleString() + "m²"
             : ""
         },
-        { label: "조합원 수", value: this.getMapSelectedArea.count_member },
+        {
+          label: "조합원 수",
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_member,
+            "명"
+          )
+        },
         {
           label: "부동산 소유자 수",
-          value: this.getMapSelectedArea.count_owner
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_owner,
+            "명"
+          )
         },
         {
           label: "세입자 수",
-          value: this.getMapSelectedArea.count_house
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_house,
+            "명"
+          )
         }
       ];
     },
@@ -243,11 +255,17 @@ export default {
         { label: "주용도", value: this.getMapSelectedArea.main_use },
         {
           label: "건폐율",
-          value: this.getMapSelectedArea.percentage_building_to_land
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.percentage_building_to_land,
+            "%"
+          )
         },
         {
           label: "용적률",
-          value: this.getMapSelectedArea.percentage_floor_area
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.percentage_floor_area,
+            "%"
+          )
         },
         {
           label: "층수(지상 | 지하)",
@@ -259,47 +277,65 @@ export default {
       return [
         {
           label: "대지 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_land_area)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_land_area,
+            "m²"
+          )
         },
         {
           label: "연 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_total_area)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_total_area,
+            "m²"
+          )
         },
         {
           label: "건축 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_building_area)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_building_area,
+            "m²"
+          )
         },
         {
           label: "구역 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_area)
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_area, "m²")
         },
         {
           label: "택지 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_land)
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_land, "m²")
         },
         {
           label: "도로 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_road)
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_road, "m²")
         },
         {
           label: "공원 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_park)
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_park, "m²")
         },
         {
           label: "녹지 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_greenery)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_greenery,
+            "m²"
+          )
         },
         {
           label: "공공공지 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_public)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_public,
+            "m²"
+          )
         },
         {
           label: "학교 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_school)
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.size_school,
+            "m²"
+          )
         },
         {
           label: "기타 면적(m²)",
-          value: this.toNumberString(this.getMapSelectedArea.size_etc)
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_etc, "m²")
         }
       ];
     },
@@ -357,18 +393,16 @@ export default {
       return options.map((option) => {
         return { ...option, disable: getDisable(option.value) };
       });
-    },
-    toNumberString() {
-      return (value) => {
-        if (!value) {
-          return "-";
-        }
-        const _value = Number(value);
-        return _value.toLocaleString();
-      };
     }
   },
   methods: {
+    getValueWithUnit(value, unit) {
+      if (!value) {
+        return "-";
+      }
+      const _value = Number(value);
+      return _value.toLocaleString() + unit;
+    },
     getStatValue(value) {
       switch (value) {
         case "size_area":
@@ -409,8 +443,23 @@ export default {
   overflow-y: auto;
   height: 90vh;
   margin-bottom: 200px;
-  .table > .row:not(:nth-last-child(-n + 1)) {
+  .table {
+    border-top: 2px solid #555555;
     border-bottom: 1px solid #e9e9e9;
+    > .row {
+      @media (max-width: 599px) {
+        &:not(:nth-last-child(-n + 1)) {
+          border-bottom: 1px solid #e9e9e9;
+        }
+      }
+      &:not(:nth-last-child(-n + 2)) {
+        border-bottom: 1px solid #e9e9e9;
+      }
+      > .label {
+        background-color: #f6f6f6;
+        width: 130px;
+      }
+    }
   }
 
   .address-section {

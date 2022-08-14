@@ -65,13 +65,13 @@ export default {
         },
         { label: "엘리베이터 수", value: `${houseInfo.count_elevator ?? "-"}` },
         { label: "사용승인일", value: houseInfo.date_approval_use },
-        { label: "대지면적 (㎡)", value: `${houseInfo.size_land_area ?? "-"}` },
+        { label: "대지면적 (m²)", value: `${houseInfo.size_land_area ?? "-"}` },
         {
-          label: "연면적 (㎡)",
+          label: "연면적 (m²)",
           value: `${houseInfo.size_gross_floor_area ?? "-"}`
         },
         {
-          label: "건축면적 (㎡)",
+          label: "건축면적 (m²)",
           value: `${houseInfo.size_building_area ?? "-"}`
         },
         { label: "난방방식", value: `${houseInfo.type_heating ?? "-"}` },
@@ -123,7 +123,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table {
   border-top: 2px solid #555555;
   border-bottom: 1px solid #e9e9e9;

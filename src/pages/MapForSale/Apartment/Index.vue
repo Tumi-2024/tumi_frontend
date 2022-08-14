@@ -267,7 +267,7 @@ export default {
           // exclusive Area
           label: "공용 면적 (m2)",
           value: this.getValue(
-            `${this.estate.group_individual_household.size_supply_area_m2}㎡`
+            `${this.estate.group_individual_household.size_supply_area_m2}m²`
           ),
           icon: ["land-area.svg"]
         },
@@ -276,7 +276,7 @@ export default {
           label: "전용 면적 (m2❘평형)",
           value: this.getValue(`${
             this.estate.group_individual_household.size_dedicated_area_m2
-          }㎡ |
+          }m² |
             ${Math.floor(
               this.estate.group_individual_household.size_dedicated_area_m2 /
                 3.3
@@ -430,15 +430,15 @@ export default {
         // 최근 관리비 없음
         {
           label: "대지면적",
-          value: this.getValue(houseInfo.size_land_area, " ㎡")
+          value: this.getValue(houseInfo.size_land_area, " m²")
         },
         {
           label: "연면적",
-          value: this.getValue(houseInfo.size_gross_floor_area, " ㎡")
+          value: this.getValue(houseInfo.size_gross_floor_area, " m²")
         },
         {
           label: "건축면적",
-          value: this.getValue(houseInfo.size_building_area, " ㎡")
+          value: this.getValue(houseInfo.size_building_area, " m²")
         },
         //
         {
@@ -557,13 +557,13 @@ export default {
           value: this.getValue(houseInfo.num_floor, " 층")
         },
         {
-          label: "공급면적(㎡)",
-          value: this.getValue(houseInfo.size_supply_area_m2, " ㎡")
+          label: "공급면적(m²)",
+          value: this.getValue(houseInfo.size_supply_area_m2, " m²")
         },
         {
-          label: "전용면적 (㎡|평형)",
+          label: "전용면적 (m²|평형)",
           value: this.getValue(
-            `${houseInfo.size_dedicated_area_m2 || "-"} ㎡ | ${(
+            `${houseInfo.size_dedicated_area_m2 || "-"} m² | ${(
               (houseInfo.size_dedicated_area_pyeong || 0) / 3.3
             ).toFixed(1)} 평`
           )
@@ -755,7 +755,7 @@ export default {
           label: "주택공급계획",
           value: this.getValue(houseInfo.status_sharing_plan)
         }
-        // { label: "구역면적 (㎡)", value: houseInfo.price_selling_hope },
+        // { label: "구역면적 (m²)", value: houseInfo.price_selling_hope },
       ];
     },
     getPersons() {
@@ -808,7 +808,7 @@ export default {
       salePrice: { value: "14억 5천만", date: "2020년 06월" },
       charter: { value: "10억 2,580만", date: "2020년 03월" },
       extraDetails: [
-        { label: "공급 / 전용 면적", info: "41.76 / 130.28㎡" },
+        { label: "공급 / 전용 면적", info: "41.76 / 130.28m²" },
         { label: "시세 갱신일", info: "2020.06.20" }
       ],
       unit: {

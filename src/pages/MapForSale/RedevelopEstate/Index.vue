@@ -17,8 +17,8 @@
     <area-information :informations="propertyInformation" class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
-      exclusiveArea="2,275㎡ (688평)"
-      commonArea="375㎡ (113평)"
+      exclusiveArea="2,275m² (688평)"
+      commonArea="375m² (113평)"
       direction="남서향"
       numberFloors="고층"
       stationArea="역세권"
@@ -63,7 +63,7 @@
       :priceAverage="averagePrice"
     />
 
-    <div class="q-py-xl "></div>
+    <div class="q-py-xl"></div>
   </div>
 </template>
 
@@ -99,7 +99,7 @@ export default {
         {
           // exclusive Area
           label: "전용면적",
-          value: "130㎡",
+          value: "130m²",
           icon: "land-area.svg"
         },
         {
@@ -167,7 +167,7 @@ export default {
       salePrice: { value: "14억 5천만", date: "2020년 06월" },
       charter: { value: "10억 2,580만", date: "2020년 03월" },
       extraDetails: [
-        { label: "공급 / 전용 면적", info: "41.76 / 130.28㎡" },
+        { label: "공급 / 전용 면적", info: "41.76 / 130.28m²" },
         { label: "시세 갱신일", info: "2020.06.20" }
       ],
       unit: {

@@ -95,7 +95,7 @@ export default {
             `${Math.ceil(houseInfo.size_land_area)} / ${Math.ceil(
               houseInfo.size_building_area
             )}`,
-            "㎡"
+            "m²"
           )}`
         },
         {
@@ -121,16 +121,16 @@ export default {
           value: getLabel(toMoneyString(priceInfo.price_initial_investment), "")
         }
         // {
-        //   label: "대지면적 (㎡)",
-        //   value: `${houseInfo.size_land_area ?? "-"}㎡`
+        //   label: "대지면적 (m²)",
+        //   value: `${houseInfo.size_land_area ?? "-"}m²`
         // },
         // {
-        //   label: "연면적 (㎡)",
-        //   value: `${houseInfo.size_gross_floor_area ?? "-"}㎡`
+        //   label: "연면적 (m²)",
+        //   value: `${houseInfo.size_gross_floor_area ?? "-"}m²`
         // },
         // {
-        //   label: "건축면적 (㎡)",
-        //   value: `${houseInfo.size_building_area ?? "-"}㎡`
+        //   label: "건축면적 (m²)",
+        //   value: `${houseInfo.size_building_area ?? "-"}m²`
         // },
         // {
         //   label: "주건물구조",

@@ -8,11 +8,9 @@
         :label="getMapSelectedArea.category"
       />
       <div class="title-heading notosanskr-medium">
-        <!-- 서울영등포 공공주택지구 -->
         {{ getMapSelectedArea.title }}
       </div>
       <div class="sub-title notosanskr-regular">
-        <!-- 서울 특별시 동대문구 전농동 106-1 -->
         {{ getMapSelectedArea.address }}
       </div>
     </section>
@@ -423,7 +421,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .more-information {
   overflow-y: auto;
   height: 90vh;

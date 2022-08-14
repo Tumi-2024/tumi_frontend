@@ -15,8 +15,8 @@
     <area-information :informations="areaInformation" class="q-mt-sm" />
     <more-information
       transactionType="토지매매"
-      landArea="2,275㎡ (688평)"
-      buildingArea="375㎡ (113평)"
+      landArea="2,275m² (688평)"
+      buildingArea="375m² (113평)"
       commonArea=""
       usageArea="일반상업"
       point="대"
@@ -74,13 +74,13 @@ export default {
         {
           // land Area
           label: "대지면적",
-          value: "2,275㎡",
+          value: "2,275m²",
           icon: "land-area.svg"
         },
         {
           // building area
           label: "건물면적",
-          value: "375㎡",
+          value: "375m²",
           icon: "building-area.svg"
         },
         {

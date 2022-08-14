@@ -32,7 +32,7 @@
     <div class="selection col q-mt-lg items-center">
       <div class="flex justify-start">
         <q-radio v-model="isM2" label="평 수" :val="false" />
-        <q-radio v-model="isM2" label="㎡" :val="true" />
+        <q-radio v-model="isM2" label="m²" :val="true" />
       </div>
       <div class="row q-mt-md">
         <q-input
@@ -40,7 +40,7 @@
           @change="onChangeMin"
           filled
           dense
-          :label="`최소 ${isM2 ? '㎡' : '평 수'}`"
+          :label="`최소 ${isM2 ? 'm²' : '평 수'}`"
           maxlength="7"
           style="width: 40%"
         />
@@ -52,7 +52,7 @@
           @change="onChangeMax"
           filled
           dense
-          :label="`최대 ${isM2 ? '㎡' : '평 수'}`"
+          :label="`최대 ${isM2 ? 'm²' : '평 수'}`"
           maxlength="7"
           style="width: 40%"
         />
@@ -120,18 +120,18 @@ export default {
         }
       ],
       presets: [
-        { label: "~10평", labelM2: "~" + 10 * 3.3 + "㎡", value: 10 * 3.3 },
-        { label: "20평", labelM2: 20 * 3.3 + "㎡", value: 20 * 3.3 },
-        { label: "30평", labelM2: 30 * 3.3 + "㎡", value: 30 * 3.3 },
-        { label: "40평", labelM2: 40 * 3.3 + "㎡", value: 40 * 3.3 },
-        { label: "50평", labelM2: 50 * 3.3 + "㎡", value: 50 * 3.3 },
-        { label: "60평", labelM2: 60 * 3.3 + "㎡", value: 60 * 3.3 },
-        { label: "70평", labelM2: 70 * 3.3 + "㎡", value: 70 * 3.3 },
-        { label: "80평", labelM2: 80 * 3.3 + "㎡", value: 80 * 3.3 },
-        { label: "90평", labelM2: 90 * 3.3 + "㎡", value: 90 * 3.3 },
-        { label: "100평", labelM2: 100 * 3.3 + "㎡", value: 100 * 3.3 },
-        { label: "150평", labelM2: 150 * 3.3 + "㎡", value: 150 * 3.3 },
-        { label: "150평대 ~", labelM2: 1000 * 3.3 + "㎡~", value: 9999 * 3.3 }
+        { label: "~10평", labelM2: "~" + 10 * 3.3 + "m²", value: 10 * 3.3 },
+        { label: "20평", labelM2: 20 * 3.3 + "m²", value: 20 * 3.3 },
+        { label: "30평", labelM2: 30 * 3.3 + "m²", value: 30 * 3.3 },
+        { label: "40평", labelM2: 40 * 3.3 + "m²", value: 40 * 3.3 },
+        { label: "50평", labelM2: 50 * 3.3 + "m²", value: 50 * 3.3 },
+        { label: "60평", labelM2: 60 * 3.3 + "m²", value: 60 * 3.3 },
+        { label: "70평", labelM2: 70 * 3.3 + "m²", value: 70 * 3.3 },
+        { label: "80평", labelM2: 80 * 3.3 + "m²", value: 80 * 3.3 },
+        { label: "90평", labelM2: 90 * 3.3 + "m²", value: 90 * 3.3 },
+        { label: "100평", labelM2: 100 * 3.3 + "m²", value: 100 * 3.3 },
+        { label: "150평", labelM2: 150 * 3.3 + "m²", value: 150 * 3.3 },
+        { label: "150평대 ~", labelM2: 1000 * 3.3 + "m²~", value: 9999 * 3.3 }
       ]
     };
   },
