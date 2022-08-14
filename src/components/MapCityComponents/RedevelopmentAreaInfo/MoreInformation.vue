@@ -106,7 +106,7 @@
       </div>
       <span style="font-weight: 500">임대 계획</span>
       <div class="row table">
-        <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
+        <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo4" :key="i">
           <div class="q-pa-sm label">
             <span class="information">{{ item.label }}</span>
           </div>
@@ -221,9 +221,7 @@ export default {
         { label: "정비구역 위치", value: this.getMapSelectedArea.area },
         {
           label: "구역면적 (m²)",
-          value: this.getMapSelectedArea.size_area
-            ? this.getMapSelectedArea.size_area.toLocaleString() + "m²"
-            : ""
+          value: this.getValueWithUnit(this.getMapSelectedArea.size_area, "m²")
         },
         {
           label: "조합원 수",
@@ -342,36 +340,61 @@ export default {
     // 주택 공급 계획 (분양)
     getInfo3() {
       return [
-        { label: "총 세대수", value: this.getMapSelectedArea.count_sale },
-        { label: "60m² 이하", value: this.getMapSelectedArea.count_sale_lt_60 },
+        {
+          label: "총 세대수",
+          value: this.getValueWithUnit(this.getMapSelectedArea.count_sale, "")
+        },
+        {
+          label: "60m² 이하",
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_sale_lt_60,
+            ""
+          )
+        },
         {
           label: "60m² ~ 85m²",
-          value: this.getMapSelectedArea.count_sale_gt_60_lt_85
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_sale_gt_60_lt_85,
+            ""
+          )
         },
-        { label: "85m² 초과", value: this.getMapSelectedArea.count_sale_gt_85 }
+        {
+          label: "85m² 초과",
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_sale_gt_85,
+            ""
+          )
+        }
       ];
     },
     // 주택 공급 계획 (임대)
     getInfo4() {
       return [
-        { label: "총 세대수", value: this.getMapSelectedArea.count_rent },
-        { label: "60m² 이하", value: this.getMapSelectedArea.count_rent_lt_60 },
+        {
+          label: "총 세대수",
+          value: this.getValueWithUnit(this.getMapSelectedArea.count_rent, "")
+        },
+        {
+          label: "60m² 이하",
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_rent_lt_60,
+            ""
+          )
+        },
         {
           label: "60m² ~ 85m²",
-          value: this.getMapSelectedArea.count_rent_gt_60_lt_85
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_rent_gt_60_lt_85,
+            ""
+          )
         },
-        { label: "85m² 초과", value: this.getMapSelectedArea.count_rent_gt_85 }
-      ];
-    },
-    getInfo5() {
-      return [
-        { label: "총 세대수", value: this.getMapSelectedArea.count_rent },
-        { label: "60m² 이하", value: this.getMapSelectedArea.count_rent_lt_60 },
         {
-          label: "60m² ~ 85m²",
-          value: this.getMapSelectedArea.count_rent_gt_60_lt_85
-        },
-        { label: "85m² 초과", value: this.getMapSelectedArea.count_rent_gt_85 }
+          label: "85m² 초과",
+          value: this.getValueWithUnit(
+            this.getMapSelectedArea.count_rent_gt_85,
+            ""
+          )
+        }
       ];
     },
     getSelectOptions() {
@@ -401,7 +424,7 @@ export default {
         return "-";
       }
       const _value = Number(value);
-      return _value.toLocaleString() + unit;
+      return _value.toLocaleString() + " " + unit;
     },
     getStatValue(value) {
       switch (value) {
