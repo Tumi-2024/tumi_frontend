@@ -52,7 +52,7 @@ export default {
 
       return [
         {
-          label: "세부유형",
+          label: "사업 유형",
           value:
             location.redevelopment_area.category ||
             location.redevelopment_area.category

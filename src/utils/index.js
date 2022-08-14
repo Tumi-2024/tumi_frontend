@@ -249,7 +249,7 @@ export const toMoneyString = (val, add = 1) => {
   const uk = Math.floor((val * add) / 10000);
   const man = Math.floor(val * add - uk * 10000);
   const price = `${uk > 0 ? `${uk.toLocaleString()} 억` : ""}${
-    man > 0 ? `${man.toLocaleString()} 만` : ""
+    man > 0 ? ` ${man.toLocaleString()} 만` : ""
   }`;
   return (isNegative ? "-" + price : price) + "원";
 };
