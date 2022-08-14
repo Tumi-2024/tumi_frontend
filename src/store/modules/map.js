@@ -9,7 +9,7 @@ const initState = {
     lat: 37.547,
     lng: 126.997
   },
-  mapAddress: "",
+  // mapAddress: "",
   mapOptions: {
     zoomControl: true,
     mapTypeControl: false,
@@ -19,6 +19,7 @@ const initState = {
     scrollwheel: true,
     fullscreenControl: false,
     disableDefaultUI: true,
+    clickableIcons: false,
     minZoom: 12
   },
   toolbarTitle: "",
@@ -30,7 +31,9 @@ const initState = {
   isCone: true,
   count: 0,
   redevId: 0,
-  redevTitle: ""
+  redevTitle: "",
+  subcityId: 0,
+  subcityTitle: ""
 };
 export const mapStore = {
   namespaced: true,
@@ -57,7 +60,7 @@ export const mapStore = {
     setRedevTitle: (state, payload) => (state.redevTitle = payload),
     setMapZoom: (state, payload) => (state.mapZoom = payload),
     setMapCenter: (state, payload) => (state.mapCenter = payload),
-    setMapAddress: (state, payload) => (state.mapAddress = payload),
+    // setMapAddress: (state, payload) => (state.mapAddress = payload),
     setMapOptions: (state, payload) => (state.mapOptions = payload),
     setToolbarTitle: (state, payload) => {
       state.toolbarTitle = payload;
@@ -69,7 +72,9 @@ export const mapStore = {
     },
     setIsInterest: (state, payload) => (state.isInterest = payload),
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
-    setAreaType: (state, payload) => (state.areaType = payload)
+    setAreaType: (state, payload) => (state.areaType = payload),
+    setSubcityId: (state, payload) => (state.subcityId = payload),
+    setSubcityTitle: (state, payload) => (state.subcityTitle = payload)
     // setIsCone: (state, payload) => (state.isCone = payload),
     // removeLocationInterest: (state, payload) => {
     //   const _state = state.interest.filter((obj) => obj.id !== payload);
@@ -78,6 +83,9 @@ export const mapStore = {
   },
   actions: {
     setAreaType: (context, payload) => context.commit("setAreaType", payload),
+    setSubcityId: (context, payload) => context.commit("setSubcityId", payload),
+    setSubcityTitle: (context, payload) =>
+      context.commit("setSubcityTitle", payload),
     setRedevId: (context, payload) => context.commit("setRedevId", payload),
     setRedevTitle: (context, payload) =>
       context.commit("setRedevTitle", payload),
@@ -125,11 +133,12 @@ export const mapStore = {
         .then((result) => {
           const string = result.data.address.split(" ");
           const redevTitle = result.data.redevelopment_area.title;
+          context.commit("setSubcityId", result.data.subcity.id);
+          context.commit("setSubcityTitle", result.data.subcity.title);
 
           context.commit("setRedevId", result.data.redevelopment_area.id);
           context.commit("setRedevTitle", result.data.redevelopment_area.title);
 
-          context.commit("setMapAddress", `${string[1]} ${string[2]}`);
           context.commit(
             "setToolbarTitle",
             redevTitle || `${string[1]} ${string[2]}`
@@ -141,18 +150,14 @@ export const mapStore = {
 
           context.commit(
             "setCount",
-            result.data.redevelopment_area.count_estates_filtered
+            result.data.subcity.count_estates_filtered
           );
-
-          // context.commit("setToolbarTitle", `${string[1]} ${string[2]}`);
 
           if (result?.data?.location?.subcity?.interest?.subcity) {
             context.commit("setIsInterest", true);
           } else {
             context.commit("setIsInterest", false);
           }
-          // context.commit("");
-          // data.lat, longitude: data.lng
         })
         .catch((thrown) => {
           if (Vue.prototype.$axios.isCancel(thrown)) {

@@ -33,55 +33,57 @@
           />
         </gmap-info-window>
       </template>
-      <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
-        <gmap-custom-marker
-          :marker="{ latitude: m.latitude, longitude: m.longitude }"
-        >
-          <div
-            v-if="getMapZoom <= redevZoom"
-            class="flex column justify-center items-center"
-            style="
-              min-height: calc((110 / 1312) * 100vh);
-              min-width: calc((110 / 1312) * 100vh);
-              padding: calc((10 / 1312) * 100vh);
-              border-radius: 100%;
-              opacity: 0.72;
-            "
-            :style="{ backgroundColor: getColor() }"
+      <template v-else>
+        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
+          <gmap-custom-marker
+            :marker="{ latitude: m.latitude, longitude: m.longitude }"
           >
-            <span
-              class="flex text-white justify-center"
-              style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
+            <div
+              class="flex column justify-center items-center"
+              style="
+                min-height: calc((110 / 1312) * 100vh);
+                min-width: calc((110 / 1312) * 100vh);
+                padding: calc((10 / 1312) * 100vh);
+                border-radius: 100%;
+                opacity: 0.72;
+              "
+              :style="{ backgroundColor: getColor() }"
+              @click="onClickMarker(m)"
             >
-              {{ m.title }}
-            </span>
-            <span
-              class="flex text-white justify-center q-mt-sm"
-              style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
-            >
-              {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
-            </span>
-            <span
-              class="flex text-white justify-center"
-              style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
-            >
-              {{
-                $route.path === "/map/city"
-                  ? `${m.count_estates_filtered}`
-                  : `${
-                      getAreaType === "재개발"
-                        ? m.count_redevelopment_area_1
-                        : getAreaType === "재건축"
-                        ? m.count_redevelopment_area_2
-                        : getAreaType === "가로주택"
-                        ? m.count_redevelopment_area_3
-                        : m.count_redevelopment_area
-                    }`
-              }}개 ({{ m.count_estates_filtered_implicit }})
-            </span>
-          </div>
-        </gmap-custom-marker>
-      </div>
+              <span
+                class="flex text-white justify-center"
+                style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
+              >
+                {{ m.title }}
+              </span>
+              <span
+                class="flex text-white justify-center q-mt-sm"
+                style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
+              >
+                {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
+              </span>
+              <span
+                class="flex text-white justify-center"
+                style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
+              >
+                {{
+                  $route.path === "/map/city"
+                    ? `${m.count_estates_filtered}`
+                    : `${
+                        getAreaType === "재개발"
+                          ? m.count_redevelopment_area_1
+                          : getAreaType === "재건축"
+                          ? m.count_redevelopment_area_2
+                          : getAreaType === "기타사업"
+                          ? m.count_redevelopment_area_3
+                          : m.count_redevelopment_area
+                      }`
+                }}개 ({{ m.count_estates_filtered_implicit }})
+              </span>
+            </div>
+          </gmap-custom-marker>
+        </div>
+      </template>
 
       <!-- we generate badges for the Redevelopment Area -->
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
@@ -190,7 +192,7 @@ export default {
             return "rgb(255, 90, 0)";
           case "재건축":
             return "rgba(0, 0, 255, 0.85)";
-          case "가로주택":
+          case "기타사업":
             return "rgba(0, 128, 0, 0.85)";
 
           default:
@@ -244,6 +246,9 @@ export default {
       };
     },
     getAreaBadges() {
+      if (this.getMapZoom < 14) {
+        return [];
+      }
       return this.getMapAreas.map((obj) => {
         const {
           status,
@@ -259,7 +264,7 @@ export default {
         };
         const getStrokeColor = (opt) => {
           switch (opt) {
-            case "가로주택":
+            case "기타사업":
               colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
               break;
             case "재건축":
@@ -330,6 +335,15 @@ export default {
     ]),
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
+    onClickMarker(item) {
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          subcity: item.id,
+          title: item.title
+        }
+      });
+    },
     redirectList(item) {
       // list/houses?redevelopment_area=208
       this.$router.push({
@@ -350,13 +364,12 @@ export default {
         const _lat = Number(Number(latitude * _acc).toFixed(0));
         const _lng = Number(Number(longitude * _acc).toFixed(0));
 
-        const latitude__range = `${(_lat - 1) / _acc},${(_lat + 1) / _acc}`;
-        const longitude__range = `${(_lng - 1) / _acc},${(_lng + 1) / _acc}`;
         return {
-          latitude__range,
-          longitude__range
+          latitude__range: `${(_lat - 1) / _acc},${(_lat + 1) / _acc}`,
+          longitude__range: `${(_lng - 1) / _acc},${(_lng + 1) / _acc}`
         };
       };
+
       this.$router.push({
         name: "listHouses",
         query: {
@@ -391,6 +404,7 @@ export default {
     idle() {
       this.setLocationLoading(false);
       this.getHouseInfo();
+      if (this.getMapZoom < 14) return;
       this.getRedevInfo();
     },
 
@@ -413,16 +427,11 @@ export default {
           case null:
             return {};
           case "재개발":
-            return { category__in: "재개발" };
           case "재건축":
-            return { category__in: "재건축" };
-          case "가로주택":
-            return { category__in: "가로주택" };
           case "일반":
-            return {
-              "category__in!": "재개발,재건축,가로주택",
-              redevelopment_area__category: "일반"
-            };
+            return { redevelopment__category: this.getAreaType };
+          case "기타사업":
+            return { redevelopment__category: "기타" };
           default:
             return null;
         }
@@ -450,9 +459,7 @@ export default {
               : "houses",
           ...location
         };
-      } else {
       }
-
       this.$store.dispatch("getSimpleHouses", payload);
     },
     setGmapContainerSize() {
@@ -462,7 +469,6 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
-      console.log(item.count);
       if (item.count) {
         this.redirectXY(item);
         return;

@@ -22,7 +22,7 @@
           @click="goToAdmin"
         >
           <q-badge outline color="primary" v-show="isRedevelop">재개발</q-badge>
-          {{ address.replace(/대한민국/gi, "") }}
+          {{ (address || "").replace(/대한민국/gi, "") }}
         </div>
         <div
           class="area-name sub"

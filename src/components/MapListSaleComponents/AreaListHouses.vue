@@ -171,13 +171,7 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      // const _query = this.$route.query;
 
-      // if (Object.keys(_query).length > 0) {
-      //   this.$router.push({
-      //     query: {}
-      //   });
-      // }
       this.saleList = [...this.saleList, ...data.results];
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);

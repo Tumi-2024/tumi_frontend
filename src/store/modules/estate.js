@@ -190,14 +190,14 @@ export const estateStore = {
           case null:
             return {};
           case "재개발":
-            return { redevelopment_area__category__in: "재개발" };
           case "재건축":
-            return { redevelopment_area__category__in: "재건축" };
-          case "가로주택":
-            return { redevelopment_area__category__in: "가로주택" };
           case "일반":
             return {
-              "redevelopment_area__category__in!": "재개발,재건축,가로주택"
+              redevelopment_area__category: context.rootState.map.areaType
+            };
+          case "기타사업":
+            return {
+              redevelopment_area__category: "기타"
             };
           default:
             return null;

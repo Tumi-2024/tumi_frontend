@@ -11,12 +11,12 @@
           :to="{
             name: 'listHouses',
             query: {
-              redevelopment_area: $store.state.map.redevId,
-              title: $store.state.map.redevTitle
+              subcity: $store.state.map.subcityId,
+              title: $store.state.map.subcityTitle
             }
           }"
         >
-          {{ $store.state.map.toolbarTitle }} 매물보기
+          {{ $store.state.map.subcityTitle }} 매물보기
           <span style="color: #ff5a00; margin-left: 10px">
             {{ `${$store.state.map.count} 개` }}
           </span>

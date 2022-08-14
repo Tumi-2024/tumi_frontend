@@ -21,8 +21,8 @@
 
       <q-card-section>
         <div class="row">
-          <q-radio v-model="shape" val="house" label="매물" />
-          <q-radio v-model="shape" val="transaction" label="실거래가" />
+          <q-radio v-model="shape" val="house" label="매물 지도" />
+          <q-radio v-model="shape" val="transaction" label="실거래가 지도" />
           <q-input
             filled
             use-input
@@ -36,74 +36,59 @@
           />
         </div>
       </q-card-section>
-      <!-- {{ locations }} -->
-      <template
-        v-if="!locations.length && !redevlopments.length && !houses.length"
-      >
-        <q-card-section>
-          <list-result
-            :list="recents"
-            @select="onSelectList"
-            @delete="onDeleteItem"
-            hasDelete
-          >
-            <template #title>
-              <q-item-label class="no-margin no-padding" header>
-                <p style="font-size: 14px" class="text-black notosanskr-medium">
-                  최근 검색 한
-                </p>
-              </q-item-label>
-            </template>
-          </list-result>
-        </q-card-section>
-        <q-separator
-          color="positive"
-          inset
-          spaced
-          size="12px"
-          class="full-width"
-        />
-      </template>
-      <q-card-section v-else>
+      <div class="flex q-px-md" style="gap: 15px">
         <list-result
+          style="flex: 1"
+          v-if="!locations.length && !redevlopments.length && !houses.length"
+          :list="recents"
+          @select="onSelectList"
+          @delete="onDeleteItem"
+          hasDelete
+        >
+          <template #title>
+            <q-item-label class="no-margin no-padding" header>
+              <p style="font-size: 16px" class="text-black notosanskr-medium">
+                최근 검색 한
+              </p>
+            </q-item-label>
+          </template>
+        </list-result>
+        <list-result
+          style="flex: 1"
+          v-if="redevlopments.length"
           :list="redevlopments"
           type="redevelopment"
           @select="onSelectList"
         >
           <template #title>
             <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 14px" class="text-black notosanskr-medium">
+              <p style="font-size: 16px" class="text-black notosanskr-medium">
                 개발정비사업
               </p>
             </q-item-label>
           </template>
         </list-result>
-        <q-separator
-          color="positive"
-          inset
-          spaced
-          size="12px"
-          class="full-width"
-        />
-
-        <list-result :list="locations" type="location" @select="onSelectList">
+        <list-result
+          style="flex: 1"
+          v-if="locations.length"
+          :list="locations"
+          type="location"
+          @select="onSelectList"
+        >
           <template #title>
             <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 14px" class="text-black notosanskr-medium">
+              <p style="font-size: 16px" class="text-black notosanskr-medium">
                 지역 (동, 도로명)
               </p>
             </q-item-label>
           </template>
         </list-result>
-        <q-separator
-          color="positive"
-          inset
-          spaced
-          size="12px"
-          class="full-width"
-        />
-
-        <list-result :list="houses" @select="onSelectList">
+        <list-result
+          style="flex: 1"
+          v-if="houses.length"
+          :list="houses"
+          @select="onSelectList"
+        >
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 14px" class="text-black notosanskr-medium">
@@ -112,19 +97,7 @@
             </q-item-label>
           </template>
         </list-result>
-      </q-card-section>
-
-      <!-- <q-card-section>
-        <list-result :list="this.recommends" />
-      </q-card-section>
-
-      <q-separator
-        color="positive"
-        inset
-        spaced
-        size="12px"
-        class="full-width"
-      /> -->
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -191,9 +164,10 @@ export default {
         `/locations/?search=${this.text}`
       );
       this.locations = data.results
-        .map(({ latitude, longitude, address }) => {
-          return { value: { latitude, longitude }, label: address };
-        })
+        .map(({ latitude, longitude, subcity, title }) => ({
+          value: { latitude, longitude },
+          label: `${subcity.address} ${title}`
+        }))
         .filter((obj) => obj.value);
     },
     async getHouses() {
@@ -201,13 +175,11 @@ export default {
         `/houses/?search=${this.text}`
       );
       this.houses = data.results
-        .map(({ latitude, longitude, group_building_house: building, id }) => {
-          return {
-            value: { latitude, longitude },
-            label: building?.title_building,
-            id
-          };
-        })
+        .map(({ latitude, longitude, group_building_house: building, id }) => ({
+          value: { latitude, longitude },
+          label: building?.title_building,
+          id
+        }))
         .filter((obj) => obj.value);
     },
     async onSearch(event) {
