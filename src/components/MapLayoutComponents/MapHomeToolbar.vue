@@ -50,7 +50,6 @@ export default {
   },
   computed: {
     getHeaderLabel() {
-      console.log(this.$route);
       const _routename = this.$route.name;
       const _routeArr = [
         {

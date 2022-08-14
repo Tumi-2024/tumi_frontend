@@ -54,12 +54,12 @@ export default {
         {
           label: "사업 유형",
           value:
-            location.redevelopment_area.category ||
-            location.redevelopment_area.category
+            location?.redevelopment_area?.category ||
+            location?.redevelopment_area?.category
         },
         {
           label: "현재 추진 단계",
-          value: location.redevelopment_area.redevelopment_step
+          value: location?.redevelopment_area?.redevelopment_step
         }
       ];
     },
@@ -83,7 +83,7 @@ export default {
         group_location: locationInfo
       } = this.item;
 
-      const dateRights = locationInfo.redevelopment_area.category_date_rights
+      const dateRights = locationInfo.redevelopment_area?.category_date_rights
         ?.replace("권리산정기준일 : ", "")
         .replace("년 ", "-")
         .replace("월 ", "-")

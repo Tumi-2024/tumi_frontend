@@ -72,10 +72,6 @@ export default {
   },
   methods: {
     ...mapActions("map", ["addInterestLocation", "setIsCone", "setAreaType"]),
-    showRedevelopmentArea() {
-      this.setIsCone(!this.getIsCone);
-      this.$emit("showArea", !this.getIsCone);
-    },
     changeRedev() {
       const index = this.type.findIndex(({ key }) => key === this.getAreaType);
       this.setAreaType(this.type[(index + 1) % this.type.length].key);
@@ -98,7 +94,7 @@ export default {
   },
   computed: {
     ...mapGetters(["estate", "getViewRedevOnly"]),
-    ...mapGetters("map", ["getIsCone", "getAreaType"]),
+    ...mapGetters("map", ["getAreaType"]),
     getLabel() {
       return this.type.find(({ key }) => key === this.getAreaType)?.label;
     },

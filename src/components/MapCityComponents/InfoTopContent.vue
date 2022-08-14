@@ -1,24 +1,29 @@
 <template>
   <div class="top-info-container notosanskr-medium">
-    <div class="markerYear" :class="{ 'mr-54': marker.infoNumber }" v-if="getMapMode === 'transaction'">
+    <div
+      class="markerYear"
+      :class="{ 'mr-54': marker.infoNumber }"
+      v-if="getMapMode === 'transaction'"
+    >
       {{ marker.year }}
     </div>
     <div
       class="roundedNumber bg-primary text-positive"
-      v-if="marker.infoNumber">
+      v-if="marker.infoNumber"
+    >
       {{ marker.infoNumber }}
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   props: {
     marker: Object
   },
   computed: {
-    ...mapGetters('map', ['getMapMode'])
+    ...mapGetters("map", ["getMapMode"])
   }
 };
 </script>
