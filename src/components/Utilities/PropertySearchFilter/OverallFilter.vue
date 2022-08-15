@@ -180,8 +180,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("queryBuilder", ["setIsMultiSelect", "initialize"]),
+    ...mapActions("search", ["setIsMultiSelect", "initialize"]),
     openModal() {
       this.setIsMultiSelect(false);
       this.modal = true;

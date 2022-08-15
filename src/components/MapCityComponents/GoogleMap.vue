@@ -438,6 +438,8 @@ export default {
         }
       };
 
+      console.log("fetch");
+
       await this.fetchMapAreas({
         ...getAreaTypeString(),
         latitude__range: `${boundLocation.latitude[0]},${boundLocation.latitude[1]}`,

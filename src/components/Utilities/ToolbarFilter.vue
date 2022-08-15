@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
-    ...mapGetters("queryBuilder", [
+    ...mapGetters("search", [
       "categories",
       "area",
       "price",

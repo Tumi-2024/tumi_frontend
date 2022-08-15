@@ -84,7 +84,7 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("queryBuilder", [
+    ...mapGetters("search", [
       "categories",
       "area",
       "price",

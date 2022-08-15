@@ -23,7 +23,6 @@ export default {
     ...mapActions("map", ["fetchLocationInterest"])
   },
   beforeMount() {
-    this.$store.dispatch("requestLocation");
     try {
       const token = this.$store.state.user.data.token;
       if (token) {

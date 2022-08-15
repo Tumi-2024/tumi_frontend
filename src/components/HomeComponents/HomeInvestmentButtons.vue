@@ -102,7 +102,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("queryBuilder", ["setCategories"]),
+    ...mapActions("search", ["setCategories"]),
     onClick(item) {
       // this.categories = [
       //   {

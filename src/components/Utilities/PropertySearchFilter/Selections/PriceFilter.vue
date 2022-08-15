@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
-    ...mapGetters("queryBuilder", ["price", "initPrice", "isMultiSelect"])
+    ...mapGetters("search", ["price", "initPrice", "isMultiSelect"])
   },
   data() {
     return {
@@ -97,7 +97,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("queryBuilder", ["setPrice", "setInitPrice"]),
+    ...mapActions("search", ["setPrice", "setInitPrice"]),
 
     toMoneyString: toMoneyString,
     select(val) {

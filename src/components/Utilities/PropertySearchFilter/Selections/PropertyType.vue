@@ -64,7 +64,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("queryBuilder", ["categories", "isMultiSelect"]),
+    ...mapGetters("search", ["categories", "isMultiSelect"]),
     getIsActive() {
       return (dd) => {
         return this.selected.some((obj) => obj === dd);
@@ -131,7 +131,7 @@ export default {
     this.selected = [...this.categories];
   },
   methods: {
-    ...mapActions("queryBuilder", ["setCategories", "removeCategories"]),
+    ...mapActions("search", ["setCategories", "removeCategories"]),
     select(val) {
       this.$emit("selectDetail", val);
     },

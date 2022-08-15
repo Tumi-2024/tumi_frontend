@@ -102,11 +102,11 @@ export const estateStore = {
     getSimpleHouses: async function (context, payload) {
       context.commit("setSimpleHouses", []);
 
-      const area = context.getters["queryBuilder/area"];
-      const price = context.getters["queryBuilder/price"];
-      const initPrice = context.getters["queryBuilder/initPrice"];
-      const person = context.getters["queryBuilder/person"];
-      const category = context.getters["queryBuilder/getCategoriesByKorean"];
+      const area = context.getters["search/area"];
+      const price = context.getters["search/price"];
+      const initPrice = context.getters["search/initPrice"];
+      const person = context.getters["search/person"];
+      const category = context.getters["search/getCategoriesByKorean"];
 
       const getQueryArray = (keyName, params) => {
         if (Array.isArray(params)) {
@@ -187,8 +187,6 @@ export const estateStore = {
         }
       };
 
-      console.log(person);
-
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
@@ -204,7 +202,7 @@ export const estateStore = {
               initPrice.min,
               initPrice.max
             ]),
-            ...getQueryArray([`${area.value}__range`], [area.min, area.max]),
+            ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
             ...getQueryArray("user__in", person),
             ...getQueryArray(
               "redevelopment_area__category",

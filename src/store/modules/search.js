@@ -1,117 +1,177 @@
-// Import Section
-import Vue from "vue";
-
-// Main Section
 export const searchStore = {
   namespaced: true,
   state: {
-    typeSale: "전체",
-    typeHouse: "아파트",
-    typeHouseDetail: "전체",
-    mainteance: "일반매물",
-    area: "10평대",
-    salePrice: {
-      text: "전체",
-      min: 0,
-      max: 0
+    // 주택 유형
+    categories: [
+      "APARTMENT",
+      "ALLIANCE",
+      "SINGLE",
+      "OFFICETEL",
+      "COMMERCIAL",
+      "LAND",
+      "noname01",
+      "noname02"
+    ],
+
+    // 전용면적
+    // 무조건 1종류와 min, max
+    area: {
+      value: undefined,
+      min: undefined,
+      max: undefined
     },
-    depositPrice: {
-      text: "전체",
-      min: 0,
-      max: 0
+    /**
+     * 주택 가격
+     */
+    price: {
+      min: undefined,
+      max: undefined
     },
-    monthlyRentPrice: {
-      text: "전체",
-      min: 0,
-      max: 0
+    /**
+     * 초기 투자금
+     */
+    initPrice: {
+      min: undefined,
+      max: undefined
     },
-    location: null
+    /**
+     * 담당자 ID
+     */
+    person: [],
+    // 다중선택 Param
+    isMultiSelect: false
   },
   getters: {
-    search: (state, getters) => {
-      return state;
+    categories: (_state) => {
+      return _state.categories;
+    },
+    getCategoriesByKorean: (_state) => {
+      const _kr = [
+        {
+          label: "아파트",
+          value: "APARTMENT"
+        },
+        {
+          label: "연립ￜ다세대",
+          value: "ALLIANCE"
+        },
+        {
+          label: "단독ￜ다가구",
+          value: "SINGLE"
+        },
+        {
+          label: "오피스텔",
+          value: "OFFICETEL"
+        },
+        {
+          label: "상업ￜ업무용",
+          value: "COMMERCIAL"
+        },
+        {
+          label: "토지",
+          value: "LAND"
+        },
+        {
+          label: "무허가건축물",
+          value: "noname01"
+        },
+        {
+          label: "입주권",
+          value: "noname02"
+        }
+      ];
+      return _state.categories
+        .map((item) => {
+          const data = _kr.filter(({ value }) => value === item);
+          return data.length > 0 ? data[0].label : null;
+        })
+        .filter((item) => item !== null);
+    },
+
+    area: (_state) => {
+      console.log(_state.area, "area");
+      return _state.area;
+    },
+    price: (_state) => {
+      return _state.price;
+    },
+    initPrice: (_state) => {
+      return _state.initPrice;
+    },
+    person: (_state) => {
+      return _state.person;
+    },
+    isMultiSelect: (_state) => {
+      return _state.isMultiSelect;
     }
   },
   mutations: {
-    // 거래 유형
-    SET_TYPE_SALE: (state, payload) => (state.typeSale = payload),
-    // 정비구역 유형
-    SET_MAINTANCE: (state, payload) => (state.typeSale = payload),
-    // 주택 유형
-    SET_TYPE_HOUSE: (state, payload) => (state.typeHouse = payload),
-    // 재개발 또는 가로주택일 때 주택 상세 유형
-    SET_TYPE_HOUSE_DETAIL: (state, payload) =>
-      (state.typeHouseDetail = payload),
-    SET_AREA: (state, payload) => (state.area = payload),
-    // 매매가
-    SET_SALE_PRICE: (state, payload) => (state.salePrice = payload),
-    // 전세 보증금
-    SET_DEPOSIT_PRICE: (state, payload) => (state.depositPrice = payload),
-    // 월세
-    SET_MONTHLY_RENT_PRICE: (state, payload) =>
-      (state.monthlyRentPrice = payload),
-    INITIALIZE: state => {
-      state = {
-        typeSale: "전체",
-        typeHouse: "아파트",
-        typeHouseDetail: "전체",
-        area: "10평대",
-        salePrice: {
-          text: "전체",
-          min: 0,
-          max: 0
+    initialize: (_state) => {
+      _state = {
+        // 주택 유형
+        // 다중선택 가능
+        categories: ["APARTMENT"],
+        area: {
+          value: undefined,
+          min: undefined,
+          max: undefined
         },
-        depositPrice: {
-          text: "전체",
-          min: 0,
-          max: 0
+        price: {
+          min: undefined,
+          max: undefined
         },
-        monthlyRentPrice: {
-          text: "전체",
-          min: 0,
-          max: 0
-        }
+        initPrice: {
+          min: undefined,
+          max: undefined
+        },
+        person: []
       };
     },
-    SET_LOCATION: (state, params) => (state.location = params)
+    // addCategories: (_state, payload) => {
+    //   if (_state.isMultiSelect) {
+    //     _state.categories.push(payload);
+    //   } else {
+    //     _state.categories = [payload];
+    //   }
+    // },
+    setCategories: (_state, payload) => {
+      _state.categories = payload;
+    },
+    removeCategories: (_state, payload) => {
+      _state.categories = _state.categories.filter((obj) => obj !== payload);
+    },
+    setArea: (_state, payload) => {
+      _state.area = payload;
+    },
+    // setAreaType: (_state, payload) => {
+    //   _state.area = payload;
+    // },
+    // setAreaPrice: (_state, payload) => {
+    //   _state.area.min = payload.min;
+    //   _state.area.max = payload.max;
+    // },
+    setPrice: (_state, payload) => (_state.price = payload),
+    setInitPrice: (_state, payload) => (_state.initPrice = payload),
+    setIsMultiSelect: (_state, payload) => {
+      _state.isMultiSelect = payload;
+    },
+    setPerson: (_state, payload) => (_state.person = payload)
   },
   actions: {
-    setTypeSale: (context, data) => context.commit("SET_TYPE_SALE", data),
-    setMaintance: (context, data) => context.commit("SET_MAINTANCE", data),
-    setTypeHouse: (context, data) => context.commit("SET_TYPE_HOUSE", data),
-    setTypeHouseDetail: (context, data) =>
-      context.commit("SET_TYPE_HOUSE_DETAIL", data),
-    setArea: (context, data) => context.commit("SET_AREA", data),
-    setSalePrice: (context, data) => context.commit("SET_SALE_PRICE", data),
-    setDepositPrice: (context, data) =>
-      context.commit("SET_DEPOSIT_PRICE", data),
-    setMonthlyRentPrice: (context, data) =>
-      context.commit("SET_MONTHLY_RENT_PRICE", data),
-    initialize: context => context.commit("INITIALIZE"),
-    setLocation: context => context.commit("SET_LOCATION"),
-    requestLocation: async context => {
-      const response = await Vue.prototype.$axios.get(`/cities/all/`);
-      const data = response.data.reduce((acc, cur) => {
-        acc[cur.title] = {
-          ...cur,
-          sub:
-            cur.sub_cities &&
-            cur.sub_cities.reduce((acc, cur) => {
-              acc[cur.title] = {
-                ...cur,
-                sub:
-                  cur.locations &&
-                  cur.locations.reduce((acc, cur) => {
-                    acc[cur.title] = cur;
-                    return acc;
-                  }, {})
-              };
-              return acc;
-            }, {})
-        };
-        return acc;
-      }, {});
-      context.commit("SET_LOCATION", data);
+    initialize: (context) => context.commit("initialize"),
+    // addCategories: (context, data) => context.commit("addCategories", data),
+    setCategories: (context, data) => context.commit("setCategories", data),
+    removeCategories: (context, data) =>
+      context.commit("removeCategories", data),
+
+    setArea: (context, data) => context.commit("setArea", data),
+    // setAreaType: (context, data) => context.commit("setAreaType", data),
+    // setAreaPrice: (context, data) => context.commit("setAreaPrice", data),
+    setPrice: (context, data) => context.commit("setPrice", data),
+    setInitPrice: (context, data) => context.commit("setInitPrice", data),
+    setPerson: (context, data) => context.commit("setPerson", data),
+    setIsMultiSelect: (context, data) => {
+      context.commit("setIsMultiSelect", data);
     }
   }
 };

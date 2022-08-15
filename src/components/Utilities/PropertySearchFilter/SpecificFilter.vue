@@ -105,7 +105,7 @@ export default {
     keyName: { type: String, required: false, default: "" }
   },
   methods: {
-    ...mapActions("queryBuilder", ["setIsMultiSelect"]),
+    ...mapActions("search", ["setIsMultiSelect"]),
     ...mapActions("area", ["fetchMapAreas"]),
     ...mapActions(["getSimpleHouses"]),
 

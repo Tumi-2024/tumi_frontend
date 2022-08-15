@@ -25,43 +25,26 @@ export const areaStore = {
   actions: {
     fetchMapAreas: async (context, payload) => {
       try {
-        const getQueryString2 =
-          context.rootGetters["searchQuery/getQueryString2"];
-        const users = getQueryString2("users", "");
+        const area = context.rootGetters["search/area"];
+        const price = context.rootGetters["search/price"];
+        const initPrice = context.rootGetters["search/initPrice"];
+        const person = context.rootGetters["search/person"];
+        const category = context.rootGetters["search/getCategoriesByKorean"];
 
-        const area = context.rootGetters["queryBuilder/area"];
-        const price = context.rootGetters["queryBuilder/price"];
-        const ctgr = context.rootGetters["queryBuilder/getCategoriesByKorean"];
-
-        // if (payload?.latitude) {
-        //   await context.commit("estate/setLatitude", payload.latitude, {
-        //     root: true
-        //   });
-        //   await context.commit("estate/setLongitude", payload.longitude, {
-        //     root: true
-        //   });
-        // }
         const lat = context.rootState.estate.latitude;
         const long = context.rootState.estate.longitude;
-        const getQueryArray = (keyname, params) => {
-          const hasValue = params.every((value) => !!value);
-          if (hasValue) {
-            return { [keyname]: params };
-          } else {
-            return {};
+        const getQueryArray = (keyName, params) => {
+          if (Array.isArray(params)) {
+            const hasValue = params.every((value) => value !== undefined);
+            if (!hasValue || params.length === 0) return {};
+            return {
+              [keyName]: params.join(",")
+            };
           }
-        };
-
-        const getRedevQuery = () => {
-          return {};
-        };
-
-        const getTypeHouseIn = () => {
-          const _ctgr = ctgr.join(",");
-          if (_ctgr.length === 0) {
-            return null;
-          }
-          return { type_house__in: _ctgr };
+          if (!params) return {};
+          return {
+            [keyName]: params
+          };
         };
 
         const { data } = await Vue.prototype.$axios.get(
@@ -71,14 +54,21 @@ export const areaStore = {
               latitude__range: `${lat[0]},${lat[1]}`,
               longitude__range: `${long[0]},${long[1]}`,
               page_size: 1000,
-              ...getTypeHouseIn(),
+              ...getQueryArray("type_house__in", category),
               ...getQueryArray("price_selling_hope__range", [
                 price.min,
                 price.max
               ]),
+              ...getQueryArray("price_initial_investment__range", [
+                initPrice.min,
+                initPrice.max
+              ]),
               ...getQueryArray([`${area.value}__range`], [area.min, area.max]),
-              user__in: users.length === 0 ? undefined : users,
-              ...getRedevQuery(),
+              ...getQueryArray("user__in", person),
+              ...getQueryArray(
+                "redevelopment_area__category",
+                context.rootState.map.areaType
+              ),
               ...payload
             }
           }

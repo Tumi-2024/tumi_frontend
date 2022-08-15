@@ -136,7 +136,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("queryBuilder", ["area", "categories", "isMultiSelect"]),
+    ...mapGetters("search", ["area", "categories", "isMultiSelect"]),
     getUnit() {
       return (value) => {
         if (value === undefined) {
@@ -172,8 +172,7 @@ export default {
   },
   methods: {
     toMoneyString,
-    ...mapActions("searchQuery", ["setQuery", "initializeQuery"]),
-    ...mapActions("queryBuilder", ["setArea"]),
+    ...mapActions("search", ["setArea"]),
 
     select(val) {
       this.$emit("selectDetail", val);
