@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import { Cookies } from "quasar";
 
 import routes from "./routes";
-import Vuex from "../store";
 
 Vue.use(VueRouter);
 
@@ -16,7 +15,7 @@ Vue.use(VueRouter);
  * with the Router instance.
  */
 
-export default function (/* { store, ssrContext } */) {
+export default function ({ store, ssrContext }) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
@@ -28,10 +27,28 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   });
 
-  Router.beforeEach((to, from, next) => {
+  Router.beforeEach(async (to, from, next) => {
     const value = Cookies.get("tumi");
-    console.log(Vuex, from);
-
+    console.log(from);
+    let text = "";
+    switch (from.name) {
+      case "map_city":
+        text = "매물 지도";
+        break;
+      case "map_city_area":
+        text = "실거래가 지도";
+        break;
+      case "home":
+        text = "메인화면";
+        break;
+      case "listHouses":
+        text = "매물 검색";
+        break;
+      default:
+        text = "뒤로 가기";
+    }
+    await store.dispatch("map/setPrevPageLabel", text);
+    // actions.setPrevPageLabel(undefined, "test");
     if (to.name === "signIn" || to.name === "signUp") {
       next();
     } else if (!value) {

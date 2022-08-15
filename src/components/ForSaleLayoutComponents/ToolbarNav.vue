@@ -16,7 +16,7 @@
           ></q-icon>
         </div>
         <q-separator vertical inset />
-        <div class="heading-nav-bar q-ml-sm">{{ getToolbarTitle }}</div>
+        <div class="heading-nav-bar q-ml-sm">{{ getPrevPageLabel }}</div>
       </q-btn>
 
       <!-- Right side starts here -->
@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarTitle"]),
+    ...mapGetters("map", ["getMapMode", "getPrevPageLabel"]),
     ...mapGetters(["currentHouse"]),
     // current_house
     is_interest() {
