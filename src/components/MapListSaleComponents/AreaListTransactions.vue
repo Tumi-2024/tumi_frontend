@@ -2,7 +2,10 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 실거래가
-      <span class="text-primary"> {{ saleList.length }} </span>개
+      <span class="text-primary">
+        {{ getNumberWithCommas(transactionCount) }}
+      </span>
+      개
     </q-card-section>
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
@@ -36,7 +39,7 @@
 
 <script>
 import Vue from "vue";
-import AreaTransaction from "./AreaTransaction.vue";
+import AreaTransaction from "./AreaItemTransaction.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 
 import { mapGetters } from "vuex";
@@ -53,11 +56,17 @@ export default {
       selectedIndex: 0,
       type: "transaction" /** sell  */,
       saleList: [],
-      currentItem: {}
+      currentItem: {},
+      transactionCount: 0
     };
   },
   computed: {
-    ...mapGetters("map", ["getMapMode"])
+    ...mapGetters("map", ["getMapMode"]),
+    getNumberWithCommas() {
+      return (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      };
+    }
   },
   created() {
     this.getAllTransactions();
@@ -92,6 +101,7 @@ export default {
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+      this.transactionCount = data.count;
     },
 
     async getTransactionsFromSearch(query) {
@@ -104,6 +114,7 @@ export default {
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+      this.transactionCount = data.count;
     },
     async getTransactionsFromRedev(id) {
       const { data } = await Vue.prototype.$axios.get(
@@ -126,6 +137,7 @@ export default {
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+      this.transactionCount = data.count;
     }
   }
 };

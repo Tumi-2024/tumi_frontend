@@ -19,7 +19,7 @@
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <q-list class="q-pt-md">
         <div v-for="(item, i) of simple_houses" :key="i">
-          <area-item
+          <area-item-house
             class="q-py-sm"
             :query="{ sellid: item.id }"
             v-bind="{ item: item }"
@@ -39,7 +39,7 @@
 <script>
 import Vue from "vue";
 // import AreaTransaction from "./AreaTransaction.vue";
-import AreaItem from "./AreaItem.vue";
+import AreaItemHouse from "./AreaItemHouse.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
@@ -51,7 +51,7 @@ export default {
   },
   components: {
     // "area-transaction": AreaTransaction,
-    "area-item": AreaItem,
+    "area-item-house": AreaItemHouse,
     "toolbar-filter": ToolbarFilter
     // InfiniteLoading
   },
@@ -67,28 +67,6 @@ export default {
       busy: false
     };
   },
-  // watch: {
-  //   $route: {
-  //     handler({ query }) {
-  //       const _key = Object.keys(query)[0];
-  //       this.text = this.$route.query.title || "";
-  //       switch (_key) {
-  //         case "search":
-  //           this.getSearchData(query, undefined, this.page);
-  //           break;
-  //         case "redevelopment_area":
-  //           this.getRedevData(query, undefined, this.page);
-  //           break;
-  //         case "location":
-  //           this.getLocationData(query, undefined, this.page);
-  //           break;
-  //         default:
-  //           this.getApiHouses(query, undefined, this.page);
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // },
   computed: {
     ...mapGetters("map", ["getMapMode"]),
     ...mapGetters(["simple_houses", "estateCount"])

@@ -13,7 +13,11 @@
           <address-with-badges
             :item="getItem(item)"
             :tags="getBadges(item)"
-            :redevName="item.group_location.redevelopment_area.title_area"
+            :redevName="`${
+              item.group_location.redevelopment_area
+                ? item.group_location.redevelopment_area.title_area
+                : ''
+            }`"
           />
         </q-item-section>
       </div>
@@ -106,15 +110,8 @@ export default {
     getItem() {
       return (item) => {
         return {
-          address: item?.group_location?.address || "",
-          building:
-            item?.group_building_house?.title_building ||
-            `${
-              item?.transaction_group?.building ||
-              item?.transaction_group?.text_road ||
-              ""
-            }
-              ${item?.text_building || item?.text_danji || ""}`
+          address: item.group_location?.address || "",
+          building: item.group_building_house?.title_building
         };
       };
     },
@@ -127,15 +124,6 @@ export default {
           const y = String(_d.getFullYear()).split(0, 2)[1];
           return y + String("." + d);
         };
-
-        // const getIcon = () => {
-        //   switch (item.group_location?.redevelopment_area.category) {
-        //     case "재개발":
-        //       return require("src/assets/icons/redevelop.svg");
-        //     default:
-        //       return require("src/assets/icons/redevelop.svg");
-        //   }
-        // };
         const getColor = (label) => {
           switch (label) {
             case "재개발":
@@ -147,12 +135,6 @@ export default {
             default:
               return "";
           }
-          //     type: [
-          //   { color: "white", label: "All", key: null },
-          //   { color: "primary", label: "재개발", key: "재개발" },
-          //   { color: "blue", label: "재건축", key: "재건축" },
-          //   { color: "green", label: "가로주택", key: "가로주택" }
-          // ]
         };
 
         return [
@@ -160,42 +142,30 @@ export default {
             type: "transactionStatus",
             value: item.transactionStatus
               ? false
-              : item?.group_location?.redevelopment_area?.category,
-            color: getColor(item?.group_location?.redevelopment_area?.category)
+              : item.group_location.redevelopment_area?.category,
+            color: getColor(item.group_location.redevelopment_area?.category)
             // icon: getIcon()
           },
-          { type: "houseType", value: item?.group_building_house.type_house },
-          { type: "redevelopment", value: item?.redevelopment },
-          { type: "stageProgress", value: item?.stageProgress },
+          { type: "houseType", value: item.group_building_house.type_house },
+          { type: "redevelopment", value: item.redevelopment },
+          { type: "stageProgress", value: item.stageProgress },
           {
             type: "pyeong",
             value:
-              (item?.group_building_house.size_building_area / 3.3).toFixed(0) +
+              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
               "평"
           },
           {
             type: "price",
             value: `${toSimpleMoneyString(
-              item?.group_trading_terms.price_selling_hope ||
-                item?.group_trading_terms.price_charter_deposit_hope
+              item.group_trading_terms.price_selling_hope ||
+                item.group_trading_terms.price_charter_deposit_hope
             )}`
           },
-          { type: "date", value: getDate(item?.created) }
+          { type: "date", value: getDate(item.created) }
         ];
       };
     },
-    // getBadges() {
-    //   return (item) => {
-    //     return [
-    //       { type: 'houseType', value: toKr(item.type_house) },
-    //       { type: 'pyeong', value: item.pyeong + '평' },
-    //       { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
-    //       { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area?, icon: '~assets/icons/redevelop.svg' },
-    //       { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
-    //       { type: 'date', value: toDateFormat(item.created) }
-    //     ]
-    //   }
-    // },
     sale() {
       const sale = {};
       sale.type = this.item.type_sale;

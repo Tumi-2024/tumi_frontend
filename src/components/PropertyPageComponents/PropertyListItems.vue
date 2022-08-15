@@ -9,7 +9,7 @@
           @click.stop="setSelected(item.id)"
         >
           <q-checkbox v-show="isEdit" v-model="selectedItems" :val="item.id" />
-          <area-item
+          <area-item-house
             :item="item"
             :query="{ sellid: item.id }"
             v-bind="{
@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import { AreaItem } from "components/MapListSaleComponents";
+import { AreaItemHouse } from "components/MapListSaleComponents";
 
 export default {
   components: {
-    "area-item": AreaItem
+    "area-item-house": AreaItemHouse
   },
   mounted() {},
   data() {

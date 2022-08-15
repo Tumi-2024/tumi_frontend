@@ -97,11 +97,12 @@
             class="information sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
-            >{{ item.value }}</a
           >
-          <span class="information sub flex items-center q-px-sm" v-else>{{
-            item.value
-          }}</span>
+            {{ item.value }}
+          </a>
+          <span class="information sub flex items-center q-px-sm" v-else>
+            {{ item.value }} 세대
+          </span>
         </div>
       </div>
       <span style="font-weight: 500">임대 계획</span>
@@ -114,11 +115,12 @@
             class="information sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
-            >{{ item.value }}</a
           >
-          <span class="information sub flex items-center q-px-sm" v-else>{{
-            item.value
-          }}</span>
+            {{ item.value }}
+          </a>
+          <span class="information sub flex items-center q-px-sm" v-else>
+            {{ item.value }} 세대
+          </span>
         </div>
       </div>
     </section>

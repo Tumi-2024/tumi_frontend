@@ -1,32 +1,30 @@
 <template>
   <div class="column">
     <div class="row items-center">
-      <template v-for="(row, rIndex) of getMainInfo">
-        <div
-          class="justify-start align-start col-md-6 col-12 flex"
-          :key="`col-${rIndex}`"
+      <div
+        v-for="(row, rIndex) of getMainInfo"
+        class="justify-start align-start col-md-6 col-12 flex"
+        :key="`col-${rIndex}`"
+      >
+        <span class="col-text main title"
+          >{{ row.label }} :&nbsp;&nbsp;&nbsp;</span
         >
-          <span class="col-text main title"
-            >{{ row.label }} :&nbsp;&nbsp;&nbsp;</span
-          >
-          <q-icon size="16px" v-if="row.isDirection">
-            <img src="~assets/icons/sun.svg" />
-          </q-icon>
-          <span class="col-text main">{{ row.value }}</span>
-        </div>
-      </template>
+        <q-icon size="16px" v-if="row.isDirection">
+          <img src="~assets/icons/sun.svg" />
+        </q-icon>
+        <span class="col-text main">{{ row.value }}</span>
+      </div>
     </div>
-    <div class="row q-mt-md q-mt-lg-lg">
-      <template v-for="(row, rIndex) of getSubInfo">
-        <span
-          class="flex col-sm-3 col-lg-3 col-12"
-          :class="`col-sm-${col}`"
-          :key="`col-${rIndex}`"
-        >
-          <span class="col-text">{{ row.label }}:&nbsp;&nbsp;&nbsp;</span>
-          <span class="col-text value">{{ row.value }}</span>
-        </span>
-      </template>
+    <div class="row q-mt-xs q-mt-lg-md">
+      <span
+        v-for="(row, rIndex) of getSubInfo"
+        class="flex col-sm-3 col-lg-3 col-12"
+        :class="`col-sm-${col}`"
+        :key="`col-${rIndex}`"
+      >
+        <span class="col-text">{{ row.label }}:&nbsp;&nbsp;&nbsp;</span>
+        <span class="col-text value">{{ row.value }}</span>
+      </span>
     </div>
   </div>
 </template>

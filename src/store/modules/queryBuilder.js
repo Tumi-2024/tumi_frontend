@@ -2,7 +2,16 @@ export const queryBuilderStore = {
   namespaced: true,
   state: {
     // 주택 유형
-    categories: [],
+    categories: [
+      "APARTMENT",
+      "ALLIANCE",
+      "SINGLE",
+      "OFFICETEL",
+      "COMMERCIAL",
+      "LAND",
+      "noname01",
+      "noname02"
+    ],
 
     // 전용면적
     // 무조건 1종류와 min, max

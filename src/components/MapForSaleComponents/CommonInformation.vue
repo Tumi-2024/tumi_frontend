@@ -78,7 +78,7 @@ export default {
       /* display:flex; */
       flex-shrink: 0;
       background-color: #f6f6f6;
-      width: 125px;
+      width: 130px;
     }
   }
 }

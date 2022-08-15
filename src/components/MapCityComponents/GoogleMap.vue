@@ -6,7 +6,6 @@
       :disable-heart="getMapZoom > 15"
       @showArea="showHideArea"
     />
-    <!-- Google Map Starts -->
     <GmapMap
       ref="mapRef"
       v-on="{
@@ -406,7 +405,7 @@ export default {
     idle() {
       this.setLocationLoading(false);
       this.getHouseInfo();
-      if (this.getMapZoom < 14) return;
+      if (this.getMapZoom < 13) return;
       this.getRedevInfo();
     },
 

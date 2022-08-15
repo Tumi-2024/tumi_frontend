@@ -22,7 +22,7 @@
         class="bg-white q-pt-md"
         v-if="properties && properties.length > 0"
       >
-        <area-item
+        <area-item-house
           v-for="(item, i) of properties"
           :key="i"
           :item="item"
@@ -31,7 +31,7 @@
             ctgr: item.category,
             type: item.type
           }"
-        ></area-item>
+        ></area-item-house>
       </q-list>
     </q-card-section>
   </div>
@@ -39,7 +39,7 @@
 
 <script>
 import { ToolbarNav } from "src/components/RecentlySeenComponents";
-import { AreaItem } from "src/components/MapListSaleComponents";
+import { AreaItemHouse } from "src/components/MapListSaleComponents";
 import {
   PropertyMenuSort,
   PropertyFilter,
@@ -51,7 +51,7 @@ export default {
     "toolbar-nav": ToolbarNav,
     PropertyMenuSort,
     PropertyFilter,
-    "area-item": AreaItem
+    "area-item-house": AreaItemHouse
   },
   mixins: [PropertyMixin]
 };

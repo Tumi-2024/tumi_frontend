@@ -102,39 +102,25 @@ export const estateStore = {
     getSimpleHouses: async function (context, payload) {
       context.commit("setSimpleHouses", []);
 
-      const getQueryString2 = context.getters["searchQuery/getQueryString2"];
+      const area = context.getters["queryBuilder/area"];
+      const price = context.getters["queryBuilder/price"];
+      const initPrice = context.getters["queryBuilder/initPrice"];
+      const person = context.getters["queryBuilder/person"];
+      const category = context.getters["queryBuilder/getCategoriesByKorean"];
 
-      const users = getQueryString2("users", "");
-
-      const areaNew = context.getters["queryBuilder/area"];
-      const priceNew = context.getters["queryBuilder/price"];
-      const ctgrNew = context.getters["queryBuilder/getCategoriesByKorean"];
-
-      const getQueryArray = (keyname, params) => {
-        const hasValue = params.every((value) => !!value);
-        if (hasValue) {
-          return { [keyname]: params };
-        } else {
-          return {};
+      const getQueryArray = (keyName, params) => {
+        if (Array.isArray(params)) {
+          const hasValue = params.every((value) => value !== undefined);
+          if (!hasValue || params.length === 0) return {};
+          return {
+            [keyName]: params.join(",")
+          };
         }
+        if (!params) return {};
+        return {
+          [keyName]: params
+        };
       };
-
-      // const query = Vue.prototype.$qs.stringify(
-      //   {
-      //     type_house__in: ctgrNew,
-      //     ...getQueryArray("price_selling_hope__range", [
-      //       priceNew.min,
-      //       priceNew.max
-      //     ]),
-      //     ...getQueryArray(
-      //       [`${areaNew.value}__range`],
-      //       [areaNew.min, areaNew.max]
-      //     ),
-      //     user__in: users.length === 0 ? undefined : users
-      //   },
-      //   { arrayFormat: "comma" }
-      // );
-
       // const encodedUrl = query + "&" + redevelopQuery;
       if (payload?.latitude) {
         await context.commit("setLatitude", payload.latitude);
@@ -167,36 +153,28 @@ export const estateStore = {
         await context.commit("setRequestUrl", context.state.requestUrl);
       }
 
-      const getRedevQuery = () => {
-        return {};
-      };
+      // const getRedevQuery = () => {
+      //   return {};
+      // };
 
-      const getTypeHouseIn = () => {
-        const _ctgr = ctgrNew.join(",");
-        if (_ctgr.length === 0) {
-          return null;
-        }
-        return { type_house__in: _ctgr };
-      };
-
-      const getAreaTypeString = () => {
-        switch (context.rootState.map.areaType) {
-          case null:
-            return {};
-          case "재개발":
-          case "재건축":
-          case "일반":
-            return {
-              redevelopment_area__category: context.rootState.map.areaType
-            };
-          case "기타사업":
-            return {
-              redevelopment_area__category: "기타"
-            };
-          default:
-            return null;
-        }
-      };
+      // const getAreaTypeString = () => {
+      //   switch (context.rootState.map.areaType) {
+      //     case null:
+      //       return {};
+      //     case "재개발":
+      //     case "재건축":
+      //     case "일반":
+      //       return {
+      //         redevelopment_area__category: context.rootState.map.areaType
+      //       };
+      //     case "기타사업":
+      //       return {
+      //         redevelopment_area__category: "기타"
+      //       };
+      //     default:
+      //       return null;
+      //   }
+      // };
 
       const getXY = () => {
         if (!lat[0] || !long[0]) {
@@ -208,24 +186,32 @@ export const estateStore = {
           };
         }
       };
+
+      console.log(person);
+
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
           params: {
             page_size: 1000,
             ...getXY(),
-            ...getTypeHouseIn(),
+            ...getQueryArray("type_house__in", category),
             ...getQueryArray("price_selling_hope__range", [
-              priceNew.min,
-              priceNew.max
+              price.min,
+              price.max
             ]),
+            ...getQueryArray("price_initial_investment__range", [
+              initPrice.min,
+              initPrice.max
+            ]),
+            ...getQueryArray([`${area.value}__range`], [area.min, area.max]),
+            ...getQueryArray("user__in", person),
             ...getQueryArray(
-              [`${areaNew.value}__range`],
-              [areaNew.min, areaNew.max]
-            ),
-            user__in: users.length === 0 ? undefined : users,
-            ...getRedevQuery(),
-            ...getAreaTypeString()
+              "redevelopment_area__category",
+              context.rootState.map.areaType
+            )
+            // ...getRedevQuery(),
+            // ...getAreaTypeString()
           }
         }
       );

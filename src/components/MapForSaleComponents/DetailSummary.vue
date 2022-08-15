@@ -159,34 +159,31 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/phone.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md text-subtitle2">
-              {{ persons[0].text }}
+        <div class="col-12 q-px-sm">
+          <div
+            class="initial-investments row q-pa-md q-mt-sm items-center flex"
+          >
+            <div class="flex">
+              <q-icon size="20px">
+                <img src="~assets/icons/phone.svg" alt="" />
+              </q-icon>
             </div>
-            <template v-if="persons[0].phone">
-              (연락처:
-              <div class="q-ml-md">{{ persons[0].phone }}</div>
-              )
-            </template>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 q-px-sm">
-          <div class="initial-investments row q-pa-sm q-mt-sm items-center">
-            <q-icon>
-              <img src="~assets/icons/phone.svg" alt="" />
-            </q-icon>
-            <div class="q-ml-md text-subtitle2">
-              {{ persons[1].text }}
+            <div class="q-ml-md" style="flex: 1" @click="callPerson">
+              <div class="row items-center">
+                <span class="text-subtitle2 col-12">
+                  {{ persons[0].rank }}
+                </span>
+                <div class="text-subtitle1 q-my-xs col-12 flex">
+                  {{ persons[0].text }}
+                  <span v-if="persons[0].phone" class="q-ml-md flex"
+                    >(연락처:{{ persons[0].phone }})</span
+                  >
+                </div>
+              </div>
+              <span class="text-grey-9">
+                클릭시 담당직원과 전화상담이 가능합니다.
+              </span>
             </div>
-            <template v-if="persons[1].phone">
-              (연락처:
-              <div class="q-ml-md">{{ persons[1].phone }}</div>
-              )
-            </template>
           </div>
         </div>
       </div>
@@ -262,6 +259,10 @@ export default {
   methods: {
     toMoneyString(value, add) {
       return toMoneyString(value, add);
+    },
+    callPerson(phoneNumber) {
+      if (!phoneNumber) return;
+      window.location.href = "tel://" + phoneNumber;
     }
   },
   computed: {
