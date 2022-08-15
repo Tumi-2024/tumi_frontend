@@ -18,8 +18,8 @@
     <div class="selection row q-mt-lg" style="color: #1a1a1a">
       <q-btn
         v-for="(property, i) of getProperties"
-        :key="i"
         flat
+        :key="i"
         class="notosanskr-medium"
         style="flex: 1"
         :style="{ 'background-color': property.disabled ? '#e9e9e9' : '' }"
@@ -63,6 +63,7 @@
       <q-btn
         v-for="(preset, index) of presets"
         :key="index"
+        flat
         dense
         :style="[{ width: `calc(100% / ${presets.length / 2})` }]"
         @click="onClickPreset(preset)"
@@ -268,7 +269,7 @@ export default {
   font-size: 15px;
   line-height: 24px;
   .q-btn {
-    border: 2px solid rgba(128, 128, 128, 0.171);
+    border: 1px solid rgba(128, 128, 128, 0.171);
     height: 44px;
     border-radius: 0;
     &.selected {

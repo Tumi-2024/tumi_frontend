@@ -30,6 +30,7 @@
         v-for="(preset, index) of presets"
         :key="index"
         dense
+        flat
         :style="[{ width: `calc(100% / ${presets.length / 2} )` }]"
         @click="onClickPreset(preset)"
         :class="{
@@ -192,7 +193,7 @@ export default {
   font-size: 15px;
   line-height: 24px;
   .q-btn {
-    border: 2px solid rgba(128, 128, 128, 0.171);
+    border: 1px solid rgba(128, 128, 128, 0.171);
     height: 44px;
     border-radius: 0;
     &.selected {
