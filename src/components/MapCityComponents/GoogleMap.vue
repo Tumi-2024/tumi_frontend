@@ -8,11 +8,13 @@
     />
     <!-- Google Map Starts -->
     <GmapMap
-      @idle="idle"
-      @dragend="dragEnd"
-      @dragstart="dragStart"
-      @zoom_changed="zoomChanged"
       ref="mapRef"
+      v-on="{
+        idle: idle,
+        dragend: dragEnd,
+        dragstart: dragStart,
+        zoom_changed: zoomChanged
+      }"
       :center="getMapCenter"
       :zoom="getMapZoom"
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"

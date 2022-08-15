@@ -11,18 +11,7 @@
       <div class="column" style="flex: 1 0 60px; margin-right: 20px">
         <q-item-section>
           <address-with-badges
-            :item="{
-              address: item.group_location.address || '',
-              building:
-                item.group_building_house.title_building ||
-                `${
-                  item.transaction_group
-                    ? item.transaction_group.building ||
-                      item.transaction_group.text_road
-                    : ''
-                }
-              ${item.text_building || item.text_danji || ''}`
-            }"
+            :item="getItem(item)"
             :tags="getBadges(item)"
             :redevName="item.group_location.redevelopment_area.title_area"
           />
@@ -114,6 +103,21 @@ export default {
     isSelected() {
       return this.is_selected;
     },
+    getItem() {
+      return (item) => {
+        return {
+          address: item?.group_location?.address || "",
+          building:
+            item?.group_building_house?.title_building ||
+            `${
+              item?.transaction_group?.building ||
+              item?.transaction_group?.text_road ||
+              ""
+            }
+              ${item?.text_building || item?.text_danji || ""}`
+        };
+      };
+    },
     getBadges() {
       return (item, ctgr) => {
         item = this.reshape(item);
@@ -125,7 +129,7 @@ export default {
         };
 
         // const getIcon = () => {
-        //   switch (item.group_location.redevelopment_area.category) {
+        //   switch (item.group_location?.redevelopment_area.category) {
         //     case "재개발":
         //       return require("src/assets/icons/redevelop.svg");
         //     default:
@@ -156,27 +160,27 @@ export default {
             type: "transactionStatus",
             value: item.transactionStatus
               ? false
-              : item.group_location.redevelopment_area.category,
-            color: getColor(item.group_location.redevelopment_area.category)
+              : item?.group_location?.redevelopment_area?.category,
+            color: getColor(item?.group_location?.redevelopment_area?.category)
             // icon: getIcon()
           },
-          { type: "houseType", value: item.group_building_house.type_house },
-          { type: "redevelopment", value: item.redevelopment },
-          { type: "stageProgress", value: item.stageProgress },
+          { type: "houseType", value: item?.group_building_house.type_house },
+          { type: "redevelopment", value: item?.redevelopment },
+          { type: "stageProgress", value: item?.stageProgress },
           {
             type: "pyeong",
             value:
-              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
+              (item?.group_building_house.size_building_area / 3.3).toFixed(0) +
               "평"
           },
           {
             type: "price",
             value: `${toSimpleMoneyString(
-              item.group_trading_terms.price_selling_hope ||
-                item.group_trading_terms.price_charter_deposit_hope
+              item?.group_trading_terms.price_selling_hope ||
+                item?.group_trading_terms.price_charter_deposit_hope
             )}`
           },
-          { type: "date", value: getDate(item.created) }
+          { type: "date", value: getDate(item?.created) }
         ];
       };
     },
@@ -186,7 +190,7 @@ export default {
     //       { type: 'houseType', value: toKr(item.type_house) },
     //       { type: 'pyeong', value: item.pyeong + '평' },
     //       { type: 'recommend', value: "투미추천 매물", isShow: item.recommend },
-    //       { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area, icon: '~assets/icons/redevelop.svg' },
+    //       { type: 'redevelopment', value: '재개발', isShow: item.redevelopment_area?, icon: '~assets/icons/redevelop.svg' },
     //       { type: this.sale.type, value: `${toKr(this.sale.type)} ${this.sale.price !== "" ? "/ " + this.sale.price : ""}` },
     //       { type: 'date', value: toDateFormat(item.created) }
     //     ]

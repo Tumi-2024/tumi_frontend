@@ -168,13 +168,7 @@ export const estateStore = {
       }
 
       const getRedevQuery = () => {
-        if (context.getters["map/getIsCone"]) {
-          // return { redevelopment_area__status: "운영" };
-          return {};
-        } else {
-          // return { redevelopment_area__isnull: true };
-          return {};
-        }
+        return {};
       };
 
       const getTypeHouseIn = () => {

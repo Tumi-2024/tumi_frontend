@@ -28,12 +28,12 @@ const initState = {
   isInterest: false,
   locationLoading: false,
   areaType: null,
-  isCone: true,
   count: 0,
   redevId: 0,
   redevTitle: "",
   subcityId: 0,
-  subcityTitle: ""
+  subcityTitle: "",
+  prevPageLabel: ""
 };
 export const mapStore = {
   namespaced: true,
@@ -50,9 +50,9 @@ export const mapStore = {
     //     : "지금 보고있는 지역";
     // },
     getToolbarTitle: (state) => state.toolbarTitle,
-    getIsCone: (state) => state.isCone,
     getAreaType: (state) => state.areaType,
-    myInterestArea: (state) => state.interest
+    myInterestArea: (state) => state.interest,
+    getPrevPageLabel: (state) => state.prevPageLabel
   },
   mutations: {
     setMapMode: (state, payload) => (state.mode = payload),
@@ -74,7 +74,8 @@ export const mapStore = {
     setLocationLoading: (state, payload) => (state.locationLoading = payload),
     setAreaType: (state, payload) => (state.areaType = payload),
     setSubcityId: (state, payload) => (state.subcityId = payload),
-    setSubcityTitle: (state, payload) => (state.subcityTitle = payload)
+    setSubcityTitle: (state, payload) => (state.subcityTitle = payload),
+    setPrevPageLabel: (state, payload) => (state.prevPageLabel = payload)
     // setIsCone: (state, payload) => (state.isCone = payload),
     // removeLocationInterest: (state, payload) => {
     //   const _state = state.interest.filter((obj) => obj.id !== payload);
@@ -92,7 +93,6 @@ export const mapStore = {
     setMapCenter: (context, payload) => context.commit("setMapCenter", payload),
     setMapZoom: (context, payload) => context.commit("setMapZoom", payload),
     setMapMode: (context, payload) => context.commit("setMapMode", payload),
-    setIsCone: (context, payload) => context.commit("setIsCone", payload),
     setLocationLoading: (context, payload) =>
       context.commit("setLocationLoading", payload),
     resetMap: (context) => {
@@ -120,6 +120,8 @@ export const mapStore = {
       }
     },
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
+    setPrevPageLabel: (context, data) =>
+      context.commit("setPrevPageLabel", data),
     changeMapCenter: async (context, data) => {
       context.commit("setMapCenter", data);
       Vue.prototype.$axios
