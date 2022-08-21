@@ -60,6 +60,8 @@
                 :label="filter.label"
                 :component="filter.type"
                 :keyName="filter.keyName"
+                isTransaction
+                @change="onChangeFilter"
               />
             </div>
           </slot>
@@ -155,6 +157,9 @@ export default {
     }
   },
   methods: {
+    onChangeFilter(params) {
+      this.$emit("changeFilter", params);
+    },
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
     onChangeSearchText(e) {
       this.$emit("change", e);
@@ -172,7 +177,7 @@ export default {
       ].find((obj) => obj.value === this.option);
       // this.$router.options.history.state.back
 
-      this.$emit("search", type.label, obj.id, obj.label);
+      this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
     async filterFn(val, update, abort) {
       const type = [
@@ -209,11 +214,12 @@ export default {
             data: { results }
           } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
           update(async () => {
-            this.options = results.map(({ title, id }) => {
+            this.options = results.map(({ title, id, subcity }) => {
               return {
                 value: title,
                 label: title,
-                id: id
+                id: id,
+                subcityId: subcity.id
               };
             });
           });

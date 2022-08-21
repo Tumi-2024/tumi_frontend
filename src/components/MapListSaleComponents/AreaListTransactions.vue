@@ -12,9 +12,10 @@
     >
       <toolbar-filter
         class="q-pt-xs q-px-sm"
-        :text="text"
-        @input="onChangeText"
+        v-model="text"
+        @focus="onFocus"
         @search="onSearch"
+        @changeFilter="onChangeFilter"
       />
     </q-card-section>
 
@@ -34,6 +35,11 @@
         </template>
       </q-list>
     </q-card-section>
+    <div
+      v-infinite-scroll="infiniteHandler"
+      infinite-scroll-disabled="busy"
+      infinite-scroll-distance="10"
+    ></div>
   </q-card>
 </template>
 
@@ -41,10 +47,14 @@
 import Vue from "vue";
 import AreaTransaction from "./AreaItemTransaction.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
+import infiniteScroll from "vue-infinite-scroll";
 
 import { mapGetters } from "vuex";
 
 export default {
+  directives: {
+    infiniteScroll
+  },
   components: {
     "area-transaction": AreaTransaction,
     "toolbar-filter": ToolbarFilter
@@ -57,7 +67,8 @@ export default {
       type: "transaction" /** sell  */,
       saleList: [],
       currentItem: {},
-      transactionCount: 0
+      transactionCount: 0,
+      params: {}
     };
   },
   computed: {
@@ -68,14 +79,35 @@ export default {
       };
     }
   },
-  created() {
-    this.getAllTransactions();
-  },
   methods: {
-    onChangeText(e) {
-      this.text = e;
+    onChangeFilter(param) {
+      this.params = param;
+      this.infiniteHandler();
     },
-    onSearch(type, id) {
+    onFocus(e) {
+      // this.getApiHouses();
+    },
+    infiniteHandler() {
+      const { query } = this.$route;
+      const _key = Object.keys(query)[0];
+      this.text = this.$route.query.title || "";
+      this.busy = true;
+      switch (_key) {
+        case "search":
+          this.getTransactionsFromSearch(query, this.page);
+          break;
+        case "redevelopment_area":
+          this.getTransactionsFromRedev(query, this.page);
+          break;
+        case "location":
+          this.getTransactionsFromLocation(query, this.page);
+          break;
+        default:
+          this.getAllTransactions(query, undefined, this.page);
+      }
+    },
+    onSearch(type, id, _label, subcityId) {
+      console.log("onSearch transaction", type, id);
       if (id.length === 0) {
         return;
       }
@@ -94,7 +126,9 @@ export default {
       }
     },
     async getAllTransactions() {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`);
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
+        params: this.params
+      });
       this.saleList = data.results.map((item) => {
         return {
           ...item,
@@ -106,7 +140,8 @@ export default {
 
     async getTransactionsFromSearch(query) {
       const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/?search=${query}`
+        `/transaction_groups/?search=${query}`,
+        { params: this.params }
       );
       this.saleList = data.results.map((item) => {
         return {
@@ -118,7 +153,8 @@ export default {
     },
     async getTransactionsFromRedev(id) {
       const { data } = await Vue.prototype.$axios.get(
-        `/redevelopment_areas/${id}/transaction_groups/`
+        `/redevelopment_areas/${id}/transaction_groups/`,
+        { params: this.params }
       );
       this.saleList = data.results.map((item) => {
         return {
@@ -129,7 +165,8 @@ export default {
     },
     async getTransactionsFromLocation(query) {
       const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/?subcity=${query}`
+        `/transaction_groups/?location=${query}`,
+        { params: this.params }
       );
       this.saleList = data.results.map((item) => {
         return {

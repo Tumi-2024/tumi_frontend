@@ -59,8 +59,8 @@ export default {
     return {
       tab: "지역",
       text: "",
+      prevSearch: "",
       selectedIndex: 0,
-      type: "transaction" /** sell  */,
       saleList: [],
       currentItem: {},
       page: 1,
@@ -96,6 +96,7 @@ export default {
       }
     },
     onSearch(type, id, label) {
+      console.log("onSearch ListHouse", type, id, label);
       if (id.length === 0) {
         return;
       }
@@ -128,7 +129,13 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      this.saleList = [...this.saleList, ...data.results];
+      if (this.prevSearch === params.title) {
+        this.saleList = [...this.saleList, ...data.results];
+      } else {
+        this.saleList = data.results;
+      }
+      this.prevSearch = params.title;
+
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
       this.page += 1;
@@ -139,7 +146,14 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      this.saleList = [...this.saleList, ...data.results];
+
+      if (this.prevSearch === params.title) {
+        this.saleList = [...this.saleList, ...data.results];
+      } else {
+        this.saleList = data.results;
+      }
+      this.prevSearch = params.title;
+
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
       this.page += 1;
@@ -149,8 +163,12 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-
-      this.saleList = [...this.saleList, ...data.results];
+      if (this.prevSearch === params.title) {
+        this.saleList = [...this.saleList, ...data.results];
+      } else {
+        this.saleList = data.results;
+      }
+      this.prevSearch = params.title;
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
       this.page += 1;
@@ -158,19 +176,28 @@ export default {
     },
 
     setSearchQuery(search, label, page) {
+      this.page = 1;
       this.$router.push({
         query: { search }
       });
+      this.getSearchData({ search }, this.page);
     },
     setRedevQuery(redevelopmentArea, title) {
+      this.page = 1;
       this.$router.push({
         query: { redevelopment_area: redevelopmentArea, title }
       });
+      this.getRedevData(
+        { redevelopment_area: redevelopmentArea, title },
+        this.page
+      );
     },
     setLocationQuery(location, label, page) {
+      this.page = 1;
       this.$router.push({
         query: { location }
       });
+      this.getLocationData({ location }, this.page);
     }
   },
   beforeMount() {

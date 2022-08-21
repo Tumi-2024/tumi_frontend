@@ -32,6 +32,17 @@
             <q-icon name="groups" />
           </template>
         </q-select>
+        <q-input
+          v-else-if="type === 'BRANCH'"
+          v-model="team2"
+          filled
+          placeholder="중개업체 명칭"
+          style="flex-basis: 400px"
+        >
+          <template v-slot:before>
+            <q-icon name="groups" />
+          </template>
+        </q-input>
       </div>
 
       <q-input
@@ -227,6 +238,7 @@ export default {
         { label: "중개업체", value: "BRANCH" }
       ],
       team: "",
+      team2: "",
       id: "",
       type: "",
       username: "",
@@ -266,10 +278,19 @@ export default {
       if (this.type !== "TEAM") {
         this.team = "";
       }
+
+      const getFormData = () => {
+        if (this.type === "TEAM") {
+          return { team: this.team };
+        } else if (this.type === "BRANCH") {
+          return { title_store2: this.team2 };
+        } else {
+          return {};
+        }
+      };
       Vue.prototype.$axios
         .post("/users/signup/", {
           type: this.type,
-          team: this.team,
           name: this.username,
           username: this.id,
           email: this.email,
@@ -277,7 +298,8 @@ export default {
           email_private: this.emailPrivate,
           phone_private: this.phonePrivate,
           password: this.password,
-          password2: this.password2
+          password2: this.password2,
+          ...getFormData()
         })
         .then((response) => {
           if (response.status === 201 || response.status === 200) {

@@ -81,7 +81,7 @@ import {
   PriceFilter,
   PersonFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     PropertyType,
@@ -102,7 +102,15 @@ export default {
     disable: { type: Boolean, default: false },
     propsClass: { type: String, default: "" },
     value: { type: [Array, Object], require: false },
-    keyName: { type: String, required: false, default: "" }
+    keyName: { type: String, required: false, default: "" },
+    isTransaction: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+  computed: {
+    ...mapGetters("search", ["getCategoriesByKorean"])
   },
   methods: {
     ...mapActions("search", ["setIsMultiSelect"]),
@@ -116,7 +124,47 @@ export default {
     save() {
       this.$refs.component.save();
       this.modal = false;
-      this.$store.dispatch("getSimpleHouses");
+      if (!this.isTransaction) {
+        this.$store.dispatch("getSimpleHouses");
+      } else {
+        const area = this.$store.state.search.area;
+        const price = this.$store.state.search.price;
+        const initPrice = this.$store.state.search.initPrice;
+        const person = this.$store.state.search.person;
+        const category = this.getCategoriesByKorean;
+
+        const getQueryArray = (keyName, params) => {
+          if (Array.isArray(params)) {
+            const hasValue = params.every((value) => value !== undefined);
+            if (!hasValue || params.length === 0) return {};
+            return {
+              [keyName]: params.join(",")
+            };
+          }
+          if (!params) return {};
+          return {
+            [keyName]: params
+          };
+        };
+
+        this.$emit("change", {
+          page_size: 1000,
+          ...getQueryArray("type_house__in", category),
+          ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
+          ...getQueryArray("price_initial_investment__range", [
+            initPrice.min,
+            initPrice.max
+          ]),
+          ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+          ...getQueryArray("user__in", person),
+          ...getQueryArray(
+            "redevelopment_area__category"
+            // getAreaTypeString()
+          )
+          // ...getRedevQuery(),
+          // ...getAreaTypeString()
+        });
+      }
     },
     initialize() {
       this.$refs.component.initialize();

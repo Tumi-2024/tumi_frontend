@@ -19,7 +19,7 @@
 
 <script>
 import { ToolbarNav } from "components/MapLayoutComponents";
-import ToolbarFilter from "components/Utilities/ToolbarFilter";
+import ToolbarFilter from "components/Utilities/MapLayoutToolbarFilter";
 import { mapGetters } from "vuex";
 export default {
   components: {
