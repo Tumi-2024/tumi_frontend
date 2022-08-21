@@ -157,24 +157,20 @@ export const estateStore = {
       //   return {};
       // };
 
-      // const getAreaTypeString = () => {
-      //   switch (context.rootState.map.areaType) {
-      //     case null:
-      //       return {};
-      //     case "재개발":
-      //     case "재건축":
-      //     case "일반":
-      //       return {
-      //         redevelopment_area__category: context.rootState.map.areaType
-      //       };
-      //     case "기타사업":
-      //       return {
-      //         redevelopment_area__category: "기타"
-      //       };
-      //     default:
-      //       return null;
-      //   }
-      // };
+      const getAreaTypeString = () => {
+        switch (context.rootState.map.areaType) {
+          case null:
+            return "";
+          case "재개발":
+          case "재건축":
+          case "일반":
+            return context.rootState.map.areaType;
+          case "기타사업":
+            return "기타";
+          default:
+            return null;
+        }
+      };
 
       const getXY = () => {
         if (!lat[0] || !long[0]) {
@@ -206,7 +202,7 @@ export const estateStore = {
             ...getQueryArray("user__in", person),
             ...getQueryArray(
               "redevelopment_area__category",
-              context.rootState.map.areaType
+              getAreaTypeString()
             )
             // ...getRedevQuery(),
             // ...getAreaTypeString()

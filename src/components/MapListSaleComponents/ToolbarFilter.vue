@@ -30,7 +30,6 @@
             :value="text"
             @input-value="onChangeSearchText"
             @input="onSelect"
-            :input-debounce="0"
             @focus="onFocus"
             use-input
             fill-input
@@ -122,7 +121,7 @@ export default {
             this.initPrice.min || this.initPrice.max
               ? "text-white bg-purple"
               : "text-grey",
-          isHide: this.$route.path !== "/map/city",
+          isHide: this.$route.name !== "listHouses",
           keyName: "initPrices"
         },
         {
@@ -130,7 +129,7 @@ export default {
           type: "PersonFilter",
           class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
           keyName: "users",
-          isHide: this.$route.path !== "/map/city"
+          isHide: this.$route.name !== "listHouses"
         }
       ];
     }
@@ -181,6 +180,13 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
+      console.log("filter", val);
+      if (!val || val === "") {
+        update(() => {
+          this.options = [];
+        });
+        return;
+      }
 
       if (val) {
         if (type.value === "redev") {
