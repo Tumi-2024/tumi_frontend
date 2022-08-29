@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 // Main Section
 import Vue from "vue";
 
@@ -100,7 +101,7 @@ export const estateStore = {
       context.commit("setSimpleHouses", []);
     },
     getSimpleHouses: async function (context, payload) {
-      context.commit("setSimpleHouses", []);
+      // context.commit("setSimpleHouses", []);
 
       const area = context.getters["search/area"];
       const price = context.getters["search/price"];
@@ -176,6 +177,10 @@ export const estateStore = {
         if (!lat[0] || !long[0]) {
           return {};
         } else {
+          console.log({
+            latitude__range: `${lat[0]},${lat[1]}`,
+            longitude__range: `${long[0]},${long[1]}`
+          });
           return {
             latitude__range: `${lat[0]},${lat[1]}`,
             longitude__range: `${long[0]},${long[1]}`
@@ -183,13 +188,29 @@ export const estateStore = {
         }
       };
 
+      const Dquery =
+        payload.type !== "transaction_groups"
+          ? getQueryArray("type_house__in", category)
+          : getQueryArray(
+              "category__in",
+              category
+                .join(",")
+                .replace("토지", "LAND")
+                .replace("오피스텔", "OFFICETEL")
+                .replace("연립|다세대", "ALLIANCE")
+                .replace("아파트", "APARTMENT")
+                .replace("상업ￜ업무용", "COMMERCIAL")
+                .replace("단독|다가구", "SINGLE")
+                .split(",")
+            );
+
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
           params: {
             page_size: 1000,
             ...getXY(),
-            ...getQueryArray("type_house__in", category),
+            ...Dquery,
             ...getQueryArray("price_selling_hope__range", [
               price.min,
               price.max
@@ -210,7 +231,7 @@ export const estateStore = {
         }
       );
 
-      context.dispatch("map/setLocationLoading", true);
+      // context.dispatch("map/setLocationLoading", true);
 
       const estateData = (results) => {
         if (results.length > 0 && results[0].count_estates > -1) {
@@ -237,7 +258,7 @@ export const estateStore = {
               });
               const defaultCur = { ...cur, count: (_acc2.count || 0) + 1 };
 
-              if (!cur.group_building_house.type_house) {
+              if (!cur.group_building_house?.type_house) {
                 return [
                   ..._acc,
                   {
@@ -261,7 +282,9 @@ export const estateStore = {
             }));
         }
       };
-      context.commit("setSimpleHouses", estateData(data.data.results));
+      const _data = estateData(data.data.results);
+      console.log(_data);
+      context.commit("setSimpleHouses", _data);
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(

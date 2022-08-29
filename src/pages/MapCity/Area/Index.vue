@@ -36,7 +36,6 @@ export default {
     ...mapActions("map", [
       "changeMapMode",
       "changeMapZoom",
-      "changeMapCenter",
       "changeToolbarTitle"
     ])
   },

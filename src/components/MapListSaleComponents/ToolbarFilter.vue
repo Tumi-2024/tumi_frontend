@@ -163,7 +163,6 @@ export default {
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
     onChangeSearchText(e) {
       this.$emit("change", e);
-      // this.searchText = e;
       this.options = [];
     },
     onFocus() {

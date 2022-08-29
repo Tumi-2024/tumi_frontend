@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="modals" position="bottom">
-    <q-card class=" notosanskr-regular">
+    <q-card class="notosanskr-regular">
       <q-card-section class="column q-pa-none">
         <div class="heading-text">
           투자매물을 <br />쉽게 찾고 관리할 수 있어요!
@@ -22,8 +22,8 @@
 
 <script>
 import { loginModalStore, loginModalMutation } from "./LoginModalState";
-import Vue from 'vue'
-import { mapActions } from "vuex"
+import Vue from "vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "LoginModal",
@@ -37,27 +37,31 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       dataLogin: {}
-    }
+    };
   },
   methods: {
     ...mapActions("map", [
       "changeMapMode",
       "changeMapZoom",
-      "changeMapCenter",
       "getLocationInterest"
     ]),
-    async login () {
+    async login() {
       if (!(this.$store.getters.user && this.$store.getters.user.id)) {
         // Get kakaoUser
-        const kakaoUser = await this.$kakaologin()
+        const kakaoUser = await this.$kakaologin();
 
         // Get user
-        const { data: user } = await this.$axios.post('/users/kakaologin/', this.$qs.stringify(kakaoUser))
-        if (!user) { return }
-        this.$store.commit('setUser', user)
+        const { data: user } = await this.$axios.post(
+          "/users/kakaologin/",
+          this.$qs.stringify(kakaoUser)
+        );
+        if (!user) {
+          return;
+        }
+        this.$store.commit("setUser", user);
 
         try {
           const token = user.token;
@@ -65,9 +69,8 @@ export default {
             Vue.prototype.$axios.defaults.headers.common.Authorization = `Token ${token}`;
             this.getLocationInterest();
           }
-        } catch (e) {
-        }
-        loginModalMutation.closeModal()
+        } catch (e) {}
+        loginModalMutation.closeModal();
       }
     }
   },
