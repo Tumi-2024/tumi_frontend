@@ -34,6 +34,9 @@ export const areaStore = {
         const lat = context.rootState.estate.latitude;
         const long = context.rootState.estate.longitude;
         const getQueryArray = (keyName, params) => {
+          if (keyName === "type_house__in" && params.length === 8) {
+            return {};
+          }
           if (Array.isArray(params)) {
             const hasValue = params.every((value) => value !== undefined);
             if (!hasValue || params.length === 0) return {};

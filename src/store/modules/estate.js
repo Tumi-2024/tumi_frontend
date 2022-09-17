@@ -110,6 +110,9 @@ export const estateStore = {
       const category = context.getters["search/getCategoriesByKorean"];
 
       const getQueryArray = (keyName, params) => {
+        if (keyName === "type_house__in" && params.length === 8) {
+          return {};
+        }
         if (Array.isArray(params)) {
           const hasValue = params.every((value) => value !== undefined);
           if (!hasValue || params.length === 0) return {};
