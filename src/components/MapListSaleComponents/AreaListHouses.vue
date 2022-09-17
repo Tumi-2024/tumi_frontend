@@ -195,7 +195,7 @@ export default {
     setLocationQuery(location, label, page) {
       this.page = 1;
       this.$router.push({
-        query: { location }
+        query: { location, title: label }
       });
       this.getLocationData({ location }, this.page);
     }

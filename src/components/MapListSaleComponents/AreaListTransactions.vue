@@ -87,6 +87,40 @@ export default {
     onFocus(e) {
       // this.getApiHouses();
     },
+    toTransactionParams(params) {
+      // valueHouse: "아파트";
+      // valueHouse: "연립ￜ다세대";
+      // valueHouse: "단독ￜ다가구";
+      // valueHouse: "오피스텔";
+      // valueHouse: "상업ￜ업무용";
+      // valueHouse: "토지";
+      // valueHouse: "무허가 건축물";
+      // valueHouse: "입주권";
+      // valueHouse: "아파트";
+      // CATEGORYS = Choices(
+      //   ("LAND", "토지"),
+      //   ("OFFICETEL", "오피스텔"),
+      //   ("ALLIANCE", "연립다세대"),
+      //   ("APARTMENT", "아파트"),
+      //   ("COMMERCIAL ", "상업업무용"),
+      //   ("SINGLE", "단독다가구")
+      // );
+      console.log(params.type_house__in);
+      const _params = params;
+      if (_params.type_house__in) {
+        _params.category__in = params.type_house__in
+          .replace("토지", "LAND")
+          .replace("오피스텔", "OFFICETEL")
+          .replace("연립|다세대", "ALLIANCE")
+          .replace("아파트", "APARTMENT")
+          .replace("상업ￜ업무용", "COMMERCIAL")
+          .replace("단독|다가구", "SINGLE");
+
+        // console.log(params);
+        delete _params.type_house__in;
+      }
+      return _params;
+    },
     infiniteHandler() {
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
@@ -126,6 +160,7 @@ export default {
       }
     },
     async getAllTransactions() {
+      console.log(this.params, "params", this.toTransactionParams(this.params));
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: this.params
       });
@@ -139,10 +174,9 @@ export default {
     },
 
     async getTransactionsFromSearch(query) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/?search=${query}`,
-        { params: this.params }
-      );
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
+        params: { ...this.params, search: query }
+      });
       this.saleList = data.results.map((item) => {
         return {
           ...item,
@@ -166,7 +200,7 @@ export default {
     async getTransactionsFromLocation(query) {
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/?location=${query}`,
-        { params: this.params }
+        { params: { ...this.params, ...query } }
       );
       this.saleList = data.results.map((item) => {
         return {

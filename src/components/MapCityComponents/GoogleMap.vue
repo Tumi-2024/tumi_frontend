@@ -239,7 +239,7 @@ export default {
     getPriceFromText() {
       return (obj) => {
         if (obj.recent_transactions) {
-          const string = obj.recent_transactions[obj.types[0]].text_price;
+          const string = obj.recent_transactions[obj.types[0]]?.text_price;
           return string ? Number(string.replace(",", "")) : 0;
         } else if (obj.group_trading_terms) {
           return Number(obj.group_trading_terms.price_selling_hope);
@@ -403,9 +403,8 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
-      this.setLocationLoading(false);
+      console.log("idle", this.getMapZoom);
       this.getHouseInfo();
-      if (this.getMapZoom < 13) return;
       this.getRedevInfo();
     },
 
@@ -472,6 +471,7 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
+      console.log("viewArea");
       if (item.count) {
         this.redirectXY(item);
         return;

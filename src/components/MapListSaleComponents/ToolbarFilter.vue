@@ -175,7 +175,6 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       // this.$router.options.history.state.back
-
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
     async filterFn(val, update, abort) {
@@ -184,7 +183,6 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
-      console.log("filter", val);
       if (!val || val === "") {
         update(() => {
           this.options = [];
@@ -213,10 +211,10 @@ export default {
             data: { results }
           } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
           update(async () => {
-            this.options = results.map(({ title, id, subcity }) => {
+            this.options = results.map(({ address, id, subcity }) => {
               return {
-                value: title,
-                label: title,
+                value: address,
+                label: address,
                 id: id,
                 subcityId: subcity.id
               };
