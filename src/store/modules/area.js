@@ -6,7 +6,7 @@ const initState = {
 };
 export const areaStore = {
   namespaced: true,
-  state: { ...initState },
+  state: { ...initState, payload: {} },
   getters: {
     getMapAreas: (state) => {
       return state.areas;
@@ -20,7 +20,8 @@ export const areaStore = {
     setMapSelectedArea: (state, payload) => (state.selectedArea = payload),
     setMapInterest: (state, payload) => (state.selectedArea.interest = payload),
     setRedevelopmentSteps: (state, payload) =>
-      (state.selectedArea.steps = payload)
+      (state.selectedArea.steps = payload),
+    setPayload: (state, payload) => (state.payload = payload)
   },
   actions: {
     fetchMapAreas: async (context, payload) => {
@@ -50,6 +51,10 @@ export const areaStore = {
           };
         };
 
+        if (payload) {
+          context.commit("setPayload", payload);
+        }
+
         const { data } = await Vue.prototype.$axios.get(
           "redevelopment_areas/",
           {
@@ -72,7 +77,7 @@ export const areaStore = {
                 "redevelopment_area__category",
                 context.rootState.map.areaType
               ),
-              ...payload
+              ...areaStore.state.payload
             }
           }
         );

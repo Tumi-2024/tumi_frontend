@@ -126,6 +126,7 @@ export default {
       this.modal = false;
       if (!this.isTransaction) {
         this.$store.dispatch("getSimpleHouses");
+        this.fetchMapAreas();
       } else {
         const area = this.$store.state.search.area;
         const price = this.$store.state.search.price;

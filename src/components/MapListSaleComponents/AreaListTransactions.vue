@@ -105,7 +105,6 @@ export default {
       //   ("COMMERCIAL ", "상업업무용"),
       //   ("SINGLE", "단독다가구")
       // );
-      console.log(params.type_house__in);
       const _params = params;
       if (_params.type_house__in) {
         _params.category__in = params.type_house__in

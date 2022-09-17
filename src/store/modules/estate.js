@@ -15,7 +15,8 @@ export const estateStore = {
     viewRedevOnly: true,
     latitude: [],
     longitude: [],
-    requestUrl: "houses"
+    requestUrl: "houses",
+    payload: {}
   },
   getters: {
     simple_houses: (state, getters) => {
@@ -42,6 +43,7 @@ export const estateStore = {
     // setSimpleHousesType: function (state, payload) {
     //   state.simple_houses_type = payload;
     // },
+    setPayload: (state, payload) => (state.payload = payload),
     setSimpleHouses: function (state, payload) {
       state.simple_houses = payload;
     },
@@ -125,7 +127,7 @@ export const estateStore = {
           [keyName]: params
         };
       };
-      // const encodedUrl = query + "&" + redevelopQuery;
+
       if (payload?.latitude) {
         await context.commit("setLatitude", payload.latitude);
         await context.commit("setLongitude", payload.longitude);
@@ -133,8 +135,12 @@ export const estateStore = {
       const lat = context.state.latitude;
       const long = context.state.longitude;
 
-      if (payload?.type) {
-        switch (payload.type) {
+      if (payload) {
+        await context.commit("setPayload", payload);
+      }
+
+      if (estateStore.state.payload?.type) {
+        switch (estateStore.state.payload?.type) {
           case "city":
             await context.commit("setRequestUrl", "cities");
             break;
@@ -192,7 +198,7 @@ export const estateStore = {
       };
 
       const Dquery =
-        payload.type !== "transaction_groups"
+        estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
               "category__in",
