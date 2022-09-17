@@ -119,10 +119,7 @@ export default {
       return (item, ctgr) => {
         item = this.reshape(item);
         const getDate = (date) => {
-          const _d = new Date(date);
-          const d = _d.getMonth() > 10 ? _d.getMonth() : "0" + _d.getMonth();
-          const y = String(_d.getFullYear()).split(0, 2)[1];
-          return y + String("." + d);
+          return this.toDateFormat(date, "YYYY.MM.DD");
         };
         const getColor = (label) => {
           switch (label) {

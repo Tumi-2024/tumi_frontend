@@ -192,7 +192,7 @@ export default {
           case "재개발":
             return "rgb(255, 90, 0)";
           case "재건축":
-            return "rgba(0, 0, 255, 0.85)";
+            return "#2196f3";
           case "기타사업":
             return "rgba(0, 128, 0, 0.85)";
 

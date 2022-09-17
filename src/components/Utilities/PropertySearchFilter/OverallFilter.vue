@@ -138,7 +138,8 @@ export default {
     // this.overallFilter = this.setInitValue();
   },
   computed: {
-    ...mapGetters("searchQuery", ["getQueryString", "getOption"])
+    ...mapGetters("searchQuery", ["getQueryString", "getOption"]),
+    ...mapGetters("search", ["getCategoriesByKorean"])
   },
   data() {
     return {
@@ -181,6 +182,8 @@ export default {
   },
   methods: {
     ...mapActions("search", ["setIsMultiSelect", "initialize"]),
+    ...mapActions("area", ["fetchMapAreas"]),
+    ...mapActions(["getSimpleHouses"]),
     openModal() {
       this.setIsMultiSelect(false);
       this.modal = true;
@@ -196,6 +199,56 @@ export default {
       console.log(this[property]);
     },
     applyFilters() {
+      this.fetchMapAreas();
+      for (const ref in this.$refs) {
+        this.$refs[ref].save();
+      }
+      if (!this.isTransaction) {
+        this.$store.dispatch("getSimpleHouses");
+        this.fetchMapAreas();
+      } else {
+        const area = this.$store.state.search.area;
+        const price = this.$store.state.search.price;
+        const initPrice = this.$store.state.search.initPrice;
+        const person = this.$store.state.search.person;
+        const category = this.getCategoriesByKorean;
+        this.modal = false;
+
+        const getQueryArray = (keyName, params) => {
+          if (keyName === "type_house__in" && params.length === 8) {
+            return {};
+          }
+          if (Array.isArray(params)) {
+            const hasValue = params.every((value) => value !== undefined);
+            if (!hasValue || params.length === 0) return {};
+            return {
+              [keyName]: params.join(",")
+            };
+          }
+          if (!params) return {};
+          return {
+            [keyName]: params
+          };
+        };
+
+        this.$emit("change", {
+          page_size: 1000,
+          ...getQueryArray("type_house__in", category),
+          ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
+          ...getQueryArray("price_initial_investment__range", [
+            initPrice.min,
+            initPrice.max
+          ]),
+          ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+          ...getQueryArray("user__in", person),
+          ...getQueryArray(
+            "redevelopment_area__category"
+            // getAreaTypeString()
+          )
+          // ...getRedevQuery(),
+          // ...getAreaTypeString()
+        });
+      }
       this.modal = false;
     }
   }
