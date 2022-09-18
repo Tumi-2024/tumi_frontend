@@ -18,7 +18,7 @@
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div
-          :class="{ 'text-white': getColor === 'black' }"
+          :class="{ 'text-white': getColor !== 'white' }"
           class="off text-dark notosanskr-bold"
         >
           {{ getLabel }}
