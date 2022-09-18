@@ -188,17 +188,18 @@ export default {
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
     getColor() {
-      return (type) => {
+      return () => {
         switch (this.getAreaType) {
           case "재개발":
             return "rgb(255, 90, 0)";
           case "재건축":
             return "#2196f3";
           case "기타사업":
-            return "rgba(0, 128, 0, 0.85)";
-
+            return "rgba(0, 128, 0, 0.8)";
+          case null:
+            return "#ffff00";
           default:
-            return "#2C3639";
+            return "rgba(128, 128, 128)";
         }
       };
     },
