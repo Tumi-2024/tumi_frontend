@@ -127,7 +127,7 @@ export default {
         const dd = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
         return {
           date: `${d.getFullYear()}.${dd}`,
-          type: item?.group_building_house?.type_house
+          type: item?.group_building_house?.type_house || "-"
         };
       };
     }
