@@ -30,7 +30,7 @@
           @click="goToAdmin"
         >
           {{ building }}
-          <span style="margin-left: 20px" v-show="isHover">
+          <span style="margin-left: 5px" v-show="isHover">
             >> 매물관리 화면
           </span>
         </div>
@@ -147,14 +147,14 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((18 / 1312) * 100vh);
-  line-height: calc((22 / 1312) * 100vh);
+  font-size: calc((25 / 1312) * 100vh);
+  line-height: calc((28 / 1312) * 100vh);
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
 
   &.redev {
-    font-size: calc((18 / 1312) * 100vh);
+    font-size: calc((25 / 1312) * 100vh);
   }
 
   &.hover {

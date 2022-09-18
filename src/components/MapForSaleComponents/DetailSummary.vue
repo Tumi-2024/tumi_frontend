@@ -12,7 +12,7 @@
         <img class="q-mr-md" src="~assets/icons/phone.svg" alt="" />담당자
       </div> -->
 
-      <div class="row">
+      <div class="row q-mt-md">
         <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
