@@ -191,13 +191,15 @@ export default {
           data: { results }
         } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
         update(async () => {
-          this.options = results.map(({ title, latitude, longitude }) => {
-            return {
-              value: title,
-              label: title,
-              position: { lat: Number(latitude), lng: Number(longitude) }
-            };
-          });
+          this.options = results.map(
+            ({ subcity, title, latitude, longitude }) => {
+              return {
+                value: `${subcity.city.title} ${subcity.title} ${title}`,
+                label: `${subcity.city.title} ${subcity.title} ${title}`,
+                position: { lat: Number(latitude), lng: Number(longitude) }
+              };
+            }
+          );
         });
       } else {
         update();

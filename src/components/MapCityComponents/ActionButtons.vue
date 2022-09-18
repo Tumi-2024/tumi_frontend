@@ -18,7 +18,7 @@
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div
-          :class="{ 'text-white': getColor !== 'white' }"
+          :class="{ 'text-white': getColor !== 'yellow-12' }"
           class="off text-dark notosanskr-bold"
         >
           {{ getLabel }}
@@ -62,11 +62,11 @@ export default {
   data() {
     return {
       type: [
-        { color: "white", label: "All", key: null },
+        { color: "yellow-12", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
         { color: "green", label: "기타사업", key: "기타사업" },
-        { color: "black", label: "일반", key: "일반" }
+        { color: "grey-6", label: "일반", key: "일반" }
       ]
     };
   },
