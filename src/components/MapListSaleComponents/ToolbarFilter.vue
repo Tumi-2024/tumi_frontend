@@ -211,10 +211,10 @@ export default {
             data: { results }
           } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
           update(async () => {
-            this.options = results.map(({ address, id, subcity }) => {
+            this.options = results.map(({ title, id, subcity }) => {
               return {
-                value: address,
-                label: address,
+                value: `${subcity.city.title} ${subcity.title} ${title}`,
+                label: `${subcity.city.title} ${subcity.title} ${title}`,
                 id: id,
                 subcityId: subcity.id
               };

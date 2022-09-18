@@ -276,7 +276,7 @@ export const estateStore = {
                     ...defaultCur,
                     group_building_house: {
                       ...cur.group_building_house,
-                      type_house: "주택유형 없음"
+                      type_house: "-"
                     }
                   }
                 ];

@@ -93,6 +93,7 @@
           <template v-if="redevZoom < getMapZoom && getMapZoom <= 15">
             <div
               class="area-badge-info notosanskr-medium"
+              :class="{ green: $route.path === '/map/city/area' }"
               @click.self="selectArea(badge)"
             >
               <q-icon
@@ -556,7 +557,11 @@ export default {
   justify-content: center;
   align-items: center;
 
-  background: #68814e;
+  &.green {
+    background: #68814e;
+  }
+  background: rgb(255, 125, 54);
+
   font-weight: 500;
   font-size: calc((16 / 1312) * 100vh);
   line-height: calc((20 / 1312) * 100vh);
