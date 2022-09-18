@@ -54,7 +54,7 @@ export default {
           func: () => this.$router.push({ name: "listHouses" })
         },
         {
-          backgroundColor: "#1976d2",
+          backgroundColor: "green",
           text: "실거래가 검색",
           subText1: "실거래가",
           subText2: `상세 검색하기`,
