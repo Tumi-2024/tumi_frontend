@@ -12,7 +12,7 @@
           :key="i"
         >
           <div class="q-pa-sm label">
-            <span class="information">{{ item.label }}</span>
+            <span class="information text-bold">{{ item.label }}</span>
           </div>
           <a
             class="information sub flex items-center q-px-sm"
@@ -83,7 +83,6 @@ export default {
   }
 }
 .information {
-  font-weight: 700;
   font-size: 14px;
   line-height: 16px;
   letter-spacing: -1.05px;
