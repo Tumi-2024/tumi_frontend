@@ -44,27 +44,28 @@
               style="
                 min-height: calc((110 / 1312) * 100vh);
                 min-width: calc((110 / 1312) * 100vh);
-                padding: calc((10 / 1312) * 100vh);
+                padding: 10px;
                 border-radius: 100%;
                 opacity: 0.72;
               "
-              :style="{ backgroundColor: getColor() }"
+              :style="{ backgroundColor: getColor.bg }"
+              :class="`text-${getColor.text}`"
               @click="onClickMarker(m)"
             >
               <span
-                class="flex text-white justify-center"
+                class="flex justify-center"
                 style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
               >
                 {{ m.title }}
               </span>
               <span
-                class="flex text-white justify-center q-mt-sm"
+                class="flex justify-center q-mt-sm"
                 style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
               >
                 {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
               </span>
               <span
-                class="flex text-white justify-center"
+                class="flex justify-center"
                 style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
               >
                 {{
@@ -188,20 +189,18 @@ export default {
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
     getColor() {
-      return () => {
-        switch (this.getAreaType) {
-          case "재개발":
-            return "rgb(255, 90, 0)";
-          case "재건축":
-            return "#2196f3";
-          case "기타사업":
-            return "rgba(0, 128, 0, 0.8)";
-          case null:
-            return "#ffff00";
-          default:
-            return "rgba(128, 128, 128)";
-        }
-      };
+      switch (this.getAreaType) {
+        case "재개발":
+          return { text: "white", bg: "rgb(255, 90, 0)" };
+        case "재건축":
+          return { text: "white", bg: "#2196f3" };
+        case "기타사업":
+          return { text: "white", bg: "rgba(0, 128, 0, 0.8)" };
+        case null:
+          return { text: "black", bg: "#ffff00" };
+        default:
+          return { text: "white", bg: "rgba(128, 128, 128)" };
+      }
     },
     getType() {
       return (m) => {
