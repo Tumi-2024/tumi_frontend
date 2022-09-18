@@ -108,7 +108,7 @@ export default {
           keyName: "areaType"
         },
         {
-          label: "가격",
+          label: "희망가격",
           type: "PriceFilter",
           class:
             this.price.min || this.price.max

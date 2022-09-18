@@ -147,14 +147,14 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((25 / 1312) * 100vh);
-  line-height: calc((28 / 1312) * 100vh);
+  font-size: calc((18 / 1312) * 100vh);
+  line-height: calc((20 / 1312) * 100vh);
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
 
   &.redev {
-    font-size: calc((25 / 1312) * 100vh);
+    font-size: calc((20 / 1312) * 100vh);
   }
 
   &.hover {

@@ -20,6 +20,13 @@
     </q-card-section>
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
+      <div style="display: flex; gap: 5px; padding: 10px 10px">
+        <Badge value="주택유형" houseType />
+        <Badge value="희망매매가" price />
+        <Badge value="매물등록일자" date />
+      </div>
+      <q-separator />
+
       <q-list class="q-pt-md">
         <template v-for="(item, i) of saleList">
           <area-transaction
@@ -50,6 +57,7 @@ import ToolbarFilter from "./ToolbarFilter.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
 import { mapGetters } from "vuex";
+import Badge from "../Utilities/Badges/Badge.vue";
 
 export default {
   directives: {
@@ -57,7 +65,8 @@ export default {
   },
   components: {
     "area-transaction": AreaTransaction,
-    "toolbar-filter": ToolbarFilter
+    "toolbar-filter": ToolbarFilter,
+    Badge
   },
   data() {
     return {

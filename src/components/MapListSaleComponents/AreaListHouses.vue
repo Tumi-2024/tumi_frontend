@@ -17,7 +17,15 @@
     </q-card-section>
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
-      <q-list class="q-pt-md">
+      <div style="display: flex; gap: 5px; padding: 10px 10px">
+        <Badge value="개발유형" recommend />
+        <Badge value="주택유형" houseType />
+        <Badge value="전용면적" pyeong />
+        <Badge value="희망매매가" price />
+        <Badge value="매물등록일자" date />
+      </div>
+      <q-separator />
+      <q-list>
         <div v-for="(item, i) of simple_houses" :key="i">
           <area-item-house
             class="q-py-sm"
@@ -44,6 +52,7 @@ import ToolbarFilter from "./ToolbarFilter.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
 import { mapGetters, mapActions } from "vuex";
+import Badge from "../Utilities/Badges/Badge.vue";
 
 export default {
   directives: {
@@ -52,8 +61,9 @@ export default {
   components: {
     // "area-transaction": AreaTransaction,
     "area-item-house": AreaItemHouse,
-    "toolbar-filter": ToolbarFilter
-    // InfiniteLoading
+    "toolbar-filter": ToolbarFilter, // InfiniteLoading
+
+    Badge
   },
   data() {
     return {

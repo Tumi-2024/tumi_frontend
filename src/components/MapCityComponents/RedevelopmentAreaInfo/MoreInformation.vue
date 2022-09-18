@@ -379,14 +379,14 @@ export default {
         {
           label: "60m² 이하",
           value: this.getValueWithUnit(
-            this.getMapSelectedArea.count_rent_lt_60,
+            this.getMapSelectedArea.count_rent_lt_40,
             ""
           )
         },
         {
           label: "60m² ~ 85m²",
           value: this.getValueWithUnit(
-            this.getMapSelectedArea.count_rent_gt_60_lt_85,
+            this.getMapSelectedArea.count_rent_gt_40_lt_85,
             ""
           )
         },
@@ -422,7 +422,7 @@ export default {
   },
   methods: {
     getValueWithUnit(value, unit) {
-      if (!value) {
+      if (value === undefined || value === null) {
         return "-";
       }
       const _value = Number(value);

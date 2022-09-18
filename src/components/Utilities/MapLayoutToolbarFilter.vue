@@ -3,10 +3,16 @@
     <div class="col flex items-end justify-between q-mb-xs">
       <div class="row items-center justify-between q-mr-xs" style="flex: 1">
         <div class="column" style="min-width: 150px">
-          <div class="helper text-left notosanskr-regular">
+          <div
+            class="helper text-left"
+            style="font-family: 'notosanskr-medium'"
+          >
             {{ getToolbarLabel }}
           </div>
-          <div class="location-text text-left notosanskr-regular">
+          <div
+            class="location-text text-left"
+            style="font-family: 'notosanskr-medium'"
+          >
             {{ getToolbarTitle }}
           </div>
         </div>
@@ -107,7 +113,7 @@ export default {
           keyName: "areaType"
         },
         {
-          label: "가격",
+          label: "희망가격",
           type: "PriceFilter",
           class:
             this.price.min || this.price.max
