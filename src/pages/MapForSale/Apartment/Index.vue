@@ -197,6 +197,16 @@ export default {
         return data.join(", ");
       }
       return data;
+    },
+    getArrayOrString2(data) {
+      if (Array.isArray(data)) {
+        return data
+          .map((obj) => {
+            return obj.replace(/\d{2}/g, "");
+          })
+          .join(",");
+      }
+      return data;
     }
   },
   computed: {
@@ -367,7 +377,7 @@ export default {
         },
         {
           label: "용도지역(2)",
-          value: this.getArrayOrString(houseInfo.type_use_area2),
+          value: this.getArrayOrString2(houseInfo.type_use_area2),
           class: "col-sm-12 col-md-12"
         },
         {
