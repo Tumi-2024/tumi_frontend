@@ -197,8 +197,9 @@ export const estateStore = {
         }
       };
 
-      const Dquery =
-        estateStore.state.payload?.type !== "transaction_groups"
+      const Dquery = {
+        redevelopment_area__isnull: "false",
+        ...(estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
               "category__in",
@@ -211,7 +212,8 @@ export const estateStore = {
                 .replace("상업ￜ업무용", "COMMERCIAL")
                 .replace("단독|다가구", "SINGLE")
                 .split(",")
-            );
+            ))
+      };
 
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,

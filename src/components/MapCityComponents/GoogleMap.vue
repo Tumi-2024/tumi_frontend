@@ -452,7 +452,11 @@ export default {
         latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
         longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
-      let payload = { type: "subcity", ...location };
+      let payload = {
+        type: "subcity",
+        ...location
+      };
+
       if (this.getMapZoom > 15) {
         payload = {
           type:
