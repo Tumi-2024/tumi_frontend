@@ -33,7 +33,7 @@
 
 <script>
 import { gmapApi } from "gmap-vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
 export default {
   components: {
