@@ -152,10 +152,19 @@ export default {
     },
     initialize() {
       //  if 멀티면
-      if (this.isMultiSelect) {
-        this.selected = [];
-      } else {
+      if (!this.isMultiSelect) {
         this.selected = ["APARTMENT"];
+      } else {
+        this.selected = [
+          "APARTMENT",
+          "ALLIANCE",
+          "SINGLE",
+          "OFFICETEL",
+          "COMMERCIAL",
+          "LAND",
+          "noname01",
+          "noname02"
+        ];
       }
     }
   }
