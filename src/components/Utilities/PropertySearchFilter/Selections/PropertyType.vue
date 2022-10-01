@@ -44,14 +44,7 @@ export default {
     value: {
       type: Array,
       require: false,
-      default: () => [
-        {
-          icon: require("assets/iconsNew/11.png"),
-          label: "아파트",
-          value: "APARTMENT",
-          valueHouse: "아파트"
-        }
-      ]
+      default: () => []
     }
   },
 
@@ -128,13 +121,15 @@ export default {
     };
   },
   beforeMount() {
-    this.selected = [...this.categories];
+    if (this.value.length === 0) {
+      this.selected = [...this.categories];
+    } else {
+      this.selected = this.value;
+    }
   },
   methods: {
     ...mapActions("search", ["setCategories", "removeCategories"]),
-    select(val) {
-      this.$emit("selectDetail", val);
-    },
+    select(val) {},
     changeValue({ value }) {
       const hasValue = this.selected.some((obj) => obj === value);
       if (hasValue) {
@@ -149,6 +144,8 @@ export default {
           this.selected = [value];
         }
       }
+      console.log(this.selected);
+      this.$emit("select", this.selected);
     },
     save() {
       this.setCategories(this.selected);

@@ -49,6 +49,7 @@
             style="padding-top: 36px"
             @select="setSelected('areas', $event)"
             @selectDetail="setSelected('areaType', $event)"
+            :categories="categories"
             ref="option2"
           />
 
@@ -145,14 +146,7 @@ export default {
     return {
       modal: false,
       moreFilters: false,
-      categories: [
-        {
-          icon: require("assets/iconsNew/11.png"),
-          label: "아파트",
-          valueTransaction: "APARTMENT",
-          valueHouse: "아파트"
-        }
-      ],
+      categories: ["APARTMENT"],
       prices: [
         { label: "최저가", value: 0 },
         { label: "최고가", key: "max", value: 999999 }
@@ -196,7 +190,6 @@ export default {
     },
     setSelected(property, value) {
       this[property] = value;
-      console.log(this[property]);
     },
     applyFilters() {
       this.fetchMapAreas();

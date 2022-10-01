@@ -14,7 +14,7 @@
         text-color="secondary"
       />
     </div>
-
+    {{ this.selectValue }}
     <div class="selection row q-mt-lg" style="color: #1a1a1a">
       <q-btn
         v-for="(property, i) of getProperties"
@@ -94,6 +94,27 @@ export default {
   components: {
     "text-under-highlight": TextUnderHighlight
   },
+  props: {
+    categories: {
+      type: Array,
+      require: false,
+      default: () => []
+    }
+  },
+  watch: {
+    // categories: {
+    //   immediate: true,
+    //   handler(newVal, oldVal) {
+    //     const defaultProperties = this.getProperties.filter(
+    //       (obj) => !obj.disabled
+    //     );
+    //     // const validSelect = defaultProperties.some((df) => {
+    //     //   return df.type.includes(this.selectValue.value);
+    //     // });
+    //     // if (validSelect) return;
+    //   }
+    // }
+  },
   data() {
     return {
       selectValue: {},
@@ -137,7 +158,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("search", ["area", "categories", "isMultiSelect"]),
+    ...mapGetters("search", ["area", "isMultiSelect"]),
     getUnit() {
       return (value) => {
         if (value === undefined) {
@@ -151,7 +172,6 @@ export default {
       };
     },
     getProperties() {
-      console.log(this.categories);
       const hasValue = (parentArray, childArray) => {
         return parentArray.some((parent) => {
           return childArray.some((child) => {
@@ -161,7 +181,6 @@ export default {
       };
 
       return this.properties.map((obj) => {
-        console.log(obj.type, this.categories);
         return {
           ...obj,
           disabled: !this.isMultiSelect
@@ -180,7 +199,6 @@ export default {
     },
     onClickPreset({ value }) {
       // 처음에 누르면 이하 모두 선택
-      console.log(value, this.selectValue);
       if (!this.selectValue.min && !this.selectValue.max) {
         this.selectValue.max = value;
         this.selectValue.min = 0;
@@ -254,7 +272,11 @@ export default {
     }
   },
   beforeMount() {
-    this.selectValue = { ...this.area };
+    if (this.selectValue.value) {
+      this.selectValue = { ...this.area };
+    } else {
+      this.selectValue = { ...this.area, value: "size_dedicated_area_m2" };
+    }
   }
 };
 </script>

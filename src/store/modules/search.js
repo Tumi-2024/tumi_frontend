@@ -89,7 +89,6 @@ export const searchStore = {
     },
 
     area: (_state) => {
-      console.log(_state.area, "area");
       return _state.area;
     },
     price: (_state) => {
@@ -127,13 +126,6 @@ export const searchStore = {
         person: []
       };
     },
-    // addCategories: (_state, payload) => {
-    //   if (_state.isMultiSelect) {
-    //     _state.categories.push(payload);
-    //   } else {
-    //     _state.categories = [payload];
-    //   }
-    // },
     setCategories: (_state, payload) => {
       _state.categories = payload;
     },
@@ -143,13 +135,6 @@ export const searchStore = {
     setArea: (_state, payload) => {
       _state.area = payload;
     },
-    // setAreaType: (_state, payload) => {
-    //   _state.area = payload;
-    // },
-    // setAreaPrice: (_state, payload) => {
-    //   _state.area.min = payload.min;
-    //   _state.area.max = payload.max;
-    // },
     setPrice: (_state, payload) => (_state.price = payload),
     setInitPrice: (_state, payload) => (_state.initPrice = payload),
     setIsMultiSelect: (_state, payload) => {

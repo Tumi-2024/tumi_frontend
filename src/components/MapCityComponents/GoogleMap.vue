@@ -19,7 +19,22 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <template v-if="getMapZoom > redevZoom">
+      <template v-if="getIsHouse && getMapZoom > redevZoom">
+        <gmap-info-window
+          v-for="m in simple_houses"
+          :key="m.id"
+          :position="m.position"
+          :opened="15 < getMapZoom"
+        >
+          <info-window-content
+            @viewArea="viewArea(m)"
+            :item="m"
+            :price="getPriceFromText(m)"
+            :is-dev="!!m.redevelopment_area"
+          />
+        </gmap-info-window>
+      </template>
+      <template v-else-if="!getIsHouse && getMapZoom > redevZoom + 1">
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
@@ -201,6 +216,9 @@ export default {
         default:
           return { text: "white", bg: "rgba(128, 128, 128)" };
       }
+    },
+    getIsHouse() {
+      return this.$route.path === "/map/city/area";
     },
     getType() {
       return (m) => {
@@ -449,13 +467,20 @@ export default {
     getHouseInfo() {
       const bounds = this.map.getBounds();
 
-      const location = {
-        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
-        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
+      const ratio = -0.00005;
+      const boundLocation = {
+        latitude: [
+          bounds.getSouthWest().lat() * (1 - ratio),
+          bounds.getNorthEast().lat() * (1 + ratio)
+        ],
+        longitude: [
+          bounds.getSouthWest().lng() * (1 - ratio),
+          bounds.getNorthEast().lng() * (1 + ratio)
+        ]
       };
       let payload = {
         type: "subcity",
-        ...location
+        ...boundLocation
       };
 
       if (this.getMapZoom > 15) {
@@ -464,7 +489,7 @@ export default {
             this.getMapMode === "redevelop-area"
               ? "transaction_groups"
               : "houses",
-          ...location
+          ...boundLocation
         };
       }
       this.$store.dispatch("getSimpleHouses", payload);
@@ -488,8 +513,14 @@ export default {
       this.setMapCenter(item.position);
 
       const getRouterParams = () => {
+        /**
+         * 여기에 좌표 로직 추가
+         */
         if (this.$route.path === "/map/city/area") {
-          return { name: "listHouses", query: { transactionid: item.id } };
+          return {
+            name: "listTransactions",
+            query: { transactionid: item.id }
+          };
         } else {
           return { name: "for_sale_apartment", query: { sellid: item.id } };
         }
