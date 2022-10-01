@@ -112,6 +112,7 @@
     <recent-history :item="transactions" />
     <section class="button-fixed-bottom">
       <q-btn
+        @click="goToDetail"
         color="primary"
         text-color="white"
         class="notosanskr-medium"
@@ -215,6 +216,15 @@ export default {
         default:
           return this.getMapSelectedArea[value] || "-";
       }
+    },
+    goToDetail() {
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          redevelopment_area: this.getMapSelectedArea.id,
+          title: this.getMapSelectedArea.title
+        }
+      });
     }
   },
   computed: {

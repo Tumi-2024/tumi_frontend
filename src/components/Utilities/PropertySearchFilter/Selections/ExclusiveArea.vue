@@ -14,7 +14,6 @@
         text-color="secondary"
       />
     </div>
-    {{ this.selectValue }}
     <div class="selection row q-mt-lg" style="color: #1a1a1a">
       <q-btn
         v-for="(property, i) of getProperties"

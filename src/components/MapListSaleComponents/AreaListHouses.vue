@@ -79,7 +79,15 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode"]),
-    ...mapGetters(["simple_houses", "estateCount"])
+    ...mapGetters(["simple_houses", "estateCount"]),
+    ...mapGetters("search", [
+      "area",
+      "price",
+      "houseType",
+      "pyeong",
+      "date",
+      "getCategoriesByKorean"
+    ])
   },
   methods: {
     ...mapActions(["setSimpleHouses", "setCountEstate", "setRequestUrl"]),
@@ -87,27 +95,65 @@ export default {
       // this.getApiHouses();
     },
     infiniteHandler() {
+      const getQueryArray = (keyName, params) => {
+        if (keyName === "type_house__in" && params?.length === 8) {
+          return {};
+        }
+        if (Array.isArray(params)) {
+          const hasValue = params.every((value) => value !== undefined);
+          if (!hasValue || params.length === 0) return {};
+          return {
+            [keyName]: params.join(",")
+          };
+        }
+        if (!params) return {};
+        return {
+          [keyName]: params
+        };
+      };
+
+      const getAllorUndefined = (param) => {
+        if (param.length === 8) return undefined;
+        return param;
+      };
+
+      const Dquery = {
+        ...getQueryArray(
+          "type_house__in",
+          getAllorUndefined(this.getCategoriesByKorean)
+        )
+      };
+
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
       this.text = this.$route.query.title || "";
       this.busy = true;
+
       switch (_key) {
         case "search":
-          this.getSearchData(query, this.page);
+          this.getSearchData({ ...Dquery, ...query }, this.page);
           break;
         case "redevelopment_area":
-          this.getRedevData(query, this.page);
+          this.getRedevData({ ...Dquery, ...query }, this.page);
           break;
         case "location":
-          this.getLocationData(query, this.page);
+          this.getLocationData({ ...Dquery, ...query }, this.page);
           break;
         default:
-          this.getApiHouses(query, undefined, this.page);
+          this.getApiHouses({ ...Dquery, ...query }, undefined, this.page);
       }
     },
-    onSearch(type, id, label) {
-      console.log("onSearch ListHouse", type, id, label);
-      if (id.length === 0) {
+    async onSearch(type, id, label) {
+      if (id?.length === 0) {
+        return;
+      }
+      if (!type && !id && !label) {
+        this.page = 1;
+        const { data } = await Vue.prototype.$axios.get(`/houses/`);
+        this.setSimpleHouses(data.results);
+        this.setCountEstate(data.count);
+
+        this.$router.push({ name: "listHouses" });
         return;
       }
       switch (type) {
@@ -209,6 +255,9 @@ export default {
       });
       this.getLocationData({ location }, this.page);
     }
+  },
+  created() {
+    this.setSimpleHouses([]);
   },
   beforeMount() {
     this.setRequestUrl("houses");

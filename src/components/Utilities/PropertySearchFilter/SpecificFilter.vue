@@ -124,8 +124,13 @@ export default {
     save() {
       this.$refs.component.save();
       this.modal = false;
-      if (!this.isTransaction) {
-        this.$store.dispatch("getSimpleHouses");
+      console.log("save", this.isTransaction, "this.isTransaction");
+      const { query } = this.$route;
+      const isTransaction = this.$route.name !== "listHouses";
+      if (!isTransaction) {
+        this.$store.dispatch("getSimpleHouses", {
+          query: { subcity: query.subcity }
+        });
         this.fetchMapAreas();
       } else {
         const area = this.$store.state.search.area;

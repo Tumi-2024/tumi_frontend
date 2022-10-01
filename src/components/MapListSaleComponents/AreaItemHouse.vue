@@ -133,7 +133,6 @@ export default {
               return "";
           }
         };
-
         return [
           {
             type: "transactionStatus",

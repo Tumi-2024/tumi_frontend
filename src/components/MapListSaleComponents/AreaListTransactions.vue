@@ -114,6 +114,18 @@ export default {
       //   ("COMMERCIAL ", "상업업무용"),
       //   ("SINGLE", "단독다가구")
       // );
+
+      // label: "무허가 건축물",
+      //     valueTransaction: "noname01",
+      //     valueHouse: "무허가 건축물"
+      //   },
+      //   {
+      //     icon: require("assets/iconsNew/18.png"),
+      //     label: "입주권",
+      //     valueTransaction: "noname02",
+      //     valueHouse: "입주권"
+      //   }
+
       const _params = params;
       if (_params.type_house__in) {
         _params.category__in = params.type_house__in
@@ -122,6 +134,8 @@ export default {
           .replace("연립ￜ다세대", "ALLIANCE")
           .replace("아파트", "APARTMENT")
           .replace("상업ￜ업무용", "COMMERCIAL")
+          .replace("무허가 건축물", "noname01")
+          .replace("입주권", "noname02")
           .replace("단독ￜ다가구", "SINGLE");
 
         // console.log(params);

@@ -186,10 +186,6 @@ export const estateStore = {
         if (!lat[0] || !long[0]) {
           return {};
         } else {
-          console.log({
-            latitude__range: `${lat[0]},${lat[1]}`,
-            longitude__range: `${long[0]},${long[1]}`
-          });
           return {
             latitude__range: `${lat[0]},${lat[1]}`,
             longitude__range: `${long[0]},${long[1]}`
@@ -197,8 +193,12 @@ export const estateStore = {
         }
       };
 
+      const _red = payload?.query?.subcity
+        ? {}
+        : { redevelopment_area__isnull: "false" };
+
       const Dquery = {
-        redevelopment_area__isnull: "false",
+        ..._red,
         ...(estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
@@ -214,6 +214,8 @@ export const estateStore = {
                 .split(",")
             ))
       };
+
+      console.log(payload);
 
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
@@ -235,12 +237,14 @@ export const estateStore = {
             ...getQueryArray(
               "redevelopment_area__category",
               getAreaTypeString()
-            )
-            // ...getRedevQuery(),
-            // ...getAreaTypeString()
+            ),
+            ...payload.query
           }
         }
       );
+      console.log(data);
+
+      context.commit("setCountEstate", data.data.count);
 
       // context.dispatch("map/setLocationLoading", true);
 
@@ -295,7 +299,9 @@ export const estateStore = {
       };
       const _data = estateData(data.data.results);
       console.log(_data);
+
       context.commit("setSimpleHouses", _data);
+      context.dispatch("map/changeEstateCount");
     },
     getDistinctHouses: async function (context, paramter) {
       const response = await Vue.prototype.$axios.get(

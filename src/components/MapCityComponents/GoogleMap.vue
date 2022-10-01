@@ -19,7 +19,7 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <template v-if="getIsHouse && getMapZoom > redevZoom">
+      <template v-if="getMapZoom > redevZoom">
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
@@ -34,7 +34,7 @@
           />
         </gmap-info-window>
       </template>
-      <template v-else-if="!getIsHouse && getMapZoom > redevZoom + 1">
+      <!-- <template v-else-if="!getIsHouse && getMapZoom > redevZoom + 1">
         <gmap-info-window
           v-for="m in simple_houses"
           :key="m.id"
@@ -48,10 +48,11 @@
             :is-dev="!!m.redevelopment_area"
           />
         </gmap-info-window>
-      </template>
+      </template> -->
       <template v-else>
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
+            v-if="m?.count_estates_filtered > -1"
             :marker="{ latitude: m.latitude, longitude: m.longitude }"
           >
             <div
