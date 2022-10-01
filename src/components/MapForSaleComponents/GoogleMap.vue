@@ -76,8 +76,6 @@ export default {
   },
 
   methods: {
-    ...mapActions("map", ["setMapCenter"]),
-
     setGmapContainerSize() {
       const h = this.$refs.gmapContainer.clientHeight;
       const w = this.$refs.gmapContainer.clientWidth;

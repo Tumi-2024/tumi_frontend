@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <div class="col-12 q-pa-lg bg-white">
-      <home-search-bar key="2"/>
+      <home-search-bar key="2" />
     </div>
     <div class="col-12 q-pl-lg q-pr-lg bg-white">
       <home-dashboard-buttons />
@@ -13,7 +13,11 @@
 </template>
 
 <script>
-import { HomeSearchBar, HomeInvestmentButtons, HomeDashboardButtons } from 'components/HomeComponents';
+import {
+  HomeSearchBar,
+  HomeInvestmentButtons,
+  HomeDashboardButtons
+} from "components/HomeComponents";
 import { Plugins } from "@capacitor/core";
 import { mapActions } from "vuex";
 const { Geolocation } = Plugins;
@@ -24,19 +28,17 @@ export default {
     HomeDashboardButtons
   },
   methods: {
-    ...mapActions("map", [
-      "changeMapCenter"
-    ])
+    ...mapActions("map", ["changeMapCenter"])
   },
   beforeMount() {
     Geolocation.getCurrentPosition({ enableHighAccuracy: true })
-      .then(position => {
+      .then((position) => {
         const { latitude: lat, longitude: lng } = position.coords;
-        this.changeMapCenter({ lat, lng });
+        // this.changeMapCenter({ lat, lng });
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e, "error");
       });
   }
-}
+};
 </script>

@@ -141,7 +141,7 @@ export default {
     ...mapActions("map", ["changeMapCenter", "setMapZoom"]),
     setSelected({ latitude, longitude }) {
       if (!this.isEdit) {
-        this.changeMapCenter({ lat: Number(latitude), lng: Number(longitude) });
+        // this.changeMapCenter({ lat: Number(latitude), lng: Number(longitude) });
         this.setMapZoom(17);
         this.$router.push({ name: "map_city" });
       }

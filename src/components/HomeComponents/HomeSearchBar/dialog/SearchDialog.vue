@@ -218,8 +218,6 @@ export default {
           lng: Number(value.longitude)
         };
 
-        console.log(value, type);
-
         if (type === "location") {
           this.$router.push({
             name: "map_city"

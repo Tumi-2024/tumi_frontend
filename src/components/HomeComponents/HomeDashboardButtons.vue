@@ -71,7 +71,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
     toMapCity() {
       this.$router.push({ name: "map_city" });
       this.$store.dispatch("map/resetMap");
