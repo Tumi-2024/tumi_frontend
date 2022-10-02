@@ -52,7 +52,6 @@
       <template v-else>
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
-            v-if="m?.count_estates_filtered > -1"
             :marker="{ latitude: m.latitude, longitude: m.longitude }"
           >
             <div
