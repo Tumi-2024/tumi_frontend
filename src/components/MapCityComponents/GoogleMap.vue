@@ -34,21 +34,6 @@
           />
         </gmap-info-window>
       </template>
-      <!-- <template v-else-if="!getIsHouse && getMapZoom > redevZoom + 1">
-        <gmap-info-window
-          v-for="m in simple_houses"
-          :key="m.id"
-          :position="m.position"
-          :opened="15 < getMapZoom"
-        >
-          <info-window-content
-            @viewArea="viewArea(m)"
-            :item="m"
-            :price="getPriceFromText(m)"
-            :is-dev="!!m.redevelopment_area"
-          />
-        </gmap-info-window>
-      </template> -->
       <template v-else>
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
