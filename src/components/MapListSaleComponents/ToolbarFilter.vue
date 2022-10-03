@@ -106,7 +106,7 @@ export default {
           keyName: "areaType"
         },
         {
-          label: "희망가격",
+          label: "희망매매가",
           type: "PriceFilter",
           class:
             this.price.min || this.price.max
@@ -154,6 +154,16 @@ export default {
       required: true
     }
   },
+
+  // watch: {
+  //   option: {
+  //     handler: function() {
+  //       this.text = "";
+  //     this.options = []
+  //     },
+  //     immediate: true
+  //   }
+  // },
   methods: {
     onChangeFilter(params) {
       this.$emit("changeFilter", params);
