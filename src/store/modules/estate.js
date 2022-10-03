@@ -102,6 +102,183 @@ export const estateStore = {
     initSimpleHouses: (context, parameter) => {
       context.commit("setSimpleHouses", []);
     },
+
+    getSimpleHousesWithoutLocation: async function (context, payload) {
+      const area = context.getters["search/area"];
+      const price = context.getters["search/price"];
+      const initPrice = context.getters["search/initPrice"];
+      const person = context.getters["search/person"];
+      const category = context.getters["search/getCategoriesByKorean"];
+
+      const getQueryArray = (keyName, params) => {
+        if (keyName === "type_house__in" && params.length === 8) {
+          return {};
+        }
+        if (Array.isArray(params)) {
+          const hasValue = params.every((value) => value !== undefined);
+          if (!hasValue || params.length === 0) return {};
+          return {
+            [keyName]: params.join(",")
+          };
+        }
+        if (!params) return {};
+        return {
+          [keyName]: params
+        };
+      };
+
+      if (estateStore.state.payload?.type) {
+        switch (estateStore.state.payload?.type) {
+          case "city":
+            await context.commit("setRequestUrl", "cities");
+            break;
+          case "subcity":
+            await context.commit("setRequestUrl", "sub_cities");
+            break;
+          case "locations":
+            await context.commit("setRequestUrl", "locations");
+            break;
+          case "transaction_groups":
+            await context.commit("setRequestUrl", "transaction_groups");
+            break;
+          case "houses":
+            await context.commit("setRequestUrl", "houses");
+            break;
+          default:
+            await context.commit("setRequestUrl", "houses");
+        }
+      } else {
+        await context.commit("setRequestUrl", context.state.requestUrl);
+      }
+
+      // const getRedevQuery = () => {
+      //   return {};
+      // };
+
+      const getAreaTypeString = () => {
+        switch (context.rootState.map.areaType) {
+          case null:
+            return "";
+          case "재개발":
+          case "재건축":
+          case "일반":
+            return context.rootState.map.areaType;
+          case "기타사업":
+            return "기타";
+          default:
+            return null;
+        }
+      };
+
+      const _red = payload?.query?.subcity
+        ? {}
+        : { redevelopment_area__isnull: "false" };
+
+      const Dquery = {
+        ..._red,
+        ...(estateStore.state.payload?.type !== "transaction_groups"
+          ? getQueryArray("type_house__in", category)
+          : getQueryArray(
+              "category__in",
+              category
+                .join(",")
+                .replace("토지", "LAND")
+                .replace("오피스텔", "OFFICETEL")
+                .replace("연립|다세대", "ALLIANCE")
+                .replace("아파트", "APARTMENT")
+                .replace("상업ￜ업무용", "COMMERCIAL")
+                .replace("단독|다가구", "SINGLE")
+                .split(",")
+            ))
+      };
+
+      const data = await Vue.prototype.$axios.get(
+        `/${context.state.requestUrl}/`,
+        {
+          params: {
+            page_size: 1000,
+            // ...getXY(),
+            ...Dquery,
+            ...getQueryArray("price_selling_hope__range", [
+              price.min,
+              price.max
+            ]),
+            ...getQueryArray("price_initial_investment__range", [
+              initPrice.min,
+              initPrice.max
+            ]),
+            ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+            ...getQueryArray("user__in", person),
+            ...getQueryArray(
+              "redevelopment_area__category",
+              getAreaTypeString()
+            ),
+            ...payload.query
+          }
+        }
+      );
+      console.log(data);
+
+      context.commit("setCountEstate", data.data.count);
+
+      // context.dispatch("map/setLocationLoading", true);
+
+      const estateData = (results) => {
+        if (results.length > 0 && results[0].count_estates > -1) {
+          return results;
+        } else {
+          return results
+            .reduce((acc, cur, index, src) => {
+              const hasValue = acc.some(() => {
+                const _lat = acc.some((obj) => obj.latitude === cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude === cur.longitude);
+                return _lat && _lng;
+              });
+              if (!hasValue) return [...acc, cur];
+              // 중복 되는 것들
+              const _acc = acc.filter(() => {
+                const _lat = acc.some((obj) => obj.latitude !== cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude !== cur.longitude);
+                return _lat || _lng;
+              });
+              const _acc2 = acc.find(() => {
+                const _lat = acc.some((obj) => obj.latitude === cur.latitude);
+                const _lng = acc.some((obj) => obj.longitude === cur.longitude);
+                return _lat && _lng;
+              });
+              const defaultCur = { ...cur, count: (_acc2.count || 0) + 1 };
+
+              if (!cur.group_building_house?.type_house) {
+                return [
+                  ..._acc,
+                  {
+                    ...defaultCur,
+                    group_building_house: {
+                      ...cur.group_building_house,
+                      type_house: "-"
+                    }
+                  }
+                ];
+              } else {
+                return [..._acc, defaultCur];
+              }
+            }, [])
+            .map((item) => ({
+              ...item,
+              position: {
+                lat: Number(item.latitude),
+                lng: Number(item.longitude)
+              }
+            }));
+        }
+      };
+      const _data = estateData(data.data.results);
+      console.log(_data);
+
+      context.commit("setSimpleHouses", _data);
+      context.dispatch("map/changeEstateCount");
+    },
+
     getSimpleHouses: async function (context, payload) {
       // context.commit("setSimpleHouses", []);
 

@@ -166,6 +166,7 @@ export default {
   // },
   methods: {
     onChangeFilter(params) {
+      console.log("toolbar", "onChangeFilter", params);
       this.$emit("changeFilter", params);
     },
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),

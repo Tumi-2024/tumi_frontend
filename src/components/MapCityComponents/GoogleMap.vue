@@ -450,25 +450,9 @@ export default {
         ]
       };
 
-      const getAreaTypeString = () => {
-        switch (this.getAreaType) {
-          case null:
-            return {};
-          case "재개발":
-          case "재건축":
-          case "일반":
-            return { redevelopment__category: this.getAreaType };
-          case "기타사업":
-            return { redevelopment__category: "기타" };
-          default:
-            return null;
-        }
-      };
-
       console.log("fetch");
 
       await this.fetchMapAreas({
-        ...getAreaTypeString(),
         latitude__range: `${boundLocation.latitude[0]},${boundLocation.latitude[1]}`,
         longitude__range: `${boundLocation.longitude[0]},${boundLocation.longitude[1]}`
       });

@@ -115,7 +115,7 @@ export default {
   methods: {
     ...mapActions("search", ["setIsMultiSelect"]),
     ...mapActions("area", ["fetchMapAreas"]),
-    ...mapActions(["getSimpleHouses"]),
+    ...mapActions(["getSimpleHouses", "getSimpleHousesWithoutLocation"]),
 
     openModal() {
       this.modal = true;
@@ -125,13 +125,22 @@ export default {
       this.$refs.component.save();
       this.modal = false;
       console.log("save", this.isTransaction, "this.isTransaction");
-      const { query } = this.$route;
+      const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
       if (!isTransaction) {
-        this.$store.dispatch("getSimpleHouses", {
-          query: { subcity: query.subcity }
-        });
-        this.fetchMapAreas();
+        if (!query.langtitude && !query.latitude) {
+          this.$store.dispatch("getSimpleHousesWithoutLocation", {
+            query: { subcity: query.subcity }
+          });
+        } else {
+          this.$store.dispatch("getSimpleHouses", {
+            query: { subcity: query.subcity }
+          });
+        }
+
+        if (path.indexOf("list") < -1) {
+          this.fetchMapAreas();
+        }
       } else {
         const area = this.$store.state.search.area;
         const price = this.$store.state.search.price;
@@ -155,6 +164,7 @@ export default {
             [keyName]: params
           };
         };
+        console.log("emit");
 
         this.$emit("change", {
           page_size: 1000,

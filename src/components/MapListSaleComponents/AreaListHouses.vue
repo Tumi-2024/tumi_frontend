@@ -13,6 +13,7 @@
         v-model="text"
         @focus="onFocus"
         @search="onSearch"
+        @changeFilter="changeFilter"
       />
     </q-card-section>
 
@@ -93,6 +94,9 @@ export default {
     ...mapActions(["setSimpleHouses", "setCountEstate", "setRequestUrl"]),
     onFocus(e) {
       // this.getApiHouses();
+    },
+    changeFilter() {
+      console.log("changeFilter");
     },
     infiniteHandler() {
       const getQueryArray = (keyName, params) => {

@@ -55,6 +55,21 @@ export const areaStore = {
           context.commit("setPayload", payload);
         }
 
+        const getAreaTypeString = () => {
+          switch (context.rootState.map.areaType) {
+            case null:
+              return "";
+            case "재개발":
+            case "재건축":
+            case "일반":
+              return context.rootState.map.areaType;
+            case "기타사업":
+              return "기타";
+            default:
+              return null;
+          }
+        };
+
         const { data } = await Vue.prototype.$axios.get(
           "redevelopment_areas/",
           {
@@ -75,7 +90,7 @@ export const areaStore = {
               ...getQueryArray("user__in", person),
               ...getQueryArray(
                 "redevelopment_area__category",
-                context.rootState.map.areaType
+                getAreaTypeString()
               ),
               ...areaStore.state.payload
             }
