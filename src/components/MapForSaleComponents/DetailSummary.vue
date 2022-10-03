@@ -159,34 +159,36 @@
             </div>
           </div>
         </div>
-        <q-card class="col-12 q-mt-md">
-          <div
-            class="initial-investments bg-orange-1 text-primary row q-pa-md items-center flex"
-            style="border: 2px solid #ff5a00"
-          >
-            <div class="flex">
-              <q-icon size="20px">
-                <img src="~assets/icons/phone.svg" alt="" />
-              </q-icon>
-            </div>
-            <div class="q-ml-md" style="flex: 1" @click="callPerson">
-              <div class="row items-center">
-                <span class="text-subtitle2 col-12 text-bold">
-                  {{ persons[0].rank }}
-                </span>
-                <div class="text-h6 q-my-xs col-12 flex text-bold">
-                  {{ persons[0].text }}
-                  <span v-if="persons[0].phone" class="q-ml-md flex"
-                    >(연락처:{{ persons[0].phone }})</span
-                  >
-                </div>
+        <div class="col-12 q-mt-md flex justify-center">
+          <q-card class="flex flex-1 cursor-pointer" style="max-width: 66%">
+            <div
+              class="initial-investments bg-orange-1 text-primary row q-pa-md items-center flex"
+              style="border: 2px solid #ff5a00"
+            >
+              <div class="flex">
+                <q-icon size="20px">
+                  <img src="~assets/icons/phone.svg" alt="" />
+                </q-icon>
               </div>
-              <span class="text-grey-9 text-bold">
-                이미지 클릭시 담당직원과 전화상담이 가능합니다.
-              </span>
+              <div class="q-ml-md" style="flex: 1" @click="callPerson">
+                <div class="row items-center">
+                  <span class="text-subtitle2 col-12 text-bold">
+                    {{ persons[0].rank }}
+                  </span>
+                  <div class="text-h6 q-my-xs col-12 flex text-bold">
+                    {{ persons[0].text }}
+                    <span v-if="persons[0].phone" class="q-ml-md flex"
+                      >(연락처:{{ persons[0].phone }})</span
+                    >
+                  </div>
+                </div>
+                <span class="text-grey-9 text-bold">
+                  이미지 클릭시 담당직원과 전화상담이 가능합니다.
+                </span>
+              </div>
             </div>
-          </div>
-        </q-card>
+          </q-card>
+        </div>
       </div>
     </q-card-section>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="more-information">
+  <div class="more-information notosanskr-light">
     <section class="address-section bg-white">
       <q-badge
         outline
@@ -26,8 +26,8 @@
       <div class="title-heading notosanskr-medium">정비사업 개요</div>
       <div class="row table">
         <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo" :key="i">
-          <div class="q-pa-sm label">
-            <span class="information">{{ item.label }}</span>
+          <div class="q-pa-sm label" style="color: #707070">
+            <span class="information text-bold">{{ item.label }}</span>
           </div>
           <a
             class="information sub flex items-center q-px-sm"
@@ -58,11 +58,12 @@
             class="information sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
-            >{{ item.value }}</a
           >
-          <span class="information sub flex items-center q-px-sm" v-else>{{
-            item.value
-          }}</span>
+            {{ item.value }}
+          </a>
+          <span class="information sub flex items-center q-px-sm" v-else>
+            {{ item.value }}
+          </span>
         </div>
       </div>
     </section>
@@ -468,6 +469,7 @@ export default {
   overflow-y: auto;
   height: 90vh;
   margin-bottom: 200px;
+  color: #707070;
   .table {
     border-top: 2px solid #555555;
     border-bottom: 1px solid #e9e9e9;
