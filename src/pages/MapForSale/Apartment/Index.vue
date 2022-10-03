@@ -35,11 +35,11 @@
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
     <!-- 위치 정보 -->
-    <common-information
+    <!-- <common-information
       class="q-mt-md"
       title="위치 정보"
       :getOptions="getLocationOptions"
-    />
+    /> -->
     <!-- 토지/용도 정보 -->
     <common-information
       class="q-mt-md"
@@ -558,7 +558,7 @@ export default {
           value: this.getValue(houseInfo.count_floor_total, " 층")
         },
         {
-          label: "층수 (해당 층)",
+          label: "해당 층",
           value: this.getValue(houseInfo.num_floor, " 층")
         },
         // {
