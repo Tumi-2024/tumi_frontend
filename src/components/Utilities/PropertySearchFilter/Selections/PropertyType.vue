@@ -155,16 +155,20 @@ export default {
       if (!this.isMultiSelect) {
         this.selected = ["APARTMENT"];
       } else {
-        this.selected = [
-          "APARTMENT",
-          "ALLIANCE",
-          "SINGLE",
-          "OFFICETEL",
-          "COMMERCIAL",
-          "LAND",
-          "noname01",
-          "noname02"
-        ];
+        if (this.selected.length !== 8) {
+          this.selected = [
+            "APARTMENT",
+            "ALLIANCE",
+            "SINGLE",
+            "OFFICETEL",
+            "COMMERCIAL",
+            "LAND",
+            "noname01",
+            "noname02"
+          ];
+        } else {
+          this.selected = ["APARTMENT"];
+        }
       }
     }
   }

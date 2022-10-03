@@ -101,18 +101,21 @@ export default {
     }
   },
   watch: {
-    // categories: {
-    //   immediate: true,
-    //   handler(newVal, oldVal) {
-    //     const defaultProperties = this.getProperties.filter(
-    //       (obj) => !obj.disabled
-    //     );
-    //     // const validSelect = defaultProperties.some((df) => {
-    //     //   return df.type.includes(this.selectValue.value);
-    //     // });
-    //     // if (validSelect) return;
-    //   }
-    // }
+    categories: {
+      immediate: true,
+      handler(newVal, oldVal) {
+        const defaultProperties = this.getProperties.filter(
+          (obj) => !obj.disabled
+        );
+        const validSelect = defaultProperties.some((df) => {
+          return df.value === this.selectValue.value;
+        });
+        console.log(validSelect);
+        if (!validSelect) {
+          this.selectValue.value = defaultProperties[0].value;
+        }
+      }
+    }
   },
   data() {
     return {
