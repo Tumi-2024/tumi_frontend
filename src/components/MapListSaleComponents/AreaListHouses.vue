@@ -95,10 +95,9 @@ export default {
     onFocus(e) {
       // this.getApiHouses();
     },
-    changeFilter() {
-      console.log("changeFilter");
-    },
+    changeFilter() {},
     infiniteHandler() {
+      this.setRequestUrl("houses");
       const getQueryArray = (keyName, params) => {
         if (keyName === "type_house__in" && params?.length === 8) {
           return {};
@@ -130,7 +129,7 @@ export default {
 
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
-      this.text = this.$route.query.title || "";
+      this.text = this.$route.query.title || this.$route.query.search || "";
       this.busy = true;
 
       switch (_key) {
@@ -148,18 +147,22 @@ export default {
       }
     },
     async onSearch(type, id, label) {
+      const { query } = this.$route;
       if (id?.length === 0) {
         return;
       }
       if (!type && !id && !label) {
         this.page = 1;
-        const { data } = await Vue.prototype.$axios.get(`/houses/`);
-        this.setSimpleHouses(data.results);
-        this.setCountEstate(data.count);
-
-        this.$router.push({ name: "listHouses" });
+        if (Object.keys(query).length !== 0) {
+          this.$router.replace({
+            name: "listHouses"
+          });
+        }
+        this.getApiHouses({}, undefined, this.page);
         return;
       }
+
+      console.log(type, id, label);
       switch (type) {
         case "지역":
           this.setLocationQuery(id, label, this.page);
@@ -177,7 +180,12 @@ export default {
 
     async getSearchData(params, page) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
-      this.saleList = [...this.saleList, ...data.results];
+      if (!!params.title && this.prevSearch === params.title) {
+        this.saleList = [...this.saleList, ...data.results];
+      } else {
+        this.saleList = data.results;
+      }
+      this.prevSearch = params.title;
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
       // context.commit("setSimpleHouses", estateData(data.data.results));
@@ -189,7 +197,7 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      if (this.prevSearch === params.title) {
+      if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [...this.saleList, ...data.results];
       } else {
         this.saleList = data.results;
@@ -207,13 +215,12 @@ export default {
         params: { ...params, page, page_size: 10 }
       });
 
-      if (this.prevSearch === params.title) {
+      if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [...this.saleList, ...data.results];
       } else {
         this.saleList = data.results;
       }
       this.prevSearch = params.title;
-
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
       this.page += 1;
@@ -223,11 +230,13 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      if (this.prevSearch === params.title) {
+      if (!!params.title && this.prevSearch === params.title) {
+        console.log(params, this.prevSearch);
         this.saleList = [...this.saleList, ...data.results];
       } else {
         this.saleList = data.results;
       }
+      console.log(this.saleList);
       this.prevSearch = params.title;
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
@@ -237,14 +246,16 @@ export default {
 
     setSearchQuery(search, label, page) {
       this.page = 1;
-      this.$router.push({
+      this.$router.replace({
+        name: "listHouses",
         query: { search }
       });
       this.getSearchData({ search }, this.page);
     },
     setRedevQuery(redevelopmentArea, title) {
       this.page = 1;
-      this.$router.push({
+      this.$router.replace({
+        name: "listHouses",
         query: { redevelopment_area: redevelopmentArea, title }
       });
       this.getRedevData(
@@ -254,7 +265,8 @@ export default {
     },
     setLocationQuery(location, label, page) {
       this.page = 1;
-      this.$router.push({
+      this.$router.replace({
+        name: "listHouses",
         query: { location, title: label }
       });
       this.getLocationData({ location }, this.page);

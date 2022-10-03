@@ -281,6 +281,7 @@ export const estateStore = {
 
     getSimpleHouses: async function (context, payload) {
       // context.commit("setSimpleHouses", []);
+      console.log(payload);
 
       const area = context.getters["search/area"];
       const price = context.getters["search/price"];
