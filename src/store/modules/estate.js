@@ -217,7 +217,6 @@ export const estateStore = {
           }
         }
       );
-      console.log(data);
 
       context.commit("setCountEstate", data.data.count);
 
@@ -273,7 +272,6 @@ export const estateStore = {
         }
       };
       const _data = estateData(data.data.results);
-      console.log(_data);
 
       context.commit("setSimpleHouses", _data);
       context.dispatch("map/changeEstateCount");
@@ -281,7 +279,6 @@ export const estateStore = {
 
     getSimpleHouses: async function (context, payload) {
       // context.commit("setSimpleHouses", []);
-      console.log(payload);
 
       const area = context.getters["search/area"];
       const price = context.getters["search/price"];
@@ -393,8 +390,6 @@ export const estateStore = {
             ))
       };
 
-      console.log(payload);
-
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
@@ -420,7 +415,6 @@ export const estateStore = {
           }
         }
       );
-      console.log(data);
 
       context.commit("setCountEstate", data.data.count);
 
@@ -476,7 +470,6 @@ export const estateStore = {
         }
       };
       const _data = estateData(data.data.results);
-      console.log(_data);
 
       context.commit("setSimpleHouses", _data);
       context.dispatch("map/changeEstateCount");

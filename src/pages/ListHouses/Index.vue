@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     onSearch(type, text) {
-      console.log(type, text, "search");
+      // console.log(type, text, "search");
     }
   }
 };

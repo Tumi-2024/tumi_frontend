@@ -124,7 +124,6 @@ export default {
     save() {
       this.$refs.component.save();
       this.modal = false;
-      console.log("save", this.isTransaction, "this.isTransaction");
       const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
       if (!isTransaction) {
@@ -164,7 +163,6 @@ export default {
             [keyName]: params
           };
         };
-        console.log("emit");
 
         this.$emit("change", {
           page_size: 1000,

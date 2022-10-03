@@ -110,7 +110,6 @@ export default {
         const validSelect = defaultProperties.some((df) => {
           return df.value === this.selectValue.value;
         });
-        console.log(validSelect);
         if (!validSelect) {
           this.selectValue.value = defaultProperties[0].value;
         }

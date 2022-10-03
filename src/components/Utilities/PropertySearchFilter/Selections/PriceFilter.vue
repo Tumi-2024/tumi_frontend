@@ -106,7 +106,6 @@ export default {
     },
     onClickPreset({ value }) {
       // 처음에 누르면 이하 모두 선택
-      console.log(value, this.selectValue);
       if (!this.selectValue.min && !this.selectValue.max) {
         this.selectValue.max = value;
         this.selectValue.min = 0;
@@ -147,7 +146,6 @@ export default {
       };
     },
     save() {
-      console.log(this.selectValue);
       if (this.keyName === "prices") {
         this.setPrice(this.selectValue);
       } else {
@@ -178,7 +176,6 @@ export default {
     }
   },
   beforeMount() {
-    console.log(this.keyName);
     if (this.keyName === "prices") {
       this.selectValue = { ...this.price };
     } else {

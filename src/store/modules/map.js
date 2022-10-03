@@ -169,11 +169,11 @@ export const mapStore = {
         });
     },
     changeEstateCount: (context, data) => {
-      console.log(
-        "changeEstateCount",
-        estateStore.state.simple_houses,
-        context.state.subcityId
-      );
+      // console.log(
+      //   "changeEstateCount",
+      //   estateStore.state.simple_houses,
+      //   context.state.subcityId
+      // );
       const _arr = estateStore.state.simple_houses.filter(
         (obj) => obj.id === context.state.subcityId
       );

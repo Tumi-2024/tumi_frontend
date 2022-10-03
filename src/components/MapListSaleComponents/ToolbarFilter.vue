@@ -166,7 +166,6 @@ export default {
   // },
   methods: {
     onChangeFilter(params) {
-      console.log("toolbar", "onChangeFilter", params);
       this.$emit("changeFilter", params);
     },
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
@@ -186,7 +185,6 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
-      console.log("onSelect");
       // this.$router.options.history.state.back
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
@@ -252,7 +250,6 @@ export default {
   },
   beforeMount() {
     const { query } = this.$route;
-    console.log(!!query?.subcity);
     switch (true) {
       case !!query?.subcity:
         this.option = "location";
