@@ -6,6 +6,7 @@
       :disable-heart="getMapZoom > 15"
       @showArea="showHideArea"
     />
+
     <GmapMap
       ref="mapRef"
       v-on="{
@@ -24,7 +25,7 @@
           v-for="m in simple_houses"
           :key="m.id"
           :position="m.position"
-          :opened="15 < getMapZoom"
+          :opened="true"
         >
           <info-window-content
             @viewArea="viewArea(m)"
@@ -92,9 +93,10 @@
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
           <template v-if="redevZoom < getMapZoom && getMapZoom <= 15">
+            <!-- :class="{ green: $route.path === '/map/city/area' }" -->
             <div
               class="area-badge-info notosanskr-medium"
-              :class="{ green: $route.path === '/map/city/area' }"
+              :class="`bg-${getBadgeColor(badge)}`"
               @click.self="selectArea(badge)"
             >
               <q-icon
@@ -188,18 +190,40 @@ export default {
     ...mapGetters(["getUserLocation"]),
     ...mapGetters(["simple_houses"]),
     google: gmapApi,
+    getBadgeColor() {
+      return ({ category }) => {
+        switch (category) {
+          case "재개발":
+            return "primary";
+          case "재건축":
+            return "blue";
+          case "가로주택":
+            return "green";
+          default:
+            return "grey-6";
+        }
+      };
+    },
     getColor() {
       switch (this.getAreaType) {
         case "재개발":
-          return { text: "white", bg: "rgb(255, 90, 0)" };
+          return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
         case "재건축":
-          return { text: "white", bg: "#2196f3" };
+          return { text: "white", bg: "#2196f3", tagClass: "blue" };
         case "기타사업":
-          return { text: "white", bg: "rgba(0, 128, 0, 0.8)" };
+          return {
+            text: "white",
+            bg: "rgba(0, 128, 0, 0.8)",
+            tagClass: "green"
+          };
         case null:
-          return { text: "black", bg: "#ffff00" };
+          return { text: "black", bg: "#ffff00", tagClass: "primary" };
         default:
-          return { text: "white", bg: "rgba(128, 128, 128)" };
+          return {
+            text: "white",
+            bg: "rgba(128, 128, 128)",
+            tagClass: "primary"
+          };
       }
     },
     getIsHouse() {
@@ -452,16 +476,9 @@ export default {
     getHouseInfo() {
       const bounds = this.map.getBounds();
 
-      const ratio = -0.00005;
       const boundLocation = {
-        latitude: [
-          bounds.getSouthWest().lat() * (1 - ratio),
-          bounds.getNorthEast().lat() * (1 + ratio)
-        ],
-        longitude: [
-          bounds.getSouthWest().lng() * (1 - ratio),
-          bounds.getNorthEast().lng() * (1 + ratio)
-        ]
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = {
         type: "subcity",
