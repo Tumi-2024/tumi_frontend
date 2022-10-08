@@ -1,8 +1,8 @@
 <template>
   <div>
     <toolbar-nav class="bg-white" style="margin-bottom: 12px" />
-    <property-menu-sort hide-edit @sort="getProperties" />
-    <property-filter
+    <!-- <property-menu-sort hide-edit @sort="getProperties" /> -->
+    <!-- <property-filter
       @filter="filter"
       :apartment="getCountType('아파트')"
       :office="getCountType('오피스텔')"
@@ -13,7 +13,7 @@
       :unauthorized="getCountType('무허가 건축물')"
       :right="getCountType('입주권')"
       class="bg-white"
-    ></property-filter>
+    ></property-filter> -->
     <div class="bg-white">
       <div style="border-bottom: 1px solid #e8e8e8; margin: 0 16px" />
     </div>
@@ -42,7 +42,7 @@ import { ToolbarNav } from "src/components/RecentlySeenComponents";
 import { AreaItemHouse } from "src/components/MapListSaleComponents";
 import {
   PropertyMenuSort,
-  PropertyFilter,
+  // PropertyFilter,
   PropertyMixin
 } from "src/components/PropertyPageComponents";
 export default {
@@ -50,7 +50,7 @@ export default {
   components: {
     "toolbar-nav": ToolbarNav,
     PropertyMenuSort,
-    PropertyFilter,
+    // PropertyFilter,
     "area-item-house": AreaItemHouse
   },
   mixins: [PropertyMixin]

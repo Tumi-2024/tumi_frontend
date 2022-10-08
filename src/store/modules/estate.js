@@ -432,24 +432,26 @@ export const estateStore = {
                 return _lat && _lng;
               });
               if (!hasValue) return [...acc, cur];
-              // 중복 되는 것들
-              const _acc = acc.filter(() => {
-                const _lat = acc.some((obj) => obj.latitude !== cur.latitude);
-                const _lng = acc.some((obj) => obj.longitude !== cur.longitude);
-                return _lat || _lng;
-              });
-              const _acc2 = acc.find(() => {
-                const _lat = acc.some((obj) => obj.latitude === cur.latitude);
-                const _lng = acc.some((obj) => obj.longitude === cur.longitude);
+              // 중복 될 경우 기존 acc 를 교체한다.
+
+              const sameAcc = acc.find((obj) => {
+                const _lat = obj.latitude === cur.latitude;
+                const _lng = obj.longitude === cur.longitude;
                 return _lat && _lng;
               });
-              const defaultCur = { ...cur, count: (_acc2.count || 0) + 1 };
+
+              const restAcc = acc.filter((obj) => {
+                const _lat = obj.latitude === cur.latitude;
+                const _lng = obj.longitude === cur.longitude;
+                return !(_lat && _lng);
+              });
 
               if (!cur.group_building_house?.type_house) {
                 return [
-                  ..._acc,
+                  ...restAcc,
                   {
-                    ...defaultCur,
+                    ...sameAcc,
+                    count: (sameAcc.count || 0) + 1,
                     group_building_house: {
                       ...cur.group_building_house,
                       type_house: "-"
@@ -457,7 +459,10 @@ export const estateStore = {
                   }
                 ];
               } else {
-                return [..._acc, defaultCur];
+                return [
+                  ...restAcc,
+                  { ...sameAcc, count: (sameAcc.count || 0) + 1 }
+                ];
               }
             }, [])
             .map((item) => ({
@@ -470,6 +475,8 @@ export const estateStore = {
         }
       };
       const _data = estateData(data.data.results);
+
+      console.log(_data, "data");
 
       context.commit("setSimpleHouses", _data);
       context.dispatch("map/changeEstateCount");
