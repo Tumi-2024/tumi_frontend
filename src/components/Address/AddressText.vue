@@ -18,7 +18,7 @@
       >
         <div
           class="area-name cursor-pointer"
-          :class="[this.textClass, { hover: isHover }]"
+          :class="[this.textClass, { hover: isHover, redirect }]"
           @click="goToAdmin"
         >
           <q-badge outline color="primary" v-show="isRedevelop">재개발</q-badge>
@@ -26,7 +26,7 @@
         </div>
         <div
           class="area-name sub"
-          :class="[{ hover: isHover }]"
+          :class="[{ hover: isHover, redirect }]"
           @click="goToAdmin"
         >
           {{ building }}
@@ -37,11 +37,11 @@
       </div>
       <div class="column justify-end flex" v-if="created">
         <div class="flex justify-end">
-          <div class="area-name q-mr-sm">매물 등록 일자</div>
-          <div class="area-name bold">{{ getDate(created) }}</div>
+          <div class="area-name-after q-mr-sm">매물 등록 일자</div>
+          <div class="area-name-after bold">{{ getDate(created) }}</div>
         </div>
         <div
-          class="area-name q-mt-xs text-weight-bold text-right"
+          class="area-name-after q-mt-xs text-weight-bold text-right redev"
           v-if="redevName"
         >
           {{ redevName }}
@@ -140,21 +140,23 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .title {
   display: flex;
   justify-content: space-between;
 }
 .area-name {
   font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: calc((18 / 1312) * 100vh);
+  line-height: calc((20 / 1312) * 100vh);
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
-  font-weight: bold;
 
-  cursor: pointer;
+  &.redirect {
+    font-weight: bold;
+    cursor: pointer;
+  }
   &.redev {
     font-size: calc((20 / 1312) * 100vh);
   }
@@ -164,7 +166,6 @@ export default {
     color: rgb(255, 90, 0);
   }
   &.sub {
-    font-weight: bold;
     font-size: 13px;
     &.hover {
       font-weight: bold;
@@ -173,5 +174,16 @@ export default {
   &.bold {
     font-weight: 800;
   }
+}
+
+.area-name-after {
+  font-weight: 500;
+  font-size: calc((18 / 1312) * 100vh);
+  line-height: calc((20 / 1312) * 100vh);
+  letter-spacing: -1.05px;
+  color: #707070;
+  margin-left: 0px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>
