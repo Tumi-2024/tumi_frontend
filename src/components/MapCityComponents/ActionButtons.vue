@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       type: [
-        { color: "yellow-12", label: "All", key: null },
+        // { color: "yellow-12", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
         { color: "green", label: "기타사업", key: "기타사업" },

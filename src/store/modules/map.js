@@ -28,7 +28,7 @@ const initState = {
   interest: [],
   isInterest: false,
   locationLoading: false,
-  areaType: null,
+  areaType: "재개발",
   count: 0,
   redevId: 0,
   redevTitle: "",
@@ -148,7 +148,7 @@ export const mapStore = {
           );
           context.commit(
             "setToolbarLabel",
-            redevTitle ? "지금 보고있는 정비사업" : "지금 보고있는 지역"
+            redevTitle ? "지도상 인근 정비사업" : "지금 보고있는 지역"
           );
           // context.commit(
           //   "setCount",

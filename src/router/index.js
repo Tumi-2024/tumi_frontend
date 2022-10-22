@@ -42,7 +42,7 @@ export default function ({ store, ssrContext }) {
         text = "메인화면";
         break;
       case "listHouses":
-        text = "매물 검색";
+        text = "매물 상세 검색";
         break;
       default:
         text = "뒤로 가기";

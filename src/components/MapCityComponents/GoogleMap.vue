@@ -3,7 +3,7 @@
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
-      :disable-heart="getMapZoom > 15"
+      :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
 
@@ -92,7 +92,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="redevZoom < getMapZoom && getMapZoom <= 15">
+          <template v-if="redevZoom < getMapZoom && getMapZoom <= 16">
             <!-- :class="{ green: $route.path === '/map/city/area' }" -->
             <div
               class="area-badge-info notosanskr-medium"
@@ -161,7 +161,7 @@ export default {
   },
   data() {
     return {
-      redevZoom: 13,
+      redevZoom: 15,
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },
@@ -469,7 +469,7 @@ export default {
         ...boundLocation
       };
 
-      if (this.getMapZoom > 15) {
+      if (this.getMapZoom > 16) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"
@@ -515,7 +515,7 @@ export default {
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
       this.map.panTo(center);
-      this.map.setZoom(15);
+      this.map.setZoom(16);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })

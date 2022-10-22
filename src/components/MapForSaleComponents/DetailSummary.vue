@@ -162,15 +162,15 @@
         <div class="col-12 q-mt-md flex justify-center">
           <q-card class="flex flex-1 cursor-pointer" style="max-width: 66%">
             <div
-              class="initial-investments bg-orange-1 text-primary row q-pa-md items-center flex"
+              class="initial-investments bg-orange-1 text-primary row q-py-md q-px-lg items-center flex"
               style="border: 2px solid #ff5a00"
             >
               <div class="flex">
-                <q-icon size="20px">
+                <q-icon size="30px">
                   <img src="~assets/icons/phone.svg" alt="" />
                 </q-icon>
               </div>
-              <div class="q-ml-md" style="flex: 1" @click="callPerson">
+              <div class="q-ml-lg" style="flex: 1" @click="callPerson">
                 <div class="row items-center">
                   <span class="text-subtitle2 col-12 text-bold">
                     {{ persons[0].rank }}

@@ -20,7 +20,8 @@
           <q-select
             style="margin-right: 4px"
             outlined
-            v-model="searchType"
+            :value="searchType"
+            @input="onChangeSelect"
             map-options
             dense
             :options="[
@@ -82,6 +83,7 @@ import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
+import { resolve } from "path";
 
 export default {
   components: {
@@ -145,7 +147,9 @@ export default {
     return {
       searchText: "",
       searchType: "redev",
-      options: []
+      options: [],
+      redev: [],
+      location: []
     };
   },
   props: {
@@ -156,6 +160,9 @@ export default {
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    onChangeSelect(e) {
+      this.searchType = e.value;
+    },
     onSelect(obj) {
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
@@ -165,52 +172,72 @@ export default {
       this.options = [];
     },
     async filterRedev(val, update, abort) {
-      if (val !== "") {
-        const {
-          data: { results }
-        } = await Vue.prototype.$axios.get(
-          `redevelopment_areas/?search=${val}`
-        );
-        update(async () => {
-          this.options = results.map(({ title, latitude, longitude }) => {
-            return {
-              value: title,
-              label: title,
-              position: { lat: Number(latitude), lng: Number(longitude) }
-            };
+      return new Promise((resolve) => {
+        Vue.prototype.$axios
+          .get(`redevelopment_areas/?search=${this.searchText}`)
+          .then((res) => {
+            update(async () => {
+              this.redev = res.data.results.map(
+                ({ title, latitude, longitude }) => {
+                  return {
+                    value: title,
+                    label: title,
+                    position: {
+                      lat: Number(latitude),
+                      lng: Number(longitude)
+                    }
+                  };
+                }
+              );
+            });
+            resolve();
           });
-        });
-      } else {
-        update();
-      }
+        // if (val !== "") {
+        // } else {
+        //   update();
+        //   resolve();
+        // }
+      });
     },
 
     async filterLocation(val, update, abort) {
-      if (val !== "") {
-        const {
-          data: { results }
-        } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
-        update(async () => {
-          this.options = results.map(
-            ({ subcity, title, latitude, longitude }) => {
-              return {
-                value: `${subcity.city.title} ${subcity.title} ${title}`,
-                label: `${subcity.city.title} ${subcity.title} ${title}`,
-                position: { lat: Number(latitude), lng: Number(longitude) }
-              };
-            }
-          );
-        });
-      } else {
-        update();
-      }
+      return new Promise((resolve) => {
+        Vue.prototype.$axios
+          .get(`locations/?search=${this.searchText}`)
+          .then((res) => {
+            update(async () => {
+              this.location = res.data.results.map(
+                ({ address, latitude, longitude }) => {
+                  return {
+                    value: address,
+                    label: address,
+                    position: {
+                      lat: Number(latitude),
+                      lng: Number(longitude)
+                    }
+                  };
+                }
+              );
+            });
+            resolve();
+          });
+        // if (val !== "") {
+        // } else {
+        //   update();
+        //   resolve();
+        // }
+      });
     },
 
     async filterFn(val, update, abort) {
+      console.log(val);
+      await this.filterRedev(val, update, abort);
+      await this.filterLocation(val, update, abort);
+      console.log(this.searchType, this.redev, this.location);
       if (this.searchType === "redev") {
-        this.filterRedev(val, update, abort);
+        this.options = this.redev;
       } else {
-        this.filterLocation(val, update, abort);
+        this.options = this.location;
       }
     }
   }

@@ -21,8 +21,18 @@
 
       <q-card-section>
         <div class="row">
-          <q-radio v-model="shape" val="house" label="매물 지도" />
-          <q-radio v-model="shape" val="transaction" label="실거래가 지도" />
+          <q-radio
+            v-model="shape"
+            val="house"
+            label="매물 지도"
+            :disabled="text.length === 0"
+          />
+          <q-radio
+            v-model="shape"
+            val="transaction"
+            label="실거래가 지도"
+            :disabled="text.length === 0"
+          />
           <q-input
             filled
             use-input
@@ -32,14 +42,28 @@
             style="flex: 1"
             @keydown.enter.prevent="onSearch"
             autofocus
-            v-model="text"
+            :value="text"
+            @input.native="onChangeText"
           />
         </div>
       </q-card-section>
       <div class="flex q-px-md" style="gap: 15px">
+        <template
+          v-if="
+            locations &&
+            !locations.length &&
+            redevlopments &&
+            !redevlopments.length &&
+            houses &&
+            !houses.length &&
+            text.length
+          "
+        >
+          검색 결과가 없습니다.
+        </template>
         <list-result
           style="flex: 1"
-          v-if="!locations.length && !redevlopments.length && !houses.length"
+          v-if="(!locations && !redevlopments && !houses) || !text.length"
           :list="recents"
           @select="onSelectList"
           @delete="onDeleteItem"
@@ -48,55 +72,57 @@
           <template #title>
             <q-item-label class="no-margin no-padding" header>
               <p style="font-size: 16px" class="text-black notosanskr-medium">
-                최근 검색 한
+                최근 검색어
               </p>
             </q-item-label>
           </template>
         </list-result>
-        <list-result
-          style="flex: 1"
-          v-if="redevlopments.length"
-          :list="redevlopments"
-          type="redevelopment"
-          @select="onSelectList"
-        >
-          <template #title>
-            <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 16px" class="text-black notosanskr-medium">
-                개발정비사업
-              </p>
-            </q-item-label>
-          </template>
-        </list-result>
-        <list-result
-          style="flex: 1"
-          v-if="locations.length"
-          :list="locations"
-          type="location"
-          @select="onSelectList"
-        >
-          <template #title>
-            <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 16px" class="text-black notosanskr-medium">
-                지역 (동, 도로명)
-              </p>
-            </q-item-label>
-          </template>
-        </list-result>
-        <list-result
-          style="flex: 1"
-          v-if="houses.length"
-          :list="houses"
-          @select="onSelectList"
-        >
-          <template #title>
-            <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 14px" class="text-black notosanskr-medium">
-                건물/단지
-              </p>
-            </q-item-label>
-          </template>
-        </list-result>
+        <div class="flex" style="width: 100%">
+          <list-result
+            style="flex: 1"
+            v-if="redevlopments && redevlopments.length && text.length"
+            :list="redevlopments"
+            type="redevelopment"
+            @select="onSelectList"
+          >
+            <template #title>
+              <q-item-label class="no-margin no-padding" header>
+                <p style="font-size: 16px" class="text-black notosanskr-medium">
+                  개발정비사업
+                </p>
+              </q-item-label>
+            </template>
+          </list-result>
+          <list-result
+            style="flex: 1"
+            v-if="locations && locations.length && text.length"
+            :list="locations"
+            type="location"
+            @select="onSelectList"
+          >
+            <template #title>
+              <q-item-label class="no-margin no-padding" header>
+                <p style="font-size: 16px" class="text-black notosanskr-medium">
+                  지역 (동, 도로명)
+                </p>
+              </q-item-label>
+            </template>
+          </list-result>
+          <list-result
+            style="flex: 1"
+            v-if="houses && houses.length && text.length"
+            :list="houses"
+            @select="onSelectList"
+          >
+            <template #title>
+              <q-item-label class="no-margin no-padding" header>
+                <p style="font-size: 14px" class="text-black notosanskr-medium">
+                  건물/단지
+                </p>
+              </q-item-label>
+            </template>
+          </list-result>
+        </div>
       </div>
     </q-card>
   </q-dialog>
@@ -206,6 +232,13 @@ export default {
       if (data.status === 204) {
         this.recents = this.recents.filter((rec) => rec.id !== id);
       }
+    },
+    onChangeText(e) {
+      this.recommends = undefined;
+      this.locations = undefined;
+      this.redevlopments = undefined;
+      this.houses = undefined;
+      this.text = e.target.value;
     },
     async onSelectList({ value, id, label }, type) {
       console.log(value, label);

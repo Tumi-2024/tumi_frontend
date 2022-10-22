@@ -1,5 +1,5 @@
 <template>
-  <q-list separator class="rounded-borders">
+  <q-list separator class="rounded-borders q-py-md">
     <q-item-label class="no-margin no-padding" header>
       <slot name="title">
         <p style="font-size: 14px" class="text-black notosanskr-medium">
