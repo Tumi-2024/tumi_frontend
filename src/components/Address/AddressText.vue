@@ -41,7 +41,7 @@
           <div class="area-name bold">{{ getDate(created) }}</div>
         </div>
         <div
-          class="area-name q-mt-xs text-weight-bold text-right redev"
+          class="area-name q-mt-xs text-weight-bold text-right"
           v-if="redevName"
         >
           {{ redevName }}
@@ -147,22 +147,24 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((18 / 1312) * 100vh);
-  line-height: calc((20 / 1312) * 100vh);
+  font-size: 14px;
+  line-height: 16px;
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
+  font-weight: bold;
 
+  cursor: pointer;
   &.redev {
     font-size: calc((20 / 1312) * 100vh);
   }
 
   &.hover {
     text-decoration: underline;
-    font-weight: bold;
     color: rgb(255, 90, 0);
   }
   &.sub {
+    font-weight: bold;
     font-size: 13px;
     &.hover {
       font-weight: bold;
