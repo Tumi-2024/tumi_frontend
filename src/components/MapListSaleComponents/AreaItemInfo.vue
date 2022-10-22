@@ -106,7 +106,7 @@ export default {
         },
         {
           label: "해당 층수",
-          value: getLabel(houseInfo.floor_count, "층")
+          value: getLabel(houseInfo.type_floor, "층")
         },
         { label: "권리산정기준일", value: dateRights },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },

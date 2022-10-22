@@ -253,8 +253,8 @@ export default {
           // number of floors
           label: "해당 층수",
           value: this.getValue(
-            this.estate.group_individual_household.num_floor,
-            "층"
+            this.estate.group_individual_household.type_floor,
+            ""
           ),
           icon: ["number-floors.svg"]
         },
@@ -561,7 +561,7 @@ export default {
         },
         {
           label: "해당 층",
-          value: this.getValue(houseInfo.num_floor, " 층")
+          value: this.getValue(houseInfo.type_floor, "")
         },
         // {
         //   label: "(메모) 매물특징",
