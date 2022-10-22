@@ -5,69 +5,6 @@
     </q-card-section>
     <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
-      <div class="flex justify-end">
-        <q-select
-          style="min-width: 120px"
-          :dense="true"
-          v-model="filterValue"
-          emit-value
-          map-options
-          :options="getOptions"
-          label="주택유형"
-        />
-      </div>
-      <q-tabs
-        v-model="activeTab"
-        dense
-        class="text-grey q-mt-lg"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-      >
-        <q-tab
-          v-for="tab in tabs"
-          :key="tab.level"
-          :name="tab.level"
-          :label="tab.label"
-        />
-      </q-tabs>
-      <q-separator />
-      <div
-        class="flex justify-end items-center"
-        style="margin-top: 20px; margin-bottom: 8px"
-      >
-        <div
-          style="
-            background-color: #ff5100;
-            width: 12px;
-            height: 8px;
-            opacity: 0.2;
-            border-radius: 2px;
-          "
-        />
-        <div style="margin-left: 5px">매매</div>
-        <div
-          style="
-            background-color: #00a4aa;
-            width: 12px;
-            height: 8px;
-            margin-left: 7px;
-            opacity: 0.2;
-            border-radius: 2px;
-          "
-        />
-        <div style="margin-left: 5px">전세</div>
-        <div
-          style="
-            border: 1px solid #d5d5d5;
-            width: 12px;
-            height: 8px;
-            margin-left: 7px;
-            border-radius: 2px;
-          "
-        />
-        <div style="margin-left: 5px">월세</div>
-      </div>
       <q-tab-panels v-model="activeTab" animated>
         <q-tab-panel
           class="q-pa-none"
@@ -76,39 +13,58 @@
           :name="tab.level"
         >
           <q-list separator style="border-top: 1px solid #1a1a1a">
-            <q-item class="item">
-              <div class="flex justify-center" style="flex: 20 0">계약일</div>
-              <div class="flex justify-center" style="flex: 15 0">주택유형</div>
-              <div class="flex justify-center" style="flex: 15 0">거래유형</div>
-
-              <div
-                class="flex"
-                style="flex: 25 0; margin-left: 10px; justify-content: center"
-              >
-                번지/건물단지명
-              </div>
-              <div class="flex justify-center" style="flex: 15 0">층수</div>
-              <div style="flex: 15 0" class="justify-center flex">
-                <q-select
-                  style="width: 90%"
-                  item-aligned
-                  dense
-                  v-model="select"
-                  :options="getSelectOptions"
-                  :option-value="(item) => (item === null ? null : item.label)"
-                />
-              </div>
-              <div class="flex justify-center" style="flex: 20 0">거래가격</div>
-              <div class="flex justify-center" style="flex: 20 0">
-                면적당 가격
-              </div>
-            </q-item>
             <q-virtual-scroll
               style="min-height: 220px; max-height: 500px"
               :items="getTransactions"
               :virtual-scroll-slice-size="100"
               separator
             >
+              <template v-slot:before>
+                <q-item
+                  class="item"
+                  style="position: sticky; top: 0; z-index: 100"
+                >
+                  <div class="flex justify-center" style="flex: 20 0">
+                    계약일
+                  </div>
+                  <div class="flex justify-center" style="flex: 15 0">
+                    주택유형
+                  </div>
+                  <div class="flex justify-center" style="flex: 15 0">
+                    거래유형
+                  </div>
+
+                  <div
+                    class="flex"
+                    style="
+                      flex: 25 0;
+                      margin-left: 10px;
+                      justify-content: center;
+                    "
+                  >
+                    번지/건물단지명
+                  </div>
+                  <div class="flex justify-center" style="flex: 15 0">층수</div>
+                  <div style="flex: 15 0" class="justify-center flex">
+                    <q-select
+                      style="width: 90%"
+                      item-aligned
+                      dense
+                      v-model="select"
+                      :options="getSelectOptions"
+                      :option-value="
+                        (item) => (item === null ? null : item.label)
+                      "
+                    />
+                  </div>
+                  <div class="flex justify-center" style="flex: 20 0">
+                    거래가격
+                  </div>
+                  <div class="flex justify-center" style="flex: 20 0">
+                    면적당 가격
+                  </div>
+                </q-item>
+              </template>
               <template v-slot="{ item, index }">
                 <q-item
                   class="item"
@@ -390,6 +346,7 @@ export default {
 .item {
   display: flex;
   align-items: center;
+  background-color: white;
   &.header {
     background-color: #f7f7f7;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
