@@ -92,7 +92,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="redevZoom < getMapZoom && getMapZoom <= 16">
+          <template v-if="getMapZoom >= 16">
             <!-- :class="{ green: $route.path === '/map/city/area' }" -->
             <div
               class="area-badge-info notosanskr-medium"
@@ -161,7 +161,7 @@ export default {
   },
   data() {
     return {
-      redevZoom: 15,
+      redevZoom: 16,
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },

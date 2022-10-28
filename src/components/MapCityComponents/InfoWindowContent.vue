@@ -35,18 +35,18 @@
       class="flex bg-white"
       @click="$emit('viewArea')"
     >
-      <div class="col items-center">
-        <div
+      <div class="col items-center q-py-sm">
+        <!-- <div
           class="info-heading notosanskr-medium text-center"
           style="padding: 4px"
           :style="{ backgroundColor: getColor(item) }"
         >
           {{ getItemInfo(item).type }}
-        </div>
+        </div> -->
         <div class="info-text text-center" style="padding: 0 8px">
           {{ toSimpleMoneyString(price) }}
         </div>
-        <div class="info-text text-center" style="padding: 0 8px 8px 8px">
+        <div class="info-text text-center" style="padding: 0 8px">
           {{ getItemInfo(item).date }}
         </div>
       </div>
