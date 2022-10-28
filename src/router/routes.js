@@ -26,15 +26,16 @@ const routes = [
     component: () => import("pages/SignIn/Index.vue"),
     name: "signIn"
   },
+  // {s,
   {
     path: "/my-page",
-    component: () => import("pages/MyPage/Index"),
-    name: "my_page"
-  },
-  {
-    path: "/my-page/",
     component: () => import("layouts/MyPageLayout.vue"),
     children: [
+      {
+        path: "",
+        component: () => import("pages/MyPage/Index"),
+        name: "my_page"
+      },
       {
         path: "area",
         component: () => import("pages/AreaPage/Index.vue"),
@@ -49,13 +50,13 @@ const routes = [
         path: "property-contacted",
         component: () => import("pages/PropertyContactedPage/Index.vue"),
         name: "property_contacted"
+      },
+      {
+        path: "recently-seen",
+        component: () => import("pages/RecentlySeenPage/Index.vue"),
+        name: "recently_seen"
       }
     ]
-  },
-  {
-    path: "/recently-seen",
-    component: () => import("pages/RecentlySeenPage/Index.vue"),
-    name: "recently_seen"
   },
   {
     path: "/insights/",

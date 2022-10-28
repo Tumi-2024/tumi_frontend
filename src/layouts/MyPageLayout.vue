@@ -1,22 +1,38 @@
 <template>
-  <q-layout view="lHh lpr lFf" container style="min-height: 100vh">
-    <q-header reveal class="bg-white">
-      <top-navigation></top-navigation>
-    </q-header>
-
-    <q-page-container>
-      <router-view></router-view>
-    </q-page-container>
-  </q-layout>
+  <div style="min-height: 100vh" class="row column bg-positive">
+    <!-- Head Section -->
+    <q-card flat square class="row items-center">
+      <toolbar></toolbar>
+      <greeting-banner></greeting-banner>
+      <icon-tabs></icon-tabs>
+    </q-card>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import { ToolbarNav } from "src/components/MyPageLayoutComponents";
+import {
+  Toolbar,
+  GreetingBanner,
+  IconTabs
+  // InformationTabs
+} from "src/components/MyPageComponents";
 export default {
   components: {
-    "top-navigation": ToolbarNav
+    toolbar: Toolbar,
+    "greeting-banner": GreetingBanner,
+    "icon-tabs": IconTabs
+    // "information-tabs": InformationTabs
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.notice {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.98px;
+  color: #707070;
+}
+</style>

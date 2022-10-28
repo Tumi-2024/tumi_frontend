@@ -84,13 +84,7 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("search", [
-      "area",
-      "price",
-      "initPrice",
-      "person",
-      "isMultiSelect"
-    ]),
+    ...mapGetters("search", ["area", "price", "initPrice", "person"]),
     getFilters() {
       return [
         {

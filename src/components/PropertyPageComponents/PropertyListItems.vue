@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="q-mt-sm" style="margin-top: 0px">
+  <q-card flat>
     <q-card-section class="list-items q-pa-none">
       <q-list class="q-pt-md">
         <div

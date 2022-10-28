@@ -119,7 +119,7 @@ export default {
 
     openModal() {
       this.modal = true;
-      this.setIsMultiSelect(true);
+      this.setIsMultiSelect(false);
     },
     save() {
       this.$refs.component.save();

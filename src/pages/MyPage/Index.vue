@@ -6,14 +6,6 @@
       <greeting-banner></greeting-banner>
       <icon-tabs></icon-tabs>
     </q-card>
-    <!-- <q-card flat square class="row items-center q-mt-sm">
-      <information-tabs></information-tabs>
-    </q-card>
-    <q-card flat square class="q-mt-sm full-heigh col-grow">
-      <q-card-section class="notice notosanskr-regular">
-        공지사항
-      </q-card-section>
-    </q-card> -->
   </div>
 </template>
 

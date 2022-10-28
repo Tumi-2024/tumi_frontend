@@ -3,14 +3,14 @@ export const searchStore = {
   state: {
     // 주택 유형
     categories: [
-      "APARTMENT",
-      "ALLIANCE",
-      "SINGLE",
-      "OFFICETEL",
-      "COMMERCIAL",
-      "LAND",
-      "noname01",
-      "noname02"
+      "APARTMENT"
+      // "ALLIANCE",
+      // "SINGLE",
+      // "OFFICETEL",
+      // "COMMERCIAL",
+      // "LAND",
+      // "noname01",
+      // "noname02"
     ],
 
     // 전용면적

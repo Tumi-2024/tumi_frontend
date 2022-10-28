@@ -83,7 +83,6 @@ import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
-import { resolve } from "path";
 
 export default {
   components: {

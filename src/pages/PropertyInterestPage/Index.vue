@@ -1,12 +1,9 @@
 <template>
-  <div class="q-mt-sm" style="max-width: 1000px">
+  <div style="max-width: 1000px">
     <property-menu-sort
       @edit="(e) => (isEdit = e)"
       :isEdit="isEdit"
     ></property-menu-sort>
-    <div class="bg-white">
-      <div style="border-bottom: 1px solid #e8e8e8; margin: 0 16px"></div>
-    </div>
     <q-card-section class="bg-white list-items q-pa-none notosanskr-regular">
       <property-list-items
         :items="properties"
