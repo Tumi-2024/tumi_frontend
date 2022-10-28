@@ -1,14 +1,11 @@
 <template>
-  <div
-    style="position: relative; width: 120px; height: 85px"
-    class="flex justify-center"
-  >
+  <div class="relative flex justify-center column">
     <div
       v-if="item.count"
       class="absolute text-primary bg-white"
       style="
-        right: 0px;
-        top: 3px;
+        right: -10px;
+        top: -10px;
         border-radius: 100%;
         border: 1px solid rgb(255, 90, 0);
         width: 25px;
@@ -22,16 +19,16 @@
     >
       +{{ item.count }}
     </div>
+    <!-- :style="{ borderColor: getColor(item) }" -->
     <div
       style="
-        position: absolute;
         width: 100px;
         flex-direction: column;
         bottom: 0;
         border-radius: 8px;
+        border: 1px solid gray;
         overflow: hidden;
       "
-      :style="{ borderColor: getColor(item) }"
       class="flex bg-white"
       @click="$emit('viewArea')"
     >
@@ -51,6 +48,29 @@
         </div>
       </div>
     </div>
+    <div
+      style="
+        position: absolute;
+        z-index: 100;
+        display: flex;
+        width: 20px;
+        height: 10px;
+        left: 40px;
+        bottom: 1px;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        background-color: gray;
+      "
+    >
+      <div
+        style="
+          width: 100%;
+          height: 100%;
+          clip-path: polygon(2px 0px, 18px 0px, 10px 8px);
+          background-color: white;
+        "
+      ></div>
+    </div>
+    <div style="display: block; float: left; width: 100%; height: 10px"></div>
   </div>
 </template>
 

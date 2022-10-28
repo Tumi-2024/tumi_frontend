@@ -21,23 +21,23 @@
       :options="getMapOptions"
     >
       <template v-if="getMapZoom > redevZoom">
-        <gmap-info-window
-          v-for="m in simple_houses"
-          :key="m.id"
-          :position="m.position"
-          :opened="true"
-        >
-          <info-window-content
-            @viewArea="viewArea(m)"
-            :item="m"
-            :price="getPriceFromText(m)"
-            :is-dev="!!m.redevelopment_area"
-          />
-        </gmap-info-window>
+        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
+          <gmap-custom-marker
+            :marker="{ latitude: m.latitude, longitude: m.longitude }"
+          >
+            <info-window-content
+              @viewArea="viewArea(m)"
+              :item="m"
+              :price="getPriceFromText(m)"
+              :is-dev="!!m.redevelopment_area"
+            />
+          </gmap-custom-marker>
+        </div>
       </template>
       <template v-else>
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
+            v-if="m.title"
             :marker="{ latitude: m.latitude, longitude: m.longitude }"
           >
             <div
@@ -488,10 +488,7 @@ export default {
     },
     viewArea(item) {
       console.log("viewArea");
-      if (item.count) {
-        this.redirectXY(item);
-        return;
-      }
+
       this.map.panTo(item.position);
       const zoomLevel = this.map.getZoom();
 
@@ -508,9 +505,16 @@ export default {
             query: { transactionid: item.id }
           };
         } else {
+          if (item.count) {
+            this.redirectXY(item);
+            return;
+          }
           return { name: "for_sale_apartment", query: { sellid: item.id } };
         }
       };
+      console.log(
+        this.$route.path === "/map/city/area" ? "transaction" : "house"
+      );
       this.$router.push(getRouterParams());
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
