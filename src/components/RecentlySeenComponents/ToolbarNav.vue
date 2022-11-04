@@ -4,7 +4,7 @@
       <q-btn
         flat
         padding="0px 16px"
-        :to="{ name: 'my_page' }"
+        :to="{ name: 'recently_seen' }"
         class="row items-center"
         style="height: 44px"
       >

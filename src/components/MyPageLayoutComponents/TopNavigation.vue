@@ -35,7 +35,7 @@ export default {
     const path = this.$route.path.split("/")[1];
     if (path === "my-page") {
       this.returnBtn.label = "내 관심 매물";
-      this.returnBtn.pathName = "my_page";
+      this.returnBtn.pathName = "recently_seen";
     }
     if (path === "insights") {
       this.returnBtn.label = "부동산 인사이트";

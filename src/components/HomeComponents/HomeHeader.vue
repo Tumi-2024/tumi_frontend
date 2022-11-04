@@ -18,7 +18,7 @@
       icon="menu"
       aria-label="Menu"
       css="btn-burger"
-      :to="{ name: 'my_page' }"
+      :to="{ name: 'recently_seen' }"
     />
   </q-toolbar>
 </template>
