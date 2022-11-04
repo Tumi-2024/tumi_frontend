@@ -68,6 +68,7 @@
                 :label="filter.label"
                 :component="filter.type"
                 :keyName="filter.keyName"
+                @change="onChangeFilter"
               />
             </div>
           </slot>
@@ -159,6 +160,10 @@ export default {
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    onChangeFilter(params) {
+      console.log(params);
+      this.$emit("changeFilter", params);
+    },
     onChangeSelect(e) {
       this.searchType = e.value;
     },

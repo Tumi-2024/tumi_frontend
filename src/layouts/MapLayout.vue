@@ -6,6 +6,7 @@
         <toolbar-filter
           v-if="$route.path.indexOf('list') === -1"
           class="q-pt-xs q-px-sm"
+          @changeFilter="changeFilter"
         />
         <!-- :disable="getMapMode === 'redevelop-area'" -->
       </div>
@@ -33,6 +34,11 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["getMapMode"])
+  },
+  methods: {
+    changeFilter(e) {
+      this.$store.dispatch("getSimpleHouses", e);
+    }
   },
   mounted() {
     this.headerH = this.$refs.navHeader;

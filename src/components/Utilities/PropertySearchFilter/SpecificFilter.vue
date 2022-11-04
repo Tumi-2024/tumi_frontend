@@ -122,6 +122,7 @@ export default {
       this.setIsMultiSelect(false);
     },
     save() {
+      console.log("try getSimpleHouses1");
       this.$refs.component.save();
       this.modal = false;
       const { query, path } = this.$route;
@@ -132,6 +133,7 @@ export default {
             query: { subcity: query.subcity }
           });
         } else {
+          console.log("try getSimpleHouses2");
           this.$store.dispatch("getSimpleHouses", {
             query: { subcity: query.subcity }
           });
@@ -141,6 +143,7 @@ export default {
           this.fetchMapAreas();
         }
       } else {
+        console.log("try getSimpleHouses3");
         const area = this.$store.state.search.area;
         const price = this.$store.state.search.price;
         const initPrice = this.$store.state.search.initPrice;
@@ -163,6 +166,7 @@ export default {
             [keyName]: params
           };
         };
+        console.log("change");
 
         this.$emit("change", {
           page_size: 1000,
