@@ -31,11 +31,11 @@ const routes = [
     path: "/my-page",
     component: () => import("layouts/MyPageLayout.vue"),
     children: [
-      {
-        path: "",
-        component: () => import("pages/MyPage/Index"),
-        name: "my_page"
-      },
+      // {
+      //   path: "",
+      //   component: () => import("pages/MyPage/Index"),
+      //   name: "my_page"
+      // },
       {
         path: "area",
         component: () => import("pages/AreaPage/Index.vue"),
