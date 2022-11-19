@@ -623,7 +623,7 @@ export default {
           class: "col-sm-8 col-md-8"
         },
         {
-          label: "희망 매매가",
+          label: "매매가",
           value: toMoneyString(houseInfo.price_selling_hope)
         },
         {

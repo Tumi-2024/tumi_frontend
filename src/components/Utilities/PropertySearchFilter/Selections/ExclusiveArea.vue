@@ -111,7 +111,7 @@ export default {
           return df.value === this.selectValue.value;
         });
         if (!validSelect) {
-          this.selectValue.value = defaultProperties[0].value;
+          this.selectValue.value = defaultProperties[0]?.value;
         }
       }
     }

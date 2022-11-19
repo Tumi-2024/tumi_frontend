@@ -22,7 +22,7 @@
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <div style="display: flex; gap: 5px; padding: 10px 10px">
         <Badge value="주택유형" houseType />
-        <Badge value="희망매매가" price />
+        <Badge value="매매가" price />
         <Badge value="매물등록일자" date />
       </div>
       <q-separator />

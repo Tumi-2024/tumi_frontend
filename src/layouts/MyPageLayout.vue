@@ -3,7 +3,7 @@
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
-      <greeting-banner></greeting-banner>
+      <!-- <greeting-banner></greeting-banner> -->
       <icon-tabs></icon-tabs>
     </q-card>
     <router-view></router-view>
@@ -13,14 +13,12 @@
 <script>
 import {
   Toolbar,
-  GreetingBanner,
   IconTabs
   // InformationTabs
 } from "src/components/MyPageComponents";
 export default {
   components: {
     toolbar: Toolbar,
-    "greeting-banner": GreetingBanner,
     "icon-tabs": IconTabs
     // "information-tabs": InformationTabs
   }

@@ -6,7 +6,7 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-
+    {{ getMapZoom }}
     <GmapMap
       ref="mapRef"
       v-on="{
@@ -20,7 +20,7 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
       :options="getMapOptions"
     >
-      <template v-if="getMapZoom > redevZoom">
+      <template v-if="getMapZoom >= 18">
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
             :marker="{ latitude: m.latitude, longitude: m.longitude }"
@@ -34,7 +34,7 @@
           </gmap-custom-marker>
         </div>
       </template>
-      <template v-else>
+      <template v-if="getMapZoom < 15">
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
             v-if="m.title"
@@ -92,7 +92,7 @@
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
-          <template v-if="getMapZoom >= 16">
+          <template v-if="getMapZoom >= redevZoom">
             <!-- :class="{ green: $route.path === '/map/city/area' }" -->
             <div
               class="area-badge-info notosanskr-medium"
@@ -161,7 +161,7 @@ export default {
   },
   data() {
     return {
-      redevZoom: 16,
+      redevZoom: 15,
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },
@@ -410,7 +410,7 @@ export default {
     dragStart() {
       this.changeMapSelectedArea(null);
     },
-    dragEnd() {
+    dragEnd(e) {
       const { center } = this.map;
       this.changeMapCenter({
         lat: center.lat(),

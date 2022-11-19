@@ -8,7 +8,7 @@
     :focused="isSelected || onHover"
   >
     <div class="row">
-      <div class="column" style="flex: 1 0 60px; margin-right: 20px">
+      <div style="flex: 1 0 60px; margin-right: 20px" class="q-mt-md">
         <q-item-section>
           <address-with-badges
             :item="getItem(item)"

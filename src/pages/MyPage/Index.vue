@@ -3,7 +3,7 @@
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
-      <greeting-banner></greeting-banner>
+      <!-- <greeting-banner></greeting-banner> -->
       <icon-tabs></icon-tabs>
     </q-card>
   </div>
@@ -12,7 +12,6 @@
 <script>
 import {
   Toolbar,
-  GreetingBanner,
   IconTabs
   // InformationTabs
 } from "src/components/MyPageComponents";
@@ -20,7 +19,6 @@ export default {
   name: "MyPage",
   components: {
     toolbar: Toolbar,
-    "greeting-banner": GreetingBanner,
     "icon-tabs": IconTabs
     // "information-tabs": InformationTabs
   }

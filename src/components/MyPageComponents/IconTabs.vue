@@ -1,27 +1,19 @@
 <template>
-  <q-card-section class="full-width row q-pa-none q-px-md">
-    <!-- icon tabs -->
-    <div
+  <q-tabs v-model="tab" class="full-width" align="justify">
+    <q-route-tab
+      class="q-py-xs"
+      :name="label"
       v-for="(tab, i) in tabs"
       :key="i"
-      class="items col-4 row items-center justify-center"
+      :to="tab.pathName"
+      active-class="text-primary"
     >
-      <q-btn
-        flat
-        ripple
-        padding="0px"
-        @click="goTo(tab.pathName)"
-        class="q-py-xs"
-      >
-        <q-icon size="44px" class="col-12">
-          <img :src="require(`../../assets/icons/${tab.icon}`)" />
-        </q-icon>
-        <div class="item-label col-12 text-center notosanskr-medium">
-          {{ tab.label }}
-        </div>
-      </q-btn>
-    </div>
-  </q-card-section>
+      <img :src="require(`../../assets/icons/${tab.icon}`)" />
+      <span class="item-label text-center notosanskr-medium mt-md">
+        {{ tab.label }}
+      </span>
+    </q-route-tab>
+  </q-tabs>
 </template>
 
 <script>
@@ -32,19 +24,19 @@ export default {
     return {
       tabs: [
         {
-          label: "최근검색",
+          label: "최근매물",
           icon: "home-recently-viewed.svg",
-          pathName: "recently_seen"
+          pathName: "recently-seen"
+        },
+        {
+          label: "관심매물",
+          icon: "home-interest.svg",
+          pathName: "property-interest"
         },
         {
           label: "관심지역",
           icon: "area-interest.svg",
           pathName: "area"
-        },
-        {
-          label: "관심매물",
-          icon: "home-interest.svg",
-          pathName: "property_interest"
         }
         // {
         //   label: "연락한 매물",
