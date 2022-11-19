@@ -158,6 +158,9 @@ export default {
         case "location":
           this.getTransactionsFromLocation(query, this.page);
           break;
+        case "transactionid":
+          this.getTransactionsById(query, this.page);
+          break;
         default:
           this.getAllTransactions(query, undefined, this.page);
       }
@@ -231,6 +234,18 @@ export default {
         };
       });
       this.transactionCount = data.count;
+    },
+    async getTransactionsById(query) {
+      const { data } = await Vue.prototype.$axios.get(
+        `/transaction_groups/${query.transactionid}/transactions`
+      );
+      this.saleList = data.map((item) => {
+        return {
+          ...item,
+          ...item.recent_transactions?.[item.types[0]]
+        };
+      });
+      this.transactionCount = data.length;
     }
   }
 };
