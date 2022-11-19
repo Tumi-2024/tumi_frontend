@@ -25,7 +25,7 @@
             map-options
             dense
             :options="[
-              { label: '정비사업', value: 'redev' },
+              { label: '개발정비사업', value: 'redev' },
               { label: '지역/주소', value: 'location' }
             ]"
           >
@@ -132,14 +132,14 @@ export default {
               : "text-grey",
           isHide: this.$route.path !== "/map/city",
           keyName: "initPrices"
-        },
-        {
-          label: "담당자",
-          type: "PersonFilter",
-          class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
-          isHide: this.$route.path !== "/map/city",
-          keyName: "users"
         }
+        // {
+        //   label: "담당자",
+        //   type: "PersonFilter",
+        //   class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
+        //   isHide: this.$route.path !== "/map/city",
+        //   keyName: "users"
+        // }
       ];
     }
   },
@@ -207,14 +207,14 @@ export default {
     async filterLocation(val, update, abort) {
       return new Promise((resolve) => {
         Vue.prototype.$axios
-          .get(`locations/?search=${this.searchText}`)
+          .get(`locations?search=${this.searchText}`)
           .then((res) => {
             update(async () => {
               this.location = res.data.results.map(
-                ({ address, latitude, longitude }) => {
+                ({ subcity, latitude, longitude, title }) => {
                   return {
-                    value: address,
-                    label: address,
+                    value: `${subcity.city.title} ${subcity.title} ${title}`,
+                    label: `${subcity.city.title} ${subcity.title} ${title}`,
                     position: {
                       lat: Number(latitude),
                       lng: Number(longitude)

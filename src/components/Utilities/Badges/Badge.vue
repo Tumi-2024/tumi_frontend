@@ -78,6 +78,9 @@ export default {
       case this.date:
         this.badgeClass = "date text-white bg-black";
         break;
+      case this.price:
+        this.badgeClass = "date text-white bg-blue";
+        break;
       default:
         this.badgeClass = "bg-info text-white";
     }

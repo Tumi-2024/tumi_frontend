@@ -69,13 +69,13 @@
             keyName="initPrices"
             ref="option4"
           />
-
+          <!--
           <person-filter
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('persons', $event)"
             ref="option5"
-          />
+          /> -->
 
           <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
             <!-- Action buttons -->

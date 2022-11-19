@@ -6,7 +6,6 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ getMapZoom }}
     <GmapMap
       ref="mapRef"
       v-on="{

@@ -117,14 +117,14 @@ export default {
               : "text-grey",
           isHide: this.$route.name !== "listHouses",
           keyName: "initPrices"
-        },
-        {
-          label: "담당자",
-          type: "PersonFilter",
-          class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
-          keyName: "users",
-          isHide: this.$route.name !== "listHouses"
         }
+        // {
+        //   label: "담당자",
+        //   type: "PersonFilter",
+        //   class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
+        //   keyName: "users",
+        //   isHide: this.$route.name !== "listHouses"
+        // }
       ];
     }
   },
@@ -215,7 +215,7 @@ export default {
         } else if (type.value === "location") {
           const {
             data: { results }
-          } = await Vue.prototype.$axios.get(`locations/?search=${val}`);
+          } = await Vue.prototype.$axios.get(`locations?search=${val}`);
           update(async () => {
             this.options = results.map(({ title, id, subcity }) => {
               return {
