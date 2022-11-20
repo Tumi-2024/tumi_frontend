@@ -1,20 +1,14 @@
 <template>
   <q-card flat class="q-mt-sm">
     <q-card-section
-      class="sort-header row bg-white q-pa-none notosanskr-medium"
+      class="sort-header row bg-white q-pa-none notosanskr-medium justify-between items-center"
       style="height: 48px"
     >
-      <p style="line-height: 48px; padding-left: 16px">
+      <span style="line-height: 24px; padding-left: 16px">
         관심 {{ this.$route.name === "area" ? "지역" : "매물" }}
         <span style="color: #ff5a00"> {{ houseCount }} </span>
         개
-      </p>
-    </q-card-section>
-
-    <q-card-section
-      class="sort-section row bg-positive q-pa-none notosanskr-regular justify-end"
-      align="center"
-    >
+      </span>
       <q-btn
         flat
         :text-color="isEdit ? 'primary' : 'dark'"

@@ -1,8 +1,8 @@
 <template>
-  <q-tabs v-model="tab" class="full-width" align="justify">
+  <q-tabs class="full-width q-mt-md" align="justify">
     <q-route-tab
       class="q-py-xs"
-      :name="label"
+      :name="tab.label"
       v-for="(tab, i) in tabs"
       :key="i"
       :to="tab.pathName"

@@ -3,7 +3,7 @@
     <q-card-section class="list-items q-pa-none">
       <q-list>
         <q-item
-          class="q-my-md items-center"
+          class="q-py-md items-center"
           clickable
           v-ripple
           v-for="(item, i) of items"
@@ -141,8 +141,8 @@ export default {
     ...mapActions("map", ["changeMapCenter", "setMapZoom"]),
     setSelected({ latitude, longitude }) {
       if (!this.isEdit) {
-        // this.changeMapCenter({ lat: Number(latitude), lng: Number(longitude) });
         this.setMapZoom(17);
+        this.changeMapCenter({ lat: Number(latitude), lng: Number(longitude) });
         this.$router.push({ name: "map_city" });
       }
     },

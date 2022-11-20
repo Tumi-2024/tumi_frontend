@@ -3,7 +3,6 @@
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
-      <!-- <greeting-banner></greeting-banner> -->
       <icon-tabs></icon-tabs>
     </q-card>
     <router-view></router-view>
