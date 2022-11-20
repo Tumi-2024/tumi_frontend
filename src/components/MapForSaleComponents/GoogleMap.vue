@@ -10,14 +10,11 @@
       :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
     >
       <!-- THIS IS INFO WINDOW -->
-      <gmap-info-window
+      <gmap-custom-marker
         :options="infoOptions"
-        :position="{ lat: position.lat, lng: position.lng }"
-        class="q-pa-lg"
-        v-if="estate"
+        :marker="{ latitude: position.lat, longitude: position.lng }"
       >
         <info-window-content
-          @viewArea="$router.back()"
           :price="estate.group_trading_terms.price_selling_hope"
           :item="estate"
           :badges="{
@@ -26,7 +23,7 @@
             area: estate.pyeong
           }"
         />
-      </gmap-info-window>
+      </gmap-custom-marker>
     </GmapMap>
   </div>
 </template>
@@ -35,9 +32,11 @@
 import { gmapApi } from "gmap-vue";
 import { mapGetters } from "vuex";
 import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 export default {
   components: {
-    InfoWindowContent
+    InfoWindowContent,
+    "gmap-custom-marker": GmapCustomMarker
   },
   props: {
     position: Object,

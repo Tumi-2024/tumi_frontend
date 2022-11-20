@@ -50,7 +50,7 @@
               "
               :style="{ backgroundColor: getColor.bg }"
               :class="`text-${getColor.text}`"
-              @click="onClickMarker(m)"
+              @mousedown="onClickMarker(m)"
             >
               <span
                 class="flex justify-center"
@@ -96,7 +96,7 @@
             <div
               class="area-badge-info notosanskr-medium"
               :class="`bg-${getBadgeColor(badge)}`"
-              @click.self="selectArea(badge)"
+              @mouseup.self="selectArea(badge)"
             >
               <q-icon
                 v-if="$route.path === '/map/city/area'"

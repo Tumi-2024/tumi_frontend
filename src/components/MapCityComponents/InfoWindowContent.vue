@@ -29,7 +29,7 @@
         overflow: hidden;
       "
       class="flex bg-white"
-      @click="$emit('viewArea')"
+      @mousedown="$emit('viewArea')"
     >
       <div class="col items-center">
         <div
