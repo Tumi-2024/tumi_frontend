@@ -16,7 +16,7 @@
             }
           }"
         >
-          {{ $store.state.map.subcityTitle }} 매물보기
+          {{ $store.state.map.subcityTitle }} 전체 매물 목록
           <span style="color: #ff5a00; margin-left: 10px">
             {{ `${$store.state.map.count} 개` }}
           </span>

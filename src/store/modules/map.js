@@ -150,10 +150,6 @@ export const mapStore = {
             "setToolbarLabel",
             redevTitle ? "지도상 인근 정비사업" : "지금 보고있는 지역"
           );
-          // context.commit(
-          //   "setCount",
-          //   result.data.subcity.count_estates_filtered
-          // );
 
           context.dispatch("changeEstateCount", result.data);
 
@@ -169,16 +165,12 @@ export const mapStore = {
         });
     },
     changeEstateCount: (context, data) => {
-      // console.log(
-      //   "changeEstateCount",
-      //   estateStore.state.simple_houses,
-      //   context.state.subcityId
-      // );
       const _arr = estateStore.state.simple_houses.filter(
         (obj) => obj.id === context.state.subcityId
       );
-      if (Array.isArray(_arr) && _arr[0]?.count_estates_filtered > -1) {
-        context.commit("setCount", _arr[0].count_estates_filtered);
+      console.log(_arr);
+      if (Array.isArray(_arr) && _arr[0]?.count_estates > -1) {
+        context.commit("setCount", _arr[0].count_estates);
       }
     },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),
