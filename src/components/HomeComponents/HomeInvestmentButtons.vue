@@ -20,7 +20,7 @@
       />
     </div>
 
-    <div class="row q-mt-sm q-col-gutter-sm">
+    <div class="row q-mt-sm q-mb-md q-col-gutter-sm">
       <div
         class="col-3 flex justify-center"
         v-for="(item, index) in investments_btn"

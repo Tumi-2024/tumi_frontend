@@ -26,13 +26,12 @@
         flex-direction: column;
         bottom: 0;
         border-radius: 8px;
-        border: 1px solid gray;
         overflow: hidden;
       "
       class="flex bg-white"
       @click="$emit('viewArea')"
     >
-      <div class="col items-center q-pb-sm">
+      <div class="col items-center">
         <div
           class="info-heading notosanskr-medium text-center"
           style="padding: 4px"
@@ -40,10 +39,10 @@
         >
           {{ getItemInfo(item).type }}
         </div>
-        <div class="info-text text-center" style="padding: 0 8px">
+        <div class="info-text text-center" style="padding: 1px 8px 0 8px">
           {{ toSimpleMoneyString(price) }}
         </div>
-        <div class="info-text text-center" style="padding: 0 8px">
+        <div class="info-text text-center" style="padding: 1px 8px 0 8px">
           {{ getItemInfo(item).date }}
         </div>
       </div>
@@ -55,21 +54,12 @@
         display: flex;
         width: 20px;
         height: 10px;
-        left: 40px;
+        left: 30px;
         bottom: 1px;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
-        background-color: gray;
+        background-color: white;
       "
-    >
-      <div
-        style="
-          width: 100%;
-          height: 100%;
-          clip-path: polygon(2px 0px, 18px 0px, 10px 8px);
-          background-color: white;
-        "
-      ></div>
-    </div>
+    ></div>
     <div style="display: block; float: left; width: 100%; height: 10px"></div>
   </div>
 </template>
@@ -158,8 +148,8 @@ export default {
 
 <style lang="scss" scoped>
 .info-heading {
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 16px;
   letter-spacing: -1.125px;
   color: white;
   &.small {
