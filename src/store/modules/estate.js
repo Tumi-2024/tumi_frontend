@@ -217,7 +217,7 @@ export const estateStore = {
           }
         }
       );
-
+      // console.log("setCountEstate", data.data.count);
       context.commit("setCountEstate", data.data.count);
 
       // context.dispatch("map/setLocationLoading", true);
@@ -417,7 +417,7 @@ export const estateStore = {
         }
       );
 
-      context.commit("setCountEstate", data.data.count);
+      // context.commit("setCountEstate", data.data.count);
 
       // context.dispatch("map/setLocationLoading", true);
 
