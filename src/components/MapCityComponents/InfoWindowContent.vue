@@ -148,7 +148,7 @@ export default {
 
 <style lang="scss" scoped>
 .info-heading {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
   letter-spacing: -1.125px;
   color: white;
