@@ -7,6 +7,7 @@
         :houseId="houseId"
         :created="created"
         :redevName="redevName"
+        class="text-subtitle1"
       />
       <!-- <div class="items-center flex">
         <img class="q-mr-md" src="~assets/icons/phone.svg" alt="" />담당자

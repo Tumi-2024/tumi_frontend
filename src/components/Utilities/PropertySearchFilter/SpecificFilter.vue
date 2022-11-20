@@ -119,7 +119,7 @@ export default {
 
     openModal() {
       this.modal = true;
-      this.setIsMultiSelect(false);
+      this.setIsMultiSelect(true);
     },
     save() {
       console.log("try getSimpleHouses1");

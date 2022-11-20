@@ -22,7 +22,7 @@
     <!-- :style="{ borderColor: getColor(item) }" -->
     <div
       style="
-        width: 100px;
+        min-width: 80px;
         flex-direction: column;
         bottom: 0;
         border-radius: 8px;
@@ -159,7 +159,7 @@ export default {
 <style lang="scss" scoped>
 .info-heading {
   font-size: 15px;
-  line-height: 22px;
+  line-height: 18px;
   letter-spacing: -1.125px;
   color: white;
   &.small {
