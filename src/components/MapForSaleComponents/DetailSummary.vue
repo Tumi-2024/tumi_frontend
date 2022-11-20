@@ -161,7 +161,7 @@
           </div>
         </div>
         <div class="col-12 q-mt-md flex justify-center">
-          <q-card class="flex flex-1 cursor-pointer" style="max-width: 66%">
+          <q-card class="flex flex-1 cursor-pointer" style="max-width: 50%">
             <div
               class="initial-investments bg-orange-1 text-primary row q-py-md q-px-lg items-center flex"
               style="border: 2px solid #ff5a00"
