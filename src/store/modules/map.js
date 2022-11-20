@@ -159,16 +159,12 @@ export const mapStore = {
             context.commit("setIsInterest", false);
           }
         })
-        .catch((thrown) => {
-          // if (Vue.prototype.$axios.isCancel(thrown)) {
-          // }
-        });
+        .catch((thrown) => {});
     },
     changeEstateCount: (context, data) => {
       const _arr = estateStore.state.simple_houses.filter(
         (obj) => obj.id === context.state.subcityId
       );
-      console.log(_arr);
       if (Array.isArray(_arr) && _arr[0]?.count_estates > -1) {
         context.commit("setCount", _arr[0].count_estates);
       }
