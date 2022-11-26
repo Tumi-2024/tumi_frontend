@@ -202,7 +202,6 @@
 </template>
 
 <script>
-import AddressWithBadges from "../Address/AddressWithBadges.vue";
 import { toMoneyString } from "src/utils";
 import AddressTextAdmin from "../Address/AddressTextAdmin.vue";
 
@@ -210,7 +209,7 @@ export default {
   name: "sale-title",
   components: {
     // AreaTags,
-    AddressWithBadges,
+    // AddressWithBadges,
     AddressTextAdmin
   },
   data() {

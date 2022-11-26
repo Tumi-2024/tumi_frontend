@@ -36,7 +36,7 @@
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>{{
+          <span class="sub flex items-center q-px-sm" v-else>{{
             item.value
           }}</span>
         </div>
@@ -61,7 +61,7 @@
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>
+          <span class="sub flex items-center q-px-sm" v-else>
             {{ item.value }}
           </span>
         </div>
@@ -75,12 +75,12 @@
             <span class="information">{{ item.label }}</span>
           </div>
           <a
-            class="information sub flex items-center q-px-sm"
+            class="sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
             >{{ item.value }}</a
           >
-          <span class="information sub flex items-center q-px-sm" v-else>{{
+          <span class="sub flex items-center q-px-sm" v-else>{{
             item.value
           }}</span>
         </div>
@@ -95,13 +95,13 @@
             <span class="information">{{ item.label }}</span>
           </div>
           <a
-            class="information sub flex items-center q-px-sm"
+            class="sub flex items-center q-px-sm"
             :href="`tel:${item.value}`"
             v-if="item.phone"
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>
+          <span class="sub flex items-center q-px-sm" v-else>
             {{ item.value }} 세대
           </span>
         </div>
@@ -119,7 +119,7 @@
           >
             {{ item.value }}
           </a>
-          <span class="information sub flex items-center q-px-sm" v-else>
+          <span class="sub flex items-center q-px-sm" v-else>
             {{ item.value }} 세대
           </span>
         </div>
@@ -465,6 +465,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.information {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -1.05px;
+  color: rgb(112, 112, 112);
+  margin-left: 0px;
+  word-break: break-all;
+  font-weight: bold;
+}
 .more-information {
   overflow-y: auto;
   height: 90vh;

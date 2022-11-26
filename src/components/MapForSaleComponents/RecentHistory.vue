@@ -5,6 +5,21 @@
     </q-card-section>
     <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
+      <q-tabs
+        v-model="activeTab"
+        class="text-grey bg-white"
+        active-color="primary"
+        align="justify"
+      >
+        <q-tab
+          v-for="tab in tabs"
+          :key="tab.level"
+          :name="tab.level"
+          class="tabs-text notosanskr-medium"
+          :label="tab.label"
+        />
+      </q-tabs>
+
       <q-tab-panels v-model="activeTab" animated>
         <q-tab-panel
           class="q-pa-none"
@@ -12,7 +27,7 @@
           :key="tab.level"
           :name="tab.level"
         >
-          <q-list separator style="border-top: 1px solid #1a1a1a">
+          <q-list separator>
             <q-virtual-scroll
               style="min-height: 220px; max-height: 500px"
               :items="getTransactions"

@@ -141,8 +141,8 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((20 / 1312) * 100vh);
-  line-height: calc((22 / 1312) * 100vh);
+  font-size: calc((22 / 1312) * 100vh);
+  line-height: calc((24 / 1312) * 100vh);
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
@@ -160,7 +160,8 @@ export default {
     color: rgb(255, 90, 0);
   }
   &.sub {
-    font-size: 13px;
+    line-height: calc((26 / 1312) * 100vh);
+
     &.hover {
       font-weight: bold;
     }
