@@ -1,13 +1,13 @@
 <template>
   <q-card>
     <q-card-section>
-      <address-with-badges
-        redirect
-        :item="{ address: areaName, building }"
+      <address-text-admin
+        :address="areaName"
+        :building="building"
         :houseId="houseId"
+        :redirect="true"
         :created="created"
         :redevName="redevName"
-        class="text-subtitle1"
       />
       <!-- <div class="items-center flex">
         <img class="q-mr-md" src="~assets/icons/phone.svg" alt="" />담당자
@@ -204,12 +204,14 @@
 <script>
 import AddressWithBadges from "../Address/AddressWithBadges.vue";
 import { toMoneyString } from "src/utils";
+import AddressTextAdmin from "../Address/AddressTextAdmin.vue";
 
 export default {
   name: "sale-title",
   components: {
     // AreaTags,
-    AddressWithBadges
+    AddressWithBadges,
+    AddressTextAdmin
   },
   data() {
     return {};
