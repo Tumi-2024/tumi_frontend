@@ -1,6 +1,6 @@
 <template>
   <q-item
-    class="column notosanskr-regular q-py-none"
+    class="column notosanskr-regular q-py-none q-px-sm"
     :to="{ name: !disabled ? to : '', query: !disabled ? query : '' }"
     :manual-focus="disabled"
     @mouseenter="onHover = true"
@@ -8,7 +8,7 @@
     :focused="isSelected || onHover"
   >
     <div class="row">
-      <div style="flex: 1 0 60px; margin-right: 20px" class="q-mt-md">
+      <div style="flex: 1 0 60px" class="q-mt-sm">
         <q-item-section>
           <address-with-badges
             :item="getItem(item)"

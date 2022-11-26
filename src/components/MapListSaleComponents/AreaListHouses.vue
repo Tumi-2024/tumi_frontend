@@ -18,7 +18,7 @@
     </q-card-section>
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
-      <div style="display: flex; gap: 5px; padding: 10px 10px">
+      <div style="display: flex; gap: 2px" class="q-pa-sm">
         <Badge value="개발유형" recommend />
         <Badge value="주택유형" houseType />
         <Badge value="전용면적" pyeong />
@@ -162,7 +162,6 @@ export default {
         return;
       }
 
-      console.log(type, id, label);
       switch (type) {
         case "지역":
           this.setLocationQuery(id, label, this.page);
@@ -230,13 +229,7 @@ export default {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, page, page_size: 10 }
       });
-      if (!!params.title && this.prevSearch === params.title) {
-        console.log(params, this.prevSearch);
-        this.saleList = [...this.saleList, ...data.results];
-      } else {
-        this.saleList = data.results;
-      }
-      console.log(this.saleList);
+      this.saleList = [...this.saleList, ...data.results];
       this.prevSearch = params.title;
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);

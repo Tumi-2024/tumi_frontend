@@ -1,5 +1,5 @@
 <template>
-  <q-item class="column notosanskr-regular">
+  <q-item class="column notosanskr-regular q-px-sm">
     <div class="row">
       <div class="column" style="flex: 1 0 300px; margin-right: 20px">
         <q-item-section>

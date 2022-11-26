@@ -82,7 +82,7 @@ export default {
         this.badgeClass = "date text-white bg-blue";
         break;
       default:
-        this.badgeClass = "bg-info text-white";
+        this.badgeClass = "bg-blue text-white";
     }
   }
 };

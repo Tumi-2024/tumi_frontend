@@ -20,7 +20,7 @@
     </q-card-section>
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
-      <div style="display: flex; gap: 5px; padding: 10px 10px">
+      <div style="display: flex; gap: 2px" class="q-pa-sm">
         <Badge value="주택유형" houseType />
         <Badge value="매매가" price />
         <Badge value="거래일자" date />
@@ -77,6 +77,7 @@ export default {
       saleList: [],
       currentItem: {},
       transactionCount: 0,
+      page: 1,
       params: {}
     };
   },
@@ -133,12 +134,13 @@ export default {
           this.getTransactionsById(query, this.page);
           break;
         default:
-          this.getAllTransactions(query, undefined, this.page);
+          this.getAllTransactions(query, this.page);
       }
     },
     onSearch(type, id, _label, subcityId) {
+      this.page = 1;
       console.log("onSearch transaction", type, id);
-      if (id.length === 0) {
+      if (id?.length === 0) {
         return;
       }
       switch (type) {
@@ -155,61 +157,77 @@ export default {
           this.getAllTransactions(id);
       }
     },
-    async getAllTransactions() {
-      console.log(this.params, "params", this.toTransactionParams(this.params));
+    async getAllTransactions(query, page) {
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
-        params: this.params
+        params: { ...this.params, page: this.page }
       });
-      this.saleList = data.results.map((item) => {
+      this.page += 1;
+
+      const newList = data.results.map((item) => {
         return {
           ...item,
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+      this.saleList = [...this.saleList, ...newList];
       this.transactionCount = data.count;
     },
 
-    async getTransactionsFromSearch(query) {
+    async getTransactionsFromSearch(query, page) {
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
-        params: { ...this.params, search: query }
+        params: { ...this.params, search: query, page: this.page }
       });
-      this.saleList = data.results.map((item) => {
+      this.page += 1;
+
+      const newList = data.results.map((item) => {
         return {
           ...item,
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+      this.saleList = [...this.saleList, ...newList];
+
       this.transactionCount = data.count;
     },
-    async getTransactionsFromRedev(id) {
+    async getTransactionsFromRedev(id, page) {
       const { data } = await Vue.prototype.$axios.get(
         `/redevelopment_areas/${id}/transaction_groups/`,
-        { params: this.params }
+        { params: { ...this.params, page: this.page } }
       );
-      this.saleList = data.results.map((item) => {
+      this.page += 1;
+
+      const newList = data.results.map((item) => {
         return {
           ...item,
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+
+      this.saleList = [...this.saleList, ...newList];
     },
-    async getTransactionsFromLocation(query) {
+    async getTransactionsFromLocation(query, page) {
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/?location=${query}`,
-        { params: { ...this.params, ...query } }
+        { params: { ...this.params, ...query, page: this.page } }
       );
-      this.saleList = data.results.map((item) => {
+      this.page += 1;
+
+      const newList = data.results.map((item) => {
         return {
           ...item,
           ...item.recent_transactions?.[item.types[0]]
         };
       });
+
+      this.saleList = [...this.saleList, ...newList];
+
       this.transactionCount = data.count;
     },
     async getTransactionsById(query) {
       const { data } = await Vue.prototype.$axios.get(
         `/transaction_groups/${query.transactionid}/transactions`
       );
+
       this.saleList = data.map((item) => {
         return {
           ...item,

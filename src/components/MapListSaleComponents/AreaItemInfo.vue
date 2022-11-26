@@ -1,9 +1,9 @@
 <template>
   <div class="column">
-    <div class="row items-center">
+    <div class="row" style="height: 40px">
       <div
         v-for="(row, rIndex) of getMainInfo"
-        class="justify-start align-start col-md-6 col-12 flex"
+        class="col-md-6 col-12"
         :key="`col-${rIndex}`"
       >
         <span class="col-text main title"
