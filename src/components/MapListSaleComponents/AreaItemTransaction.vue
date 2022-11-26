@@ -68,7 +68,7 @@ export default {
       if (!string1 || !string2) {
         return "";
       }
-      const str2 = string2?.length === 1 ? `0 + ${string2}` : string2;
+      const str2 = string2?.length === 1 ? `0${string2}` : string2;
       return string1?.slice(0, 4) + "." + string1?.slice(4, 6) + "." + str2;
     }
   },

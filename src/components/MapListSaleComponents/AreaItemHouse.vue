@@ -15,7 +15,7 @@
             :tags="getBadges(item)"
             :redevName="`${
               item.group_location.redevelopment_area
-                ? item.group_location.redevelopment_area.title_area
+                ? item.group_location.redevelopment_area.category
                 : ''
             }`"
           />

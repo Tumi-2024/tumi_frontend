@@ -128,12 +128,6 @@ export default {
           return d;
         };
 
-        // const getDate = (_date) => {
-        //   const y = _date.getFullYear()
-        //   const d = new Date(_date).getMonth();
-
-        //   return y + String("." + d);
-        // };
         return `${getYear()}.${getMonth()}.${getDay()}`;
       };
     }

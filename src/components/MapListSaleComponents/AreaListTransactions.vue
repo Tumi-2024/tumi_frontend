@@ -23,7 +23,7 @@
       <div style="display: flex; gap: 5px; padding: 10px 10px">
         <Badge value="주택유형" houseType />
         <Badge value="매매가" price />
-        <Badge value="매물등록일자" date />
+        <Badge value="거래일자" date />
       </div>
       <q-separator />
 
@@ -97,35 +97,6 @@ export default {
       // this.getApiHouses();
     },
     toTransactionParams(params) {
-      // valueHouse: "아파트";
-      // valueHouse: "연립ￜ다세대";
-      // valueHouse: "단독ￜ다가구";
-      // valueHouse: "오피스텔";
-      // valueHouse: "상업ￜ업무용";
-      // valueHouse: "토지";
-      // valueHouse: "무허가 건축물";
-      // valueHouse: "입주권";
-      // valueHouse: "아파트";
-      // CATEGORYS = Choices(
-      //   ("LAND", "토지"),
-      //   ("OFFICETEL", "오피스텔"),
-      //   ("ALLIANCE", "연립다세대"),
-      //   ("APARTMENT", "아파트"),
-      //   ("COMMERCIAL ", "상업업무용"),
-      //   ("SINGLE", "단독다가구")
-      // );
-
-      // label: "무허가 건축물",
-      //     valueTransaction: "noname01",
-      //     valueHouse: "무허가 건축물"
-      //   },
-      //   {
-      //     icon: require("assets/iconsNew/18.png"),
-      //     label: "입주권",
-      //     valueTransaction: "noname02",
-      //     valueHouse: "입주권"
-      //   }
-
       const _params = params;
       if (_params.type_house__in) {
         _params.category__in = params.type_house__in
