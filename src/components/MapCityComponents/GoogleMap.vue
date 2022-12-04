@@ -47,8 +47,8 @@
             <div
               style="
                 position: relative;
-                width: 30px;
-                height: 30px;
+                width: 15px;
+                height: 15px;
                 border-radius: 100%;
               "
               class="radial-gradient"

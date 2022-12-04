@@ -2,6 +2,26 @@
 // Main Section
 import Vue from "vue";
 
+const getQueryArray = (keyName, params) => {
+  if (keyName === "type_house__in" && params.length === 8) {
+    return {};
+  }
+  if (Array.isArray(params)) {
+    const hasValue = params.every((value) => {
+      return value !== undefined && !Number.isNaN(value);
+    });
+    if (!hasValue || params.length === 0) return {};
+
+    return {
+      [keyName]: params.join(",")
+    };
+  }
+  if (!params || Number.isNaN(params)) return {};
+  return {
+    [keyName]: params
+  };
+};
+
 export const estateStore = {
   state: {
     simple_houses: [],
@@ -110,23 +130,6 @@ export const estateStore = {
       const person = context.getters["search/person"];
       const period = context.getters["search/period"];
       const category = context.getters["search/getCategoriesByKorean"];
-
-      const getQueryArray = (keyName, params) => {
-        if (keyName === "type_house__in" && params.length === 8) {
-          return {};
-        }
-        if (Array.isArray(params)) {
-          const hasValue = params.every((value) => value !== undefined);
-          if (!hasValue || params.length === 0) return {};
-          return {
-            [keyName]: params.join(",")
-          };
-        }
-        if (!params) return {};
-        return {
-          [keyName]: params
-        };
-      };
 
       if (estateStore.state.payload?.type) {
         switch (estateStore.state.payload?.type) {
@@ -289,23 +292,6 @@ export const estateStore = {
       const person = context.getters["search/person"];
       const period = context.getters["search/period"];
       const category = context.getters["search/getCategoriesByKorean"];
-
-      const getQueryArray = (keyName, params) => {
-        if (keyName === "type_house__in" && params.length === 8) {
-          return {};
-        }
-        if (Array.isArray(params)) {
-          const hasValue = params.every((value) => value !== undefined);
-          if (!hasValue || params.length === 0) return {};
-          return {
-            [keyName]: params.join(",")
-          };
-        }
-        if (!params) return {};
-        return {
-          [keyName]: params
-        };
-      };
 
       if (payload?.latitude) {
         await context.commit("setLatitude", payload.latitude);
