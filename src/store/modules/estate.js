@@ -108,6 +108,7 @@ export const estateStore = {
       const price = context.getters["search/price"];
       const initPrice = context.getters["search/initPrice"];
       const person = context.getters["search/person"];
+      const period = context.getters["search/period"];
       const category = context.getters["search/getCategoriesByKorean"];
 
       const getQueryArray = (keyName, params) => {
@@ -207,6 +208,10 @@ export const estateStore = {
               initPrice.min,
               initPrice.max
             ]),
+            ...getQueryArray("created__range", [
+              new Date(period[0]),
+              new Date(period[1])
+            ]),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
             ...getQueryArray("user__in", person),
             ...getQueryArray(
@@ -278,13 +283,11 @@ export const estateStore = {
     },
 
     getSimpleHouses: async function (context, payload) {
-      // context.commit("setSimpleHouses", []);
-      console.log("getSimpleHouses");
-
       const area = context.getters["search/area"];
       const price = context.getters["search/price"];
       const initPrice = context.getters["search/initPrice"];
       const person = context.getters["search/person"];
+      const period = context.getters["search/period"];
       const category = context.getters["search/getCategoriesByKorean"];
 
       const getQueryArray = (keyName, params) => {
@@ -407,6 +410,11 @@ export const estateStore = {
               initPrice.max
             ]),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+            ...getQueryArray("created__range", [
+              new Date(period[0]).getTime(),
+              new Date(period[1]).getTime()
+            ]),
+
             ...getQueryArray("user__in", person),
             ...getQueryArray(
               "redevelopment_area__category",

@@ -32,6 +32,11 @@
         </template>
       </q-input>
       <div class="justify-between flex">
+        <q-checkbox v-model="autoLogin">
+          <span class="">자동 로그인</span>
+        </q-checkbox>
+      </div>
+      <div class="justify-between flex">
         <q-btn
           label="회원가입"
           color="primary"
@@ -52,6 +57,7 @@ export default {
   data() {
     return {
       username: "",
+      autoLogin: false,
       password: ""
     };
   },
@@ -64,8 +70,12 @@ export default {
         })
         .then(({ data }) => {
           this.$store.commit("setUser", data);
-          Cookies.set("tumi", data.token, { expires: "1d" });
-          Cookies.set("tumi_i", data.id, { expires: "1d" });
+          Cookies.set("tumi", data.token, {
+            expires: this.autoLogin ? "30d" : undefined
+          });
+          Cookies.set("tumi_i", data.id, {
+            expires: this.autoLogin ? "30d" : undefined
+          });
 
           try {
             if (data.token) {

@@ -98,9 +98,13 @@ export default {
       "price",
       "initPrice",
       "person",
-      "isMultiSelect"
+      "isMultiSelect",
+      "period"
     ]),
     getFilters() {
+      const hasValue = (array) => {
+        return array.every((obj) => obj);
+      };
       return [
         {
           label: "주택유형",
@@ -132,14 +136,14 @@ export default {
               : "text-grey",
           isHide: this.$route.path !== "/map/city",
           keyName: "initPrices"
+        },
+        {
+          label: "기간",
+          type: "PropertyPeriod",
+          class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
+          keyName: "period",
+          isHide: this.$route.path === "/map/city"
         }
-        // {
-        //   label: "담당자",
-        //   type: "PersonFilter",
-        //   class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
-        //   isHide: this.$route.path !== "/map/city",
-        //   keyName: "users"
-        // }
       ];
     }
   },
@@ -196,11 +200,6 @@ export default {
             });
             resolve();
           });
-        // if (val !== "") {
-        // } else {
-        //   update();
-        //   resolve();
-        // }
       });
     },
 
@@ -225,11 +224,6 @@ export default {
             });
             resolve();
           });
-        // if (val !== "") {
-        // } else {
-        //   update();
-        //   resolve();
-        // }
       });
     },
 

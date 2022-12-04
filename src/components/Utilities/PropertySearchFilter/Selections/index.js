@@ -9,6 +9,7 @@ import PropertyConnoisseur from "./PropertyConnoisseur";
 import MaintenanceType from "./MaintenanceType";
 import PriceFilter from "./PriceFilter";
 import PersonFilter from "./PersonFilter";
+import PropertyPeriod from "./PropertyPeriod";
 
 export {
   TransactionType,
@@ -21,5 +22,6 @@ export {
   PropertyConnoisseur,
   MaintenanceType,
   PriceFilter,
+  PropertyPeriod,
   PersonFilter
 };

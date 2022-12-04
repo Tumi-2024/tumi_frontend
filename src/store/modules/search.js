@@ -38,6 +38,10 @@ export const searchStore = {
      * 담당자 ID
      */
     person: [],
+    /**
+     *  기간
+     */
+    period: [undefined, undefined],
     // 다중선택 Param
     isMultiSelect: false
   },
@@ -102,6 +106,9 @@ export const searchStore = {
     },
     isMultiSelect: (_state) => {
       return _state.isMultiSelect;
+    },
+    period(_state) {
+      return _state.period;
     }
   },
   mutations: {
@@ -140,7 +147,8 @@ export const searchStore = {
     setIsMultiSelect: (_state, payload) => {
       _state.isMultiSelect = payload;
     },
-    setPerson: (_state, payload) => (_state.person = payload)
+    setPerson: (_state, payload) => (_state.person = payload),
+    setPeriod: (_state, payload) => (_state.period = payload)
   },
   actions: {
     initialize: (context) => context.commit("initialize"),
@@ -157,6 +165,7 @@ export const searchStore = {
     setPerson: (context, data) => context.commit("setPerson", data),
     setIsMultiSelect: (context, data) => {
       context.commit("setIsMultiSelect", data);
-    }
+    },
+    setPeriod: (context, data) => context.commit("setPeriod", data)
   }
 };

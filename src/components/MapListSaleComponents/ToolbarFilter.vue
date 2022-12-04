@@ -84,8 +84,12 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("search", ["area", "price", "initPrice", "person"]),
+    ...mapGetters("search", ["area", "price", "initPrice", "person", "period"]),
     getFilters() {
+      const hasValue = (array) => {
+        return array.every((obj) => obj);
+      };
+
       return [
         {
           label: "주택유형",
@@ -117,6 +121,13 @@ export default {
               : "text-grey",
           isHide: this.$route.name !== "listHouses",
           keyName: "initPrices"
+        },
+        {
+          label: "기간",
+          type: "PropertyPeriod",
+          class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
+          keyName: "period",
+          isHide: this.$route.path === "/map/city"
         }
         // {
         //   label: "담당자",

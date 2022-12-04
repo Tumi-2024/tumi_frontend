@@ -8,7 +8,7 @@
         :label="getMapSelectedArea.category"
       />
       <div class="title-heading notosanskr-medium">
-        {{ getMapSelectedArea.title }}
+        {{ getMapSelectedArea.title_area }}
       </div>
       <div class="sub-title notosanskr-regular">
         {{ getMapSelectedArea.address }}

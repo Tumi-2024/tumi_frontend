@@ -33,7 +33,42 @@
           </gmap-custom-marker>
         </div>
       </template>
-      <template v-if="getMapZoom < 15">
+      <template v-else-if="getMapZoom < 18 && getMapZoom > 15">
+        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
+          <gmap-custom-marker
+            :marker="{ latitude: m.latitude, longitude: m.longitude }"
+          >
+            <!-- <info-window-content
+              @viewArea="viewArea(m)"
+              :item="m"
+              :price="getPriceFromText(m)"
+              :is-dev="!!m.redevelopment_area"
+            /> -->
+            <div
+              style="
+                position: relative;
+                width: 30px;
+                height: 30px;
+                border-radius: 100%;
+              "
+              class="radial-gradient"
+            >
+              <!-- <div
+                style="
+                  position: absolute;
+                  top: 5px;
+                  height: 5px;
+                  background-color: rgba(255, 90, 0, 1);
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 100%;
+                "
+              ></div> -->
+            </div>
+          </gmap-custom-marker>
+        </div>
+      </template>
+      <template v-else>
         <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
           <gmap-custom-marker
             v-if="m.title"
@@ -468,7 +503,7 @@ export default {
         ...boundLocation
       };
 
-      if (this.getMapZoom > 16) {
+      if (this.getMapZoom > this.redevZoom) {
         payload = {
           type:
             this.getMapMode === "redevelop-area"
@@ -556,6 +591,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.radial-gradient {
+  background: radial-gradient(
+    red 20%,
+    rgb(255, 90, 0) 30%,
+    rgba(255, 90, 0, 0.1) 80%
+  );
+}
 // make the outer container of info-window transparent
 ::v-deep .gm-style-iw {
   background: transparent;

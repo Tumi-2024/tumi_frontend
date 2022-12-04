@@ -77,15 +77,17 @@ export default {
 
       const {
         group_building_house: houseInfo,
-        group_price: priceInfo,
-        group_location: locationInfo
+        group_price: priceInfo
+        // group_location: locationInfo
       } = this.item;
 
-      const dateRights = locationInfo.redevelopment_area?.category_date_rights
-        ?.replace("권리산정기준일 : ", "")
-        .replace("년 ", "-")
-        .replace("월 ", "-")
-        .replace("일", "");
+      console.log(houseInfo);
+
+      // const dateRights = locationInfo.redevelopment_area?.category_date_rights
+      //   ?.replace("권리산정기준일 : ", "")
+      //   .replace("년 ", "-")
+      //   .replace("월 ", "-")
+      //   .replace("일", "");
       return [
         {
           label: "토지/건축 면적",
@@ -108,7 +110,7 @@ export default {
           label: "해당 층수",
           value: getLabel(houseInfo.type_floor, "층")
         },
-        { label: "권리산정기준일", value: dateRights },
+        { label: "입주년차", value: houseInfo.year_tenancy },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
         {
           label: "감정평가액",
