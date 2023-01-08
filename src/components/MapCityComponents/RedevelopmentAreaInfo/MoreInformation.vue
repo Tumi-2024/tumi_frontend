@@ -145,6 +145,7 @@
 
     <section class="button-fixed-bottom">
       <q-btn
+        @click="goToDetail"
         color="primary"
         text-color="white"
         class="notosanskr-medium"
@@ -422,6 +423,15 @@ export default {
     }
   },
   methods: {
+    goToDetail() {
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          redevelopment_area: this.getMapSelectedArea.id,
+          title: this.getMapSelectedArea.title
+        }
+      });
+    },
     getValueWithUnit(value, unit) {
       if (value === undefined || value === null) {
         return "-";

@@ -492,7 +492,7 @@ export default {
         { label: "시공사 (건설사)", value: houseInfo.title_contractor },
         {
           label: "입주년차",
-          value: `${houseInfo.date_approval_use || ""}`
+          value: `${houseInfo.year_tenancy || ""}`
         },
         //
         // {

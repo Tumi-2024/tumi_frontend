@@ -142,7 +142,7 @@ export default {
   data() {
     return {
       options: [],
-      option: "redev"
+      option: "building"
     };
   },
   model: {

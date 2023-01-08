@@ -1,9 +1,7 @@
 <template>
   <div class="image-material">
     <div class="related-images">
-      <div class="title-heading notosanskr-medium">
-        관련 이미지
-      </div>
+      <div class="title-heading notosanskr-medium">관련 이미지</div>
       <div class="image q-mt-md" v-if="getMapSelectedArea.image_location">
         <q-img :src="getMapSelectedArea.image_location" :ratio="4 / 3" />
       </div>
@@ -15,18 +13,17 @@
       </div>
 
       <div class="no-registered-data" v-if="noImages()">
-        <div class="text-no-data notosanskr-medium">
-          등록된 자료가 없습니다
-        </div>
+        <div class="text-no-data notosanskr-medium">등록된 자료가 없습니다</div>
       </div>
 
-      <div style="height: 200px;"></div>
+      <div style="height: 200px"></div>
     </div>
     <section class="button-fixed-bottom q-mr-lg">
       <q-btn
+        @click="goToDetail"
         color="primary"
         text-color="white"
-        class=" notosanskr-medium "
+        class="notosanskr-medium"
         label="이지역 투자매물 보러가기"
       />
     </section>
@@ -40,6 +37,15 @@ export default {
     ...mapGetters("area", ["getMapSelectedArea"])
   },
   methods: {
+    goToDetail() {
+      this.$router.push({
+        name: "listHouses",
+        query: {
+          redevelopment_area: this.getMapSelectedArea.id,
+          title: this.getMapSelectedArea.title
+        }
+      });
+    },
     noImages() {
       const area = this.getMapSelectedArea;
       return !area.image_location && !area.image_view && !area.image_layout;

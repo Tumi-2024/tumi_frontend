@@ -25,7 +25,7 @@
           {{ (address || "").replace(/대한민국/gi, "") }}
         </div>
         <div
-          class="area-name sub"
+          class="area-name sub q-mt-sm"
           :class="[{ hover: isHover, redirect }]"
           @click="goToAdmin"
         >
@@ -41,7 +41,7 @@
           <div class="area-name-after bold">{{ getDate(created) }}</div>
         </div>
         <div
-          class="area-name-after q-mt-xs text-weight-bold text-right redev"
+          class="area-name-after q-mt-xs text-weight-bold text-right redev q-mt-sm"
           v-if="redevName"
         >
           {{ redevName }}

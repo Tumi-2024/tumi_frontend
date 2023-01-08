@@ -1,6 +1,10 @@
 <template>
   <div class="column" style="width: 100%">
-    <div class="row" style="width: 100%; height: 40px">
+    <div
+      class="row"
+      style="width: 100%; height: 40px"
+      v-if="getMainInfo.length"
+    >
       <div
         v-for="(row, rIndex) of getMainInfo"
         class="col-md-6 col-12"
