@@ -248,7 +248,6 @@ export default {
     },
 
     async filterFn(val, update, abort) {
-      console.log("filterFn", val);
       await this.filterRedev(val, update, abort);
       await this.filterLocation(val, update, abort);
       if (this.searchType === "redev") {

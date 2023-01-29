@@ -201,12 +201,9 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
-      // this.$router.options.history.state.back
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
     async filterFn(val, update, abort) {
-      console.log("filterFn", val);
-
       const type = [
         { label: "개발정비사업", value: "redev" },
         { label: "지역", value: "location" },
