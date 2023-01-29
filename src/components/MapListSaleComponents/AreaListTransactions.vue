@@ -2,11 +2,10 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="notosanskr-medium">
       전체 실거래가
-      <span class="text-primary">
-        {{ getNumberWithCommas(transactionCount) }}
-      </span>
-      개
+      <span class="text-primary">{{ getNumberWithCommas(estateCount) }} </span
+      >개
     </q-card-section>
+
     <q-card-section
       class="sort-section row bg-positive q-pa-none notosanskr-regular"
     >
@@ -15,7 +14,7 @@
         v-model="text"
         @focus="onFocus"
         @search="onSearch"
-        @changeFilter="onChangeFilter"
+        @changeFilter="changeFilter"
       />
     </q-card-section>
 
@@ -26,7 +25,6 @@
         <Badge value="거래일자" date />
       </div>
       <q-separator />
-
       <q-list class="q-pt-md">
         <template v-for="(item, i) of saleList">
           <area-transaction
@@ -56,7 +54,7 @@ import AreaTransaction from "./AreaItemTransaction.vue";
 import ToolbarFilter from "./ToolbarFilter.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Badge from "../Utilities/Badges/Badge.vue";
 
 export default {
@@ -72,17 +70,25 @@ export default {
     return {
       tab: "지역",
       text: "",
+      prevSearch: "",
       selectedIndex: 0,
-      type: "transaction" /** sell  */,
       saleList: [],
       currentItem: {},
-      transactionCount: 0,
       page: 1,
-      params: {}
+      busy: false
     };
   },
   computed: {
     ...mapGetters("map", ["getMapMode"]),
+    ...mapGetters(["simple_houses", "estateCount"]),
+    ...mapGetters("search", [
+      "area",
+      "price",
+      "houseType",
+      "pyeong",
+      "date",
+      "getCategoriesByKorean"
+    ]),
     getNumberWithCommas() {
       return (num) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -90,152 +96,228 @@ export default {
     }
   },
   methods: {
-    onChangeFilter(param) {
-      this.params = param;
-      this.infiniteHandler();
-    },
+    ...mapActions(["setCountEstate", "setRequestUrl"]),
     onFocus(e) {
       // this.getApiHouses();
     },
-    toTransactionParams(params) {
-      const _params = params;
-      if (_params.type_house__in) {
-        _params.category__in = params.type_house__in
-          .replace("토지", "LAND")
-          .replace("오피스텔", "OFFICETEL")
-          .replace("연립ￜ다세대", "ALLIANCE")
-          .replace("아파트", "APARTMENT")
-          .replace("상업ￜ업무용", "COMMERCIAL")
-          .replace("무허가 건축물", "noname01")
-          .replace("입주권", "noname02")
-          .replace("단독ￜ다가구", "SINGLE");
-
-        // console.log(params);
-        delete _params.type_house__in;
-      }
-      return _params;
-    },
+    changeFilter() {},
     infiniteHandler() {
+      this.setRequestUrl("transactions");
+      const getQueryArray = (keyName, params) => {
+        if (keyName === "type_house__in" && params?.length === 8) {
+          return {};
+        }
+        if (Array.isArray(params)) {
+          const hasValue = params.every((value) => value !== undefined);
+          if (!hasValue || params.length === 0) return {};
+          return {
+            [keyName]: params.join(",")
+          };
+        }
+        if (!params) return {};
+        return {
+          [keyName]: params
+        };
+      };
+
+      const getAllorUndefined = (param) => {
+        if (param.length === 8) return undefined;
+        return param;
+      };
+
+      const Dquery = {
+        ...getQueryArray(
+          "type_house__in",
+          getAllorUndefined(this.getCategoriesByKorean)
+        )
+      };
+
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
-      this.text = this.$route.query.title || "";
+      this.text = this.$route.query.title || this.$route.query.search || "";
       this.busy = true;
+
       switch (_key) {
         case "search":
-          this.getTransactionsFromSearch(query, this.page);
+          this.getSearchData({ ...Dquery, ...query }, this.page);
           break;
         case "redevelopment_area":
-          this.getTransactionsFromRedev(query, this.page);
+          this.getRedevData({ ...Dquery, ...query }, this.page);
           break;
         case "location":
-          this.getTransactionsFromLocation(query, this.page);
-          break;
-        case "transactionid":
-          this.getTransactionsById(query, this.page);
+          this.getLocationData({ ...Dquery, ...query }, this.page);
           break;
         default:
-          this.getAllTransactions(query, this.page);
+          this.getApiHouses({ ...Dquery, ...query }, undefined, this.page);
       }
     },
-    onSearch(type, id, _label, subcityId) {
-      this.page = 1;
-      console.log("onSearch transaction", type, id);
+    async onSearch(type, id, label) {
+      const { query } = this.$route;
       if (id?.length === 0) {
         return;
       }
+      if (!type && !id && !label) {
+        this.page = 1;
+        if (Object.keys(query).length !== 0) {
+          this.$router.replace({
+            name: "listTransactions"
+          });
+        }
+        this.getApiHouses({}, undefined, this.page);
+        return;
+      }
+
       switch (type) {
         case "지역":
-          this.getTransactionsFromLocation(id);
+          this.setLocationQuery(id, label, this.page);
           break;
         case "개발정비사업":
-          this.getTransactionsFromRedev(id);
+          this.setRedevQuery(id, label, this.page);
           break;
         case "건물/단지":
-          this.getTransactionsFromSearch(id);
+          this.setSearchQuery(id, label, this.page);
           break;
         default:
-          this.getAllTransactions(id);
+          this.getApiHouses(id, label, this.page);
       }
     },
-    async getAllTransactions(query, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
-        params: { ...this.params, page: this.page }
-      });
-      this.page += 1;
 
-      const newList = data.results.map((item) => {
-        return {
-          ...item,
-          ...item.recent_transactions?.[item.types[0]]
-        };
+    async getSearchData(params, page) {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+        params
       });
-      this.saleList = [...this.saleList, ...newList];
-      this.transactionCount = data.count;
+      if (!!params.title && this.prevSearch === params.title) {
+        this.saleList = [
+          ...this.saleList,
+          ...data.results.map((item) => {
+            return {
+              ...item,
+              ...item.recent_transactions?.[item.types[0]]
+            };
+          })
+        ];
+      } else {
+        this.saleList = data.results.map((item) => {
+          return {
+            ...item,
+            ...item.recent_transactions?.[item.types[0]]
+          };
+        });
+      }
+      this.prevSearch = params.title;
+      this.setCountEstate(data.count);
+      // context.commit("setSimpleHouses", estateData(data.data.results));
+      this.page += 1;
+      this.busy = false;
     },
 
-    async getTransactionsFromSearch(query, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
-        params: { ...this.params, search: query, page: this.page }
+    async getRedevData(params, page) {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+        params: { ...params, page, page_size: 10 }
       });
+      if (!!params.title && this.prevSearch === params.title) {
+        this.saleList = [
+          ...this.saleList,
+          ...data.results.map((item) => {
+            return {
+              ...item,
+              ...item.recent_transactions?.[item.types[0]]
+            };
+          })
+        ];
+      } else {
+        this.saleList = data.results.map((item) => {
+          return {
+            ...item,
+            ...item.recent_transactions?.[item.types[0]]
+          };
+        });
+      }
+      this.prevSearch = params.title;
+
+      this.setCountEstate(data.count);
       this.page += 1;
-
-      const newList = data.results.map((item) => {
-        return {
-          ...item,
-          ...item.recent_transactions?.[item.types[0]]
-        };
-      });
-      this.saleList = [...this.saleList, ...newList];
-
-      this.transactionCount = data.count;
+      this.busy = false;
     },
-    async getTransactionsFromRedev(id, page) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/redevelopment_areas/${id}/transaction_groups/`,
-        { params: { ...this.params, page: this.page } }
+
+    async getLocationData(params, page) {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+        params: { ...params, page, page_size: 10 }
+      });
+
+      if (!!params.title && this.prevSearch === params.title) {
+        this.saleList = [
+          ...this.saleList,
+          ...data.results.map((item) => {
+            return {
+              ...item,
+              ...item.recent_transactions?.[item.types[0]]
+            };
+          })
+        ];
+      } else {
+        this.saleList = data.results.map((item) => {
+          return {
+            ...item,
+            ...item.recent_transactions?.[item.types[0]]
+          };
+        });
+      }
+      this.prevSearch = params.title;
+      this.setCountEstate(data.count);
+      this.page += 1;
+      this.busy = false;
+    },
+    async getApiHouses(params, label, page) {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+        params: { ...params, page, page_size: 10 }
+      });
+      this.saleList = [
+        ...this.saleList,
+        ...data.results.map((item) => {
+          return {
+            ...item,
+            ...item.recent_transactions?.[item.types[0]]
+          };
+        })
+      ];
+      this.prevSearch = params.title;
+      this.setCountEstate(data.count);
+      this.page += 1;
+      this.busy = false;
+    },
+
+    setSearchQuery(search, label, page) {
+      this.page = 1;
+      this.$router.replace({
+        name: "listTransactions",
+        query: { search }
+      });
+      this.getSearchData({ search }, this.page);
+    },
+    setRedevQuery(redevelopmentArea, title) {
+      this.page = 1;
+      this.$router.replace({
+        name: "listTransactions",
+        query: { redevelopment_area: redevelopmentArea, title }
+      });
+      this.getRedevData(
+        { redevelopment_area: redevelopmentArea, title },
+        this.page
       );
-      this.page += 1;
-
-      const newList = data.results.map((item) => {
-        return {
-          ...item,
-          ...item.recent_transactions?.[item.types[0]]
-        };
-      });
-
-      this.saleList = [...this.saleList, ...newList];
     },
-    async getTransactionsFromLocation(query, page) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/?location=${query}`,
-        { params: { ...this.params, ...query, page: this.page } }
-      );
-      this.page += 1;
-
-      const newList = data.results.map((item) => {
-        return {
-          ...item,
-          ...item.recent_transactions?.[item.types[0]]
-        };
+    setLocationQuery(location, label, page) {
+      this.page = 1;
+      this.$router.replace({
+        name: "listTransactions",
+        query: { location, title: label }
       });
-
-      this.saleList = [...this.saleList, ...newList];
-
-      this.transactionCount = data.count;
-    },
-    async getTransactionsById(query) {
-      const { data } = await Vue.prototype.$axios.get(
-        `/transaction_groups/${query.transactionid}/transactions`
-      );
-
-      this.saleList = data.map((item) => {
-        return {
-          ...item,
-          ...item.recent_transactions?.[item.types[0]]
-        };
-      });
-      this.transactionCount = data.length;
+      this.getLocationData({ location }, this.page);
     }
+  },
+  created() {},
+  beforeMount() {
+    this.setRequestUrl("houses");
   }
 };
 </script>

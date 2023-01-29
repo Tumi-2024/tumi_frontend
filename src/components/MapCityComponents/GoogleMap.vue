@@ -396,9 +396,14 @@ export default {
       "setMapZoom",
       "setMapCenter"
     ]),
+
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
     onClickMarker(item) {
+      if (this.$route.name === "map_city_area") {
+        // this.setMapZoom(14);
+        return;
+      }
       this.$router.push({
         name: "listHouses",
         query: {

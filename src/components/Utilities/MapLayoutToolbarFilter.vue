@@ -119,7 +119,7 @@ export default {
           keyName: "categories"
         },
         {
-          label: "면적종류",
+          label: "면적",
           type: "exclusive-area",
           class: this.area.value ? "text-white bg-green" : "text-grey",
           keyName: "areaType"
