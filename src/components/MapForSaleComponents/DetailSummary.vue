@@ -1,6 +1,7 @@
 <template>
   <q-card>
     <q-card-section>
+      <badge-list :tags="getBadges(item)" class="q-my-sm" />
       <address-text-admin
         :address="areaName"
         :building="building"
@@ -9,10 +10,6 @@
         :created="created"
         :redevName="redevName"
       />
-      <!-- <div class="items-center flex">
-        <img class="q-mr-md" src="~assets/icons/phone.svg" alt="" />담당자
-      </div> -->
-
       <div class="row q-mt-md">
         <div class="col-12 col-md-4 q-px-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
@@ -202,14 +199,16 @@
 </template>
 
 <script>
-import { toMoneyString } from "src/utils";
+import { toMoneyString, toSimpleMoneyString, toDateFormat } from "src/utils";
 import AddressTextAdmin from "../Address/AddressTextAdmin.vue";
+import BadgeList from "src/components/Utilities/Badges/BadgeList.vue";
 
 export default {
   name: "sale-title",
   components: {
     // AreaTags,
     // AddressWithBadges,
+    BadgeList,
     AddressTextAdmin
   },
   data() {
@@ -259,6 +258,10 @@ export default {
     persons: {
       type: Array,
       required: false
+    },
+    item: {
+      type: Object,
+      required: false
     }
   },
   methods: {
@@ -268,9 +271,78 @@ export default {
     callPerson(phoneNumber) {
       if (!phoneNumber) return;
       window.location.href = "tel://" + phoneNumber;
+    },
+    reshape(item) {
+      if (!item.group_building_house) {
+        item.group_building_house = { type_house: item.type_house };
+      }
+      if (!item.group_individual_household) {
+        item.group_individual_household = {
+          size_dedicated_area: item.size_dedicated_area
+        };
+      }
+      if (!item.group_land_use) {
+        item.group_land_use = {
+          type_structure_building: item.type_structure_building
+        };
+      }
+      if (!item.group_trading_terms) {
+        item.group_trading_terms = {
+          price_selling_hope: item.price_selling_hope,
+          price_charter_deposit_hope: item.price_charter_deposit_hope
+        };
+      }
+      return item;
     }
   },
   computed: {
+    getBadges() {
+      return (item, ctgr) => {
+        item = this.reshape(item);
+        const getDate = (date) => {
+          return toDateFormat(date, "YYYY.MM.DD");
+        };
+        const getColor = (label) => {
+          switch (label) {
+            case "재개발":
+              return "primary";
+            case "재건축":
+              return "blue";
+            case "가로주택":
+              return "green";
+            default:
+              return "";
+          }
+        };
+        return [
+          {
+            type: "transactionStatus",
+            value: item.transactionStatus
+              ? false
+              : item.group_location.redevelopment_area?.category,
+            color: getColor(item.group_location.redevelopment_area?.category)
+            // icon: getIcon()
+          },
+          { type: "houseType", value: item.group_building_house.type_house },
+          { type: "redevelopment", value: item.redevelopment },
+          { type: "stageProgress", value: item.stageProgress },
+          {
+            type: "pyeong",
+            value:
+              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
+              "평"
+          },
+          {
+            type: "price",
+            value: `${toSimpleMoneyString(
+              item.group_trading_terms.price_selling_hope ||
+                item.group_trading_terms.price_charter_deposit_hope
+            )}`
+          },
+          { type: "date", value: getDate(item.created) }
+        ];
+      };
+    },
     getBadgeOptions() {
       return [
         { type: "houseType", value: this.tags.type },

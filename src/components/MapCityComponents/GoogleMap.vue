@@ -465,7 +465,6 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle() {
-      console.log("idle", this.getMapZoom);
       this.getHouseInfo();
       this.getRedevInfo();
     },
@@ -483,8 +482,6 @@ export default {
           bounds.getNorthEast().lng() * (1 + ratio)
         ]
       };
-
-      console.log("fetch");
 
       await this.fetchMapAreas({
         latitude__range: `${boundLocation.latitude[0]},${boundLocation.latitude[1]}`,
@@ -521,8 +518,6 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
-      console.log("viewArea");
-
       this.map.panTo(item.position);
       const zoomLevel = this.map.getZoom();
 

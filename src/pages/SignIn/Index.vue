@@ -5,6 +5,11 @@
       :src="require('assets/tumi-icon-high.jpeg')"
       class="q-mr-sm"
     />
+    <span class="q-mt-lg text-h5 flex text-center text-blue items-center">
+      "투미 유료화원"은 "투미 네이버카페"의 아이디로<u class="q-mx-xs">
+        회원가입</u
+      >해주세요.
+    </span>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md q-mt-lg">
       <q-input
         filled

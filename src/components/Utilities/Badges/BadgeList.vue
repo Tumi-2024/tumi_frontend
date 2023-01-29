@@ -2,8 +2,8 @@
   <div class="row" style="gap: 2px">
     <template v-for="(badge, index) of tags">
       <badge
-        :key="index"
         v-if="badge.value"
+        :key="index"
         v-bind="{ icon: badge.icon, value: badge.value, [badge.type]: true }"
         :color="badge.color"
       />

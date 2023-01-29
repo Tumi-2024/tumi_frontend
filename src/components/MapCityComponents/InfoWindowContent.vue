@@ -135,8 +135,6 @@ export default {
         }
         const d = new Date(item.created);
         const dd = d.getMonth() < 10 ? "0" + (d.getMonth() + 1) : d.getMonth();
-        console.log(d);
-        console.log(d.getMonth());
         return {
           date: `${d.getFullYear()}.${dd}`,
           type: item?.group_building_house?.type_house || "-"

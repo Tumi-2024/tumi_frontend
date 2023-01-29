@@ -22,8 +22,6 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error.response);
-
     // const { status } = error.response;
     // if (status === 403) {
     //   Cookies.remove("tumi");

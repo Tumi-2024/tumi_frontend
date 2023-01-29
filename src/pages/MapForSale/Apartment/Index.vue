@@ -29,7 +29,8 @@
         },
         created: estate.created,
         redevName: estate.group_location.redevelopment_area.title,
-        persons: getPersons
+        persons: getPersons,
+        item: estate
       }"
     />
     <!--  매물정보  -->
@@ -588,7 +589,7 @@ export default {
           label: "전용면적 (m²|평형)",
           value: this.getValue(
             `${houseInfo.size_dedicated_area_m2 || "-"} m² | ${(
-              (houseInfo.size_dedicated_area_pyeong || 0) / 3.3
+              houseInfo.size_dedicated_area_pyeong || 0
             ).toFixed(1)} 평`
           )
         },

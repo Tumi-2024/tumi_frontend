@@ -114,7 +114,7 @@ export default {
           label: "해당 층수",
           value: getLabel(houseInfo.type_floor, "층")
         },
-        { label: "입주년차", value: houseInfo.year_tenancy },
+        { label: "입주년차", value: getLabel(houseInfo.year_tenancy, "년차") },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
         {
           label: "감정평가액",
