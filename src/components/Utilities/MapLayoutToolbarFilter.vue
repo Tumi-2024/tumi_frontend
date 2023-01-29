@@ -32,13 +32,13 @@
           </q-select>
           <q-select
             ref="keywordRef"
+            class="icon"
             filled
             label="검색"
             dense
             :value="searchText"
-            @input-value="onChangeSearchText"
             @input="onSelect"
-            :input-debounce="0"
+            :input-debounce="200"
             use-input
             fill-input
             hide-selected
@@ -50,6 +50,9 @@
               <q-item>
                 <q-item-section class="text-grey"> No results </q-item-section>
               </q-item>
+            </template>
+            <template v-slot:append>
+              <q-icon name="search" @click.stop.prevent />
             </template>
           </q-select>
         </div>
@@ -109,7 +112,10 @@ export default {
         {
           label: "주택유형",
           type: "property-type",
-          class: this.categories.length ? "text-white bg-primary" : "text-grey",
+          class:
+            this.categories.length !== 8
+              ? "text-white bg-primary"
+              : "text-grey",
           keyName: "categories"
         },
         {
@@ -162,10 +168,28 @@ export default {
       default: false
     }
   },
+  beforeMount() {
+    if (this.$route.query.redev) {
+      this.searchText = this.$route.query.redev;
+      this.searchType = "redev";
+    }
+
+    if (this.$route.query.location) {
+      this.searchText = this.$route.query.location;
+      this.searchType = "location";
+    }
+  },
+  mounted() {
+    const el = this.$refs.keywordRef;
+    const el2 = el.$refs.target;
+    el2.addEventListener("input", (e) => {
+      this.searchText = e.target.value;
+      el.filter();
+    });
+  },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
     onChangeFilter(params) {
-      console.log(params);
       this.$emit("changeFilter", params);
     },
     onChangeSelect(e) {
@@ -174,10 +198,6 @@ export default {
     onSelect(obj) {
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
-    },
-    onChangeSearchText(e) {
-      this.searchText = e;
-      this.options = [];
     },
     async filterRedev(val, update, abort) {
       return new Promise((resolve) => {
@@ -228,10 +248,9 @@ export default {
     },
 
     async filterFn(val, update, abort) {
-      console.log(val);
+      console.log("filterFn", val);
       await this.filterRedev(val, update, abort);
       await this.filterLocation(val, update, abort);
-      console.log(this.searchType, this.redev, this.location);
       if (this.searchType === "redev") {
         this.options = this.redev;
       } else {

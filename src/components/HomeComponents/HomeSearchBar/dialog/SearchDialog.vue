@@ -241,7 +241,7 @@ export default {
       this.text = e.target.value;
     },
     async onSelectList({ value, id, label }, type) {
-      console.log(value, label);
+      console.log(value, label, type);
       if (!value && label) {
         this.text = label;
         this.onSearch();
@@ -253,13 +253,19 @@ export default {
 
         if (type === "location") {
           this.$router.push({
-            name: "map_city"
+            name: "map_city",
+            query: {
+              location: label
+            }
           });
           this.setMapZoom(15);
           this.changeMapCenter(_value);
         } else if (type === "redevelopment") {
           this.$router.push({
-            name: "map_city"
+            name: "map_city_area",
+            query: {
+              redev: label
+            }
           });
           this.setMapZoom(15);
           this.changeMapCenter(_value);

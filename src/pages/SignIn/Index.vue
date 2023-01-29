@@ -10,6 +10,7 @@
         filled
         v-model="username"
         label="아이디"
+        autocomplete="new-password"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || '아이디를 입력해주세요.']"
       >
@@ -21,6 +22,7 @@
         filled
         v-model="password"
         label="비밀번호"
+        autocomplete="new-password"
         lazy-rules
         type="password"
         :rules="[
@@ -31,7 +33,11 @@
           <q-icon name="lock" />
         </template>
       </q-input>
-      <div class="justify-between flex">
+
+      <div class="justify-start flex">
+        <q-checkbox v-model="autoSaveId">
+          <span class="">아이디 저장</span>
+        </q-checkbox>
         <q-checkbox v-model="autoLogin">
           <span class="">자동 로그인</span>
         </q-checkbox>
@@ -58,6 +64,7 @@ export default {
     return {
       username: "",
       autoLogin: false,
+      autoSaveId: true,
       password: ""
     };
   },
@@ -76,6 +83,14 @@ export default {
           Cookies.set("tumi_i", data.id, {
             expires: this.autoLogin ? "30d" : undefined
           });
+
+          if (this.autoSaveId) {
+            Cookies.set("tumi_id", this.username, {
+              expires: this.autoSaveId ? "1y" : undefined
+            });
+          } else {
+            Cookies.remove("tumi_id");
+          }
 
           try {
             if (data.token) {
@@ -107,6 +122,7 @@ export default {
   beforeMount() {
     Cookies.remove("tumi");
     Cookies.remove("tumi_i");
+    this.username = Cookies.get("tumi_id");
   }
 };
 </script>

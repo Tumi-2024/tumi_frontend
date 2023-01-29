@@ -28,9 +28,9 @@
             label="검색"
             dense
             :value="text"
-            @input-value="onChangeSearchText"
             @input="onSelect"
             @focus="onFocus"
+            :input-debounce="200"
             use-input
             fill-input
             hide-selected
@@ -84,7 +84,14 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("search", ["area", "price", "initPrice", "person", "period"]),
+    ...mapGetters("search", [
+      "getCategoriesByKorean",
+      "area",
+      "price",
+      "initPrice",
+      "person",
+      "period"
+    ]),
     getFilters() {
       const hasValue = (array) => {
         return array.every((obj) => obj);
@@ -94,7 +101,10 @@ export default {
         {
           label: "주택유형",
           type: "property-type",
-          class: "text-white bg-primary",
+          class:
+            this.getCategoriesByKorean.length !== 8
+              ? "text-white bg-primary"
+              : "text-grey",
           keyName: "categories"
         },
         {
@@ -142,7 +152,7 @@ export default {
   data() {
     return {
       options: [],
-      option: "building"
+      option: "redev"
     };
   },
   model: {
@@ -160,15 +170,15 @@ export default {
     }
   },
 
-  // watch: {
-  //   option: {
-  //     handler: function() {
-  //       this.text = "";
-  //     this.options = []
-  //     },
-  //     immediate: true
-  //   }
-  // },
+  mounted() {
+    const el = this.$refs.keywordRef;
+    const el2 = el.$refs.target;
+    el2.addEventListener("input", (e) => {
+      this.$emit("change:text", e.target.value);
+      el.filter();
+    });
+  },
+
   methods: {
     onChangeFilter(params) {
       console.log(params);
@@ -195,6 +205,8 @@ export default {
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
     async filterFn(val, update, abort) {
+      console.log("filterFn", val);
+
       const type = [
         { label: "개발정비사업", value: "redev" },
         { label: "지역", value: "location" },
@@ -263,8 +275,11 @@ export default {
       case query?.redevelopment_area:
         this.option = "redev";
         break;
-      default:
+      case query?.building:
         this.option = "building";
+        break;
+      default:
+        this.option = "redev";
         break;
     }
   }

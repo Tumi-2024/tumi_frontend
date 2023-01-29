@@ -1,6 +1,7 @@
 <template>
   <q-item
-    class="column notosanskr-regular q-py-none q-px-sm"
+    class="column notosanskr-regular q-py-sm q-px-sm"
+    style="border-bottom: 1px solid #e9e9e9"
     :to="{ name: !disabled ? to : '', query: !disabled ? query : '' }"
     :manual-focus="disabled"
     @mouseenter="onHover = true"

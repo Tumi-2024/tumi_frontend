@@ -75,7 +75,11 @@
                   <div class="flex justify-center" style="flex: 20 0">
                     거래가격
                   </div>
-                  <div class="flex justify-center" style="flex: 20 0">
+                  <div
+                    class="flex justify-center"
+                    style="flex: 20 0"
+                    v-if="activeTab === 'SALE' || activeTab === 'all'"
+                  >
                     면적당 가격
                   </div>
                 </q-item>
@@ -139,7 +143,11 @@
                   <div class="flex justify-center" style="flex: 20 0">
                     {{ toMoneyString(item.price || item.price_deposit) }}
                   </div>
-                  <div class="flex justify-center" style="flex: 20 0">
+                  <div
+                    class="flex justify-center"
+                    style="flex: 20 0"
+                    v-if="activeTab === 'SALE' || activeTab === 'all'"
+                  >
                     {{ toMoneyString(item.price / getItemSize(item, select)) }}
                   </div>
                 </q-item>

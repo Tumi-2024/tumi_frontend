@@ -9,8 +9,9 @@
         >
           <img
             :src="require('assets/tumi-logo.png')"
-            class="q-mr-sm"
+            class="q-mr-sm cursor-pointer"
             style="height: 100%"
+            @click="$router.push({ name: 'home' })"
           />
           <span class="text-h6 text-bold" style="color: #222222"
             >{{ getHeaderLabel }}
