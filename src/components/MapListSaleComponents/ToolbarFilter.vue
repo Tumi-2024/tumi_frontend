@@ -11,7 +11,7 @@
         >
           <q-select
             class="q-mr-md"
-            style="width: 120px"
+            style="width: 125px"
             dense
             emit-value
             map-options

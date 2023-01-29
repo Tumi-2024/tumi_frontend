@@ -5,11 +5,22 @@
       :src="require('assets/tumi-icon-high.jpeg')"
       class="q-mr-sm"
     />
-    <span class="q-mt-lg text-h5 flex text-center text-blue items-center">
-      "투미 유료화원"은 "투미 네이버카페"의 아이디로<u class="q-mx-xs">
-        회원가입</u
-      >해주세요.
-    </span>
+    <div
+      class="q-pa-md q-mt-md flex justify-center"
+      style="border-radius: 10px; border: 1px solid #ff5a00"
+    >
+      <span
+        class="text-subtitle2 flex text-center text-primary items-center"
+        style="word-break: keep-all"
+      >
+        "투미 유료회원"은 "투미 네이버카페"의 아이디로
+        <a
+          class="q-mx-xs cursor-pointer"
+          @click="$router.push({ name: 'signUp' })"
+          >회원가입</a
+        >해주세요.
+      </span>
+    </div>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md q-mt-lg">
       <q-input
         filled
