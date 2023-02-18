@@ -38,12 +38,6 @@
           <gmap-custom-marker
             :marker="{ latitude: m.latitude, longitude: m.longitude }"
           >
-            <!-- <info-window-content
-              @viewArea="viewArea(m)"
-              :item="m"
-              :price="getPriceFromText(m)"
-              :is-dev="!!m.redevelopment_area"
-            /> -->
             <div
               style="
                 position: relative;
@@ -52,19 +46,7 @@
                 border-radius: 100%;
               "
               class="radial-gradient"
-            >
-              <!-- <div
-                style="
-                  position: absolute;
-                  top: 5px;
-                  height: 5px;
-                  background-color: rgba(255, 90, 0, 1);
-                  width: 10px;
-                  height: 10px;
-                  border-radius: 100%;
-                "
-              ></div> -->
-            </div>
+            ></div>
           </gmap-custom-marker>
         </div>
       </template>
@@ -401,7 +383,13 @@ export default {
     ...mapActions(["changeUserLocation"]),
     onClickMarker(item) {
       if (this.$route.name === "map_city_area") {
-        // this.setMapZoom(14);
+        this.$router.push({
+          name: "listTransactions",
+          query: {
+            subcity: item.id,
+            title: item.title
+          }
+        });
         return;
       }
       this.$router.push({
@@ -422,7 +410,32 @@ export default {
         }
       });
     },
-    redirectXY({ latitude, longitude, title }) {
+    redirectXYTransaction({ latitude, longitude, title }) {
+      const getXYQuery = (latitude, longitude) => {
+        if (!latitude || !longitude) {
+          return;
+        }
+        const _acc = 10000 * 1000;
+
+        const _lat = Number(Number(latitude * _acc).toFixed(0));
+        const _lng = Number(Number(longitude * _acc).toFixed(0));
+
+        return {
+          latitude__range: `${(_lat - 1) / _acc},${(_lat + 1) / _acc}`,
+          longitude__range: `${(_lng - 1) / _acc},${(_lng + 1) / _acc}`
+        };
+      };
+
+      this.$router.push({
+        name: "listTransactions",
+        query: {
+          ...getXYQuery(latitude, longitude),
+          title
+        }
+      });
+    },
+
+    redirectXYHouse({ latitude, longitude, title }) {
       const getXYQuery = (latitude, longitude) => {
         if (!latitude || !longitude) {
           return;
@@ -534,13 +547,10 @@ export default {
          * 여기에 좌표 로직 추가
          */
         if (this.$route.path === "/map/city/area") {
-          return {
-            name: "listTransactions",
-            query: { transactionid: item.id }
-          };
+          this.redirectXYTransaction(item);
         } else {
           if (item.count) {
-            this.redirectXY(item);
+            this.redirectXYHouse(item);
             return;
           }
           return { name: "for_sale_apartment", query: { sellid: item.id } };

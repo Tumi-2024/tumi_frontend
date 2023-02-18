@@ -6,8 +6,13 @@
     </q-card-section>
 
     <q-card-section
-      class="sort-section row bg-positive q-pa-none notosanskr-regular"
+      class="sort-section row bg-positive q-pa-none notosanskr-regular items-center"
     >
+      <div>
+        <q-badge outline color="primary" @click="changeDevType">
+          {{ getAreaType }}
+        </q-badge>
+      </div>
       <toolbar-filter
         class="q-pt-xs q-px-sm"
         v-model="text"
@@ -75,11 +80,12 @@ export default {
       saleList: [],
       currentItem: {},
       page: 1,
-      busy: false
+      busy: false,
+      devType: "재개발"
     };
   },
   computed: {
-    ...mapGetters("map", ["getMapMode"]),
+    ...mapGetters("map", ["getMapMode", "getAreaType"]),
     ...mapGetters(["simple_houses", "estateCount"]),
     ...mapGetters("search", [
       "area",
@@ -92,12 +98,9 @@ export default {
   },
   methods: {
     ...mapActions(["setSimpleHouses", "setCountEstate", "setRequestUrl"]),
-    onFocus(e) {
-      // this.getApiHouses();
-    },
-    changeFilter() {},
-    infiniteHandler() {
-      this.setRequestUrl("houses");
+    ...mapActions("map", ["setAreaType"]),
+
+    getDquery() {
       const getQueryArray = (keyName, params) => {
         if (keyName === "type_house__in" && params?.length === 8) {
           return {};
@@ -120,12 +123,51 @@ export default {
         return param;
       };
 
+      const getAreaTypeString = () => {
+        switch (this.getAreaType) {
+          case null:
+            return "";
+          case "재개발":
+          case "재건축":
+          case "일반":
+            return this.getAreaType;
+          case "기타사업":
+            return "기타";
+          default:
+            return null;
+        }
+      };
+
       const Dquery = {
         ...getQueryArray(
           "type_house__in",
           getAllorUndefined(this.getCategoriesByKorean)
-        )
+        ),
+        ...getQueryArray("redevelopment_area__category", getAreaTypeString())
       };
+      return Dquery;
+    },
+
+    changeDevType() {
+      const devTypes = [
+        { color: "primary", label: "재개발", key: "재개발" },
+        { color: "blue", label: "재건축", key: "재건축" },
+        { color: "green", label: "기타사업", key: "기타사업" },
+        { color: "grey-6", label: "일반", key: "일반" }
+      ];
+      const index = devTypes.findIndex((item) => item.key === this.getAreaType);
+
+      this.saleList = [];
+      this.setAreaType(devTypes[index > 2 ? 0 : index + 1].key);
+      this.page = 1;
+      this.infiniteHandler();
+    },
+    onFocus(e) {
+      // this.getApiHouses();
+    },
+    changeFilter() {},
+    infiniteHandler() {
+      this.setRequestUrl("houses");
 
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
@@ -134,19 +176,19 @@ export default {
 
       switch (_key) {
         case "search":
-          this.getSearchData({ ...Dquery, ...query }, this.page);
+          this.getSearchData({ ...query }, this.page);
           break;
         case "redevelopment_area":
-          this.getRedevData({ ...Dquery, ...query }, this.page);
+          this.getRedevData({ ...query }, this.page);
           break;
         case "location":
-          this.getLocationData({ ...Dquery, ...query }, this.page);
+          this.getLocationData({ ...query }, this.page);
           break;
         default:
-          this.getApiHouses({ ...Dquery, ...query }, undefined, this.page);
+          this.getApiHouses({ ...query }, undefined, this.page);
       }
     },
-    async onSearch(type, id, label) {
+    async onSearch(type, id, label, subCityId) {
       const { query } = this.$route;
       if (id?.length === 0) {
         return;
@@ -164,7 +206,11 @@ export default {
 
       switch (type) {
         case "지역":
-          this.setLocationQuery(id, label, this.page);
+          if (!subCityId) {
+            this.setSubCityQuery(id, label, this.page);
+          } else {
+            this.setLocationQuery(id, label, this.page);
+          }
           break;
         case "개발정비사업":
           this.setRedevQuery(id, label, this.page);
@@ -178,7 +224,12 @@ export default {
     },
 
     async getSearchData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, { params });
+      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
+        params: {
+          ...params,
+          ...this.getDquery()
+        }
+      });
       if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [...this.saleList, ...data.results];
       } else {
@@ -194,7 +245,7 @@ export default {
 
     async getRedevData(params, page) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, page, page_size: 10 }
+        params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
       if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [...this.saleList, ...data.results];
@@ -211,7 +262,7 @@ export default {
 
     async getLocationData(params, page) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, page, page_size: 10 }
+        params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
 
       if (!!params.title && this.prevSearch === params.title) {
@@ -227,7 +278,7 @@ export default {
     },
     async getApiHouses(params, label, page) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, page, page_size: 10 }
+        params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
       this.saleList = [...this.saleList, ...data.results];
       this.prevSearch = params.title;
@@ -263,6 +314,15 @@ export default {
         query: { location, title: label }
       });
       this.getLocationData({ location }, this.page);
+    },
+    setSubCityQuery(subCities, label, page) {
+      this.page = 1;
+      this.$router.replace({
+        name: "listHouses",
+        query: { subcity: subCities, title: label }
+      });
+      console.log({ subCities, label, page });
+      this.getLocationData({ subcity: subCities }, this.page);
     }
   },
   created() {

@@ -134,7 +134,7 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: "기간",
+          label: this.$route.name !== "listHouses" ? "기간" : "거래 기간",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
@@ -235,17 +235,31 @@ export default {
           });
         } else if (type.value === "location") {
           const {
+            data: { results: subCityResults }
+          } = await Vue.prototype.$axios.get(`sub_cities?search=${val}`);
+          const {
             data: { results }
           } = await Vue.prototype.$axios.get(`locations?search=${val}`);
+
+          const subArr = subCityResults.map((obj) => {
+            return {
+              value: obj.address,
+              label: obj.address,
+              id: obj.id,
+              subcityId: null
+            };
+          });
+
+          const locationArr = results.map(({ title, id, subcity }) => {
+            return {
+              value: `${subcity.city.title} ${subcity.title} ${title}`,
+              label: `${subcity.city.title} ${subcity.title} ${title}`,
+              id: id,
+              subcityId: subcity.id
+            };
+          });
           update(async () => {
-            this.options = results.map(({ title, id, subcity }) => {
-              return {
-                value: `${subcity.city.title} ${subcity.title} ${title}`,
-                label: `${subcity.city.title} ${subcity.title} ${title}`,
-                id: id,
-                subcityId: subcity.id
-              };
-            });
+            this.options = [...subArr, ...locationArr];
           });
         } else {
           const {
