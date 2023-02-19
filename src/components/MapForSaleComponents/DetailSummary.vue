@@ -113,7 +113,7 @@
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
             </q-icon>
-            <div class="q-ml-md title">추가분담금</div>
+            <div class="q-ml-md title">분담금</div>
             <q-separator
               class="self-center q-mx-sm"
               vertical
