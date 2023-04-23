@@ -11,7 +11,7 @@
         :redevName="redevName"
       />
       <div class="row q-mt-md">
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -28,7 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -43,7 +43,7 @@
             <div class="price">{{ prices.percentage_ratio }}%</div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -77,7 +77,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -93,7 +93,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -108,7 +108,7 @@
             <div class="price">{{ toMoneyString(prices.price_member) }}</div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -125,7 +125,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
@@ -140,7 +140,7 @@
             <div class="price">{{ toMoneyString(prices.price_total) }}</div>
           </div>
         </div>
-        <div class="col-12 col-md-4 q-px-sm">
+        <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />

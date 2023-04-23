@@ -570,7 +570,7 @@ export default {
         //   class: "col-sm-12 col-md-12"
         // },
         {
-          label: "대지권면적(m²|평형)",
+          label: "대지권면적(대지지분)",
           value: this.getValue(
             `${houseInfo.size_land_area_m2} m² | ${(
               (houseInfo.size_land_area_pyeong || 0) / 3.3
@@ -578,7 +578,7 @@ export default {
           )
         },
         {
-          label: "공급면적(m²|평형)",
+          label: "공급면적(대지지분)",
           value: this.getValue(
             `${houseInfo.size_supply_area_m2} m² | ${(
               houseInfo.size_supply_area_pyeong / 3.3
@@ -586,7 +586,7 @@ export default {
           )
         },
         {
-          label: "전용면적 (m²|평형)",
+          label: "전용면적 (대지지분)",
           value: this.getValue(
             `${houseInfo.size_dedicated_area_m2 || "-"} m² | ${(
               houseInfo.size_dedicated_area_pyeong || 0
@@ -752,8 +752,8 @@ export default {
     },
     getPersons() {
       const redevTitle =
-        this.estate.group_location.redevelopment_area?.title_area ?? "";
-      console.log(this.estate.group_user);
+        this.estate.group_location.redevelopment_area?.title ?? "";
+      console.log(this.estate.group_location.redevelopment_area);
       return [
         {
           rank: `${redevTitle} 전문 컨설턴트`,

@@ -62,10 +62,14 @@
                 min-height: calc((110 / 1312) * 100vh);
                 min-width: calc((110 / 1312) * 100vh);
                 padding: 10px;
-                border-radius: 100%;
                 opacity: 0.72;
               "
-              :style="{ backgroundColor: getColor.bg }"
+              :style="{
+                backgroundColor: getColor.bg,
+                borderRadius: `${
+                  $route.path === '/map/city/area' ? '0%' : '100%'
+                }`
+              }"
               :class="`text-${getColor.text}`"
               @mousedown="onClickMarker(m)"
             >
@@ -97,7 +101,8 @@
                           ? m.count_redevelopment_area_3
                           : m.count_redevelopment_area
                       }`
-                }}개 ({{ m.count_estates_filtered_implicit }})
+                }}개
+                <!-- ({{ m.count_estates_filtered_implicit }}) -->
               </span>
             </div>
           </gmap-custom-marker>
@@ -109,7 +114,6 @@
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
           <template v-if="getMapZoom >= redevZoom">
-            <!-- :class="{ green: $route.path === '/map/city/area' }" -->
             <div
               class="area-badge-info notosanskr-medium"
               :class="`bg-${getBadgeColor(badge)}`"

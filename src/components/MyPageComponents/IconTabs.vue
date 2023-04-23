@@ -29,7 +29,7 @@ export default {
           pathName: "recently-seen"
         },
         {
-          label: "관심매물",
+          label: "관심 매물",
           icon: "home-interest.svg",
           pathName: "property-interest"
         },

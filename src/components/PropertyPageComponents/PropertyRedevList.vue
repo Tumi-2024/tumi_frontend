@@ -11,10 +11,10 @@
           @click.stop="setSelected(item)"
         >
           <q-checkbox v-show="isEdit" v-model="selectedItems" :val="item.id" />
-          <span style="font-size: 16px; flex-basis: 200px" class="q-tex">
+          <span style="font-size: 16px; flex-basis: 400px" class="flex">
             {{ item.title }}
           </span>
-          <div class="q-pa-sm row">
+          <div class="q-pa-sm row flex">
             <div class="col-md-6 col-12">
               <span
                 style="

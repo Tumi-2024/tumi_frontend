@@ -51,8 +51,17 @@
                 <q-item-section class="text-grey"> No results </q-item-section>
               </q-item>
             </template>
-            <template v-slot:append>
+            <template v-slot:prepend>
               <q-icon name="search" @click.stop.prevent />
+            </template>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps" style="width: 200px">
+                <q-item-section>
+                  <q-item-label class="ellipsis">
+                    {{ scope.opt.label }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
             </template>
           </q-select>
         </div>

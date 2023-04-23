@@ -2,9 +2,9 @@
   <q-toolbar class="bg-white text-dark">
     <q-toolbar-title class="q-mt-md flex items-center">
       <img
-        :src="require('assets/tumi-logo.png')"
+        :src="require('assets/tumi-icon-high.jpeg')"
         class="q-mr-sm"
-        style="height: 100%"
+        style="height: 72px; width: 72px; object-fit: cover"
       />
       <span class="notosanskr-bold text-h4 q-ml-md" style="color: #222222">
         {{ title }}

@@ -7,7 +7,7 @@
     >
       <div
         v-for="(row, rIndex) of getMainInfo"
-        class="col-md-6 col-12"
+        class="col-sm-6 col-12"
         :key="`col-${rIndex}`"
       >
         <span class="col-text main title"
@@ -56,7 +56,7 @@ export default {
         {
           label: "사업 유형",
           value:
-            location?.redevelopment_area?.category ||
+            location?.redevelopment_area?.title ||
             location?.redevelopment_area?.category
         },
         {
@@ -92,12 +92,20 @@ export default {
       //   .replace("년 ", "-")
       //   .replace("월 ", "-")
       //   .replace("일", "");
+      // size_land_area_m2
+      // size_land_area
+
+      // size_dedicated_area_m2
+      // size_gross_floor_area
       return [
         {
           label: "토지/건축 면적",
           value: `${getLabel(
-            `${Math.ceil(houseInfo.size_land_area)} / ${Math.ceil(
-              houseInfo.size_building_area
+            `${Math.ceil(
+              houseInfo.size_land_area_m2 || houseInfo.size_land_area
+            )} / ${Math.ceil(
+              houseInfo.size_dedicated_area_m2 ||
+                houseInfo.size_gross_floor_area
             )}`,
             "m²"
           )}`
