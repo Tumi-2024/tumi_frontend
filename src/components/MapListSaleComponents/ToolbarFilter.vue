@@ -134,7 +134,7 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: this.$route.name !== "listHouses" ? "기간" : "거래 기간",
+          label: this.$route.name === "listHouses" ? "기간" : "거래 기간",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
