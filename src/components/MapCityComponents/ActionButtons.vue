@@ -64,8 +64,9 @@ export default {
       type: [
         // { color: "yellow-12", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
+        { color: "primary", label: "재개발(도심)", key: "도심" },
         { color: "blue", label: "재건축", key: "재건축" },
-        { color: "green", label: "기타사업", key: "기타사업" },
+        { color: "green", label: "모아/가로", key: "기타사업" },
         { color: "grey-6", label: "일반", key: "일반" }
       ]
     };

@@ -228,6 +228,8 @@ export default {
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
+        case "도심":
+          return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
         case "재건축":
           return { text: "white", bg: "#2196f3", tagClass: "blue" };
         case "기타사업":
