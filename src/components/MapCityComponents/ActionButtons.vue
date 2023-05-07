@@ -64,10 +64,9 @@ export default {
       type: [
         // { color: "yellow-12", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
-        { color: "primary", label: "재개발(도심)", key: "도심" },
         { color: "blue", label: "재건축", key: "재건축" },
-        { color: "green", label: "모아/가로", key: "기타사업" },
-        { color: "grey-6", label: "일반", key: "일반" }
+        { color: "green", label: "가로/모아", key: "가로모아" },
+        { color: "purple-4", label: "기타", key: "일반" }
       ]
     };
   },
@@ -97,10 +96,15 @@ export default {
     ...mapGetters(["estate", "getViewRedevOnly"]),
     ...mapGetters("map", ["getAreaType"]),
     getLabel() {
-      return this.type.find(({ key }) => key === this.getAreaType)?.label;
+      return (
+        this.type.find(({ key }) => key === this.getAreaType)?.label || "일반"
+      );
     },
     getColor() {
-      return this.type.find(({ key }) => key === this.getAreaType)?.color;
+      return (
+        this.type.find(({ key }) => key === this.getAreaType)?.color ||
+        "purple-6"
+      );
     }
   }
 };

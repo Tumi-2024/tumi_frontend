@@ -141,7 +141,7 @@ export default {
           case "기타사업":
             return "기타";
           default:
-            return null;
+            return this.getAreaType;
         }
       };
 

@@ -212,6 +212,7 @@ export default {
     google: gmapApi,
     getBadgeColor() {
       return ({ category }) => {
+        console.log(category);
         switch (category) {
           case "재개발":
             return "primary";
@@ -219,20 +220,28 @@ export default {
             return "blue";
           case "가로주택":
             return "green";
+          // case "일반":
+          // case "기타":
+          //   return "purple";
           default:
-            return "grey-6";
+            return "purple-4";
         }
       };
     },
     getColor() {
+      console.log(this.getAreaType);
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
-        case "도심":
-          return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
         case "재건축":
           return { text: "white", bg: "#2196f3", tagClass: "blue" };
-        case "기타사업":
+        case "일반":
+          return {
+            text: "white",
+            bg: "#a155b8",
+            tagClass: "purple"
+          };
+        case "가로모아":
           return {
             text: "white",
             bg: "rgba(0, 128, 0, 0.8)",
@@ -314,15 +323,22 @@ export default {
           fill: ""
         };
         const getStrokeColor = (opt) => {
+          console.log(opt);
           switch (opt) {
-            case "기타사업":
+            case "가로주택":
+              colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
+              break;
+            case "기타":
               colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
               break;
             case "재건축":
               colors = { ...colors, stroke: "#2196f3", fill: "#2196f3" };
               break;
-            default:
+            case "재개발":
               colors = { ...colors, stroke: "#ff9800", fill: "#ff9800" };
+              break;
+            default:
+              colors = { ...colors, stroke: "#7c0170", fill: "#a155b8" };
           }
         };
         getStrokeColor(category);

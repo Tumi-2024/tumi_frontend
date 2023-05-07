@@ -117,16 +117,14 @@
 import {
   PropertyType,
   ExclusiveArea,
-  PriceFilter,
-  PersonFilter
+  PriceFilter
 } from "components/Utilities/PropertySearchFilter/Selections";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     PropertyType,
     ExclusiveArea,
-    PriceFilter,
-    PersonFilter
+    PriceFilter
   },
 
   props: {

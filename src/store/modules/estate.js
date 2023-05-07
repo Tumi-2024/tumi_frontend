@@ -167,8 +167,8 @@ export const estateStore = {
           case "재건축":
           case "일반":
             return context.rootState.map.areaType;
-          case "기타사업":
-            return "기타";
+          case "기타":
+            return "일반";
           default:
             return null;
         }
@@ -333,20 +333,21 @@ export const estateStore = {
       // };
 
       const getAreaTypeString = () => {
-        switch (context.rootState.map.areaType) {
+        switch (this.getAreaType) {
           case null:
             return "";
+          case "가로/모아":
+            return "가로모아";
           case "재개발":
           case "재건축":
           case "일반":
-            return context.rootState.map.areaType;
+            return this.getAreaType;
           case "기타사업":
             return "기타";
           default:
-            return null;
+            return this.getAreaType;
         }
       };
-
       const getXY = () => {
         if (!lat[0] || !long[0]) {
           return {};
