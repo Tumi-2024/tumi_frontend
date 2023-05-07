@@ -65,7 +65,7 @@
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
             </q-icon>
-            <div class="q-ml-md title">초기투자금</div>
+            <div class="q-ml-md title">분담금</div>
             <q-separator
               class="self-center q-mx-sm"
               vertical
@@ -73,7 +73,7 @@
               style="height: 16px"
             />
             <div class="price">
-              {{ toMoneyString(prices.price_initial_investment) }}
+              {{ toMoneyString(prices.price_additional) }}
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
             <q-icon>
               <img src="~assets/icons/coins.svg" alt="" />
             </q-icon>
-            <div class="q-ml-md title">분담금</div>
+            <div class="q-ml-md title">초기투자금</div>
             <q-separator
               class="self-center q-mx-sm"
               vertical
@@ -121,7 +121,7 @@
               style="height: 16px"
             />
             <div class="price">
-              {{ toMoneyString(prices.price_additional) }}
+              {{ toMoneyString(prices.price_initial_investment) }}
             </div>
           </div>
         </div>

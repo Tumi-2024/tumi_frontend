@@ -9,9 +9,16 @@
       class="sort-section row bg-positive q-pa-none notosanskr-regular items-center"
     >
       <div>
-        <q-badge outline color="primary" @click="changeDevType">
+        <q-select
+          dense
+          :options="['재개발', '재건축', '기타사업', '일반']"
+          @input="changeDevType"
+          :value="getAreaType"
+          emit-value
+        />
+        <!-- <q-badge outline color="primary" @click="changeDevType">
           {{ getAreaType }}
-        </q-badge>
+        </q-badge> -->
       </div>
       <toolbar-filter
         class="q-pt-xs q-px-sm"
@@ -148,17 +155,17 @@ export default {
       return Dquery;
     },
 
-    changeDevType() {
-      const devTypes = [
-        { color: "primary", label: "재개발", key: "재개발" },
-        { color: "blue", label: "재건축", key: "재건축" },
-        { color: "green", label: "기타사업", key: "기타사업" },
-        { color: "grey-6", label: "일반", key: "일반" }
-      ];
-      const index = devTypes.findIndex((item) => item.key === this.getAreaType);
+    changeDevType(event) {
+      // const devTypes = [
+      //   { color: "primary", label: "재개발", key: "재개발" },
+      //   { color: "blue", label: "재건축", key: "재건축" },
+      //   { color: "green", label: "기타사업", key: "기타사업" },
+      //   { color: "grey-6", label: "일반", key: "일반" }
+      // ];
+      // const index = devTypes.findIndex((item) => item.key === this.getAreaType);
 
       this.saleList = [];
-      this.setAreaType(devTypes[index > 2 ? 0 : index + 1].key);
+      this.setAreaType(event);
       this.page = 1;
       this.infiniteHandler();
     },

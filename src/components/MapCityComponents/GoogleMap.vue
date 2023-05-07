@@ -324,6 +324,7 @@ export default {
           }
         };
         getStrokeColor(category);
+
         const isStop = status !== "운영";
         if (isStop) {
           colors = { ...colors, fill: "#757575" };
@@ -341,7 +342,15 @@ export default {
             strokeOpacity: 1,
             strokeWeight: 2,
             fillColor: colors.fill,
-            fillOpacity: isStop ? 0.35 : 0.1
+            fillOpacity: isStop ? 0.35 : 0.1,
+            options: {
+              fillPattern: {
+                path: "M 0,-1 0,1",
+                strokeOpacity: 1,
+                strokeWeight: 1,
+                scale: 4
+              }
+            }
           },
           ...obj
         };

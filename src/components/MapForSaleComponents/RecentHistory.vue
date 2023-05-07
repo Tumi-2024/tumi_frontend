@@ -60,7 +60,7 @@
                     번지/건물단지명
                   </div>
                   <div class="flex justify-center" style="flex: 15 0">층수</div>
-                  <div style="flex: 15 0" class="justify-center flex">
+                  <div style="flex: 17 0" class="justify-center flex">
                     <q-select
                       style="width: 90%"
                       item-aligned
@@ -136,7 +136,7 @@
                     {{ (item.text_floor || "").replace(/null/i, "-") }}층
                   </div>
                   <!-- 면적 -->
-                  <div class="flex justify-center" style="flex: 15 0">
+                  <div class="flex justify-center" style="flex: 17 0">
                     {{ getItemSize(item, select) }}
                   </div>
                   <!-- 거래가격 -->
@@ -175,10 +175,10 @@ export default {
   data() {
     return {
       areaSelected: "",
-      activeTab: "all",
+      activeTab: "SALE",
       filterValue: "",
       tabs: [
-        { level: "all", label: "전체" },
+        // { level: "all", label: "전체" },
         { level: "SALE", label: "매매" },
         { level: "RENT", label: "전세" },
         { level: "monthly", label: "월세" }
@@ -295,16 +295,14 @@ export default {
       };
     },
     getTransactions() {
+      console.log(this.item);
+      if (!this.item) return [];
       const results = this.item?.filter((obj) => {
         if (this.filterValue === "") {
           return true;
         }
         return obj.category === this.filterValue;
       });
-
-      if (this.activeTab === "all") {
-        return results;
-      }
 
       if (this.activeTab === "monthly") {
         return results

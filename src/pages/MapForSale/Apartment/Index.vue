@@ -35,6 +35,11 @@
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
+    <common-information
+      class="q-mt-md"
+      title="희망 거래 조건 <소유자(매도자/임대인) 기준>"
+      :getOptions="getTradeOptions"
+    />
     <!-- 위치 정보 -->
     <!-- <common-information
       class="q-mt-md"
@@ -47,6 +52,7 @@
       title="토지/용도 정보"
       :getOptions="getAreaOptions"
     />
+
     <common-information
       class="q-mt-md"
       title="건물/주택(단지) 정보"
@@ -69,11 +75,7 @@
       title="공시지가 정보 [토지지가 / 주택가격]"
       :getOptions="getStandardPriceOptions"
     />
-    <common-information
-      class="q-mt-md"
-      title="희망 거래 조건 <소유자(매도자/임대인) 기준>"
-      :getOptions="getTradeOptions"
-    />
+
     <common-information
       class="q-mt-md"
       title="정비사업 주요 정보"
