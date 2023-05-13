@@ -38,9 +38,10 @@
             dense
             :value="searchText"
             @input="onSelect"
-            :input-debounce="200"
+            :input-debounce="400"
             use-input
             fill-input
+            :loading="false"
             hide-selected
             :options="options"
             @filter="filterFn"
@@ -96,6 +97,7 @@ import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
+import _ from "lodash";
 
 export default {
   components: {
@@ -235,7 +237,7 @@ export default {
     async filterLocation(val, update, abort) {
       return new Promise((resolve) => {
         Vue.prototype.$axios
-          .get(`locations?search=${this.searchText}`)
+          .get(`locations/?search=${this.searchText}`)
           .then((res) => {
             update(async () => {
               this.location = res.data.results.map(
@@ -257,6 +259,7 @@ export default {
     },
 
     async filterFn(val, update, abort) {
+      if (val === undefined) return;
       await this.filterRedev(val, update, abort);
       await this.filterLocation(val, update, abort);
       if (this.searchType === "redev") {

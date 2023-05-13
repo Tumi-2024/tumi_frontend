@@ -22,6 +22,7 @@
       <div style="display: flex; gap: 2px" class="q-pa-sm">
         <Badge value="주택유형" houseType />
         <Badge value="매매가" price />
+        <Badge value="전용면적" pyeong />
         <Badge value="거래일자" date />
       </div>
       <q-separator />
@@ -57,6 +58,26 @@ import infiniteScroll from "vue-infinite-scroll";
 import { mapGetters, mapActions } from "vuex";
 import Badge from "../Utilities/Badges/Badge.vue";
 
+const getQueryArray = (keyName, params) => {
+  if (keyName === "type_house__in" && params.length === 8) {
+    return {};
+  }
+  if (Array.isArray(params)) {
+    const hasValue = params.every((value) => {
+      return value !== undefined && !Number.isNaN(value);
+    });
+    if (!hasValue || params.length === 0) return {};
+
+    return {
+      [keyName]: params.join(",")
+    };
+  }
+  if (!params || Number.isNaN(params)) return {};
+  return {
+    [keyName]: params
+  };
+};
+
 export default {
   directives: {
     infiniteScroll
@@ -85,7 +106,6 @@ export default {
       "area",
       "price",
       "houseType",
-      "pyeong",
       "date",
       "getCategoriesByKorean"
     ]),
@@ -100,8 +120,14 @@ export default {
     onFocus(e) {
       // this.getApiHouses();
     },
-    changeFilter() {},
-    infiniteHandler() {
+    changeFilter(params) {
+      console.log(params);
+      this.infiniteHandler(params, 1);
+    },
+    infiniteHandler(params, pageNumber) {
+      if (pageNumber) {
+        this.page = pageNumber;
+      }
       this.setRequestUrl("transactions");
       const getQueryArray = (keyName, params) => {
         if (keyName === "type_house__in" && params?.length === 8) {
@@ -120,17 +146,31 @@ export default {
         };
       };
 
-      const getAllorUndefined = (param) => {
-        if (param.length === 8) return undefined;
-        return param;
-      };
+      console.log(params);
 
       const Dquery = {
         ...getQueryArray(
-          "type_house__in",
-          getAllorUndefined(this.getCategoriesByKorean)
-        )
+          "category__in",
+          this.getCategoriesByKorean
+            .join(",")
+            .replace("토지", "LAND")
+            .replace("오피스텔", "OFFICETEL")
+            .replace("연립ￜ다세대", "ALLIANCE")
+            .replace("아파트", "APARTMENT")
+            .replace("상업ￜ업무용", "COMMERCIAL")
+            .replace("단독|다가구", "SINGLE")
+            .split(",")
+        ),
+        ...params
       };
+      // }
+
+      // const Dquery = {
+      //   ...getQueryArray(
+      //     "type_house__in",
+      //     getAllorUndefined(this.getCategoriesByKorean)
+      //   )
+      // };
 
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
@@ -152,6 +192,7 @@ export default {
       }
     },
     async onSearch(type, id, label) {
+      console.log(type, id, label, "test");
       const { query } = this.$route;
       if (id?.length === 0) {
         return;
@@ -183,7 +224,7 @@ export default {
     },
 
     async getSearchData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params
       });
       if (!!params.title && this.prevSearch === params.title) {
@@ -212,7 +253,7 @@ export default {
     },
 
     async getRedevData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
       if (!!params.title && this.prevSearch === params.title) {
@@ -241,7 +282,7 @@ export default {
     },
 
     async getLocationData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
 
@@ -269,7 +310,7 @@ export default {
       this.busy = false;
     },
     async getApiHouses(params, label, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups`, {
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
       this.saleList = [

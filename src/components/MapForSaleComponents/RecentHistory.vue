@@ -72,15 +72,26 @@
                       "
                     />
                   </div>
-                  <div class="flex justify-center" style="flex: 20 0">
+                  <div
+                    class="flex justify-center"
+                    style="flex: 20 0"
+                    v-if="activeTab === 'SALE'"
+                  >
                     거래가격
                   </div>
+                  <div class="flex justify-center" style="flex: 20 0" v-else>
+                    보증금
+                  </div>
+
                   <div
                     class="flex justify-center"
                     style="flex: 20 0"
                     v-if="activeTab === 'SALE' || activeTab === 'all'"
                   >
                     면적당 가격
+                  </div>
+                  <div class="flex justify-center" style="flex: 20 0" v-else>
+                    월세
                   </div>
                 </q-item>
               </template>
@@ -126,10 +137,7 @@
                   <!-- 번지/ 건물단지 명 -->
                   <div style="flex: 27 0">
                     <span style="display: flex; justify-content: center">
-                      {{ `${item.text_road || ""}` }}
-                    </span>
-                    <span>
-                      {{ `${item.text_danji || ""}` }}
+                      {{ item.text_sigungu + item.bonbeon || item.beonji }}
                     </span>
                   </div>
                   <div class="flex justify-center" style="flex: 15 0">

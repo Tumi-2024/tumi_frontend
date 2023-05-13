@@ -177,7 +177,7 @@ export const estateStore = {
       const _red = payload?.query?.subcity
         ? {}
         : { redevelopment_area__isnull: "false" };
-
+      console.log("getSimpleHousesWithoutLocation");
       const Dquery = {
         ..._red,
         ...(estateStore.state.payload?.type !== "transaction_groups"
@@ -188,7 +188,7 @@ export const estateStore = {
                 .join(",")
                 .replace("토지", "LAND")
                 .replace("오피스텔", "OFFICETEL")
-                .replace("연립|다세대", "ALLIANCE")
+                .replace("연립ￜ다세대", "ALLIANCE")
                 .replace("아파트", "APARTMENT")
                 .replace("상업ￜ업무용", "COMMERCIAL")
                 .replace("단독|다가구", "SINGLE")
@@ -362,10 +362,9 @@ export const estateStore = {
       const _red = payload?.query?.subcity
         ? {}
         : { redevelopment_area__isnull: "false" };
-
       const Dquery = {
         ..._red,
-        ...(estateStore.state.payload?.type !== "transaction_groups"
+        ...(!window.location.hash.includes("/city/area")
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
               "category__in",
@@ -373,7 +372,7 @@ export const estateStore = {
                 .join(",")
                 .replace("토지", "LAND")
                 .replace("오피스텔", "OFFICETEL")
-                .replace("연립|다세대", "ALLIANCE")
+                .replace("연립ￜ다세대", "ALLIANCE")
                 .replace("아파트", "APARTMENT")
                 .replace("상업ￜ업무용", "COMMERCIAL")
                 .replace("단독|다가구", "SINGLE")

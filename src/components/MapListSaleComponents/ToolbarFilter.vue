@@ -97,7 +97,6 @@ export default {
         return array.every((obj) => obj);
       };
 
-      console.log(this.$route.name);
       return [
         {
           label: "주택유형",
@@ -115,7 +114,7 @@ export default {
           keyName: "areaType"
         },
         {
-          label: "매매가",
+          label: "희망 매매가",
           type: "PriceFilter",
           class:
             this.price.min || this.price.max
@@ -134,19 +133,12 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: this.$route.name === "listHouses" ? "기간" : "거래 기간",
+          label: this.$route.name === "listHouses" ? "기간" : "거래일자",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
           isHide: this.$route.path === "/map/city"
         }
-        // {
-        //   label: "담당자",
-        //   type: "PersonFilter",
-        //   class: this.person?.length > 0 ? "text-white bg-black" : "text-grey",
-        //   keyName: "users",
-        //   isHide: this.$route.name !== "listHouses"
-        // }
       ];
     }
   },
@@ -182,7 +174,7 @@ export default {
 
   methods: {
     onChangeFilter(params) {
-      console.log(params);
+      console.log(params, "params");
       this.$emit("changeFilter", params);
     },
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),

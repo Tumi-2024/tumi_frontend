@@ -557,6 +557,7 @@ export default {
               : "houses",
           ...boundLocation
         };
+        console.log(payload, "payload");
       }
       this.$store.dispatch("getSimpleHouses", payload);
     },

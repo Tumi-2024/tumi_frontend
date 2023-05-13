@@ -360,6 +360,7 @@ export default {
               return "black";
           }
         };
+        console.log(item);
         return [
           {
             type: "redevType",
@@ -374,10 +375,13 @@ export default {
               }
             ).label
           },
-          // { type: 'pyeong', value: Math.floor(Number(item.text_size_total) * 10 / 3.3) / 10 + '평' },
           {
             type: this.types?.[0]?.toLowerCase(),
             value: `${toMoneyString(item.price)}`
+          },
+          {
+            type: "pyeong",
+            value: Math.floor(item.text_size_private) + "평"
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }
         ];
