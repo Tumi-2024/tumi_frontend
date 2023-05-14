@@ -1,7 +1,17 @@
 <template>
   <q-card class="bg-white notosanskr-medium">
-    <q-card-section class="row q-pb-none justify-between">
-      <div class="title-heading col-6">실거래가 히스토리</div>
+    <q-card-section class="q-pb-none justify-between items-center row">
+      <div class="title-heading col-6">정비사업 실거래가 히스토리</div>
+      <q-select
+        style="width: 80px"
+        v-model="unitSelect"
+        label="단위"
+        :options="[
+          { label: '평', value: '평' },
+          { label: '㎡', value: '㎡' }
+        ]"
+        :option-value="(item) => (item === null ? null : item.label)"
+      />
     </q-card-section>
     <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
@@ -137,7 +147,7 @@
                   <!-- 번지/ 건물단지 명 -->
                   <div style="flex: 27 0">
                     <span style="display: flex; justify-content: center">
-                      {{ item.text_sigungu + item.bonbeon || item.beonji }}
+                      {{ item.text_sigungu }} {{ item.bonbeon || item.beonji }}
                     </span>
                   </div>
                   <div class="flex justify-center" style="flex: 15 0">
@@ -145,7 +155,7 @@
                   </div>
                   <!-- 면적 -->
                   <div class="flex justify-center" style="flex: 17 0">
-                    {{ getItemSize(item, select) }}
+                    {{ getItemSize(item, select) + unitSelect.value }}
                   </div>
                   <!-- 거래가격 -->
                   <div class="flex justify-center" style="flex: 20 0">
@@ -157,6 +167,7 @@
                     v-if="activeTab === 'SALE' || activeTab === 'all'"
                   >
                     {{ toMoneyString(item.price / getItemSize(item, select)) }}
+                    / {{ unitSelect.value }}
                   </div>
                 </q-item>
               </template>
@@ -192,8 +203,12 @@ export default {
         { level: "monthly", label: "월세" }
       ],
       select: {
-        label: "전용면적",
-        value: "text_size_private"
+        label: "대지면적",
+        value: "대지면적"
+      },
+      unitSelect: {
+        label: "평",
+        value: "평"
       }
     };
   },
@@ -241,49 +256,50 @@ export default {
         }
       ];
     },
+
     getItemSize() {
       return (item, select) => {
-        let itemValue = item[select.value];
-        if (
-          item.category === "COMMERCIAL " &&
-          (select.value === "text_size_private" ||
-            select.value === "text_size_yean")
-        ) {
-          itemValue = item.text_size_total;
-          return itemValue;
-        } else if (select.value === "text_size_daeji") {
-          itemValue =
-            item.text_size_daeji ||
-            item.text_size_land ||
-            item.text_size_contract;
-          return itemValue;
-        } else {
-          return itemValue;
+        console.log(this.unitSelect);
+        const unit = this.unitSelect.value === "평" ? 3.30579 : 1;
+
+        const getRound = (value) => {
+          if (this.unitSelect.value === "평") {
+            return Math.round(value);
+          } else {
+            return value;
+          }
+        };
+
+        if (select.value === "대지면적") {
+          return getRound(
+            Number(
+              (item.text_size_land ||
+                item.size_land ||
+                item.text_size_daeji ||
+                item.size_daeji) / unit
+            )
+          );
         }
+        return getRound(
+          Number(
+            item.text_size_private ||
+              item.size_private ||
+              item.text_size_yean ||
+              item.size_yean
+          )
+        );
       };
     },
     getSelectOptions() {
       return [
         {
-          label: "전용면적",
-          value: "text_size_private"
-        },
-        {
           label: "대지면적",
-          value: "text_size_daeji"
+          value: "대지면적"
         },
         {
-          label: "연면적",
-          value: "text_size_yean"
+          label: "건물면적",
+          value: "건물면적"
         }
-        // {
-        //   label: "계약면적",
-        //   value: "text_size_contract"
-        // },
-        // {
-        //   label: "전용/연면적",
-        //   value: "text_size_total"
-        // }
       ];
     },
     getHouseType() {
@@ -303,7 +319,6 @@ export default {
       };
     },
     getTransactions() {
-      console.log(this.item);
       if (!this.item) return [];
       const results = this.item?.filter((obj) => {
         if (this.filterValue === "") {
@@ -311,10 +326,24 @@ export default {
         }
         return obj.category === this.filterValue;
       });
+      // console.log(
+      //   results
+      //     .filter(({ types }) => types.indexOf("RENT") > -1)
+      //     .map((result) => {
+      //       return result.recent_transactions.RENT;
+      //     })
+      //     .filter(
+      //       ({ text_price_monthly: priceMonthly }) =>
+      //         !priceMonthly || Number(priceMonthly) === 0
+      //     )
+      // );
 
       if (this.activeTab === "monthly") {
         return results
-          .filter(({ type }) => type === "RENT")
+          .filter(({ types }) => types.indexOf("RENT") > -1)
+          .map((result) => {
+            return result.recent_transactions.RENT;
+          })
           .filter(
             ({ text_price_monthly: priceMonthly }) =>
               !!priceMonthly && Number(priceMonthly) > 0
@@ -323,16 +352,22 @@ export default {
 
       if (this.activeTab === "RENT") {
         return results
-          .filter(({ type }) => type === "RENT")
+          .filter(({ types }) => types.indexOf("RENT") > -1)
+          .map((result) => {
+            return result.recent_transactions.RENT;
+          })
           .filter(
             ({ text_price_monthly: priceMonthly }) =>
               !priceMonthly || Number(priceMonthly) === 0
           );
       }
+      console.log();
 
-      return results.filter(
-        (transaction) => transaction.type === this.activeTab
-      );
+      return results
+        .filter(({ types }) => types.indexOf("SALE") > -1)
+        .map((result) => {
+          return result.recent_transactions.SALE;
+        });
     },
     isRent() {
       return (item) => item.type === this.tabs[2].level;

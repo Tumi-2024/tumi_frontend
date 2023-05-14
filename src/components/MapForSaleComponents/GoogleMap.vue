@@ -40,7 +40,6 @@ export default {
   },
   props: {
     position: Object,
-    // polygon = [{lat: xxx, lng: xxx}, {lat: xxx, lng: xxx}]
     polygon: {
       type: Array,
       default: null

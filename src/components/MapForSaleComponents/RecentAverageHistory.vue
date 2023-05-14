@@ -1,9 +1,7 @@
 <template>
   <q-card class="bg-white notosanskr-medium">
     <q-card-section class="row q-pb-none justify-between">
-      <div class="title-heading col-6">
-        최근 3년 평균 실거래가
-      </div>
+      <div class="title-heading col-6">최근 3년 평균 실거래가</div>
       <q-select
         dense
         v-model="areaSelected"
@@ -40,8 +38,8 @@
   </q-card>
 </template>
 <script>
-import { toMoneyString } from 'src/utils';
-import BarChart from 'src/utils/BarChart'
+import { toMoneyString } from "src/utils";
+import BarChart from "src/utils/BarChart";
 
 export default {
   components: {
@@ -53,10 +51,10 @@ export default {
     graph: {
       type: Array,
       validator(value) {
-        return value.length === 3
+        return value.length === 3;
       },
       default() {
-        return []
+        return [];
       }
     }
   },
@@ -72,13 +70,13 @@ export default {
             backgroundColor: ({ dataIndex: index }) => {
               switch (index) {
                 case 0:
-                  return 'rgba(255, 125, 54, 0.2)'
+                  return "rgba(255, 125, 54, 0.2)";
                 case 1:
-                  return 'rgba(255, 125, 54, 0.6)'
+                  return "rgba(255, 125, 54, 0.6)";
                 case 2:
-                  return 'rgba(255, 125, 54, 1)'
+                  return "rgba(255, 125, 54, 1)";
                 default:
-                  return 'rgba(255, 125, 54, 0.2)'
+                  return "rgba(255, 125, 54, 0.2)";
               }
             },
             data: [this.graph[0].sale, this.graph[1].sale, this.graph[2].sale]
@@ -87,13 +85,13 @@ export default {
             backgroundColor: ({ dataIndex: index }) => {
               switch (index) {
                 case 0:
-                  return 'rgba(11, 205, 199, 0.2)'
+                  return "rgba(11, 205, 199, 0.2)";
                 case 1:
-                  return 'rgba(11, 205, 199, 0.6)'
+                  return "rgba(11, 205, 199, 0.6)";
                 case 2:
-                  return 'rgba(11, 205, 199, 1)'
+                  return "rgba(11, 205, 199, 1)";
                 default:
-                  return 'rgba(11, 205, 199, 0.2)'
+                  return "rgba(11, 205, 199, 0.2)";
               }
             },
             data: [this.graph[0].rent, this.graph[1].rent, this.graph[2].rent]
@@ -109,19 +107,23 @@ export default {
           }
         },
         scales: {
-          yAxes: [{
-            gridLines: {
-              drawTicks: false,
-              drawOnChartArea: false
-            },
-            ticks: { max: 100000, min: 95000 }
-          }],
-          xAxes: [{
-            gridLines: {
-              drawTicks: false,
-              drawOnChartArea: false
+          yAxes: [
+            {
+              gridLines: {
+                drawTicks: false,
+                drawOnChartArea: false
+              },
+              ticks: { max: 100000, min: 95000 }
             }
-          }]
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                drawTicks: false,
+                drawOnChartArea: false
+              }
+            }
+          ]
         },
         legend: {
           display: false
@@ -131,22 +133,15 @@ export default {
   },
   computed: {
     getTransactions() {
-      return this.item
+      return this.item;
     },
     getTicks() {
-      // console.log(this.graph)
-      // const getMax = this.graph.reduce((acc, curr) => {
-      //   return acc <= curr.scale ? curr.scale : acc
-      // }, 0)
-      // const getMin = this.graph.reduce((acc, curr) => {
-      //   return acc >= curr.rent ? curr.rent : acc
-      // }, 0)
-      return { max: 10000, min: 10000 }
+      return { max: 10000, min: 10000 };
     }
   },
   methods: {
     toMoneyString(value, add) {
-      return toMoneyString(value, add)
+      return toMoneyString(value, add);
     }
   }
 };
@@ -186,9 +181,9 @@ export default {
 .tags {
   margin-top: 16px;
   display: flex;
-  .badge{
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
+  .badge {
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
     box-sizing: border-box;
     border-radius: 8px;
     &:nth-last-child(1) {
@@ -203,7 +198,7 @@ export default {
       line-height: 36px;
       text-align: center;
       letter-spacing: -1.05px;
-      color: #1A1A1A;
+      color: #1a1a1a;
     }
   }
 }
@@ -211,13 +206,13 @@ export default {
 .summary {
   display: flex;
   flex-direction: column;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   border-radius: 12px;
   padding: 15px;
   justify-content: center;
   .badge {
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
     box-sizing: border-box;
     border-radius: 4px;
     margin-left: 4px;
@@ -240,7 +235,7 @@ export default {
     font-size: 15px;
     line-height: 22px;
     letter-spacing: -1.125px;
-    color: #D32C00;
+    color: #d32c00;
   }
 
   .price {
@@ -250,7 +245,7 @@ export default {
     font-size: 21px;
     line-height: 32px;
     letter-spacing: -1.575px;
-    color: #1A1A1A;
+    color: #1a1a1a;
   }
 }
 </style>

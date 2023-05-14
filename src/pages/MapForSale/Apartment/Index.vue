@@ -153,7 +153,6 @@ export default {
     "google-map": GoogleMap
   },
   async beforeMount() {
-    console.log("beforeMount");
     if (this.$route?.query?.sellid) {
       const { query } = this.$route;
       await Vue.prototype.$axios.post(`/houses/${query.sellid}/recent/`);
@@ -166,12 +165,14 @@ export default {
       this.redevelopment = data.group_location?.redevelopment_area;
 
       this.$store.dispatch("addRecentlyViewedHouse", data);
+
       const {
         data: { results }
       } = await Vue.prototype.$axios.get(
-        `/houses/${this.estate.id}/transactions/`
+        `/redevelopment_areas/${this.redevelopment.id}/transaction_groups/`
       );
       this.transactions = results;
+      console.log(this.transactions);
       // this.getGraphData();
     }
   },
@@ -755,7 +756,6 @@ export default {
     getPersons() {
       const redevTitle =
         this.estate.group_location.redevelopment_area?.title ?? "";
-      console.log(this.estate.group_location.redevelopment_area);
       return [
         {
           rank: `${redevTitle} 전문 컨설턴트`,
