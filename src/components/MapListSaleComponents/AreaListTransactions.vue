@@ -150,7 +150,7 @@ export default {
 
       const Dquery = {
         ...getQueryArray(
-          "category__in",
+          "categories",
           this.getCategoriesByKorean
             .join(",")
             .replace("토지", "LAND")
@@ -163,14 +163,6 @@ export default {
         ),
         ...params
       };
-      // }
-
-      // const Dquery = {
-      //   ...getQueryArray(
-      //     "type_house__in",
-      //     getAllorUndefined(this.getCategoriesByKorean)
-      //   )
-      // };
 
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
@@ -192,7 +184,6 @@ export default {
       }
     },
     async onSearch(type, id, label) {
-      console.log(type, id, label, "test");
       const { query } = this.$route;
       if (id?.length === 0) {
         return;

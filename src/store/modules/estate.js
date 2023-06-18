@@ -160,6 +160,7 @@ export const estateStore = {
       // };
 
       const getAreaTypeString = () => {
+        console.log(context.rootState.map.areaType);
         switch (context.rootState.map.areaType) {
           case null:
             return "";
@@ -170,7 +171,7 @@ export const estateStore = {
           case "기타":
             return "일반";
           default:
-            return null;
+            return context.rootState.map.areaType;
         }
       };
 
@@ -183,7 +184,7 @@ export const estateStore = {
         ...(estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-              "category__in",
+              "_categories",
               category
                 .join(",")
                 .replace("토지", "LAND")
@@ -225,10 +226,7 @@ export const estateStore = {
           }
         }
       );
-      // console.log("setCountEstate", data.data.count);
       context.commit("setCountEstate", data.data.count);
-
-      // context.dispatch("map/setLocationLoading", true);
 
       const estateData = (results) => {
         if (results.length > 0 && results[0].count_estates > -1) {
@@ -327,27 +325,24 @@ export const estateStore = {
       } else {
         await context.commit("setRequestUrl", context.state.requestUrl);
       }
-
-      // const getRedevQuery = () => {
-      //   return {};
-      // };
+      console.log("getSimpleHouses", this.getAreaType);
 
       const getAreaTypeString = () => {
-        switch (this.getAreaType) {
+        console.log(context.rootState.map.areaType);
+        switch (context.rootState.map.areaType) {
           case null:
             return "";
-          case "가로/모아":
-            return "가로모아";
           case "재개발":
           case "재건축":
           case "일반":
-            return this.getAreaType;
-          case "기타사업":
-            return "기타";
+            return context.rootState.map.areaType;
+          case "기타":
+            return "일반";
           default:
-            return this.getAreaType;
+            return context.rootState.map.areaType;
         }
       };
+
       const getXY = () => {
         if (!lat[0] || !long[0]) {
           return {};
@@ -367,7 +362,7 @@ export const estateStore = {
         ...(!window.location.hash.includes("/city/area")
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-              "category__in",
+              "_categories",
               category
                 .join(",")
                 .replace("토지", "LAND")
@@ -380,6 +375,9 @@ export const estateStore = {
             ))
       };
 
+      console.log(
+        getQueryArray("redevelopment_area__category", getAreaTypeString())
+      );
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
