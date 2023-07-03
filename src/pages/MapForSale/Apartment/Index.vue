@@ -82,7 +82,11 @@
       v-if="this.estate.group_location.redevelopment_area.id"
       :getOptions="getRedevOptions"
     />
-    <!-- v-if="" -->
+
+    <investment-point
+      class="q-mt-md"
+      :item="estate.group_location.redevelopment_area"
+    />
     <!-- 재개발 정보 -->
     <redevelopment-information
       v-if="this.estate.group_location.redevelopment_area.id"
@@ -138,7 +142,8 @@ import {
   // RecentPricing,
   RecentHistory,
   // RecentAverageHistory,
-  CommonInformation
+  CommonInformation,
+  InvestmentPoint
 } from "components/MapForSaleComponents";
 export default {
   components: {
@@ -150,6 +155,7 @@ export default {
     // SchoolSection,
     // RecentPricing,
     RecentHistory,
+    InvestmentPoint,
     "google-map": GoogleMap
   },
   async beforeMount() {

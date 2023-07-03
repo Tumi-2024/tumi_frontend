@@ -1,34 +1,20 @@
 <template>
   <q-card>
     <q-card-section class="q-pa-md bg-white">
-      <span class="heading-title"> 재개발 정보 </span>
+      <span class="heading-title"> 투자포인트 </span>
       <section class="progress-section bg-white">
         <div class="info notosanskr-regular">
-          <item-redevelopment-info
-            v-for="(item, index) in list"
-            :key="index"
-            :label="item.title"
-            :date="item.date"
-          />
-          <!-- <item-redevelopment-info
-            label="준공인가"
-            :date="completion"
-            highlight
-          /> -->
+          {{ item.description_investment }}
         </div>
       </section>
     </q-card-section>
   </q-card>
 </template>
 <script>
-import ItemRedevelopmentInfo from "./Common/ItemRedevelopmentInfo";
-
 export default {
-  components: {
-    "item-redevelopment-info": ItemRedevelopmentInfo
-  },
+  components: {},
   props: {
-    list: {
+    item: {
       type: Array,
       require: false,
       default: () => {
