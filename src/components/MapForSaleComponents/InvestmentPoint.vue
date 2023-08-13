@@ -3,9 +3,10 @@
     <q-card-section class="q-pa-md bg-white">
       <span class="heading-title"> 투자포인트 </span>
       <section class="progress-section bg-white">
-        <div class="info notosanskr-regular">
-          {{ item.description_investment }}
-        </div>
+        <section
+          class="info notosanskr-regular"
+          v-html="item.description_investment"
+        ></section>
       </section>
     </q-card-section>
   </q-card>
