@@ -6,13 +6,12 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ getMapZoom }}
-
     <naver-maps
       ref="naverMapRef"
       class="page-container"
       :mapOptions="{
-        zoom: getMapZoom
+        zoom: getMapZoom,
+        ...mapOptions
       }"
       v-on="{
         dragend: dragEndNaver,
@@ -332,8 +331,7 @@ export default {
   components: {
     // "info-top-content": InfoTopContent,
     "info-window-content": InfoWindowContent,
-    "action-buttons": ActionButtons,
-    "gmap-custom-marker": GmapCustomMarker
+    "action-buttons": ActionButtons
   },
   data() {
     return {
@@ -341,7 +339,13 @@ export default {
       map: null,
       initCenter: null,
       mapSize: { height: "", width: "" },
-      isShowCluster: true
+      isShowCluster: true,
+      mapOptions: {
+        zoomControl: true,
+        zoomControlOptions: {
+          position: 7
+        }
+      }
     };
   },
   props: {
