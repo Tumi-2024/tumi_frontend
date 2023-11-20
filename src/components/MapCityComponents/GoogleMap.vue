@@ -719,10 +719,6 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
-      this.map.panTo(item.position);
-      const zoomLevel = this.map.getZoom();
-
-      this.setMapZoom(zoomLevel);
       this.setMapCenter(item.position);
 
       const getRouterParams = () => {
@@ -745,8 +741,7 @@ export default {
       this.$router.push(getRouterParams());
     },
     goToLocation(center = { lat: 0, lng: 0 }) {
-      this.map.panTo(center);
-      this.map.setZoom(16);
+      // this.map.setZoom(16);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })
