@@ -317,7 +317,6 @@
 import Vue from "vue";
 /** google map components */
 import { gmapApi } from "gmap-vue";
-import GmapCustomMarker from "vue2-gmap-custom-marker";
 /** custom components */
 import InfoWindowContent from "./InfoWindowContent";
 import ActionButtons from "./ActionButtons";

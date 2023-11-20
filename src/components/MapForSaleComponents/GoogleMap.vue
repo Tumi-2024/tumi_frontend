@@ -1,19 +1,30 @@
 <template>
   <div class="bg-white" ref="gmapContainer">
-    <GmapMap
-      ref="mapRef"
-      :center="{
-        lat: position.lat,
-        lng: position.lng
+    <naver-maps
+      ref="naverMap"
+      class="naver-map"
+      :mapOptions="{
+        zoom: 17,
+        draggable: false,
+        disableTwoFingerTapZoom: true,
+        disableDoubleClickZoom: true,
+        disableDoubleTapZoom: true,
+        pinchZoom: false,
+        scrollWheel: false
       }"
-      :zoom="17"
-      :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
     >
-      <!-- THIS IS INFO WINDOW -->
-      <gmap-custom-marker
-        :options="infoOptions"
-        :marker="{ latitude: position.lat, longitude: position.lng }"
-      >
+      <naver-polygon
+        :key="`detail-polygon`"
+        :paths="[polygon]"
+        :options="{
+          strokeColor: '#FF5100',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#0BCDC7',
+          fillOpacity: 0.35
+        }"
+      ></naver-polygon>
+      <naver-marker :lat="Number(position.lat)" :lng="Number(position.lng)">
         <info-window-content
           :price="estate.group_trading_terms.price_selling_hope"
           :item="estate"
@@ -23,20 +34,17 @@
             area: estate.pyeong
           }"
         />
-      </gmap-custom-marker>
-    </GmapMap>
+      </naver-marker>
+    </naver-maps>
   </div>
 </template>
 
 <script>
-import { gmapApi } from "gmap-vue";
 import { mapGetters } from "vuex";
 import InfoWindowContent from "../MapCityComponents/InfoWindowContent";
-import GmapCustomMarker from "vue2-gmap-custom-marker";
 export default {
   components: {
-    InfoWindowContent,
-    "gmap-custom-marker": GmapCustomMarker
+    InfoWindowContent
   },
   props: {
     position: Object,
@@ -57,73 +65,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["getMapOptions"]),
-    google: gmapApi
+    ...mapGetters("map", ["getMapOptions"])
   },
 
   async mounted() {
-    // we access the map Object
-    this.map = await this.$refs.mapRef.$mapPromise;
-    this.setGmapContainerSize();
-    this.map.setOptions({ zoomControl: true, scrollwheel: true });
-    this.map.addListener("click", (e) => {
-      /** * access click event */
-    });
-
-    this.setAreaPolygon();
-  },
-
-  methods: {
-    setGmapContainerSize() {
-      const h = this.$refs.gmapContainer.clientHeight;
-      const w = this.$refs.gmapContainer.clientWidth;
-      this.mapSize.height = h + "px";
-      this.mapSize.width = w + "px";
-    },
-    setAreaPolygon() {
-      let path;
-      if (!this.polygon) {
-        // IF THERES NO POLYGON WE CREATE OUR OWN
-        const position = new this.google.maps.LatLng(
-          this.position.lat,
-          this.position.lng
-        );
-        const coord1 = this.google.maps.geometry.spherical.computeOffset(
-          position,
-          100,
-          100
-        );
-        const coord2 = this.google.maps.geometry.spherical.computeOffset(
-          position,
-          -100,
-          -100
-        );
-        const coord3 = this.google.maps.geometry.spherical.computeOffset(
-          position,
-          100,
-          -100
-        );
-        const coord4 = this.google.maps.geometry.spherical.computeOffset(
-          position,
-          -100,
-          100
-        );
-        path = [coord1, coord2, coord4, coord3];
-      }
-      const style = {
-        strokeColor: "#FF5100",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#0BCDC7",
-        fillOpacity: 0.35
-      };
-      this.area = new this.google.maps.Polygon({
-        ...style,
-        paths: this.polygon || path,
-        map: this.map,
-        center: this.position
-      });
-    }
+    this.$refs.naverMap.setCenter(
+      this.position.lat * (1 - 0.000005),
+      this.position.lng
+    );
   }
 };
 </script>
@@ -142,5 +91,9 @@ export default {
 // hide the close "x" icon on info window
 ::v-deep .gm-ui-hover-effect {
   display: none !important;
+}
+
+.naver-map {
+  height: 100%;
 }
 </style>

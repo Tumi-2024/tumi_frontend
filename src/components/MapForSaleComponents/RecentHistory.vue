@@ -259,7 +259,6 @@ export default {
 
     getItemSize() {
       return (item, select) => {
-        console.log(this.unitSelect);
         const unit = this.unitSelect.value === "평" ? 3.30579 : 1;
 
         const getRound = (value) => {
@@ -361,7 +360,6 @@ export default {
               !priceMonthly || Number(priceMonthly) === 0
           );
       }
-      console.log();
 
       return results
         .filter(({ types }) => types.indexOf("SALE") > -1)
