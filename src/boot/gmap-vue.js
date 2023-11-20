@@ -2,6 +2,13 @@ import Vue from "vue";
 import * as GmapVue from "gmap-vue";
 // for some reason process.env will add always add double quote on value so we have to remove them
 
+import naver from "vue-naver-maps";
+Vue.use(naver, {
+  clientID: process.env.NODE_ENV === "production" ? "md4y5nkqex" : "zd6dosbz6f",
+  useGovAPI: false,
+  subModules: ""
+});
+
 Vue.use(GmapVue, {
   load: {
     // key: process.env.GOOGLE_MAP_API.replace(/"/g, ""),

@@ -6,163 +6,7 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ getMapZoom }}
-
-    <naver-maps
-      ref="naverMapRef"
-      class="page-container"
-      :mapOptions="{
-        zoom: getMapZoom
-      }"
-      v-on="{
-        dragend: dragEndNaver,
-        dragstart: dragStart,
-        load: idle,
-        zoom_changed: zoomChanged
-      }"
-    >
-      <!-- 각 구 별 매물/실거래가 보여주기 -->
-      <div v-for="m in simple_houses" :key="'d' + m.title + getColor.bg + m.id">
-        <template v-if="getMapZoom < 16">
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <div
-              class="flex column justify-center items-center"
-              style="
-                min-height: calc((110 / 1312) * 100vh);
-                min-width: calc((110 / 1312) * 100vh);
-                padding: 10px;
-                opacity: 0.72;
-              "
-              :style="{
-                backgroundColor: getColor.bg,
-                borderRadius: `${
-                  $route.path === '/map/city/area' ? '0%' : '100%'
-                }`
-              }"
-              :class="`text-${getColor.text}`"
-              @mousedown="onClickMarker(m)"
-            >
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
-              >
-                {{ m.title }}
-              </span>
-              <span
-                class="flex justify-center q-mt-sm"
-                style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
-              >
-                {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
-              </span>
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
-              >
-                {{
-                  $route.path === "/map/city"
-                    ? `${m.count_estates_filtered}`
-                    : `${
-                        getAreaType === "재개발"
-                          ? m.count_redevelopment_area_1
-                          : getAreaType === "재건축"
-                          ? m.count_redevelopment_area_2
-                          : getAreaType === "기타사업"
-                          ? m.count_redevelopment_area_3
-                          : m.count_redevelopment_area
-                      }`
-                }}개
-                <!-- ({{ m.count_estates_filtered_implicit }}) -->
-              </span>
-            </div>
-          </naver-marker>
-        </template>
-        <template v-else-if="getMapZoom === 15 || getMapZoom === 16">
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <div
-              style="
-                position: relative;
-                width: 15px;
-                height: 15px;
-                border-radius: 100%;
-              "
-              class="radial-gradient"
-            ></div
-          ></naver-marker>
-        </template>
-        <template v-else>
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <info-window-content
-              @viewArea="viewArea(m)"
-              :item="m"
-              :price="getPriceFromText(m)"
-              :is-dev="!!m.redevelopment_area"
-            />
-          </naver-marker>
-        </template>
-      </div>
-      <!-- @load="(e) => onAreaInfoLoad(e, m)" -->
-    </naver-maps>
-    <!-- 재개발 구역 보여주기 -->
-    <template v-if="getMapZoom > 13">
-      <template v-for="badge in getAreaBadges">
-        <naver-polygon
-          :key="`${badge.id}-polygon`"
-          :paths="[badge.path]"
-          :options="badge.options"
-        ></naver-polygon>
-        <naver-marker
-          v-if="getMapZoom > 14"
-          :key="`${badge.id}-marker`"
-          :lat="badge.center.lat"
-          :lng="badge.center.lng"
-        >
-          <template>
-            <div
-              class="area-badge-info notosanskr-medium"
-              :class="`bg-${getBadgeColor(badge)}`"
-              @mouseup.self="selectArea(badge)"
-            >
-              <q-icon
-                v-if="$route.path === '/map/city/area'"
-                size="20px"
-                class="q-mr-xs"
-              >
-                <img src="~assets/icons/area-info.svg" alt="area-info" />
-              </q-icon>
-              <div
-                @click.prevent="() => redirectList(badge)"
-                v-else
-                style="
-                  max-width: 200px;
-                  border-radius: 2px;
-                  background-color: white;
-                  color: black;
-                  /* margin-right: 5px; */
-                "
-                class="items-center justify-center flex"
-              >
-                <span
-                  style="
-                    font-size: calc((13 / 1312) * 100vh);
-                    line-height: calc((15 / 1312) * 100vh);
-
-                    color: #333333;
-                    padding: 3px 5px;
-                  "
-                >
-                  {{ badge.count_estates_filtered }}
-                </span>
-              </div>
-              <span>
-                {{ badge.title | truncate(15) }}
-              </span>
-            </div>
-          </template>
-        </naver-marker>
-      </template>
-    </template>
-
-    <!-- <GmapMap
+    <GmapMap
       ref="mapRef"
       v-on="{
         idle: idle,
@@ -258,14 +102,14 @@
                           : m.count_redevelopment_area
                       }`
                 }}개
-                ({{ m.count_estates_filtered_implicit }})
+                <!-- ({{ m.count_estates_filtered_implicit }}) -->
               </span>
             </div>
           </gmap-custom-marker>
         </div>
       </template>
 
-      we generate badges for the Redevelopment Area
+      <!-- we generate badges for the Redevelopment Area -->
       <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
         <gmap-polygon :paths="badge.path" :options="badge.options" />
         <gmap-custom-marker :marker="badge.center">
@@ -310,7 +154,7 @@
           </template>
         </gmap-custom-marker>
       </div>
-    </GmapMap> -->
+    </GmapMap>
   </div>
 </template>
 
@@ -368,6 +212,7 @@ export default {
     google: gmapApi,
     getBadgeColor() {
       return ({ category }) => {
+        console.log(category);
         switch (category) {
           case "재개발":
             return "primary";
@@ -384,15 +229,16 @@ export default {
       };
     },
     getColor() {
+      console.log(this.getAreaType);
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
         case "재건축":
-          return { text: "white", bg: "#2196F3", tagClass: "blue" };
+          return { text: "white", bg: "#2196f3", tagClass: "blue" };
         case "일반":
           return {
             text: "white",
-            bg: "#A155B8",
+            bg: "#a155b8",
             tagClass: "purple"
           };
         case "가로모아":
@@ -477,21 +323,22 @@ export default {
           fill: ""
         };
         const getStrokeColor = (opt) => {
+          console.log(opt);
           switch (opt) {
             case "가로주택":
-              colors = { ...colors, stroke: "#52C41A", fill: "#52C41A" };
+              colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
               break;
             case "기타":
-              colors = { ...colors, stroke: "#52C41A", fill: "#52C41A" };
+              colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
               break;
             case "재건축":
-              colors = { ...colors, stroke: "#2196F3", fill: "#2196F3" };
+              colors = { ...colors, stroke: "#2196f3", fill: "#2196f3" };
               break;
             case "재개발":
-              colors = { ...colors, stroke: "#FF9800", fill: "#FF9800" };
+              colors = { ...colors, stroke: "#ff9800", fill: "#ff9800" };
               break;
             default:
-              colors = { ...colors, stroke: "#7C0170", fill: "#A155B8" };
+              colors = { ...colors, stroke: "#7c0170", fill: "#a155b8" };
           }
         };
         getStrokeColor(category);
@@ -513,7 +360,15 @@ export default {
             strokeOpacity: 1,
             strokeWeight: 2,
             fillColor: colors.fill,
-            fillOpacity: isStop ? 0.35 : 0.1
+            fillOpacity: isStop ? 0.35 : 0.1,
+            options: {
+              fillPattern: {
+                path: "M 0,-1 0,1",
+                strokeOpacity: 1,
+                strokeWeight: 1,
+                scale: 4
+              }
+            }
           },
           ...obj
         };
@@ -521,11 +376,17 @@ export default {
     }
   },
   async mounted() {
-    const naverMap = this.$refs.naverMapRef.map;
-
+    this.setGmapContainerSize();
+    this.map = await this.$refs.mapRef.$mapPromise;
+    this.map.setOptions({
+      zoomControlOptions: {
+        position: this.google.maps.ControlPosition.RIGHT_TOP
+      }
+    });
+    const { center } = this.map;
     this.changeMapCenter({
-      lat: naverMap.center._lat,
-      lng: naverMap.center._lng
+      lat: center.lat(),
+      lng: center.lng()
     });
   },
   beforeMount() {
@@ -551,7 +412,6 @@ export default {
 
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
-
     onClickMarker(item) {
       if (this.$route.name === "map_city_area") {
         this.$router.push({
@@ -634,23 +494,15 @@ export default {
       this.changeMapSelectedArea(null);
     },
     dragEnd(e) {
-      console.log(this.$refs.naverMapRef);
       const { center } = this.map;
       this.changeMapCenter({
         lat: center.lat(),
         lng: center.lng()
       });
     },
-    dragEndNaver(e) {
-      this.changeMapCenter({
-        lng: e.latlng.x,
-        lat: e.latlng.y
-      });
-      this.idle();
-    },
-    zoomChanged(zoomLevel) {
-      this.setMapZoom(zoomLevel);
-      this.idle();
+    zoomChanged() {
+      const zoom = this.map.getZoom();
+      this.setMapZoom(zoom);
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -661,23 +513,22 @@ export default {
       );
       this.changeMapSelectedArea(result.data);
     },
-    idle(e) {
-      const bounds = this.$refs.naverMapRef.map.bounds;
-      this.getHouseInfo(bounds);
-      this.getRedevInfo(bounds);
+    idle() {
+      this.getHouseInfo();
+      this.getRedevInfo();
     },
 
-    async getRedevInfo(bounds) {
-      if (this.getMapZoom < 14) return;
-      const ratio = 0.000001;
+    async getRedevInfo() {
+      const bounds = this.map.getBounds();
+      const ratio = 0.0001;
       const boundLocation = {
         latitude: [
-          bounds._sw._lat * (1 + ratio),
-          bounds._ne._lat * (1 - ratio)
+          bounds.getSouthWest().lat() * (1 - ratio),
+          bounds.getNorthEast().lat() * (1 + ratio)
         ],
         longitude: [
-          bounds._sw._lng * (1 + ratio),
-          bounds._ne._lng * (1 - ratio)
+          bounds.getSouthWest().lng() * (1 - ratio),
+          bounds.getNorthEast().lng() * (1 + ratio)
         ]
       };
 
@@ -686,10 +537,12 @@ export default {
         longitude__range: `${boundLocation.longitude[0]},${boundLocation.longitude[1]}`
       });
     },
-    getHouseInfo(bounds) {
+    getHouseInfo() {
+      const bounds = this.map.getBounds();
+
       const boundLocation = {
-        latitude: [bounds._sw._lat, bounds._ne._lat],
-        longitude: [bounds._sw._lng, bounds._ne._lng]
+        latitude: [bounds.getSouthWest().lat(), bounds.getNorthEast().lat()],
+        longitude: [bounds.getSouthWest().lng(), bounds.getNorthEast().lng()]
       };
       let payload = {
         type: "subcity",
@@ -807,7 +660,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  white-space: nowrap;
 
   &.green {
     background: #68814e;
@@ -822,10 +674,5 @@ export default {
   color: #ffffff;
   border-radius: 8px;
   padding: calc((4 / 1312) * 100vh) calc((8 / 1312) * 100vh);
-}
-
-.page-container {
-  background: rgb(54, 54, 54);
-  min-height: calc(100vh - 118px);
 }
 </style>
