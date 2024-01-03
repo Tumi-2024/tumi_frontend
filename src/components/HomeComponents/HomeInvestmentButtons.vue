@@ -103,15 +103,12 @@ export default {
   },
   methods: {
     ...mapActions("search", ["setCategories"]),
+    ...mapActions("map", ["setMapZoom", "changeMapCenter"]),
     onClick(item) {
-      // this.categories = [
-      //   {
-      //     icon: require("assets/iconsNew/11.png"),
-      //     label: "아파트",
-      //     valueTransaction: "APARTMENT",
-      //     valueHouse: "아파트"
-      //   }
-      // ];
+      this.changeMapCenter({
+        lng: 126.9816417,
+        lat: 37.57037778
+      });
       this.setCategories([item.valueTransaction]);
       if (this.shape === "house") {
         this.$router.push({ name: "map_city" });

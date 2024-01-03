@@ -109,7 +109,11 @@
       show-units
       :unit="unit"
     /> -->
-    <recent-history class="q-mt-md" :item="transactions" />
+    <recent-history
+      class="q-mt-md"
+      :item="transactions"
+      :title="estate.group_location.redevelopment_area.title"
+    />
     <!-- <recent-average-history
       class="q-my-md"
       v-if="graphData.length > 0"
@@ -587,7 +591,7 @@ export default {
           )
         },
         {
-          label: "공급면적(대지지분)",
+          label: "공급면적",
           value: this.getValue(
             `${houseInfo.size_supply_area_m2} m² | ${(
               houseInfo.size_supply_area_pyeong / 3.3
@@ -595,7 +599,7 @@ export default {
           )
         },
         {
-          label: "전용면적 (대지지분)",
+          label: "전용면적",
           value: this.getValue(
             `${houseInfo.size_dedicated_area_m2 || "-"} m² | ${(
               houseInfo.size_dedicated_area_pyeong || 0

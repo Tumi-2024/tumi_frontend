@@ -45,7 +45,7 @@
             hide-selected
             :options="options"
             @filter="filterFn"
-            style="flex: 1"
+            style="max-width: 220px"
           >
             <template v-slot:no-option>
               <q-item>
@@ -55,15 +55,13 @@
             <template v-slot:prepend>
               <q-icon name="search" @click.stop.prevent />
             </template>
-            <template v-slot:option="scope">
-              <q-item v-bind="scope.itemProps" style="width: 200px">
-                <q-item-section>
-                  <q-item-label class="ellipsis">
-                    {{ scope.opt.label }}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </template>
+            <!-- <template v-slot:option="scope">
+              <q-item-section>
+                <q-item-label class="ellipsis">
+                  {{ scope.opt.label }}
+                </q-item-label>
+              </q-item-section>
+            </template> -->
           </q-select>
         </div>
       </div>
@@ -97,7 +95,17 @@ import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
-import _ from "lodash";
+
+const ellipsisText = (string) => {
+  const stringLength = 20;
+  let resultString = "";
+  if (string.length > stringLength) {
+    resultString = string.substr(0, stringLength - 3) + "...";
+  } else {
+    resultString = string;
+  }
+  return resultString;
+};
 
 export default {
   components: {
@@ -155,7 +163,7 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: "기간",
+          label: "거래일자",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
@@ -207,6 +215,7 @@ export default {
       this.searchType = e.value;
     },
     onSelect(obj) {
+      console.log(obj);
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
     },
@@ -220,7 +229,7 @@ export default {
                 ({ title, latitude, longitude }) => {
                   return {
                     value: title,
-                    label: title,
+                    label: ellipsisText(title),
                     position: {
                       lat: Number(latitude),
                       lng: Number(longitude)
@@ -244,7 +253,9 @@ export default {
                 ({ subcity, latitude, longitude, title }) => {
                   return {
                     value: `${subcity.city.title} ${subcity.title} ${title}`,
-                    label: `${subcity.city.title} ${subcity.title} ${title}`,
+                    label: ellipsisText(
+                      `${subcity.city.title} ${subcity.title} ${title}`
+                    ),
                     position: {
                       lat: Number(latitude),
                       lng: Number(longitude)
@@ -259,7 +270,12 @@ export default {
     },
 
     async filterFn(val, update, abort) {
-      if (val === undefined) return;
+      if (!val || val === "") {
+        update(() => {
+          this.options = [];
+        });
+        return;
+      }
       await this.filterRedev(val, update, abort);
       await this.filterLocation(val, update, abort);
       if (this.searchType === "redev") {

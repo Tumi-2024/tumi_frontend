@@ -1,9 +1,9 @@
 <template>
   <q-card class="bg-white notosanskr-medium">
     <q-card-section class="q-pb-none justify-between items-center row">
-      <div class="title-heading col-6">정비사업 실거래가 히스토리</div>
+      <div class="title-heading col-6">{{ title }} 실거래가 히스토리</div>
       <q-select
-        style="width: 80px"
+        style="width: 83px"
         v-model="unitSelect"
         label="단위"
         :options="[
@@ -96,7 +96,7 @@
                   <div
                     class="flex justify-center"
                     style="flex: 20 0"
-                    v-if="activeTab === 'SALE' || activeTab === 'all'"
+                    v-if="activeTab === 'SALE' || activeTab === 'RENT'"
                   >
                     면적당 가격
                   </div>
@@ -189,6 +189,11 @@ export default {
     item: {
       type: Array,
       require: true
+    },
+    title: {
+      type: String,
+      required: false,
+      default: "정비사업"
     }
   },
   data() {

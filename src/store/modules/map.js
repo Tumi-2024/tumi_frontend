@@ -7,8 +7,8 @@ const initState = {
   mode: "default",
   mapZoom: 12,
   mapCenter: {
-    lat: 37.547,
-    lng: 126.997
+    lng: 126.9816417,
+    lat: 37.57037778
   },
   // mapAddress: "",
   mapOptions: {
@@ -194,8 +194,8 @@ export const mapStore = {
           .post(
             `/sub_cities/uninterest/address/`,
             Vue.prototype.$qs.stringify({
-              latitude: context.state.mapCenter.lat,
-              longitude: context.state.mapCenter.lng
+              longitude: context.state.mapCenter.lng,
+              latitude: context.state.mapCenter.lat
             })
           )
           .then((result) => {

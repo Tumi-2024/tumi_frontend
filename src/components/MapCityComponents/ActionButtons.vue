@@ -93,7 +93,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["estate", "getViewRedevOnly"]),
     ...mapGetters("map", ["getAreaType"]),
     getLabel() {
       return (

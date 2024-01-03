@@ -54,7 +54,7 @@ export default {
 
       return [
         {
-          label: "사업 유형",
+          label: "사업명",
           value:
             location?.redevelopment_area?.title ||
             location?.redevelopment_area?.category

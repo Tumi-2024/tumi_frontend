@@ -133,7 +133,7 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: this.$route.name === "listHouses" ? "기간" : "거래일자",
+          label: this.$route.name === "listHouses" ? "등록일자" : "거래일자",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
@@ -194,6 +194,7 @@ export default {
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
+
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
     async filterFn(val, update, abort) {

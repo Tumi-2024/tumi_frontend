@@ -6,15 +6,17 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
+    {{ getMapCenter }}
+    {{ getMapZoom }}
     <naver-maps
       ref="naverMapRef"
       class="page-container"
       :mapOptions="{
-        zoom: getMapZoom,
-        ...mapOptions
+        ...mapOptions,
+        zoom: this.getMapZoom
       }"
       v-on="{
-        dragend: dragEndNaver,
+        dragend: dragEnd,
         dragstart: dragStart,
         load: idle,
         zoom_changed: zoomChanged
@@ -27,8 +29,8 @@
             <div
               class="flex column justify-center items-center"
               style="
-                min-height: calc((110 / 1312) * 100vh);
-                min-width: calc((110 / 1312) * 100vh);
+                min-height: calc((90 / 1312) * 100vh);
+                min-width: calc((90 / 1312) * 100vh);
                 padding: 10px;
                 opacity: 0.72;
               "
@@ -160,156 +162,6 @@
         </naver-marker>
       </template>
     </template>
-
-    <!-- <GmapMap
-      ref="mapRef"
-      v-on="{
-        idle: idle,
-        dragend: dragEnd,
-        dragstart: dragStart,
-        zoom_changed: zoomChanged
-      }"
-      :center="getMapCenter"
-      :zoom="getMapZoom"
-      :style="`height: ${mapSize.height}; width: ${mapSize.width};`"
-      :options="getMapOptions"
-    >
-      <template v-if="getMapZoom >= 18">
-        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
-          <gmap-custom-marker
-            :marker="{ latitude: m.latitude, longitude: m.longitude }"
-          >
-            <info-window-content
-              @viewArea="viewArea(m)"
-              :item="m"
-              :price="getPriceFromText(m)"
-              :is-dev="!!m.redevelopment_area"
-            />
-          </gmap-custom-marker>
-        </div>
-      </template>
-      <template v-else-if="getMapZoom < 18 && getMapZoom > 15">
-        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
-          <gmap-custom-marker
-            :marker="{ latitude: m.latitude, longitude: m.longitude }"
-          >
-            <div
-              style="
-                position: relative;
-                width: 15px;
-                height: 15px;
-                border-radius: 100%;
-              "
-              class="radial-gradient"
-            ></div>
-          </gmap-custom-marker>
-        </div>
-      </template>
-      <template v-else>
-        <div :key="'d' + m.title + m.id" v-for="m in simple_houses">
-          <gmap-custom-marker
-            v-if="m.title"
-            :marker="{ latitude: m.latitude, longitude: m.longitude }"
-          >
-            <div
-              class="flex column justify-center items-center"
-              style="
-                min-height: calc((110 / 1312) * 100vh);
-                min-width: calc((110 / 1312) * 100vh);
-                padding: 10px;
-                opacity: 0.72;
-              "
-              :style="{
-                backgroundColor: getColor.bg,
-                borderRadius: `${
-                  $route.path === '/map/city/area' ? '0%' : '100%'
-                }`
-              }"
-              :class="`text-${getColor.text}`"
-              @mousedown="onClickMarker(m)"
-            >
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
-              >
-                {{ m.title }}
-              </span>
-              <span
-                class="flex justify-center q-mt-sm"
-                style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
-              >
-                {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
-              </span>
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
-              >
-                {{
-                  $route.path === "/map/city"
-                    ? `${m.count_estates_filtered}`
-                    : `${
-                        getAreaType === "재개발"
-                          ? m.count_redevelopment_area_1
-                          : getAreaType === "재건축"
-                          ? m.count_redevelopment_area_2
-                          : getAreaType === "기타사업"
-                          ? m.count_redevelopment_area_3
-                          : m.count_redevelopment_area
-                      }`
-                }}개
-                ({{ m.count_estates_filtered_implicit }})
-              </span>
-            </div>
-          </gmap-custom-marker>
-        </div>
-      </template>
-
-      we generate badges for the Redevelopment Area
-      <div v-for="badge in getAreaBadges" :key="`${badge.id}-polygon`">
-        <gmap-polygon :paths="badge.path" :options="badge.options" />
-        <gmap-custom-marker :marker="badge.center">
-          <template v-if="getMapZoom >= redevZoom">
-            <div
-              class="area-badge-info notosanskr-medium"
-              :class="`bg-${getBadgeColor(badge)}`"
-              @mouseup.self="selectArea(badge)"
-            >
-              <q-icon
-                v-if="$route.path === '/map/city/area'"
-                size="20px"
-                class="q-mr-xs"
-              >
-                <img src="~assets/icons/area-info.svg" alt="area-info" />
-              </q-icon>
-              <div
-                @click.prevent="() => redirectList(badge)"
-                v-else
-                style="
-                  border-radius: 2px;
-                  background-color: white;
-                  color: black;
-                  margin-right: 5px;
-                "
-                class="items-center justify-center flex"
-              >
-                <span
-                  style="
-                    font-size: calc((13 / 1312) * 100vh);
-                    line-height: calc((15 / 1312) * 100vh);
-
-                    color: #333333;
-                    padding: 3px 5px;
-                  "
-                >
-                  {{ badge.count_estates_filtered }}
-                </span>
-              </div>
-              {{ badge.title | truncate(15) }}
-            </div>
-          </template>
-        </gmap-custom-marker>
-      </div>
-    </GmapMap> -->
   </div>
 </template>
 
@@ -336,7 +188,6 @@ export default {
     return {
       redevZoom: 15,
       map: null,
-      initCenter: null,
       mapSize: { height: "", width: "" },
       isShowCluster: true,
       mapOptions: {
@@ -525,14 +376,13 @@ export default {
   },
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
-
-    this.changeMapCenter({
-      lat: naverMap.center._lat,
-      lng: naverMap.center._lng
-    });
-  },
-  beforeMount() {
-    this.initCenter = this.getMapCenter;
+    naverMap.setZoom(this.getMapZoom);
+    naverMap.setCenter(this.getMapCenter);
+    this.idle();
+    // this.changeMapCenter({
+    //   lat: naverMap.center._lat,
+    //   lng: naverMap.center._lng
+    // });
   },
 
   watch: {
@@ -637,17 +487,10 @@ export default {
       this.changeMapSelectedArea(null);
     },
     dragEnd(e) {
-      console.log(this.$refs.naverMapRef);
-      const { center } = this.map;
+      const { center } = this.$refs.naverMapRef.map;
       this.changeMapCenter({
-        lat: center.lat(),
-        lng: center.lng()
-      });
-    },
-    dragEndNaver(e) {
-      this.changeMapCenter({
-        lng: e.latlng.x,
-        lat: e.latlng.y
+        lng: center.lng(),
+        lat: center.lat()
       });
       this.idle();
     },
@@ -671,7 +514,6 @@ export default {
     },
 
     async getRedevInfo(bounds) {
-      if (this.getMapZoom < 14) return;
       const ratio = 0.000001;
       const boundLocation = {
         latitude: [
