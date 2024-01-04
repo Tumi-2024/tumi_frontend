@@ -71,7 +71,6 @@ export const areaStore = {
               return context.rootState.map.areaType;
           }
         };
-        context.commit("setMapAreas", []);
 
         const { data } = await Vue.prototype.$axios.get(
           "redevelopment_areas/",

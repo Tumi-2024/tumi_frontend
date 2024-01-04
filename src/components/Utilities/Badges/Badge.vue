@@ -24,6 +24,9 @@ export default {
     pyeong: {
       type: Boolean
     },
+    area: {
+      type: Boolean
+    },
     charter: {
       type: Boolean
     },
@@ -61,6 +64,7 @@ export default {
         this.badgeClass = "text-white bg-primary";
         break;
       case this.pyeong:
+      case this.area:
         this.badgeClass = "text-white bg-green";
         break;
       case this.recommend:

@@ -6,8 +6,8 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ getMapCenter }}
-    {{ getMapZoom }}
+    {{ this.getMapZoom - 5 }}
+    {{ this.getMapZoom }}
     <naver-maps
       ref="naverMapRef"
       class="page-container"
@@ -24,144 +24,145 @@
     >
       <!-- 각 구 별 매물/실거래가 보여주기 -->
       <div v-for="m in simple_houses" :key="'d' + m.title + getColor.bg + m.id">
-        <template v-if="getMapZoom < 16">
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <div
-              class="flex column justify-center items-center"
-              style="
-                min-height: calc((90 / 1312) * 100vh);
-                min-width: calc((90 / 1312) * 100vh);
-                padding: 10px;
-                opacity: 0.72;
-              "
-              :style="{
-                backgroundColor: getColor.bg,
-                borderRadius: `${
-                  $route.path === '/map/city/area' ? '0%' : '100%'
-                }`
-              }"
-              :class="`text-${getColor.text}`"
-              @mousedown="onClickMarker(m)"
-            >
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
+        <div>
+          <template v-if="getMapZoom < 16">
+            <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
+              <div
+                class="flex column justify-center items-center"
+                style="
+                  min-height: calc((90 / 1312) * 100vh);
+                  min-width: calc((90 / 1312) * 100vh);
+                  padding: 10px;
+                  opacity: 0.72;
+                "
+                :style="{
+                  backgroundColor: getColor.bg,
+                  borderRadius: `${
+                    $route.path === '/map/city/area' ? '0%' : '100%'
+                  }`
+                }"
+                :class="`text-${getColor.text}`"
+                @mousedown="onClickMarker(m)"
               >
-                {{ m.title }}
-              </span>
-              <span
-                class="flex justify-center q-mt-sm"
-                style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
-              >
-                {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
-              </span>
-              <span
-                class="flex justify-center"
-                style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
-              >
-                {{
-                  $route.path === "/map/city"
-                    ? `${m.count_estates_filtered}`
-                    : `${
-                        getAreaType === "재개발"
-                          ? m.count_redevelopment_area_1
-                          : getAreaType === "재건축"
-                          ? m.count_redevelopment_area_2
-                          : getAreaType === "기타사업"
-                          ? m.count_redevelopment_area_3
-                          : m.count_redevelopment_area
-                      }`
-                }}개
-                <!-- ({{ m.count_estates_filtered_implicit }}) -->
-              </span>
-            </div>
-          </naver-marker>
-        </template>
-        <template v-else-if="getMapZoom === 15 || getMapZoom === 16">
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <div
-              style="
-                position: relative;
-                width: 15px;
-                height: 15px;
-                border-radius: 100%;
-              "
-              class="radial-gradient"
-            ></div
-          ></naver-marker>
-        </template>
-        <template v-else>
-          <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
-            <info-window-content
-              @viewArea="viewArea(m)"
-              :item="m"
-              :price="getPriceFromText(m)"
-              :is-dev="!!m.redevelopment_area"
-            />
-          </naver-marker>
-        </template>
+                <span
+                  class="flex justify-center"
+                  style="font-weight: 700; font-size: calc((16 / 1312) * 100vh)"
+                >
+                  {{ m.title }}
+                </span>
+                <span
+                  class="flex justify-center q-mt-sm"
+                  style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
+                >
+                  {{ $route.path === "/map/city" ? `매물` : `정비사업` }}
+                </span>
+                <span
+                  class="flex justify-center"
+                  style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
+                >
+                  {{
+                    $route.path === "/map/city"
+                      ? `${m.count_estates_filtered}`
+                      : `${
+                          getAreaType === "재개발"
+                            ? m.count_redevelopment_area_1
+                            : getAreaType === "재건축"
+                            ? m.count_redevelopment_area_2
+                            : getAreaType === "기타사업"
+                            ? m.count_redevelopment_area_3
+                            : m.count_redevelopment_area
+                        }`
+                  }}개
+                </span>
+              </div>
+            </naver-marker>
+          </template>
+          <template v-else-if="getMapZoom < 18">
+            <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
+              <div
+                style="
+                  position: relative;
+                  width: 15px;
+                  height: 15px;
+                  border-radius: 100%;
+                "
+                class="radial-gradient"
+              ></div
+            ></naver-marker>
+          </template>
+          <template v-else>
+            <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
+              <info-window-content
+                @viewArea="viewArea(m)"
+                :item="m"
+                :price="getPriceFromText(m)"
+                :is-dev="!!m.redevelopment_area"
+              />
+            </naver-marker>
+          </template>
+        </div>
       </div>
       <!-- @load="(e) => onAreaInfoLoad(e, m)" -->
     </naver-maps>
-    <!-- 재개발 구역 보여주기 -->
-    <template v-if="getMapZoom > 13">
-      <template v-for="badge in getAreaBadges">
-        <naver-polygon
-          :key="`${badge.id}-polygon`"
-          :paths="[badge.path]"
-          :options="badge.options"
-        ></naver-polygon>
+    <div
+      v-for="badge in getAreaBadges"
+      :key="`${badge.id}-marker-with-polygon`"
+    >
+      <template v-if="getMapZoom > 13">
         <naver-marker
           v-if="getMapZoom > 14"
-          :key="`${badge.id}-marker`"
+          :id="`${badge.id}-marker`"
           :lat="badge.center.lat"
           :lng="badge.center.lng"
         >
-          <template>
-            <div
-              class="area-badge-info notosanskr-medium"
-              :class="`bg-${getBadgeColor(badge)}`"
-              @mouseup.self="selectArea(badge)"
+          <div
+            class="area-badge-info notosanskr-medium"
+            :class="`bg-${getBadgeColor(badge)}`"
+            @mouseup.self="selectArea(badge)"
+          >
+            <q-icon
+              v-if="$route.path === '/map/city/area'"
+              size="20px"
+              class="q-mr-xs"
             >
-              <q-icon
-                v-if="$route.path === '/map/city/area'"
-                size="20px"
-                class="q-mr-xs"
-              >
-                <img src="~assets/icons/area-info.svg" alt="area-info" />
-              </q-icon>
-              <div
-                @click.prevent="() => redirectList(badge)"
-                v-else
+              <img src="~assets/icons/area-info.svg" alt="area-info" />
+            </q-icon>
+            <div
+              @click.prevent="() => redirectList(badge)"
+              v-else
+              style="
+                max-width: 200px;
+                border-radius: 2px;
+                background-color: white;
+                color: black;
+                /* margin-right: 5px; */
+              "
+              class="items-center justify-center flex"
+            >
+              <span
                 style="
-                  max-width: 200px;
-                  border-radius: 2px;
-                  background-color: white;
-                  color: black;
-                  /* margin-right: 5px; */
-                "
-                class="items-center justify-center flex"
-              >
-                <span
-                  style="
-                    font-size: calc((13 / 1312) * 100vh);
-                    line-height: calc((15 / 1312) * 100vh);
+                  font-size: calc((13 / 1312) * 100vh);
+                  line-height: calc((15 / 1312) * 100vh);
 
-                    color: #333333;
-                    padding: 3px 5px;
-                  "
-                >
-                  {{ badge.count_estates_filtered }}
-                </span>
-              </div>
-              <span>
-                {{ badge.title | truncate(15) }}
+                  color: #333333;
+                  padding: 3px 5px;
+                "
+              >
+                {{ badge.count_estates_filtered }}
               </span>
             </div>
-          </template>
+            <span>
+              {{ badge.title | truncate(15) }}
+            </span>
+          </div>
         </naver-marker>
+        <naver-polygon
+          :paths="[badge.path]"
+          :options="badge.options"
+        ></naver-polygon>
       </template>
-    </template>
+    </div>
+    <!-- 재개발 구역 보여주기 -->
   </div>
 </template>
 
@@ -378,7 +379,7 @@ export default {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
     naverMap.setCenter(this.getMapCenter);
-    this.idle();
+    // this.idle();
     // this.changeMapCenter({
     //   lat: naverMap.center._lat,
     //   lng: naverMap.center._lng
@@ -395,12 +396,7 @@ export default {
   methods: {
     // have access to vuex actions
     ...mapActions(["estate", "setViewRedevOnly"]),
-    ...mapActions("map", [
-      "changeMapCenter",
-      "setLocationLoading",
-      "setMapZoom",
-      "setMapCenter"
-    ]),
+    ...mapActions("map", ["changeMapCenter", "setMapZoom", "setMapCenter"]),
 
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
@@ -424,6 +420,7 @@ export default {
         }
       });
     },
+
     redirectList(item) {
       // list/houses?redevelopment_area=208
       this.$router.push({
@@ -508,12 +505,16 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle(e) {
-      const bounds = this.$refs.naverMapRef.map.bounds;
-      this.getHouseInfo(bounds);
-      this.getRedevInfo(bounds);
+      this.getHouseInfo();
+      this.getRedevInfo();
+
+      const zoom = this.$refs.naverMapRef.map.zoom;
+      console.log(zoom);
     },
 
-    async getRedevInfo(bounds) {
+    async getRedevInfo() {
+      const bounds = this.$refs.naverMapRef.map.bounds;
+
       const ratio = 0.000001;
       const boundLocation = {
         latitude: [
@@ -531,7 +532,9 @@ export default {
         longitude__range: `${boundLocation.longitude[0]},${boundLocation.longitude[1]}`
       });
     },
-    getHouseInfo(bounds) {
+    getHouseInfo() {
+      const bounds = this.$refs.naverMapRef.map.bounds;
+
       const boundLocation = {
         latitude: [bounds._sw._lat, bounds._ne._lat],
         longitude: [bounds._sw._lng, bounds._ne._lng]
@@ -644,6 +647,7 @@ export default {
 }
 
 .area-badge-info {
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;

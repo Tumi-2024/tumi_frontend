@@ -190,13 +190,11 @@ export default {
       this[property] = value;
     },
     applyFilters() {
-      this.fetchMapAreas();
       for (const ref in this.$refs) {
         this.$refs[ref].save();
       }
       if (!this.isTransaction) {
         this.$store.dispatch("getSimpleHouses");
-        this.fetchMapAreas();
       } else {
         const area = this.$store.state.search.area;
         const price = this.$store.state.search.price;
@@ -239,6 +237,7 @@ export default {
           // ...getRedevQuery(),
           // ...getAreaTypeString()
         });
+        this.fetchMapAreas();
       }
       this.modal = false;
     }

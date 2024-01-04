@@ -199,6 +199,10 @@ export default {
       this.$emit("selectDetail", val);
     },
     onClickPreset({ value }) {
+      if (!this.selectValue.value) {
+        window.alert("면적 종류를 먼저 선택해주세요");
+        return;
+      }
       // 처음에 누르면 이하 모두 선택
       if (!this.selectValue.min && !this.selectValue.max) {
         this.selectValue.max = value;
