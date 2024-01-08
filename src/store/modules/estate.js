@@ -325,7 +325,6 @@ export const estateStore = {
       } else {
         await context.commit("setRequestUrl", context.state.requestUrl);
       }
-      console.log("getSimpleHouses", this.getAreaType);
 
       const getAreaTypeString = () => {
         console.log(context.rootState.map.areaType);

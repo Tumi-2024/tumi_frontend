@@ -28,6 +28,7 @@
           <template v-if="getMapZoom < 16">
             <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
               <div
+                v-if="m.title"
                 class="flex column justify-center items-center"
                 style="
                   min-height: calc((90 / 1312) * 100vh);
@@ -42,7 +43,7 @@
                   }`
                 }"
                 :class="`text-${getColor.text}`"
-                @mousedown="onClickMarker(m)"
+                @mouseup="onClickMarker(m)"
               >
                 <span
                   class="flex justify-center"
@@ -80,12 +81,11 @@
           <template v-else-if="getMapZoom < 18">
             <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
               <div
-                style="
-                  position: relative;
-                  width: 15px;
-                  height: 15px;
-                  border-radius: 100%;
-                "
+                style="position: relative; border-radius: 100%"
+                :style="{
+                  width: getMapZoom !== 17 ? '10px' : '15px',
+                  height: getMapZoom !== 17 ? '10px' : '15px'
+                }"
                 class="radial-gradient"
               ></div
             ></naver-marker>
@@ -128,7 +128,7 @@
               <img src="~assets/icons/area-info.svg" alt="area-info" />
             </q-icon>
             <div
-              @click.prevent="() => redirectList(badge)"
+              @mouseup="() => redirectList(badge)"
               v-else
               style="
                 max-width: 200px;
@@ -187,6 +187,7 @@ export default {
   },
   data() {
     return {
+      isClicked: false,
       redevZoom: 15,
       map: null,
       mapSize: { height: "", width: "" },
@@ -402,6 +403,8 @@ export default {
     ...mapActions(["changeUserLocation"]),
 
     onClickMarker(item) {
+      if (!this.isClicked) return;
+
       if (this.$route.name === "map_city_area") {
         this.$router.push({
           name: "listTransactions",
@@ -481,9 +484,11 @@ export default {
       });
     },
     dragStart() {
+      this.isClicked = false;
       this.changeMapSelectedArea(null);
     },
     dragEnd(e) {
+      this.isClicked = true;
       const { center } = this.$refs.naverMapRef.map;
       this.changeMapCenter({
         lng: center.lng(),

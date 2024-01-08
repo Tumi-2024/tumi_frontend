@@ -165,8 +165,9 @@ export const mapStore = {
       const _arr = estateStore.state.simple_houses.filter(
         (obj) => obj.id === context.state.subcityId
       );
+      console.log(_arr[0]);
       if (Array.isArray(_arr) && _arr[0]?.count_estates > -1) {
-        context.commit("setCount", _arr[0].count_estates);
+        context.commit("setCount", _arr[0].count_estates_filtered);
       }
     },
     changeMapOptions: (context, data) => context.commit("setMapOptions", data),

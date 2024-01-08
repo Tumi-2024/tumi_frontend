@@ -1,6 +1,26 @@
 <template>
   <q-card flat>
     <q-card-section class="list-items q-pa-none">
+      <q-card-section class="list-items q-pa-none notosanskr-regular">
+        <div style="display: flex; gap: 2px" class="q-pa-sm">
+          <Badge value="개발유형" recommend />
+          <Badge value="주택유형" houseType />
+          <Badge value="전용면적" pyeong />
+          <Badge value="희망매매가" price />
+          <Badge value="매물등록일자" date />
+        </div>
+        <q-separator />
+        <q-list>
+          <div v-for="(item, i) of simple_houses" :key="i">
+            <area-item-house
+              class="q-py-sm"
+              :query="{ sellid: item.id }"
+              v-bind="{ item: item }"
+            />
+            <q-separator />
+          </div>
+        </q-list>
+      </q-card-section>
       <q-list class="q-pt-md">
         <div
           style="width: 100%; display: flex"
@@ -55,10 +75,12 @@
 
 <script>
 import { AreaItemHouse } from "components/MapListSaleComponents";
+import Badge from "../Utilities/Badges/Badge.vue";
 
 export default {
   components: {
-    "area-item-house": AreaItemHouse
+    "area-item-house": AreaItemHouse,
+    Badge
   },
   mounted() {},
   data() {
