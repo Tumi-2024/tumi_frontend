@@ -85,8 +85,6 @@ export default {
         // group_location: locationInfo
       } = this.item;
 
-      console.log(houseInfo);
-
       // const dateRights = locationInfo.redevelopment_area?.category_date_rights
       //   ?.replace("권리산정기준일 : ", "")
       //   .replace("년 ", "-")
@@ -99,7 +97,7 @@ export default {
       // size_gross_floor_area
       return [
         {
-          label: "토지/건축 면적",
+          label: "대지/건물 면적",
           value: `${getLabel(
             `${Math.ceil(
               houseInfo.size_land_area_m2 || houseInfo.size_land_area

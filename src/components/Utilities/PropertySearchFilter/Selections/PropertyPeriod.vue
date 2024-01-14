@@ -49,19 +49,19 @@
 import { mapActions, mapGetters } from "vuex";
 import { toMoneyString } from "src/utils";
 
+const _date = new Date().getTime();
+
 export default {
   components: {},
   data() {
     return {
-      startDate: null,
-      endDate: null
+      startDate: _date - 365 * 24 * 60 * 60 * 1000,
+      endDate: _date
     };
   },
   computed: {
     ...mapGetters("search", ["area", "isMultiSelect"]),
     getPresets() {
-      const _date = new Date().getTime();
-
       const _preset = [
         { label: "3년 전", value: _date - 3 * 365 * 24 * 60 * 60 * 1000 },
         { label: "2년 전", value: _date - 2 * 365 * 24 * 60 * 60 * 1000 },

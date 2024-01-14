@@ -126,7 +126,7 @@ export default {
     save() {
       this.$refs.component.save();
       this.modal = false;
-      const { query } = this.$route;
+      const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
       console.log("save");
       if (!isTransaction) {
@@ -138,6 +138,10 @@ export default {
           this.$store.dispatch("getSimpleHouses", {
             query: { subcity: query.subcity }
           });
+        }
+
+        if (path.indexOf("list") < -1) {
+          this.fetchMapAreas();
         }
       } else {
         const area = this.$store.state.search.area;
@@ -180,7 +184,6 @@ export default {
           // ...getRedevQuery(),
           // ...getAreaTypeString()
         });
-        this.fetchMapAreas();
       }
     },
     initialize() {

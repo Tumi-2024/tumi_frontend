@@ -360,7 +360,6 @@ export default {
               return "black";
           }
         };
-        console.log(item);
         return [
           {
             type: "redevType",
@@ -380,8 +379,8 @@ export default {
             value: `${toMoneyString(item.price)}`
           },
           {
-            type: "pyeong",
-            value: Math.floor(item.text_size_private) + "평"
+            type: "area",
+            value: Math.floor(item.text_size_contract) + "m²"
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }
         ];

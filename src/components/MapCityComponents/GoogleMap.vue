@@ -6,14 +6,15 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ this.getMapZoom - 5 }}
-    {{ this.getMapZoom }}
+    {{ this.getMapCenter }}
+    <!-- style="width: 100%; height: 500px" -->
     <naver-maps
       ref="naverMapRef"
       class="page-container"
       :mapOptions="{
+        zoom: this.getMapZoom,
         ...mapOptions,
-        zoom: this.getMapZoom
+        ...this.getMapCenter
       }"
       v-on="{
         dragend: dragEnd,
@@ -191,7 +192,6 @@ export default {
       redevZoom: 15,
       map: null,
       mapSize: { height: "", width: "" },
-      isShowCluster: true,
       mapOptions: {
         zoomControl: true,
         zoomControlOptions: {
@@ -208,6 +208,12 @@ export default {
     showEstates: {
       type: Boolean,
       default: true
+    }
+  },
+  watch: {
+    getMapCenter(obj) {
+      const map = this.$refs.naverMapRef.map;
+      map.panTo(obj);
     }
   },
   computed: {
@@ -376,28 +382,31 @@ export default {
       });
     }
   },
+  async beforeMount() {
+    this.setSimpleHouses([]);
+  },
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
     naverMap.setCenter(this.getMapCenter);
-    // this.idle();
+    this.initMapCenter();
     // this.changeMapCenter({
     //   lat: naverMap.center._lat,
     //   lng: naverMap.center._lng
     // });
   },
 
-  watch: {
-    getUserLocation(newVal) {
-      this.markUsersLocation(newVal);
-      this.goToLocation(newVal);
-    }
-  },
-
   methods: {
     // have access to vuex actions
+    ...mapActions(["setSimpleHouses"]),
+
     ...mapActions(["estate", "setViewRedevOnly"]),
-    ...mapActions("map", ["changeMapCenter", "setMapZoom", "setMapCenter"]),
+    ...mapActions("map", [
+      "changeMapCenter",
+      "setMapZoom",
+      "setMapCenter",
+      "initMapCenter"
+    ]),
 
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
@@ -557,7 +566,6 @@ export default {
               : "houses",
           ...boundLocation
         };
-        console.log(payload, "payload");
       }
       this.$store.dispatch("getSimpleHouses", payload);
     },
@@ -568,6 +576,7 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
+      console.log("viewArea");
       this.setMapCenter(item.position);
 
       const getRouterParams = () => {
@@ -589,9 +598,6 @@ export default {
       );
       this.$router.push(getRouterParams());
     },
-    goToLocation(center = { lat: 0, lng: 0 }) {
-      // this.map.setZoom(16);
-    },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })
         .then((position) => {
@@ -603,25 +609,6 @@ export default {
     async showHideArea() {
       this.getHouseInfo();
       this.getRedevInfo();
-    },
-    markUsersLocation(position = { lat: 0, lng: 0 }) {
-      (() =>
-        new this.google.maps.Circle({
-          strokeColor: "#FF5100",
-          strokeOpacity: 0.8,
-          strokeWeight: 1,
-          fillColor: "#FF7D36",
-          fillOpacity: 0.35,
-          map: this.map,
-          center: position,
-          radius: 50
-        }))();
-
-      (() =>
-        new this.google.maps.Marker({
-          position,
-          map: this.map
-        }))();
     }
   }
 };
@@ -675,6 +662,6 @@ export default {
 
 .page-container {
   background: rgb(54, 54, 54);
-  min-height: calc(100vh - 118px);
+  height: calc(100vh - 118px);
 }
 </style>

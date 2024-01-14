@@ -45,7 +45,7 @@
             hide-selected
             :options="options"
             @filter="filterFn"
-            style="max-width: 220px"
+            style="max-width: 250px"
           >
             <template v-slot:no-option>
               <q-item>
@@ -215,7 +215,7 @@ export default {
       this.searchType = e.value;
     },
     onSelect(obj) {
-      console.log(obj);
+      this.searchText = obj.label;
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
     },
@@ -271,16 +271,14 @@ export default {
 
     async filterFn(val, update, abort) {
       if (!val || val === "") {
-        update(() => {
-          this.options = [];
-        });
+        update();
         return;
       }
-      await this.filterRedev(val, update, abort);
-      await this.filterLocation(val, update, abort);
       if (this.searchType === "redev") {
+        await this.filterRedev(val, update, abort);
         this.options = this.redev;
       } else {
+        await this.filterLocation(val, update, abort);
         this.options = this.location;
       }
     }

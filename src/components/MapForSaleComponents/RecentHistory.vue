@@ -1,7 +1,7 @@
 <template>
   <q-card class="bg-white notosanskr-medium">
     <q-card-section class="q-pb-none justify-between items-center row">
-      <div class="title-heading col-6">{{ title }} 실거래가 히스토리</div>
+      <div class="title-heading col-6">[{{ title }}] 실거래가 히스토리</div>
       <q-select
         style="width: 83px"
         v-model="unitSelect"

@@ -327,7 +327,6 @@ export const estateStore = {
       }
 
       const getAreaTypeString = () => {
-        console.log(context.rootState.map.areaType);
         switch (context.rootState.map.areaType) {
           case null:
             return "";

@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     changeFilter(e) {
-      console.log(e);
       this.$store.dispatch("getSimpleHouses", e);
     }
   },

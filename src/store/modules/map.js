@@ -123,6 +123,12 @@ export const mapStore = {
     changeMapZoom: (context, data) => context.commit("setMapZoom", data),
     setPrevPageLabel: (context, data) =>
       context.commit("setPrevPageLabel", data),
+    initMapCenter: async (context) => {
+      context.commit("setMapCenter", {
+        lng: 126.9816417,
+        lat: 37.57037778
+      });
+    },
     changeMapCenter: async (context, data) => {
       context.commit("setMapCenter", data);
       Vue.prototype.$axios
@@ -165,7 +171,6 @@ export const mapStore = {
       const _arr = estateStore.state.simple_houses.filter(
         (obj) => obj.id === context.state.subcityId
       );
-      console.log(_arr[0]);
       if (Array.isArray(_arr) && _arr[0]?.count_estates > -1) {
         context.commit("setCount", _arr[0].count_estates_filtered);
       }

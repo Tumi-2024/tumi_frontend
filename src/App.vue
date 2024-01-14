@@ -30,9 +30,7 @@ export default {
         // this.$store.dispatch("getDetailHouses", "page_size=5");
         // this.fetchLocationInterest();
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }
 };
 </script>

@@ -98,7 +98,7 @@ export default {
   methods: {
     ...mapActions(["setCountEstate", "setRequestUrl"]),
     onFocus(e) {
-      // this.getApiHouses();
+      // this.getApiTransaction();
     },
     changeFilter(params) {
       console.log(params);
@@ -111,6 +111,9 @@ export default {
       this.setRequestUrl("transactions");
       const getQueryArray = (keyName, params) => {
         if (keyName === "type_house__in" && params?.length === 8) {
+          return {};
+        }
+        if (keyName === "_categories" && params?.length === 8) {
           return {};
         }
         if (Array.isArray(params)) {
@@ -126,11 +129,11 @@ export default {
         };
       };
 
-      console.log(params);
-
+      // Transaction API 만들기
+      console.log(this.area, "this Area");
       const Dquery = {
         ...getQueryArray(
-          "categories",
+          "_categories",
           this.getCategoriesByKorean
             .join(",")
             .replace("토지", "LAND")
@@ -160,7 +163,7 @@ export default {
           this.getLocationData({ ...Dquery, ...query }, this.page);
           break;
         default:
-          this.getApiHouses({ ...Dquery, ...query }, undefined, this.page);
+          this.getApiTransaction({ ...Dquery, ...query }, undefined, this.page);
       }
     },
     async onSearch(type, id, label) {
@@ -175,7 +178,7 @@ export default {
             name: "listTransactions"
           });
         }
-        this.getApiHouses({}, undefined, this.page);
+        this.getApiTransaction({}, undefined, this.page);
         return;
       }
 
@@ -190,7 +193,7 @@ export default {
           this.setSearchQuery(id, label, this.page);
           break;
         default:
-          this.getApiHouses(id, label, this.page);
+          this.getApiTransaction(id, label, this.page);
       }
     },
 
@@ -280,7 +283,7 @@ export default {
       this.page += 1;
       this.busy = false;
     },
-    async getApiHouses(params, label, page) {
+    async getApiTransaction(params, label, page) {
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
@@ -305,6 +308,7 @@ export default {
         name: "listTransactions",
         query: { search }
       });
+
       this.getSearchData({ search }, this.page);
     },
     setRedevQuery(redevelopmentArea, title) {

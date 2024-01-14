@@ -204,9 +204,7 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       if (!val || val === "") {
-        update(() => {
-          this.options = [];
-        });
+        update();
         return;
       }
 

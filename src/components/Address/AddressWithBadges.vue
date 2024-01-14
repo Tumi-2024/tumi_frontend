@@ -8,6 +8,7 @@
       :houseId="houseId"
       :redirect="redirect"
       :created="created"
+      :area="item.area"
       :redevName="redevName"
     />
   </div>

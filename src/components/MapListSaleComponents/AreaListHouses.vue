@@ -125,7 +125,7 @@ export default {
         };
       };
 
-      const getAllorUndefined = (param) => {
+      const getAllOrUndefined = (param) => {
         if (param.length === 8) return undefined;
         return param;
       };
@@ -148,7 +148,7 @@ export default {
       const Dquery = {
         ...getQueryArray(
           "type_house__in",
-          getAllorUndefined(this.getCategoriesByKorean)
+          getAllOrUndefined(this.getCategoriesByKorean)
         ),
         ...getQueryArray("redevelopment_area__category", getAreaTypeString())
       };
@@ -328,7 +328,6 @@ export default {
         name: "listHouses",
         query: { subcity: subCities, title: label }
       });
-      console.log({ subCities, label, page });
       this.getLocationData({ subcity: subCities }, this.page);
     }
   },

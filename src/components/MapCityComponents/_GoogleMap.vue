@@ -212,7 +212,6 @@ export default {
     google: gmapApi,
     getBadgeColor() {
       return ({ category }) => {
-        console.log(category);
         switch (category) {
           case "재개발":
             return "primary";
@@ -229,7 +228,6 @@ export default {
       };
     },
     getColor() {
-      console.log(this.getAreaType);
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
@@ -323,7 +321,6 @@ export default {
           fill: ""
         };
         const getStrokeColor = (opt) => {
-          console.log(opt);
           switch (opt) {
             case "가로주택":
               colors = { ...colors, stroke: "#52c41a", fill: "#52c41a" };
@@ -557,7 +554,6 @@ export default {
               : "houses",
           ...boundLocation
         };
-        console.log(payload, "payload");
       }
       this.$store.dispatch("getSimpleHouses", payload);
     },
@@ -588,7 +584,6 @@ export default {
           return { name: "for_sale_apartment", query: { sellid: item.id } };
         }
       };
-      console.log(
         this.$route.path === "/map/city/area" ? "transaction" : "house"
       );
       this.$router.push(getRouterParams());
