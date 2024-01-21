@@ -21,18 +21,8 @@
 
       <q-card-section>
         <div class="row">
-          <q-radio
-            v-model="shape"
-            val="house"
-            label="매물 지도"
-            :disabled="text.length === 0"
-          />
-          <q-radio
-            v-model="shape"
-            val="transaction"
-            label="실거래가 지도"
-            :disabled="text.length === 0"
-          />
+          <q-radio v-model="shape" val="house" label="매물 지도" />
+          <q-radio v-model="shape" val="transaction" label="실거래가 지도" />
           <q-input
             filled
             use-input

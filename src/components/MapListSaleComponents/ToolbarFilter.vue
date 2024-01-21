@@ -114,7 +114,7 @@ export default {
           keyName: "areaType"
         },
         {
-          label: "희망 매매가",
+          label: "매매가",
           type: "PriceFilter",
           class:
             this.price.min || this.price.max

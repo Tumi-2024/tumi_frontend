@@ -58,7 +58,7 @@
                 </span>
                 <span
                   class="flex justify-center"
-                  style="font-weight: 700; font-size: calc((8 / 1000) * 100vh)"
+                  style="font-weight: 700; font-size: calc((15 / 1000) * 100vh)"
                 >
                   {{
                     $route.path === "/map/city"

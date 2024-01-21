@@ -5,12 +5,10 @@
       class="naver-map"
       :mapOptions="{
         zoom: 17,
-        draggable: false,
-        disableTwoFingerTapZoom: true,
-        disableDoubleClickZoom: true,
-        disableDoubleTapZoom: true,
-        pinchZoom: false,
-        scrollWheel: false
+        zoomControl: true,
+        zoomControlOptions: {
+          position: 'TOP_RIGHT'
+        }
       }"
     >
       <naver-polygon
