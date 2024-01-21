@@ -128,7 +128,6 @@ export default {
       this.modal = false;
       const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
-      console.log("save");
       if (!isTransaction) {
         if (!query.langtitude && !query.latitude) {
           this.$store.dispatch("getSimpleHousesWithoutLocation", {

@@ -182,7 +182,6 @@ export default {
         `/redevelopment_areas/${this.redevelopment.id}/transaction_groups/`
       );
       this.transactions = results;
-      console.log(this.transactions);
       // this.getGraphData();
     }
   },

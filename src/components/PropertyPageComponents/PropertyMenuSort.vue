@@ -67,7 +67,6 @@ export default {
     ...mapGetters("map", ["myInterestArea"]),
 
     houseCount() {
-      console.log(this.$route.name);
       if (this.$route.name === "area") {
         return this.myInterestArea.length;
       }

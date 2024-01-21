@@ -144,7 +144,6 @@ export default {
           this.selected = [value];
         }
       }
-      console.log(this.selected);
       this.$emit("select", this.selected);
     },
     save() {
