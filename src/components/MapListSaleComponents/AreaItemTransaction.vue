@@ -380,7 +380,7 @@ export default {
           },
           {
             type: "area",
-            value: Math.floor(item.text_size_contract) + "m²"
+            value: Math.floor(item.text_size_private) + "m²"
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }
         ];
