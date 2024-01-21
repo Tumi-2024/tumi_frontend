@@ -151,7 +151,11 @@ export default {
       const _key = Object.keys(query)[0];
       this.text = this.$route.query.title || this.$route.query.search || "";
       this.busy = true;
-
+      console.log(_key, "_key");
+      if (pageNumber === 1) {
+        this.getApiTransaction({ ...Dquery, ...query }, this.page);
+        return;
+      }
       switch (_key) {
         case "search":
           this.getSearchData({ ...Dquery, ...query }, this.page);
@@ -163,7 +167,11 @@ export default {
           this.getLocationData({ ...Dquery, ...query }, this.page);
           break;
         default:
-          this.getApiTransaction({ ...Dquery, ...query }, undefined, this.page);
+          this.loadMoreApiTransaction(
+            { ...Dquery, ...query },
+            undefined,
+            this.page
+          );
       }
     },
     async onSearch(type, id, label) {
@@ -198,6 +206,7 @@ export default {
     },
 
     async getSearchData(params, page) {
+      console.log("getSearchData");
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params
       });
@@ -227,6 +236,7 @@ export default {
     },
 
     async getRedevData(params, page) {
+      console.log("getRedevData");
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
@@ -284,9 +294,33 @@ export default {
       this.busy = false;
     },
     async getApiTransaction(params, label, page) {
+      console.log(params);
+      console.log("getApiTransaction");
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
+      console.log(data);
+      this.saleList = [
+        // ...this.saleList,
+        ...data.results.map((item) => {
+          return {
+            ...item,
+            ...item.recent_transactions?.[item.types[0]]
+          };
+        })
+      ];
+      this.prevSearch = params.title;
+      this.setCountEstate(data.count);
+      this.page += 1;
+      this.busy = false;
+    },
+    async loadMoreApiTransaction(params, label, page) {
+      console.log(params);
+      console.log("getApiTransaction");
+      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
+        params: { ...params, page, page_size: 10 }
+      });
+      console.log(data);
       this.saleList = [
         ...this.saleList,
         ...data.results.map((item) => {
