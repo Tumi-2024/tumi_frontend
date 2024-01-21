@@ -387,7 +387,6 @@ export default {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
     naverMap.setCenter(this.getMapCenter);
-    this.initMapCenter();
     // this.changeMapCenter({
     //   lat: naverMap.center._lat,
     //   lng: naverMap.center._lng

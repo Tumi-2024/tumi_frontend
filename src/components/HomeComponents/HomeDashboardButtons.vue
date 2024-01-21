@@ -72,15 +72,19 @@ export default {
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
+    ...mapActions("map", ["initMapCenter"]),
+
     toMapCity() {
       this.$router.push({ name: "map_city" });
-      // this.$store.dispatch("map/resetMap");
+      this.initMapCenter();
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
+      this.initMapCenter();
     },
     redirectListTransaction() {
       this.$router.push({ name: "listTransactions" });
+      this.initMapCenter();
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })

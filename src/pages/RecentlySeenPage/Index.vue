@@ -5,6 +5,14 @@
         class="bg-white q-pt-md"
         v-if="properties && properties.length > 0"
       >
+        <div style="display: flex; gap: 2px" class="q-pa-sm bg-white">
+          <Badge value="개발유형" recommend />
+          <Badge value="주택유형" houseType />
+          <Badge value="전용면적" pyeong />
+          <Badge value="희망매매가" price />
+          <Badge value="매물등록일자" date />
+        </div>
+        <q-separator />
         <area-item-house
           v-for="(item, i) of properties"
           :key="i"
@@ -22,6 +30,7 @@
 
 <script>
 import { AreaItemHouse } from "src/components/MapListSaleComponents";
+import Badge from "../../components/Utilities/Badges/Badge.vue";
 import {
   // PropertyFilter,
   PropertyMixin
@@ -30,6 +39,7 @@ export default {
   name: "Recently-Seen",
   components: {
     // PropertyFilter,
+    Badge,
     "area-item-house": AreaItemHouse
   },
   mixins: [PropertyMixin]

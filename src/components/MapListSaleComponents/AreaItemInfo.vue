@@ -95,6 +95,7 @@ export default {
 
       // size_dedicated_area_m2
       // size_gross_floor_area
+      console.log(houseInfo.size_land_area_m2);
       return [
         {
           label: "대지/건물 면적",

@@ -454,7 +454,7 @@ export default {
         },
         // 최근 관리비 없음
         {
-          label: "대지면적",
+          label: "토지면적",
           value: this.getValue(houseInfo.size_land_area, " m²")
         },
         {
