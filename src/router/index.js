@@ -51,13 +51,13 @@ export default function ({ store, ssrContext }) {
     // actions.setPrevPageLabel(undefined, "test");
     if (to.name === "signIn" || to.name === "signUp") {
       next();
+    } else {
+      next();
     }
     // else if (!value) {
     //   next("/sign-in");
     // }
-    else {
-      next();
-    }
+
     //  else if (!value && to.name === 'signIn') {
     //   next('/sign-in')
     // } else if (!value && to.name === 'signUp') {
