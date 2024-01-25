@@ -95,7 +95,7 @@ export default {
     },
     getItemInfo() {
       return (item) => {
-        if (this.getMapMode === "redevelop-area") {
+        if (this.$route.name === "map_city_area") {
           const TYPE_HOUSE = {
             "COMMERCIAL ": "상업업무용",
             SINGLE: "단독다가구",

@@ -71,20 +71,22 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
-    ...mapActions("map", ["initMapCenter"]),
+    ...mapActions("map", ["changeMapMode", "changeMapZoom", "initMapCenter"]),
 
     toMapCity() {
       this.$router.push({ name: "map_city" });
       this.initMapCenter();
+      this.changeMapZoom(12);
     },
     toRedevelopmentArea() {
       this.$router.push({ name: "map_city_area" });
       this.initMapCenter();
+      this.changeMapZoom(12);
     },
     redirectListTransaction() {
       this.$router.push({ name: "listTransactions" });
       this.initMapCenter();
+      this.changeMapZoom(12);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition({ enableHighAccuracy: true })

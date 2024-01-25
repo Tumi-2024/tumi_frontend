@@ -167,7 +167,9 @@ export default {
   async beforeMount() {
     if (this.$route?.query?.sellid) {
       const { query } = this.$route;
-      await Vue.prototype.$axios.post(`/houses/${query.sellid}/recent/`);
+      if (this.$store.getters.user.id) {
+        await Vue.prototype.$axios.post(`/houses/${query.sellid}/recent/`);
+      }
       const { data } = await Vue.prototype.$axios.get(
         `/houses/${query.sellid}/`
       );

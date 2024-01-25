@@ -40,8 +40,9 @@
         >
           <q-list separator>
             <q-virtual-scroll
+              v-if="transactions"
               style="min-height: 220px; max-height: 500px"
-              :items="getTransactions"
+              :items="transactions"
               :virtual-scroll-slice-size="100"
               separator
             >
@@ -180,8 +181,9 @@
   </q-card>
 </template>
 <script>
+import Vue from "vue";
 import { toMoneyString } from "src/utils";
-
+import { mapGetters } from "vuex";
 export default {
   components: {
     // TextUnderHighlight
@@ -195,11 +197,16 @@ export default {
       type: String,
       required: false,
       default: "정비사업"
+    },
+    redevId: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       areaSelected: "",
+      transactions: [],
       activeTab: "SALE",
       filterValue: "",
       tabs: [
@@ -218,6 +225,21 @@ export default {
       }
     };
   },
+  methods: {
+    ...mapGetters("area", ["getMapSelectedArea"]),
+    toMoneyString(value, add) {
+      return toMoneyString(value, add);
+    },
+    async getTransactions() {
+      const { data } = await Vue.prototype.$axios.get(
+        `redevelopment_areas/${this.redevId}/transactions/?page_size=1000&type=${this.activeTab}`
+      );
+      this.transactions = data.results;
+    }
+  },
+  beforeMount() {
+    this.getTransactions();
+  },
   computed: {
     getTabLabel() {
       return ({ text_price_monthly: priceMonthly, type }) => {
@@ -226,41 +248,6 @@ export default {
         }
         return this.tabs.find((tab) => tab.level === type).label;
       };
-    },
-    getOptions() {
-      return [
-        { value: "", label: "전체" },
-        {
-          value: "COMMERCIAL ",
-          label: "상업업무용",
-          disable: !this.item?.some((obj) => obj.category === "COMMERCIAL ")
-        },
-        {
-          value: "SINGLE",
-          label: "단독다가구",
-          disable: !this.item?.some((obj) => obj.category === "SINGLE")
-        },
-        {
-          value: "OFFICETEL",
-          label: "오피스텔",
-          disable: !this.item?.some((obj) => obj.category === "OFFICETEL")
-        },
-        {
-          value: "APARTMENT",
-          label: "아파트",
-          disable: !this.item?.some((obj) => obj.category === "APARTMENT")
-        },
-        {
-          value: "LAND",
-          label: "토지",
-          disable: !this.item?.some((obj) => obj.category === "LAND")
-        },
-        {
-          value: "ALLIANCE",
-          label: "연립ￜ다세대",
-          disable: !this.item?.some((obj) => obj.category === "ALLIANCE")
-        }
-      ];
     },
 
     getItemSize() {
@@ -323,66 +310,12 @@ export default {
         return newVal[0].label;
       };
     },
-    getTransactions() {
-      if (!this.item) return [];
-      const results = this.item?.filter((obj) => {
-        if (this.filterValue === "") {
-          return true;
-        }
-        return obj.category === this.filterValue;
-      });
-      // console.log(
-      //   results
-      //     .filter(({ types }) => types?.indexOf("RENT") > -1)
-      //     .map((result) => {
-      //       return result.recent_transactions.RENT;
-      //     })
-      //     .filter(
-      //       ({ text_price_monthly: priceMonthly }) =>
-      //         !priceMonthly || Number(priceMonthly) === 0
-      //     )
-      // );
 
-      if (this.activeTab === "monthly") {
-        return results
-          .filter(({ types }) => types?.indexOf("RENT") > -1)
-          .map((result) => {
-            return result.recent_transactions.RENT;
-          })
-          .filter(
-            ({ text_price_monthly: priceMonthly }) =>
-              !!priceMonthly && Number(priceMonthly) > 0
-          );
-      }
-
-      if (this.activeTab === "RENT") {
-        return results
-          .filter(({ types }) => types?.indexOf("RENT") > -1)
-          .map((result) => {
-            return result.recent_transactions.RENT;
-          })
-          .filter(
-            ({ text_price_monthly: priceMonthly }) =>
-              !priceMonthly || Number(priceMonthly) === 0
-          );
-      }
-
-      return results
-        .filter(({ types }) => types?.indexOf("SALE") > -1)
-        .map((result) => {
-          return result.recent_transactions.SALE;
-        });
-    },
     isRent() {
       return (item) => item.type === this.tabs[2].level;
     },
     isSale() {
       return (item) => item.type === this.tabs[1].level;
-    }
-  },
-  methods: {
-    toMoneyString(value, add) {
-      return toMoneyString(value, add);
     }
   }
 };

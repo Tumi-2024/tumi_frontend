@@ -544,6 +544,8 @@ export default {
       });
     },
     getHouseInfo() {
+      console.log(this.$route.name);
+
       const bounds = this.$refs.naverMapRef.map.bounds;
 
       const boundLocation = {
@@ -558,7 +560,7 @@ export default {
       if (this.getMapZoom > this.redevZoom) {
         payload = {
           type:
-            this.getMapMode === "redevelop-area"
+            this.$route.name === "map_city_area"
               ? "transaction_groups"
               : "houses",
           ...boundLocation

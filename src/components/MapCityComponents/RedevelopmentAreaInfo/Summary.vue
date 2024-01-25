@@ -109,7 +109,9 @@
         style="margin: 0 20px"
       />
     </section> -->
-    <recent-history :item="transactions" />
+    ,
+
+    <recent-history :redevId="getMapSelectedArea.id" />
     <section class="button-fixed-bottom">
       <q-btn
         @click="goToDetail"
@@ -125,7 +127,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import Vue from "vue";
 // import LineChart from "src/utils/lineChart";
 import { toMoneyString, toSimpleMoneyString } from "src/utils";
 import { RecentHistory } from "components/MapForSaleComponents";
@@ -337,96 +338,90 @@ export default {
       currTr.priceText = toMoneyString(currTr.price);
 
       return currTr;
-    },
-    getInfo() {
-      return () => {
-        const options = [];
-        const TI = this.getCurrTransactions;
+    }
+    // getInfo() {
+    //   return () => {
+    //     const options = [];
+    //     const TI = this.getCurrTransactions;
 
-        if (
-          this.ctgr1 === "APARTMENT" ||
-          this.ctgr1 === "OFFICETEL" ||
-          this.ctgr1 === "COMMERCIAL "
-        ) {
-          options.push({
-            label: "전용/연면적",
-            value: `${
-              TI?.size_private
-                ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
-                : " -"
-            }/${
-              TI?.size_yean ? (TI?.size_yean / 3.3).toFixed(2) + " 평 " : " -"
-            }`
-          });
-        } else if (this.ctgr1 === "ALLIANCE" || this.ctgr1 === "SINGLE") {
-          options.push({
-            label: "전용/연면적",
-            price: `${(
-              (this.getCurrTransactions.price / (TI?.size_private / 3.3)) *
-              10000
-            ).toFixed(0)}`,
-            value: `거래면적 : ${
-              TI?.size_private
-                ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
-                : " -"
-            }`
-          });
-          options.push({
-            label: "대지(권)면적",
-            price: `${(
-              (this.getCurrTransactions.price / (TI?.size_land / 3.3)) *
-              10000
-            ).toFixed(0)}`,
-            value: `거래면적 : ${
-              TI?.size_land ? (TI?.size_land / 3.3).toFixed(2) + " 평 " : " -"
-            }`
-          });
-        } else {
-          options.push({
-            label: "토지 계약 면적",
-            price: `${(
-              (this.getCurrTransactions.price / (TI.size_daeji / 3.3)) *
-              10000
-            ).toFixed(0)}`,
-            value: `거래면적 : ${
-              TI.size_daeji ? (TI.size_daeji / 3.3).toFixed(2) + " m² " : " -"
-            }`
-          });
-        }
-        return options;
-      };
-    },
+    //     if (
+    //       this.ctgr1 === "APARTMENT" ||
+    //       this.ctgr1 === "OFFICETEL" ||
+    //       this.ctgr1 === "COMMERCIAL "
+    //     ) {
+    //       options.push({
+    //         label: "전용/연면적",
+    //         value: `${
+    //           TI?.size_private
+    //             ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
+    //             : " -"
+    //         }/${
+    //           TI?.size_yean ? (TI?.size_yean / 3.3).toFixed(2) + " 평 " : " -"
+    //         }`
+    //       });
+    //     } else if (this.ctgr1 === "ALLIANCE" || this.ctgr1 === "SINGLE") {
+    //       options.push({
+    //         label: "전용/연면적",
+    //         price: `${(
+    //           (this.getCurrTransactions.price / (TI?.size_private / 3.3)) *
+    //           10000
+    //         ).toFixed(0)}`,
+    //         value: `거래면적 : ${
+    //           TI?.size_private
+    //             ? (TI?.size_private / 3.3).toFixed(2) + " 평 "
+    //             : " -"
+    //         }`
+    //       });
+    //       options.push({
+    //         label: "대지(권)면적",
+    //         price: `${(
+    //           (this.getCurrTransactions.price / (TI?.size_land / 3.3)) *
+    //           10000
+    //         ).toFixed(0)}`,
+    //         value: `거래면적 : ${
+    //           TI?.size_land ? (TI?.size_land / 3.3).toFixed(2) + " 평 " : " -"
+    //         }`
+    //       });
+    //     } else {
+    //       options.push({
+    //         label: "토지 계약 면적",
+    //         price: `${(
+    //           (this.getCurrTransactions.price / (TI.size_daeji / 3.3)) *
+    //           10000
+    //         ).toFixed(0)}`,
+    //         value: `거래면적 : ${
+    //           TI.size_daeji ? (TI.size_daeji / 3.3).toFixed(2) + " m² " : " -"
+    //         }`
+    //       });
+    //     }
+    //     return options;
+    //   };
+    // },
     // getTransactions() {
     //   return this.transactions.filter(
     //     ({ category }) => category === this.ctgr1
     //   );
     // },
-    getSelectOptions() {
-      const options = [
-        { label: "아파트", value: "APARTMENT" },
-        { label: "오피스텔", value: "OFFICETEL" },
-        { label: "상업업무용", value: "COMMERCIAL " },
-        { label: "분양/입주권", value: "LAND" },
-        { label: "연립ￜ다세대", value: "ALLIANCE" },
-        { label: "단독|다가구", value: "SINGLE" },
-        { label: "토지", value: "LAND" }
-      ];
+    // getSelectOptions() {
+    //   const options = [
+    //     { label: "아파트", value: "APARTMENT" },
+    //     { label: "오피스텔", value: "OFFICETEL" },
+    //     { label: "상업업무용", value: "COMMERCIAL " },
+    //     { label: "분양/입주권", value: "LAND" },
+    //     { label: "연립ￜ다세대", value: "ALLIANCE" },
+    //     { label: "단독|다가구", value: "SINGLE" },
+    //     { label: "토지", value: "LAND" }
+    //   ];
 
-      const getDisable = (value) =>
-        !this.transactions.some((transaction) => {
-          return transaction.category === value;
-        });
+    //   const getDisable = (value) =>
+    //     !this.transactions.some((transaction) => {
+    //       return transaction.category === value;
+    //     });
 
-      return options.map((option) => {
-        return { ...option, disable: getDisable(option.value) };
-      });
-    }
-  },
-  async beforeMount() {
-    const { data } = await Vue.prototype.$axios.get(
-      `redevelopment_areas/${this.getMapSelectedArea.id}/transactions/?page_size=1000`
-    );
-    this.transactions = data.results;
+    //   return options.map((option) => {
+    //     return { ...option, disable: getDisable(option.value) };
+    //   });
+    // }
   }
 };
 </script>

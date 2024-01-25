@@ -67,7 +67,7 @@
             </q-item-label>
           </template>
         </list-result>
-        <div class="flex" style="width: 100%">
+        <div class="flex" style="width: 100%" v-if="$store.getters.user.id">
           <list-result
             style="flex: 1"
             v-if="redevlopments && redevlopments.length && text.length"
@@ -113,6 +113,19 @@
             </template>
           </list-result>
         </div>
+        <div
+          class="flex"
+          style="
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            color: #222222;
+            font-weight: 800;
+          "
+          v-else
+        >
+          로그인을 하지 않은 사용자는 최근 검색어 기능이 지원되지 않습니다.
+        </div>
       </div>
     </q-card>
   </q-dialog>
@@ -148,6 +161,7 @@ export default {
       this.dialog = true;
     },
     async getRecentHistory() {
+      if (!this.$store.getters.user.id) return;
       const { data } = await Vue.prototype.$axios.get("/search/");
       this.recents = data.results.map(({ title, id }) => {
         return { label: title, id };
@@ -210,10 +224,14 @@ export default {
         this.houses = [];
         this.getRecentHistory();
       } else {
-        await Vue.prototype.$axios.post("/search/", { search: this.text });
-        this.getRedevelopment();
-        this.getLocations();
-        this.getHouses();
+        try {
+          await Vue.prototype.$axios.post("/search/", { search: this.text });
+        } catch (e) {
+        } finally {
+          this.getRedevelopment();
+          this.getLocations();
+          this.getHouses();
+        }
       }
     },
     async onDeleteItem({ id }) {
