@@ -184,7 +184,6 @@ export default {
         `/redevelopment_areas/${this.redevelopment.id}/transaction_groups/`
       );
       this.transactions = results;
-      // this.getGraphData();
     }
   },
   methods: {

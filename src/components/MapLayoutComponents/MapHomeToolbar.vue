@@ -13,7 +13,15 @@
             style="height: 100%"
             @click="$router.push({ name: 'home' })"
           />
-          <span class="text-h6 text-bold" style="color: #222222"
+          <span
+            class="text-h6 text-bold"
+            style="
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              color: #222222;
+            "
             >{{ getHeaderLabel }}
           </span>
         </div>

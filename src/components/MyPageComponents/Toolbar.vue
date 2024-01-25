@@ -4,18 +4,15 @@
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>
     <div>
-      <q-btn @click="redirectToAdmin" color="primary" class="q-mr-sm">
+      <q-btn
+        v-if="$store.getters.user.id"
+        @click="redirectToAdmin"
+        color="primary"
+        class="q-mr-sm"
+      >
         관리자 페이지
       </q-btn>
-      <q-btn @click="logOut">로그아웃</q-btn>
-      <q-btn
-        flat
-        class="bg-primary text-white q-ml-sm"
-        @click="setModal"
-        v-if="!$store.getters.user.id"
-      >
-        로그인
-      </q-btn>
+      <q-btn v-if="$store.getters.user.id" @click="logOut">로그아웃</q-btn>
     </div>
   </q-card-section>
 </template>
