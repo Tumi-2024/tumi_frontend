@@ -6,7 +6,8 @@
         :key="index"
         v-bind="{ icon: badge.icon, value: badge.value, [badge.type]: true }"
         :color="badge.color"
-      />
+      >
+      </badge>
     </template>
   </div>
 </template>

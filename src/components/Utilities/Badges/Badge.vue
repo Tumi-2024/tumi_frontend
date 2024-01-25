@@ -1,5 +1,13 @@
 <template>
   <q-badge :class="badgeClass" outline :color="color">
+    <q-tooltip
+      anchor="top middle"
+      self="bottom middle"
+      :offset="[10, 10]"
+      :content-class="badgeClass"
+    >
+      {{ getLabel }}
+    </q-tooltip>
     <q-icon v-if="icon">
       <img :src="icon" alt="" srcset="" />
     </q-icon>
@@ -11,6 +19,9 @@
 <script>
 export default {
   props: {
+    transactionStatus: {
+      type: Boolean
+    },
     value: {
       type: String,
       required: true
@@ -53,6 +64,60 @@ export default {
     return {
       badgeClass: ""
     };
+  },
+  computed: {
+    getLabel() {
+      switch (true) {
+        case this.transactionStatus:
+          return "개발유형";
+        case this.houseType:
+          return "주택유형";
+        case this.pyeong:
+          return "전용면적";
+        case this.area:
+          return "면적";
+        case this.recommend:
+          return "추천";
+        case this.redevelopment:
+          return "재개발";
+        case this.charter:
+          return "전세";
+        case this.sale:
+          return "매매";
+        case this.date:
+          return "수정일자";
+        case this.price:
+          return "희망매매가";
+        default:
+          return "";
+      }
+    },
+    getColor() {
+      switch (true) {
+        case this.transactionStatus:
+          return "primary";
+        case this.houseType:
+          return "primary";
+        case this.pyeong:
+          return "green";
+        case this.area:
+          return "green";
+        case this.recommend:
+          return "white";
+        case this.redevelopment:
+          return "white";
+        case this.charter:
+          return "blue-grey";
+        case this.sale:
+          return "blue";
+        case this.date:
+          return "black";
+        case this.price:
+          return "blue";
+        default:
+          return "blue";
+      }
+    }
   },
   created() {
     if (this.color) {

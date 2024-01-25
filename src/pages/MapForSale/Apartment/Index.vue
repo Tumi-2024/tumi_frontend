@@ -111,6 +111,8 @@
     /> -->
     <recent-history
       class="q-mt-md"
+      v-if="this.redevelopment.id"
+      :redevId="this.redevelopment.id"
       :item="transactions"
       :title="estate.group_location.redevelopment_area.title"
     />

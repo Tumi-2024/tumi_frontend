@@ -1,5 +1,3 @@
-const now = new Date().getTime();
-
 export const searchStore = {
   namespaced: true,
   state: {
@@ -43,7 +41,7 @@ export const searchStore = {
     /**
      *  기간
      */
-    period: [now - 365 * 24 * 60 * 60 * 1000, now],
+    period: [],
     // 다중선택 Param
     isMultiSelect: false
   },

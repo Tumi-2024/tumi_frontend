@@ -3,7 +3,7 @@
     <q-card-section class="q-pb-none justify-between items-center row">
       <div class="title-heading col-6">[{{ title }}] 실거래가 히스토리</div>
       <q-select
-        style="width: 83px"
+        style="width: 90px"
         v-model="unitSelect"
         label="단위"
         :options="[
@@ -24,6 +24,7 @@
         <q-tab
           v-for="tab in tabs"
           :key="tab.level"
+          :disable="tab.level !== 'SALE'"
           :name="tab.level"
           class="tabs-text notosanskr-medium"
           :label="tab.label"
@@ -332,7 +333,7 @@ export default {
       });
       // console.log(
       //   results
-      //     .filter(({ types }) => types.indexOf("RENT") > -1)
+      //     .filter(({ types }) => types?.indexOf("RENT") > -1)
       //     .map((result) => {
       //       return result.recent_transactions.RENT;
       //     })
@@ -344,7 +345,7 @@ export default {
 
       if (this.activeTab === "monthly") {
         return results
-          .filter(({ types }) => types.indexOf("RENT") > -1)
+          .filter(({ types }) => types?.indexOf("RENT") > -1)
           .map((result) => {
             return result.recent_transactions.RENT;
           })
@@ -356,7 +357,7 @@ export default {
 
       if (this.activeTab === "RENT") {
         return results
-          .filter(({ types }) => types.indexOf("RENT") > -1)
+          .filter(({ types }) => types?.indexOf("RENT") > -1)
           .map((result) => {
             return result.recent_transactions.RENT;
           })
@@ -367,7 +368,7 @@ export default {
       }
 
       return results
-        .filter(({ types }) => types.indexOf("SALE") > -1)
+        .filter(({ types }) => types?.indexOf("SALE") > -1)
         .map((result) => {
           return result.recent_transactions.SALE;
         });

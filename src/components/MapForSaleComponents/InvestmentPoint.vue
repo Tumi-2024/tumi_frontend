@@ -16,7 +16,7 @@ export default {
   components: {},
   props: {
     item: {
-      type: Array,
+      type: Array | Object,
       require: false,
       default: () => {
         return [];

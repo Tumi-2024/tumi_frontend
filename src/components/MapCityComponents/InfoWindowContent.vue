@@ -47,20 +47,6 @@
         </div>
       </div>
     </div>
-    <div
-      style="
-        position: absolute;
-        z-index: 100;
-        display: flex;
-        width: 20px;
-        height: 10px;
-        left: 30px;
-        bottom: 1px;
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
-        background-color: white;
-      "
-    ></div>
-    <div style="display: block; float: left; width: 100%; height: 10px"></div>
   </div>
 </template>
 

@@ -42,7 +42,7 @@
                   }`
                 }"
                 :class="`text-${getColor.text}`"
-                @mouseup="onClickMarker(m)"
+                @click="onClickMarker(m)"
               >
                 <span
                   class="flex justify-center"
@@ -58,7 +58,7 @@
                 </span>
                 <span
                   class="flex justify-center"
-                  style="font-weight: 700; font-size: calc((15 / 1000) * 100vh)"
+                  style="font-weight: 700; font-size: calc((12 / 1000) * 100vh)"
                 >
                   {{
                     $route.path === "/map/city"
@@ -117,7 +117,7 @@
           <div
             class="area-badge-info notosanskr-medium"
             :class="`bg-${getBadgeColor(badge)}`"
-            @mouseup.self="selectArea(badge)"
+            @mouseup="selectArea(badge)"
           >
             <q-icon
               v-if="$route.path === '/map/city/area'"
@@ -636,11 +636,11 @@ export default {
 }
 
 .area-badge-info {
-  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+  transform: translate(-50%, -50%);
 
   &.green {
     background: #68814e;

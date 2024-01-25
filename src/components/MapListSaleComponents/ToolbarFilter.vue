@@ -92,7 +92,9 @@ export default {
       "person",
       "period"
     ]),
+    ...mapGetters("map", ["getAreaType"]),
     getFilters() {
+      console.log(this.period);
       const hasValue = (array) => {
         return array.every((obj) => obj);
       };
@@ -133,7 +135,7 @@ export default {
           keyName: "initPrices"
         },
         {
-          label: this.$route.name === "listHouses" ? "등록일자" : "거래일자",
+          label: this.$route.name === "listHouses" ? "수정일자" : "거래일자",
           type: "PropertyPeriod",
           class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
@@ -209,10 +211,24 @@ export default {
 
       if (val) {
         if (type.value === "redev") {
+          const getAreaTypeString = () => {
+            switch (this.getAreaType) {
+              case null:
+                return "";
+              case "재개발":
+              case "재건축":
+              case "일반":
+                return this.getAreaType;
+              case "기타사업":
+                return "기타";
+              default:
+                return this.getAreaType;
+            }
+          };
           const {
             data: { results }
           } = await Vue.prototype.$axios.get(
-            `redevelopment_areas/?search=${val}`
+            `redevelopment_areas/?search=${val}&redevelopment_area__category=${getAreaTypeString()}`
           );
           update(async () => {
             this.options = results.map(({ title, id }) => {

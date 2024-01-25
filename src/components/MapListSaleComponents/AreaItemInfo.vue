@@ -95,19 +95,25 @@ export default {
 
       // size_dedicated_area_m2
       // size_gross_floor_area
-      console.log(houseInfo.size_land_area_m2);
+      const daejiArea = () => {
+        if (
+          houseInfo.size_land_area_m2 ||
+          houseInfo.size_land_area ||
+          houseInfo.size_dedicated_area_m2 ||
+          houseInfo.size_gross_floor_area
+        ) {
+          return `${Math.ceil(
+            houseInfo.size_land_area_m2 || houseInfo.size_land_area
+          )} / ${Math.ceil(
+            houseInfo.size_dedicated_area_m2 || houseInfo.size_gross_floor_area
+          )}`;
+        }
+        return undefined;
+      };
       return [
         {
           label: "대지/건물 면적",
-          value: `${getLabel(
-            `${Math.ceil(
-              houseInfo.size_land_area_m2 || houseInfo.size_land_area
-            )} / ${Math.ceil(
-              houseInfo.size_dedicated_area_m2 ||
-                houseInfo.size_gross_floor_area
-            )}`,
-            "m²"
-          )}`
+          value: `${getLabel(daejiArea(), "m²")}`
         },
         {
           label: "총 세대수",

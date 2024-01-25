@@ -113,7 +113,12 @@ export default {
     "specific-filter": SpecificFilter
   },
   computed: {
-    ...mapGetters("map", ["getMapMode", "getToolbarLabel", "getToolbarTitle"]),
+    ...mapGetters("map", [
+      "getMapMode",
+      "getToolbarLabel",
+      "getToolbarTitle",
+      "getAreaType"
+    ]),
     ...mapGetters("search", [
       "categories",
       "area",
@@ -124,7 +129,10 @@ export default {
       "period"
     ]),
     getFilters() {
+      console.log(this.period);
+
       const hasValue = (array) => {
+        if (!array.length) return false;
         return array.every((obj) => obj);
       };
       return [
@@ -221,8 +229,27 @@ export default {
     },
     async filterRedev(val, update, abort) {
       return new Promise((resolve) => {
+        const getAreaTypeString = () => {
+          switch (this.getAreaType) {
+            case null:
+              return "";
+            case "재개발":
+            case "재건축":
+            case "일반":
+              return this.getAreaType;
+            case "기타사업":
+              return "기타";
+            default:
+              return this.getAreaType;
+          }
+        };
+
         Vue.prototype.$axios
-          .get(`redevelopment_areas/?search=${this.searchText}`)
+          .get(
+            `redevelopment_areas/?search=${
+              this.searchText
+            }&redevelopment_area__category=${getAreaTypeString()}`
+          )
           .then((res) => {
             update(async () => {
               this.redev = res.data.results.map(
