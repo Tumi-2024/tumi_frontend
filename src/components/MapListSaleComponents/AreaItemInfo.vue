@@ -81,6 +81,7 @@ export default {
 
       const {
         group_building_house: houseInfo,
+        group_individual_household: householdInfo,
         group_price: priceInfo
         // group_location: locationInfo
       } = this.item;
@@ -96,16 +97,18 @@ export default {
       // size_dedicated_area_m2
       // size_gross_floor_area
       const daejiArea = () => {
+        console.log(houseInfo);
         if (
-          houseInfo.size_land_area_m2 ||
+          householdInfo.size_land_area_m2 ||
           houseInfo.size_land_area ||
-          houseInfo.size_dedicated_area_m2 ||
+          householdInfo.size_dedicated_area_m2 ||
           houseInfo.size_gross_floor_area
         ) {
-          return `${Math.ceil(
-            houseInfo.size_land_area_m2 || houseInfo.size_land_area
-          )} / ${Math.ceil(
-            houseInfo.size_dedicated_area_m2 || houseInfo.size_gross_floor_area
+          return `${Math.round(
+            householdInfo.size_land_area_m2 || houseInfo.size_land_area
+          )} / ${Math.round(
+            householdInfo.size_dedicated_area_m2 ||
+              houseInfo.size_gross_floor_area
           )}`;
         }
         return undefined;

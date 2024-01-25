@@ -111,18 +111,19 @@
     </section> -->
     ,
 
-    <recent-history :redevId="getMapSelectedArea.id" />
+    <recent-history
+      :redevId="getMapSelectedArea.id"
+      style="padding-bottom: 118px"
+    />
     <section class="button-fixed-bottom">
       <q-btn
         @click="goToDetail"
         color="primary"
         text-color="white"
         class="notosanskr-medium"
-        label="이지역 투자매물 보러가기"
+        label="이 지역 투자매물 보러가기"
       />
     </section>
-
-    <section style="min-height: 200px"></section>
   </div>
 </template>
 <script>
@@ -429,6 +430,7 @@ export default {
 <style lang="scss" scoped>
 .more-information {
   overflow-y: auto;
+  position: relative;
   height: 90vh;
   margin-bottom: 200px;
 }
@@ -547,7 +549,7 @@ export default {
     }
   }
   .button-fixed-bottom {
-    width: 100%;
+    width: calc(100% - 48px);
     max-width: 1000px;
     position: fixed;
     bottom: 0;

@@ -17,6 +17,10 @@
       </div>
       <img class="btn-icon" :src="btn.img" />
     </q-btn>
+    <span style="text-align: center; font-size: 16px; color: #191919"
+      >※ 위 사이트(투미맵)에 표기된 내용들은 실제 정보와 다를 수 있으니,
+      참고용으로만 사용하시기 바랍니다.</span
+    >
   </div>
 </template>
 

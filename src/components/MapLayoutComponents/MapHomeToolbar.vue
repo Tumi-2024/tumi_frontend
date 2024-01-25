@@ -26,6 +26,7 @@
           </span>
         </div>
       </div>
+
       <!-- right section-items -->
       <section class="q-pr-md">
         <q-btn flat padding="4px" color="black" :to="{ name: 'recently_seen' }">

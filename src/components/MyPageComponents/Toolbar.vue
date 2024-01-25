@@ -30,7 +30,8 @@ export default {
     logOut() {
       Cookies.remove("tumi");
       Cookies.remove("tumi_i");
-      this.$router.push({ name: "signIn" });
+      this.$store.commit("logout");
+      this.$router.push("/");
     },
     redirectToAdmin() {
       window.open("https://admin.tumimap.com/admin/", "_blank");
