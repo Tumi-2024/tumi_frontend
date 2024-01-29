@@ -16,9 +16,12 @@
             {{ getToolbarTitle }}
           </div>
         </div>
-        <div class="q-my-xs text-left notosanskr-medium q-ml-lg flex no-wrap">
+        <div
+          class="q-my-xs text-left notosanskr-medium q-ml-xs flex"
+          style="gap: 4px"
+        >
           <q-select
-            style="margin-right: 4px"
+            style="margin-right: 4px; display: flex; flex: 1"
             outlined
             :value="searchType"
             @input="onChangeSelect"
@@ -32,12 +35,14 @@
           </q-select>
           <q-select
             ref="keywordRef"
+            style="display: flex; flex: 1"
             class="icon"
             filled
             label="검색"
             dense
             :value="searchText"
             @input="onSelect"
+            @change="onChangeText"
             :input-debounce="400"
             use-input
             fill-input
@@ -45,7 +50,6 @@
             hide-selected
             :options="options"
             @filter="filterFn"
-            style="max-width: 250px"
           >
             <template v-slot:no-option>
               <q-item>
@@ -207,12 +211,12 @@ export default {
     }
   },
   mounted() {
-    const el = this.$refs.keywordRef;
-    const el2 = el.$refs.target;
-    el2.addEventListener("input", (e) => {
-      this.searchText = e.target.value;
-      el.filter();
-    });
+    // const el = this.$refs.keywordRef;
+    // const el2 = el.$refs.target;
+    // el2.addEventListener("input", (e) => {
+    //   this.searchText = e.target.value;
+    //   el.filter();
+    // });
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
@@ -224,8 +228,13 @@ export default {
     },
     onSelect(obj) {
       this.searchText = obj.label;
+      console.log(obj.label);
       this.changeMapCenter(obj.position);
       this.changeMapZoom(16);
+    },
+    onChangeText(e) {
+      console.log(e.target.value);
+      this.searchText = e.target.value;
     },
     async filterRedev(val, update, abort) {
       return new Promise((resolve) => {
@@ -297,6 +306,8 @@ export default {
     },
 
     async filterFn(val, update, abort) {
+      console.log("filterFn", val);
+      this.searchText = val;
       if (!val || val === "") {
         update();
         return;

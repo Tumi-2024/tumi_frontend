@@ -261,7 +261,7 @@ export default {
             return value;
           }
         };
-
+        console.log(item);
         if (select.value === "대지면적") {
           return getRound(
             Number(
