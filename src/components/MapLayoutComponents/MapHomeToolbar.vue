@@ -8,7 +8,7 @@
           style="height: calc((40 / 1312) * 100vh)"
         >
           <img
-            :src="require('assets/tumi-logo.png')"
+            :src="require('assets/tumi-icon-high.jpeg')"
             class="q-mr-sm cursor-pointer"
             style="height: 100%"
             @click="$router.push({ name: 'home' })"
