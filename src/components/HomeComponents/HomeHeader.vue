@@ -1,13 +1,13 @@
 <template>
-  <q-toolbar class="bg-white text-dark">
-    <q-toolbar-title class="q-mt-md flex items-center">
+  <q-toolbar class="bg-white text-dark q-pt-md">
+    <q-toolbar-title class="flex items-center">
       <img
         :src="require('assets/tumi-icon-high.jpeg')"
         class="q-mr-sm"
-        style="height: 72px; width: 72px; object-fit: cover"
+        style="height: 60px; width: 60px; object-fit: cover"
       />
       <span
-        class="notosanskr-bold text-h4 q-ml-md"
+        class="notosanskr-bold text-h4 text-h3-md q-ml-md"
         style="
           -webkit-user-select: none;
           -moz-user-select: none;

@@ -17,7 +17,7 @@
             map-options
             v-model="option"
             :options="[
-              { label: '개발정비사업', value: 'redev' },
+              { label: '정비사업', value: 'redev' },
               { label: '지역', value: 'location' },
               { label: '건물/단지', value: 'building' }
             ]"
@@ -191,7 +191,7 @@ export default {
     },
     onSelect(obj) {
       const type = [
-        { label: "개발정비사업", value: "redev" },
+        { label: "정비사업", value: "redev" },
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
@@ -200,7 +200,7 @@ export default {
     },
     async filterFn(val, update, abort) {
       const type = [
-        { label: "개발정비사업", value: "redev" },
+        { label: "정비사업", value: "redev" },
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);

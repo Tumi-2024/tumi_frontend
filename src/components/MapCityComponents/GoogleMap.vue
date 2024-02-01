@@ -6,8 +6,6 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
-    {{ this.getMapCenter }}
-    {{ this.getMapZoom }}
     <naver-maps
       ref="naverMapRef"
       class="page-container"

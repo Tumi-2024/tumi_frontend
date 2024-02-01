@@ -28,7 +28,7 @@
             map-options
             dense
             :options="[
-              { label: '개발정비사업', value: 'redev' },
+              { label: '정비사업', value: 'redev' },
               { label: '지역/주소', value: 'location' }
             ]"
           >

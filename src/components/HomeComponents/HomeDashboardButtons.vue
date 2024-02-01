@@ -129,11 +129,11 @@ export default {
 
 .btn-title1 {
   @media (max-width: 599px) {
-    font-size: 13px;
+    font-size: 15px;
     margin: 10px 0 10px 10px;
   }
   @media (min-width: 600px) {
-    font-size: 18px;
+    font-size: 22px;
     margin: 20px 0 15px 20px;
   }
   text-align: left;
