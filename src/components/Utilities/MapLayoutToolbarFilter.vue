@@ -133,8 +133,6 @@ export default {
       "period"
     ]),
     getFilters() {
-      console.log(this.period);
-
       const hasValue = (array) => {
         if (!array.length) return false;
         return array.every((obj) => obj);
@@ -210,14 +208,6 @@ export default {
       this.searchType = "location";
     }
   },
-  mounted() {
-    // const el = this.$refs.keywordRef;
-    // const el2 = el.$refs.target;
-    // el2.addEventListener("input", (e) => {
-    //   this.searchText = e.target.value;
-    //   el.filter();
-    // });
-  },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
     onChangeFilter(params) {
@@ -227,10 +217,11 @@ export default {
       this.searchType = e.value;
     },
     onSelect(obj) {
-      this.searchText = obj.label;
-      console.log(obj.label);
       this.changeMapCenter(obj.position);
-      this.changeMapZoom(16);
+      setTimeout(() => {
+        this.changeMapZoom(15);
+      }, 1000);
+      this.searchText = obj.label;
     },
     onChangeText(e) {
       console.log(e.target.value);

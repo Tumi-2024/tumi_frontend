@@ -7,8 +7,8 @@ const initState = {
   mode: "default",
   mapZoom: 12,
   mapCenter: {
-    lng: 126.9816417,
-    lat: 37.57037778
+    // lng: 126.9816417,
+    // lat: 37.57037778
   },
   // mapAddress: "",
   mapOptions: {

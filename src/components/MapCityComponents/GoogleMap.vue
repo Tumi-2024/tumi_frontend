@@ -6,6 +6,8 @@
       :disable-heart="getMapZoom > 16"
       @showArea="showHideArea"
     />
+    {{ this.getMapCenter }}
+    {{ this.getMapZoom }}
     <naver-maps
       ref="naverMapRef"
       class="page-container"
@@ -18,7 +20,8 @@
         dragend: dragEnd,
         dragstart: dragStart,
         load: idle,
-        zoom_changed: zoomChanged
+        zoom_changed: zoomChanged,
+        bounds_changed: boundsChanged
       }"
     >
       <!-- 각 구 별 매물/실거래가 보여주기 -->
@@ -175,6 +178,7 @@ import ActionButtons from "./ActionButtons";
 import { mapGetters, mapActions } from "vuex";
 /** geolocation */
 import { Plugins } from "@capacitor/core";
+import { debounce } from "quasar";
 
 const { Geolocation } = Plugins;
 
@@ -212,6 +216,9 @@ export default {
     getMapCenter(obj) {
       const map = this.$refs.naverMapRef.map;
       map.panTo(obj);
+      console.log(map.panTo(obj));
+      console.log(this.$refs.naverMapRef.map.bounds);
+      this.getRedevInfo();
     }
   },
   computed: {
@@ -386,7 +393,9 @@ export default {
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
-    naverMap.setCenter(this.getMapCenter);
+    this.boundsChanged = debounce(this.boundsChanged, 100);
+    // this.$refs.naverMapRef.map.addListener("", this.idle);
+    // naverMap.setCenter(this.getMapCenter);
     // this.changeMapCenter({
     //   lat: naverMap.center._lat,
     //   lng: naverMap.center._lng
@@ -398,12 +407,7 @@ export default {
     ...mapActions(["setSimpleHouses"]),
 
     ...mapActions(["estate", "setViewRedevOnly"]),
-    ...mapActions("map", [
-      "changeMapCenter",
-      "setMapZoom",
-      "setMapCenter",
-      "initMapCenter"
-    ]),
+    ...mapActions("map", ["changeMapCenter", "setMapZoom", "setMapCenter"]),
 
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
@@ -503,8 +507,14 @@ export default {
       this.idle();
     },
     zoomChanged(zoomLevel) {
+      if (zoomLevel > 13) {
+        this.getRedevInfo();
+      }
       this.setMapZoom(zoomLevel);
       this.idle();
+    },
+    boundsChanged(b) {
+      this.getRedevInfo(b);
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -517,15 +527,12 @@ export default {
     },
     idle(e) {
       this.getHouseInfo();
-      this.getRedevInfo();
 
       const zoom = this.$refs.naverMapRef.map.zoom;
       console.log(zoom);
     },
 
-    async getRedevInfo() {
-      const bounds = this.$refs.naverMapRef.map.bounds;
-
+    async getRedevInfo(bounds = this.$refs.naverMapRef.map.bounds) {
       const ratio = 0.000001;
       const boundLocation = {
         latitude: [
