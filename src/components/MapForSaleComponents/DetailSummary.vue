@@ -11,6 +11,9 @@
         :redevName="redevName"
       />
       <div class="row q-mt-md">
+        <span class="text-h5 text-bold text-center full-width">
+          매물 예상 가격
+        </span>
         <div class="col-12 col-md-4 q-px-sm q-mt-sm">
           <div class="initial-investments row q-pa-sm q-mt-sm items-center">
             <q-icon>
@@ -158,7 +161,7 @@
           </div>
         </div>
         <div class="col-12 q-mt-md flex justify-center">
-          <q-card class="flex flex-1 cursor-pointer" style="max-width: 50%">
+          <q-card class="flex flex-1 cursor-pointer" style="max-width: 500px">
             <div
               class="initial-investments bg-orange-1 text-primary row q-py-md q-px-lg items-center flex"
               style="border: 2px solid #ff5a00"
@@ -329,7 +332,7 @@ export default {
           {
             type: "pyeong",
             value:
-              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
+              item.group_building_house.size_supply_area_pyeong.toFixed(0) +
               "평"
           },
           {

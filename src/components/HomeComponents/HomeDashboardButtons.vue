@@ -5,6 +5,7 @@
       :key="btnIndex"
       v-for="(btn, btnIndex) of btnGroup"
       class="btn-dash-board full-width"
+      :class="btnIndex === 4 ? 'last' : ''"
       :style="{ backgroundColor: btn.backgroundColor }"
       style="flex: 1 0 calc(50% - 4px)"
       @click="btn.func"
@@ -43,9 +44,9 @@ export default {
         },
         {
           backgroundColor: "#3ECCB2",
-          text: "정비사업/실거래가 지도",
+          text: "실거래가 지도",
           subText1: `지도에서 쉽게`,
-          subText2: `정비사업/실거래가 찾기`,
+          subText2: `실거래가 찾기`,
           img: require("assets/iconsNew/20Redev.png"),
           func: this.toRedevelopmentArea
         },
@@ -109,20 +110,20 @@ export default {
 <style lang="scss">
 .btn-dash-board {
   @media (max-width: 599px) {
-    min-height: 90px;
+    min-height: 150px;
   }
   @media (min-width: 600px) {
-    min-height: 140px;
+    min-height: 180px;
   }
 
   color: #fff;
   border-radius: 12px;
-  &:not(:last-child) {
+  &.last {
     @media (max-width: 599px) {
-      min-height: 150px;
+      min-height: 90px;
     }
     @media (min-width: 600px) {
-      min-height: 180px;
+      min-height: 140px;
     }
   }
 }

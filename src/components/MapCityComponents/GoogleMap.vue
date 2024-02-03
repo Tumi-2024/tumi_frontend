@@ -239,6 +239,7 @@ export default {
           case "재건축":
             return "blue";
           case "가로주택":
+          case "모아주택":
             return "green";
           // case "일반":
           // case "기타":
@@ -249,6 +250,7 @@ export default {
       };
     },
     getColor() {
+      console.log(this.getAreaType);
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
@@ -260,6 +262,7 @@ export default {
             bg: "#A155B8",
             tagClass: "purple"
           };
+        case "모아주택":
         case "가로모아":
           return {
             text: "white",
@@ -342,9 +345,10 @@ export default {
           fill: ""
         };
         const getStrokeColor = (opt) => {
+          console.log(opt);
           switch (opt) {
-            case "가로주택":
-              colors = { ...colors, stroke: "#52C41A", fill: "#52C41A" };
+            case "모아주택":
+              colors = { ...colors, stroke: "#4caf50", fill: "#4caf50" };
               break;
             case "기타":
               colors = { ...colors, stroke: "#52C41A", fill: "#52C41A" };

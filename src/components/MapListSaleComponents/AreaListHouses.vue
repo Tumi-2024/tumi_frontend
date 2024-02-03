@@ -21,6 +21,8 @@
         </q-badge> -->
       </div>
       <toolbar-filter
+        :devType="devType"
+        :areaType="getAreaType"
         class="q-pt-xs q-px-sm"
         v-model="text"
         @focus="onFocus"
@@ -156,14 +158,6 @@ export default {
     },
 
     changeDevType(event) {
-      // const devTypes = [
-      //   { color: "primary", label: "재개발", key: "재개발" },
-      //   { color: "blue", label: "재건축", key: "재건축" },
-      //   { color: "green", label: "기타사업", key: "기타사업" },
-      //   { color: "grey-6", label: "일반", key: "일반" }
-      // ];
-      // const index = devTypes.findIndex((item) => item.key === this.getAreaType);
-
       this.saleList = [];
       this.setAreaType(event);
       this.page = 1;
@@ -186,7 +180,7 @@ export default {
           this.getSearchData({ ...query }, this.page);
           break;
         case "redevelopment_area":
-          this.getRedevData({ ...query }, this.page);
+          this.getHouseData({ ...query }, this.page);
           break;
         case "location":
           this.getLocationData({ ...query }, this.page);
@@ -219,7 +213,7 @@ export default {
             this.setLocationQuery(id, label, this.page);
           }
           break;
-        case "개발정비사업":
+        case "정비사업":
           this.setRedevQuery(id, label, this.page);
           break;
         case "건물/단지":
@@ -250,7 +244,7 @@ export default {
       this.busy = false;
     },
 
-    async getRedevData(params, page) {
+    async getHouseData(params, page) {
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
@@ -309,7 +303,7 @@ export default {
         name: "listHouses",
         query: { redevelopment_area: redevelopmentArea, title }
       });
-      this.getRedevData(
+      this.getHouseData(
         { redevelopment_area: redevelopmentArea, title },
         this.page
       );

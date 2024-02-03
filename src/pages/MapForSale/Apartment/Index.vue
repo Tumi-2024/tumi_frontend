@@ -306,8 +306,7 @@ export default {
             this.estate.group_individual_household.size_dedicated_area_m2
           }m² |
             ${Math.floor(
-              this.estate.group_individual_household.size_dedicated_area_m2 /
-                3.3
+              this.estate.group_individual_household.size_dedicated_area_pyeong
             )}평`),
           icon: ["land-area.svg"]
         },
@@ -588,16 +587,16 @@ export default {
           label: "대지권면적(대지지분)",
           value: this.getValue(
             `${houseInfo.size_land_area_m2} m² | ${(
-              (houseInfo.size_land_area_pyeong || 0) / 3.3
+              houseInfo.size_land_area_pyeong || 0
             ).toFixed(1)} 평`
           )
         },
         {
           label: "공급면적",
           value: this.getValue(
-            `${houseInfo.size_supply_area_m2} m² | ${(
-              houseInfo.size_supply_area_pyeong / 3.3
-            ).toFixed(1)} 평`
+            `${
+              houseInfo.size_supply_area_m2
+            } m² | ${houseInfo.size_supply_area_pyeong.toFixed(1)} 평`
           )
         },
         {

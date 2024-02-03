@@ -189,7 +189,8 @@ Font/50 */
     &.selected {
       border: 2px solid #fc5b2e;
       text-align: center;
-      color: #ff5100;
+      background: #ff5100c4;
+      color: white;
     }
   }
   .q-btn__wrapper {

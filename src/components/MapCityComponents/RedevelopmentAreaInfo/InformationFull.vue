@@ -12,6 +12,9 @@
         <div class="header-section notosanskr-medium">
           정비사업 정보
           <div>
+            <span class="q-pr-sm text-caption">
+              최근 업데이트 일자: {{ getUpdatedDate }}
+            </span>
             <q-btn flat padding="0 8px" class="bg-white" @click="like">
               <q-icon size="24px">
                 <img
@@ -99,7 +102,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("area", ["getMapSelectedArea"])
+    ...mapGetters("area", ["getMapSelectedArea"]),
+    getUpdatedDate() {
+      const date = new Date(this.getMapSelectedArea.modified);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return `${year}.${month}.${day}`;
+    }
   },
   methods: {
     ...mapActions("area", ["interestSelectedArea", "uninterestSelectedArea"]),

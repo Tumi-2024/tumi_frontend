@@ -5,7 +5,7 @@
     </q-btn>
     <div>
       <q-btn
-        v-if="$store.getters.user.id"
+        v-if="$store.getters.user.id && $route.path !== '/insights/'"
         @click="redirectToAdmin"
         color="primary"
         class="q-mr-sm"

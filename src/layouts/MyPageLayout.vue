@@ -3,7 +3,7 @@
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
-      <icon-tabs></icon-tabs>
+      <icon-tabs v-if="$route.path === '/insight/'"></icon-tabs>
     </q-card>
     <router-view></router-view>
   </div>

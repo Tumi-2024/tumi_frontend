@@ -4,7 +4,7 @@
       class="title q-pa-none row justify-between items-center notosanskr-medium"
     >
       <div class="title row">
-        <text-under-highlight text="전용면적" />
+        <text-under-highlight text="면적" />
       </div>
       <q-btn
         flat
@@ -302,7 +302,8 @@ export default {
     &.selected {
       border: 2px solid #fc5b2e;
       text-align: center;
-      color: #ff5100;
+      background: #ff5100c4;
+      color: white;
     }
   }
 }

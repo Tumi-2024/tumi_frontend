@@ -50,7 +50,7 @@ export default {
       if (this.infoProps) {
         return this.infoProps;
       }
-      const { group_location: location } = this.item;
+      const { group_location: location, group_price: price } = this.item;
 
       return [
         {
@@ -60,8 +60,8 @@ export default {
             location?.redevelopment_area?.category
         },
         {
-          label: "현재 추진 단계",
-          value: location?.redevelopment_area?.redevelopment_step
+          label: "프리미엄",
+          value: toMoneyString(price?.price_premium)
         }
       ];
     },
@@ -82,7 +82,8 @@ export default {
       const {
         group_building_house: houseInfo,
         group_individual_household: householdInfo,
-        group_price: priceInfo
+        group_price: priceInfo,
+        group_trading_terms: terms
         // group_location: locationInfo
       } = this.item;
 
@@ -115,31 +116,79 @@ export default {
       };
       return [
         {
-          label: "대지/건물 면적",
-          value: `${getLabel(daejiArea(), "m²")}`
+          label: "물건 종류",
+          value: houseInfo.type_house
         },
         {
-          label: "총 세대수",
-          value: getLabel(houseInfo.count_household, "세대")
+          label: "매매,전세 가격",
+          value: toMoneyString(terms.price_selling_hope)
         },
         {
-          label: "부동산 소유자 수",
-          value: getLabel(houseInfo.count_owner, "명")
+          label: "총 층수",
+          value: householdInfo.count_floor_total
         },
         {
           label: "해당 층수",
-          value: getLabel(houseInfo.type_floor, "층")
+          value: householdInfo.num_floor
         },
-        { label: "입주년차", value: getLabel(houseInfo.year_tenancy, "년차") },
+        {
+          label: "대지 지분",
+          value: "대지지분"
+        },
+        {
+          label: "전용/공급 면적",
+          value: `${householdInfo.size_dedicated_area_m2}m²/${householdInfo.size_supply_area_m2}m²`
+        },
+        {
+          label: "방향(거실 기준)",
+          value: householdInfo.type_direction
+        },
+        {
+          label: "방수/욕실수",
+          value: `${householdInfo.count_room}/${householdInfo.count_bathroom}`
+        },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
         {
-          label: "감정평가액",
-          value: getLabel(toMoneyString(priceInfo.price_appraised), "")
+          label: "입주 가능일",
+          value: terms.date_due_hope
         },
         {
-          label: "초기투자금",
-          value: getLabel(toMoneyString(priceInfo.price_initial_investment), "")
+          label: "주차대수",
+          value: `${
+            houseInfo.count_parking_down + houseInfo.count_parking_up
+          } 대`
+        },
+        {
+          label: "관리비",
+          value: `${Math.floor(householdInfo.price_maintenance / 10000)}만원`
         }
+
+        // {
+        //   label: "대지/건물 면적",
+        //   value: `${getLabel(daejiArea(), "m²")}`
+        // },
+        // {
+        //   label: "총 세대수",
+        //   value: getLabel(houseInfo.count_household, "세대")
+        // },
+        // {
+        //   label: "부동산 소유자 수",
+        //   value: getLabel(houseInfo.count_owner, "명")
+        // },
+        // {
+        //   label: "해당 층수",
+        //   value: getLabel(houseInfo.type_floor, "층")
+        // },
+        // { label: "입주년차", value: getLabel(houseInfo.year_tenancy, "년차") },
+        // { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
+        // {
+        //   label: "감정평가액",
+        //   value: getLabel(toMoneyString(priceInfo.price_appraised), "")
+        // },
+        // {
+        //   label: "초기투자금",
+        //   value: getLabel(toMoneyString(priceInfo.price_initial_investment), "")
+        // }
         // {
         //   label: "대지면적 (m²)",
         //   value: `${houseInfo.size_land_area ?? "-"}m²`

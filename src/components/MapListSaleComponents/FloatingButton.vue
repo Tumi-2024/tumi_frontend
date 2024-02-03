@@ -41,7 +41,11 @@ export default {
   methods: {
     goToMap() {
       // set quries for map
-      this.$router.push({ name: "map_city" });
+      if (this.$route.name === "listTransactions") {
+        this.$router.push({ name: "map_city_area" });
+      } else {
+        this.$router.push({ name: "map_city" });
+      }
       // this.$router.push({
       //   name: "map_city",
       //   query: {

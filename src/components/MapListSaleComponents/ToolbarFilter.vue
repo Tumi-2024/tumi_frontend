@@ -190,6 +190,7 @@ export default {
       this.$emit("focus");
     },
     onSelect(obj) {
+      console.log("onSelect", obj);
       const type = [
         { label: "정비사업", value: "redev" },
         { label: "지역", value: "location" },

@@ -149,8 +149,7 @@ export default {
           {
             type: "pyeong",
             value:
-              (item.group_building_house.size_building_area / 3.3).toFixed(0) +
-              "평"
+              item.group_individual_household.size_dedicated_area_pyeong + "평"
           },
           {
             type: "price",
