@@ -219,7 +219,7 @@ export default {
     onSelect(obj) {
       this.changeMapCenter(obj.position);
       setTimeout(() => {
-        this.changeMapZoom(15);
+        this.changeMapZoom(18);
       }, 1000);
       this.searchText = obj.label;
     },
