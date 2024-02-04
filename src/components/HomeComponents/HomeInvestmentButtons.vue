@@ -2,7 +2,7 @@
   <div>
     <div class="row q-mt-md q-col-gutter-sm">
       <div class="items-center">
-        <p class="title1">"주택유형별" 지도로 찾기</p>
+        <p class="title1">주택유형 별 지도</p>
       </div>
       <q-radio
         style="margin-left: 10px; margin-bottom: 12px"
@@ -57,10 +57,10 @@ export default {
           valueHouse: "아파트"
         },
         {
-          icon: require("assets/iconsNew/12.png"),
-          label: "연립ￜ다세대",
-          valueTransaction: "ALLIANCE",
-          valueHouse: "연립ￜ다세대"
+          icon: require("assets/iconsNew/14.png"),
+          label: "오피스텔",
+          valueTransaction: "OFFICETEL",
+          valueHouse: "오피스텔"
         },
         {
           icon: require("assets/iconsNew/13.png"),
@@ -69,10 +69,10 @@ export default {
           valueHouse: "단독ￜ다가구"
         },
         {
-          icon: require("assets/iconsNew/14.png"),
-          label: "원룸/오피스텔",
-          valueTransaction: "OFFICETEL",
-          valueHouse: "오피스텔"
+          icon: require("assets/iconsNew/12.png"),
+          label: "연립|다세대",
+          valueTransaction: "ALLIANCE",
+          valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/16.png"),
@@ -88,7 +88,7 @@ export default {
         },
         {
           icon: require("assets/iconsNew/17.png"),
-          label: "무허가 건축물",
+          label: "무허가건축물",
           valueTransaction: "noname01",
           valueHouse: "무허가 건축물"
         },
