@@ -1,17 +1,24 @@
 <template>
   <q-card-section
-    class="row items-center flex justify-end q-pa-none q-ma-none"
+    class="row items-center flex justify-end q-pa-none q-pt-none q-ma-none"
     style="flex: 1"
   >
     <div class="col flex items-center justify-between">
       <div class="row items-center">
         <div
-          class="q-my-xs col-4 text-left notosanskr-medium row"
-          style="flex: 1"
+          class="col-4 text-left notosanskr-medium row"
+          style="flex: 1; gap: 8px"
         >
           <q-select
-            class="q-mr-md"
-            style="width: 125px"
+            class="notosanskr-regular self-end"
+            dense
+            :options="['전체', '재개발', '재건축', '가로/모아', '기타']"
+            @input="changeDevType"
+            :value="$route.query.redevelopment_area__category || '전체'"
+            emit-value
+          />
+          <q-select
+            style="min-width: 125px"
             dense
             emit-value
             map-options
@@ -94,7 +101,6 @@ export default {
     ]),
     ...mapGetters("map", ["getAreaType"]),
     getFilters() {
-      console.log(this.period);
       const hasValue = (array) => {
         return array.every((obj) => obj);
       };
@@ -147,21 +153,14 @@ export default {
   data() {
     return {
       options: [],
-      option: "redev"
+      option: "redev",
+      text: ""
     };
-  },
-  model: {
-    prop: "text",
-    event: "change"
   },
   props: {
     disable: {
       type: Boolean,
       default: false
-    },
-    text: {
-      type: String,
-      required: true
     }
   },
 
@@ -169,16 +168,22 @@ export default {
     const el = this.$refs.keywordRef;
     const el2 = el.$refs.target;
     el2.addEventListener("input", (e) => {
-      this.$emit("change:text", e.target.value);
       el.filter();
+      this.text = e.target.value;
     });
   },
 
   methods: {
+    ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
       this.$emit("changeFilter", params);
     },
-    ...mapActions("map", ["changeMapMode", "changeMapZoom"]),
+    changeDevType(event) {
+      if (this.$route.query.redevelopment_area__category === event) return;
+      this.$router.replace({
+        query: { ...this.$route.query, redevelopment_area__category: event }
+      });
+    },
     onChangeSearchText(e) {
       this.$emit("change", e);
       this.options = [];
@@ -190,12 +195,12 @@ export default {
       this.$emit("focus");
     },
     onSelect(obj) {
-      console.log("onSelect", obj);
       const type = [
         { label: "정비사업", value: "redev" },
         { label: "지역", value: "location" },
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
+      this.text = obj.label;
 
       this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
     },
@@ -209,13 +214,12 @@ export default {
         update();
         return;
       }
-
       if (val) {
         if (type.value === "redev") {
           const getAreaTypeString = () => {
             switch (this.getAreaType) {
               case null:
-                return "";
+                return null;
               case "재개발":
               case "재건축":
               case "일반":
@@ -226,11 +230,15 @@ export default {
                 return this.getAreaType;
             }
           };
+
           const {
             data: { results }
-          } = await Vue.prototype.$axios.get(
-            `redevelopment_areas/?search=${val}&redevelopment_area__category=${getAreaTypeString()}`
-          );
+          } = await Vue.prototype.$axios.get(`redevelopment_areas/`, {
+            params: {
+              search: val,
+              redevelopment_area__category: getAreaTypeString()
+            }
+          });
           update(async () => {
             this.options = results.map(({ title, id }) => {
               return {
@@ -301,6 +309,9 @@ export default {
         this.option = "redev";
         break;
     }
+
+    console.log(query);
+    this.text = query?.title || "";
   }
 };
 </script>

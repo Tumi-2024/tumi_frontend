@@ -11,7 +11,6 @@
     >
       <toolbar-filter
         class="q-pt-xs q-px-sm"
-        v-model="text"
         @focus="onFocus"
         @search="onSearch"
         @changeFilter="changeFilter"
@@ -70,7 +69,6 @@ export default {
   data() {
     return {
       tab: "지역",
-      text: "",
       prevSearch: "",
       selectedIndex: 0,
       saleList: [],
@@ -147,7 +145,6 @@ export default {
 
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
-      this.text = this.$route.query.title || this.$route.query.search || "";
       this.busy = true;
       if (pageNumber === 1) {
         this.getApiTransaction({ ...Dquery, ...query }, this.page);
@@ -357,6 +354,7 @@ export default {
   created() {},
   beforeMount() {
     this.setRequestUrl("houses");
+    this.setAreaType(null);
   }
 };
 </script>

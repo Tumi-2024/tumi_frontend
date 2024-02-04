@@ -6,25 +6,16 @@
     </q-card-section>
 
     <q-card-section
-      class="sort-section row bg-positive q-pa-none notosanskr-regular items-center"
+      style="gap: 8px"
+      class="sort-section bg-positive justify-end q-pa-none q-ma-none flex"
     >
-      <div>
-        <q-select
-          dense
-          :options="['재개발', '재건축', '기타사업', '일반']"
-          @input="changeDevType"
-          :value="getAreaType"
-          emit-value
-        />
-        <!-- <q-badge outline color="primary" @click="changeDevType">
+      <!-- <q-badge outline color="primary" @click="changeDevType">
           {{ getAreaType }}
         </q-badge> -->
-      </div>
       <toolbar-filter
         :devType="devType"
         :areaType="getAreaType"
         class="q-pt-xs q-px-sm"
-        v-model="text"
         @focus="onFocus"
         @search="onSearch"
         @changeFilter="changeFilter"
@@ -83,7 +74,6 @@ export default {
   data() {
     return {
       tab: "지역",
-      text: "",
       prevSearch: "",
       selectedIndex: 0,
       saleList: [],
@@ -134,8 +124,8 @@ export default {
 
       const getAreaTypeString = () => {
         switch (this.getAreaType) {
-          case null:
-            return "";
+          case "전체":
+            return;
           case "재개발":
           case "재건축":
           case "일반":
@@ -157,22 +147,14 @@ export default {
       return Dquery;
     },
 
-    changeDevType(event) {
-      this.saleList = [];
-      this.setAreaType(event);
-      this.page = 1;
-      this.infiniteHandler();
-    },
     onFocus(e) {
       // this.getApiHouses();
     },
     changeFilter() {},
     infiniteHandler() {
       this.setRequestUrl("houses");
-
       const { query } = this.$route;
       const _key = Object.keys(query)[0];
-      this.text = this.$route.query.title || this.$route.query.search || "";
       this.busy = true;
 
       switch (_key) {
@@ -239,7 +221,6 @@ export default {
       this.prevSearch = params.title;
       this.setSimpleHouses(this.saleList);
       this.setCountEstate(data.count);
-      // context.commit("setSimpleHouses", estateData(data.data.results));
       this.page += 1;
       this.busy = false;
     },
@@ -330,6 +311,7 @@ export default {
   },
   beforeMount() {
     this.setRequestUrl("houses");
+    this.setAreaType(null);
   }
 };
 </script>
