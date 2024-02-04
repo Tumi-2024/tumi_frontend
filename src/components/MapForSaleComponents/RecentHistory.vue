@@ -1,7 +1,10 @@
 <template>
   <q-card class="bg-white nanum-square">
-    <q-card-section class="q-pb-none justify-between items-center row">
-      <div class="title-heading col-6">[{{ title }}] 실거래가 히스토리</div>
+    <q-card-section
+      class="q-pb-none justify-between items-center row"
+      style="gap: 12px; flex: 1 1 0"
+    >
+      <div class="title-heading">[{{ title }}] 실거래가 히스토리</div>
       <q-select
         style="width: 90px"
         v-model="unitSelect"
@@ -71,7 +74,7 @@
                   >
                     번지/건물단지명
                   </div>
-                  <!-- <div class="flex justify-center" style="flex: 15 0">층수</div> -->
+                  <div class="flex justify-center" style="flex: 15 0">층수</div>
                   <div style="flex: 17 0" class="justify-center flex">
                     <q-select
                       style="width: 90%"
@@ -117,60 +120,104 @@
                   }"
                   :key="index"
                 >
-                  <!-- 계약일 -->
-                  <div class="flex justify-center" style="flex: 20 0">
-                    {{
-                      item.text_month.slice(0, 4) +
-                      "." +
-                      item.text_month.slice(4, 6) +
-                      "." +
-                      (item.text_day.length === 1
-                        ? "0" + item.text_day
-                        : item.text_day)
-                    }}
-                  </div>
-                  <!-- 주택 유형 -->
-                  <div class="flex justify-center" style="flex: 15 0">
-                    {{ getHouseType(item.category) }}
-                  </div>
-                  <!-- 거래 유형 -->
-                  <div
-                    style="flex: 15 0"
-                    class="flex justify-center text-weight-medium"
-                    :style="{
-                      color: isSale(item)
-                        ? 'rgba(255, 81, 0)'
-                        : 'rgba(0, 164, 170)'
-                    }"
-                  >
-                    {{ getTabLabel(item) }}
-                  </div>
+                  <!-- 휴대폰일 때 -->
+                  <template v-if="$q.screen.xs">
+                    <!-- {{ $q.screen.sm || $q.screen.xs }} -->
+                    <!-- {{ $q.screen.xs }} -->
+                    <div class="flex col">
+                      <div class="column" style="flex: 1">
+                        <span style="font-size: 16px">
+                          계약일:
+                          {{
+                            item.text_month.slice(2, 4) +
+                            "." +
+                            item.text_month.slice(4, 6) +
+                            "." +
+                            (item.text_day.length === 1
+                              ? "0" + item.text_day
+                              : item.text_day)
+                          }}
+                        </span>
+                        <span>
+                          주소:
+                          {{ getAddressWithoutSiGunGu(item.text_sigungu) }}
+                          {{ item.bonbeon || item.beonji }},
+                          {{ (item.text_floor || "").replace(/null/i, "-") }}층
+                        </span>
+                      </div>
+                      <div
+                        style="display: flex; flex: 1; flex-direction: column"
+                      >
+                        <span>주택유형: {{ getHouseType(item.category) }}</span>
+                        <!-- <span>{{
+                          대지면적: (item.text_size_land ||
+                item.size_land ||
+                item.text_size_daeji ||
+                item.size_daeji) / unit
 
-                  <!-- 번지/ 건물단지 명 -->
-                  <div style="flex: 27 0">
-                    <span style="display: flex; justify-content: center">
-                      {{ item.text_sigungu }} {{ item.bonbeon || item.beonji }}
-                    </span>
-                  </div>
-                  <div class="flex justify-center" style="flex: 15 0">
-                    {{ (item.text_floor || "").replace(/null/i, "-") }}층
-                  </div>
-                  <!-- 면적 -->
-                  <div class="flex justify-center" style="flex: 17 0">
-                    {{ getItemSize(item, select) + unitSelect.value }}
-                  </div>
-                  <!-- 거래가격 -->
-                  <div class="flex justify-center" style="flex: 20 0">
-                    {{ toMoneyString(item.price || item.price_deposit) }}
-                  </div>
-                  <div
-                    class="flex justify-center"
-                    style="flex: 20 0"
-                    v-if="activeTab === 'SALE' || activeTab === 'all'"
-                  >
-                    {{ toMoneyString(item.price / getItemSize(item, select)) }}
-                    / {{ unitSelect.value }}
-                  </div>
+                        }}</span> -->
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <!-- 계약일 -->
+                    <div class="flex justify-center" style="flex: 20 0">
+                      {{
+                        item.text_month.slice(0, 4) +
+                        "." +
+                        item.text_month.slice(4, 6) +
+                        "." +
+                        (item.text_day.length === 1
+                          ? "0" + item.text_day
+                          : item.text_day)
+                      }}
+                    </div>
+                    <!-- 주택 유형 -->
+                    <div class="flex justify-center" style="flex: 15 0">
+                      {{ getHouseType(item.category) }}
+                    </div>
+                    <!-- 거래 유형 -->
+                    <div
+                      style="flex: 15 0"
+                      class="flex justify-center text-weight-medium"
+                      :style="{
+                        color: isSale(item)
+                          ? 'rgba(255, 81, 0)'
+                          : 'rgba(0, 164, 170)'
+                      }"
+                    >
+                      {{ getTabLabel(item) }}
+                    </div>
+
+                    <!-- 번지/ 건물단지 명 -->
+                    <div style="flex: 27 0">
+                      <span style="display: flex; justify-content: center">
+                        {{ item.text_sigungu }}
+                        {{ item.bonbeon || item.beonji }}
+                      </span>
+                    </div>
+                    <div class="flex justify-center" style="flex: 15 0">
+                      {{ (item.text_floor || "").replace(/null/i, "-") }}층
+                    </div>
+                    <!-- 면적 -->
+                    <div class="flex justify-center" style="flex: 17 0">
+                      {{ getItemSize(item, select) + unitSelect.value }}
+                    </div>
+                    <!-- 거래가격 -->
+                    <div class="flex justify-center" style="flex: 20 0">
+                      {{ toMoneyString(item.price || item.price_deposit) }}
+                    </div>
+                    <div
+                      class="flex justify-center"
+                      style="flex: 20 0"
+                      v-if="activeTab === 'SALE' || activeTab === 'all'"
+                    >
+                      {{
+                        toMoneyString(item.price / getItemSize(item, select))
+                      }}
+                      / {{ unitSelect.value }}
+                    </div>
+                  </template>
                 </q-item>
               </template>
             </q-virtual-scroll>
@@ -241,6 +288,12 @@ export default {
     this.getTransactions();
   },
   computed: {
+    getAddressWithoutSiGunGu() {
+      return (address) => {
+        const addressArr = address.split(" ");
+        return addressArr[1] + " " + addressArr[2];
+      };
+    },
     getTabLabel() {
       return ({ text_price_monthly: priceMonthly, type }) => {
         if (!!priceMonthly && Number(priceMonthly) > 0) {
@@ -327,6 +380,7 @@ export default {
   color: #1a1a1a;
   line-height: 26px;
   font-weight: bold;
+  word-break: keep-all;
 }
 .unit-heading {
   font-weight: 500;

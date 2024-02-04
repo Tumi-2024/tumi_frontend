@@ -213,8 +213,8 @@ export const estateStore = {
               initPrice.max
             ]),
             ...getQueryArray("created__range", [
-              new Date(period[0]),
-              new Date(period[1])
+              new Date(period[0] ?? undefined).getTime(),
+              new Date(period[1] ?? undefined).getTime()
             ]),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
             ...getQueryArray("user__in", person),
@@ -373,9 +373,6 @@ export const estateStore = {
             ))
       };
 
-      console.log(
-        getQueryArray("redevelopment_area__category", getAreaTypeString())
-      );
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
         {
@@ -393,8 +390,8 @@ export const estateStore = {
             ]),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
             ...getQueryArray("created__range", [
-              new Date(period[0]).getTime(),
-              new Date(period[1]).getTime()
+              new Date(period[0] ?? undefined).getTime(),
+              new Date(period[1] ?? undefined).getTime()
             ]),
 
             ...getQueryArray("user__in", person),
