@@ -435,11 +435,11 @@ export default {
           value: this.getValue(houseInfo.title_building)
         },
         {
-          label: "K-APT 기준 아파트명",
+          label: "K-APT 아파트명",
           value: this.getValue(houseInfo.title_apartment_k_apt)
         },
         {
-          label: "K-APT 기준 단지코드",
+          label: "K-APT 단지코드",
           value: this.getValue(houseInfo.code_complex_k_apt)
         },
         {
@@ -490,12 +490,12 @@ export default {
         //
         {
           label: "엘리베이터 수",
-          value: this.getValue(houseInfo.count_elevator, " 개")
+          value: this.getValue(houseInfo.count_elevator, " 대")
         },
         {
-          label: "주차대수 (지상/지하)",
+          label: "주차대수",
           value: this.getValue(
-            `${houseInfo.count_parking_up} 대 / ${houseInfo.count_parking_down} 대`
+            `지상 ${houseInfo.count_parking_up} 대 / 지하 ${houseInfo.count_parking_down} 대`
           )
         },
         {
@@ -584,7 +584,7 @@ export default {
         //   class: "col-sm-12 col-md-12"
         // },
         {
-          label: "대지권면적(대지지분)",
+          label: "대지지분 (대지권면적)",
           value: this.getValue(
             `${houseInfo.size_land_area_m2} m² | ${(
               houseInfo.size_land_area_pyeong || 0

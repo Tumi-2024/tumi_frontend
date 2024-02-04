@@ -12,7 +12,9 @@
           :key="i"
         >
           <div class="q-pa-sm label">
-            <span class="information text-bold">{{ item.label }}</span>
+            <span class="information text-bold" style="word-break: keep-all">{{
+              item.label
+            }}</span>
           </div>
           <a
             class="information sub flex items-center q-px-sm"
