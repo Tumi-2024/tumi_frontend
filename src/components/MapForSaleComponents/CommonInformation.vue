@@ -83,9 +83,9 @@ export default {
   }
 }
 .information {
+  font-family: "nanum-square";
   font-size: 14px;
   line-height: 16px;
-  letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
   word-break: break-all;
@@ -96,7 +96,7 @@ export default {
 .heading-title {
   font-family: "nanum-square";
   font-style: normal;
-  font-weight: 500;
+  font-weight: bold;
   font-size: 17px;
   line-height: 19px;
   letter-spacing: -1.275px;

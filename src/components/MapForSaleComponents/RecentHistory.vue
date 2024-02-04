@@ -326,6 +326,7 @@ export default {
   letter-spacing: -1.275px;
   color: #1a1a1a;
   line-height: 26px;
+  font-weight: bold;
 }
 .unit-heading {
   font-weight: 500;

@@ -82,7 +82,7 @@ export default {
 .heading-title {
   font-family: "nanum-square";
   font-style: normal;
-  font-weight: 500;
+  font-weight: bold;
   font-size: 17px;
   line-height: 19px;
   letter-spacing: -1.275px;

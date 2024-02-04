@@ -179,7 +179,7 @@
                   <div class="text-h6 q-my-xs col-12 flex text-bold">
                     {{ persons[0].text }}
                     <span v-if="persons[0].phone" class="q-ml-md flex"
-                      >(연락처:{{ persons[0].phone }})</span
+                      >Tel. {{ persons[0].phone }}</span
                     >
                   </div>
                 </div>

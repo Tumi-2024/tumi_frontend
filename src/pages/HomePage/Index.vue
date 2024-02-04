@@ -33,7 +33,7 @@ export default {
   beforeMount() {
     Geolocation.getCurrentPosition({ enableHighAccuracy: true })
       .then((position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
+        // const { latitude: lat, longitude: lng } = position.coords;
         // this.changeMapCenter({ lat, lng });
       })
       .catch((e) => {

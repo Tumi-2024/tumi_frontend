@@ -519,7 +519,7 @@ export default {
       padding: 0 4px;
     }
     .title-heading {
-      font-weight: 500;
+      font-weight: bold;
       font-size: 21px;
       line-height: 32px;
       letter-spacing: -1.575px;
