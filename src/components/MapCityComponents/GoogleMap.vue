@@ -18,8 +18,8 @@
         dragend: dragEnd,
         dragstart: dragStart,
         load: idle,
-        zoom_changed: zoomChanged,
-        bounds_changed: boundsChanged
+        zoom_changed: zoomChanged
+        // bounds_changed: boundsChanged
       }"
     >
       <!-- 각 구 별 매물/실거래가 보여주기 -->
@@ -392,11 +392,11 @@ export default {
   },
   async beforeMount() {
     this.setSimpleHouses([]);
+    this.boundsChanged = debounce(this.boundsChanged, 2000);
   },
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
-    this.boundsChanged = debounce(this.boundsChanged, 100);
     // this.$refs.naverMapRef.map.addListener("", this.idle);
     // naverMap.setCenter(this.getMapCenter);
     // this.changeMapCenter({
