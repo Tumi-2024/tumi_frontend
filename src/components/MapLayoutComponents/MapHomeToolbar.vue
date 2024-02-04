@@ -5,10 +5,10 @@
       <div class="row items-center">
         <div
           class="flex align-center location-text large text-left notosanskr-regular q-ml-sm"
-          style="height: calc((40 / 1312) * 100vh)"
+          style="height: 30px"
         >
           <img
-            :src="require('assets/tumi-icon-high.jpeg')"
+            :src="require('assets/tumi-icon-high.png')"
             class="q-mr-sm cursor-pointer"
             style="height: 100%"
             @click="$router.push({ name: 'home' })"
