@@ -2,7 +2,7 @@
   <q-toolbar class="bg-white text-dark q-pt-md">
     <q-toolbar-title class="flex items-center">
       <img
-        :src="require('assets/tumi-icon-high.jpeg')"
+        :src="require('assets/tumi-icon-high.png')"
         class="q-mr-sm"
         style="height: 60px; width: 60px; object-fit: cover"
       />

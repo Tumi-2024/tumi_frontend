@@ -2,7 +2,7 @@
   <q-card-section class="q-pa-xl bg-white justify-center flex column">
     <img
       style="width: 100%; max-width: 400px; align-self: center"
-      :src="require('assets/tumi-icon-high.jpeg')"
+      :src="require('assets/tumi-icon-high.png')"
       class="q-mr-sm"
     />
     <div

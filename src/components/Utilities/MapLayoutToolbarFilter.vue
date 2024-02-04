@@ -21,7 +21,7 @@
           style="gap: 4px"
         >
           <q-select
-            style="margin-right: 4px; display: flex; flex: 1"
+            style="margin-right: 4px; display: flex; flex: 1; min-width: 125px"
             outlined
             :value="searchType"
             @input="onChangeSelect"
