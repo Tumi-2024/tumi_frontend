@@ -4,13 +4,13 @@
     <q-card-section class="bg-white">
       <div class="row q-pb-md">
         <div class="col-sm-6 col-12 q-px-sm">
-          <span class="information">K-APT 아파트명: &nbsp;&nbsp;&nbsp;</span>
+          <span class="information">K-APT 아파트명: &nbsp;</span>
           <span class="information sub">{{
             estate.group_building_house.title_apartment_k_apt
           }}</span>
         </div>
         <div class="col-sm-6 col-12 q-px-sm">
-          <span class="information">K-APT 단지코드: &nbsp;&nbsp;&nbsp;</span>
+          <span class="information">K-APT 단지코드: &nbsp;</span>
           <span class="information sub">{{
             estate.group_building_house.code_complex_k_apt || "-"
           }}</span>

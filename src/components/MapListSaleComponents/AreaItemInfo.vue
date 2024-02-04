@@ -2,7 +2,7 @@
   <div class="column" style="width: 100%">
     <div
       class="row"
-      style="width: 100%; height: 40px"
+      style="width: 100%; min-height: 40px"
       v-if="getMainInfo.length"
     >
       <div
@@ -10,9 +10,7 @@
         class="col-sm-6 col-12"
         :key="`col-${rIndex}`"
       >
-        <span class="col-text main title"
-          >{{ row.label }} :&nbsp;&nbsp;&nbsp;</span
-        >
+        <span class="col-text main title">{{ row.label }}:&nbsp;</span>
         <q-icon size="16px" v-if="row.isDirection">
           <img src="~assets/icons/sun.svg" />
         </q-icon>
@@ -22,11 +20,11 @@
     <div class="row q-mt-xs q-mt-lg-md">
       <span
         v-for="(row, rIndex) of getSubInfo"
-        class="flex col-sm-3 col-lg-3 col-12"
+        class="flex col-md-3 col-sm-6 col-12"
         :class="`col-sm-${col}`"
         :key="`col-${rIndex}`"
       >
-        <span class="col-text">{{ row.label }}:&nbsp;&nbsp;&nbsp;</span>
+        <span class="col-text">{{ row.label }}:&nbsp;</span>
         <span class="col-text value">{{ row.value }}</span>
       </span>
     </div>

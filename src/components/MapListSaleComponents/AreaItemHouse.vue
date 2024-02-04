@@ -8,7 +8,7 @@
     @mouseleave="onHover = false"
     :focused="isSelected || onHover"
   >
-    <div class="row">
+    <div class="row" style="gap: 8px">
       <div style="flex: 1 0 60px" class="q-mt-sm">
         <q-item-section>
           <address-with-badges
