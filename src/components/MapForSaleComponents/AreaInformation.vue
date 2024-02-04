@@ -60,7 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 .heading-title {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-style: normal;
   font-weight: 500;
   font-size: 17px;
@@ -70,7 +70,7 @@ export default {
 }
 .information-btn {
   .title {
-    font-family: "notosanskr-medium";
+    font-family: "nanum-square";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -80,7 +80,7 @@ export default {
     color: #1a1a1a;
   }
   .sub-title {
-    font-family: "notosanskr-medium";
+    font-family: "nanum-square";
     font-style: normal;
     font-weight: 500;
     font-size: 13px;

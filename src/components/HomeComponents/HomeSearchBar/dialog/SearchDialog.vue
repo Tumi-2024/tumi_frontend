@@ -61,7 +61,7 @@
         >
           <template #title>
             <q-item-label class="no-margin no-padding" header>
-              <p style="font-size: 16px" class="text-black notosanskr-medium">
+              <p style="font-size: 16px" class="text-black nanum-square">
                 최근 검색어
               </p>
             </q-item-label>
@@ -77,7 +77,7 @@
           >
             <template #title>
               <q-item-label class="no-margin no-padding" header>
-                <p style="font-size: 16px" class="text-black notosanskr-medium">
+                <p style="font-size: 16px" class="text-black nanum-square">
                   개발정비사업
                 </p>
               </q-item-label>
@@ -92,7 +92,7 @@
           >
             <template #title>
               <q-item-label class="no-margin no-padding" header>
-                <p style="font-size: 16px" class="text-black notosanskr-medium">
+                <p style="font-size: 16px" class="text-black nanum-square">
                   지역 (동, 도로명)
                 </p>
               </q-item-label>
@@ -106,7 +106,7 @@
           >
             <template #title>
               <q-item-label class="no-margin no-padding" header>
-                <p style="font-size: 14px" class="text-black notosanskr-medium">
+                <p style="font-size: 14px" class="text-black nanum-square">
                   건물/단지
                 </p>
               </q-item-label>

@@ -3,21 +3,18 @@
     <div class="col flex items-end justify-between q-mb-xs">
       <div class="row items-center justify-between q-mr-xs" style="flex: 1">
         <div class="column" style="min-width: 150px">
-          <div
-            class="helper text-left"
-            style="font-family: 'notosanskr-medium'"
-          >
+          <div class="helper text-left" style="font-family: 'nanum-square'">
             {{ getToolbarLabel }}
           </div>
           <div
             class="location-text text-left"
-            style="font-family: 'notosanskr-medium'"
+            style="font-family: 'nanum-square'"
           >
             {{ getToolbarTitle }}
           </div>
         </div>
         <div
-          class="q-my-xs text-left notosanskr-medium q-ml-xs flex"
+          class="q-my-xs text-left nanum-square q-ml-xs flex"
           style="gap: 4px"
         >
           <q-select
@@ -72,7 +69,7 @@
       <div class="flex" style="margin: 6px 0">
         <overall-filter :disable="disable" />
         <div
-          class="scrolling-wrapper-flexbox notosanskr-medium row float-right"
+          class="scrolling-wrapper-flexbox nanum-square row float-right"
           :class="{ hideScrollbar: $q.platform.is.mobile }"
         >
           <slot>

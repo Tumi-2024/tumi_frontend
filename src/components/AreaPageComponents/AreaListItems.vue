@@ -1,6 +1,6 @@
 <template>
   <q-card flat class="q-mt-sm">
-    <q-card-section class="notosanskr-medium">
+    <q-card-section class="nanum-square">
       관심지역 매물 <span class="text-primary">320</span>개
     </q-card-section>
 

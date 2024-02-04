@@ -1,7 +1,7 @@
 // app global css in SCSS form
 @font-face {
-  font-family: notosanskr-medium;
-  src: url(./font/NotoSansKR-Medium.otf);
+  font-family: nanum-square;
+  src: url(./font/NanumSquareR.otf);
 }
 
 @font-face {
@@ -19,16 +19,26 @@
   src: url(./font/NotoSansKR-Bold.otf);
 }
 
-.notosanskr-medium {
-  font-family: "notosanskr-medium";
+@font-face {
+  font-family: nanum-square;
+  src: url(./font/NanumSquareR.otf);
+}
+
+@font-face {
+  font-family: nanum-square-bold;
+  src: url(./font/NanumSquareB.otf);
+}
+
+.nanum-square {
+  font-family: "nanum-square";
 }
 
 .notosanskr-regular {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
 }
 
 .notosanskr-bold {
-  font-family: "notosanskr-bold";
+  font-family: "nanum-square-bold";
 }
 
 .summernote {
@@ -38,5 +48,13 @@
 }
 
 .app {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-bold";
+  // font-family: "notosanskr-regular";
+  // font-family: "NanumSquareLight";
+  // font-family: "NanumSquareBold";
+  // font-family: "NanumSquareExtraBold";
+  // font-family: "NanumSquareAcb";
+  // font-family: "NanumSquareAceb";
+  // font-family: "NanumSquareAcl";
+  // font-family: "NanumSquareAcr";
 }

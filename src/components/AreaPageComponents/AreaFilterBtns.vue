@@ -6,7 +6,7 @@
         outline
         color="primary"
         padding="8px"
-        style="border-radius: 8px; height: 36px;"
+        style="border-radius: 8px; height: 36px"
         class="q-mr-sm"
       >
         <q-icon size="20px">
@@ -14,7 +14,7 @@
         </q-icon>
       </q-btn>
 
-      <div class="scrolling-wrapper-flexbox notosanskr-medium row sc">
+      <div class="scrolling-wrapper-flexbox nanum-square row sc">
         <q-btn unelevated padding="0px" class="q-mr-xs q-px-md">
           매매,전세,월세
         </q-btn>

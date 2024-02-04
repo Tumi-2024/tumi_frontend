@@ -1,5 +1,5 @@
 <template>
-  <div class="top-info-container notosanskr-medium">
+  <div class="top-info-container nanum-square">
     <div
       class="markerYear"
       :class="{ 'mr-54': marker.infoNumber }"

@@ -2,7 +2,7 @@
   <q-list separator class="rounded-borders q-py-md">
     <q-item-label class="no-margin no-padding" header>
       <slot name="title">
-        <p style="font-size: 14px" class="text-black notosanskr-medium">
+        <p style="font-size: 14px" class="text-black nanum-square">
           <span class="text-primary">투미!</span>
           추천 검색
         </p>

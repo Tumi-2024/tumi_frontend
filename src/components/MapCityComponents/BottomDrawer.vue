@@ -7,7 +7,7 @@
       >
         <q-btn
           flat
-          class="btn-view-properties full-width notosanskr-medium"
+          class="btn-view-properties full-width nanum-square"
           :to="{
             name: 'listHouses',
             query: {

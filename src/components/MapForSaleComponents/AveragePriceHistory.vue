@@ -1,9 +1,7 @@
 <template>
   <q-card flat class="bg-white notosanskr-regular">
     <q-card-section class="row q-pb-none justify-between">
-      <div class="title-heading col-6">
-        최근 3년 평균 실거래가
-      </div>
+      <div class="title-heading col-6">최근 3년 평균 실거래가</div>
 
       <q-select
         dense
@@ -26,10 +24,10 @@
         <div class="title q-py-xs">
           최근 한달기준 실거래가 평균
           <q-badge outline color="grey-13" class="q-mx-xs bg-white">
-            <span class="date  notosanskr-medium">{{ priceAverage.date }}</span>
+            <span class="date nanum-square">{{ priceAverage.date }}</span>
           </q-badge>
         </div>
-        <div class="price-value notosanskr-medium">
+        <div class="price-value nanum-square">
           {{ priceAverage.value }}
         </div>
       </div>
@@ -42,7 +40,7 @@
           outline
           class="q-mr-sm q-px-sm"
         >
-          <span class=" notosanskr-medium">#{{ badge }}</span>
+          <span class="nanum-square">#{{ badge }}</span>
         </q-badge>
       </div>
     </q-card-section>

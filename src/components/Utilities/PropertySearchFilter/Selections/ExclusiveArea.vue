@@ -1,8 +1,6 @@
 <template>
   <q-card-section>
-    <div
-      class="title q-pa-none row justify-between items-center notosanskr-medium"
-    >
+    <div class="title q-pa-none row justify-between items-center nanum-square">
       <div class="title row">
         <text-under-highlight text="면적" />
       </div>
@@ -19,7 +17,7 @@
         v-for="(property, i) of getProperties"
         flat
         :key="i"
-        class="notosanskr-medium"
+        class="nanum-square"
         style="flex: 1"
         :style="{ 'background-color': property.disabled ? '#e9e9e9' : '' }"
         :disable="property.disabled"

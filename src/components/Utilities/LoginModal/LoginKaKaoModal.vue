@@ -5,7 +5,7 @@
         <div class="heading-text">
           투자매물을 <br />쉽게 찾고 관리할 수 있어요!
         </div>
-        <q-btn flat class="bg-yellow q-mx-md notosanskr-medium" @click="login">
+        <q-btn flat class="bg-yellow q-mx-md nanum-square" @click="login">
           <q-icon class="q-px-sm" size="32px">
             <img src="~assets/icons/kakao.svg" alt="" srcset="" />
           </q-icon>

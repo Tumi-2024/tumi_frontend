@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md q-mt-md">
+  <q-card-section class="toolbar nanum-square q-pa-none q-px-md q-mt-md">
     <q-btn flat padding="4px" ripple :to="{ path: '/' }">
       <q-icon name="keyboard_backspace" size="28px"></q-icon>
     </q-btn>

@@ -9,7 +9,7 @@
   >
     <q-card flat class="dialog overflow-hidden">
       <div style="background-color: #e8e8e8">
-        <div class="header-section notosanskr-medium">
+        <div class="header-section nanum-square">
           정비사업 정보
           <div>
             <span class="q-pr-sm text-caption">
@@ -43,17 +43,17 @@
           >
             <q-tab
               name="summary"
-              class="tabs-text notosanskr-medium"
+              class="tabs-text nanum-square"
               label="주요정보"
             />
             <q-tab
               name="more_information"
-              class="tabs-text notosanskr-medium"
+              class="tabs-text nanum-square"
               label="상세정보"
             />
             <q-tab
               name="image_material"
-              class="tabs-text notosanskr-medium"
+              class="tabs-text nanum-square"
               label="이미지 자료"
             />
           </q-tabs>

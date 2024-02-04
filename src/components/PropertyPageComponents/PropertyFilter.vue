@@ -1,7 +1,7 @@
 <template>
   <q-card flat class="q-mt-sm" style="margin-top: 0px">
     <q-card-section class="row justify-between card-section" style="">
-      <div class="notosanskr-medium" style="">
+      <div class="nanum-square" style="">
         <q-btn
           unelevated
           class="q-mr-sm"
@@ -140,7 +140,7 @@ export default {
   border-radius: 1;
 }
 
-.notosanskr-medium {
+.nanum-square {
   white-space: nowrap;
   overflow-x: auto;
 }

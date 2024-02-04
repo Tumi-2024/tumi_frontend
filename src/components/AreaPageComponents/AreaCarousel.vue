@@ -30,13 +30,10 @@
           </section>
 
           <section class="row justify-between items-center q-pt-sm col-12">
-            <div class="text-address notosanskr-medium">
+            <div class="text-address nanum-square">
               {{
                 interest.address
-                  ? interest.address
-                      .split(" ")
-                      .slice(1)
-                      .join(" ")
+                  ? interest.address.split(" ").slice(1).join(" ")
                   : null
               }}
             </div>

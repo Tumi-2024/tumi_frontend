@@ -94,7 +94,7 @@ export default {
   }
 }
 .heading-title {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-style: normal;
   font-weight: 500;
   font-size: 17px;

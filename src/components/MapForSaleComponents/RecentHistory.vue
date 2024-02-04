@@ -1,5 +1,5 @@
 <template>
-  <q-card class="bg-white notosanskr-medium">
+  <q-card class="bg-white nanum-square">
     <q-card-section class="q-pb-none justify-between items-center row">
       <div class="title-heading col-6">[{{ title }}] 실거래가 히스토리</div>
       <q-select
@@ -26,7 +26,7 @@
           :key="tab.level"
           :disable="tab.level !== 'SALE'"
           :name="tab.level"
-          class="tabs-text notosanskr-medium"
+          class="tabs-text nanum-square"
           :label="tab.label"
         />
       </q-tabs>
@@ -71,7 +71,7 @@
                   >
                     번지/건물단지명
                   </div>
-                  <div class="flex justify-center" style="flex: 15 0">층수</div>
+                  <!-- <div class="flex justify-center" style="flex: 15 0">층수</div> -->
                   <div style="flex: 17 0" class="justify-center flex">
                     <q-select
                       style="width: 90%"

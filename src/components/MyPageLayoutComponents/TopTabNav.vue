@@ -1,10 +1,6 @@
 <template>
   <q-card-section class="q-pa-none full-width bg-red">
-    <q-tabs
-      dense
-      align="justify"
-      class="bg-white text-primary notosanskr-medium"
-    >
+    <q-tabs dense align="justify" class="bg-white text-primary nanum-square">
       <q-route-tab
         v-for="(tab, i) in routeTabs"
         :key="i"

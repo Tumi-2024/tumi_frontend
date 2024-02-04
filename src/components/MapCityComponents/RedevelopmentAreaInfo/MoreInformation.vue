@@ -10,10 +10,10 @@
       <!-- <q-badge
         outline
         color="primary"
-        class="badge-type notosanskr-medium"
+        class="badge-type nanum-square"
         label="재개발 구역"
       /> -->
-      <div class="title-heading notosanskr-medium">
+      <div class="title-heading nanum-square">
         <!-- 서울영등포 공공주택지구 -->
         {{ getMapSelectedArea.title }}
       </div>
@@ -23,7 +23,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">정비사업 개요</div>
+      <div class="title-heading nanum-square">정비사업 개요</div>
       <div class="row table">
         <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo" :key="i">
           <div class="q-pa-sm label" style="color: #707070">
@@ -43,7 +43,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">도시계획 사항</div>
+      <div class="title-heading nanum-square">도시계획 사항</div>
       <div class="row table">
         <div
           class="col-sm-6 col-12 row"
@@ -68,7 +68,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">건축 계획</div>
+      <div class="title-heading nanum-square">건축 계획</div>
       <div class="row table">
         <div class="col-sm-6 col-12 row" v-for="(item, i) of getInfo2" :key="i">
           <div class="q-pa-sm label">
@@ -87,7 +87,7 @@
       </div>
     </section>
     <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">주택 공급 계획</div>
+      <div class="title-heading nanum-square">주택 공급 계획</div>
       <span style="font-weight: 500">분양 계획</span>
       <div class="row table" style="margin-bottom: 20px">
         <div class="col-sm-3 col-12 row" v-for="(item, i) of getInfo3" :key="i">
@@ -136,7 +136,7 @@
       class="investment-point notosanskr-regular"
       v-if="getMapSelectedArea.description_investment"
     >
-      <div class="title-heading notosanskr-medium">투자포인트</div>
+      <div class="title-heading nanum-square">투자포인트</div>
       <div
         class="item summernote"
         v-html="getMapSelectedArea.description_investment"
@@ -148,7 +148,7 @@
         @click="goToDetail"
         color="primary"
         text-color="white"
-        class="notosanskr-medium"
+        class="nanum-square"
         label="이지역 투자매물 보러가기"
       />
     </section>

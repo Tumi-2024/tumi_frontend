@@ -8,7 +8,7 @@
         :key="i"
         flat
         style="flex: 1 0 auto"
-        class="notosanskr-medium"
+        class="nanum-square"
         :class="{ selected: selected === transaction }"
         :label="transaction"
         @click="changeValue(transaction)"

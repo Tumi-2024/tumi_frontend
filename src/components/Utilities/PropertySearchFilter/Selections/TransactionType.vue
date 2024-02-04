@@ -7,7 +7,7 @@
         v-for="(transaction, i) of transactions"
         :key="i"
         flat
-        class="col-3 notosanskr-medium"
+        class="col-3 nanum-square"
         :class="{ selected: selected === transaction.label }"
         :label="transaction.label"
         @click="changeValue(transaction.value)"

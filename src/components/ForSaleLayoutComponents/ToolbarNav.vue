@@ -74,7 +74,7 @@ export default {
   background: white;
 }
 .heading-nav-bar {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-weight: 500;
   font-size: 17px;
   line-height: 44px;

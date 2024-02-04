@@ -9,7 +9,7 @@
       active-class="text-primary"
     >
       <img :src="require(`../../assets/icons/${tab.icon}`)" />
-      <span class="item-label text-center notosanskr-medium mt-md">
+      <span class="item-label text-center nanum-square mt-md">
         {{ tab.label }}
       </span>
     </q-route-tab>

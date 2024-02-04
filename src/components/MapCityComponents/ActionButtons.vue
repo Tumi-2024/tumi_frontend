@@ -18,8 +18,8 @@
           <img src="~assets/icons/cone.svg" alt="" srcset="" />
         </q-icon>
         <div
-          :class="{ 'text-white': getColor !== 'yellow-12' }"
-          class="off text-dark notosanskr-bold"
+          :class="{ 'text-white': getColor !== 'papaya-12' }"
+          class="off notosanskr-bold"
         >
           {{ getLabel }}
         </div>
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       type: [
-        // { color: "yellow-12", label: "All", key: null },
+        { color: "papaya-12", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
         { color: "green", label: "가로/모아", key: "가로모아" },

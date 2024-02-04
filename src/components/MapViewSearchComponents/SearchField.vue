@@ -9,11 +9,7 @@
     >
       <template v-slot:append>
         <!-- <q-icon name="close" @click="text = ''" class="cursor-pointer" /> -->
-        <q-btn
-          flat
-          class="cancel-text q-pr-sm notosanskr-medium"
-          @click="text = ''"
-        >
+        <q-btn flat class="cancel-text q-pr-sm nanum-square" @click="text = ''">
           취소
         </q-btn>
       </template>

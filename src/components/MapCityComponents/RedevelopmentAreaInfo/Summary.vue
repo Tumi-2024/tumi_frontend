@@ -7,7 +7,7 @@
         class="bmedium"
         :label="getMapSelectedArea.category"
       />
-      <div class="title-heading notosanskr-medium">
+      <div class="title-heading nanum-square">
         {{ getMapSelectedArea.title }}
       </div>
       <div class="sub-title notosanskr-regular">
@@ -26,13 +26,13 @@
             />
           </div>
           <section class="column">
-            <div class="stat-title notosanskr-medium">
+            <div class="stat-title nanum-square">
               {{ i + 1 }}. {{ stat.title }}
             </div>
-            <div class="stat-value notosanskr-medium" v-if="stat.default == 0">
+            <div class="stat-value nanum-square" v-if="stat.default == 0">
               {{ stat.value | number("0,0") }} {{ stat.unit }}
             </div>
-            <div class="stat-value notosanskr-medium" v-else>
+            <div class="stat-value nanum-square" v-else>
               {{ stat.value }}
             </div>
           </section>
@@ -41,11 +41,11 @@
       </div>
     </section>
     <!-- <section class="investment-point bg-white">
-      <div class="title-heading notosanskr-medium">
+      <div class="title-heading nanum-square">
         실거래가
       </div>
       <div class="row justify-between">
-        <div class="sub-title notosanskr-medium">
+        <div class="sub-title nanum-square">
           실거래 정보
         </div>
         <div class="help-text">
@@ -120,7 +120,7 @@
         @click="goToDetail"
         color="primary"
         text-color="white"
-        class="notosanskr-medium"
+        class="nanum-square"
         label="이 지역 투자매물 보러가기"
       />
     </section>
@@ -465,7 +465,7 @@ export default {
   }
 }
 .heading-title {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-style: normal;
   font-weight: 500;
   font-size: 17px;

@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <div class="q-pa-none row items-center justify-between notosanskr-medium">
+    <div class="q-pa-none row items-center justify-between nanum-square">
       <text-under-highlight text="감정가"></text-under-highlight>
       <q-btn
         flat
@@ -18,7 +18,7 @@
         v-for="(price, i) of prices"
         :key="i"
         flat
-        class="col-2 notosanskr-medium"
+        class="col-2 nanum-square"
         :class="{ selected: selected === price && selected != '' }"
         :label="price"
         @click="selected = price"
@@ -28,7 +28,7 @@
     <q-separator />
 
     <div class="specified-amount q-mt-lg q-mb-sm">
-      <div class="title notosanskr-medium">
+      <div class="title nanum-square">
         총액
         <span class="notosanskr-regular">(만원)</span>
       </div>
@@ -44,7 +44,7 @@
         </div>
         <div
           class="col-2 text-weight-bolder text-center"
-          style="font-size: 24px;"
+          style="font-size: 24px"
         >
           ~
         </div>

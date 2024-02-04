@@ -1,7 +1,7 @@
 <template>
   <div class="image-material">
     <div class="related-images">
-      <div class="title-heading notosanskr-medium">관련 이미지</div>
+      <div class="title-heading nanum-square">관련 이미지</div>
       <div class="image q-mt-md" v-if="getMapSelectedArea.image_location">
         <q-img :src="getMapSelectedArea.image_location" :ratio="4 / 3" />
       </div>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="no-registered-data" v-if="noImages()">
-        <div class="text-no-data notosanskr-medium">등록된 자료가 없습니다</div>
+        <div class="text-no-data nanum-square">등록된 자료가 없습니다</div>
       </div>
 
       <div style="height: 200px"></div>
@@ -23,7 +23,7 @@
         @click="goToDetail"
         color="primary"
         text-color="white"
-        class="notosanskr-medium"
+        class="nanum-square"
         label="이지역 투자매물 보러가기"
       />
     </section>

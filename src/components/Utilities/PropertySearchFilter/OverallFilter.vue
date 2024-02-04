@@ -23,7 +23,7 @@
     <q-dialog v-model="modal" position="bottom">
       <q-card class="notosanskr-regular overflow-hidden">
         <q-card-section
-          class="head-section bg-white notosanskr-medium row justify-between items-center"
+          class="head-section bg-white nanum-square row justify-between items-center"
         >
           <div>검색 필터</div>
           <q-btn flat padding="0px">
@@ -54,7 +54,7 @@
           />
 
           <price-filter
-            label="주택 가격"
+            label="매매가"
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('prices', $event)"
@@ -77,9 +77,9 @@
             ref="option5"
           /> -->
 
-          <q-card-section class="q-pa-none bg-white q-mt-md notosanskr-medium">
+          <q-card-section class="q-pa-none bg-white q-mt-md nanum-square">
             <!-- Action buttons -->
-            <div class="row q-py-md justify-around notosanskr-medium">
+            <div class="row q-py-md justify-around nanum-square">
               <div class="col q-mx-xs">
                 <!-- reset | 초기화 -->
                 <q-btn

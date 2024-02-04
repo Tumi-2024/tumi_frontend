@@ -115,7 +115,7 @@
         <gmap-custom-marker :marker="badge.center">
           <template v-if="getMapZoom >= redevZoom">
             <div
-              class="area-badge-info notosanskr-medium"
+              class="area-badge-info nanum-square"
               :class="`bg-${getBadgeColor(badge)}`"
               @mouseup.self="selectArea(badge)"
             >

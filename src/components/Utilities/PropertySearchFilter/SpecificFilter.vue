@@ -25,12 +25,12 @@
     <!-- Dialog Section -->
     <q-dialog v-model="modal" position="bottom">
       <q-card class="notosanskr-regular">
-        <q-card-section class="head-section bg-white notosanskr-medium">
+        <q-card-section class="head-section bg-white nanum-square">
           <div class="indicator"></div>
         </q-card-section>
 
         <q-card-section
-          class="q-pa-none bg-white notosanskr-medium"
+          class="q-pa-none bg-white nanum-square"
           style="min-height: 200px"
         >
           <component
@@ -43,7 +43,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-lg bg-white">
-          <div class="row justify-around notosanskr-medium">
+          <div class="row justify-around nanum-square">
             <div class="col q-mx-xs">
               <!-- reset | 초기화 -->
               <q-btn

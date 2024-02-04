@@ -1,6 +1,6 @@
 <template>
   <q-card flat class="q-mt-sm">
-    <q-card-section class="notosanskr-medium">
+    <q-card-section class="nanum-square">
       전체 매물
       <span class="text-primary">{{ estateCount }} </span>개
     </q-card-section>

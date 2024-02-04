@@ -5,10 +5,7 @@
   >
     <div class="col flex items-center justify-between">
       <div class="row items-center">
-        <div
-          class="col-4 text-left notosanskr-medium row"
-          style="flex: 1; gap: 8px"
-        >
+        <div class="col-4 text-left nanum-square row" style="flex: 1; gap: 8px">
           <q-select
             class="notosanskr-regular self-end"
             dense
@@ -43,7 +40,7 @@
             hide-selected
             :options="options"
             @filter="filterFn"
-            style="flex: 1"
+            style="flex: 1; ime-mode: active"
           >
             <template v-slot:no-option>
               <q-item>
@@ -56,7 +53,7 @@
       <div class="flex">
         <overall-filter :disable="disable" />
         <div
-          class="scrolling-wrapper-flexbox notosanskr-medium row float-right"
+          class="scrolling-wrapper-flexbox nanum-square row float-right"
           :class="{ hideScrollbar: $q.platform.is.mobile }"
         >
           <slot>

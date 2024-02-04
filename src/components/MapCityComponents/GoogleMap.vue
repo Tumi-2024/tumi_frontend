@@ -18,8 +18,8 @@
         dragend: dragEnd,
         dragstart: dragStart,
         load: idle,
-        zoom_changed: zoomChanged
-        // bounds_changed: boundsChanged
+        zoom_changed: zoomChanged,
+        bounds_changed: boundsChanged
       }"
     >
       <!-- 각 구 별 매물/실거래가 보여주기 -->
@@ -116,7 +116,7 @@
           :lng="badge.center.lng"
         >
           <div
-            class="area-badge-info notosanskr-medium"
+            class="area-badge-info nanum-square"
             :class="`bg-${getBadgeColor(badge)}`"
             @mouseup="selectArea(badge)"
           >
@@ -392,11 +392,11 @@ export default {
   },
   async beforeMount() {
     this.setSimpleHouses([]);
-    this.boundsChanged = debounce(this.boundsChanged, 2000);
   },
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
+    this.boundsChanged = debounce(this.boundsChanged, 2000);
     // this.$refs.naverMapRef.map.addListener("", this.idle);
     // naverMap.setCenter(this.getMapCenter);
     // this.changeMapCenter({
@@ -416,7 +416,6 @@ export default {
     ...mapActions(["changeUserLocation"]),
 
     onClickMarker(item) {
-      console.log(this.isDragEnd);
       if (!this.isDragEnd) return;
 
       if (this.$route.name === "map_city_area") {
@@ -532,9 +531,6 @@ export default {
     },
     idle(e) {
       this.getHouseInfo();
-
-      const zoom = this.$refs.naverMapRef.map.zoom;
-      console.log(zoom);
     },
 
     async getRedevInfo(bounds = this.$refs.naverMapRef.map.bounds) {

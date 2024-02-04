@@ -1,9 +1,7 @@
 <template>
-  <q-card class="bg-white notosanskr-medium">
+  <q-card class="bg-white nanum-square">
     <q-card-section class="row q-pb-none justify-between">
-      <div class="title-heading col-6">
-        최근 실거래가
-      </div>
+      <div class="title-heading col-6">최근 실거래가</div>
 
       <q-select
         dense
@@ -35,9 +33,7 @@
         <q-separator vertical style="margin: 0 20px" v-if="charter.value" />
 
         <div class="col" v-if="charter.value">
-          <q-badge outline class="text-teal bg-white q-mr-sm">
-            전세가
-          </q-badge>
+          <q-badge outline class="text-teal bg-white q-mr-sm"> 전세가 </q-badge>
           <q-badge outline class="text-grey bg-white q-mr-sm">
             {{ charter.date }}
           </q-badge>
@@ -49,7 +45,7 @@
       <div class="price-per-land-area row q-mt-md" v-if="pricePerLandArea">
         <div class="label text-grey-14 notosanskr-regular">토지면적당 단가</div>
         <q-separator vertical class="q-mx-xs" />
-        <div class="value text-primary notosanskr-medium">
+        <div class="value text-primary nanum-square">
           {{ pricePerLandArea }}/ 평
         </div>
       </div>
@@ -73,10 +69,8 @@
       </div>
     </q-card-section>
 
-    <q-card-section class="bg-white q-pb-xl notosanskr-medium" v-if="showUnits">
-      <div class="unit-heading q-py-xs notosanskr-regular">
-        단위(만)
-      </div>
+    <q-card-section class="bg-white q-pb-xl nanum-square" v-if="showUnits">
+      <div class="unit-heading q-py-xs notosanskr-regular">단위(만)</div>
 
       <div class="unit-table">
         <!-- Division | 구분 -->
@@ -109,9 +103,9 @@
           <div class="col-3">월세가</div>
           <div class="monthly col notosanskr-bold">
             {{ unit.monthly.deposit }}
-            <span class=" notosanskr-regular">보증금 /</span>
+            <span class="notosanskr-regular">보증금 /</span>
             {{ unit.monthly.rent }}
-            <span class=" notosanskr-regular">월세</span>
+            <span class="notosanskr-regular">월세</span>
           </div>
         </div>
       </div>

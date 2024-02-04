@@ -1,11 +1,11 @@
 <template>
   <q-card flat class="bg-white">
     <q-card-section class="q-pb-none justify-between">
-      <div class="title-heading notosanskr-medium">실거래가 히스토리</div>
+      <div class="title-heading nanum-square">실거래가 히스토리</div>
       <q-tabs
         v-model="tab"
         align="justify"
-        class="tabs bg-white notosanskr-medium"
+        class="tabs bg-white nanum-square"
         :breakpoint="0"
         indicator-color="primary"
         active-color="primary"
@@ -53,7 +53,7 @@
           >
             {{ item.deal }}
           </div>
-          <div class="price col row justify-center notosanskr-medium">
+          <div class="price col row justify-center nanum-square">
             {{ item.price }}
           </div>
           <div class="number-floors col row justify-center">

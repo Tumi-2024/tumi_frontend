@@ -1,8 +1,6 @@
 <template>
   <q-card class="bg-white q-pb-xl">
-    <q-card-section class="heading-title notosanskr-medium">
-      관리비
-    </q-card-section>
+    <q-card-section class="heading-title nanum-square"> 관리비 </q-card-section>
 
     <q-card-section class="q-py-none">
       <q-card class="admin-cost row q-mt-md" bordered>
@@ -11,7 +9,7 @@
           v-for="item in cost"
           :key="item.label"
         >
-          <div class="full-width text-center value notosanskr-medium">
+          <div class="full-width text-center value nanum-square">
             {{ item.value }}
           </div>
 

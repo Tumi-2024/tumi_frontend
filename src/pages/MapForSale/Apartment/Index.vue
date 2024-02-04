@@ -594,9 +594,9 @@ export default {
         {
           label: "공급면적",
           value: this.getValue(
-            `${
-              houseInfo.size_supply_area_m2
-            } m² | ${houseInfo.size_supply_area_pyeong.toFixed(1)} 평`
+            `${houseInfo.size_supply_area_m2} m² | ${(
+              houseInfo.size_supply_area_pyeong || 0
+            ).toFixed(1)} 평`
           )
         },
         {

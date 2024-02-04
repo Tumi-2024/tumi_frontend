@@ -1,22 +1,14 @@
 <template>
   <q-card flat class="my-card" v-if="lists">
-    <q-card-section class="heading-title notosanskr-medium">
+    <q-card-section class="heading-title nanum-square">
       인근지역 유사거래 사례
     </q-card-section>
     <div class="info-table">
       <div class="row table-row-heading">
-        <div class="col table-row-label">
-          계약일
-        </div>
-        <div class="col table-row-label">
-          주소
-        </div>
-        <div class="col table-row-label">
-          단가
-        </div>
-        <div class="col table-row-label">
-          공시지가 비율
-        </div>
+        <div class="col table-row-label">계약일</div>
+        <div class="col table-row-label">주소</div>
+        <div class="col table-row-label">단가</div>
+        <div class="col table-row-label">공시지가 비율</div>
       </div>
 
       <div v-for="(list, i) of lists" :key="i" class="row table-row-data">
@@ -68,7 +60,7 @@ export default {
   line-height: 26px;
 }
 .table-row-label {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-style: normal;
   font-weight: normal;
   font-size: 13px;

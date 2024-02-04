@@ -11,11 +11,11 @@
         <q-badge
           outline
           :color="getColor(getMapSelectedArea.category)"
-          class="badge-type notosanskr-medium"
+          class="badge-type nanum-square"
           :label="getMapSelectedArea.category"
         />
       </div>
-      <div class="info q-mt-sm notosanskr-medium">
+      <div class="info q-mt-sm nanum-square">
         <div class="head">
           <q-badge outline class="q-mr-xs" color="grey-6">
             <q-icon size="14px">

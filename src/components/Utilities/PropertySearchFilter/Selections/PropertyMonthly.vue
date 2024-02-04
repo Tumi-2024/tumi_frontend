@@ -1,6 +1,6 @@
 <template>
   <q-card-section>
-    <div class="q-pa-none row justify-between items-center notosanskr-medium">
+    <div class="q-pa-none row justify-between items-center nanum-square">
       <text-under-highlight text="월세"></text-under-highlight>
       <q-btn
         flat
@@ -18,7 +18,7 @@
         v-for="(price, i) of prices"
         :key="i"
         flat
-        class="col-2 notosanskr-medium"
+        class="col-2 nanum-square"
         :class="{ selected: selected === price && selected != '' }"
         :label="price"
         @click="changePriceText(price)"
@@ -28,7 +28,7 @@
     <q-separator />
 
     <div class="specified-amount q-mt-lg q-mb-sm">
-      <div class="title notosanskr-medium">
+      <div class="title nanum-square">
         총액
         <span class="notosanskr-regular">(만원)</span>
       </div>
@@ -46,7 +46,7 @@
         </div>
         <div
           class="col-2 text-weight-bolder text-center"
-          style="font-size: 24px;"
+          style="font-size: 24px"
         >
           ~
         </div>
@@ -102,18 +102,18 @@ export default {
   methods: {
     changePriceText(text) {
       this.selected = text;
-      this.$emit('select', {
+      this.$emit("select", {
         text: this.selected,
         min: this.min,
         max: this.max
-      })
+      });
     },
     changeValue(val) {
-      this.$emit('select', {
+      this.$emit("select", {
         selected: this.selected,
         min: this.min,
         max: this.max
-      })
+      });
     }
   }
 };

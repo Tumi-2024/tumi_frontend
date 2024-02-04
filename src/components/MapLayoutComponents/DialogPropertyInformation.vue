@@ -1,11 +1,11 @@
 <template>
   <q-dialog v-model="dialogPropertyInfo" position="bottom">
     <q-card class="notosanskr-regular">
-      <q-card-section class="header-title bg-white notosanskr-medium">
+      <q-card-section class="header-title bg-white nanum-square">
         찾아볼 매물 정보
       </q-card-section>
 
-      <q-card-section class="row bg-white q-pa-none notosanskr-medium">
+      <q-card-section class="row bg-white q-pa-none nanum-square">
         <div v-for="(item, i) of properties" :key="i" class="col-3">
           <q-btn
             flat
@@ -29,7 +29,7 @@
           unelevated
           text-color="positive"
           label="정보 조회하기"
-          class="btn-retrieving-info full-width notosanskr-medium"
+          class="btn-retrieving-info full-width nanum-square"
         />
       </q-card-section>
     </q-card>

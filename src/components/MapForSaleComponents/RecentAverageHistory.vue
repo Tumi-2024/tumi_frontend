@@ -1,5 +1,5 @@
 <template>
-  <q-card class="bg-white notosanskr-medium">
+  <q-card class="bg-white nanum-square">
     <q-card-section class="row q-pb-none justify-between">
       <div class="title-heading col-6">최근 3년 평균 실거래가</div>
       <q-select

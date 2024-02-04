@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="toolbar notosanskr-medium q-pa-none">
+  <q-card-section class="toolbar nanum-square q-pa-none">
     <div>
       <q-btn
         flat

@@ -35,7 +35,7 @@ export default {
           align: "end",
           display: true,
           labels: {
-            fontFamily: "notosanskr-medium"
+            fontFamily: "nanum-square"
           }
         },
         responsive: true,
@@ -46,7 +46,7 @@ export default {
             {
               ticks: {
                 beginAtZero: true,
-                callback: function(value) {
+                callback: function (value) {
                   return value + "억";
                 }
               }

@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="toolbar notosanskr-medium q-pa-none">
+  <q-card-section class="toolbar nanum-square q-pa-none">
     <div class="row items-center">
       <q-btn flat class="row" color="dark" :to="{ name: returnBtn.pathName }">
         <!-- <q-btn flat class="row" :to="{ name: returnBtn.pathName }"> -->

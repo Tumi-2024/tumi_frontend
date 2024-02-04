@@ -1,6 +1,6 @@
 <template>
   <q-card flat class="q-mt-sm">
-    <q-card-section class="notosanskr-medium">
+    <q-card-section class="nanum-square">
       전체 실거래가
       <span class="text-primary">{{ getNumberWithCommas(estateCount) }} </span
       >개

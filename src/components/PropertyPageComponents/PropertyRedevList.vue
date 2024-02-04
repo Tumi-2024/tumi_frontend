@@ -90,7 +90,7 @@
 
     <q-dialog v-model="isEdit" seamless position="bottom">
       <q-card class="modal">
-        <q-card-section class="row notosanskr-medium">
+        <q-card-section class="row nanum-square">
           <div class="col q-px-xs">
             <q-btn
               class="full-width select-delete"

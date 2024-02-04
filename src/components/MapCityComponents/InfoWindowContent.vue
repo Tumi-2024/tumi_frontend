@@ -33,7 +33,7 @@
     >
       <div class="col items-center">
         <div
-          class="info-heading notosanskr-medium text-center"
+          class="info-heading nanum-square text-center"
           style="padding: 4px"
           :style="{ backgroundColor: getColor(item) }"
         >

@@ -1,6 +1,6 @@
 <template>
   <section class="progress-section bg-white">
-    <div class="title-heading notosanskr-medium">
+    <div class="title-heading nanum-square">
       {{ title }}
     </div>
 

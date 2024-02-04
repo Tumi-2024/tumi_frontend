@@ -8,7 +8,7 @@
         :key="i"
         style="flex-basis: 20%"
         flat
-        class="col notosanskr-medium"
+        class="col nanum-square"
         :class="{
           selected: getIsActive(property.value)
         }"

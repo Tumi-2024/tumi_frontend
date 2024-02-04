@@ -1,8 +1,6 @@
 <template>
-  <q-card class="bg-white notosanskr-medium">
-    <q-card-section class="heading-title">
-      학교
-    </q-card-section>
+  <q-card class="bg-white nanum-square">
+    <q-card-section class="heading-title"> 학교 </q-card-section>
 
     <q-card-section>
       <q-tabs

@@ -2,9 +2,9 @@
   <q-card
     flat
     class="q-mx-md"
-    style="background: #FFD8CC; border-radius: 8px; margin-top: 36px"
+    style="background: #ffd8cc; border-radius: 8px; margin-top: 36px"
   >
-    <q-card-section class="row justify-around items-center notosanskr-medium">
+    <q-card-section class="row justify-around items-center nanum-square">
       <div class="col">
         <q-btn
           padding="2px"

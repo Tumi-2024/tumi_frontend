@@ -2,7 +2,7 @@
   <div v-if="isVisible()">
     <q-separator class="q-my-lg" />
 
-    <div class="title q-mb-lg notosanskr-medium">
+    <div class="title q-mb-lg nanum-square">
       가로주택 세부유형 <span>(중복 선택 가능)</span>
     </div>
 
@@ -11,7 +11,7 @@
         v-for="(type, i) of types"
         :key="i"
         flat
-        class="col-4 notosanskr-medium"
+        class="col-4 nanum-square"
         :class="{ selected: selected === type && selected != '' }"
         :label="type"
         @click="select(type)"

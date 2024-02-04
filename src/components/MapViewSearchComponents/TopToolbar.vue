@@ -1,6 +1,6 @@
 <template>
   <q-card flat style="height: 44px">
-    <q-card-section class="toolbar notosanskr-medium q-pa-none q-px-md">
+    <q-card-section class="toolbar nanum-square q-pa-none q-px-md">
       <div class="row items-center">
         <q-btn flat padding="8px 4px" :to="{ name: 'map_city' }">
           <q-icon

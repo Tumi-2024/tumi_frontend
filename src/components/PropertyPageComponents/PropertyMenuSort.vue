@@ -1,7 +1,7 @@
 <template>
   <q-card flat class="q-mt-sm">
     <q-card-section
-      class="sort-header row bg-white q-pa-none notosanskr-medium justify-between items-center"
+      class="sort-header row bg-white q-pa-none nanum-square justify-between items-center"
       style="height: 48px"
     >
       <span style="line-height: 24px; padding-left: 16px">

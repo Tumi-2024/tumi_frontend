@@ -332,7 +332,7 @@ export default {
           {
             type: "pyeong",
             value:
-              item.group_building_house.size_supply_area_pyeong.toFixed(0) +
+              item.group_building_house.size_supply_area_pyeong?.toFixed(0) +
               "평"
           },
           {
@@ -364,7 +364,7 @@ export default {
 
 <style lang="scss" scoped>
 .area-name {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
@@ -373,7 +373,7 @@ export default {
 }
 
 .price-name {
-  font-family: "notosanskr-medium";
+  font-family: "nanum-square";
   font-weight: 500;
   font-size: 24px;
   line-height: 36px;
@@ -388,7 +388,7 @@ export default {
   border-radius: 8px;
 
   .title {
-    font-family: "notosanskr-medium";
+    font-family: "nanum-square";
     font-size: 17px;
     line-height: 36px;
     letter-spacing: -1.275px;
@@ -397,7 +397,7 @@ export default {
   }
 
   .price {
-    font-family: "notosanskr-medium";
+    font-family: "nanum-square";
     font-weight: 500;
     font-size: 17px;
     line-height: 36px;
