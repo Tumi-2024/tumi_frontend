@@ -46,7 +46,7 @@ export default {
 }
 
 .label-info {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -55,7 +55,7 @@ export default {
 }
 
 .field-info {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

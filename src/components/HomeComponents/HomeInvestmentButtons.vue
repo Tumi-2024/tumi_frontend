@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .title1 {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   font-size: 17px;
 }
 

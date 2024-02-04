@@ -71,7 +71,7 @@ export default {
 }
 
 .table-row-value {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   font-style: normal;
   font-weight: normal;
   font-size: 13px;

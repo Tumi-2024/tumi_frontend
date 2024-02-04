@@ -158,7 +158,7 @@ export default {
     margin: 0 0 0 20px;
   }
 
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   text-align: left;
 }
 
@@ -171,7 +171,7 @@ export default {
     font-size: 15px;
     margin: -5px 0 0 20px;
   }
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   text-align: left;
 }
 .btn-icon {

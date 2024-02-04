@@ -406,7 +406,7 @@ export default {
   }
 }
 .bottom-title {
-  font-family: "notosanskr-regular";
+  font-family: "nanum-square-regular";
   font-size: 16px;
   line-height: 60px;
   letter-spacing: -1.2px;
