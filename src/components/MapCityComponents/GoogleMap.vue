@@ -188,7 +188,7 @@ export default {
   },
   data() {
     return {
-      isClicked: false,
+      isDragEnd: true,
       redevZoom: 15,
       map: null,
       mapSize: { height: "", width: "" },
@@ -416,7 +416,8 @@ export default {
     ...mapActions(["changeUserLocation"]),
 
     onClickMarker(item) {
-      if (!this.isClicked) return;
+      console.log(this.isDragEnd);
+      if (!this.isDragEnd) return;
 
       if (this.$route.name === "map_city_area") {
         this.$router.push({
@@ -428,6 +429,7 @@ export default {
         });
         return;
       }
+      console.log("goTo list");
       this.$router.push({
         name: "listHouses",
         query: {
@@ -497,11 +499,11 @@ export default {
       });
     },
     dragStart() {
-      this.isClicked = false;
+      this.isDragEnd = false;
       this.changeMapSelectedArea(null);
     },
     dragEnd(e) {
-      this.isClicked = true;
+      this.isDragEnd = true;
       const { center } = this.$refs.naverMapRef.map;
       this.changeMapCenter({
         lng: center.lng(),
