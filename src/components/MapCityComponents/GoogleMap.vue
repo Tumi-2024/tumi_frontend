@@ -348,6 +348,7 @@ export default {
           console.log(opt);
           switch (opt) {
             case "모아주택":
+            case "가로주택":
               colors = { ...colors, stroke: "#4caf50", fill: "#4caf50" };
               break;
             case "기타":
