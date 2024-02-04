@@ -248,7 +248,7 @@ export default {
           .get(
             `redevelopment_areas/?search=${
               this.searchText
-            }&redevelopment_area__category=${getAreaTypeString()}`
+            }&redevelopment_area__category=${getAreaTypeString()}&page_size=1000`
           )
           .then((res) => {
             update(async () => {
@@ -273,7 +273,7 @@ export default {
     async filterLocation(val, update, abort) {
       return new Promise((resolve) => {
         Vue.prototype.$axios
-          .get(`locations/?search=${this.searchText}`)
+          .get(`locations/?search=${this.searchText}&page_size=1000`)
           .then((res) => {
             update(async () => {
               this.location = res.data.results.map(

@@ -191,7 +191,7 @@ export default {
     },
     async getLocations() {
       const { data } = await Vue.prototype.$axios.get(
-        `/locations/?search=${this.text}`
+        `/locations/?search=${this.text}&page_size=1000`
       );
       this.locations = data.results
         .map(({ latitude, longitude, subcity, title }) => ({
