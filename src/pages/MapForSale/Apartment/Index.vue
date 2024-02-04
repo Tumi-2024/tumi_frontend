@@ -293,7 +293,7 @@ export default {
         },
         {
           // exclusive Area
-          label: "공용 면적 (m2)",
+          label: "공용 면적",
           value: this.getValue(
             `${this.estate.group_individual_household.size_supply_area_m2}m²`
           ),
@@ -301,7 +301,7 @@ export default {
         },
         {
           // exclusive Area
-          label: "전용 면적 (m2❘평형)",
+          label: "전용 면적",
           value: this.getValue(`${
             this.estate.group_individual_household.size_dedicated_area_m2
           }m² |
@@ -457,45 +457,45 @@ export default {
         // 최근 관리비 없음
         {
           label: "토지면적",
-          value: this.getValue(houseInfo.size_land_area, " m²")
+          value: this.getValue(houseInfo.size_land_area, "m²")
         },
         {
           label: "연면적",
-          value: this.getValue(houseInfo.size_gross_floor_area, " m²")
+          value: this.getValue(houseInfo.size_gross_floor_area, "m²")
         },
         {
           label: "건축면적",
-          value: this.getValue(houseInfo.size_building_area, " m²")
+          value: this.getValue(houseInfo.size_building_area, "m²")
         },
         //
         {
           label: "건폐율",
-          value: this.getValue(houseInfo.percentage_building_cover, " %")
+          value: this.getValue(houseInfo.percentage_building_cover, "%")
         },
         {
           label: "용적률",
-          value: this.getValue(houseInfo.percentage_floor_area, " %")
+          value: this.getValue(houseInfo.percentage_floor_area, "%")
         },
         { label: "복도 유형", value: houseInfo.type_corridor },
         //
         {
           label: "건물 동 (개)수",
-          value: this.getValue(houseInfo.count_building, " 개동")
+          value: this.getValue(houseInfo.count_building, "개동")
         },
         {
           label: "총 세대수",
-          value: this.getValue(houseInfo.count_household, " 세대")
+          value: this.getValue(houseInfo.count_household, "세대")
         },
         { label: "난방방식", value: this.getValue(houseInfo.type_heating) },
         //
         {
           label: "엘리베이터 수",
-          value: this.getValue(houseInfo.count_elevator, " 대")
+          value: this.getValue(houseInfo.count_elevator, "대")
         },
         {
           label: "주차대수",
           value: this.getValue(
-            `지상 ${houseInfo.count_parking_up} 대 / 지하 ${houseInfo.count_parking_down} 대`
+            `지상 ${houseInfo.count_parking_up}대 / 지하 ${houseInfo.count_parking_down}대`
           )
         },
         {
@@ -586,31 +586,31 @@ export default {
         {
           label: "대지지분 (대지권면적)",
           value: this.getValue(
-            `${houseInfo.size_land_area_m2} m² | ${(
+            `${houseInfo.size_land_area_m2}m² | ${(
               houseInfo.size_land_area_pyeong || 0
-            ).toFixed(1)} 평`
+            ).toFixed(1)}평`
           )
         },
         {
           label: "공급면적",
           value: this.getValue(
-            `${houseInfo.size_supply_area_m2} m² | ${(
+            `${houseInfo.size_supply_area_m2}m² | ${(
               houseInfo.size_supply_area_pyeong || 0
-            ).toFixed(1)} 평`
+            ).toFixed(1)}평`
           )
         },
         {
           label: "전용면적",
           value: this.getValue(
-            `${houseInfo.size_dedicated_area_m2 || "-"} m² | ${(
+            `${houseInfo.size_dedicated_area_m2 || "-"}m² | ${(
               houseInfo.size_dedicated_area_pyeong || 0
-            ).toFixed(1)} 평`
+            ).toFixed(1)}평`
           )
         },
         {
-          label: "방수 | 욕실수",
+          label: "방수/욕실수",
           value: this.getValue(
-            `${houseInfo.count_room} 개 | ${houseInfo.count_bathroom} 개`
+            `${houseInfo.count_room} 개/${houseInfo.count_bathroom} 개`
           ),
           class: "col-sm-6 col-md-4"
         },
@@ -642,7 +642,7 @@ export default {
           value: toMoneyString(houseInfo.price_selling_hope)
         },
         {
-          label: "희망 전월세 보증금",
+          label: "희망 보증금",
           value: toMoneyString(
             houseInfo.price_charter_deposit_hope ||
               houseInfo.price_monthly_rent_deposit_hope
@@ -654,7 +654,7 @@ export default {
         },
         { label: "희망 계약일", value: houseInfo.date_due_hope },
         {
-          label: "희망 입주(이사)일",
+          label: "희망 입주일",
           value: houseInfo.date_due_move
         },
         { label: "융자금", value: toMoneyString(houseInfo.price_loan) },
@@ -663,20 +663,20 @@ export default {
           value: houseInfo.description_rent_condition
         },
         { label: "희망 이사조건", value: houseInfo.description_move_condition },
-        { label: "[옵션] 세안고", value: houseInfo.description_option_wash },
+        { label: "세안고", value: houseInfo.description_option_wash },
         {
-          label: "[옵션] 주택구조",
+          label: "주택구조",
           value: houseInfo.description_option_duplex
         },
-        { label: "[옵션] 올수리", value: houseInfo.date_option_repair },
-        { label: "[옵션] 인테리어", value: houseInfo.date_option_interior },
+        { label: "올수리", value: houseInfo.date_option_repair },
+        { label: "인테리어", value: houseInfo.date_option_interior },
         {
-          label: "[옵션] 보일러교체",
+          label: "보일러교체",
           value: houseInfo.date_option_boiler_replacement
         },
-        { label: "(제한) 애완동물", value: houseInfo.description_option_pets },
+        { label: "애완동물", value: houseInfo.description_option_pets },
         {
-          label: "(제한) 외국인",
+          label: "외국인",
           value: houseInfo.description_option_foreigner
         }
       ];

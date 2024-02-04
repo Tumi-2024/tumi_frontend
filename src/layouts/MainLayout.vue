@@ -26,7 +26,7 @@ export default {
       if (this.$route.name === "signUp") {
         return "회원가입";
       }
-      return "Tumi";
+      return "투미맵";
     }
   }
 };

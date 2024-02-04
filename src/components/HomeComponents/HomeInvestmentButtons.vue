@@ -2,7 +2,7 @@
   <div>
     <div class="row q-mt-md q-col-gutter-sm">
       <div class="items-center">
-        <p class="title1">주택유형 별 지도</p>
+        <p class="title1">주택유형 별 지도검색</p>
       </div>
       <q-radio
         style="margin-left: 10px; margin-bottom: 12px"

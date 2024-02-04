@@ -176,9 +176,12 @@
                   <span class="text-subtitle2 col-12 text-bold">
                     {{ persons[0].rank }}
                   </span>
-                  <div class="text-h6 q-my-xs col-12 flex text-bold">
+                  <div
+                    class="text-h6 q-my-xs col-12 flex text-bold"
+                    style="gap: 8px"
+                  >
                     {{ persons[0].text }}
-                    <span v-if="persons[0].phone" class="q-ml-md flex"
+                    <span v-if="persons[0].phone" class="flex"
                       >Tel. {{ persons[0].phone }}</span
                     >
                   </div>
