@@ -20,9 +20,9 @@
     <q-card-section class="list-items q-pa-none notosanskr-regular">
       <div style="display: flex; gap: 2px" class="q-pa-sm">
         <Badge value="주택유형" houseType />
-        <Badge value="전용면적" area />
-        <Badge value="매매가" price />
-        <Badge value="거래일자" date />
+        <Badge value="매매가" label="매매가" price />
+        <Badge value="전용면적" label="전용면적" area />
+        <Badge value="거래일자" label="거래일자" date />
       </div>
       <q-separator />
       <q-list class="q-pt-md">
@@ -354,7 +354,7 @@ export default {
   created() {},
   beforeMount() {
     this.setRequestUrl("houses");
-    this.setAreaType(null);
+    // this.setAreaType(null);
   }
 };
 </script>

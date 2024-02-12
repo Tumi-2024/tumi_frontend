@@ -96,7 +96,6 @@ export default {
       // size_dedicated_area_m2
       // size_gross_floor_area
       const daejiArea = () => {
-        console.log(houseInfo);
         if (
           householdInfo.size_land_area_m2 ||
           houseInfo.size_land_area ||
@@ -114,28 +113,30 @@ export default {
       };
       return [
         {
-          label: "물건 종류",
+          label: "물건종류",
           value: houseInfo.type_house
         },
         {
-          label: "매매,전세 가격",
+          label: "매매 가격",
           value: toMoneyString(terms.price_selling_hope)
         },
         {
           label: "총 층수",
-          value: householdInfo.count_floor_total
+          value: `총 ${householdInfo.count_floor_total}층`
         },
         {
           label: "해당 층수",
-          value: householdInfo.num_floor
+          value: `${householdInfo.num_floor}층`
         },
         {
           label: "대지 지분",
-          value: "대지지분"
+          value: `${householdInfo.size_land_area_m2}m² (${(
+            householdInfo.size_land_area_pyeong || 0
+          ).toFixed(0)}평)`
         },
         {
           label: "전용/공급 면적",
-          value: `${householdInfo.size_dedicated_area_m2}m²/${householdInfo.size_supply_area_m2}m²`
+          value: `${householdInfo.size_dedicated_area_m2}m² / ${householdInfo.size_supply_area_m2}m²`
         },
         {
           label: "방향(거실 기준)",
@@ -143,7 +144,7 @@ export default {
         },
         {
           label: "방수/욕실수",
-          value: `${householdInfo.count_room}/${householdInfo.count_bathroom}`
+          value: `${householdInfo.count_room}개 / ${householdInfo.count_bathroom}개`
         },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
         {

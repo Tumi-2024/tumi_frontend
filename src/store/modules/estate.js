@@ -184,17 +184,17 @@ export const estateStore = {
         ...(estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-              "_categories",
-              category
-                .join(",")
-                .replace("토지", "LAND")
-                .replace("오피스텔", "OFFICETEL")
-                .replace("연립ￜ다세대", "ALLIANCE")
-                .replace("아파트", "APARTMENT")
-                .replace("상업ￜ업무용", "COMMERCIAL")
-                .replace("단독|다가구", "SINGLE")
-                .split(",")
-            ))
+            "_categories",
+            category
+              .join(",")
+              .replace("토지", "LAND")
+              .replace("오피스텔", "OFFICETEL")
+              .replace("연립ￜ다세대", "ALLIANCE")
+              .replace("아파트", "APARTMENT")
+              .replace("상업ￜ업무용", "COMMERCIAL")
+              .replace("단독|다가구", "SINGLE")
+              .split(",")
+          ))
       };
 
       const data = await Vue.prototype.$axios.get(
@@ -335,7 +335,7 @@ export const estateStore = {
           case "일반":
             return context.rootState.map.areaType;
           case "기타":
-            return "일반";
+            return "기타";
           default:
             return context.rootState.map.areaType;
         }
@@ -360,17 +360,17 @@ export const estateStore = {
         ...(!window.location.hash.includes("/city/area")
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-              "_categories",
-              category
-                .join(",")
-                .replace("토지", "LAND")
-                .replace("오피스텔", "OFFICETEL")
-                .replace("연립ￜ다세대", "ALLIANCE")
-                .replace("아파트", "APARTMENT")
-                .replace("상업ￜ업무용", "COMMERCIAL")
-                .replace("단독|다가구", "SINGLE")
-                .split(",")
-            ))
+            "_categories",
+            category
+              .join(",")
+              .replace("토지", "LAND")
+              .replace("오피스텔", "OFFICETEL")
+              .replace("연립ￜ다세대", "ALLIANCE")
+              .replace("아파트", "APARTMENT")
+              .replace("상업ￜ업무용", "COMMERCIAL")
+              .replace("단독|다가구", "SINGLE")
+              .split(",")
+          ))
       };
 
       const data = await Vue.prototype.$axios.get(
@@ -575,6 +575,6 @@ export const estateStore = {
       if (status !== 200) return;
       context.commit("setRecentlyViewedHouses", data.results);
     },
-    filterHousesType: (context, parameter) => {}
+    filterHousesType: (context, parameter) => { }
   }
 };

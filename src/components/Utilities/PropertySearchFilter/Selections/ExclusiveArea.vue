@@ -132,12 +132,12 @@ export default {
         {
           label: "대지면적",
           value: "size_land_area",
-          type: ["SINGLE", "noname01", "LAND"]
+          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
         },
         {
-          label: "대지권면적",
+          label: "대지지분",
           value: "size_land_area2",
-          type: ["ALLIANCE"]
+          type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
         }
       ],
       presets: [

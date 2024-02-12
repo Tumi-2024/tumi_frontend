@@ -9,7 +9,7 @@
       @focus="onHandleFocus"
       class="search-field"
       style="flex: 1"
-      placeholder="지역명 정비사업명을 적어주세요"
+      placeholder='"지역명, 정비사업명"을 적어주세요'
     />
     <div class="col-2 flex items-center">
       <q-btn icon="search" class="search-btn full-width" color="primary" />

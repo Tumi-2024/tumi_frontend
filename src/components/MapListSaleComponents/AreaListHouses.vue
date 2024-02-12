@@ -27,7 +27,7 @@
         <Badge value="개발유형" recommend />
         <Badge value="주택유형" houseType />
         <Badge value="전용면적" pyeong />
-        <Badge value="희망매매가" price />
+        <Badge value="매매가" price />
         <Badge value="매물수정일자" date />
       </div>
       <q-separator />
@@ -311,7 +311,7 @@ export default {
   },
   beforeMount() {
     this.setRequestUrl("houses");
-    this.setAreaType(null);
+    // this.setAreaType(null);
   }
 };
 </script>

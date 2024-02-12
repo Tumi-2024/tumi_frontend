@@ -4,7 +4,12 @@
       <badge
         v-if="badge.value"
         :key="index"
-        v-bind="{ icon: badge.icon, value: badge.value, [badge.type]: true }"
+        v-bind="{
+          icon: badge.icon,
+          value: badge.value,
+          [badge.type]: true,
+          label: badge.label
+        }"
         :color="badge.color"
       >
       </badge>

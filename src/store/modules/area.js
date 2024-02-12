@@ -59,14 +59,12 @@ export const areaStore = {
           switch (context.rootState.map.areaType) {
             case null:
               return "";
-            case "가로/모아":
-              return "가로모아";
             case "재개발":
             case "재건축":
             case "일반":
               return context.rootState.map.areaType;
             case "기타":
-              return "일반";
+              return "기타";
             default:
               return context.rootState.map.areaType;
           }
@@ -122,7 +120,7 @@ export const areaStore = {
           `/redevelopment_areas/${area.id}/interest/`
         );
         context.commit("setMapInterest", data);
-      } catch (error) {}
+      } catch (error) { }
     },
     uninterestSelectedArea: async (context) => {
       try {
@@ -131,7 +129,7 @@ export const areaStore = {
           `/redevelopment_areas/${id}/interest/`
         );
         context.commit("setMapInterest", null);
-      } catch (error) {}
+      } catch (error) { }
     },
     changeMapSelectedArea: (context, area) =>
       context.commit("setMapSelectedArea", area),

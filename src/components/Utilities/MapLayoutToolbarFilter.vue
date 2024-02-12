@@ -53,9 +53,6 @@
                 <q-item-section class="text-grey"> No results </q-item-section>
               </q-item>
             </template>
-            <template v-slot:prepend>
-              <q-icon name="search" @click.stop.prevent />
-            </template>
             <!-- <template v-slot:option="scope">
               <q-item-section>
                 <q-item-label class="ellipsis">
@@ -212,6 +209,9 @@ export default {
     },
     onChangeSelect(e) {
       this.searchType = e.value;
+      this.options = [];
+      console.log(this.$refs.keywordRef);
+      this.$refs.keywordRef.updateInputValue(this.searchText);
     },
     onSelect(obj) {
       this.changeMapCenter(obj.position);
@@ -227,6 +227,7 @@ export default {
     async filterRedev(val, update, abort) {
       return new Promise((resolve) => {
         const getAreaTypeString = () => {
+          console.log(this.getAreaType);
           switch (this.getAreaType) {
             case null:
               return "";
@@ -234,7 +235,7 @@ export default {
             case "재건축":
             case "일반":
               return this.getAreaType;
-            case "기타사업":
+            case "기타":
               return "기타";
             default:
               return this.getAreaType;
@@ -295,11 +296,11 @@ export default {
 
     async filterFn(val, update, abort) {
       console.log("filterFn", val);
-      this.searchText = val;
       if (!val || val === "") {
         update();
         return;
       }
+      this.searchText = val;
       if (this.searchType === "redev") {
         await this.filterRedev(val, update, abort);
         this.options = this.redev;

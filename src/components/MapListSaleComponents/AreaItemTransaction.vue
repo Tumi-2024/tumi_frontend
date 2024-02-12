@@ -380,6 +380,7 @@ export default {
           },
           {
             type: "area",
+            label: "전용면적",
             value: Math.floor(item.text_size_private) + "m²"
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }

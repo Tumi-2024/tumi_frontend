@@ -9,7 +9,7 @@
           <q-select
             class="notosanskr-regular self-end"
             dense
-            :options="['전체', '재개발', '재건축', '가로/모아', '기타']"
+            :options="['전체', '재개발', '재건축', '기타']"
             @input="changeDevType"
             :value="$route.query.redevelopment_area__category || '전체'"
             emit-value
@@ -307,7 +307,6 @@ export default {
         break;
     }
 
-    console.log(query);
     this.text = query?.title || "";
   }
 };

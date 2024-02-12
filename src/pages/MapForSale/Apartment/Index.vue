@@ -35,6 +35,202 @@
     />
     <!--  매물정보  -->
     <area-information :informations="getInformation" class="q-mt-md" />
+    <q-card class="q-mt-md">
+      <q-card-section>
+        <div class="row q-mt-md">
+          <span class="text-h5 text-bold text-center full-width">
+            추정가치 분석
+          </span>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">감정가</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_appraised) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">비례율</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ estate.group_price.percentage_ratio }}%
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">권리가</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_rights) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">분담금</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_additional) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">프리미엄</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_premium) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">조합원 분양가</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_member) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">초기투자금</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_initial_investment) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">총매가</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_total) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 q-px-sm q-mt-sm">
+            <div class="initial-investments row q-pa-sm q-mt-sm items-center">
+              <q-icon>
+                <img src="~assets/icons/coins.svg" alt="" />
+              </q-icon>
+              <div class="q-ml-md title">안전마진</div>
+              <q-separator
+                class="self-center q-mx-sm"
+                vertical
+                inset
+                style="height: 16px"
+              />
+              <div class="price">
+                {{ toMoneyString(estate.group_price.price_safety_margin) }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 q-mt-md flex justify-center">
+            <q-card class="flex flex-1 cursor-pointer" style="max-width: 500px">
+              <div
+                class="initial-investments bg-orange-1 text-primary row q-py-md q-px-lg items-center flex"
+                style="border: 2px solid #ff5a00"
+              >
+                <div class="flex">
+                  <q-icon size="30px">
+                    <img src="~assets/icons/phone.svg" alt="" />
+                  </q-icon>
+                </div>
+                <div class="q-ml-lg" style="flex: 1" @click="callPerson">
+                  <div class="row items-center">
+                    <span class="text-subtitle2 col-12 text-bold">
+                      {{ getPersons[0].rank }}
+                    </span>
+                    <div
+                      class="text-h6 q-my-xs col-12 flex text-bold"
+                      style="gap: 8px"
+                    >
+                      {{ getPersons[0].text }}
+                      <span v-if="getPersons[0].phone" class="flex"
+                        >Tel. {{ getPersons[0].phone }}</span
+                      >
+                    </div>
+                  </div>
+                  <span class="text-grey-9 text-bold">
+                    이미지 클릭시 담당직원과 전화상담이 가능합니다.
+                  </span>
+                </div>
+              </div>
+            </q-card>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
     <common-information
       class="q-mt-md"
       title="희망 거래 조건 <소유자(매도자/임대인) 기준>"
@@ -191,6 +387,10 @@ export default {
   methods: {
     toKr,
     toMoneyString,
+    callPerson(phoneNumber) {
+      if (!phoneNumber) return;
+      window.location.href = "tel://" + phoneNumber;
+    },
     makePolygon(area) {
       this.redevelopmentArea = area.redevelopment_area_locations.map((obj) => {
         return { lat: Number(obj.lat), lng: Number(obj.lng) };
@@ -257,76 +457,72 @@ export default {
       return [
         {
           // number of floors
-          label: "해당 동수",
-          value: this.getValue(
-            this.estate.group_individual_household.num_dong,
-            "동"
-          ),
+          label: "물건종류",
+          value: this.getValue(this.estate.group_building_house.type_house),
           icon: ["11.png"],
           new: true
         },
         {
           // number of floors
-          label: "해당 층수",
+          label: "대지면적",
           value: this.getValue(
-            this.estate.group_individual_household.type_floor,
-            ""
+            this.estate.group_building_house.size_land_area,
+            "m²"
           ),
           icon: ["number-floors.svg"]
         },
         {
           // direction
-          label: "방향",
+          label: "건물면적",
           value: this.getValue(
-            this.estate.group_individual_household.type_direction
+            this.estate.group_building_house.size_building_area,
+            "m²"
           ),
           icon: ["direction.svg"]
         },
         {
           // station-area
-          label: "방수/욕실수",
+          label: "사용승인일",
           value: this.getValue(
-            `${this.estate.group_individual_household.count_room}/${this.estate.group_individual_household.count_bathroom}`
+            this.estate.group_building_house.date_approval_use
           ),
           icon: ["31A.png", "31B.png"],
           new: true
         },
         {
           // exclusive Area
-          label: "공용 면적",
+          label: "매매가",
           value: this.getValue(
-            `${this.estate.group_individual_household.size_supply_area_m2}m²`
+            toMoneyString(this.estate.group_trading_terms.price_selling_hope)
           ),
           icon: ["land-area.svg"]
         },
         {
           // exclusive Area
-          label: "전용 면적",
-          value: this.getValue(`${
-            this.estate.group_individual_household.size_dedicated_area_m2
-          }m² |
-            ${Math.floor(
-              this.estate.group_individual_household.size_dedicated_area_pyeong
-            )}평`),
+          label: "보증금",
+          value: `${toMoneyString(
+            this.estate.group_trading_terms.price_charter_deposit_hope ||
+              this.estate.group_trading_terms.price_monthly_rent_deposit_hope
+          )}`,
           icon: ["land-area.svg"]
         },
         // {
         //   // Right
         {
           // Premium price
-          label: "하절기 관리비",
+          label: "월세",
           value: this.getValue(
-            this.estate.group_individual_household.price_maintenance_summer?.toLocaleString(),
-            " 원"
+            toMoneyString(
+              this.estate.group_trading_terms.price_monthly_rent_hope
+            )
           ),
           icon: ["right.svg"]
         },
         {
           // Premium price
-          label: "동절기 관리비",
+          label: "예상프리미엄",
           value: this.getValue(
-            this.estate.group_individual_household.price_maintenance_winter?.toLocaleString(),
-            " 원"
+            toMoneyString(this.estate.group_price.price_premium)
           ),
           icon: ["right.svg"]
         }
@@ -456,7 +652,7 @@ export default {
         },
         // 최근 관리비 없음
         {
-          label: "토지면적",
+          label: "대지면적",
           value: this.getValue(houseInfo.size_land_area, "m²")
         },
         {
@@ -841,5 +1037,55 @@ export default {
 <style lang="scss" scoped>
 .map {
   height: calc(118vh / 375 * 100);
+}
+
+.area-name {
+  font-family: "nanum-square";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -1.2px;
+  color: #707070;
+}
+
+.price-name {
+  font-family: "nanum-square";
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -2.7px;
+  span {
+    color: #00a4aa;
+  }
+}
+
+.initial-investments {
+  background: #f7f7f7;
+  border-radius: 8px;
+
+  .title {
+    font-family: "nanum-square";
+    font-size: 17px;
+    line-height: 36px;
+    letter-spacing: -1.275px;
+    width: 100px;
+    color: #707070;
+  }
+
+  .price {
+    font-family: "nanum-square";
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 36px;
+    letter-spacing: -1.275px;
+    color: #1a1a1a;
+  }
+}
+.bottom-title {
+  font-family: "nanum-square-regular";
+  font-size: 16px;
+  line-height: 60px;
+  letter-spacing: -1.2px;
+  color: #1a1a1a;
 }
 </style>

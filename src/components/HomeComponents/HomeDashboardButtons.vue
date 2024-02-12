@@ -26,8 +26,18 @@
         text-align: left;
       "
       >※ 위 사이트(투미맵)에 표기된 내용들은 실제 정보와 다를 수 있으니,
-      참고용으로만 사용하시기 바랍니다.</span
-    >
+      참고용으로만 사용하시기 바랍니다.
+    </span>
+    <span
+      style="
+        text-align: center;
+        font-size: 16px;
+        color: #191919;
+        text-align: left;
+      "
+      >※ "정비사업정보"는 각 지자체의 "정보시스템 DB"를 기반으로 제공한
+      자료이며, 일부 잘못된 정보가 있을 수 있습니다.
+    </span>
   </div>
 </template>
 
@@ -62,7 +72,7 @@ export default {
           subText1: "매물",
           subText2: `상세 검색하기`,
           img: require("assets/iconsNew/search.png"),
-          func: () => this.$router.push({ name: "listHouses" })
+          func: () => this.redirectListHouse()
         },
         {
           backgroundColor: "green",
@@ -82,8 +92,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions("map", ["changeMapMode", "changeMapZoom", "initMapCenter"]),
-
+    ...mapActions("map", [
+      "changeMapMode",
+      "changeMapZoom",
+      "initMapCenter",
+      "setAreaType"
+    ]),
     toMapCity() {
       this.$router.push({ name: "map_city" });
       this.initMapCenter();
@@ -94,8 +108,13 @@ export default {
       this.initMapCenter();
       this.changeMapZoom(12);
     },
+    redirectListHouse() {
+      this.setAreaType(null);
+      this.$router.push({ name: "listHouses" });
+    },
     redirectListTransaction() {
       this.$router.push({ name: "listTransactions" });
+      this.setAreaType(null);
       this.initMapCenter();
       this.changeMapZoom(12);
     },

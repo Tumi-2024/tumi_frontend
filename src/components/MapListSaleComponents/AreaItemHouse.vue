@@ -140,25 +140,36 @@ export default {
             value: item.transactionStatus
               ? false
               : item.group_location.redevelopment_area?.category,
-            color: getColor(item.group_location.redevelopment_area?.category)
+            color: getColor(item.group_location.redevelopment_area?.category),
+            label: "개발유형"
             // icon: getIcon()
           },
-          { type: "houseType", value: item.group_building_house.type_house },
+          {
+            type: "houseType",
+            value: item.group_building_house.type_house,
+            label: "주택유형"
+          },
           { type: "redevelopment", value: item.redevelopment },
           { type: "stageProgress", value: item.stageProgress },
           {
             type: "pyeong",
             value:
-              item.group_individual_household.size_dedicated_area_pyeong + "평"
+              (item.group_individual_household.size_dedicated_area_pyeong ||
+                Math.floor(
+                  item.group_building_house.size_gross_floor_area / 3.3
+                )) + "평",
+            label: "전용면적"
           },
+          // size_dedicated_area_m2 size_gross_floor_area
           {
             type: "price",
             value: `${toSimpleMoneyString(
               item.group_trading_terms.price_selling_hope ||
                 item.group_trading_terms.price_charter_deposit_hope
-            )}`
+            )}`,
+            label: "매매가"
           },
-          { type: "date", value: getDate(item.created) }
+          { type: "date", value: getDate(item.created), label: "매물수정일자" }
         ];
       };
     },

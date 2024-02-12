@@ -35,7 +35,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-::v-deep .q-select__dropdown-icon {
-  font-size: 35px;
-}
+// ::v-deep .q-select__dropdown-icon {
+//   font-size: 35px;
+// }
 </style>

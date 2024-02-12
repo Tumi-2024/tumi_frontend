@@ -151,9 +151,6 @@ export default {
     font-weight: bold;
     cursor: pointer;
   }
-  &.redev {
-    font-size: calc((22 / 1312) * 100vh);
-  }
 
   &.hover {
     text-decoration: underline;
@@ -180,5 +177,9 @@ export default {
   margin-left: 0px;
   cursor: pointer;
   font-weight: bold;
+  &.redev {
+    font-size: calc((28 / 1312) * 100vh);
+    color: #ff5a00;
+  }
 }
 </style>

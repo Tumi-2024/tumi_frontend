@@ -11,10 +11,13 @@
           v-for="(item, i) of getOptions"
           :key="i"
         >
-          <div class="q-pa-sm label">
-            <span class="information text-bold" style="word-break: keep-all">{{
-              item.label
-            }}</span>
+          <div class="q-pa-sm label flex">
+            <span
+              class="information text-bold self-center"
+              style="word-break: keep-all"
+            >
+              {{ item.label }}
+            </span>
           </div>
           <a
             class="information sub flex items-center q-px-sm"

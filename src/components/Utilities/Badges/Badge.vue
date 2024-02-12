@@ -1,18 +1,19 @@
 <template>
   <q-badge :class="badgeClass" outline :color="color">
     <q-tooltip
+      v-if="label"
       anchor="top middle"
       self="bottom middle"
       :offset="[10, 10]"
       :content-class="badgeClass"
     >
-      {{ getLabel }}
+      {{ label }}
     </q-tooltip>
     <q-icon v-if="icon">
       <img :src="icon" alt="" srcset="" />
     </q-icon>
     <slot name="label">
-      {{ value }}
+      {{ getValue }}
     </slot>
   </q-badge>
 </template>
@@ -58,6 +59,10 @@ export default {
     },
     houseType: {
       type: Boolean
+    },
+    label: {
+      type: String,
+      required: false
     }
   },
   data() {
@@ -66,6 +71,15 @@ export default {
     };
   },
   computed: {
+    getValue() {
+      switch (this.value) {
+        case "가로주택":
+        case "모아주택":
+          return "기타";
+        default:
+          return this.value;
+      }
+    },
     getLabel() {
       switch (true) {
         case this.transactionStatus:
@@ -87,50 +101,33 @@ export default {
         case this.date:
           return "수정일자";
         case this.price:
-          return "희망매매가";
+          return "매매가";
         default:
           return "";
-      }
-    },
-    getColor() {
-      switch (true) {
-        case this.transactionStatus:
-          return "primary";
-        case this.houseType:
-          return "primary";
-        case this.pyeong:
-          return "green";
-        case this.area:
-          return "green";
-        case this.recommend:
-          return "white";
-        case this.redevelopment:
-          return "white";
-        case this.charter:
-          return "blue-grey";
-        case this.sale:
-          return "blue";
-        case this.date:
-          return "black";
-        case this.price:
-          return "blue";
-        default:
-          return "blue";
       }
     }
   },
   created() {
-    if (this.color) {
-      this.badgeClass = "";
-      return;
-    }
     switch (true) {
+      // case this.transactionStatus:
+      //   this.badgeClass = "text-primary bg-white";
+      //   break;
+      case this.value === "모아주택":
+      case this.value === "가로주택":
+        this.badgeClass = "text-green";
+        break;
+      case this.value === "재건축":
+        this.badgeClass = "text-blue";
+        break;
       case this.houseType:
         this.badgeClass = "text-white bg-primary";
         break;
       case this.pyeong:
       case this.area:
         this.badgeClass = "text-white bg-green";
+        break;
+      case this.transactionStatus:
+        this.badgeClass = "text-primary bg-white";
         break;
       case this.recommend:
         this.badgeClass = "text-primary bg-white";
@@ -151,7 +148,7 @@ export default {
         this.badgeClass = "date text-white bg-blue";
         break;
       default:
-        this.badgeClass = "bg-blue text-white";
+        this.badgeClass = "date text-white bg-blue";
     }
   }
 };

@@ -69,7 +69,7 @@
                             ? m.count_redevelopment_area_1
                             : getAreaType === "재건축"
                             ? m.count_redevelopment_area_2
-                            : getAreaType === "기타사업"
+                            : getAreaType === "기타"
                             ? m.count_redevelopment_area_3
                             : m.count_redevelopment_area
                         }`
@@ -240,12 +240,12 @@ export default {
             return "blue";
           case "가로주택":
           case "모아주택":
+          case "기타":
             return "green";
           // case "일반":
-          // case "기타":
           //   return "purple";
           default:
-            return "purple-4";
+            return "green";
         }
       };
     },
@@ -256,7 +256,7 @@ export default {
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
         case "재건축":
           return { text: "white", bg: "#2196F3", tagClass: "blue" };
-        case "일반":
+        case "기타":
           return {
             text: "white",
             bg: "#A155B8",
@@ -264,13 +264,13 @@ export default {
           };
         case "모아주택":
         case "가로모아":
+        case null:
           return {
             text: "white",
             bg: "rgba(0, 128, 0, 0.8)",
             tagClass: "green"
           };
-        case null:
-          return { text: "black", bg: "#ffff00", tagClass: "primary" };
+        // return { text: "black", bg: "#ffff00", tagClass: "primary" };
         default:
           return {
             text: "white",

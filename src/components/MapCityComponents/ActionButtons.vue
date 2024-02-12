@@ -62,11 +62,11 @@ export default {
   data() {
     return {
       type: [
-        { color: "papaya-12", label: "All", key: null },
+        { color: "green", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
-        { color: "green", label: "가로/모아", key: "가로모아" },
-        { color: "purple-4", label: "기타", key: "일반" }
+        // { color: "green", label: "가로/모아", key: "가로모아" },
+        { color: "purple-4", label: "기타", key: "기타" }
       ]
     };
   },

@@ -53,7 +53,10 @@
         </template>
         <list-result
           style="flex: 1"
-          v-if="(!locations && !redevlopments && !houses) || !text.length"
+          v-if="
+            ((!locations && !redevlopments && !houses) || !text.length) &&
+            $store.getters.user.id
+          "
           :list="recents"
           @select="onSelectList"
           @delete="onDeleteItem"
@@ -67,10 +70,13 @@
             </q-item-label>
           </template>
         </list-result>
-        <div class="flex" style="width: 100%" v-if="$store.getters.user.id">
+        <div class="flex" style="width: 100%">
           <list-result
             style="flex: 1"
-            v-if="redevlopments && redevlopments.length && text.length"
+            v-if="
+              (redevlopments && redevlopments.length && text.length) ||
+              !$store.getters.user.id
+            "
             :list="redevlopments"
             type="redevelopment"
             @select="onSelectList"
@@ -85,7 +91,10 @@
           </list-result>
           <list-result
             style="flex: 1"
-            v-if="locations && locations.length && text.length"
+            v-if="
+              (locations && locations.length && text.length) ||
+              !$store.getters.user.id
+            "
             :list="locations"
             type="location"
             @select="onSelectList"
@@ -112,19 +121,6 @@
               </q-item-label>
             </template>
           </list-result>
-        </div>
-        <div
-          class="flex"
-          style="
-            width: 100%;
-            text-align: center;
-            font-size: 20px;
-            color: #222222;
-            font-weight: 800;
-          "
-          v-else
-        >
-          로그인을 하지 않은 사용자는 최근 검색어 기능이 지원되지 않습니다.
         </div>
       </div>
     </q-card>
