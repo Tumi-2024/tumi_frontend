@@ -286,6 +286,7 @@ export default {
       this.busy = false;
     },
     async getApiTransaction(params, label, page) {
+      console.log('getApiTransaction', params)
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });

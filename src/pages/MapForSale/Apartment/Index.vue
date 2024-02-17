@@ -38,7 +38,7 @@
     <q-card class="q-mt-md">
       <q-card-section>
         <div class="row q-mt-md">
-          <span class="text-h5 text-bold text-center full-width">
+          <span class="heading-title" style="width: 100%;">
             추정가치 분석
           </span>
           <div class="col-12 col-md-4 q-px-sm q-mt-sm">
@@ -212,7 +212,7 @@
                       {{ getPersons[0].rank }}
                     </span>
                     <div
-                      class="text-h6 q-my-xs col-12 flex text-bold"
+                      class="text-h6 q-mb-xs col-12 flex text-bold"
                       style="gap: 8px"
                     >
                       {{ getPersons[0].text }}
@@ -228,6 +228,9 @@
               </div>
             </q-card>
           </div>
+          <span style="margin-top: 10px; font-size: 14px; font-weight: bold;">
+            ※ 위 "추정가치 분석" 정보는 예상수치이며, 사업진행에 따라 변동 될 수 있음.
+          </span>
         </div>
       </q-card-section>
     </q-card>
@@ -469,7 +472,7 @@ export default {
             this.estate.group_building_house.size_land_area,
             "m²"
           ),
-          icon: ["number-floors.svg"]
+          icon: ["land-area.svg"]
         },
         {
           // direction
@@ -478,7 +481,7 @@ export default {
             this.estate.group_building_house.size_building_area,
             "m²"
           ),
-          icon: ["direction.svg"]
+          icon: ["number-floors.svg"]
         },
         {
           // station-area
@@ -486,8 +489,7 @@ export default {
           value: this.getValue(
             this.estate.group_building_house.date_approval_use
           ),
-          icon: ["31A.png", "31B.png"],
-          new: true
+          icon: ["union.svg"]
         },
         {
           // exclusive Area
@@ -504,7 +506,7 @@ export default {
             this.estate.group_trading_terms.price_charter_deposit_hope ||
               this.estate.group_trading_terms.price_monthly_rent_deposit_hope
           )}`,
-          icon: ["land-area.svg"]
+          icon: ["connoisseur.svg"]
         },
         // {
         //   // Right
@@ -516,7 +518,7 @@ export default {
               this.estate.group_trading_terms.price_monthly_rent_hope
             )
           ),
-          icon: ["right.svg"]
+          icon: ["rent.svg"]
         },
         {
           // Premium price
@@ -524,7 +526,7 @@ export default {
           value: this.getValue(
             toMoneyString(this.estate.group_price.price_premium)
           ),
-          icon: ["right.svg"]
+          icon: ["parking.svg"]
         }
       ];
     },
@@ -1088,4 +1090,15 @@ export default {
   letter-spacing: -1.2px;
   color: #1a1a1a;
 }
+
+.heading-title {
+  font-family: "nanum-square";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 19px;
+  letter-spacing: -1.275px;
+  color: #1a1a1a;
+}
+
 </style>

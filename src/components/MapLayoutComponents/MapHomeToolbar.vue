@@ -67,7 +67,7 @@ export default {
           route: "map_city"
         },
         {
-          text: "정비사업/실거래가 지도",
+          text: "실거래가 지도",
           route: "map_city_area"
         },
         {

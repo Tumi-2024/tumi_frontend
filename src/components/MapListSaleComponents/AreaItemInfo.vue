@@ -31,6 +31,13 @@
   </div>
 </template>
 <script>
+
+const getValue = (value) => {
+  if (value === 'null' || value === null) {
+    return '-';
+  }
+  return value
+}
 import { toKr, toMoneyString } from "src/utils";
 
 export default {
@@ -80,7 +87,7 @@ export default {
       const {
         group_building_house: houseInfo,
         group_individual_household: householdInfo,
-        group_price: priceInfo,
+        // group_price: priceInfo,
         group_trading_terms: terms
         // group_location: locationInfo
       } = this.item;
@@ -95,22 +102,23 @@ export default {
 
       // size_dedicated_area_m2
       // size_gross_floor_area
-      const daejiArea = () => {
-        if (
-          householdInfo.size_land_area_m2 ||
-          houseInfo.size_land_area ||
-          householdInfo.size_dedicated_area_m2 ||
-          houseInfo.size_gross_floor_area
-        ) {
-          return `${Math.round(
-            householdInfo.size_land_area_m2 || houseInfo.size_land_area
-          )} / ${Math.round(
-            householdInfo.size_dedicated_area_m2 ||
-              houseInfo.size_gross_floor_area
-          )}`;
-        }
-        return undefined;
-      };
+      // const daejiArea = () => {
+      //   if (
+      //     householdInfo.size_land_area_m2 ||
+      //     houseInfo.size_land_area ||
+      //     householdInfo.size_dedicated_area_m2 ||
+      //     houseInfo.size_gross_floor_area
+      //   ) {
+      //     return `${Math.round(
+      //       householdInfo.size_land_area_m2 || houseInfo.size_land_area
+      //     )} / ${Math.round(
+      //       householdInfo.size_dedicated_area_m2 ||
+      //         houseInfo.size_gross_floor_area
+      //     )}`;
+      //   }
+      //   return undefined;
+      // };
+      console.log(householdInfo)
       return [
         {
           label: "물건종류",
@@ -122,21 +130,21 @@ export default {
         },
         {
           label: "총 층수",
-          value: `총 ${householdInfo.count_floor_total}층`
+          value: `총 ${getValue(householdInfo.count_floor_total)}층`
         },
         {
           label: "해당 층수",
-          value: `${householdInfo.num_floor}층`
+          value: `${getValue(householdInfo.num_floor)}층`
         },
         {
-          label: "대지 지분",
-          value: `${householdInfo.size_land_area_m2}m² (${(
+          label: "대지지분",
+          value: `${getValue(householdInfo.size_land_area_m2)}m² (${(
             householdInfo.size_land_area_pyeong || 0
           ).toFixed(0)}평)`
         },
         {
           label: "전용/공급 면적",
-          value: `${householdInfo.size_dedicated_area_m2}m² / ${householdInfo.size_supply_area_m2}m²`
+          value: `${getValue(householdInfo.size_dedicated_area_m2)}m² / ${getValue(householdInfo.size_supply_area_m2)}m²`
         },
         {
           label: "방향(거실 기준)",

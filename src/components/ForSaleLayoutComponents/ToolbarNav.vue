@@ -21,7 +21,7 @@
 
       <!-- Right side starts here -->
 
-      <div class="flex-row">
+      <div class="flex-row" v-if="$store.getters.user.id">
         <q-btn flat padding="0 8px" class="bg-white" @click="like()">
           <q-icon size="32px">
             <img v-if="currentHouse" src="~assets/icons/hearted.svg" alt="" />
@@ -34,6 +34,11 @@
           </q-icon>
         </q-btn>
       </div>
+      <q-btn flat padding="4px" :to="{ name: 'home' }" v-else>
+          <q-icon size="24px">
+            <img src="~assets/icons/regular-house.svg" alt="" />
+          </q-icon>
+        </q-btn>
     </q-card-section>
   </q-card>
 </template>

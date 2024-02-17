@@ -135,7 +135,7 @@ export default {
           type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
         },
         {
-          label: "대지지분",
+          label: "대지지분(대지권면적)",
           value: "size_land_area2",
           type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
         }

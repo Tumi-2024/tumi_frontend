@@ -108,8 +108,8 @@ export default {
                 label: "거래금액(만원)",
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
-              { label: "용도지역", value: item.text_type_area },
-              { label: "전용/연면적(m²)", value: item.text_size_total + "m²" },
+              { label: "용도", value: item.text_type_area },
+              { label: "전용/연면적", value: item.text_size_total + "m²" },
               { label: "도로조건", value: item.text_type_road },
               { label: "건축물주용도", value: item.text_type_yongdo },
               {
@@ -144,11 +144,11 @@ export default {
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
               {
-                label: "대지면적(m²)",
+                label: "대지면적",
                 value: item.text_size_daeji ? item.text_size_daeji + "m²" : "-"
               },
               {
-                label: "연면적(m²)",
+                label: "연면적",
                 value: item.text_size_yean ? item.text_size_yean + "m²" : "-"
               },
               { label: "도로조건", value: item.text_type_road },
@@ -180,7 +180,7 @@ export default {
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
               {
-                label: "전용면적(m²)",
+                label: "전용면적",
                 value: item.text_size_private
                   ? item.text_size_private + "m²"
                   : "-"
@@ -217,7 +217,7 @@ export default {
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
               {
-                label: "전용면적(m²)",
+                label: "전용면적",
                 value: item.text_size_private
                   ? item.text_size_private + "m²"
                   : "-"
@@ -248,12 +248,12 @@ export default {
                     : item.text_day
                 }`
               },
-              { label: "용도지역", value: item.text_type_area },
+              { label: "용도", value: item.text_type_area },
               {
-                label: "거래금액(만원)",
+                label: "거래금액",
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
-              { label: "계약면적(m²)", value: item.text_size_contract },
+              { label: "계약면적", value: item.text_size_contract },
               { label: "도로조건", value: item.text_type_road },
               { label: "지목", value: item.text_jimog },
               { label: "지분구분", value: item.text_type_land },
@@ -281,11 +281,11 @@ export default {
                 value: item.text_price ? item.text_price + "만원" : "-"
               },
               {
-                label: "대지권면적(m²)",
+                label: "대지권면적",
                 value: item.text_size_land ? item.text_size_land + "m²" : "-"
               },
               {
-                label: "전용면적(m²)",
+                label: "전용면적",
                 value: item.text_size_private
                   ? item.text_size_private + "m²"
                   : "-"
@@ -309,7 +309,7 @@ export default {
               { label: "분양/입주", value: "분양/입주" },
               { label: "단지명", value: item.text_danji },
               {
-                label: "전용면적(m²)",
+                label: "전용면적",
                 value: item.text_size_private
                   ? item.text_size_private + "m²"
                   : "-"

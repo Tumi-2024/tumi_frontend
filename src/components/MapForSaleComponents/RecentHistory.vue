@@ -27,7 +27,6 @@
         <q-tab
           v-for="tab in tabs"
           :key="tab.level"
-          :disable="tab.level !== 'SALE'"
           :name="tab.level"
           class="tabs-text nanum-square"
           :label="tab.label"
@@ -51,6 +50,7 @@
             >
               <template v-slot:before>
                 <q-item
+                v-if="!$q.screen.sm && !$q.screen.xs"
                   class="item"
                   style="position: sticky; top: 0; z-index: 100"
                 >
@@ -109,6 +109,9 @@
                     월세
                   </div>
                 </q-item>
+                <q-item v-if="$q.screen.sm || $q.screen.xs">
+                  test
+                </q-item>
               </template>
               <template v-slot="{ item, index }">
                 <q-item
@@ -121,7 +124,7 @@
                   :key="index"
                 >
                   <!-- 휴대폰일 때 -->
-                  <template v-if="$q.screen.xs">
+                  <template v-if="$q.screen.sm || $q.screen.xs">
                     <!-- {{ $q.screen.sm || $q.screen.xs }} -->
                     <!-- {{ $q.screen.xs }} -->
                     <div class="flex col">
@@ -271,6 +274,11 @@ export default {
         value: "평"
       }
     };
+  },
+  watch: {
+    activeTab () {
+      this.getTransactions();
+    }
   },
   methods: {
     ...mapGetters("area", ["getMapSelectedArea"]),

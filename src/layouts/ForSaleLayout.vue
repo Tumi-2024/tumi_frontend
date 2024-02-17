@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpr lFf" container style="min-height: 100vh">
-    <q-header reveal class="bg-white">
+    <q-header reveal class="bg-white" style="padding: 2px 0;" >
       <toolbar-nav />
     </q-header>
     <q-page-container
