@@ -29,7 +29,8 @@
 
       <!-- right section-items -->
       <section class="q-pr-md">
-        <q-btn flat padding="4px" color="black" :to="{ name: 'recently_seen' }">
+        <!-- <div class="flex-row" v-if="$store.getters.user.id"></div> -->
+        <q-btn v-if="$store.getters.user.id" flat padding="4px" color="black" :to="{ name: 'recently_seen' }">
           <q-icon name="menu" size="24px"></q-icon>
         </q-btn>
         <q-btn flat padding="4px" :to="{ name: 'home' }">

@@ -345,7 +345,6 @@ export default {
           fill: ""
         };
         const getStrokeColor = (opt) => {
-          console.log(opt);
           switch (opt) {
             case "모아주택":
             case "가로주택":
@@ -399,10 +398,10 @@ export default {
     this.boundsChanged = debounce(this.boundsChanged, 2000);
     // this.$refs.naverMapRef.map.addListener("", this.idle);
     // naverMap.setCenter(this.getMapCenter);
-    // this.changeMapCenter({
-    //   lat: naverMap.center._lat,
-    //   lng: naverMap.center._lng
-    // });
+    this.changeMapCenter({
+      lat: naverMap.center._lat,
+      lng: naverMap.center._lng
+    });
   },
 
   methods: {

@@ -44,19 +44,19 @@ export const insightsStore = {
   actions: {
     getEstate: async function (context) {
       const { data } = await Vue.prototype.$axios.get(
-        "/insights?category=부동산팁"
+        "/insights/"
       );
       context.commit("setEstateResponse", data);
     },
     getPolicy: async function (context) {
       const { data } = await Vue.prototype.$axios.get(
-        "/insights?category=정책분석"
+        "/insights/"
       );
       context.commit("setPolicyResponse", data);
     },
     getMarket: async function (context) {
       const { data } = await Vue.prototype.$axios.get(
-        "/insights?category=시장전망"
+        "/insights/"
       );
       context.commit("setMarketResponse", data);
     }

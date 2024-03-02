@@ -76,7 +76,7 @@ export const searchStore = {
           value: "LAND"
         },
         {
-          label: "무허가건축물",
+          label: "무허가 건축물",
           value: "noname01"
         },
         {

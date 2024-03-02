@@ -105,8 +105,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               { label: "용도", value: item.text_type_area },
               { label: "전용/연면적", value: item.text_size_total + "m²" },
@@ -140,8 +140,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               {
                 label: "대지면적",
@@ -176,8 +176,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               {
                 label: "전용면적",
@@ -213,8 +213,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               {
                 label: "전용면적",
@@ -251,9 +251,9 @@ export default {
               { label: "용도", value: item.text_type_area },
               {
                 label: "거래금액",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                value: toMoneyString(item.price)
               },
-              { label: "계약면적", value: item.text_size_contract },
+              { label: "계약면적", value: item.text_size_contract + "m²" },
               { label: "도로조건", value: item.text_type_road },
               { label: "지목", value: item.text_jimog },
               { label: "지분구분", value: item.text_type_land },
@@ -277,8 +277,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               {
                 label: "대지권면적",
@@ -326,8 +326,8 @@ export default {
                 }`
               },
               {
-                label: "거래금액(만원)",
-                value: item.text_price ? item.text_price + "만원" : "-"
+                label: "거래금액",
+                value: toMoneyString(item.price)
               },
               {
                 label: "층",
@@ -346,6 +346,22 @@ export default {
 
     getBadges() {
       return (item, ctgr) => {
+        const getArea = () => {
+          switch (item.category) {
+            case "COMMERCIAL ":
+              return item.text_size_total || '-'
+            case "SINGLE":
+              return item.text_size_yean || '-'
+            case "OFFICETEL":
+              return item.text_size_private || '-'
+            case "APARTMENT":
+              return item.text_size_private || '-'
+            case "LAND":
+              return item.text_size_contract || '-'
+            case "ALLIANCE":
+              return item.text_size_private || '-'
+          }
+        }
         const getColor = (type) => {
           switch (type) {
             case "재개발":
@@ -375,13 +391,13 @@ export default {
             ).label
           },
           {
-            type: this.types?.[0]?.toLowerCase(),
-            value: `${toMoneyString(item.price)}`
-          },
-          {
             type: "area",
             label: "전용면적",
-            value: Math.floor(item.text_size_private) + "m²"
+            value: getArea() + "m²"
+          },
+          {
+            type: this.types?.[0]?.toLowerCase(),
+            value: `${toMoneyString(item.price)}`
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }
         ];

@@ -29,8 +29,6 @@ export default {
       this.tab = this.$route.params.tab;
     }
     this.$store.dispatch("getEstate");
-    this.$store.dispatch("getPolicy");
-    this.$store.dispatch("getMarket");
   },
   computed: {
     insightsResults() {

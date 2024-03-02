@@ -7,14 +7,22 @@
 
 <script>
 import { BottomDrawer, GoogleMap } from "components/MapCityComponents";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "bottom-drawer": BottomDrawer,
     "google-map": GoogleMap
   },
+  methods: {
+    ...mapActions("map", [
+      "changeToolbarTitle"
+    ])
+  },
   computed: {
     ...mapGetters("area", ["getMapAreas", "getMapSelectedArea"])
+  },
+  beforeMount() {
+    this.changeToolbarTitle("매물")
   }
 };
 </script>

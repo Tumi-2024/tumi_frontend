@@ -469,7 +469,7 @@ export default {
           // number of floors
           label: "대지면적",
           value: this.getValue(
-            this.estate.group_building_house.size_land_area,
+            this.estate.group_individual_household.size_land_area_m2 || this.estate.group_building_house.size_land_area,
             "m²"
           ),
           icon: ["land-area.svg"]
@@ -478,7 +478,7 @@ export default {
           // direction
           label: "건물면적",
           value: this.getValue(
-            this.estate.group_building_house.size_building_area,
+            this.estate.group_individual_household.size_dedicated_area_m2 || this.estate.group_building_house.size_building_area,
             "m²"
           ),
           icon: ["number-floors.svg"]
@@ -497,7 +497,7 @@ export default {
           value: this.getValue(
             toMoneyString(this.estate.group_trading_terms.price_selling_hope)
           ),
-          icon: ["land-area.svg"]
+          icon: ["privilege.svg"]
         },
         {
           // exclusive Area
@@ -622,8 +622,8 @@ export default {
     },
     getApartOptions() {
       const {
-        group_building_house: houseInfo
-        // group_individual_household: houseInfo3,
+        group_building_house: houseInfo,
+        group_individual_household: householdInfo
         // group_land_use: houseInfo4
       } = this.estate;
 
@@ -655,7 +655,7 @@ export default {
         // 최근 관리비 없음
         {
           label: "대지면적",
-          value: this.getValue(houseInfo.size_land_area, "m²")
+          value: this.getValue(householdInfo.size_land_area_m2 || houseInfo.size_land_area, "m²")
         },
         {
           label: "연면적",
@@ -934,7 +934,7 @@ export default {
           value: this.getValue(houseInfo.count_rent?.toLocaleString(), "세대")
         },
         {
-          label: "입주 예정일",
+          label: "입주예정일",
           value: houseInfo.description_move_condition
         },
 

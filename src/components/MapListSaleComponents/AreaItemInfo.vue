@@ -118,7 +118,6 @@ export default {
       //   }
       //   return undefined;
       // };
-      console.log(householdInfo)
       return [
         {
           label: "물건종류",
@@ -143,7 +142,7 @@ export default {
           ).toFixed(0)}평)`
         },
         {
-          label: "전용/공급 면적",
+          label: "전용/공급면적",
           value: `${getValue(householdInfo.size_dedicated_area_m2)}m² / ${getValue(householdInfo.size_supply_area_m2)}m²`
         },
         {
@@ -152,11 +151,11 @@ export default {
         },
         {
           label: "방수/욕실수",
-          value: `${householdInfo.count_room}개 / ${householdInfo.count_bathroom}개`
+          value: `${getValue(householdInfo.count_room)}개 / ${getValue(householdInfo.count_bathroom)}개`
         },
         { label: "사용승인일", value: getLabel(houseInfo.date_approval_use) },
         {
-          label: "입주 가능일",
+          label: "입주가능일",
           value: terms.date_due_hope
         },
         {
