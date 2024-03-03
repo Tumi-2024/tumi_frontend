@@ -137,25 +137,31 @@
                             <q-badge outline color="blue">{{ toMoneyString(item.price || item.price_deposit) }}</q-badge>
                             <q-badge v-if="item.price_monthly" outline class="bg-blue text-white">{{ toMoneyString(item.price_monthly) }}</q-badge>
                             <q-badge outline color="green">{{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}</q-badge>
-                            <q-badge color="black"> {{
-                            item.text_month.slice(2, 4) +
-                            "." +
-                            item.text_month.slice(4, 6) +
-                            "." +
-                            (item.text_day.length === 1
-                              ? "0" + item.text_day
-                              : item.text_day)
-                          }}</q-badge>
+                            <q-badge color="black">
+                              {{
+                                item.text_month.slice(2, 4) +
+                                "." +
+                                item.text_month.slice(4, 6) +
+                                "." +
+                                (item.text_day.length === 1
+                                  ? "0" + item.text_day
+                                  : item.text_day)
+                              }}
+                          </q-badge>
                           </div>
+
+                        </div>
+                        <div class="flex justify-between">
+                          <span style="font-size: 16px">{{ item.address }}</span>
+
+                        </div>
+                        <div class="flex justify-between">
                           <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
                             <span style="font-weight: 400; font-size: 14px;">
                               대지면적  &nbsp;
                             </span>
                             {{ (item.size_daeji || item.size_land) + 'm²' }}
                           </span>
-                        </div>
-                        <div class="flex justify-between">
-                          <span style="font-size: 16px">{{ item.address }}</span>
                           <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
                             <span style="font-weight: 400; font-size: 14px;">
                               건물면적 &nbsp;
