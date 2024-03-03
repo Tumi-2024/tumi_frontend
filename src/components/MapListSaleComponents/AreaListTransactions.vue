@@ -206,19 +206,13 @@ export default {
       });
       if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [
-          ...data.results.map((item) => {
-            return {
-              ...item,
-              ...item.recent_transactions?.[item.types[0]]
-            };
-          }),
+          ...data.results,
           ...this.saleList
         ];
       } else {
         this.saleList = data.results.map((item) => {
           return {
-            ...item,
-            ...item.recent_transactions?.[item.types[0]]
+            ...item
           };
         });
       }
@@ -236,18 +230,13 @@ export default {
       if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [
           ...this.saleList,
-          ...data.results.map((item) => {
-            return {
-              ...item,
-              ...item.recent_transactions?.[item.types[0]]
-            };
-          })
+          ...data.results
         ];
       } else {
         this.saleList = data.results.map((item) => {
           return {
-            ...item,
-            ...item.recent_transactions?.[item.types[0]]
+            ...item
+
           };
         });
       }
@@ -294,8 +283,7 @@ export default {
         // ...this.saleList,
         ...data.results.map((item) => {
           return {
-            ...item,
-            ...item.recent_transactions?.[item.types[0]]
+            ...item
           };
         })
       ];

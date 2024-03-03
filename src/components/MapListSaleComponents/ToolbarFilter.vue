@@ -173,6 +173,7 @@ export default {
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
+      console.log('onChangeFilter')
       const { name } = this.$route
       if (name === 'listTransactions' || name === "map_city_area") {
         const _newParam = params
@@ -194,9 +195,10 @@ export default {
          size_daeji__range 대지면적 size_land_area__range
          size_land__range 대지권면적 size_land_area2__range
          */
-        // console.log(_newParam)
+        console.log(_newParam)
         this.$emit("changeFilter", _newParam);
       } else {
+        console.log(params)
         this.$emit("changeFilter", params);
       }
     },
@@ -314,6 +316,7 @@ export default {
               });
             });
           } else {
+            console.log('house')
             const {
               data: { results }
             } = await Vue.prototype.$axios.get(`houses/?search=${val}`);

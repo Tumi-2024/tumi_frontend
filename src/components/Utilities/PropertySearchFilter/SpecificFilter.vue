@@ -128,63 +128,65 @@ export default {
       this.modal = false;
       const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
-      if (!isTransaction) {
-        if (!query.langtitude && !query.latitude) {
-          this.$store.dispatch("getSimpleHousesWithoutLocation", {
-            query: { subcity: query.subcity }
-          });
-        } else {
-          this.$store.dispatch("getSimpleHouses", {
-            query: { subcity: query.subcity }
-          });
-        }
+      const area = this.$store.state.search.area;
+      const price = this.$store.state.search.price;
+      const initPrice = this.$store.state.search.initPrice;
+      const person = this.$store.state.search.person;
+      const category = this.getCategoriesByKorean;
 
-        if (path.indexOf("list") < -1) {
-          this.fetchMapAreas();
+      const getQueryArray = (keyName, params) => {
+        if (keyName === "type_house__in" && params.length === 8) {
+          return {};
+        }
+        if (Array.isArray(params)) {
+          const hasValue = params.every((value) => value !== undefined);
+          if (!hasValue || params.length === 0) return {};
+          return {
+            [keyName]: params.join(",")
+          };
+        }
+        if (!params) return {};
+        return {
+          [keyName]: params
+        };
+      };
+
+      if (!isTransaction) {
+        if (this.$route.name !== 'listHouses') {
+          if (!query.langtitude && !query.latitude) {
+            this.$store.dispatch("getSimpleHousesWithoutLocation", {
+              query: { subcity: query.subcity }
+            });
+          } else {
+            this.$store.dispatch("getSimpleHouses", {
+              query: { subcity: query.subcity }
+            });
+          }
+
+          if (path.indexOf("list") < -1) {
+            this.fetchMapAreas();
+          }
         }
       } else {
-        const area = this.$store.state.search.area;
-        const price = this.$store.state.search.price;
-        const initPrice = this.$store.state.search.initPrice;
-        const person = this.$store.state.search.person;
-        const category = this.getCategoriesByKorean;
-
-        const getQueryArray = (keyName, params) => {
-          if (keyName === "type_house__in" && params.length === 8) {
-            return {};
-          }
-          if (Array.isArray(params)) {
-            const hasValue = params.every((value) => value !== undefined);
-            if (!hasValue || params.length === 0) return {};
-            return {
-              [keyName]: params.join(",")
-            };
-          }
-          if (!params) return {};
-          return {
-            [keyName]: params
-          };
-        };
-
         console.log(category, 'category')
-        this.$emit("change", {
-          page_size: 1000,
-          ...getQueryArray("type_house__in", category),
-          ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
-          ...getQueryArray("price_initial_investment__range", [
-            initPrice.min,
-            initPrice.max
-          ]),
-          ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
-          ...getQueryArray("user__in", person),
-          ...getQueryArray(
-            "redevelopment_area__category"
-            // getAreaTypeString()
-          )
-          // ...getRedevQuery(),
-          // ...getAreaTypeString()
-        });
       }
+      this.$emit("change", {
+        page_size: 1000,
+        ...getQueryArray("type_house__in", category),
+        ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
+        ...getQueryArray("price_initial_investment__range", [
+          initPrice.min,
+          initPrice.max
+        ]),
+        ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+        ...getQueryArray("user__in", person),
+        ...getQueryArray(
+          "redevelopment_area__category"
+          // getAreaTypeString()
+        )
+        // ...getRedevQuery(),
+        // ...getAreaTypeString()
+      });
     },
     initialize() {
       this.$refs.component.initialize();

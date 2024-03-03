@@ -95,7 +95,7 @@ export default {
       return [
         {
           label: "물건종류",
-          value: houseInfo.type_house.replace("ￜ", "")
+          value: houseInfo.type_house?.replace("ￜ", "")
         },
         {
           label: "매매 가격",
