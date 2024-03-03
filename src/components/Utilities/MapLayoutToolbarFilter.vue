@@ -131,6 +131,7 @@ export default {
         if (!array.length) return false;
         return array.every((obj) => obj);
       };
+      console.log()
       return [
         {
           label: "주택유형",

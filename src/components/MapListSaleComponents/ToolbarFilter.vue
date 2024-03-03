@@ -140,7 +140,7 @@ export default {
         {
           label: this.$route.name === "listHouses" ? "수정일자" : "거래일자",
           type: "PropertyPeriod",
-          class: hasValue(this.period) ? "text-white bg-brown-4" : "text-grey",
+          class: this.period[0] ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
           isHide: this.$route.path === "/map/city"
         }
