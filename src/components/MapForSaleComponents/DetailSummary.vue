@@ -142,7 +142,7 @@ export default {
             color: getColor(item.group_location.redevelopment_area?.category)
             // icon: getIcon()
           },
-          { type: "houseType", value: item.group_building_house.type_house },
+          { type: "houseType", value: item.group_building_house.type_house.replace("ￜ", "|") },
           { type: "redevelopment", value: item.redevelopment },
           { type: "stageProgress", value: item.stageProgress },
           {

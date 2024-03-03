@@ -456,6 +456,7 @@ export default {
       };
     },
     getInformation() {
+      // console.log(this.estate.group_building_house.type_house, "단독ￜ다가구".replace("ￜ", "|"))
       return [
         {
           // number of floors

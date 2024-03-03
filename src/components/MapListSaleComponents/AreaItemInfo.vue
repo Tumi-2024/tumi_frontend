@@ -92,36 +92,10 @@ export default {
         // group_location: locationInfo
       } = this.item;
 
-      // const dateRights = locationInfo.redevelopment_area?.category_date_rights
-      //   ?.replace("권리산정기준일 : ", "")
-      //   .replace("년 ", "-")
-      //   .replace("월 ", "-")
-      //   .replace("일", "");
-      // size_land_area_m2
-      // size_land_area
-
-      // size_dedicated_area_m2
-      // size_gross_floor_area
-      // const daejiArea = () => {
-      //   if (
-      //     householdInfo.size_land_area_m2 ||
-      //     houseInfo.size_land_area ||
-      //     householdInfo.size_dedicated_area_m2 ||
-      //     houseInfo.size_gross_floor_area
-      //   ) {
-      //     return `${Math.round(
-      //       householdInfo.size_land_area_m2 || houseInfo.size_land_area
-      //     )} / ${Math.round(
-      //       householdInfo.size_dedicated_area_m2 ||
-      //         houseInfo.size_gross_floor_area
-      //     )}`;
-      //   }
-      //   return undefined;
-      // };
       return [
         {
           label: "물건종류",
-          value: houseInfo.type_house.replace("ￜ", "|")
+          value: houseInfo.type_house.replace("ￜ", "")
         },
         {
           label: "매매 가격",
