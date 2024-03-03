@@ -6,6 +6,7 @@
     >
       <div class="title-heading">[{{ title }}] 실거래가 히스토리</div>
       <q-select
+        v-if="!($q.screen.sm || $q.screen.xs)"
         style="width: 90px"
         v-model="unitSelect"
         label="단위"
