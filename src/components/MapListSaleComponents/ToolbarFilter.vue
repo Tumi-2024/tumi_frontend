@@ -182,13 +182,15 @@ export default {
         _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
         _newParam.size_daeji__range = _newParam.size_land_area__range;
         _newParam.size_land__range = _newParam.size_land_area_m2__range;
-        _newParam.price__range = _newParam.price_selling_hope__range
+        _newParam.price__range = _newParam.price_selling_hope__range;
+        _newParam.date__range = _newParam.modified__range;
 
         delete _newParam.size_dedicated_area_m2__range;
         delete _newParam.size_gross_floor_area__range;
         delete _newParam.size_land_area__range;
         delete _newParam.size_land_area_m2__range;
         delete _newParam.price_selling_hope__range;
+        delete _newParam.modified__range;
         /**
          * size_private__range 전용면적 size_dedicated_area_m2
          size_yean__range 연면적 size_gross_floor_area__range

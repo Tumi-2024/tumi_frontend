@@ -201,7 +201,7 @@ export default {
     },
 
     async getSearchData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/?type=SALE`, {
         params
       });
       if (!!params.title && this.prevSearch === params.title) {
@@ -224,7 +224,7 @@ export default {
     },
 
     async getRedevData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/?type=SALE`, {
         params: { ...params, page, page_size: 10 }
       });
       if (!!params.title && this.prevSearch === params.title) {
@@ -248,7 +248,7 @@ export default {
     },
 
     async getLocationData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/?type=SALE`, {
         params: { ...params, page, page_size: 10 }
       });
 
@@ -276,7 +276,7 @@ export default {
       this.busy = false;
     },
     async getApiTransaction(params, label, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/?type=SALE`, {
         params: { ...params, page, page_size: 10 }
       });
       this.saleList = [
@@ -293,7 +293,7 @@ export default {
       this.busy = false;
     },
     async loadMoreApiTransaction(params, label, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/?type=SALE`, {
         params: { ...params, page, page_size: 10 }
       });
       this.saleList = [

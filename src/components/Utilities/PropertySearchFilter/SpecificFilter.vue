@@ -132,6 +132,8 @@ export default {
       const price = this.$store.state.search.price;
       const initPrice = this.$store.state.search.initPrice;
       const person = this.$store.state.search.person;
+      const period = this.$store.state.search.period;
+
       const category = this.getCategoriesByKorean;
 
       const getQueryArray = (keyName, params) => {
@@ -168,7 +170,7 @@ export default {
           }
         }
       } else {
-        console.log(category, 'category')
+        // console.log(category, 'category')
       }
       this.$emit("change", {
         page_size: 1000,
@@ -179,6 +181,7 @@ export default {
           initPrice.max
         ]),
         ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
+        ...getQueryArray([`modified__range`], period),
         ...getQueryArray("user__in", person),
         ...getQueryArray(
           "redevelopment_area__category"

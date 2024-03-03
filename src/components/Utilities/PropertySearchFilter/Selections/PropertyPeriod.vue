@@ -53,8 +53,8 @@ export default {
   components: {},
   data() {
     return {
-      startDate: null,
-      endDate: null
+      startDate: this.$store.state.search.period[0],
+      endDate: this.$store.state.search.period[1]
     };
   },
   computed: {
@@ -86,7 +86,6 @@ export default {
         day < 10 ? `0${day}` : day
       }`;
     },
-
     onChangeStartDate(e) {
       const _value = e.target.value;
       this.startDate = new Date(_value).getTime();
