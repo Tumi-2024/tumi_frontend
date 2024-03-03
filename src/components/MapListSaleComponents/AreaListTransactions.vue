@@ -127,7 +127,6 @@ export default {
       };
 
       // Transaction API 만들기
-      console.log(this.getCategoriesByKorean)
       const Dquery = {
         ...getQueryArray(
           "_categories",
@@ -170,6 +169,7 @@ export default {
       }
     },
     async onSearch(type, id, label) {
+      console.log(type, id, label)
       const { query } = this.$route;
       if (id?.length === 0) {
         return;
@@ -189,7 +189,7 @@ export default {
         case "지역":
           this.setLocationQuery(id, label, this.page);
           break;
-        case "개발정비사업":
+        case "정비사업":
           this.setRedevQuery(id, label, this.page);
           break;
         case "건물/단지":
@@ -206,13 +206,13 @@ export default {
       });
       if (!!params.title && this.prevSearch === params.title) {
         this.saleList = [
-          ...this.saleList,
           ...data.results.map((item) => {
             return {
               ...item,
               ...item.recent_transactions?.[item.types[0]]
             };
-          })
+          }),
+          ...this.saleList
         ];
       } else {
         this.saleList = data.results.map((item) => {

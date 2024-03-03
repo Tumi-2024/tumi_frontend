@@ -28,8 +28,8 @@
     </div>
     <div class="selection col q-mt-lg items-center">
       <div class="flex justify-start">
-        <q-radio v-model="isM2" label="평 수" :val="false" />
         <q-radio v-model="isM2" label="m²" :val="true" />
+        <q-radio v-model="isM2" label="평 수" :val="false" />
       </div>
       <div class="row q-mt-md">
         <q-input
@@ -117,7 +117,7 @@ export default {
   data() {
     return {
       selectValue: {},
-      isM2: false,
+      isM2: true,
       properties: [
         {
           label: "전용면적",
