@@ -133,7 +133,7 @@
                       >
                         <div style="display: flex; justify-content: space-between;">
                           <div style="display: flex; align-items: center; gap: 4px;">
-                            <q-badge outline color="primary">{{ getHouseType(item.category) }}</q-badge>
+                            <q-badge outline color="primary">{{ getHouseType(item.category.replace("ￜ", "|")) }}</q-badge>
                             <q-badge outline color="blue">{{ toMoneyString(item.price || item.price_deposit) }}</q-badge>
                             <q-badge v-if="item.price_monthly" outline class="bg-blue text-white">{{ toMoneyString(item.price_monthly) }}</q-badge>
                             <q-badge outline color="green">{{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}</q-badge>
