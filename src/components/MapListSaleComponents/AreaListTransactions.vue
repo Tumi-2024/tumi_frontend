@@ -112,7 +112,7 @@ export default {
         if (keyName === "type_house__in" && params?.length === 8) {
           return {};
         }
-        if (keyName === "_categories" && params?.length === 8) {
+        if (keyName === "category__in" && params?.length === 8) {
           return {};
         }
         if (Array.isArray(params)) {
@@ -130,7 +130,7 @@ export default {
       // Transaction API 만들기
       const Dquery = {
         ...getQueryArray(
-          "_categories",
+          "category__in",
           this.getCategoriesByKorean.filter(obj => obj !== '무허가 건축물' && obj !== '입주권')
             .join(",")
             .replace("토지", "LAND")

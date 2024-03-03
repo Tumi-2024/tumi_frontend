@@ -182,7 +182,7 @@ export const estateStore = {
         ...(estateStore.state.payload?.type !== "transaction_groups"
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-            "_categories",
+            "category__in",
             category
               .join(",")
               .replace("토지", "LAND")
@@ -194,6 +194,8 @@ export const estateStore = {
               .split(",")
           ))
       };
+
+      console.log(period[0])
 
       const data = await Vue.prototype.$axios.get(
         `/${context.state.requestUrl}/`,
@@ -210,10 +212,7 @@ export const estateStore = {
               initPrice.min,
               initPrice.max
             ]),
-            ...getQueryArray("created__range", [
-              new Date(period[0] ?? undefined).getTime(),
-              new Date(period[1] ?? undefined).getTime()
-            ]),
+            ...getQueryArray("modified__range", period),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
             ...getQueryArray("user__in", person),
             ...getQueryArray(
@@ -358,7 +357,7 @@ export const estateStore = {
         ...(!window.location.hash.includes("/city/area")
           ? getQueryArray("type_house__in", category)
           : getQueryArray(
-            "_categories",
+            "category__in",
             category
               .join(",")
               .replace("토지", "LAND")
@@ -387,10 +386,7 @@ export const estateStore = {
               initPrice.max
             ]),
             ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
-            ...getQueryArray("created__range", [
-              new Date(period[0] ?? undefined).getTime(),
-              new Date(period[1] ?? undefined).getTime()
-            ]),
+            ...getQueryArray("modified__range", period),
 
             ...getQueryArray("user__in", person),
             ...getQueryArray(
