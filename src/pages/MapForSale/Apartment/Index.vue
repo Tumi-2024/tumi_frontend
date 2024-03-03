@@ -206,16 +206,15 @@
                     <img src="~assets/icons/phone.svg" alt="" />
                   </q-icon>
                 </div>
-                <div class="q-ml-lg" style="flex: 1" @click="callPerson">
+                <div class="q-ml-lg" style="flex: 1; word-break: keep-all;" @click="callPerson">
                   <div class="row items-center">
                     <span class="text-subtitle2 col-12 text-bold">
                       {{ getPersons[0].rank }}
                     </span>
                     <div
                       class="text-h6 q-mb-xs col-12 flex text-bold"
-                      style="gap: 8px"
                     >
-                      {{ getPersons[0].text }}
+                      <span style="margin-right: 4px;">{{ getPersons[0].text }}</span>
                       <span v-if="getPersons[0].phone" class="flex"
                         >Tel. {{ getPersons[0].phone }}</span
                       >
