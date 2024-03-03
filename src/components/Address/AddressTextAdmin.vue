@@ -3,7 +3,6 @@
     <div class="title">
       <div
         class="column"
-        style="flex: 1"
         @mouseover="
           () => {
             if (!redirect) return;

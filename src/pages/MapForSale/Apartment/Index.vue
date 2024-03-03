@@ -307,6 +307,11 @@
       show-units
       :unit="unit"
     /> -->
+    <common-information
+      class="q-mt-md"
+      title="중개사무소"
+      :getOptions="getStoreInfo"
+    />
     <recent-history
       class="q-mt-md"
       v-if="this.redevelopment.id"
@@ -878,6 +883,17 @@ export default {
           value: houseInfo.description_option_foreigner
         }
       ];
+    },
+    getStoreInfo() {
+      const { store_main: store } = this.estate;
+      return [
+        { label: "명칭", value: store?.title, class: "col-sm-12 col-md-12" },
+        { label: "소재지", value: store?.address },
+        { label: "등록번호", value: store?.registration_number },
+        { label: "연락처", value: store?.call },
+        { label: "성명", value: store?.title }
+
+      ]
     },
     getRedevOptions() {
       const {

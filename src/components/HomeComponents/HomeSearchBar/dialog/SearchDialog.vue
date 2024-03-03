@@ -252,31 +252,26 @@ export default {
           lat: Number(value.latitude),
           lng: Number(value.longitude)
         };
-
+        this.setMapZoom(18);
+        this.changeMapCenter(_value);
         if (type === "location") {
           this.$router.push({
-            name: "map_city",
+            name: this.shape === 'house' ? "map_city" : "for_sale_apartment",
             query: {
               location: label
             }
           });
-          this.setMapZoom(15);
-          this.changeMapCenter(_value);
         } else if (type === "redevelopment") {
           this.$router.push({
-            name: "map_city_area",
+            name: this.shape === 'house' ? "map_city" : "map_city_area",
             query: {
               redev: label
             }
           });
-          this.setMapZoom(15);
-          this.changeMapCenter(_value);
         } else {
-          this.setMapZoom(16);
-          this.changeMapCenter(_value);
           await Vue.prototype.$axios.post(`/houses/${id}/recent/`, {});
           this.$router.push({
-            name: "for_sale_apartment",
+            name: this.shape === 'house' ? "map_city" : "for_sale_apartment",
             query: {
               value
             }
