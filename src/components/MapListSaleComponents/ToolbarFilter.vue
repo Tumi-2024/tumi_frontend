@@ -274,18 +274,35 @@ export default {
             this.options = [...subArr, ...locationArr];
           });
         } else {
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
-          update(async () => {
-            this.options = results.map(({ group_building_house: building }) => {
-              return {
-                value: building.title_building,
-                label: building.title_building,
-                id: building.title_building
-              };
+          const { name } = this.$route
+          console.log(this.$route)
+          if (name === 'listTransactions') {
+            const {
+              data: { results }
+            } = await Vue.prototype.$axios.get(`transactions/?search=${val}`);
+            update(async () => {
+              this.options = results.map((building) => {
+                return {
+                  value: building.text_danji,
+                  label: building.text_danji,
+                  id: building.text_danji
+                };
+              });
             });
-          });
+          } else {
+            const {
+              data: { results }
+            } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
+            update(async () => {
+              this.options = results.map(({ group_building_house: building }) => {
+                return {
+                  value: building.title_building,
+                  label: building.title_building,
+                  id: building.title_building
+                };
+              });
+            });
+          }
         }
       }
     }

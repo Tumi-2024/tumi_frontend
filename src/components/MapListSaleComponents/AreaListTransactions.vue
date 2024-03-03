@@ -201,7 +201,7 @@ export default {
     },
 
     async getSearchData(params, page) {
-      const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
+      const { data } = await Vue.prototype.$axios.get(`/transactions/`, {
         params
       });
       if (!!params.title && this.prevSearch === params.title) {
@@ -330,6 +330,7 @@ export default {
         name: "listTransactions",
         query: { search }
       });
+      console.log(search, 'search')
 
       this.getSearchData({ search }, this.page);
     },
