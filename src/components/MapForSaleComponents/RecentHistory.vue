@@ -42,8 +42,8 @@
         >
           <q-list separator>
             <q-virtual-scroll
-              v-if="transactions"
               style="min-height: 220px; max-height: 500px"
+              v-if="transactions.length"
               :items="transactions"
               :virtual-scroll-slice-size="100"
               separator
@@ -110,7 +110,6 @@
                   </div>
                 </q-item>
                 <q-item v-if="$q.screen.sm || $q.screen.xs">
-                  test
                 </q-item>
               </template>
               <template v-slot="{ item, index }">
@@ -128,9 +127,25 @@
                     <!-- {{ $q.screen.sm || $q.screen.xs }} -->
                     <!-- {{ $q.screen.xs }} -->
                     <div class="flex col">
-                      <div class="column" style="flex: 1">
-                        <span style="font-size: 16px">
-                          계약일:
+                      <div
+                        style="display: flex; flex: 1; flex-direction: column; font-size: 16px"
+                      >
+                        <span>
+                          <span style="font-size: 14px">주택유형:</span>
+                          {{ getHouseType(item.category) }}
+                        </span>
+                        <span>
+                          <span style="font-size: 14px">
+                            대지/ 건물면적:
+                          </span>
+                          {{ item.text_size_land ? item.text_size_land + 'm²' : '-' }} / {{ item.text_size_private ? item.text_size_private + 'm²' : '-' }}
+                        </span>
+                      </div>
+                      <div class="column" style="flex: 1; font-size: 16px">
+                        <span>
+                          <span style="font-size: 14px">
+                            계약일:
+                          </span>
                           {{
                             item.text_month.slice(2, 4) +
                             "." +
@@ -142,24 +157,15 @@
                           }}
                         </span>
                         <span>
-                          주소:
+                          <span style="font-size: 14px">
+                            주소:
+                          </span>
                           {{ getAddressWithoutSiGunGu(item.text_sigungu) }}
                           {{ item.bonbeon || item.beonji }},
                           {{ (item.text_floor || "").replace(/null/i, "-") }}층
                         </span>
                       </div>
-                      <div
-                        style="display: flex; flex: 1; flex-direction: column"
-                      >
-                        <span>주택유형: {{ getHouseType(item.category) }}</span>
-                        <!-- <span>{{
-                          대지면적: (item.text_size_land ||
-                item.size_land ||
-                item.text_size_daeji ||
-                item.size_daeji) / unit
 
-                        }}</span> -->
-                      </div>
                     </div>
                   </template>
                   <template v-else>
