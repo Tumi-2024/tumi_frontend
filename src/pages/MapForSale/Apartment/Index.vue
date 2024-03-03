@@ -975,7 +975,6 @@ export default {
           label: "주택공급계획",
           value: this.getValue(houseInfo.status_sharing_plan)
         }
-        // { label: "구역면적 (m²)", value: houseInfo.price_selling_hope },
       ];
     },
     getPersons() {

@@ -224,7 +224,7 @@ export default {
         },
         { label: "정비구역 위치", value: this.getMapSelectedArea.area },
         {
-          label: "구역면적 (m²)",
+          label: "구역면적 ",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_area, "m²")
         },
         {
@@ -278,65 +278,65 @@ export default {
     getInfo2() {
       return [
         {
-          label: "대지 면적(m²)",
+          label: "대지 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_land_area,
             "m²"
           )
         },
         {
-          label: "연 면적(m²)",
+          label: "연 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_total_area,
             "m²"
           )
         },
         {
-          label: "건축 면적(m²)",
+          label: "건축 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_building_area,
             "m²"
           )
         },
         {
-          label: "구역 면적(m²)",
+          label: "구역 면적",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_area, "m²")
         },
         {
-          label: "택지 면적(m²)",
+          label: "택지 면적",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_land, "m²")
         },
         {
-          label: "도로 면적(m²)",
+          label: "도로 면적",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_road, "m²")
         },
         {
-          label: "공원 면적(m²)",
+          label: "공원 면적",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_park, "m²")
         },
         {
-          label: "녹지 면적(m²)",
+          label: "녹지 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_greenery,
             "m²"
           )
         },
         {
-          label: "공공공지 면적(m²)",
+          label: "공공공지 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_public,
             "m²"
           )
         },
         {
-          label: "학교 면적(m²)",
+          label: "학교 면적",
           value: this.getValueWithUnit(
             this.getMapSelectedArea.size_school,
             "m²"
           )
         },
         {
-          label: "기타 면적(m²)",
+          label: "기타 면적",
           value: this.getValueWithUnit(this.getMapSelectedArea.size_etc, "m²")
         }
       ];
