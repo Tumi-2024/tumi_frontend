@@ -282,7 +282,7 @@ export default {
         }
         const category = [
           { key: "COMMERCIAL ", label: "상업업무용" },
-          { key: "SINGLE", label: "단독다가구" },
+          { key: "SINGLE", label: "단독ￜ다가구" },
           { key: "OFFICETEL", label: "오피스텔" },
           { key: "APARTMENT", label: "아파트" },
           { key: "LAND", label: "토지" },

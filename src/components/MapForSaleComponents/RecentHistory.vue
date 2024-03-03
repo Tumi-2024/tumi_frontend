@@ -134,7 +134,8 @@
                         <div style="display: flex; justify-content: space-between;">
                           <div style="display: flex; align-items: center; gap: 4px;">
                             <q-badge outline color="primary">{{ getHouseType(item.category) }}</q-badge>
-                            <q-badge v-if="item.price" outline color="blue">{{ toMoneyString(item.price) }}</q-badge>
+                            <q-badge outline color="blue">{{ toMoneyString(item.price || item.price_deposit) }}</q-badge>
+                            <q-badge v-if="item.price_monthly" outline class="bg-blue text-white">{{ toMoneyString(item.price_monthly) }}</q-badge>
                             <q-badge outline color="green">{{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}</q-badge>
                             <q-badge color="black"> {{
                             item.text_month.slice(2, 4) +
@@ -266,9 +267,9 @@ export default {
       filterValue: "",
       tabs: [
         // { level: "all", label: "전체" },
-        { level: "SALE", label: "매매" },
-        { level: "RENT", label: "전세" },
-        { level: "monthly", label: "월세" }
+        { level: "SALE", key: "MONTHLY", label: "매매" },
+        { level: "RENT", key: "RENT", label: "전세" },
+        { level: "MONTHLY", key: "MONTHLY", label: "월세" }
       ],
       select: {
         label: "대지면적",
@@ -290,12 +291,19 @@ export default {
     toMoneyString(value, add) {
       return toMoneyString(value, add);
     },
-
     async getTransactions() {
+      const type = this.activeTab === 'SALE' ? 'SALE' : this.activeTab === 'MONTHLY' ? "RENT" : "RENT"
       const { data } = await Vue.prototype.$axios.get(
-        `transactions/?page_size=1000&transaction_group__redevelopment_area=${this.redevId}&type=${this.activeTab}`
+        `redevelopment_areas/${this.redevId}/transactions/?page_size=1000&type=${type}`
       );
-      this.transactions = data.results;
+
+      if (this.activeTab === 'SALE') {
+        this.transactions = data.results
+      } else if (this.activeTab === 'RENT') {
+        this.transactions = data.results.filter(obj => !obj.price_monthly);
+      } else {
+        this.transactions = data.results.filter(obj => !!obj.price_monthly);
+      }
     }
   },
   beforeMount() {

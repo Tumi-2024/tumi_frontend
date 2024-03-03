@@ -118,28 +118,7 @@ export default {
     return {
       selectValue: {},
       isM2: true,
-      properties: [
-        {
-          label: "전용면적",
-          value: "size_dedicated_area_m2",
-          type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
-        },
-        {
-          label: "연면적",
-          value: "size_gross_floor_area",
-          type: ["SINGLE", "noname01", "COMMERCIAL"]
-        },
-        {
-          label: "대지면적",
-          value: "size_land_area",
-          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
-        },
-        {
-          label: "대지지분(대지권면적)",
-          value: "size_land_area2",
-          type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
-        }
-      ],
+      properties: [],
       presets: [
         { label: "~10평", labelM2: "~" + 10 * 3.3 + "m²", value: 10 * 3.3 },
         { label: "20평", labelM2: 20 * 3.3 + "m²", value: 20 * 3.3 },
@@ -279,6 +258,55 @@ export default {
       this.selectValue = { ...this.area };
     } else {
       this.selectValue = { ...this.area, value: "size_dedicated_area_m2" };
+    }
+    const { name } = this.$route
+    console.log(name === 'listTransactions')
+    if (name === 'listTransactions' || name === 'map_city_area') {
+      this.properties = [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
+        },
+        {
+          label: "연면적",
+          value: "size_gross_floor_area",
+          type: ["SINGLE", "noname01"]
+        },
+        {
+          label: "대지면적",
+          value: "size_land_area",
+          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
+        },
+        {
+          label: "대지지분(대지권면적)",
+          value: "size_land_area2",
+          type: ["ALLIANCE"]
+        }
+      ]
+    } else {
+      this.properties = [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
+        },
+        {
+          label: "연면적",
+          value: "size_gross_floor_area",
+          type: ["SINGLE", "noname01", "COMMERCIAL"]
+        },
+        {
+          label: "대지면적",
+          value: "size_land_area",
+          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
+        },
+        {
+          label: "대지지분(대지권면적)",
+          value: "size_land_area2",
+          type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
+        }
+      ]
     }
   }
 };

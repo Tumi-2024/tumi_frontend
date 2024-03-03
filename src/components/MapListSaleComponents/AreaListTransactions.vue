@@ -74,7 +74,8 @@ export default {
       saleList: [],
       currentItem: {},
       page: 1,
-      busy: false
+      busy: false,
+      params: {}
     };
   },
   computed: {
@@ -99,6 +100,7 @@ export default {
       // this.getApiTransaction();
     },
     changeFilter(params) {
+      this.params = params
       this.infiniteHandler(params, 1);
     },
     infiniteHandler(params, pageNumber) {
@@ -125,7 +127,6 @@ export default {
           [keyName]: params
         };
       };
-
       // Transaction API 만들기
       const Dquery = {
         ...getQueryArray(
@@ -137,7 +138,7 @@ export default {
             .replace("연립ￜ다세대", "ALLIANCE")
             .replace("아파트", "APARTMENT")
             .replace("상업ￜ업무용", "COMMERCIAL")
-            .replace("단독|다가구", "SINGLE")
+            .replace("단독ￜ다가구", "SINGLE")
             .split(",")
         ),
         ...params
@@ -147,22 +148,22 @@ export default {
       const _key = Object.keys(query)[0];
       this.busy = true;
       if (pageNumber === 1) {
-        this.getApiTransaction({ ...Dquery, ...query }, this.page);
+        this.getApiTransaction({ ...Dquery, ...query, ...this.params }, this.page);
         return;
       }
       switch (_key) {
         case "search":
-          this.getSearchData({ ...Dquery, ...query }, this.page);
+          this.getSearchData({ ...Dquery, ...query, ...this.params }, this.page);
           break;
         case "redevelopment_area":
-          this.getRedevData({ ...Dquery, ...query }, this.page);
+          this.getRedevData({ ...Dquery, ...query, ...this.params }, this.page);
           break;
         case "location":
-          this.getLocationData({ ...Dquery, ...query }, this.page);
+          this.getLocationData({ ...Dquery, ...query, ...this.params }, this.page);
           break;
         default:
           this.loadMoreApiTransaction(
-            { ...Dquery, ...query },
+            { ...Dquery, ...query, ...this.params },
             undefined,
             this.page
           );
