@@ -3,6 +3,7 @@
     <div class="title">
       <div
         class="column"
+        style="flex: 1"
         @mouseover="
           () => {
             if (!redirect) return;
@@ -170,15 +171,15 @@ export default {
 
 .area-name-after {
   font-weight: 500;
-  font-size: calc((20 / 1312) * 100vh);
-  line-height: calc((21 / 1312) * 100vh);
+  font-size: 12px;
+  line-height: 14px;
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;
   cursor: pointer;
   font-weight: bold;
   &.redev {
-    font-size: calc((28 / 1312) * 100vh);
+    font-size: 14px;
     color: #ff5a00;
   }
 }

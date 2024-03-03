@@ -17,7 +17,6 @@
         :option-value="(item) => (item === null ? null : item.label)"
       />
     </q-card-section>
-    <!-- recent hitory -->
     <q-card-section class="bg-white notosanskr-regular">
       <q-tabs
         v-model="activeTab"
@@ -381,7 +380,7 @@ export default {
           { label: "오피스텔", value: "OFFICETEL" },
           { label: "상업업무용", value: "COMMERCIAL " },
           { label: "분양/입주권", value: "LAND" },
-          { label: "연립ￜ다세대", value: "ALLIANCE" },
+          { label: "연립|다세대", value: "ALLIANCE" },
           { label: "단독|다가구", value: "SINGLE" },
           { label: "토지", value: "LAND" }
         ].filter((item) => {
