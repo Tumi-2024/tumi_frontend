@@ -60,21 +60,34 @@ export default {
     font-family: "nanum-square";
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
     text-align: center;
     letter-spacing: -1.2px;
     color: #1a1a1a;
+    @media  (max-width: 599px) {
+      font-size: 12px;
+      line-height: 18px;
+    }
+    @media (min-width: 600px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
   .sub-title {
     font-family: "nanum-square";
     font-style: normal;
     font-weight: 500;
-    font-size: 13px;
-    line-height: 20px;
+
     text-align: center;
     letter-spacing: -0.975px;
     color: #707070;
+    @media  (max-width: 599px) {
+      font-size: 11px;
+      line-height: 16px;
+    }
+    @media (min-width: 600px) {
+      font-size: 13px;
+      line-height: 20px;
+    }
   }
 
   &.border-bottom-dashed {

@@ -290,9 +290,10 @@ export default {
     toMoneyString(value, add) {
       return toMoneyString(value, add);
     },
+
     async getTransactions() {
       const { data } = await Vue.prototype.$axios.get(
-        `redevelopment_areas/${this.redevId}/transactions/?page_size=1000&type=${this.activeTab}`
+        `transactions/?page_size=1000&transaction_group__redevelopment_area=${this.redevId}&type=${this.activeTab}`
       );
       this.transactions = data.results;
     }
