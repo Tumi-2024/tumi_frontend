@@ -169,7 +169,6 @@ export default {
       }
     },
     async onSearch(type, id, label) {
-      console.log(type, id, label)
       const { query } = this.$route;
       if (id?.length === 0) {
         return;
@@ -287,7 +286,6 @@ export default {
       this.busy = false;
     },
     async getApiTransaction(params, label, page) {
-      console.log('getApiTransaction', params)
       const { data } = await Vue.prototype.$axios.get(`/transaction_groups/`, {
         params: { ...params, page, page_size: 10 }
       });
@@ -330,7 +328,6 @@ export default {
         name: "listTransactions",
         query: { search }
       });
-      console.log(search, 'search')
 
       this.getSearchData({ search }, this.page);
     },

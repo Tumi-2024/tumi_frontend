@@ -214,9 +214,10 @@ export default {
     getMapCenter(obj) {
       const map = this.$refs.naverMapRef.map;
       map.panTo(obj);
-      console.log(map.panTo(obj));
-      console.log(this.$refs.naverMapRef.map.bounds);
       this.getRedevInfo();
+      setTimeout(() => {
+        this.getHouseInfo();
+      }, 500)
     }
   },
   computed: {
@@ -250,7 +251,6 @@ export default {
       };
     },
     getColor() {
-      console.log(this.getAreaType);
       switch (this.getAreaType) {
         case "재개발":
           return { text: "white", bg: "rgb(255, 90, 0)", tagClass: "primary" };
@@ -395,9 +395,7 @@ export default {
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
-    this.boundsChanged = debounce(this.boundsChanged, 2000);
-    // this.$refs.naverMapRef.map.addListener("", this.idle);
-    // naverMap.setCenter(this.getMapCenter);
+    this.boundsChanged = debounce(this.boundsChanged, 1000);
     this.changeMapCenter({
       lat: naverMap.center._lat,
       lng: naverMap.center._lng
@@ -427,7 +425,6 @@ export default {
         });
         return;
       }
-      console.log("goTo list");
       this.$router.push({
         name: "listHouses",
         query: {
@@ -551,8 +548,6 @@ export default {
       });
     },
     getHouseInfo() {
-      console.log(this.$route.name);
-
       const bounds = this.$refs.naverMapRef.map.bounds;
 
       const boundLocation = {

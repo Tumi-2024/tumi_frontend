@@ -160,7 +160,6 @@ export const estateStore = {
       // };
 
       const getAreaTypeString = () => {
-        console.log(context.rootState.map.areaType);
         switch (context.rootState.map.areaType) {
           case null:
             return "";
@@ -178,7 +177,6 @@ export const estateStore = {
       const _red = payload?.query?.subcity
         ? {}
         : { redevelopment_area__isnull: "false" };
-      console.log("getSimpleHousesWithoutLocation");
       const Dquery = {
         ..._red,
         ...(estateStore.state.payload?.type !== "transaction_groups"
@@ -463,8 +461,6 @@ export const estateStore = {
         }
       };
       const _data = estateData(data.data.results);
-
-      console.log(_data, "data");
 
       context.commit("setSimpleHouses", _data);
       context.dispatch("map/changeEstateCount");

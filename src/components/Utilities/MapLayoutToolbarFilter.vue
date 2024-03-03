@@ -210,7 +210,6 @@ export default {
     onChangeSelect(e) {
       this.searchType = e.value;
       this.options = [];
-      console.log(this.$refs.keywordRef);
       this.$refs.keywordRef.updateInputValue(this.searchText);
     },
     onSelect(obj) {
@@ -221,13 +220,11 @@ export default {
       this.searchText = obj.label;
     },
     onChangeText(e) {
-      console.log(e.target.value);
       this.searchText = e.target.value;
     },
     async filterRedev(val, update, abort) {
       return new Promise((resolve) => {
         const getAreaTypeString = () => {
-          console.log(this.getAreaType);
           switch (this.getAreaType) {
             case null:
               return "";
@@ -295,9 +292,9 @@ export default {
     },
 
     async filterFn(val, update, abort) {
-      console.log("filterFn", val);
       if (!val || val === "") {
-        update();
+        update(this.options = []);
+        this.searchText = ''
         return;
       }
       this.searchText = val;
