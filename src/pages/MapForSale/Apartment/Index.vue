@@ -71,7 +71,7 @@
                 style="height: 16px"
               />
               <div class="price">
-                {{ estate.group_price.percentage_ratio }}%
+                {{ (estate.group_price.percentage_ratio).toFixed(2) }}%
               </div>
             </div>
           </div>
@@ -887,11 +887,10 @@ export default {
     getStoreInfo() {
       const { store_main: store } = this.estate;
       return [
-        { label: "명칭", value: store?.title, class: "col-sm-12 col-md-12" },
-        { label: "소재지", value: store?.address },
-        { label: "등록번호", value: store?.registration_number },
-        { label: "연락처", value: store?.call },
-        { label: "성명", value: store?.title }
+        { label: "명칭/대표자", value: store?.title, class: "col-sm-6 col-md-6" },
+        { label: "등록번호", value: store?.registration_number, class: "col-sm-6 col-md-6" },
+        { label: "소재지", value: store?.address, class: "col-sm-6 col-md-6" },
+        { label: "대표연락처", value: store?.call, class: "col-sm-6 col-md-6" }
 
       ]
     },

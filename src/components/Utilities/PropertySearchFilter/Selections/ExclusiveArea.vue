@@ -280,7 +280,7 @@ export default {
         },
         {
           label: "대지지분(대지권면적)",
-          value: "size_land_area2",
+          value: "size_land_area",
           type: ["ALLIANCE"]
         }
       ]
@@ -303,7 +303,7 @@ export default {
         },
         {
           label: "대지지분(대지권면적)",
-          value: "size_land_area2",
+          value: "size_land_area_m2",
           type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
         }
       ]
