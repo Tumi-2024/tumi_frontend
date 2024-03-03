@@ -388,7 +388,7 @@ export default {
               this.category.find((obj) => obj.key === this.ctgr) || {
                 label: ""
               }
-            ).label
+            ).label.replace("ￜ", "|")
           },
           {
             type: "area",

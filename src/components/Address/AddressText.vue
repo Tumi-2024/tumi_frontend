@@ -25,7 +25,7 @@
           {{ (address || "").replace(/대한민국/gi, "") }}
         </div>
         <div
-          class="area-name sub"
+          class="area-name"
           :class="[{ hover: isHover, redirect }]"
           @click="goToAdmin"
         >

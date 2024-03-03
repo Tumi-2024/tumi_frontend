@@ -132,7 +132,7 @@
               <q-icon>
                 <img src="~assets/icons/coins.svg" alt="" />
               </q-icon>
-              <div class="q-ml-md title">조합원 분양가</div>
+              <div class="q-ml-md title" style="word-break: keep-all;">조합원 분양가</div>
               <q-separator
                 class="self-center q-mx-sm"
                 vertical

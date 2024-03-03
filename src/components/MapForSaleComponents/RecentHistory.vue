@@ -128,12 +128,13 @@
                     <!-- {{ $q.screen.xs }} -->
                     <div class="flex col">
                       <div
-                        style="display: flex; flex: 1; flex-direction: column; gap: 8px;"
+                        style="display: flex; flex: 1; flex-direction: column; gap: 4px;"
                       >
                         <div style="display: flex; justify-content: space-between;">
-                          <div style="display: flex; gap: 4px; align-items: center; gap: 4px;">
+                          <div style="display: flex; align-items: center; gap: 4px;">
                             <q-badge outline color="primary">{{ getHouseType(item.category) }}</q-badge>
                             <q-badge v-if="item.price" outline color="blue">{{ toMoneyString(item.price) }}</q-badge>
+                            <q-badge outline color="green">{{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}</q-badge>
                             <q-badge color="black"> {{
                             item.text_month.slice(2, 4) +
                             "." +
@@ -146,7 +147,7 @@
                           </div>
                           <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
                             <span style="font-weight: 400; font-size: 14px;">
-                              대지면적
+                              대지면적  &nbsp;
                             </span>
                             {{ (item.size_daeji || item.size_land) + 'm²' }}
                           </span>
@@ -155,7 +156,7 @@
                           <span style="font-size: 16px">{{ item.address }}</span>
                           <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
                             <span style="font-weight: 400; font-size: 14px;">
-                              건물면적
+                              건물면적 &nbsp;
                             </span>
                              {{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}
                           </span>
