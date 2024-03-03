@@ -207,6 +207,7 @@ export default {
     },
 
     async getSearchData(params, page) {
+      this.saleList = []
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: {
           ...params,
@@ -226,6 +227,7 @@ export default {
     },
 
     async getHouseData(params, page) {
+      this.saleList = []
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
@@ -243,6 +245,7 @@ export default {
     },
 
     async getLocationData(params, page) {
+      this.saleList = []
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
@@ -259,6 +262,7 @@ export default {
       this.busy = false;
     },
     async getApiHouses(params, label, page) {
+      this.saleList = []
       const { data } = await Vue.prototype.$axios.get(`/houses/`, {
         params: { ...params, ...this.getDquery(), page, page_size: 10 }
       });
