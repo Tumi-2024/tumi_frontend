@@ -5,7 +5,7 @@
       anchor="top middle"
       self="bottom middle"
       :offset="[10, 10]"
-      :content-class="badgeClass"
+      :content-class="tooltipClass"
     >
       {{ label }}
     </q-tooltip>
@@ -67,7 +67,8 @@ export default {
   },
   data() {
     return {
-      badgeClass: ""
+      badgeClass: "",
+      tooltipClass: ""
     };
   },
   computed: {
@@ -121,31 +122,40 @@ export default {
         break;
       case this.houseType:
         this.badgeClass = "text-primary bg-white";
+        this.tooltipClass = "text-white bg-primary";
         break;
       case this.pyeong:
       case this.area:
         this.badgeClass = "text-green bg-white";
+        this.tooltipClass = "text-white bg-green";
         break;
       case this.transactionStatus:
         this.badgeClass = "text-white bg-primary";
+        this.tooltipClass = "text-primary bg-white";
         break;
       case this.recommend:
         this.badgeClass = "text-white bg-primary";
+        this.tooltipClass = "text-primary bg-white";
         break;
       case this.redevelopment:
         this.badgeClass = "re-develop bg-white";
+        this.tooltipClass = "text-white bg-green";
         break;
       case this.charter:
         this.badgeClass = "bg-blue-grey";
+        this.tooltipClass = "text-white bg-green";
         break;
       case this.sale:
         this.badgeClass = "bg-blue";
+        this.tooltipClass = "text-white bg-green";
         break;
       case this.date:
         this.badgeClass = "date text-black bg-white";
+        this.tooltipClass = "text-white bg-black";
         break;
       case this.price:
         this.badgeClass = "date text-blue bg-white";
+        this.tooltipClass = "text-white bg-blue";
         break;
       default:
         this.badgeClass = "date text-blue bg-white";

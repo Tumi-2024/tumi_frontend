@@ -146,7 +146,7 @@ export default {
           },
           {
             type: "houseType",
-            value: item.group_building_house.type_house,
+            value: item.group_building_house.type_house.replace("ￜ", "|"),
             label: "주택유형"
           },
           { type: "redevelopment", value: item.redevelopment },
