@@ -460,7 +460,7 @@ export default {
         {
           // number of floors
           label: "물건종류",
-          value: this.getValue(this.estate.group_building_house.type_house),
+          value: this.getValue(this.estate.group_building_house.type_house.replace("ￜ", "|")),
           icon: ["11.png"],
           new: true
         },
