@@ -120,17 +120,17 @@ export default {
         this.badgeClass = "text-blue";
         break;
       case this.houseType:
-        this.badgeClass = "text-white bg-primary";
+        this.badgeClass = "text-primary bg-white";
         break;
       case this.pyeong:
       case this.area:
-        this.badgeClass = "text-white bg-green";
+        this.badgeClass = "text-green bg-white";
         break;
       case this.transactionStatus:
-        this.badgeClass = "text-primary bg-white";
+        this.badgeClass = "text-white bg-primary";
         break;
       case this.recommend:
-        this.badgeClass = "text-primary bg-white";
+        this.badgeClass = "text-white bg-primary";
         break;
       case this.redevelopment:
         this.badgeClass = "re-develop bg-white";
@@ -142,13 +142,13 @@ export default {
         this.badgeClass = "bg-blue";
         break;
       case this.date:
-        this.badgeClass = "date text-white bg-black";
+        this.badgeClass = "date text-black bg-white";
         break;
       case this.price:
-        this.badgeClass = "date text-white bg-blue";
+        this.badgeClass = "date text-blue bg-white";
         break;
       default:
-        this.badgeClass = "date text-white bg-blue";
+        this.badgeClass = "date text-blue bg-white";
     }
   }
 };

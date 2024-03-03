@@ -577,7 +577,6 @@ export default {
       this.mapSize.width = w + "px";
     },
     viewArea(item) {
-      console.log("viewArea");
       this.setMapCenter(item.position);
 
       const getRouterParams = () => {
@@ -594,9 +593,6 @@ export default {
           return { name: "for_sale_apartment", query: { sellid: item.id } };
         }
       };
-      console.log(
-        this.$route.path === "/map/city/area" ? "transaction" : "house"
-      );
       this.$router.push(getRouterParams());
     },
     getCurrentPosition() {

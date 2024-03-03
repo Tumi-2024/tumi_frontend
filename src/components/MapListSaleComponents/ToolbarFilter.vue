@@ -275,7 +275,6 @@ export default {
           });
         } else {
           const { name } = this.$route
-          console.log(this.$route)
           if (name === 'listTransactions') {
             const {
               data: { results }

@@ -128,25 +128,13 @@
                     <!-- {{ $q.screen.xs }} -->
                     <div class="flex col">
                       <div
-                        style="display: flex; flex: 1; flex-direction: column; font-size: 16px"
+                        style="display: flex; flex: 1; flex-direction: column; gap: 8px;"
                       >
-                        <span>
-                          <span style="font-size: 14px">주택유형:</span>
-                          {{ getHouseType(item.category) }}
-                        </span>
-                        <span>
-                          <span style="font-size: 14px">
-                            대지/ 건물면적:
-                          </span>
-                          {{ item.text_size_land ? item.text_size_land + 'm²' : '-' }} / {{ item.text_size_private ? item.text_size_private + 'm²' : '-' }}
-                        </span>
-                      </div>
-                      <div class="column" style="flex: 1; font-size: 16px">
-                        <span>
-                          <span style="font-size: 14px">
-                            계약일:
-                          </span>
-                          {{
+                        <div style="display: flex; justify-content: space-between;">
+                          <div style="display: flex; gap: 4px; align-items: center; gap: 4px;">
+                            <q-badge outline color="primary">{{ getHouseType(item.category) }}</q-badge>
+                            <q-badge v-if="item.price" outline color="blue">{{ toMoneyString(item.price) }}</q-badge>
+                            <q-badge color="black"> {{
                             item.text_month.slice(2, 4) +
                             "." +
                             item.text_month.slice(4, 6) +
@@ -154,16 +142,25 @@
                             (item.text_day.length === 1
                               ? "0" + item.text_day
                               : item.text_day)
-                          }}
-                        </span>
-                        <span>
-                          <span style="font-size: 14px">
-                            주소:
+                          }}</q-badge>
+                          </div>
+                          <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
+                            <span style="font-weight: 400; font-size: 14px;">
+                              대지면적
+                            </span>
+                            {{ (item.size_daeji || item.size_land) + 'm²' }}
                           </span>
-                          {{ getAddressWithoutSiGunGu(item.text_sigungu) }}
-                          {{ item.bonbeon || item.beonji }},
-                          {{ (item.text_floor || "").replace(/null/i, "-") }}층
-                        </span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span style="font-size: 16px">{{ item.address }}</span>
+                          <span style="font-size: 16px; width: 130px; text-align: left; font-weight: bold;">
+                            <span style="font-weight: 400; font-size: 14px;">
+                              건물면적
+                            </span>
+                             {{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}
+                          </span>
+                        </div>
+
                       </div>
 
                     </div>
