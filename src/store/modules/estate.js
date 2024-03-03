@@ -190,7 +190,7 @@ export const estateStore = {
               .replace("연립ￜ다세대", "ALLIANCE")
               .replace("아파트", "APARTMENT")
               .replace("상업ￜ업무용", "COMMERCIAL")
-              .replace("단독|다가구", "SINGLE")
+              .replace("단독ￜ다가구", "SINGLE")
               .split(",")
           ))
       };
@@ -366,7 +366,7 @@ export const estateStore = {
               .replace("연립ￜ다세대", "ALLIANCE")
               .replace("아파트", "APARTMENT")
               .replace("상업ￜ업무용", "COMMERCIAL")
-              .replace("단독|다가구", "SINGLE")
+              .replace("단독ￜ다가구", "SINGLE")
               .split(",")
           ))
       };

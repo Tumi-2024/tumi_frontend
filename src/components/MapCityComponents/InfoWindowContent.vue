@@ -37,7 +37,7 @@
           style="padding: 4px"
           :style="{ backgroundColor: getColor(item) }"
         >
-          {{ getItemInfo(item).type }}
+          {{ getItemInfo(item).type.replace("ￜ", "|") }}
         </div>
         <div class="info-text text-center" style="padding: 1px 8px 0 8px">
           {{ toSimpleMoneyString(price) }}
