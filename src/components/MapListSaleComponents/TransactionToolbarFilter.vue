@@ -20,6 +20,7 @@
             emit-value
             map-options
             v-model="option"
+            @input="onChangeSearchType"
             :options="[
               { label: '정비사업', value: 'redev' },
               { label: '지역', value: 'location' },
@@ -58,7 +59,7 @@
         >
           <slot>
             <div class="items" v-for="(filter, i) of getFilters" :key="i">
-              <specific-filter
+              <TransactionToolbarFilterDetail
                 v-if="!filter.isHide"
                 :propsClass="filter.class"
                 :label="filter.label"
@@ -78,14 +79,14 @@
 <script>
 import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
-import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
+import TransactionToolbarFilterDetail from "./TransactionToolbarFilterDetail.vue";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     "overall-filter": OverallFilter,
-    "specific-filter": SpecificFilter
+    TransactionToolbarFilterDetail
   },
   computed: {
     ...mapGetters("search", [
@@ -98,31 +99,37 @@ export default {
     ]),
     ...mapGetters("map", ["getAreaType"]),
     getFilters() {
-      const hasValue = (array) => {
-        return array.every((obj) => obj);
-      };
+      const query = this.$route.query;
+
+      const hasKey = (keyname) => {
+        return Object.entries(query).some(query => {
+          return query[0] === keyname && !!query[1]
+        })
+      }
+
+      console.log(hasKey('category__in'), hasKey('size_private__range') || hasKey('size_yean__range') || hasKey('size_daeji__range') || hasKey('size_land__range'), hasKey('price__range'))
 
       return [
         {
           label: "주택유형",
           type: "property-type",
           class:
-            this.getCategoriesByKorean.length !== 8
-              ? "text-white bg-primary"
-              : "text-grey",
+          hasKey('category__in')
+            ? "text-white bg-primary"
+            : "text-grey",
           keyName: "categories"
         },
         {
           label: "면적",
           type: "exclusive-area",
-          class: this.area.value ? "text-white bg-green" : "text-grey",
+          class: hasKey('size_private__range') || hasKey('size_yean__range') || hasKey('size_daeji__range') || hasKey('size_land__range') ? "text-white bg-green" : "text-grey",
           keyName: "areaType"
         },
         {
           label: "매매가",
           type: "PriceFilter",
           class:
-            this.price.min || this.price.max
+            hasKey('price__range')
               ? "text-white bg-blue"
               : "text-grey",
           keyName: "prices"
@@ -131,7 +138,7 @@ export default {
           label: "초기투자금",
           type: "PriceFilter",
           class:
-            this.initPrice.min || this.initPrice.max
+            hasKey('price_initial_investment__range')
               ? "text-white bg-purple"
               : "text-grey",
           isHide: this.$route.name !== "listHouses",
@@ -140,7 +147,7 @@ export default {
         {
           label: this.$route.name === "listHouses" ? "수정일자" : "거래일자",
           type: "PropertyPeriod",
-          class: this.period[0] ? "text-white bg-brown-4" : "text-grey",
+          class: hasKey('date__range') ? "text-white bg-brown-4" : "text-grey",
           keyName: "period",
           isHide: this.$route.path === "/map/city"
         }
@@ -209,12 +216,9 @@ export default {
         query: { ...this.$route.query, redevelopment_area__category: event }
       });
     },
-    onChangeSearchText(e) {
-      this.$emit("change", e);
+    onChangeSearchType(e) {
       this.options = [];
-      if (e === "") {
-        this.$emit("search");
-      }
+      this.text = "";
     },
     onFocus() {
       this.$emit("focus");
@@ -226,8 +230,17 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       this.text = obj.label;
+      console.log(obj)
 
-      this.$emit("search", type.label, obj.id, obj.label, obj.subcityId);
+      this.$router.replace({
+        query: {
+          ...this.$route.query,
+          title: obj.label,
+          redevelopment_area: type.value === "redev" ? obj.id : undefined,
+          location: type.value === "location" ? obj.id : undefined,
+          search: type.value === "building" ? obj.value : undefined
+        }
+      })
     },
     async filterFn(val, update, abort) {
       const type = [
@@ -338,13 +351,13 @@ export default {
   beforeMount() {
     const { query } = this.$route;
     switch (true) {
-      case !!query?.subcity:
+      case !!query?.location:
         this.option = "location";
         break;
       case query?.redevelopment_area:
         this.option = "redev";
         break;
-      case query?.building:
+      case query?.search:
         this.option = "building";
         break;
       default:

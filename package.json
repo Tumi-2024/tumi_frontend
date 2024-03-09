@@ -30,6 +30,7 @@
     "v-money": "^0.8.1",
     "vue-chartjs": "^3.5.1",
     "vue-chimera": "^3.0.2",
+    "vue-infinite-loading": "^2.4.5",
     "vue-infinite-scroll": "^2.0.2",
     "vue-naver-maps": "^0.15.0",
     "vue2-filters": "^0.12.0",

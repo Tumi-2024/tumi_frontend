@@ -9,17 +9,12 @@
       style="gap: 8px"
       class="sort-section bg-positive justify-end q-pa-none q-ma-none flex"
     >
-      <!-- <q-badge outline color="primary" @click="changeDevType">
-          {{ getAreaType }}
-        </q-badge> -->
-      <toolbar-filter
+      <house-toolbar-filter
         :devType="devType"
         :areaType="getAreaType"
         class="q-pt-xs q-px-sm"
-        @focus="onFocus"
-        @search="onSearch"
         @changeFilter="changeFilter"
-      />
+        />
     </q-card-section>
 
     <q-card-section class="list-items q-pa-none notosanskr-regular">
@@ -32,7 +27,7 @@
       </div>
       <q-separator />
       <q-list>
-        <div v-for="(item, i) of simple_houses" :key="i">
+        <div v-for="(item, i) of this.saleList" :key="i">
           <area-item-house
             class="q-py-sm"
             :query="{ sellid: item.id }"
@@ -52,10 +47,11 @@
 
 <script>
 import Vue from "vue";
+import infiniteScroll from "vue-infinite-scroll";
+
 // import AreaTransaction from "./AreaTransaction.vue";
 import AreaItemHouse from "./AreaItemHouse.vue";
-import ToolbarFilter from "./ToolbarFilter.vue";
-import infiniteScroll from "vue-infinite-scroll";
+import HouseToolbarFilter from "./HouseToolbarFilter.vue";
 
 import { mapGetters, mapActions } from "vuex";
 import Badge from "../Utilities/Badges/Badge.vue";
@@ -67,9 +63,15 @@ export default {
   components: {
     // "area-transaction": AreaTransaction,
     "area-item-house": AreaItemHouse,
-    "toolbar-filter": ToolbarFilter, // InfiniteLoading
 
-    Badge
+    Badge,
+    HouseToolbarFilter
+  },
+  watch: {
+    $route(val) {
+      this.page = 1
+      this.getHouseList(val.query)
+    }
   },
   data() {
     return {
@@ -97,225 +99,41 @@ export default {
   },
   methods: {
     ...mapActions(["setSimpleHouses", "setCountEstate", "setRequestUrl"]),
-    ...mapActions("map", ["setAreaType"]),
-
-    getDquery() {
-      const getQueryArray = (keyName, params) => {
-        if (keyName === "type_house__in" && params?.length === 8) {
-          return {};
-        }
-        if (Array.isArray(params)) {
-          const hasValue = params.every((value) => value !== undefined);
-          if (!hasValue || params.length === 0) return {};
-          return {
-            [keyName]: params.join(",")
-          };
-        }
-        if (!params) return {};
-        return {
-          [keyName]: params
-        };
-      };
-
-      const getAllOrUndefined = (param) => {
-        if (param.length === 8) return undefined;
-        return param;
-      };
-
-      const getAreaTypeString = () => {
-        switch (this.getAreaType) {
-          case "전체":
-            return;
-          case "재개발":
-          case "재건축":
-          case "일반":
-            return this.getAreaType;
-          case "기타사업":
-            return "기타";
-          default:
-            return this.getAreaType;
-        }
-      };
-
-      const Dquery = {
-        ...getQueryArray(
-          "type_house__in",
-          getAllOrUndefined(this.getCategoriesByKorean)
-        ),
-        ...getQueryArray("redevelopment_area__category", getAreaTypeString())
-      };
-      return Dquery;
-    },
 
     onFocus(e) {
       // this.getApiHouses();
     },
-    changeFilter() {},
+    changeFilter(params) {
+      this.page = 1;
+      this.$router.replace({
+        name: "listHouses",
+        query: { ...params, page_size: 20, page: 1 }
+      });
+    },
     infiniteHandler() {
-      this.setRequestUrl("houses");
-      const { query } = this.$route;
-      const _key = Object.keys(query)[0];
-      this.busy = true;
-
-      switch (_key) {
-        case "search":
-          this.getSearchData({ ...query }, this.page);
-          break;
-        case "redevelopment_area":
-          this.getHouseData({ ...query }, this.page);
-          break;
-        case "location":
-          this.getLocationData({ ...query }, this.page);
-          break;
-        default:
-          this.getApiHouses({ ...query }, undefined, this.page);
-      }
+      const query = this.$route.query
+      this.getHouseList({ ...query, page: this.page })
     },
-    async onSearch(type, id, label, subCityId) {
-      const { query } = this.$route;
-      if (id?.length === 0) {
-        return;
-      }
-      if (!type && !id && !label) {
-        this.page = 1;
-        if (Object.keys(query).length !== 0) {
-          this.$router.replace({
-            name: "listHouses"
-          });
+    async getHouseList (query) {
+      try {
+        const { data } = await Vue.prototype.$axios.get(`/houses/`, { params: { page: this.page, page_size: 20, ...query } })
+        this.setCountEstate(data.count)
+        if (this.page === 1) {
+          this.saleList = data.results
+        } else {
+          this.saleList = [...this.saleList, ...data.results]
         }
-        this.getApiHouses({}, undefined, this.page);
-        return;
+        this.page += 1
+      } catch (e) {
       }
-
-      switch (type) {
-        case "지역":
-          if (!subCityId) {
-            this.setSubCityQuery(id, label, this.page);
-          } else {
-            this.setLocationQuery(id, label, this.page);
-          }
-          break;
-        case "정비사업":
-          this.setRedevQuery(id, label, this.page);
-          break;
-        case "건물/단지":
-          this.setSearchQuery(id, label, this.page);
-          break;
-        default:
-          this.getApiHouses(id, label, this.page);
-      }
-    },
-
-    async getSearchData(params, page) {
-      this.saleList = []
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: {
-          ...params,
-          ...this.getDquery()
-        }
-      });
-      if (!!params.title && this.prevSearch === params.title) {
-        this.saleList = [...this.saleList, ...data.results];
-      } else {
-        this.saleList = data.results;
-      }
-      this.prevSearch = params.title;
-      this.setSimpleHouses(this.saleList);
-      this.setCountEstate(data.count);
-      this.page += 1;
-      this.busy = false;
-    },
-
-    async getHouseData(params, page) {
-      this.saleList = []
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, ...this.getDquery(), page, page_size: 10 }
-      });
-      if (!!params.title && this.prevSearch === params.title) {
-        this.saleList = [...this.saleList, ...data.results];
-      } else {
-        this.saleList = data.results;
-      }
-      this.prevSearch = params.title;
-
-      this.setSimpleHouses(this.saleList);
-      this.setCountEstate(data.count);
-      this.page += 1;
-      this.busy = false;
-    },
-
-    async getLocationData(params, page) {
-      this.saleList = []
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, ...this.getDquery(), page, page_size: 10 }
-      });
-
-      if (!!params.title && this.prevSearch === params.title) {
-        this.saleList = [...this.saleList, ...data.results];
-      } else {
-        this.saleList = data.results;
-      }
-      this.prevSearch = params.title;
-      this.setSimpleHouses(this.saleList);
-      this.setCountEstate(data.count);
-      this.page += 1;
-      this.busy = false;
-    },
-    async getApiHouses(params, label, page) {
-      this.saleList = []
-      const { data } = await Vue.prototype.$axios.get(`/houses/`, {
-        params: { ...params, ...this.getDquery(), page, page_size: 10 }
-      });
-      this.saleList = [...this.saleList, ...data.results];
-      this.prevSearch = params.title;
-      this.setSimpleHouses(this.saleList);
-      this.setCountEstate(data.count);
-      this.page += 1;
-      this.busy = false;
-    },
-
-    setSearchQuery(search, label, page) {
-      this.page = 1;
-      this.$router.replace({
-        name: "listHouses",
-        query: { search }
-      });
-      this.getSearchData({ search }, this.page);
-    },
-    setRedevQuery(redevelopmentArea, title) {
-      this.page = 1;
-      this.$router.replace({
-        name: "listHouses",
-        query: { redevelopment_area: redevelopmentArea, title }
-      });
-      this.getHouseData(
-        { redevelopment_area: redevelopmentArea, title },
-        this.page
-      );
-    },
-    setLocationQuery(location, label, page) {
-      this.page = 1;
-      this.$router.replace({
-        name: "listHouses",
-        query: { location, title: label }
-      });
-      this.getLocationData({ location }, this.page);
-    },
-    setSubCityQuery(subCities, label, page) {
-      this.page = 1;
-      this.$router.replace({
-        name: "listHouses",
-        query: { subcity: subCities, title: label }
-      });
-      this.getLocationData({ subcity: subCities }, this.page);
     }
+
   },
   created() {
     this.setSimpleHouses([]);
   },
   beforeMount() {
     this.setRequestUrl("houses");
-    // this.setAreaType(null);
   }
 };
 </script>

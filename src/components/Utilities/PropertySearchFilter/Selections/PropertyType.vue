@@ -10,7 +10,7 @@
         flat
         class="col nanum-square"
         :class="{
-          selected: getIsActive(property.value)
+          selected: getIsActive(property.value, property.valueHouse)
         }"
         @click="changeValue(property)"
       >
@@ -48,14 +48,6 @@ export default {
     }
   },
 
-  watch: {
-    value: {
-      immediate: true,
-      handler(newVal, oldVal) {
-        this.selected = newVal;
-      }
-    }
-  },
   computed: {
     ...mapGetters("search", ["categories", "isMultiSelect"]),
     getIsActive() {
@@ -121,11 +113,47 @@ export default {
     };
   },
   beforeMount() {
-    if (this.value.length === 0) {
-      this.selected = [...this.categories];
-    } else {
-      this.selected = this.value;
+    console.log("beforeMount PropertyType.vue")
+    const query = this.$route.query;
+    // if (query.type_house__in) {
+    //   return query.type_house__in.includes(valueHouse);
+    // }
+    if (this.$route.name === 'listHouses') {
+      if (query.type_house__in) {
+        this.selected = query.type_house__in.split(',').map(obj => {
+          return this.properties.find(property => property.valueHouse === obj).value
+        })
+      } else {
+        this.selected = [
+          "APARTMENT",
+          "ALLIANCE",
+          "SINGLE",
+          "OFFICETEL",
+          "COMMERCIAL",
+          "LAND",
+          "noname01",
+          "noname02"
+        ];
+      }
+    } else if (this.$route.name === 'listTransactions') {
+      if (query.category__in) {
+        this.selected = query.category__in.split(',').map(obj => {
+          return this.properties.find(property => property.value === obj).value
+        })
+      } else {
+        this.selected = [
+          "APARTMENT",
+          "ALLIANCE",
+          "SINGLE",
+          "OFFICETEL",
+          "COMMERCIAL",
+          "LAND",
+          "noname01",
+          "noname02"
+        ];
+      }
     }
+    console.log(this.selected, 'this.selected')
   },
   methods: {
     ...mapActions("search", ["setCategories", "removeCategories"]),
@@ -148,27 +176,6 @@ export default {
     },
     save() {
       this.setCategories(this.selected);
-    },
-    initialize() {
-      //  if 멀티면
-      if (!this.isMultiSelect) {
-        this.selected = ["APARTMENT"];
-      } else {
-        if (this.selected.length !== 8) {
-          this.selected = [
-            "APARTMENT",
-            "ALLIANCE",
-            "SINGLE",
-            "OFFICETEL",
-            "COMMERCIAL",
-            "LAND",
-            "noname01",
-            "noname02"
-          ];
-        } else {
-          this.selected = ["APARTMENT"];
-        }
-      }
     }
   }
 };

@@ -177,7 +177,10 @@ export default {
   },
   beforeMount() {
     if (this.keyName === "prices") {
-      this.selectValue = { ...this.price };
+      this.selectValue = {
+        min: undefined,
+        max: undefined
+      };
     } else {
       this.selectValue = { ...this.initPrice };
     }

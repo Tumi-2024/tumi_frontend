@@ -10,7 +10,9 @@ import { mapStore } from "./modules/map";
 import { estateStore } from "./modules/estate";
 import { areaStore } from "./modules/area";
 import { searchStore } from "./modules/search";
+import InfiniteLoading from 'vue-infinite-loading';
 
+Vue.use(InfiniteLoading, { /* options */ });
 // Main Section
 Vue.use(Vuex);
 

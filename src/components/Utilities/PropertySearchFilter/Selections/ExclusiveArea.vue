@@ -21,7 +21,7 @@
         style="flex: 1"
         :style="{ 'background-color': property.disabled ? '#e9e9e9' : '' }"
         :disable="property.disabled"
-        :class="{ selected: selectValue.value === property.value }"
+        :class="{ selected: selectValue.value === property.value}"
         :label="property.label"
         @click="changeValue(property)"
       />
@@ -149,6 +149,16 @@ export default {
         }
       };
     },
+    isSelected() {
+      return (valueHouse) => {
+        const query = this.$route.query;
+        console.log(query)
+        console.log(valueHouse)
+        console.log(query[valueHouse])
+        return query[valueHouse]
+        // if (query.)
+      }
+    },
     getProperties() {
       const hasValue = (parentArray, childArray) => {
         return parentArray.some((parent) => {
@@ -254,59 +264,71 @@ export default {
     }
   },
   beforeMount() {
-    if (this.selectValue.value) {
-      this.selectValue = { ...this.area };
-    } else {
-      this.selectValue = { ...this.area, value: "size_dedicated_area_m2" };
-    }
-    const { name } = this.$route
-    console.log(name === 'listTransactions')
-    if (name === 'listTransactions' || name === 'map_city_area') {
-      this.properties = [
-        {
-          label: "전용면적",
-          value: "size_dedicated_area_m2",
-          type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
-        },
-        {
-          label: "연면적",
-          value: "size_gross_floor_area",
-          type: ["SINGLE", "noname01"]
-        },
-        {
-          label: "대지면적",
-          value: "size_land_area",
-          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
-        },
-        {
-          label: "대지지분(대지권면적)",
-          value: "size_land_area_m2",
-          type: ["ALLIANCE"]
-        }
-      ]
-    } else {
-      this.properties = [
-        {
-          label: "전용면적",
-          value: "size_dedicated_area_m2",
-          type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
-        },
-        {
-          label: "연면적",
-          value: "size_gross_floor_area",
-          type: ["SINGLE", "noname01", "COMMERCIAL"]
-        },
-        {
-          label: "대지면적",
-          value: "size_land_area",
-          type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
-        },
-        {
-          label: "대지지분(대지권면적)",
-          value: "size_land_area_m2",
-          type: ["APARTMENT", "OFFICETEL", "ALLIANCE", "COMMERCIAL"]
-        }
-      ]
+    this.initialize()
+    this.properties = [
+      {
+        label: "전용면적",
+        value: "size_dedicated_area_m2",
+        valueHouse: "size_dedicated_area_m2__range",
+        type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "noname02"]
+      },
+      {
+        label: "연면적",
+        value: "size_gross_floor_area",
+        valueHouse: "size_gross_floor_area__range",
+        type: ["SINGLE", "noname01"]
+      },
+      {
+        label: "대지면적",
+        value: "size_land_area",
+        valueHouse: "size_land_area__range",
+        type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
+      },
+      {
+        label: "대지지분(대지권면적)",
+        value: "size_land_area_m2",
+        valueHouse: 'size_land_area_m2__range',
+        type: ["ALLIANCE"]
+      }
+    ]
+
+    const query = this.$route.query;
+
+    switch (true) {
+      case !!query.size_dedicated_area_m2__range:
+        this.selectValue = {
+          min: undefined,
+          max: undefined,
+          value: "size_dedicated_area_m2"
+        };
+        break;
+      case !!query.size_gross_floor_area__range:
+        this.selectValue = {
+          min: undefined,
+          max: undefined,
+          value: "size_gross_floor_area"
+        };
+        break;
+      case !!query.size_land_area__range:
+        this.selectValue = {
+          min: undefined,
+          max: undefined,
+          value: "size_land_area"
+        };
+        break;
+      case !!query.size_land_area_m2__range:
+        this.selectValue = {
+          min: undefined,
+          max: undefined,
+          value: "size_land_area_m2"
+        };
+        break;
+      default:
+        this.selectValue = {
+          min: undefined,
+          max: undefined,
+          value: "size_dedicated_area_m2"
+        };
     }
   }
 };
