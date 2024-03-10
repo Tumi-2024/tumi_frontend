@@ -215,9 +215,9 @@
                       class="text-h6 q-mb-xs col-12 flex text-bold"
                     >
                       <span style="margin-right: 4px;">{{ getPersons[0].text }}</span>
-                      <span v-if="getPersons[0].phone" class="flex"
-                        >Tel. {{ getPersons[0].phone }}</span
-                      >
+                      <a href="tel: getPersons[0].phone" v-if="getPersons[0].phone" class="flex">
+                        {{ getPersons[0].phone }}
+                      </a>
                     </div>
                   </div>
                   <span class="text-grey-9 text-bold">
