@@ -73,12 +73,12 @@ export default {
   data() {
     return {
       category: [
-        { key: "COMMERCIAL ", label: "상업업무용" },
-        { key: "SINGLE", label: "단독ￜ다가구" },
-        { key: "OFFICETEL", label: "오피스텔" },
-        { key: "APARTMENT", label: "아파트" },
-        { key: "LAND", label: "토지" },
-        { key: "ALLIANCE", label: "연립ￜ다세대" }
+        { key: "상업업무용 ", label: "상업업무용" },
+        { key: "단독|다가구", label: "단독ￜ다가구" },
+        { key: "오피스텔", label: "오피스텔" },
+        { key: "아파트", label: "아파트" },
+        { key: "토지", label: "토지" },
+        { key: "연립|다세대", label: "연립ￜ다세대" }
       ]
     };
   },
@@ -97,12 +97,12 @@ export default {
       return (item) => {
         if (this.$route.name === "map_city_area") {
           const TYPE_HOUSE = {
-            "COMMERCIAL ": "상업업무용",
-            SINGLE: "단독ￜ다가구",
-            OFFICETEL: "오피스텔",
-            APARTMENT: "아파트",
-            LAND: "토지",
-            ALLIANCE: "연립ￜ다세대"
+            "상업업무용 ": "상업업무용",
+            "단독|다가구": "단독ￜ다가구",
+            오피스텔: "오피스텔",
+            아파트: "아파트",
+            토지: "토지",
+            "연립|다세대": "연립ￜ다세대"
           };
           const transactionItem = item.recent_transactions?.[item.types[0]];
           if (!transactionItem) {

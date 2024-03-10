@@ -3,12 +3,12 @@ export const searchStore = {
   state: {
     // 주택 유형
     categories: [
-      "APARTMENT",
-      "ALLIANCE",
-      "SINGLE",
-      "OFFICETEL",
-      "COMMERCIAL",
-      "LAND",
+      "아파트",
+      "연립|다세대",
+      "단독|다가구",
+      "오피스텔",
+      "상업업무용",
+      "토지",
       "무허가 건축물",
       "입주권"
     ],
@@ -53,27 +53,27 @@ export const searchStore = {
       const _kr = [
         {
           label: "아파트",
-          value: "APARTMENT"
+          value: "아파트"
         },
         {
           label: "연립ￜ다세대",
-          value: "ALLIANCE"
+          value: "연립|다세대"
         },
         {
           label: "단독ￜ다가구",
-          value: "SINGLE"
+          value: "단독|다가구"
         },
         {
           label: "오피스텔",
-          value: "OFFICETEL"
+          value: "오피스텔"
         },
         {
           label: "상업ￜ업무용",
-          value: "COMMERCIAL"
+          value: "상업업무용"
         },
         {
           label: "토지",
-          value: "LAND"
+          value: "토지"
         },
         {
           label: "무허가 건축물",
@@ -116,7 +116,7 @@ export const searchStore = {
       _state = {
         // 주택 유형
         // 다중선택 가능
-        categories: ["APARTMENT"],
+        categories: ["아파트"],
         area: {
           value: undefined,
           min: undefined,

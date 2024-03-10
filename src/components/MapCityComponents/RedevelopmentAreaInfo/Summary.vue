@@ -138,7 +138,7 @@ export default {
   },
   data() {
     return {
-      // ctgr1: "ALLIANCE",
+      // ctgr1: "연립|다세대",
       transactions: [],
 
       datacollection: {
@@ -346,9 +346,9 @@ export default {
     //     const TI = this.getCurrTransactions;
 
     //     if (
-    //       this.ctgr1 === "APARTMENT" ||
-    //       this.ctgr1 === "OFFICETEL" ||
-    //       this.ctgr1 === "COMMERCIAL "
+    //       this.ctgr1 === "아파트" ||
+    //       this.ctgr1 === "오피스텔" ||
+    //       this.ctgr1 === "상업업무용 "
     //     ) {
     //       options.push({
     //         label: "전용/연면적",
@@ -360,7 +360,7 @@ export default {
     //           TI?.size_yean ? (TI?.size_yean / 3.3).toFixed(2) + " 평 " : " -"
     //         }`
     //       });
-    //     } else if (this.ctgr1 === "ALLIANCE" || this.ctgr1 === "SINGLE") {
+    //     } else if (this.ctgr1 === "연립|다세대" || this.ctgr1 === "단독|다가구") {
     //       options.push({
     //         label: "전용/연면적",
     //         price: `${(
@@ -405,13 +405,13 @@ export default {
     // },
     // getSelectOptions() {
     //   const options = [
-    //     { label: "아파트", value: "APARTMENT" },
-    //     { label: "오피스텔", value: "OFFICETEL" },
-    //     { label: "상업업무용", value: "COMMERCIAL " },
-    //     { label: "분양/입주권", value: "LAND" },
-    //     { label: "연립ￜ다세대", value: "ALLIANCE" },
-    //     { label: "단독|다가구", value: "SINGLE" },
-    //     { label: "토지", value: "LAND" }
+    //     { label: "아파트", value: "아파트" },
+    //     { label: "오피스텔", value: "오피스텔" },
+    //     { label: "상업업무용", value: "상업업무용 " },
+    //     { label: "분양/입주권", value: "토지" },
+    //     { label: "연립ￜ다세대", value: "연립|다세대" },
+    //     { label: "단독|다가구", value: "단독|다가구" },
+    //     { label: "토지", value: "토지" }
     //   ];
 
     //   const getDisable = (value) =>

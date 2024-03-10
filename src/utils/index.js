@@ -7,12 +7,12 @@ const TYPE_SALE_ENG = {
 };
 
 const TYPE_HOUSE_ENG = {
-  상업업무용: "COMMERCIAL ",
-  단독다가구: "SINGLE",
-  오피스텔: "OFFICETEL",
-  아파트: "APARTMENT",
-  토지: "LAND",
-  연립ￜ다세대: "ALLIANCE"
+  상업업무용: "상업업무용 ",
+  단독다가구: "단독|다가구",
+  오피스텔: "오피스텔",
+  아파트: "아파트",
+  토지: "토지",
+  연립ￜ다세대: "연립|다세대"
 };
 
 const TYPE_HOUSE_DETAIL_ENG = {

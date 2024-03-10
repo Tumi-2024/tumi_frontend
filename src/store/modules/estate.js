@@ -185,12 +185,12 @@ export const estateStore = {
             "category__in",
             category
               .join(",")
-              .replace("토지", "LAND")
-              .replace("오피스텔", "OFFICETEL")
-              .replace("연립ￜ다세대", "ALLIANCE")
-              .replace("아파트", "APARTMENT")
-              .replace("상업ￜ업무용", "COMMERCIAL")
-              .replace("단독ￜ다가구", "SINGLE")
+              .replace("토지", "토지")
+              .replace("오피스텔", "오피스텔")
+              .replace("연립ￜ다세대", "연립|다세대")
+              .replace("아파트", "아파트")
+              .replace("상업ￜ업무용", "상업업무용")
+              .replace("단독ￜ다가구", "단독|다가구")
               .split(",")
           ))
       };
@@ -360,12 +360,12 @@ export const estateStore = {
             "category__in",
             category
               .join(",")
-              .replace("토지", "LAND")
-              .replace("오피스텔", "OFFICETEL")
-              .replace("연립ￜ다세대", "ALLIANCE")
-              .replace("아파트", "APARTMENT")
-              .replace("상업ￜ업무용", "COMMERCIAL")
-              .replace("단독ￜ다가구", "SINGLE")
+              .replace("토지", "토지")
+              .replace("오피스텔", "오피스텔")
+              .replace("연립ￜ다세대", "연립|다세대")
+              .replace("아파트", "아파트")
+              .replace("상업ￜ업무용", "상업업무용")
+              .replace("단독ￜ다가구", "단독|다가구")
               .split(",")
           ))
       };

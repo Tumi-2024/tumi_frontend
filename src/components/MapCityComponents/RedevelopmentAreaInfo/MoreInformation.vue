@@ -403,13 +403,13 @@ export default {
     },
     getSelectOptions() {
       const options = [
-        { label: "아파트", value: "APARTMENT" },
-        { label: "오피스텔", value: "OFFICETEL" },
-        { label: "상업업무용", value: "COMMERCIAL " },
-        { label: "분양/입주권", value: "LAND" },
-        { label: "연립ￜ다세대", value: "ALLIANCE" },
-        { label: "단독|다가구", value: "SINGLE" },
-        { label: "토지", value: "LAND" }
+        { label: "아파트", value: "아파트" },
+        { label: "오피스텔", value: "오피스텔" },
+        { label: "상업업무용", value: "상업업무용 " },
+        { label: "분양/입주권", value: "토지" },
+        { label: "연립ￜ다세대", value: "연립|다세대" },
+        { label: "단독|다가구", value: "단독|다가구" },
+        { label: "토지", value: "토지" }
       ];
 
       const getDisable = (value) =>

@@ -250,29 +250,30 @@ export default {
         label: "전용면적",
         value: "size_dedicated_area_m2",
         valueHouse: "size_dedicated_area_m2__range",
-        type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL", "입주권"]
+        type: ["아파트", "연립|다세대", "오피스텔", "상업업무용", "입주권"]
       },
       {
         label: "연면적",
         value: "size_gross_floor_area",
         valueHouse: "size_gross_floor_area__range",
-        type: ["SINGLE", "COMMERCIAL", "무허가 건축물"]
+        type: ["단독|다가구", "상업업무용", "무허가 건축물"]
       },
       {
         label: "대지면적",
         value: "size_land_area",
         valueHouse: "size_land_area__range",
-        type: ["SINGLE", "COMMERCIAL", "LAND", "무허가 건축물"]
+        type: ["단독|다가구", "상업업무용", "토지", "무허가 건축물"]
       },
       {
         label: "대지지분(대지권면적)",
         value: "size_land_area_m2",
         valueHouse: 'size_land_area_m2__range',
-        type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL"]
+        type: ["아파트", "연립|다세대", "오피스텔", "상업업무용"]
       }
     ]
 
     const query = this.$route.query;
+    console.log(query)
 
     switch (true) {
       case !!query.size_dedicated_area_m2__range:
@@ -303,6 +304,35 @@ export default {
           value: "size_land_area_m2"
         };
         break;
+      case !!query.size_private__range:
+        this.selectValue = {
+          min: Number(query.size_private__range.split(",")[0]),
+          max: Number(query.size_private__range.split(",")[1]),
+          value: "size_dedicated_area_m2"
+        };
+        break;
+      case !!query.size_yean__range:
+        this.selectValue = {
+          min: Number(query.size_yean__range.split(",")[0]),
+          max: Number(query.size_yean__range.split(",")[1]),
+          value: "size_gross_floor_area"
+        };
+        break;
+      case !!query.size_daeji__range:
+        this.selectValue = {
+          min: Number(query.size_daeji__range.split(",")[0]),
+          max: Number(query.size_daeji__range.split(",")[1]),
+          value: "size_land_area"
+        };
+        break;
+      case !!query.size_land__range:
+        this.selectValue = {
+          min: Number(query.size_land__range.split(",")[0]),
+          max: Number(query.size_land__range.split(",")[1]),
+          value: "size_land_area_m2"
+        };
+        break;
+
       default:
         this.selectValue = {
           min: undefined,

@@ -173,17 +173,7 @@ export default {
         page_size: 1000,
         ...getQueryArray(
           "category__in",
-          this.getCategoriesByKorean.filter(obj => obj !== '무허가 건축물' && obj !== '입주권')
-            .join(",")
-            .replace("토지", "LAND")
-            .replace("오피스텔", "OFFICETEL")
-            .replace("연립ￜ다세대", "ALLIANCE")
-            .replace("아파트", "APARTMENT")
-            .replace("상업ￜ업무용", "COMMERCIAL")
-            .replace("단독ￜ다가구", "SINGLE")
-            .replace("무허가 건축물", "noname01")
-            .replace("입주권", "noname02")
-            .split(",")
+          this.getCategoriesByKorean
         ),
         ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
         ...getQueryArray("price_initial_investment__range", [

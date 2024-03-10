@@ -145,15 +145,15 @@ export default {
 
       return query.type_house__in
         ? query.type_house__in
-          .replace("토지", "LAND")
-          .replace("오피스텔", "OFFICETEL")
-          .replace("연립ￜ다세대", "ALLIANCE")
-          .replace("아파트", "APARTMENT")
-          .replace("상업ￜ업무용", "COMMERCIAL")
-          .replace("단독ￜ다가구", "SINGLE")
-          .replace("무허가 건축물", "noname01")
-          .replace("입주권", "noname02").split(",")
-        : ["APARTMENT"];
+          .replace("토지", "토지")
+          .replace("오피스텔", "오피스텔")
+          .replace("연립ￜ다세대", "연립|다세대")
+          .replace("아파트", "아파트")
+          .replace("상업ￜ업무용", "상업업무용")
+          .replace("단독ￜ다가구", "단독|다가구")
+          .replace("무허가 건축물", "무허가 건축물")
+          .replace("입주권", "입주권").split(",")
+        : ["아파트"];
     }
   },
   data() {
@@ -243,14 +243,14 @@ export default {
       this.$emit("change", {
         page_size: 1000,
         ...getQueryArray("type_house__in", category.join(",")
-          .replace("LAND", "토지")
-          .replace("OFFICETEL", "오피스텔")
-          .replace("ALLIANCE", "연립ￜ다세대")
-          .replace("APARTMENT", "아파트")
-          .replace("COMMERCIAL", "상업ￜ업무용")
-          .replace("SINGLE", "단독ￜ다가구")
-          .replace("noname01", "무허가 건축물")
-          .replace("noname02", "입주권")
+          .replace("토지", "토지")
+          .replace("오피스텔", "오피스텔")
+          .replace("연립|다세대", "연립ￜ다세대")
+          .replace("아파트", "아파트")
+          .replace("상업업무용", "상업ￜ업무용")
+          .replace("단독|다가구", "단독ￜ다가구")
+          .replace("무허가 건축물", "무허가 건축물")
+          .replace("입주권", "입주권")
           .split(",")),
         ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
         ...getQueryArray("price_initial_investment__range", [

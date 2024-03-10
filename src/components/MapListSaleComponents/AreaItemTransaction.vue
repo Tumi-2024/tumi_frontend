@@ -47,12 +47,12 @@ export default {
   data() {
     return {
       category: [
-        { key: "COMMERCIAL ", label: "상업업무용" },
-        { key: "SINGLE", label: "단독다가구" },
-        { key: "OFFICETEL", label: "오피스텔" },
-        { key: "APARTMENT", label: "아파트" },
-        { key: "LAND", label: "토지" },
-        { key: "ALLIANCE", label: "연립ￜ다세대" }
+        { key: "상업업무용", label: "상업업무용" },
+        { key: "단독|다가구", label: "단독다가구" },
+        { key: "오피스텔", label: "오피스텔" },
+        { key: "아파트", label: "아파트" },
+        { key: "토지", label: "토지" },
+        { key: "연립ￜ다세대", label: "연립ￜ다세대" }
       ],
       sellType: [
         { key: "SALE", label: "매매" },
@@ -90,7 +90,7 @@ export default {
     getSubInfoProps() {
       return (item) => {
         switch (this.ctgr) {
-          case "COMMERCIAL ":
+          case "상업업무용 ":
             return [
               { label: "유형", value: item.text_type },
               {
@@ -125,7 +125,7 @@ export default {
                 value: this.getReleaseDate(item.text_date_release)
               }
             ];
-          case "SINGLE":
+          case "단독|다가구":
             return [
               { label: "주택유형", value: item.text_house_type },
               {
@@ -161,7 +161,7 @@ export default {
                 value: this.getReleaseDate(item.text_date_release)
               }
             ];
-          case "OFFICETEL":
+          case "오피스텔":
             return [
               { label: "단지명", value: item.text_danji },
               {
@@ -198,7 +198,7 @@ export default {
                 value: this.getReleaseDate(item.text_date_release)
               }
             ];
-          case "APARTMENT":
+          case "아파트":
             return [
               { label: "단지명", value: item.text_danji },
               {
@@ -235,7 +235,7 @@ export default {
                 value: this.getReleaseDate(item.text_date_release)
               }
             ];
-          case "LAND":
+          case "토지":
             return [
               {
                 label: "계약일자",
@@ -262,7 +262,7 @@ export default {
                 value: this.getReleaseDate(item.text_date_release)
               }
             ];
-          case "ALLIANCE":
+          case "연립ￜ다세대":
             return [
               { label: "건물명", value: item.text_building },
               {
@@ -348,17 +348,17 @@ export default {
       return (item, ctgr) => {
         const getArea = () => {
           switch (item.category) {
-            case "COMMERCIAL ":
+            case "상업업무용 ":
               return item.text_size_total || '-'
-            case "SINGLE":
+            case "단독|다가구":
               return item.text_size_yean || '-'
-            case "OFFICETEL":
+            case "오피스텔":
               return item.text_size_private || '-'
-            case "APARTMENT":
+            case "아파트":
               return item.text_size_private || '-'
-            case "LAND":
+            case "토지":
               return item.text_size_contract || '-'
-            case "ALLIANCE":
+            case "연립ￜ다세대":
               return item.text_size_private || '-'
           }
         }

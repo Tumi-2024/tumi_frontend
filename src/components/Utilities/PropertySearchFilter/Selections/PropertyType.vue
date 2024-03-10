@@ -10,7 +10,7 @@
         flat
         class="col nanum-square"
         :class="{
-          selected: getIsActive(property.value, property.valueHouse)
+          selected: getIsActive(property.value, property.value)
         }"
         @click="changeValue(property)"
       >
@@ -52,6 +52,7 @@ export default {
     ...mapGetters("search", ["categories", "isMultiSelect"]),
     getIsActive() {
       return (dd) => {
+        console.log(this.selected, dd)
         return this.selected.some((obj) => obj === dd);
       };
     }
@@ -64,49 +65,49 @@ export default {
         {
           icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          value: "APARTMENT",
+          value: "아파트",
           valueHouse: "아파트"
         },
         {
           icon: require("assets/iconsNew/12.png"),
           label: "연립ￜ다세대",
-          value: "ALLIANCE",
+          value: "연립|다세대",
           valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/13.png"),
           label: "단독|다가구",
-          value: "SINGLE",
+          value: "단독|다가구",
           valueHouse: "단독ￜ다가구"
         },
         {
           icon: require("assets/iconsNew/14.png"),
           label: "원룸/오피스텔",
-          value: "OFFICETEL",
+          value: "오피스텔",
           valueHouse: "오피스텔"
         },
         {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
-          value: "COMMERCIAL",
+          value: "상업ￜ업무용",
           valueHouse: "상업ￜ업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),
           label: "토지",
-          value: "LAND",
+          value: "토지",
           valueHouse: "토지"
         },
         {
           icon: require("assets/iconsNew/17.png"),
           label: "무허가 건축물",
-          value: "noname01",
+          value: "무허가 건축물",
           valueHouse: "무허가 건축물"
         },
         {
           icon: require("assets/iconsNew/18.png"),
           label: "입주권",
-          value: "noname02",
+          value: "입주권",
           valueHouse: "입주권"
         }
       ]
@@ -114,45 +115,23 @@ export default {
   },
   beforeMount() {
     const query = this.$route.query;
-    if (this.value) {
+
+    console.log(query, this.value)
+    if (this.value.length) {
       this.selected = this.value;
       return
     }
-    if (this.$route.name === 'listHouses') {
-      if (query.type_house__in) {
-        this.selected = query.type_house__in.split(',').map(obj => {
-          return this.properties.find(property => property.valueHouse === obj).value
-        })
-      } else {
-        this.selected = [
-          "APARTMENT",
-          "ALLIANCE",
-          "SINGLE",
-          "OFFICETEL",
-          "COMMERCIAL",
-          "LAND",
-          "noname01",
-          "noname02"
-        ];
-      }
-    } else if (this.$route.name === 'listTransactions') {
-      if (query.category__in) {
-        this.selected = query.category__in.split(',').map(obj => {
-          return this.properties.find(property => property.value === obj).value
-        })
-      } else {
-        this.selected = [
-          "APARTMENT",
-          "ALLIANCE",
-          "SINGLE",
-          "OFFICETEL",
-          "COMMERCIAL",
-          "LAND",
-          "noname01",
-          "noname02"
-        ];
-      }
+    if (query.type_house__in) {
+      this.selected = query.type_house__in.split(',').map(obj => {
+        return this.properties.find(property => property.valueHouse === obj).value
+      })
+    } else if (query.category__in) {
+      console.log('query.category__in', query.category__in)
+      this.selected = query.category__in.split(',').map(obj => {
+        return this.properties.find(property => property.value === obj).value
+      })
     } else {
+      this.selected = [];
     }
   },
   methods: {

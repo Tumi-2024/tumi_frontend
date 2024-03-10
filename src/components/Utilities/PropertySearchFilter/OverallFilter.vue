@@ -144,7 +144,7 @@ export default {
     return {
       modal: false,
       moreFilters: false,
-      categories: ["APARTMENT"],
+      categories: ["아파트"],
       prices: [
         { label: "최저가", value: 0 },
         { label: "최고가", key: "max", value: 999999 }

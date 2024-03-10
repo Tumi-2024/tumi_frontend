@@ -180,35 +180,22 @@ export default {
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
-      console.log('onChangeFilter')
-      const { name } = this.$route
-      if (name === 'listTransactions' || name === "map_city_area") {
-        const _newParam = params
-        _newParam.size_private__range = _newParam.size_dedicated_area_m2__range;
-        _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
-        _newParam.size_daeji__range = _newParam.size_land_area__range;
-        _newParam.size_land__range = _newParam.size_land_area_m2__range;
-        _newParam.price__range = _newParam.price_selling_hope__range;
-        _newParam.date__range = _newParam.modified__range;
+      const _newParam = params
+      console.log(params)
+      _newParam.size_private__range = _newParam.size_dedicated_area_m2__range;
+      _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
+      _newParam.size_daeji__range = _newParam.size_land_area__range;
+      _newParam.size_land__range = _newParam.size_land_area_m2__range;
+      _newParam.price__range = _newParam.price_selling_hope__range;
+      _newParam.date__range = _newParam.modified__range;
 
-        delete _newParam.size_dedicated_area_m2__range;
-        delete _newParam.size_gross_floor_area__range;
-        delete _newParam.size_land_area__range;
-        delete _newParam.size_land_area_m2__range;
-        delete _newParam.price_selling_hope__range;
-        delete _newParam.modified__range;
-        /**
-         * size_private__range 전용면적 size_dedicated_area_m2
-         size_yean__range 연면적 size_gross_floor_area__range
-         size_daeji__range 대지면적 size_land_area__range
-         size_land__range 대지권면적 size_land_area2__range
-         */
-        console.log(_newParam)
-        this.$emit("changeFilter", _newParam);
-      } else {
-        console.log(params)
-        this.$emit("changeFilter", params);
-      }
+      delete _newParam.size_dedicated_area_m2__range;
+      delete _newParam.size_gross_floor_area__range;
+      delete _newParam.size_land_area__range;
+      delete _newParam.size_land_area_m2__range;
+      delete _newParam.price_selling_hope__range;
+      delete _newParam.modified__range;
+      this.$emit("changeFilter", _newParam);
     },
     changeDevType(event) {
       if (this.$route.query.redevelopment_area__category === event) return;

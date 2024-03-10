@@ -53,37 +53,37 @@ export default {
         {
           icon: require("assets/iconsNew/11.png"),
           label: "아파트",
-          valueTransaction: "APARTMENT",
+          valueTransaction: "아파트",
           valueHouse: "아파트"
         },
         {
           icon: require("assets/iconsNew/14.png"),
           label: "오피스텔",
-          valueTransaction: "OFFICETEL",
+          valueTransaction: "오피스텔",
           valueHouse: "오피스텔"
         },
         {
           icon: require("assets/iconsNew/13.png"),
           label: "단독|다가구",
-          valueTransaction: "SINGLE",
+          valueTransaction: "단독|다가구",
           valueHouse: "단독ￜ다가구"
         },
         {
           icon: require("assets/iconsNew/12.png"),
           label: "연립|다세대",
-          valueTransaction: "ALLIANCE",
+          valueTransaction: "연립|다세대",
           valueHouse: "연립ￜ다세대"
         },
         {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
-          valueTransaction: "COMMERCIAL",
+          valueTransaction: "상업업무용",
           valueHouse: "상업ￜ업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),
           label: "토지",
-          valueTransaction: "LAND",
+          valueTransaction: "토지",
           valueHouse: "토지"
         },
         {

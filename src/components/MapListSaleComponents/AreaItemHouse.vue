@@ -94,12 +94,12 @@ export default {
   data() {
     return {
       category: [
-        { key: "COMMERCIAL ", label: "상업업무용" },
-        { key: "SINGLE", label: "단독|다가구" },
-        { key: "OFFICETEL", label: "오피스텔" },
-        { key: "APARTMENT", label: "아파트" },
-        { key: "LAND", label: "토지" },
-        { key: "ALLIANCE", label: "연립|다세대" }
+        { key: "상업업무용 ", label: "상업업무용" },
+        { key: "단독|다가구", label: "단독|다가구" },
+        { key: "오피스텔", label: "오피스텔" },
+        { key: "아파트", label: "아파트" },
+        { key: "토지", label: "토지" },
+        { key: "연립|다세대", label: "연립|다세대" }
       ],
       onHover: false
     };
