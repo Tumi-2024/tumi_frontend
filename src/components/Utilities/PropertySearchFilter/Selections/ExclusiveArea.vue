@@ -154,7 +154,7 @@ export default {
       };
     },
     getDisabled() {
-      return ({ type }) => (type.some(type => type === this.activeAreaType[0]));
+      return ({ type }) => (!type.some(type => type === this.activeAreaType[0]));
     }
   },
   methods: {
@@ -252,19 +252,19 @@ export default {
         label: "연면적",
         value: "size_gross_floor_area",
         valueHouse: "size_gross_floor_area__range",
-        type: ["SINGLE", "noname01"]
+        type: ["SINGLE", "COMMERCIAL", "noname01"]
       },
       {
         label: "대지면적",
         value: "size_land_area",
         valueHouse: "size_land_area__range",
-        type: ["SINGLE", "noname01", "COMMERCIAL", "LAND"]
+        type: ["SINGLE", "COMMERCIAL", "LAND", "noname01"]
       },
       {
         label: "대지지분(대지권면적)",
         value: "size_land_area_m2",
         valueHouse: 'size_land_area_m2__range',
-        type: ["ALLIANCE"]
+        type: ["APARTMENT", "ALLIANCE", "OFFICETEL", "COMMERCIAL"]
       }
     ]
 
