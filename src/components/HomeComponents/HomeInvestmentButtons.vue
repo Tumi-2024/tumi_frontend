@@ -89,13 +89,13 @@ export default {
         {
           icon: require("assets/iconsNew/17.png"),
           label: "무허가건축물",
-          valueTransaction: "noname01",
+          valueTransaction: "무허가 건축물",
           valueHouse: "무허가 건축물"
         },
         {
           icon: require("assets/iconsNew/18.png"),
           label: "입주권",
-          valueTransaction: "noname02",
+          valueTransaction: "입주권",
           valueHouse: "입주권"
         }
       ]

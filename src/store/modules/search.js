@@ -9,8 +9,8 @@ export const searchStore = {
       "OFFICETEL",
       "COMMERCIAL",
       "LAND",
-      "noname01",
-      "noname02"
+      "무허가 건축물",
+      "입주권"
     ],
 
     // 전용면적
@@ -77,11 +77,11 @@ export const searchStore = {
         },
         {
           label: "무허가 건축물",
-          value: "noname01"
+          value: "무허가 건축물"
         },
         {
           label: "입주권",
-          value: "noname02"
+          value: "입주권"
         }
       ];
       return _state.categories

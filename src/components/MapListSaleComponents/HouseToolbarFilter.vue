@@ -114,8 +114,8 @@ export default {
           .replace("아파트", "APARTMENT")
           .replace("상업ￜ업무용", "COMMERCIAL")
           .replace("단독ￜ다가구", "SINGLE")
-          .replace("무허가 건축물", "noname01")
-          .replace("입주권", "noname02").split(",")
+          .replace("무허가 건축물", "무허가 건축물")
+          .replace("입주권", "입주권").split(",")
         : [];
 
       return [
