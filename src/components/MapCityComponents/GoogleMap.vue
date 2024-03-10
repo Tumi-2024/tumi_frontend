@@ -70,7 +70,7 @@
                             : getAreaType === "재건축"
                             ? m.count_redevelopment_area_2
                             : getAreaType === "기타"
-                            ? m.count_redevelopment_area_3
+                            ? m.count_redevelopment_area - m.count_redevelopment_area_1 - m.count_redevelopment_area_2
                             : m.count_redevelopment_area
                         }`
                   }}개
@@ -211,14 +211,14 @@ export default {
     }
   },
   watch: {
-    getMapCenter(obj) {
-      const map = this.$refs.naverMapRef.map;
-      map.panTo(obj);
-      this.getRedevInfo();
-      setTimeout(() => {
-        this.getHouseInfo();
-      }, 500)
-    }
+    // getMapCenter(obj) {
+    //   const map = this.$refs.naverMapRef.map;
+    //   map.panTo(obj);
+    //   this.getRedevInfo();
+    //   setTimeout(() => {
+    //     this.getHouseInfo();
+    //   }, 500)
+    // }
   },
   computed: {
     ...mapGetters("map", [

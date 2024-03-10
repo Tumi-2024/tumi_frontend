@@ -98,7 +98,7 @@
                           : getAreaType === "재건축"
                           ? m.count_redevelopment_area_2
                           : getAreaType === "기타사업"
-                          ? m.count_redevelopment_area_3
+                          ? m.count_redevelopment_area - m.count_redevelopment_area1 - m.count_redevelopment_area2
                           : m.count_redevelopment_area
                       }`
                 }}개
