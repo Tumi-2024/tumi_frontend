@@ -282,6 +282,7 @@
     />
 
     <investment-point
+      v-if="estate.group_location.description_investment"
       class="q-mt-md"
       :item="estate.group_location.redevelopment_area"
     />
