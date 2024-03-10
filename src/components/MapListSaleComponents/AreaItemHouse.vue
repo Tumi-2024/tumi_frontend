@@ -169,7 +169,7 @@ export default {
             )}`,
             label: "매매가"
           },
-          { type: "date", value: getDate(item.created), label: "매물수정일자" }
+          { type: "date", value: getDate(item.modified), label: "매물수정일자" }
         ];
       };
     },
