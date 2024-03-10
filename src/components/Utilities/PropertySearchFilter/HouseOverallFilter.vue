@@ -41,7 +41,7 @@
             class="q-pb-xl bg-white q-mt-sm"
             style="padding-top: 36px"
             @select="setSelected('categories', $event)"
-            :value="getInitCategory"
+            :value="[]"
             ref="option1"
           />
           <exclusive-area
@@ -49,7 +49,7 @@
             style="padding-top: 36px"
             @select="setSelected('areas', $event)"
             @selectDetail="setSelected('areaType', $event)"
-            :categories="getInitCategory"
+            :categories="[]"
             :activeAreaType="activeAreaType"
             ref="option2"
           />
@@ -228,7 +228,7 @@ export default {
           return {};
         }
         if (Array.isArray(params)) {
-          const hasValue = params.every((value) => value !== undefined);
+          const hasValue = params.every((value) => value !== undefined && value !== '');
           if (!hasValue || params.length === 0) return {};
           return {
             [keyName]: params.join(",")

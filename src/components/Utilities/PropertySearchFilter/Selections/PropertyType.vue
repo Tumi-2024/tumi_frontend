@@ -174,6 +174,9 @@ export default {
       }
       this.$emit("select", this.selected);
     },
+    initialize() {
+      this.selected = []
+    },
     save() {
       this.setCategories(this.selected);
     }

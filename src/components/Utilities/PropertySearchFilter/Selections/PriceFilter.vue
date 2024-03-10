@@ -74,7 +74,8 @@ export default {
     },
     value: {
       type: Object,
-      required: false
+      required: false,
+      default: () => ({})
     }
   },
   computed: {
@@ -180,24 +181,27 @@ export default {
     }
   },
   beforeMount() {
+    this.selectValue = {
+      min: undefined,
+      max: undefined
+    };
     if (this.keyName === "prices") {
-      this.selectValue = {
-        min: undefined,
-        max: undefined
-      };
     } else {
       const query = this.$route.query;
-      console.log(this.keyName)
       if (this.keyName !== 'initPrices') {
-        this.selectValue = {
-          min: Number(query.price_selling_hope__range.split(",")[0]),
-          max: Number(query.price_selling_hope__range.split(",")[1])
-        };
+        if (query.price_selling_hope__range) {
+          this.selectValue = {
+            min: Number(query.price_selling_hope__range.split(",")[0]),
+            max: Number(query.price_selling_hope__range.split(",")[1])
+          };
+        }
       } else {
-        this.selectValue = {
-          min: Number(query.price_initial_investment__range.split(",")[0]),
-          max: Number(query.price_initial_investment__range.split(",")[1])
-        };
+        if (query.price_initial_investment__range) {
+          this.selectValue = {
+            min: Number(query.price_initial_investment__range.split(",")[0]),
+            max: Number(query.price_initial_investment__range.split(",")[1])
+          };
+        }
       }
     }
   }

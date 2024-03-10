@@ -65,6 +65,7 @@
                 :label="filter.label"
                 :component="filter.type"
                 :keyName="filter.keyName"
+                :value="filter.value"
                 @change="onChangeFilter"
               />
             </div>
@@ -105,6 +106,18 @@ export default {
         return Object.entries(query).some(query => query[0] === keyname)
       }
 
+      const propertyTypeValue = query.type_house__in
+        ? query.type_house__in
+          .replace("토지", "LAND")
+          .replace("오피스텔", "OFFICETEL")
+          .replace("연립ￜ다세대", "ALLIANCE")
+          .replace("아파트", "APARTMENT")
+          .replace("상업ￜ업무용", "COMMERCIAL")
+          .replace("단독ￜ다가구", "SINGLE")
+          .replace("무허가 건축물", "noname01")
+          .replace("입주권", "noname02").split(",")
+        : [];
+
       return [
         {
           label: "주택유형",
@@ -113,7 +126,8 @@ export default {
           hasKey('type_house__in')
             ? "text-white bg-primary"
             : "text-grey",
-          keyName: "categories"
+          keyName: "categories",
+          value: propertyTypeValue
         },
         {
           label: "면적",

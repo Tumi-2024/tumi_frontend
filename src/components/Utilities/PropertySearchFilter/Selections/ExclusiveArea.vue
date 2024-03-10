@@ -232,11 +232,6 @@ export default {
       this.setArea(this.selectValue);
     },
     initialize() {
-      this.setArea({
-        value: undefined,
-        min: undefined,
-        max: undefined
-      });
       this.selectValue = {
         value: undefined,
         min: undefined,
@@ -308,7 +303,7 @@ export default {
         this.selectValue = {
           min: undefined,
           max: undefined,
-          value: "size_dedicated_area_m2"
+          value: undefined
         };
     }
   }
