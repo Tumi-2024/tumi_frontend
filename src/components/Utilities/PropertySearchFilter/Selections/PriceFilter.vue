@@ -71,6 +71,10 @@ export default {
     keyName: {
       type: String,
       require: true
+    },
+    value: {
+      type: Object,
+      required: false
     }
   },
   computed: {
@@ -182,7 +186,19 @@ export default {
         max: undefined
       };
     } else {
-      this.selectValue = { ...this.initPrice };
+      const query = this.$route.query;
+      console.log(this.keyName)
+      if (this.keyName !== 'initPrices') {
+        this.selectValue = {
+          min: Number(query.price_selling_hope__range.split(",")[0]),
+          max: Number(query.price_selling_hope__range.split(",")[1])
+        };
+      } else {
+        this.selectValue = {
+          min: Number(query.price_initial_investment__range.split(",")[0]),
+          max: Number(query.price_initial_investment__range.split(",")[1])
+        };
+      }
     }
   }
 };

@@ -113,11 +113,11 @@ export default {
     };
   },
   beforeMount() {
-    console.log("beforeMount PropertyType.vue")
     const query = this.$route.query;
-    // if (query.type_house__in) {
-    //   return query.type_house__in.includes(valueHouse);
-    // }
+    if (this.value) {
+      this.selected = this.value;
+      return
+    }
     if (this.$route.name === 'listHouses') {
       if (query.type_house__in) {
         this.selected = query.type_house__in.split(',').map(obj => {
@@ -152,8 +152,8 @@ export default {
           "noname02"
         ];
       }
+    } else {
     }
-    console.log(this.selected, 'this.selected')
   },
   methods: {
     ...mapActions("search", ["setCategories", "removeCategories"]),

@@ -1,10 +1,9 @@
 <template>
   <q-card flat class="q-mt-sm">
     <q-card-section class="nanum-square">
-      전체 매물
-      <span class="text-primary">{{ estateCount }} </span>개
+      전체 실거래가
+      <span class="text-primary">{{ estateCount.toLocaleString() }} </span>개
     </q-card-section>
-
     <q-card-section
       style="gap: 8px"
       class="sort-section bg-positive justify-end q-pa-none q-ma-none flex"

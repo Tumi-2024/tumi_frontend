@@ -14,13 +14,13 @@
     </div>
     <div class="selection row q-mt-lg" style="color: #1a1a1a">
       <q-btn
-        v-for="(property, i) of getProperties"
+        v-for="(property, i) of this.properties"
         flat
         :key="i"
         class="nanum-square"
         style="flex: 1"
-        :style="{ 'background-color': property.disabled ? '#e9e9e9' : '' }"
-        :disable="property.disabled"
+        :style="{ 'background-color': getDisabled(property) ? '#e9e9e9' : '' }"
+        :disable="getDisabled(property)"
         :class="{ selected: selectValue.value === property.value}"
         :label="property.label"
         @click="changeValue(property)"
@@ -58,24 +58,25 @@
 
     <div style="width: 100%" class="q-mt-lg selection">
       <q-btn
-        v-for="(preset, index) of presets"
-        :key="index"
-        flat
-        dense
-        :style="[{ width: `calc(100% / ${presets.length / 2})` }]"
-        @click="onClickPreset(preset)"
-        :class="{
-          'selected bg-primary text-white':
-            preset.value === selectValue.max ||
-            preset.value === selectValue.min,
-          'bg-orange-2 text-black':
-            preset.value < selectValue.max && preset.value > selectValue.min
-        }"
+      v-for="(preset, index) of presets"
+      :key="index"
+      flat
+      dense
+      :style="[{ width: `calc(100% / ${presets.length / 2})` }]"
+      @click="onClickPreset(preset)"
+      :class="{
+        'selected bg-primary text-white':
+        preset.value === selectValue.max ||
+        preset.value === selectValue.min,
+        'bg-orange-2 text-black':
+        preset.value < selectValue.max && preset.value > selectValue.min
+      }"
       >
         <div
           class="column items-center"
           style="font-size: calc((12 / 1000) * 100vh)"
         >
+
           {{ isM2 ? preset.labelM2 : preset.label }}
         </div>
       </q-btn>
@@ -96,22 +97,11 @@ export default {
       type: Array,
       require: false,
       default: () => []
-    }
-  },
-  watch: {
-    categories: {
-      immediate: true,
-      handler(newVal, oldVal) {
-        const defaultProperties = this.getProperties.filter(
-          (obj) => !obj.disabled
-        );
-        const validSelect = defaultProperties.some((df) => {
-          return df.value === this.selectValue.value;
-        });
-        if (!validSelect) {
-          this.selectValue.value = defaultProperties[0]?.value;
-        }
-      }
+    },
+    activeAreaType: {
+      type: Array,
+      require: false,
+      default: () => []
     }
   },
   data() {
@@ -135,6 +125,20 @@ export default {
       ]
     };
   },
+  watch: {
+    activeAreaType() {
+      this.properties.some(property => {
+        if (!this.getDisabled(property)) {
+          this.selectValue = {
+            value: property.value,
+            min: undefined,
+            max: undefined
+          };
+          return true;
+        }
+      })
+    }
+  },
   computed: {
     ...mapGetters("search", ["area", "isMultiSelect"]),
     getUnit() {
@@ -149,33 +153,8 @@ export default {
         }
       };
     },
-    isSelected() {
-      return (valueHouse) => {
-        const query = this.$route.query;
-        console.log(query)
-        console.log(valueHouse)
-        console.log(query[valueHouse])
-        return query[valueHouse]
-        // if (query.)
-      }
-    },
-    getProperties() {
-      const hasValue = (parentArray, childArray) => {
-        return parentArray.some((parent) => {
-          return childArray.some((child) => {
-            return parent === child;
-          });
-        });
-      };
-
-      return this.properties.map((obj) => {
-        return {
-          ...obj,
-          disabled: !this.isMultiSelect
-            ? !hasValue(obj.type, this.categories)
-            : false
-        };
-      });
+    getDisabled() {
+      return ({ type }) => (type.some(type => type === this.activeAreaType[0]));
     }
   },
   methods: {
@@ -218,6 +197,8 @@ export default {
       }
     },
     changeValue({ value }) {
+      console.log(value)
+      this.$emit("select", value);
       if (this.selectValue.value === value) {
         this.selectValue = {};
       } else {
@@ -297,29 +278,29 @@ export default {
     switch (true) {
       case !!query.size_dedicated_area_m2__range:
         this.selectValue = {
-          min: undefined,
-          max: undefined,
+          min: Number(query.size_dedicated_area_m2__range.split(",")[0]),
+          max: Number(query.size_dedicated_area_m2__range.split(",")[1]),
           value: "size_dedicated_area_m2"
         };
         break;
       case !!query.size_gross_floor_area__range:
         this.selectValue = {
-          min: undefined,
-          max: undefined,
+          min: Number(query.size_gross_floor_area__range.split(",")[0]),
+          max: Number(query.size_gross_floor_area__range.split(",")[1]),
           value: "size_gross_floor_area"
         };
         break;
       case !!query.size_land_area__range:
         this.selectValue = {
-          min: undefined,
-          max: undefined,
+          min: Number(query.size_land_area__range.split(",")[0]),
+          max: Number(query.size_land_area__range.split(",")[1]),
           value: "size_land_area"
         };
         break;
       case !!query.size_land_area_m2__range:
         this.selectValue = {
-          min: undefined,
-          max: undefined,
+          min: Number(query.size_land_area_m2__range.split(",")[0]),
+          max: Number(query.size_land_area_m2__range.split(",")[1]),
           value: "size_land_area_m2"
         };
         break;

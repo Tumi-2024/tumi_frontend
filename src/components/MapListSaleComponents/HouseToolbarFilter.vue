@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="flex">
-        <overall-filter :disable="disable" />
+        <HouseOverallFilter :disable="disable" @change="onChangeFilter" />
         <div
           class="scrolling-wrapper-flexbox nanum-square row float-right"
           :class="{ hideScrollbar: $q.platform.is.mobile }"
@@ -78,14 +78,14 @@
 
 <script>
 import Vue from "vue";
-import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
+import HouseOverallFilter from "components/Utilities/PropertySearchFilter/HouseOverallFilter";
 import HouseToolbarFilterDetail from "./HouseToolbarFilterDetail.vue";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    "overall-filter": OverallFilter,
+    HouseOverallFilter,
     HouseToolbarFilterDetail
   },
   computed: {
@@ -176,7 +176,6 @@ export default {
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
-      console.log('onChangeFilter')
       const { name } = this.$route
       if (name === 'listTransactions' || name === "map_city_area") {
         const _newParam = params
@@ -199,10 +198,9 @@ export default {
          size_daeji__range 대지면적 size_land_area__range
          size_land__range 대지권면적 size_land_area2__range
          */
-        console.log(_newParam)
+
         this.$emit("changeFilter", _newParam);
       } else {
-        console.log(params)
         this.$emit("changeFilter", params);
       }
     },
@@ -226,7 +224,6 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       this.text = obj.label;
-      console.log(obj)
 
       this.$router.replace({
         query: {
@@ -326,7 +323,6 @@ export default {
               });
             });
           } else {
-            console.log('house')
             const {
               data: { results }
             } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
