@@ -3,7 +3,7 @@
     <!-- Head Section -->
     <q-card flat square class="row items-center">
       <toolbar></toolbar>
-      <icon-tabs v-if="$route.path === '/insight/'"></icon-tabs>
+      <icon-tabs v-if="$route.name === 'recently_seen' && $store.state.user.data.token"></icon-tabs>
     </q-card>
     <router-view></router-view>
   </div>
