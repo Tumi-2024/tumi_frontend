@@ -1,8 +1,6 @@
 <template>
   <q-layout view="hHh lpr lfr">
-    <q-header style="max-width: 1000px" class="q-mx-auto">
-      <home-header :title="getTitle" />
-    </q-header>
+    <home-header :title="getTitle" />
 
     <q-page-container class="bg-positive">
       <router-view />

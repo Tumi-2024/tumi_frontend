@@ -132,7 +132,7 @@
                       >
                         <div style="display: flex; justify-content: space-between;">
                           <div style="display: flex; align-items: center; gap: 4px;">
-                            <q-badge outline color="primary">{{ getHouseType(item.category.replace("ￜ", "|")) }}</q-badge>
+                            <q-badge outline color="primary">{{ getHouseType(item.category.replace("|", "|")) }}</q-badge>
                             <q-badge outline color="blue">{{ toMoneyString(item.price || item.price_deposit) }}</q-badge>
                             <q-badge v-if="item.price_monthly" outline class="bg-blue text-white">{{ toMoneyString(item.price_monthly) }}</q-badge>
                             <q-badge outline color="green">{{ (item.text_size_private  || item.text_size_yean || item.text_size_total) +  'm²' }}</q-badge>
@@ -380,8 +380,8 @@ export default {
           { label: "오피스텔", value: "오피스텔" },
           { label: "상업업무용", value: "상업업무용 " },
           { label: "분양/입주권", value: "토지" },
-          { label: "연립|다세대", value: "연립|다세대" },
-          { label: "단독|다가구", value: "단독|다가구" },
+          { label: "연립다세대", value: "연립다세대" },
+          { label: "단독다가구", value: "단독다가구" },
           { label: "토지", value: "토지" }
         ].filter((item) => {
           return item.value === value;

@@ -407,8 +407,8 @@ export default {
         { label: "오피스텔", value: "오피스텔" },
         { label: "상업업무용", value: "상업업무용 " },
         { label: "분양/입주권", value: "토지" },
-        { label: "연립ￜ다세대", value: "연립|다세대" },
-        { label: "단독|다가구", value: "단독|다가구" },
+        { label: "연립다세대", value: "연립다세대" },
+        { label: "단독다가구", value: "단독다가구" },
         { label: "토지", value: "토지" }
       ];
 

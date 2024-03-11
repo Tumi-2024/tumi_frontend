@@ -250,25 +250,25 @@ export default {
         label: "전용면적",
         value: "size_dedicated_area_m2",
         valueHouse: "size_dedicated_area_m2__range",
-        type: ["아파트", "연립|다세대", "오피스텔", "상업업무용", "입주권"]
+        type: ["아파트", "연립다세대", "오피스텔", "상업업무용", "입주권"]
       },
       {
         label: "연면적",
         value: "size_gross_floor_area",
         valueHouse: "size_gross_floor_area__range",
-        type: ["단독|다가구", "상업업무용", "무허가 건축물"]
+        type: ["단독다가구", "상업업무용", "무허가건축물"]
       },
       {
         label: "대지면적",
         value: "size_land_area",
         valueHouse: "size_land_area__range",
-        type: ["단독|다가구", "상업업무용", "토지", "무허가 건축물"]
+        type: ["단독다가구", "상업업무용", "토지", "무허가건축물"]
       },
       {
         label: "대지지분(대지권면적)",
         value: "size_land_area_m2",
         valueHouse: 'size_land_area_m2__range',
-        type: ["아파트", "연립|다세대", "오피스텔", "상업업무용"]
+        type: ["아파트", "연립다세대", "오피스텔", "상업업무용"]
       }
     ]
 

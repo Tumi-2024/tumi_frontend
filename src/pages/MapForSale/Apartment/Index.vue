@@ -462,12 +462,12 @@ export default {
       };
     },
     getInformation() {
-      // console.log(this.estate.group_building_house.type_house, "단독ￜ다가구".replace("ￜ", "|"))
+      // console.log(this.estate.group_building_house.type_house, "단독다가구".replace("|", "|"))
       return [
         {
           // number of floors
           label: "물건종류",
-          value: this.getValue(this.estate.group_building_house.type_house.replace("ￜ", "|")),
+          value: this.getValue(this.estate.group_building_house.type_house.replace("|", "|")),
           icon: ["11.png"],
           new: true
         },

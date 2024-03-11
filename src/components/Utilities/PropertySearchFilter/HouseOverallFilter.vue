@@ -147,11 +147,11 @@ export default {
         ? query.type_house__in
           .replace("토지", "토지")
           .replace("오피스텔", "오피스텔")
-          .replace("연립ￜ다세대", "연립|다세대")
+          .replace("연립다세대", "연립다세대")
           .replace("아파트", "아파트")
-          .replace("상업ￜ업무용", "상업업무용")
-          .replace("단독ￜ다가구", "단독|다가구")
-          .replace("무허가 건축물", "무허가 건축물")
+          .replace("상업|업무용", "상업업무용")
+          .replace("단독다가구", "단독다가구")
+          .replace("무허가건축물", "무허가건축물")
           .replace("입주권", "입주권").split(",")
         : ["아파트"];
     }
@@ -178,7 +178,7 @@ export default {
           value: "size_dedicated_area_m2",
           type: [
             "아파트",
-            "연립ￜ다세대",
+            "연립다세대",
             "원룸/오피스텔",
             "상업업무용",
             "입주권"
@@ -245,11 +245,11 @@ export default {
         ...getQueryArray("type_house__in", category.join(",")
           .replace("토지", "토지")
           .replace("오피스텔", "오피스텔")
-          .replace("연립|다세대", "연립ￜ다세대")
+          .replace("연립다세대", "연립다세대")
           .replace("아파트", "아파트")
-          .replace("상업업무용", "상업ￜ업무용")
-          .replace("단독|다가구", "단독ￜ다가구")
-          .replace("무허가 건축물", "무허가 건축물")
+          .replace("상업업무용", "상업|업무용")
+          .replace("단독다가구", "단독다가구")
+          .replace("무허가건축물", "무허가건축물")
           .replace("입주권", "입주권")
           .split(",")),
         ...getQueryArray("price_selling_hope__range", [price.min, price.max]),

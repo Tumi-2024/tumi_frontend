@@ -37,7 +37,7 @@
           style="padding: 4px"
           :style="{ backgroundColor: getColor(item) }"
         >
-          {{ getItemInfo(item).type.replace("ￜ", "|") }}
+          {{ getItemInfo(item).type.replace("|", "|") }}
         </div>
         <div class="info-text text-center" style="padding: 1px 8px 0 8px">
           {{ toSimpleMoneyString(price) }}
@@ -74,11 +74,11 @@ export default {
     return {
       category: [
         { key: "상업업무용 ", label: "상업업무용" },
-        { key: "단독|다가구", label: "단독ￜ다가구" },
+        { key: "단독다가구", label: "단독다가구" },
         { key: "오피스텔", label: "오피스텔" },
         { key: "아파트", label: "아파트" },
         { key: "토지", label: "토지" },
-        { key: "연립|다세대", label: "연립ￜ다세대" }
+        { key: "연립다세대", label: "연립다세대" }
       ]
     };
   },
@@ -98,11 +98,11 @@ export default {
         if (this.$route.name === "map_city_area") {
           const TYPE_HOUSE = {
             "상업업무용 ": "상업업무용",
-            "단독|다가구": "단독ￜ다가구",
+            단독다가구: "단독다가구",
             오피스텔: "오피스텔",
             아파트: "아파트",
             토지: "토지",
-            "연립|다세대": "연립ￜ다세대"
+            연립다세대: "연립다세대"
           };
           const transactionItem = item.recent_transactions?.[item.types[0]];
           if (!transactionItem) {

@@ -64,21 +64,21 @@ export default {
         },
         {
           icon: require("assets/iconsNew/13.png"),
-          label: "단독|다가구",
-          valueTransaction: "단독|다가구",
-          valueHouse: "단독ￜ다가구"
+          label: "단독다가구",
+          valueTransaction: "단독다가구",
+          valueHouse: "단독다가구"
         },
         {
           icon: require("assets/iconsNew/12.png"),
-          label: "연립|다세대",
-          valueTransaction: "연립|다세대",
-          valueHouse: "연립ￜ다세대"
+          label: "연립다세대",
+          valueTransaction: "연립다세대",
+          valueHouse: "연립다세대"
         },
         {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
           valueTransaction: "상업업무용",
-          valueHouse: "상업ￜ업무용"
+          valueHouse: "상업|업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),
@@ -89,8 +89,8 @@ export default {
         {
           icon: require("assets/iconsNew/17.png"),
           label: "무허가건축물",
-          valueTransaction: "무허가 건축물",
-          valueHouse: "무허가 건축물"
+          valueTransaction: "무허가건축물",
+          valueHouse: "무허가건축물"
         },
         {
           icon: require("assets/iconsNew/18.png"),

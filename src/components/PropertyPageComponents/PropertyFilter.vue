@@ -18,13 +18,13 @@
           @filter="filter"
         />
         <filter-button
-          :type="'연립ￜ다세대'"
+          :type="'연립다세대'"
           :count="alliance"
           :current_filter="filter_keyword"
           @filter="filter"
         />
         <filter-button
-          :type="'단독ￜ다가구'"
+          :type="'단독다가구'"
           :count="single"
           :current_filter="filter_keyword"
           @filter="filter"
@@ -36,7 +36,7 @@
           @filter="filter"
         />
         <filter-button
-          :type="'상업ￜ업무용'"
+          :type="'상업|업무용'"
           :count="commercial"
           :current_filter="filter_keyword"
           @filter="filter"
@@ -48,7 +48,7 @@
           @filter="filter"
         />
         <filter-button
-          :type="'무허가 건축물'"
+          :type="'무허가건축물'"
           :count="unauthorized"
           :current_filter="filter_keyword"
           @filter="filter"

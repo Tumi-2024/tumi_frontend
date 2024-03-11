@@ -4,12 +4,12 @@ export const searchStore = {
     // 주택 유형
     categories: [
       "아파트",
-      "연립|다세대",
-      "단독|다가구",
+      "연립다세대",
+      "단독다가구",
       "오피스텔",
       "상업업무용",
       "토지",
-      "무허가 건축물",
+      "무허가건축물",
       "입주권"
     ],
 
@@ -56,19 +56,19 @@ export const searchStore = {
           value: "아파트"
         },
         {
-          label: "연립ￜ다세대",
-          value: "연립|다세대"
+          label: "연립다세대",
+          value: "연립다세대"
         },
         {
-          label: "단독ￜ다가구",
-          value: "단독|다가구"
+          label: "단독다가구",
+          value: "단독다가구"
         },
         {
           label: "오피스텔",
           value: "오피스텔"
         },
         {
-          label: "상업ￜ업무용",
+          label: "상업|업무용",
           value: "상업업무용"
         },
         {
@@ -76,8 +76,8 @@ export const searchStore = {
           value: "토지"
         },
         {
-          label: "무허가 건축물",
-          value: "무허가 건축물"
+          label: "무허가건축물",
+          value: "무허가건축물"
         },
         {
           label: "입주권",

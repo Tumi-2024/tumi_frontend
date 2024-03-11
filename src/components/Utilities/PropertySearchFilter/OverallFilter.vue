@@ -159,7 +159,7 @@ export default {
           value: "size_dedicated_area_m2",
           type: [
             "아파트",
-            "연립ￜ다세대",
+            "연립다세대",
             "원룸/오피스텔",
             "상업업무용",
             "입주권"

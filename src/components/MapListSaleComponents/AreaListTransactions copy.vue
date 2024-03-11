@@ -132,14 +132,14 @@ export default {
       const Dquery = {
         ...getQueryArray(
           "category__in",
-          this.getCategoriesByKorean.filter(obj => obj !== '무허가 건축물' && obj !== '입주권')
+          this.getCategoriesByKorean.filter(obj => obj !== '무허가건축물' && obj !== '입주권')
             .join(",")
             .replace("토지", "토지")
             .replace("오피스텔", "오피스텔")
-            .replace("연립ￜ다세대", "연립|다세대")
+            .replace("연립다세대", "연립다세대")
             .replace("아파트", "아파트")
-            .replace("상업ￜ업무용", "상업업무용")
-            .replace("단독ￜ다가구", "단독|다가구")
+            .replace("상업|업무용", "상업업무용")
+            .replace("단독다가구", "단독다가구")
             .split(",")
         ),
         ...params

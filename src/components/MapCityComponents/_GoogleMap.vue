@@ -282,11 +282,11 @@ export default {
         }
         const category = [
           { key: "상업업무용 ", label: "상업업무용" },
-          { key: "단독|다가구", label: "단독ￜ다가구" },
+          { key: "단독다가구", label: "단독다가구" },
           { key: "오피스텔", label: "오피스텔" },
           { key: "아파트", label: "아파트" },
           { key: "토지", label: "토지" },
-          { key: "연립|다세대", label: "연립ￜ다세대" }
+          { key: "연립다세대", label: "연립다세대" }
         ].find(({ key }) => key === value?.[0]);
         if (category) {
           return category.label;

@@ -95,11 +95,11 @@ export default {
     return {
       category: [
         { key: "상업업무용 ", label: "상업업무용" },
-        { key: "단독|다가구", label: "단독|다가구" },
+        { key: "단독다가구", label: "단독다가구" },
         { key: "오피스텔", label: "오피스텔" },
         { key: "아파트", label: "아파트" },
         { key: "토지", label: "토지" },
-        { key: "연립|다세대", label: "연립|다세대" }
+        { key: "연립다세대", label: "연립다세대" }
       ],
       onHover: false
     };
@@ -146,7 +146,7 @@ export default {
           },
           {
             type: "houseType",
-            value: item.group_building_house.type_house?.replace("ￜ", "|"),
+            value: item.group_building_house.type_house?.replace("|", "|"),
             label: "주택유형"
           },
           { type: "redevelopment", value: item.redevelopment },
