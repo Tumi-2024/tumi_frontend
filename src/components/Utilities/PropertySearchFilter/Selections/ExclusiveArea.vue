@@ -245,35 +245,64 @@ export default {
   },
   beforeMount() {
     this.initialize()
-    this.properties = [
-      {
-        label: "전용면적",
-        value: "size_dedicated_area_m2",
-        valueHouse: "size_dedicated_area_m2__range",
-        type: ["아파트", "연립다세대", "오피스텔", "상업업무용", "입주권"]
-      },
-      {
-        label: "연면적",
-        value: "size_gross_floor_area",
-        valueHouse: "size_gross_floor_area__range",
-        type: ["단독다가구", "상업업무용", "무허가건축물"]
-      },
-      {
-        label: "대지면적",
-        value: "size_land_area",
-        valueHouse: "size_land_area__range",
-        type: ["단독다가구", "상업업무용", "토지", "무허가건축물"]
-      },
-      {
-        label: "대지지분(대지권면적)",
-        value: "size_land_area_m2",
-        valueHouse: 'size_land_area_m2__range',
-        type: ["아파트", "연립다세대", "오피스텔", "상업업무용"]
-      }
-    ]
+    if (this.$route.name === 'listTransactions' || this.$route.name === 'map_city_area') {
+      console.log(this.properties)
+      this.properties = [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          valueHouse: "size_dedicated_area_m2__range",
+          type: ["아파트", "연립다세대", "오피스텔", "상업업무용", "입주권"]
+        },
+        {
+          label: "연면적",
+          value: "size_gross_floor_area",
+          valueHouse: "size_gross_floor_area__range",
+          type: ["단독다가구", "무허가건축물"]
+        },
+        {
+          label: "대지면적",
+          value: "size_land_area",
+          valueHouse: "size_land_area__range",
+          type: ["단독다가구", "상업업무용", "토지", "무허가건축물"]
+        },
+        {
+          label: "대지지분(대지권면적)",
+          value: "size_land_area_m2",
+          valueHouse: 'size_land_area_m2__range',
+          type: ["연립다세대"]
+        }
+      ]
+    } else {
+      this.properties = [
+        {
+          label: "전용면적",
+          value: "size_dedicated_area_m2",
+          valueHouse: "size_dedicated_area_m2__range",
+          type: ["아파트", "연립다세대", "오피스텔", "상업업무용", "입주권"]
+        },
+        {
+          label: "연면적",
+          value: "size_gross_floor_area",
+          valueHouse: "size_gross_floor_area__range",
+          type: ["단독다가구", "상업업무용", "무허가건축물"]
+        },
+        {
+          label: "대지면적",
+          value: "size_land_area",
+          valueHouse: "size_land_area__range",
+          type: ["단독다가구", "상업업무용", "토지", "무허가건축물"]
+        },
+        {
+          label: "대지지분(대지권면적)",
+          value: "size_land_area_m2",
+          valueHouse: 'size_land_area_m2__range',
+          type: ["아파트", "연립다세대", "오피스텔", "상업업무용"]
+        }
+      ]
+    }
 
     const query = this.$route.query;
-    console.log(query)
 
     switch (true) {
       case !!query.size_dedicated_area_m2__range:

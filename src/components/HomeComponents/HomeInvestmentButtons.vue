@@ -78,7 +78,7 @@ export default {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
           valueTransaction: "상업업무용",
-          valueHouse: "상업|업무용"
+          valueHouse: "상업업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),

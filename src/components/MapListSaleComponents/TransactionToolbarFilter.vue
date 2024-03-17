@@ -52,7 +52,8 @@
         </div>
       </div>
       <div class="flex">
-        <overall-filter :disable="disable" />
+        <!-- <overall-filter :disable="disable" /> -->
+        <TransactionOverallFilter :disable="disable" @change="onChangeFilter"  />
         <div
           class="scrolling-wrapper-flexbox nanum-square row float-right"
           :class="{ hideScrollbar: $q.platform.is.mobile }"
@@ -78,14 +79,14 @@
 
 <script>
 import Vue from "vue";
-import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
+import TransactionOverallFilter from "components/Utilities/PropertySearchFilter/TransactionOverallFilter";
 import TransactionToolbarFilterDetail from "./TransactionToolbarFilterDetail.vue";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    "overall-filter": OverallFilter,
+    TransactionOverallFilter,
     TransactionToolbarFilterDetail
   },
   computed: {
@@ -106,8 +107,6 @@ export default {
           return query[0] === keyname && !!query[1]
         })
       }
-
-      console.log(hasKey('category__in'), hasKey('size_private__range') || hasKey('size_yean__range') || hasKey('size_daeji__range') || hasKey('size_land__range'), hasKey('price__range'))
 
       return [
         {
@@ -181,7 +180,6 @@ export default {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
       const _newParam = params
-      console.log(params)
       _newParam.size_private__range = _newParam.size_dedicated_area_m2__range;
       _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
       _newParam.size_daeji__range = _newParam.size_land_area__range;
@@ -230,8 +228,10 @@ export default {
         search: type.value === "building" ? obj.value : undefined
       }
 
+      const oldQuery = this.$route.query
+
       this.$router.replace({
-        query
+        query: { ...oldQuery, ...query }
       })
     },
     async filterFn(val, update, abort) {

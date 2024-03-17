@@ -239,6 +239,8 @@ export default {
       ].find((obj) => obj.value === this.option);
       this.text = obj.label;
 
+      const oldQuery = this.$route.query
+
       const query = obj.subcityId ? {
         title: obj.label,
         redevelopment_area: type.value === "redev" ? obj.id : undefined,
@@ -252,7 +254,7 @@ export default {
       }
 
       this.$router.replace({
-        query
+        query: { ...oldQuery, ...query }
       })
     },
     async filterFn(val, update, abort) {

@@ -158,7 +158,7 @@ export default {
                 Math.floor(
                   item.group_building_house.size_gross_floor_area / 3.3
                 )) + "평",
-            label: "전용면적"
+            label: "건물면적"
           },
           // size_dedicated_area_m2 size_gross_floor_area
           {
@@ -169,7 +169,7 @@ export default {
             )}`,
             label: "매매가"
           },
-          { type: "date", value: getDate(item.modified), label: "매물수정일자" }
+          { type: "date", value: getDate(item.modified), label: "거래일자" }
         ];
       };
     },

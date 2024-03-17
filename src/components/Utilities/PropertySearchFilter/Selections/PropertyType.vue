@@ -51,10 +51,7 @@ export default {
   computed: {
     ...mapGetters("search", ["categories", "isMultiSelect"]),
     getIsActive() {
-      return (dd) => {
-        console.log(this.selected, dd)
-        return this.selected.some((obj) => obj === dd);
-      };
+      return (dd) => this.selected.some((obj) => obj === dd);
     }
   },
 
@@ -89,8 +86,8 @@ export default {
         {
           icon: require("assets/iconsNew/16.png"),
           label: "상업업무용",
-          value: "상업|업무용",
-          valueHouse: "상업|업무용"
+          value: "상업업무용",
+          valueHouse: "상업업무용"
         },
         {
           icon: require("assets/iconsNew/15.png"),
@@ -115,8 +112,6 @@ export default {
   },
   beforeMount() {
     const query = this.$route.query;
-
-    console.log(query, this.value)
     if (this.value.length) {
       this.selected = this.value;
       return
@@ -126,7 +121,6 @@ export default {
         return this.properties.find(property => property.valueHouse === obj).value
       })
     } else if (query.category__in) {
-      console.log('query.category__in', query.category__in)
       this.selected = query.category__in.split(',').map(obj => {
         return this.properties.find(property => property.value === obj).value
       })
@@ -136,7 +130,6 @@ export default {
   },
   methods: {
     ...mapActions("search", ["setCategories", "removeCategories"]),
-    select(val) {},
     changeValue({ value }) {
       const hasValue = this.selected.some((obj) => obj === value);
       if (hasValue) {

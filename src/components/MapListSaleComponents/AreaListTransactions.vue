@@ -108,11 +108,11 @@ export default {
       // this.getApiHouses();
     },
     changeFilter(params) {
-      console.log('changeFilter')
+      const query = this.$route.query;
       this.page = 1;
       this.$router.replace({
         name: "listTransactions",
-        query: { ...params, page_size: 20, page: 1 }
+        query: { ...query, ...params, page_size: 20, page: 1 }
       });
     },
     infiniteHandler() {

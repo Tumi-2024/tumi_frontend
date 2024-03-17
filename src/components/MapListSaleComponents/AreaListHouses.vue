@@ -2,7 +2,7 @@
   <q-card flat class="q-mt-sm">
     <q-card-section class="nanum-square">
       전체 매물
-      <span class="text-primary">{{ estateCount }} </span>개
+      <span class="text-primary">{{ estateCount.toLocaleString() }} </span>개
     </q-card-section>
 
     <q-card-section
@@ -21,9 +21,9 @@
       <div style="display: flex; gap: 2px" class="q-pa-sm">
         <Badge value="개발유형" recommend />
         <Badge value="주택유형" houseType />
-        <Badge value="전용면적" pyeong />
+        <Badge value="건물면적" pyeong />
         <Badge value="매매가" price />
-        <Badge value="매물수정일자" date />
+        <Badge value="거래일자" date />
       </div>
       <q-separator />
       <q-list>
@@ -104,10 +104,11 @@ export default {
       // this.getApiHouses();
     },
     changeFilter(params) {
+      const query = this.$route.query
       this.page = 1;
       this.$router.replace({
         name: "listHouses",
-        query: { ...params, page_size: 20, page: 1 }
+        query: { ...query, ...params, page_size: 20, page: 1 }
       });
     },
     infiniteHandler() {
