@@ -239,14 +239,20 @@ export default {
       ].find((obj) => obj.value === this.option);
       this.text = obj.label;
 
+      const query = obj.subcityId ? {
+        title: obj.label,
+        redevelopment_area: type.value === "redev" ? obj.id : undefined,
+        subcity: type.value === "location" ? obj.subcityId : undefined,
+        search: type.value === "building" ? obj.value : undefined
+      } : {
+        title: obj.label,
+        redevelopment_area: type.value === "redev" ? obj.id : undefined,
+        location: type.value === "location" ? obj.id : undefined,
+        search: type.value === "building" ? obj.value : undefined
+      }
+
       this.$router.replace({
-        query: {
-          ...this.$route.query,
-          title: obj.label,
-          redevelopment_area: type.value === "redev" ? obj.id : undefined,
-          location: type.value === "location" ? obj.id : undefined,
-          search: type.value === "building" ? obj.value : undefined
-        }
+        query
       })
     },
     async filterFn(val, update, abort) {
@@ -257,7 +263,6 @@ export default {
       ].find((obj) => obj.value === this.option);
       if (!val || val === "") {
         update();
-        return;
       }
       if (val) {
         if (type.value === "redev") {
@@ -306,7 +311,7 @@ export default {
               value: obj.address,
               label: obj.address,
               id: obj.id,
-              subcityId: null
+              subcityId: obj.id
             };
           });
 
@@ -315,7 +320,7 @@ export default {
               value: `${subcity.city.title} ${subcity.title} ${title}`,
               label: `${subcity.city.title} ${subcity.title} ${title}`,
               id: id,
-              subcityId: subcity.id
+              subcityId: null
             };
           });
           update(async () => {
@@ -358,6 +363,7 @@ export default {
     const { query } = this.$route;
     switch (true) {
       case !!query?.location:
+      case !!query?.subcity:
         this.option = "location";
         break;
       case query?.redevelopment_area:
