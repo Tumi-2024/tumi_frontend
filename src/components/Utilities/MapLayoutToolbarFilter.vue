@@ -39,6 +39,7 @@
             dense
             :value="searchText"
             @input="onSelect"
+            @input.native="filter($event.target.value)"
             @change="onChangeText"
             :input-debounce="400"
             use-input
@@ -93,6 +94,7 @@ import Vue from "vue";
 import OverallFilter from "components/Utilities/PropertySearchFilter/OverallFilter";
 import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
+import { debounce } from 'quasar';
 
 const ellipsisText = (string) => {
   const stringLength = 20;
@@ -192,6 +194,9 @@ export default {
       default: false
     }
   },
+  mounted() {
+    this.filter = debounce(this.filter, 500);
+  },
   beforeMount() {
     if (this.$route.query.redev) {
       this.searchText = this.$route.query.redev;
@@ -205,6 +210,10 @@ export default {
   },
   methods: {
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "changeMapCenter"]),
+    filter(keyword) {
+      this.$refs.keywordRef.filter(keyword);
+      this.searchText = keyword;
+    },
     onChangeFilter(params) {
       this.$emit("changeFilter", params);
     },

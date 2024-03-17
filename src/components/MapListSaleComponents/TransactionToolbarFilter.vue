@@ -35,6 +35,7 @@
             :value="text"
             @input="onSelect"
             @focus="onFocus"
+            @input.native="filter($event.target.value)"
             :input-debounce="200"
             use-input
             fill-input
@@ -83,6 +84,7 @@ import TransactionOverallFilter from "components/Utilities/PropertySearchFilter/
 import TransactionToolbarFilterDetail from "./TransactionToolbarFilterDetail.vue";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
+import { debounce } from 'quasar';
 
 export default {
   components: {
@@ -168,15 +170,14 @@ export default {
   },
 
   mounted() {
-    const el = this.$refs.keywordRef;
-    const el2 = el.$refs.target;
-    el2.addEventListener("input", (e) => {
-      el.filter();
-      this.text = e.target.value;
-    });
+    this.filter = debounce(this.filter, 500);
   },
 
   methods: {
+    filter(keyword) {
+      this.$refs.keywordRef.filter(keyword);
+      this.text = keyword;
+    },
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
       const _newParam = params

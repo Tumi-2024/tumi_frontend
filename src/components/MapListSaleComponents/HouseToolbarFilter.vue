@@ -34,8 +34,8 @@
             dense
             :value="text"
             @input="onSelect"
-            @focus="onFocus"
-            :input-debounce="200"
+            @input.native="filter($event.target.value)"
+            :input-debounce="500"
             use-input
             fill-input
             hide-selected
@@ -83,6 +83,7 @@ import HouseOverallFilter from "components/Utilities/PropertySearchFilter/HouseO
 import HouseToolbarFilterDetail from "./HouseToolbarFilterDetail.vue";
 // import SpecificFilter from "components/Utilities/PropertySearchFilter/SpecificFilter";
 import { mapGetters, mapActions } from "vuex";
+import { debounce } from 'quasar';
 
 export default {
   components: {
@@ -179,15 +180,23 @@ export default {
   },
 
   mounted() {
-    const el = this.$refs.keywordRef;
-    const el2 = el.$refs.target;
-    el2.addEventListener("input", (e) => {
-      el.filter();
-      this.text = e.target.value;
-    });
+    // const el = this.$refs.keywordRef;
+    // console.log(el)
+    // const el2 = el.$refs.target;
+    // el2.addEventListener("input", (e) => {
+    //   console.log('input', e, el)
+    //   // el.filter();
+    //   // this.text = e.target.value;
+    // });
+    this.filter = debounce(this.filter, 500);
   },
 
   methods: {
+    filter(keyword) {
+      this.$refs.keywordRef.filter(keyword);
+      this.text = keyword;
+    },
+
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
       const { name } = this.$route
@@ -228,9 +237,6 @@ export default {
       this.options = [];
       this.text = "";
     },
-    onFocus() {
-      this.$emit("focus");
-    },
     onSelect(obj) {
       const type = [
         { label: "정비사업", value: "redev" },
@@ -264,99 +270,98 @@ export default {
         { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       if (!val || val === "") {
-        update();
+        abort();
+        return
       }
-      if (val) {
-        if (type.value === "redev") {
-          const getAreaTypeString = () => {
-            switch (this.getAreaType) {
-              case null:
-                return null;
-              case "재개발":
-              case "재건축":
-              case "일반":
-                return this.getAreaType;
-              case "기타사업":
-                return "기타";
-              default:
-                return this.getAreaType;
-            }
-          };
+      if (type.value === "redev") {
+        const getAreaTypeString = () => {
+          switch (this.getAreaType) {
+            case null:
+              return null;
+            case "재개발":
+            case "재건축":
+            case "일반":
+              return this.getAreaType;
+            case "기타사업":
+              return "기타";
+            default:
+              return this.getAreaType;
+          }
+        };
 
+        const {
+          data: { results }
+        } = await Vue.prototype.$axios.get(`redevelopment_areas/`, {
+          params: {
+            search: val,
+            redevelopment_area__category: getAreaTypeString()
+          }
+        });
+        update(async () => {
+          this.options = results.map(({ title, id }) => {
+            return {
+              value: title,
+              label: title,
+              id: id
+            };
+          });
+        });
+      } else if (type.value === "location") {
+        const {
+          data: { results: subCityResults }
+        } = await Vue.prototype.$axios.get(`sub_cities?search=${val}`);
+        const {
+          data: { results }
+        } = await Vue.prototype.$axios.get(`locations?search=${val}`);
+
+        const subArr = subCityResults.map((obj) => {
+          return {
+            value: obj.address,
+            label: obj.address,
+            id: obj.id,
+            subcityId: obj.id
+          };
+        });
+
+        const locationArr = results.map(({ title, id, subcity }) => {
+          return {
+            value: `${subcity.city.title} ${subcity.title} ${title}`,
+            label: `${subcity.city.title} ${subcity.title} ${title}`,
+            id: id,
+            subcityId: null
+          };
+        });
+        update(async () => {
+          this.options = [...subArr, ...locationArr];
+        });
+      } else {
+        const { name } = this.$route
+        if (name === 'listTransactions') {
           const {
             data: { results }
-          } = await Vue.prototype.$axios.get(`redevelopment_areas/`, {
-            params: {
-              search: val,
-              redevelopment_area__category: getAreaTypeString()
-            }
-          });
+          } = await Vue.prototype.$axios.get(`transactions/?search=${val}`);
           update(async () => {
-            this.options = results.map(({ title, id }) => {
+            this.options = results.map((building) => {
               return {
-                value: title,
-                label: title,
-                id: id
+                value: building.text_danji,
+                label: building.text_danji,
+                id: building.text_danji
               };
             });
           });
-        } else if (type.value === "location") {
-          const {
-            data: { results: subCityResults }
-          } = await Vue.prototype.$axios.get(`sub_cities?search=${val}`);
+        } else {
           const {
             data: { results }
-          } = await Vue.prototype.$axios.get(`locations?search=${val}`);
-
-          const subArr = subCityResults.map((obj) => {
-            return {
-              value: obj.address,
-              label: obj.address,
-              id: obj.id,
-              subcityId: obj.id
-            };
-          });
-
-          const locationArr = results.map(({ title, id, subcity }) => {
-            return {
-              value: `${subcity.city.title} ${subcity.title} ${title}`,
-              label: `${subcity.city.title} ${subcity.title} ${title}`,
-              id: id,
-              subcityId: null
-            };
-          });
+          } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
           update(async () => {
-            this.options = [...subArr, ...locationArr];
+            this.options = results.map(({ group_building_house: building }) => {
+              return {
+                value: building.title_building,
+                label: building.title_building,
+                id: building.title_building
+              };
+            });
           });
-        } else {
-          const { name } = this.$route
-          if (name === 'listTransactions') {
-            const {
-              data: { results }
-            } = await Vue.prototype.$axios.get(`transactions/?search=${val}`);
-            update(async () => {
-              this.options = results.map((building) => {
-                return {
-                  value: building.text_danji,
-                  label: building.text_danji,
-                  id: building.text_danji
-                };
-              });
-            });
-          } else {
-            const {
-              data: { results }
-            } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
-            update(async () => {
-              this.options = results.map(({ group_building_house: building }) => {
-                return {
-                  value: building.title_building,
-                  label: building.title_building,
-                  id: building.title_building
-                };
-              });
-            });
-          }
         }
       }
     }
