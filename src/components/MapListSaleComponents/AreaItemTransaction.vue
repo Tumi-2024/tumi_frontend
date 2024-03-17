@@ -90,7 +90,7 @@ export default {
     getSubInfoProps() {
       return (item) => {
         switch (this.ctgr) {
-          case "상업업무용 ":
+          case "상업업무용":
             return [
               { label: "유형", value: item.text_type },
               {

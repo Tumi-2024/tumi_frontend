@@ -36,7 +36,7 @@
           @filter="filter"
         />
         <filter-button
-          :type="'상업|업무용'"
+          :type="'상업업무용'"
           :count="commercial"
           :current_filter="filter_keyword"
           @filter="filter"

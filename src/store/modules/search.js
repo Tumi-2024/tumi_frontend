@@ -68,7 +68,7 @@ export const searchStore = {
           value: "오피스텔"
         },
         {
-          label: "상업|업무용",
+          label: "상업업무용",
           value: "상업업무용"
         },
         {
