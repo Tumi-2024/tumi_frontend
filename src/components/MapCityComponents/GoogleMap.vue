@@ -243,10 +243,10 @@ export default {
           case "모아주택":
           case "기타":
             return "green";
-          // case "일반":
-          //   return "purple";
+            // return "purple";
+            // case "일반":
           default:
-            return "green";
+            return "purple";
         }
       };
     },

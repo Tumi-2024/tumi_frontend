@@ -122,27 +122,13 @@ export default {
         const getDate = (date) => {
           return this.toDateFormat(date, "YYYY.MM.DD");
         };
-        const getColor = (label) => {
-          switch (label) {
-            case "재개발":
-              return "primary";
-            case "재건축":
-              return "blue";
-            case "가로주택":
-              return "green";
-            default:
-              return "";
-          }
-        };
         return [
           {
             type: "transactionStatus",
             value: item.transactionStatus
               ? false
               : item.group_location.redevelopment_area?.category,
-            color: getColor(item.group_location.redevelopment_area?.category),
             label: "개발유형"
-            // icon: getIcon()
           },
           {
             type: "houseType",

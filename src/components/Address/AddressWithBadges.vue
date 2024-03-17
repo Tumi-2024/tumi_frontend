@@ -35,6 +35,22 @@ export default {
       type: String,
       required: false
     }
+  },
+  computed: {
+    getBadgeClass() {
+      return (text) => {
+        switch (text) {
+          case '재건축':
+            return 'bg-blue text-white'
+          case '재개발':
+            return 'bg-primary text-white'
+          case '기타':
+            return 'bg-green text-white'
+          default:
+            return 'bg-white text-primary'
+        }
+      }
+    }
   }
 };
 </script>

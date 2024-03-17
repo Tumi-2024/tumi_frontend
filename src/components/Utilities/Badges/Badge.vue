@@ -115,14 +115,16 @@ export default {
       //   break;
       case this.value === "모아주택":
       case this.value === "가로주택":
-        this.badgeClass = "text-green";
+        this.badgeClass = "bg-green text-white";
+        this.tooltipClass = "bg-green text-white";
         break;
       case this.value === "재건축":
-        this.badgeClass = "text-blue";
+        this.badgeClass = "bg-blue text-white";
+        this.tooltipClass = "text-white bg-blue";
         break;
       case this.houseType:
         this.badgeClass = "text-primary bg-white";
-        this.tooltipClass = "text-white bg-primary";
+        this.tooltipClass = "text-primary bg-white";
         break;
       case this.pyeong:
       case this.area:
@@ -158,7 +160,7 @@ export default {
         this.tooltipClass = "text-white bg-blue";
         break;
       default:
-        this.badgeClass = "date text-blue bg-white";
+        this.badgeClass = "";
     }
   }
 };
