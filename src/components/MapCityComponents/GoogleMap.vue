@@ -267,7 +267,7 @@ export default {
         case null:
           return {
             text: "white",
-            bg: "rgba(0, 128, 0, 0.8)",
+            bg: "grey",
             tagClass: "green"
           };
         // return { text: "black", bg: "#ffff00", tagClass: "primary" };

@@ -1,17 +1,5 @@
 <template>
   <div class="action-container q-px-sm" style="min-width: 70px">
-    <!-- <q-btn color="white" padding="8px" @click="interestLocation()">
-      <q-icon>
-        <img
-          v-if="!$store.state.map.isInterest"
-          src="~assets/icons/heart.svg"
-          alt=""
-          srcset=""
-        />
-        <img v-else src="~assets/icons/hearted.svg" alt="" srcset="" />
-      </q-icon>
-    </q-btn> -->
-
     <q-btn :color="getColor" @click="changeRedev" padding="6px">
       <div>
         <q-icon size="30px">
@@ -62,7 +50,7 @@ export default {
   data() {
     return {
       type: [
-        { color: "green", label: "All", key: null },
+        { color: "grey", label: "All", key: null },
         { color: "primary", label: "재개발", key: "재개발" },
         { color: "blue", label: "재건축", key: "재건축" },
         // { color: "green", label: "가로/모아", key: "가로모아" },
