@@ -108,7 +108,7 @@ export default {
       this.page = 1;
       this.$router.replace({
         name: "listHouses",
-        query: { ...query, ...params, page_size: 20, page: 1 }
+        query: { ...params, page_size: 20, page: 1 }
       });
     },
     infiniteHandler() {

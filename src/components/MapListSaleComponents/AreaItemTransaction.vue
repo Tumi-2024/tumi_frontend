@@ -387,7 +387,7 @@ export default {
               this.category.find((obj) => obj.key === this.ctgr) || {
                 label: ""
               }
-            ).label.replace("|", "|")
+            ).label
           },
           {
             type: "area",
@@ -395,7 +395,7 @@ export default {
             value: getArea() + "m²"
           },
           {
-            type: this.types?.[0]?.toLowerCase(),
+            type: "price",
             value: `${toMoneyString(item.price)}`
           },
           { type: "date", value: this.getdate(item.text_month, item.text_day) }
