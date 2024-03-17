@@ -88,7 +88,7 @@ export default {
         case this.houseType:
           return "주택유형";
         case this.pyeong:
-          return "전용면적";
+          return "건물면적";
         case this.area:
           return "면적";
         case this.recommend:
@@ -115,16 +115,16 @@ export default {
       //   break;
       case this.value === "모아주택":
       case this.value === "가로주택":
-        this.badgeClass = "bg-green text-white";
+        this.badgeClass = "text-green bg-white";
         this.tooltipClass = "bg-green text-white";
         break;
       case this.value === "재건축":
-        this.badgeClass = "bg-blue text-white";
+        this.badgeClass = "text-white bg-blue";
         this.tooltipClass = "text-white bg-blue";
         break;
       case this.houseType:
         this.badgeClass = "text-primary bg-white";
-        this.tooltipClass = "text-primary bg-white";
+        this.tooltipClass = "text-white bg-primary";
         break;
       case this.pyeong:
       case this.area:

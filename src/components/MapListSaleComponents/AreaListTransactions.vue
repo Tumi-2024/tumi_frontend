@@ -20,7 +20,7 @@
       <div style="display: flex; gap: 2px" class="q-pa-sm">
         <!-- <Badge value="개발유형" recommend /> -->
         <Badge value="주택유형" houseType />
-        <Badge value="전용면적" pyeong />
+        <Badge value="건물면적" pyeong />
         <Badge value="매매가" price />
         <Badge value="거래일자" date />
       </div>
