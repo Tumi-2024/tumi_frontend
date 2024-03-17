@@ -78,7 +78,7 @@
               </div>
             </naver-marker>
           </template>
-          <template v-else-if="getMapZoom < 18">
+          <template v-else-if="getMapZoom < 17">
             <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
               <div
                 style="position: relative; border-radius: 100%"
@@ -514,7 +514,10 @@ export default {
       this.idle();
     },
     boundsChanged(b) {
-      this.getRedevInfo(b);
+      console.log(this.getMapZoom)
+      if (this.getMapZoom > 13) {
+        this.getRedevInfo();
+      }
     },
     onChangeRedev() {
       this.setViewRedevOnly();
