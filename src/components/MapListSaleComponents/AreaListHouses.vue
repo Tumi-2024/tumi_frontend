@@ -23,7 +23,7 @@
         <Badge value="주택유형" houseType />
         <Badge value="건물면적" pyeong />
         <Badge value="매매가" price />
-        <Badge value="거래일자" date />
+        <Badge value="매물수정일자" date />
       </div>
       <q-separator />
       <q-list>
