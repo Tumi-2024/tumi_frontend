@@ -211,14 +211,14 @@ export default {
     }
   },
   watch: {
-    // getMapCenter(obj) {
-    //   const map = this.$refs.naverMapRef.map;
-    //   map.panTo(obj);
-    //   this.getRedevInfo();
-    //   setTimeout(() => {
-    //     this.getHouseInfo();
-    //   }, 500)
-    // }
+    getMapCenter(obj) {
+      const map = this.$refs.naverMapRef.map;
+      map.panTo(obj);
+      this.getRedevInfo();
+      setTimeout(() => {
+        this.getHouseInfo();
+      }, 1000)
+    }
   },
   computed: {
     ...mapGetters("map", [
@@ -504,7 +504,6 @@ export default {
         lng: center.lng(),
         lat: center.lat()
       });
-      this.idle();
     },
     zoomChanged(zoomLevel) {
       if (zoomLevel > 13) {
@@ -512,12 +511,6 @@ export default {
       }
       this.setMapZoom(zoomLevel);
       this.idle();
-    },
-    boundsChanged(b) {
-      console.log(this.getMapZoom)
-      if (this.getMapZoom > 13) {
-        this.getRedevInfo();
-      }
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -529,7 +522,7 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle(e) {
-      this.getHouseInfo();
+      // this.getHouseInfo();
     },
 
     async getRedevInfo(bounds = this.$refs.naverMapRef.map.bounds) {
