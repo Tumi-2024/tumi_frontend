@@ -21,7 +21,7 @@
         style="flex: 1"
         :style="{ 'background-color': getDisabled(property) ? '#e9e9e9' : '' }"
         :disable="getDisabled(property)"
-        :class="{ selected: selectValue.value === property.value}"
+        :class="{ selected: (selectValue.value === property.value) || selectValue.value === property.valueHouse}"
         :label="property.label"
         @click="changeValue(property)"
       />
@@ -245,31 +245,31 @@ export default {
   },
   beforeMount() {
     this.initialize()
+    console.log(this.$route.name)
     if (this.$route.name === 'listTransactions' || this.$route.name === 'map_city_area') {
-      console.log(this.properties)
       this.properties = [
         {
           label: "전용면적",
-          value: "size_dedicated_area_m2",
-          valueHouse: "size_dedicated_area_m2__range",
+          value: "size_private",
+          valueHouse: "size_dedicated_area_m2",
           type: ["아파트", "연립다세대", "오피스텔", "상업업무용", "입주권"]
         },
         {
           label: "연면적",
-          value: "size_gross_floor_area",
-          valueHouse: "size_gross_floor_area__range",
+          value: "size_yean",
+          valueHouse: "size_gross_floor_area",
           type: ["단독다가구", "무허가건축물"]
         },
         {
           label: "대지면적",
-          value: "size_land_area",
-          valueHouse: "size_land_area__range",
+          value: "size_daeji",
+          valueHouse: "size_land_area",
           type: ["단독다가구", "상업업무용", "토지", "무허가건축물"]
         },
         {
           label: "대지지분(대지권면적)",
           value: "size_land_area_m2",
-          valueHouse: 'size_land_area_m2__range',
+          valueHouse: 'size_land',
           type: ["연립다세대"]
         }
       ]
@@ -295,8 +295,8 @@ export default {
         },
         {
           label: "대지지분(대지권면적)",
-          value: "size_land_area_m2",
-          valueHouse: 'size_land_area_m2__range',
+          value: "size_land",
+          valueHouse: 'size_land__range',
           type: ["아파트", "연립다세대", "오피스텔", "상업업무용"]
         }
       ]

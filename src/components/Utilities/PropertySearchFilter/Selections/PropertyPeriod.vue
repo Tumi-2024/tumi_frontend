@@ -4,8 +4,7 @@
       <div class="row q-mt-md justify-center">
         <q-input
           type="date"
-          @change="onChangeStartDate"
-          :value="TransformDateToInput(startDate)"
+          v-model="startDate"
           filled
           dense
           maxlength="7"
@@ -14,10 +13,11 @@
         <span style="font-size: calc((30 / 1000) * 100vh)" class="q-mx-lg">
           ~
         </span>
+
         <q-input
           type="date"
-          @change="onChangeEndDate"
-          :value="TransformDateToInput(endDate)"
+          value="2020-"
+          v-model="endDate"
           filled
           dense
           maxlength="7"
@@ -49,12 +49,19 @@
 import { mapActions, mapGetters } from "vuex";
 import { toMoneyString } from "src/utils";
 
+const currentYYYYMMDD = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}-${new Date().getDate()}`;
+
 export default {
   components: {},
+  props: {
+    keyName: {
+      type: String
+    }
+  },
   data() {
     return {
-      startDate: this.$store.state.search.period[0],
-      endDate: this.$store.state.search.period[1]
+      startDate: undefined,
+      endDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}-${new Date().getDate()}`
     };
   },
   computed: {
@@ -76,42 +83,34 @@ export default {
   methods: {
     toMoneyString,
     ...mapActions("search", ["setPeriod"]),
-    TransformDateToInput(dateNumber, format = "yyyy-MM-dd") {
-      if (!dateNumber) return;
-      const date = new Date(dateNumber);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
+    getTime (date) {
+      if (!date) return;
+      const _date = new Date(date);
+      const year = _date.getFullYear();
+      const month = _date.getMonth() + 1;
+      const day = _date.getDate();
       return `${year}-${month < 10 ? `0${month}` : month}-${
-        day < 10 ? `0${day}` : day
-      }`;
-    },
-    onChangeStartDate(e) {
-      const _value = e.target.value;
-      this.startDate = new Date(_value).getTime();
-    },
-    onChangeEndDate(e) {
-      const _value = e.target.value;
-      this.endDate = new Date(_value).getTime();
+    day < 10 ? `0${day}` : day
+  }`;
     },
 
     onClickPreset({ value }) {
-      this.startDate = value;
+      this.startDate = this.getTime(value);
     },
     save() {
-      this.setPeriod([
-        this.TransformDateToInput(this.startDate),
-        this.TransformDateToInput(this.endDate)
-      ]);
     },
     initialize() {
       this.startDate = null;
-      this.endDate = null;
-      this.setPeriod([undefined, undefined]);
+      this.endDate = currentYYYYMMDD;
     }
   },
-  mounted() {
-    this.endDate = new Date();
+  beforeMount() {
+    const query = this.$route.query;
+
+    if (query[this.keyName]) {
+      this.startDate = query[this.keyName].split(",")[0];
+      this.endDate = query[this.keyName].split(",")[1];
+    }
   }
 };
 </script>

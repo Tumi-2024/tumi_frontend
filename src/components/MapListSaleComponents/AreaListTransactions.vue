@@ -108,11 +108,26 @@ export default {
       // this.getApiHouses();
     },
     changeFilter(params) {
-      const query = this.$route.query;
+      console.log('changeFilter', params)
+
+      const query = this.$route.query
+      const newQuery = { ...query }
+      // params 의 값이 null 이면 객체에서 제외 시킨다. undefined 는 제외시키지 않는다.
+      for (const key in params) {
+        if (params[key] === null) {
+          delete newQuery[key]
+        } else {
+          newQuery[key] = params[key]
+        }
+      }
+
+      console.log(params, 'params')
+      console.log(newQuery, 'newQuery')
+
       this.page = 1;
       this.$router.replace({
         name: "listTransactions",
-        query: { ...query, ...params, page_size: 20, page: 1 }
+        query: { ...newQuery, page_size: 20, page: 1 }
       });
     },
     infiniteHandler() {

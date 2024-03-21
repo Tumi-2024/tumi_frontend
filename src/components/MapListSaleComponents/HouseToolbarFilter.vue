@@ -127,7 +127,7 @@ export default {
           hasKey('type_house__in')
             ? "text-white bg-primary"
             : "text-grey",
-          keyName: "categories",
+          keyName: "type_house__in",
           value: propertyTypeValue
         },
         {
@@ -143,7 +143,7 @@ export default {
             hasKey('price_selling_hope__range')
               ? "text-white bg-blue"
               : "text-grey",
-          keyName: "prices"
+          keyName: "price_selling_hope__range"
         },
         {
           label: "초기투자금",
@@ -153,13 +153,13 @@ export default {
               ? "text-white bg-purple"
               : "text-grey",
           isHide: this.$route.name !== "listHouses",
-          keyName: "initPrices"
+          keyName: "price_initial_investment__range"
         },
         {
           label: this.$route.name === "listHouses" ? "수정일자" : "거래일자",
           type: "PropertyPeriod",
           class: hasKey('modified__range') ? "text-white bg-brown-4" : "text-grey",
-          keyName: "period",
+          keyName: "modified__range",
           isHide: this.$route.path === "/map/city"
         }
       ];
@@ -199,33 +199,18 @@ export default {
 
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
-      const { name } = this.$route
-      if (name === 'listTransactions' || name === "map_city_area") {
-        const _newParam = params
-        _newParam.size_private__range = _newParam.size_dedicated_area_m2__range;
-        _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
-        _newParam.size_daeji__range = _newParam.size_land_area__range;
-        _newParam.size_land__range = _newParam.size_land_area_m2__range;
-        _newParam.price__range = _newParam.price_selling_hope__range;
-        _newParam.date__range = _newParam.modified__range;
+      const houseParam = {
+        type_house__in: params.type_house__in || null,
+        size_dedicated_area_m2__range: params.size_dedicated_area_m2__range || null,
+        size_gross_floor_area__range: params.size_gross_floor_area__range || null,
+        size_land_area__range: params.size_land_area__range || null,
+        size_land_area_m2__range: params.size_land_area_m2__range || null,
+        price_selling_hope__range: params.price_selling_hope__range || null,
+        price_initial_investment__range: params.price_initial_investment__range || null,
+        modified__range: params.modified__range || null
 
-        delete _newParam.size_dedicated_area_m2__range;
-        delete _newParam.size_gross_floor_area__range;
-        delete _newParam.size_land_area__range;
-        delete _newParam.size_land_area_m2__range;
-        delete _newParam.price_selling_hope__range;
-        delete _newParam.modified__range;
-        /**
-         * size_private__range 전용면적 size_dedicated_area_m2
-         size_yean__range 연면적 size_gross_floor_area__range
-         size_daeji__range 대지면적 size_land_area__range
-         size_land__range 대지권면적 size_land_area2__range
-         */
-
-        this.$emit("changeFilter", _newParam);
-      } else {
-        this.$emit("changeFilter", params);
       }
+      this.$emit("changeFilter", houseParam);
     },
     changeDevType(event) {
       if (this.$route.query.redevelopment_area__category === event) return;

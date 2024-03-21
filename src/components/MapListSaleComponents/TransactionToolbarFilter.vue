@@ -118,7 +118,7 @@ export default {
           hasKey('category__in')
             ? "text-white bg-primary"
             : "text-grey",
-          keyName: "categories"
+          keyName: "category__in"
         },
         {
           label: "면적",
@@ -133,23 +133,13 @@ export default {
             hasKey('price__range')
               ? "text-white bg-blue"
               : "text-grey",
-          keyName: "prices"
-        },
-        {
-          label: "초기투자금",
-          type: "PriceFilter",
-          class:
-            hasKey('price_initial_investment__range')
-              ? "text-white bg-purple"
-              : "text-grey",
-          isHide: this.$route.name !== "listHouses",
-          keyName: "initPrices"
+          keyName: "price__range"
         },
         {
           label: this.$route.name === "listHouses" ? "수정일자" : "거래일자",
           type: "PropertyPeriod",
           class: hasKey('date__range') ? "text-white bg-brown-4" : "text-grey",
-          keyName: "period",
+          keyName: "date__range",
           isHide: this.$route.path === "/map/city"
         }
       ];
@@ -180,21 +170,17 @@ export default {
     },
     ...mapActions("map", ["changeMapMode", "changeMapZoom", "setAreaType"]),
     onChangeFilter(params) {
-      const _newParam = params
-      _newParam.size_private__range = _newParam.size_dedicated_area_m2__range;
-      _newParam.size_yean__range = _newParam.size_gross_floor_area__range;
-      _newParam.size_daeji__range = _newParam.size_land_area__range;
-      _newParam.size_land__range = _newParam.size_land_area_m2__range;
-      _newParam.price__range = _newParam.price_selling_hope__range;
-      _newParam.date__range = _newParam.modified__range;
+      const houseParam = {
+        category__in: params.category__in || null,
+        size_private__range: params.size_private__range || null,
+        size_yean__range: params.size_yean__range || null,
+        size_daeji__range: params.size_daeji__range || null,
+        size_land__range: params.size_land__range || null,
+        price__range: params.price__range || null,
+        date__range: params.date__range || null
 
-      delete _newParam.size_dedicated_area_m2__range;
-      delete _newParam.size_gross_floor_area__range;
-      delete _newParam.size_land_area__range;
-      delete _newParam.size_land_area_m2__range;
-      delete _newParam.price_selling_hope__range;
-      delete _newParam.modified__range;
-      this.$emit("changeFilter", _newParam);
+      }
+      this.$emit("changeFilter", houseParam);
     },
     changeDevType(event) {
       if (this.$route.query.redevelopment_area__category === event) return;

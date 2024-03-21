@@ -188,7 +188,7 @@ export default {
     if (this.keyName === "prices") {
     } else {
       const query = this.$route.query;
-      if (this.keyName !== 'initPrices') {
+      if (this.keyName === 'price_selling_hope__range') {
         if (query.price_selling_hope__range) {
           this.selectValue = {
             min: Number(query.price_selling_hope__range.split(",")[0]),

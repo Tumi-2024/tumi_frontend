@@ -128,30 +128,6 @@ export default {
       this.modal = false;
       const { query, path } = this.$route;
       const isTransaction = this.$route.name !== "listHouses";
-      const area = this.$store.state.search.area;
-      const price = this.$store.state.search.price;
-      const initPrice = this.$store.state.search.initPrice;
-      const person = this.$store.state.search.person;
-      const period = this.$store.state.search.period;
-
-      const category = this.getCategoriesByKorean;
-
-      const getQueryArray = (keyName, params) => {
-        if (keyName === "type_house__in" && params.length === 8) {
-          return {};
-        }
-        if (Array.isArray(params)) {
-          const hasValue = params.every((value) => value !== undefined);
-          if (!hasValue || params.length === 0) return {};
-          return {
-            [keyName]: params.join(",")
-          };
-        }
-        if (!params) return {};
-        return {
-          [keyName]: params
-        };
-      };
 
       if (!isTransaction) {
         if (this.$route.name !== 'listHouses') {
@@ -169,26 +145,35 @@ export default {
             this.fetchMapAreas();
           }
         }
-      } else {
       }
-      this.$emit("change", {
-        page_size: 1000,
-        ...getQueryArray("type_house__in", category),
-        ...getQueryArray("price_selling_hope__range", [price.min, price.max]),
-        ...getQueryArray("price_initial_investment__range", [
-          initPrice.min,
-          initPrice.max
-        ]),
-        ...getQueryArray([`${area?.value}__range`], [area?.min, area?.max]),
-        ...getQueryArray([`modified__range`], period),
-        ...getQueryArray("user__in", person),
-        ...getQueryArray(
-          "redevelopment_area__category"
-          // getAreaTypeString()
-        )
-        // ...getRedevQuery(),
-        // ...getAreaTypeString()
-      });
+      console.log(this.keyName)
+      if (this.keyName === 'type_house__in') {
+        this.$router.replace({
+          query: { ...query, type_house__in: this.$refs.component.selected.join(',') }
+        });
+      } else if (this.keyName === 'areaType') {
+        const { value, min, max } = this.$refs.component.selectValue
+        this.$router.replace({
+          query: { ...query, [`${value}__range`]: `${min},${max}` }
+        });
+      } else if (this.keyName === 'price_selling_hope__range') {
+        this.$router.replace({
+          query: { ...query, price_selling_hope__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+        })
+      } else if (this.keyName === 'price_initial_investment__range') {
+        this.$router.replace({
+          query: { ...query, price_initial_investment__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+        })
+      } else {
+        const { startDate, endDate } = this.$refs.component
+        this.$router.replace({
+          query: { ...query, modified__range: `${startDate},${endDate}` }
+        });
+      }
+
+      console.log(this.keyName, 'params~~!', this.$refs.component.selectValue)
+      // this.$emit('change', params)
+      // console.log('save', this.$route.name, this.$refs.component.selected, this.$refs.component.selectValue, this.$refs.component.startDate, this.$refs.component.endDate)
     },
     initialize() {
       this.$refs.component.initialize();
