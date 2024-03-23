@@ -245,7 +245,6 @@ export default {
   },
   beforeMount() {
     this.initialize()
-    console.log(this.$route.name)
     if (this.$route.name === 'listTransactions' || this.$route.name === 'map_city_area') {
       this.properties = [
         {

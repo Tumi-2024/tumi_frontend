@@ -146,34 +146,63 @@ export default {
           }
         }
       }
-      console.log(this.keyName)
       if (this.keyName === 'type_house__in') {
+        let newQuery = { ...query }
+        if (this.$refs.component.selected.length !== 0) {
+          newQuery = { ...query, type_house__in: this.$refs.component.selected.join(',') }
+        } else {
+          delete newQuery.type_house__in
+        }
         this.$router.replace({
-          query: { ...query, type_house__in: this.$refs.component.selected.join(',') }
+          query: newQuery
         });
       } else if (this.keyName === 'areaType') {
         const { value, min, max } = this.$refs.component.selectValue
+        let newQuery = { ...query }
+        if (value) {
+          newQuery = { ...query, [`${value}__range`]: `${min},${max}` }
+        } else {
+          delete newQuery.size_dedicated_area_m2__range
+          delete newQuery.size_gross_floor_area__range
+          delete newQuery.size_land_area__range
+          delete newQuery.size_land__range
+        }
+
         this.$router.replace({
-          query: { ...query, [`${value}__range`]: `${min},${max}` }
+          query: newQuery
         });
       } else if (this.keyName === 'price_selling_hope__range') {
+        let newQuery = { ...query }
+        if (this.$refs.component.selectValue.min !== undefined && this.$refs.component.selectValue.max !== undefined) {
+          newQuery = { ...query, price_selling_hope__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+        } else {
+          delete newQuery.price_selling_hope__range
+        }
         this.$router.replace({
-          query: { ...query, price_selling_hope__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+          query: newQuery
         })
       } else if (this.keyName === 'price_initial_investment__range') {
+        let newQuery = { ...query }
+        if (this.$refs.component.selectValue.min !== undefined && this.$refs.component.selectValue.max !== undefined) {
+          newQuery = { ...query, price_initial_investment__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+        } else {
+          delete newQuery.price_initial_investment__range
+        }
         this.$router.replace({
-          query: { ...query, price_initial_investment__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+          query: newQuery
         })
       } else {
         const { startDate, endDate } = this.$refs.component
+        let newQuery = { ...query }
+        if (startDate && endDate) {
+          newQuery = { ...query, modified__range: `${startDate},${endDate}` }
+        } else {
+          delete newQuery.modified__range
+        }
         this.$router.replace({
-          query: { ...query, modified__range: `${startDate},${endDate}` }
+          query: newQuery
         });
       }
-
-      console.log(this.keyName, 'params~~!', this.$refs.component.selectValue)
-      // this.$emit('change', params)
-      // console.log('save', this.$route.name, this.$refs.component.selected, this.$refs.component.selectValue, this.$refs.component.startDate, this.$refs.component.endDate)
     },
     initialize() {
       this.$refs.component.initialize();

@@ -129,26 +129,49 @@ export default {
       this.modal = false;
 
       if (this.keyName === 'category__in') {
+        const newQuery = { ...query }
+        if (this.$refs.component.selected.length === 0) {
+          delete newQuery.category__in
+        } else {
+          newQuery.category__in = this.$refs.component.selected.join(',')
+        }
         this.$router.replace({
-          query: { ...query, category__in: this.$refs.component.selected.join(',') }
+          query: newQuery
         });
       } else if (this.keyName === 'areaType') {
         const { value, min, max } = this.$refs.component.selectValue
+        let newQuery = { ...query }
+        if (value) {
+          newQuery = { ...query, [`${value}__range`]: `${min},${max}` }
+        } else {
+          delete newQuery.size_private__range
+          delete newQuery.size_yean__range
+          delete newQuery.size_daeji__range
+          delete newQuery.size_land_area_m2__range
+        }
         this.$router.replace({
-          query: { ...query, [`${value}__range`]: `${min},${max}` }
+          query: newQuery
         });
       } else if (this.keyName === 'price__range') {
+        let newQuery = { ...query }
+        if (this.$refs.component.selectValue.min !== undefined && this.$refs.component.selectValue.max !== undefined) {
+          newQuery = { ...query, price__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+        } else {
+          delete newQuery.price__range
+        }
         this.$router.replace({
-          query: { ...query, price__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
-        })
-      } else if (this.keyName === 'price_initial_investment__range') {
-        this.$router.replace({
-          query: { ...query, price_initial_investment__range: `${this.$refs.component.selectValue.min},${this.$refs.component.selectValue.max}` }
+          query: newQuery
         })
       } else {
         const { startDate, endDate } = this.$refs.component
+        let newQuery = { ...query }
+        if (startDate && endDate) {
+          newQuery = { ...query, date__range: `${startDate},${endDate}` }
+        } else {
+          delete newQuery.date__range
+        }
         this.$router.replace({
-          query: { ...query, date__range: `${startDate},${endDate}` }
+          query: newQuery
         });
       }
     },
