@@ -141,9 +141,8 @@ export default {
 }
 .area-name {
   font-weight: 500;
-  font-size: calc((18 / 1312) * 100vh);
-  line-height: calc((20 / 1312) * 100vh);
-  letter-spacing: -1.05px;
+  font-size: 14px;
+  line-height: 16px;
   color: #707070;
   margin-left: 0px;
 
@@ -172,8 +171,8 @@ export default {
 
 .area-name-after {
   font-weight: 500;
-  font-size: calc((18 / 1312) * 100vh);
-  line-height: calc((20 / 1312) * 100vh);
+  font-size: 14px;
+  line-height: 16px;
   letter-spacing: -1.05px;
   color: #707070;
   margin-left: 0px;

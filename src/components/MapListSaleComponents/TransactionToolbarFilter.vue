@@ -24,7 +24,7 @@
             :options="[
               { label: '정비사업', value: 'redev' },
               { label: '지역', value: 'location' },
-              { label: '건물/단지', value: 'building' }
+              // { label: '건물/단지', value: 'building' }
             ]"
           />
           <q-select
@@ -231,8 +231,8 @@ export default {
     async filterFn(val, update, abort) {
       const type = [
         { label: "정비사업", value: "redev" },
-        { label: "지역", value: "location" },
-        { label: "건물/단지", value: "building" }
+        { label: "지역", value: "location" }
+        // { label: "건물/단지", value: "building" }
       ].find((obj) => obj.value === this.option);
       if (!val || val === "") {
         update();
@@ -270,7 +270,12 @@ export default {
                 label: title,
                 id: id
               };
-            });
+            }).reduce((acc, cur) => {
+              if (!acc.find((obj) => obj.value === cur.value)) {
+                acc.push(cur);
+              }
+              return acc;
+            }, []);
           });
         } else if (type.value === "location") {
           const {

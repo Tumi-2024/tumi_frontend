@@ -387,7 +387,8 @@ export default {
               this.category.find((obj) => obj.key === this.ctgr) || {
                 label: ""
               }
-            ).label
+            ).label,
+            label: '주택유형'
           },
           {
             type: "area",
@@ -396,9 +397,10 @@ export default {
           },
           {
             type: "price",
+            label: "매매가",
             value: `${toMoneyString(item.price)}`
           },
-          { type: "date", value: this.getdate(item.text_month, item.text_day) }
+          { type: "date", label: "거래일자", value: this.getdate(item.text_month, item.text_day) }
         ];
       };
     },

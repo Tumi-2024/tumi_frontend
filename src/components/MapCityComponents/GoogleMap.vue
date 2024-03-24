@@ -195,7 +195,8 @@ export default {
       mapOptions: {
         zoomControl: true,
         zoomControlOptions: {
-          position: 7
+          position: 7,
+          minZoom: 11
         }
       }
     };

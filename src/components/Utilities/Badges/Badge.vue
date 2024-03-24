@@ -1,13 +1,13 @@
 <template>
   <q-badge :class="badgeClass" outline :color="color">
     <q-tooltip
-      v-if="label"
-      anchor="top middle"
-      self="bottom middle"
-      :offset="[10, 10]"
-      :content-class="tooltipClass"
+    v-if="label"
+    anchor="top middle"
+    self="bottom middle"
+    :offset="[10, 10]"
+    :content-class="tooltipClass"
     >
-      {{ label }}
+    {{ label }}
     </q-tooltip>
     <q-icon v-if="icon">
       <img :src="icon" alt="" srcset="" />
