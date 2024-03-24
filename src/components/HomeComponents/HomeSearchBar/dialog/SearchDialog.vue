@@ -21,10 +21,8 @@
 
       <q-card-section>
         <div class="flex row wrap">
-          <div class="col-xs-4 col-md-2 items-center flex">
+          <div class="col-xs-12 col-md-4 items-center flex">
             <q-radio v-model="shape" val="house" label="매물 지도" />
-          </div>
-          <div class="col-xs-4 col-md-2 items-center flex">
             <q-radio v-model="shape" val="transaction" label="실거래가 지도" />
           </div>
           <div class="col-xs-12 col-md-8">

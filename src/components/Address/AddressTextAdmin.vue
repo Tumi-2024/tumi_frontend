@@ -3,12 +3,7 @@
     <div class="title">
       <div
         class="column"
-        @mouseover="
-          () => {
-            if (!redirect) return;
-            isHover = true;
-          }
-        "
+        @mouseover="hover(redirect)"
         @mouseout="
           () => {
             if (!redirect) return;
@@ -51,6 +46,8 @@
   </q-item-section>
 </template>
 <script>
+import { Cookies } from "quasar";
+
 export default {
   props: {
     textClass: String,
@@ -95,6 +92,8 @@ export default {
   },
   methods: {
     goToAdmin() {
+      const team = Cookies.get("team")
+      if (!team) return
       if (!this.redirect) {
         return;
       }
@@ -105,6 +104,14 @@ export default {
     }
   },
   computed: {
+    hover() {
+      return (redirect) => {
+        const team = Cookies.get("team")
+        if (!team) return
+        if (!redirect) return;
+        this.isHover = true;
+      }
+    },
     getDate() {
       return (date) => {
         const _date = new Date(date);

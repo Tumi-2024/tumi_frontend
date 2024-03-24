@@ -93,12 +93,6 @@ export default {
         })
         .then(({ data }) => {
           this.$store.commit("setUser", data);
-          Cookies.set("tumi", data.token, {
-            expires: this.autoLogin ? "30d" : undefined
-          });
-          Cookies.set("tumi_i", data.id, {
-            expires: this.autoLogin ? "30d" : undefined
-          });
 
           if (this.autoSaveId) {
             Cookies.set("tumi_id", this.username, {

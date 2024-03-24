@@ -1,5 +1,6 @@
 // Import Section
 import Vue from 'vue'
+import { Cookies } from "quasar";
 
 // Main Section
 export const userStore = {
@@ -18,6 +19,15 @@ export const userStore = {
   mutations: {
     setUser: function (state, payload) {
       state.data = payload
+      Cookies.set("tumi", payload.token, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
+      Cookies.set("tumi_id", payload.id, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
+      Cookies.set("team", payload.type, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
     },
     patchUser: async function (state, payload) {
       const { data: user } = await Vue.prototype.$axios.patch(
@@ -30,6 +40,15 @@ export const userStore = {
     logout: function (state, payload) {
       state.data = {};
       state.location = null;
+      Cookies.remove("tumi", payload.token, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
+      Cookies.remove("tumi_id", payload.id, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
+      Cookies.remove("team", payload.type, {
+        expires: this.autoLogin ? "30d" : undefined
+      });
     },
     setUserLocation: function (state, location) {
       state.location = location
