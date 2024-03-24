@@ -200,13 +200,14 @@
               <div
                 class="initial-investments bg-orange-1 text-primary row q-py-md q-px-lg items-center flex"
                 style="border: 2px solid #ff5a00"
+                @click="() => callPerson(getPersons[0].phone)"
               >
                 <div class="flex">
                   <q-icon size="30px">
                     <img src="~assets/icons/phone.svg" alt="" />
                   </q-icon>
                 </div>
-                <div class="q-ml-lg" style="flex: 1; word-break: keep-all;" @click="() => callPerson(getPersons[0].phone)">
+                <div class="q-ml-lg" style="flex: 1; word-break: keep-all;" >
                   <div class="row items-center">
                     <span class="text-subtitle2 col-12 text-bold">
                       {{ getPersons[0].rank }}
