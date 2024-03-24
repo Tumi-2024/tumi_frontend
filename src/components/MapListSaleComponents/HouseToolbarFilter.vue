@@ -231,7 +231,6 @@ export default {
       this.text = obj.label;
 
       const oldQuery = { ...this.$route.query }
-
       let query = {}
 
       if (obj.subcityId) {
@@ -297,8 +296,8 @@ export default {
               label: title,
               id: id
             };
-          });
-        });
+          })
+        })
       } else if (type.value === "location") {
         const {
           data: { results: subCityResults }
@@ -328,34 +327,23 @@ export default {
           this.options = [...subArr, ...locationArr];
         });
       } else {
-        const { name } = this.$route
-        if (name === 'listTransactions') {
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(`transactions/?search=${val}`);
-          update(async () => {
-            this.options = results.map((building) => {
-              return {
-                value: building.text_danji,
-                label: building.text_danji,
-                id: building.text_danji
-              };
-            });
-          });
-        } else {
-          const {
-            data: { results }
-          } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
-          update(async () => {
-            this.options = results.map(({ group_building_house: building }) => {
-              return {
-                value: building.title_building,
-                label: building.title_building,
-                id: building.title_building
-              };
-            });
-          });
-        }
+        const {
+          data: { results }
+        } = await Vue.prototype.$axios.get(`houses/?search=${val}`);
+        update(async () => {
+          this.options = results.map(({ group_building_house: building }) => {
+            return {
+              value: building.title_building,
+              label: building.title_building,
+              id: building.title_building
+            };
+          }).reduce((acc, cur) => {
+            if (!acc.find((obj) => obj.value === cur.value)) {
+              acc.push(cur);
+            }
+            return acc;
+          }, []);
+        });
       }
     }
   },
