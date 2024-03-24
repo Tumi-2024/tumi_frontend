@@ -113,25 +113,22 @@ export const searchStore = {
   },
   mutations: {
     initialize: (_state) => {
-      _state = {
-        // 주택 유형
-        // 다중선택 가능
-        categories: ["아파트"],
-        area: {
-          value: undefined,
-          min: undefined,
-          max: undefined
-        },
-        price: {
-          min: undefined,
-          max: undefined
-        },
-        initPrice: {
-          min: undefined,
-          max: undefined
-        },
-        person: []
-      };
+      console.log('initialize')
+      _state.categories = []
+      _state.area = {
+        value: undefined,
+        min: undefined,
+        max: undefined
+      }
+      _state.price = {
+        min: undefined,
+        max: undefined
+      }
+      _state.initPrice = {
+        min: undefined,
+        max: undefined
+      }
+      _state.person = []
     },
     setCategories: (_state, payload) => {
       _state.categories = payload;

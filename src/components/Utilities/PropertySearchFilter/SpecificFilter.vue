@@ -171,7 +171,6 @@ export default {
         }
       } else {
       }
-      console.log('change')
       this.$emit("change", {
         page_size: 1000,
         ...getQueryArray("type_house__in", category),

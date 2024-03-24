@@ -5,19 +5,19 @@
       class="q-mx-auto bg-white"
     >
       <router-view />
-      <login-modal />
+      <!-- <login-modal /> -->
     </div>
   </div>
 </template>
 <script>
-import LoginModal from "src/components/Utilities/LoginModal/LoginKaKaoModal.vue";
+// import LoginModal from "src/components/Utilities/LoginModal/LoginKaKaoModal.vue";
 import Vue from "vue";
 import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
-    "login-modal": LoginModal
+    // "login-modal": LoginModal
   },
   methods: {
     ...mapActions("map", ["fetchLocationInterest"])

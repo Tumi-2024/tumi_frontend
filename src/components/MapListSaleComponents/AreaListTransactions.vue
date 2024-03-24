@@ -108,8 +108,6 @@ export default {
       // this.getApiHouses();
     },
     changeFilter(params) {
-      console.log('changeFilter', params)
-
       const query = this.$route.query
       const newQuery = { ...query }
       // params 의 값이 null 이면 객체에서 제외 시킨다. undefined 는 제외시키지 않는다.
@@ -120,9 +118,6 @@ export default {
           newQuery[key] = params[key]
         }
       }
-
-      console.log(params, 'params')
-      console.log(newQuery, 'newQuery')
 
       this.page = 1;
       this.$router.replace({

@@ -139,7 +139,7 @@ export default {
           label: "주택유형",
           type: "property-type",
           class:
-            this.categories.length !== 8
+            this.categories.length !== 8 && this.categories.length !== 0
               ? "text-white bg-primary"
               : "text-grey",
           keyName: "categories"

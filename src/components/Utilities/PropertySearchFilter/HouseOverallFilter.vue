@@ -153,7 +153,7 @@ export default {
           .replace("단독다가구", "단독다가구")
           .replace("무허가건축물", "무허가건축물")
           .replace("입주권", "입주권").split(",")
-        : ["아파트"];
+        : [];
     }
   },
   data() {

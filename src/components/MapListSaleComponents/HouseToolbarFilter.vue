@@ -230,18 +230,26 @@ export default {
       ].find((obj) => obj.value === this.option);
       this.text = obj.label;
 
-      const oldQuery = this.$route.query
+      const oldQuery = { ...this.$route.query }
 
-      const query = obj.subcityId ? {
-        title: obj.label,
-        redevelopment_area: type.value === "redev" ? obj.id : undefined,
-        subcity: type.value === "location" ? obj.subcityId : undefined,
-        search: type.value === "building" ? obj.value : undefined
-      } : {
-        title: obj.label,
-        redevelopment_area: type.value === "redev" ? obj.id : undefined,
-        location: type.value === "location" ? obj.id : undefined,
-        search: type.value === "building" ? obj.value : undefined
+      let query = {}
+
+      if (obj.subcityId) {
+        query = {
+          title: obj.label,
+          redevelopment_area: type.value === "redev" ? obj.id : undefined,
+          subcity: type.value === "location" ? obj.subcityId : undefined,
+          search: type.value === "building" ? obj.value : undefined
+        }
+        delete oldQuery.location
+      } else {
+        query = {
+          title: obj.label,
+          redevelopment_area: type.value === "redev" ? obj.id : undefined,
+          location: type.value === "location" ? obj.id : undefined,
+          search: type.value === "building" ? obj.value : undefined
+        }
+        delete oldQuery.subcity
       }
 
       this.$router.replace({

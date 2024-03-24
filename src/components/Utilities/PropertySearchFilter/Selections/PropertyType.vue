@@ -10,7 +10,7 @@
         flat
         class="col nanum-square"
         :class="{
-          selected: getIsActive(property.value, property.value)
+          selected: getIsActive(property.value)
         }"
         @click="changeValue(property)"
       >

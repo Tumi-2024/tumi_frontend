@@ -390,6 +390,7 @@ export default {
     }
   },
   async beforeMount() {
+    this.initialize()
     this.setSimpleHouses([]);
   },
   async mounted() {
@@ -411,6 +412,7 @@ export default {
 
     ...mapActions("area", ["fetchMapAreas", "changeMapSelectedArea"]),
     ...mapActions(["changeUserLocation"]),
+    ...mapActions("search", ["initialize"]),
 
     onClickMarker(item) {
       if (!this.isDragEnd) return;
