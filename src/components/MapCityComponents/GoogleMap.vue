@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white" ref="gmapContainer">
+  <div class="bg-white nanum-square" ref="gmapContainer">
     <!-- Heart buttons | cone | GPS -->
     <action-buttons
       @accessUserLocation="getCurrentPosition"
