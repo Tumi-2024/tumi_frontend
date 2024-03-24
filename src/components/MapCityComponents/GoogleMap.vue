@@ -19,13 +19,12 @@
         dragstart: dragStart,
         load: idle,
         zoom_changed: zoomChanged,
-        bounds_changed: boundsChanged
       }"
     >
       <!-- 각 구 별 매물/실거래가 보여주기 -->
       <div v-for="m in simple_houses" :key="'d' + m.title + getColor.bg + m.id">
         <div>
-          <template v-if="getMapZoom < 16">
+          <template v-if="getMapZoom < redevZoom - 1">
             <naver-marker :lat="Number(m.latitude)" :lng="Number(m.longitude)">
               <div
                 v-if="m.title"
@@ -189,7 +188,7 @@ export default {
   data() {
     return {
       isDragEnd: true,
-      redevZoom: 15,
+      redevZoom: 16,
       map: null,
       mapSize: { height: "", width: "" },
       mapOptions: {
@@ -397,7 +396,6 @@ export default {
   async mounted() {
     const naverMap = this.$refs.naverMapRef.map;
     naverMap.setZoom(this.getMapZoom);
-    this.boundsChanged = debounce(this.boundsChanged, 1000);
     this.changeMapCenter({
       lat: naverMap.center._lat,
       lng: naverMap.center._lng
@@ -513,7 +511,9 @@ export default {
         this.getRedevInfo();
       }
       this.setMapZoom(zoomLevel);
-      this.idle();
+      this.getHouseInfo();
+
+      // this.idle();
     },
     onChangeRedev() {
       this.setViewRedevOnly();
@@ -525,7 +525,6 @@ export default {
       this.changeMapSelectedArea(result.data);
     },
     idle(e) {
-      // this.getHouseInfo();
     },
 
     async getRedevInfo(bounds = this.$refs.naverMapRef.map.bounds) {

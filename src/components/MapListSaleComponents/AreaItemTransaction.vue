@@ -392,7 +392,7 @@ export default {
           },
           {
             type: "area",
-            label: "전용면적",
+            label: "건물면적",
             value: getArea() + "m²"
           },
           {
