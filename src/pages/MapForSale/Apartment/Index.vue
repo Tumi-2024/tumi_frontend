@@ -206,7 +206,7 @@
                     <img src="~assets/icons/phone.svg" alt="" />
                   </q-icon>
                 </div>
-                <div class="q-ml-lg" style="flex: 1; word-break: keep-all;" @click="callPerson">
+                <div class="q-ml-lg" style="flex: 1; word-break: keep-all;" @click="() => callPerson(getPersons[0].phone)">
                   <div class="row items-center">
                     <span class="text-subtitle2 col-12 text-bold">
                       {{ getPersons[0].rank }}
@@ -215,9 +215,7 @@
                       class="text-h6 q-mb-xs col-12 flex text-bold"
                     >
                       <span style="margin-right: 4px;">{{ getPersons[0].text }}</span>
-                      <a href="tel: getPersons[0].phone" v-if="getPersons[0].phone" class="flex">
-                        {{ getPersons[0].phone }}
-                      </a>
+                      {{ getPersons[0].phone }}
                     </div>
                   </div>
                   <span class="text-grey-9 text-bold">
@@ -396,8 +394,9 @@ export default {
     toKr,
     toMoneyString,
     callPerson(phoneNumber) {
+      console.log(phoneNumber)
       if (!phoneNumber) return;
-      window.location.href = "tel://" + phoneNumber;
+      window.location.href = "tel:" + phoneNumber;
     },
     makePolygon(area) {
       this.redevelopmentArea = area.redevelopment_area_locations.map((obj) => {
