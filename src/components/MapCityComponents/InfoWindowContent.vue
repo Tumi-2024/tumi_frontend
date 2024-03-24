@@ -37,7 +37,7 @@
           style="padding: 4px"
           :style="{ backgroundColor: getColor(item) }"
         >
-          {{ getItemInfo(item).type.replace("|", "|") }}
+          {{ getItemInfo(item).type }}
         </div>
         <div class="info-text text-center" style="padding: 1px 8px 0 8px">
           {{ toSimpleMoneyString(price) }}
@@ -97,7 +97,7 @@ export default {
       return (item) => {
         if (this.$route.name === "map_city_area") {
           const TYPE_HOUSE = {
-            "상업업무용 ": "상업업무용",
+            상업업무용: "상업업무용",
             단독다가구: "단독다가구",
             오피스텔: "오피스텔",
             아파트: "아파트",

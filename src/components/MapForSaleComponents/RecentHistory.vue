@@ -43,7 +43,6 @@
           <q-list separator>
             <q-virtual-scroll
               style="min-height: 220px; max-height: 500px"
-              v-if="transactions.length"
               :items="transactions"
               :virtual-scroll-slice-size="100"
               separator
@@ -83,7 +82,7 @@
                       v-model="select"
                       :options="getSelectOptions"
                       :option-value="
-                        (item) => (item === null ? null : item.label)
+                        (item) => (item === null ? null : item.value)
                       "
                     />
                   </div>
@@ -101,10 +100,11 @@
                   <div
                     class="flex justify-center"
                     style="flex: 20 0"
-                    v-if="activeTab === 'SALE' || activeTab === 'RENT'"
+                    v-if="activeTab === 'SALE'"
                   >
                     면적당 가격
                   </div>
+                  <div v-else-if="activeTab === 'RENT'"></div>
                   <div class="flex justify-center" style="flex: 20 0" v-else>
                     월세
                   </div>
@@ -231,6 +231,15 @@
                       }}
                       / {{ unitSelect.value }}
                     </div>
+                    <div
+                      class="flex justify-center"
+                      style="flex: 20 0"
+                      v-if="activeTab === 'MONTHLY'"
+                    >
+                      {{
+                        toMoneyString(item.price_monthly)
+                      }}
+                    </div>
                   </template>
                 </q-item>
               </template>
@@ -326,7 +335,8 @@ export default {
         if (!!priceMonthly && Number(priceMonthly) > 0) {
           return "월세";
         }
-        return this.tabs.find((tab) => tab.level === type).label;
+
+        return this.tabs.find((tab) => tab.level === type)?.label;
       };
     },
 
@@ -378,8 +388,8 @@ export default {
         const newVal = [
           { label: "아파트", value: "아파트" },
           { label: "오피스텔", value: "오피스텔" },
-          { label: "상업업무용", value: "상업업무용 " },
-          { label: "분양/입주권", value: "토지" },
+          { label: "상업업무용", value: "상업업무용" },
+          { label: "분양/입주권", value: "분양/입주권" },
           { label: "연립다세대", value: "연립다세대" },
           { label: "단독다가구", value: "단독다가구" },
           { label: "토지", value: "토지" }
