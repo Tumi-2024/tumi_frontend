@@ -252,7 +252,7 @@ export default {
         delete oldQuery.subcity
       }
 
-      this.$router.replace({
+      this.$router.push({
         query: { ...oldQuery, ...query }
       })
     },
